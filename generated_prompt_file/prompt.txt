@@ -1,54 +1,12 @@
---- Fuzzing Context Prompt ---
+
+    你是软件测试方面首屈一指的专家，尤其擅长fuzz编译和构建问题的解决。通常是由fuzz配置文件与项目的文件内容不匹配导致的编译或构建问题。下面我将给你提供不同项目在oss-fuzz编译过程中的报错，请你根据报错信息和配置文件内容等信息对报错给出针对性的解决方案，尽可能的不去改动与问题不相关的文件内容，最终使该项目能够成功的进行编译和build。
+    下面将给出aiohttp-master的Dockerfile、build.sh、fuzz_http_parser.py、fuzz_http_payload_parser.py、fuzz_multipart.py、fuzz_payload_url.py、fuzz_web_request.py、project.yaml、文件树、报错日志内容。请你对文件树进行读取并分析给出的信息并且指出问题可能是由哪些文件内容引起的，是fuzz测试构建的核心文件如Dockerfile、build.sh或者是aiohttp-master项目中的文件，并尝试给出解决方案。
 
 
 --- Configuration Files ---
-#!/bin/bash -eu
-# Copyright 2020 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-export ORIG_CFLAGS=${CFLAGS}
-cd haproxy
 
-# Fix some things in the Makefile where there are no options available
-sed 's/COPTS += $(DEBUG) $(OPTIONS_CFLAGS) $(CFLAGS) $(ADDINC)/COPTS += $(DEBUG) $(OPTIONS_CFLAGS) $(CFLAGS) $(ADDINC) ${ORIG_CFLAGS}/g' -i Makefile
-sed 's/LDOPTS = $(TARGET_LDFLAGS) $(OPTIONS_LDFLAGS) $(ADDLIB)/LDOPTS = $(TARGET_LDFLAGS) $(OPTIONS_LDFLAGS) $(ADDLIB) ${CXXFLAGS}/g' -i Makefile
-make TARGET=generic CC=${CC} LD=${CXX} 
-
-# Make a copy of the main file since it has many global functions we need to declare
-# We dont want the main function but we need the rest of the stuff in haproxy.c
-cd /src/haproxy
-sed 's/int main(int argc/int main2(int argc/g' -i ./src/haproxy.c
-sed 's/dladdr(main,/dladdr(main2,/g' -i ./src/tools.c
-sed 's/(void*)main/(void*)main2/g' -i ./src/tools.c
-
-
-SETTINGS="-Iinclude -g -DUSE_POLL -DUSE_TPROXY -DCONFIG_HAPROXY_VERSION=\"\" -DCONFIG_HAPROXY_DATE=\"\""
-
-$CC $CFLAGS $SETTINGS -c -o ./src/haproxy.o ./src/haproxy.c
-ar cr libhaproxy.a ./src/*.o
-
-for fuzzer in hpack_decode cfg_parser; do
-  cp $SRC/fuzz_${fuzzer}.c .
-  $CC $CFLAGS $SETTINGS -c fuzz_${fuzzer}.c  -o fuzz_${fuzzer}.o
-  $CXX -g $CXXFLAGS $LIB_FUZZING_ENGINE  fuzz_${fuzzer}.o libhaproxy.a -o $OUT/fuzz_${fuzzer}
-done
-
-# build vtest for run_tests.sh
-cd $SRC/VTest2
-make vtest
-# vtest binary is in $SRC/VTest2/vtest
-# Copyright 2020 Google Inc.
+### 内容来源: Dockerfile ###
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -63,1534 +21,785 @@ make vtest
 # limitations under the License.
 #
 ################################################################################
-FROM gcr.io/oss-fuzz-base/base-builder
-RUN apt-get update && apt-get install -y make libpcre2-dev zlib1g-dev
-RUN git clone https://github.com/haproxy/haproxy
-RUN git clone https://github.com/vtest/VTest2 --depth=1
 
-WORKDIR $SRC
+FROM gcr.io/oss-fuzz-base/base-builder-python
+#RUN apt-get update && apt-get install -y \
+  pkg-config \
+  zlib1g \
+  zlib1g-dev \
+  libjpeg-dev \
+  libpng-dev \
+  libffi-dev \
+  make \
+  autoconf \
+  libtool
+RUN python3 -m pip install --upgrade pip
+RUN curl -sL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
+RUN bash nodesource_setup.sh && apt-get install -y nodejs
+RUN git clone --recurse-submodules https://github.com/aio-libs/aiohttp
+COPY build.sh $SRC/
+COPY fuzz_* $SRC/aiohttp/
 
-COPY build.sh run_tests.sh $SRC/
-COPY fuzz* $SRC/
-homepage: "https://github.com/haproxy/haproxy"
-primary_contact: "adam@adalogics.com"
-language: c++
-auto_ccs:
-  - "david@adalogics.com"
-  - "timwolla@googlemail.com"
-  - "willy@1wt.eu"
-  - "tribuslukas58@gmail.com"
-  - "christopher.faulet@gmail.com"
-  - "vkrasnobaeva@haproxy.com"
-  - "wlallemand@haproxy.com"
-sanitizers:
-  - address
+WORKDIR $SRC/aiohttp
 
-# Bug reports are public by default:
-view_restrictions: none
-main_repo: 'https://github.com/haproxy/haproxy'
+### 内容来源: build.sh ###
+#!/bin/bash -eu
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+################################################################################
+# Build the llhttp parser
+git submodule update --init --recursive
+pushd "$SRC/aiohttp/vendor/llhttp/"
+npm ci
+make
+popd # "$SRC/aiohttp/vendor/llhttp/"
 
+# Build & install aiohttp
+make cythonize
+make install-dev
+
+# Duplicate fuzzers to use Pure python code (in addition
+# to the existing C-compiled code).
+cp fuzz_http_parser.py fuzz_http_parser_pure_python.py
+sed -i 's/AIOHTTP_VAL=0/AIOHTTP_VAL=1/g' fuzz_http_parser_pure_python.py
+cp fuzz_http_payload_parser.py fuzz_http_payload_parser_pure_python.py
+sed -i 's/AIOHTTP_VAL=0/AIOHTTP_VAL=1/g' fuzz_http_payload_parser_pure_python.py
+
+# Build fuzzers in $OUT.
+for fuzzer in $(find $SRC -name 'fuzz_*.py'); do
+  compile_python_fuzzer $fuzzer
+done
+
+### 内容来源: fuzz_http_parser.py ###
+#!/usr/bin/python3
+
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import os
+AIOHTTP_VAL=0
+if AIOHTTP_VAL == 0:
+  os.environ["AIOHTTP_NO_EXTENSIONS"] = ""
+else:
+  os.environ["AIOHTTP_NO_EXTENSIONS"] = "1"
+
+import sys
+import atheris
+
+# aiohttp imports
+import asyncio
+with atheris.instrument_imports():
+    import aiohttp
+    from aiohttp.base_protocol import BaseProtocol
+    from aiohttp import http_exceptions, streams
+
+@atheris.instrument_func
+def TestOneInput(data):
+    loop = asyncio.get_event_loop()
+    pr = BaseProtocol(loop)
+    h_p = aiohttp.http_parser.HttpRequestParser(pr, loop, 32768)
+    try:
+        h_p.feed_data(data)
+        h_p.feed_eof()
+    except aiohttp.http_exceptions.HttpProcessingError:
+        None
+
+def main():
+    atheris.Setup(sys.argv, TestOneInput, enable_python_coverage=True)
+    loop = asyncio.get_event_loop()
+    asyncio.set_event_loop(loop)
+    atheris.Fuzz()
+
+if __name__ == "__main__":
+    main()
+
+### 内容来源: fuzz_http_payload_parser.py ###
+#!/usr/bin/python3
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import os
+AIOHTTP_VAL=0
+if AIOHTTP_VAL == 0:
+  os.environ["AIOHTTP_NO_EXTENSIONS"] = ""
+else:
+  os.environ["AIOHTTP_NO_EXTENSIONS"] = "1"
+
+import sys
+import atheris
+
+# aiohttp imports
+import asyncio
+with atheris.instrument_imports():
+    import aiohttp
+    from aiohttp.base_protocol import BaseProtocol
+    from aiohttp import http_exceptions, streams
+
+@atheris.instrument_func
+def TestOneInput(data):
+    loop = asyncio.get_event_loop()
+    pr = BaseProtocol(loop)
+    out = aiohttp.StreamReader(pr, 2**16, loop=None)
+    h_p = aiohttp.http_parser.HttpPayloadParser(out, loop, 32768)
+    try:
+        h_p.feed_data(data)
+    except aiohttp.http_exceptions.HttpProcessingError:
+        None
+
+def main():
+    atheris.Setup(sys.argv, TestOneInput, enable_python_coverage=True)
+    loop = asyncio.get_event_loop()
+    asyncio.set_event_loop(loop)
+    atheris.Fuzz()
+
+if __name__ == "__main__":
+    main()
+
+### 内容来源: fuzz_multipart.py ###
+#!/usr/bin/python3
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import io
+import sys
+import atheris
+
+# aiohttp imports
+import asyncio
+with atheris.instrument_imports():
+    import aiohttp
+    from aiohttp.hdrs import (
+        CONTENT_TYPE,
+    )
+
+class FuzzStream:
+    def __init__(self, content):
+        self.content = io.BytesIO(content)
+
+    async def read(self, size = None):
+        return self.content.read(size)
+
+    def at_eof(self):
+        return self.content.tell() == len(self.content.getbuffer())
+
+    async def readline(self):
+        return self.content.readline()
+
+    def unread_data(self, data):
+        self.content = io.BytesIO(data + self.content.read())
+
+
+@atheris.instrument_func
+async def fuzz_bodypart_reader(data):
+    fdp = atheris.FuzzedDataProvider(data)
+    obj = aiohttp.BodyPartReader(
+        b"--:",
+        {
+            CONTENT_TYPE: fdp.ConsumeUnicode(30),
+        },
+        FuzzStream(fdp.ConsumeBytes(atheris.ALL_REMAINING)),
+    )
+    if not obj.at_eof():
+        await obj.form()
+
+@atheris.instrument_func
+def TestOneInput(data):
+    try:
+        asyncio.run(fuzz_bodypart_reader(data))
+    except AssertionError:
+        return
+
+def main():
+    atheris.Setup(sys.argv, TestOneInput)
+    loop = asyncio.get_event_loop()
+    asyncio.set_event_loop(loop)
+    atheris.Fuzz()
+
+if __name__ == "__main__":
+    main()
+
+### 内容来源: fuzz_payload_url.py ###
+#!/usr/bin/python3
+
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import sys
+import atheris
+
+# aiohttp specific
+with atheris.instrument_imports():
+    from aiohttp import http_exceptions, payload
+    from yarl import URL
+
+@atheris.instrument_func
+def TestOneInput(data):
+    fdp = atheris.FuzzedDataProvider(data)
+    original = fdp.ConsumeString(sys.maxsize)
+
+    try:
+        p = payload.StringPayload(original)
+    except UnicodeEncodeError:
+        None
+    try:
+        u = URL(original)
+    except ValueError:
+        None
+
+def main():
+    atheris.Setup(sys.argv, TestOneInput, enable_python_coverage=True)
+    atheris.Fuzz()
+
+if __name__ == "__main__":
+    main()
+
+### 内容来源: fuzz_web_request.py ###
+#!/usr/bin/python3
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import os
+import sys
+import atheris
+
+# aiohttp imports
+import asyncio
+with atheris.instrument_imports():
+    import aiohttp
+    from aiohttp.test_utils import make_mocked_request
+    from multidict import CIMultiDict
+    from yarl import URL
+
+@atheris.instrument_func
+async def fuzz_run_one_async(data):
+    fdp = atheris.FuzzedDataProvider(data)
+    url_s = fdp.ConsumeString(fdp.ConsumeIntInRange(0, 512))
+    try:
+        URL(url_s)
+    except Exception:
+        return
+
+    headers = CIMultiDict(
+        { fdp.ConsumeString(20) : fdp.ConsumeString(fdp.ConsumeIntInRange(0, 512)) }
+    )
+    req = make_mocked_request("GET", url_s, headers=headers)
+
+    l1 = len(req.forwarded)
+    ret = await req.post()
+
+@atheris.instrument_func
+def TestOneInput(data):
+    asyncio.run(fuzz_run_one_async(data))
+
+def main():
+    atheris.Setup(sys.argv, TestOneInput, enable_python_coverage=True)
+    loop = asyncio.get_event_loop()
+    asyncio.set_event_loop(loop)
+    atheris.Fuzz()
+
+if __name__ == "__main__":
+    main()
+
+### 内容来源: project.yaml ###
 fuzzing_engines:
-  - afl
-  - honggfuzz
-  - libfuzzer
+- libfuzzer
+homepage: https://github.com/aio-libs/aiohttp
+language: python
+main_repo: https://github.com/aio-libs/aiohttp
+sanitizers:
+- address
+- undefined
+vendor_ccs:
+- david@adalogics.com
+- adam@adalogics.com
 
 
 --- Project File Tree ---
-📁 haproxy
-├── 📄 BRANCHES
-├── 📄 BSDmakefile
-├── 📄 CHANGELOG
-├── 📄 CONTRIBUTING
-├── 📄 INSTALL
-├── 📄 LICENSE
-├── 📄 MAINTAINERS
+📁 aiohttp-master
+├── 📁 CHANGES
+│   ├── 📄 10872.contrib.rst
+│   ├── 📄 11161.feature.rst
+│   ├── 📄 11233.doc.rst
+│   ├── 📄 11243.bugfix
+│   ├── 📄 11268.feature.rst
+│   ├── 📄 11363.packaging
+│   ├── 📄 11425.packaging.rst
+│   ├── 📄 2174.bugfix
+│   ├── 📄 2835.breaking.rst
+│   ├── 📄 2977.breaking.rst
+│   ├── 📄 3310.bugfix
+│   ├── 📄 3462.feature
+│   ├── 📄 3463.breaking.rst
+│   ├── 📄 3482.bugfix
+│   ├── 📄 3538.breaking.rst
+│   ├── 📄 3539.breaking.rst
+│   ├── 📄 3540.feature
+│   ├── 📄 3542.breaking.rst
+│   ├── 📄 3545.feature
+│   ├── 📄 3547.breaking.rst
+│   ├── 📄 3548.breaking.rst
+│   ├── 📄 3559.doc
+│   ├── 📄 3562.bugfix
+│   ├── 📄 3569.feature
+│   ├── 📄 3580.breaking.rst
+│   ├── 📄 3612.bugfix
+│   ├── 📄 3613.bugfix
+│   ├── 📄 3642.doc
+│   ├── 📄 3685.doc
+│   ├── 📄 3721.bugfix
+│   ├── 📄 3767.feature
+│   ├── 📄 3787.feature
+│   ├── 📄 3796.feature
+│   ├── 📄 3890.breaking.rst
+│   ├── 📄 3901.breaking.rst
+│   ├── 📄 3929.breaking.rst
+│   ├── 📄 3931.breaking.rst
+│   ├── 📄 3932.breaking.rst
+│   ├── 📄 3933.breaking.rst
+│   ├── 📄 3934.breaking.rst
+│   ├── 📄 3935.breaking.rst
+│   ├── 📄 3939.breaking.rst
+│   ├── 📄 3940.breaking.rst
+│   ├── 📄 3942.breaking.rst
+│   ├── 📄 3948.breaking.rst
+│   ├── 📄 3994.misc
+│   ├── 📄 4161.doc
+│   ├── 📄 4277.feature
+│   ├── 📄 4283.bugfix
+│   ├── 📄 4299.bugfix
+│   ├── 📄 4302.bugfix
+│   ├── 📄 4368.bugfix
+│   ├── 📄 4452.doc
+│   ├── 📄 4504.doc
+│   ├── 📄 4526.bugfix
+│   ├── 📄 4558.bugfix
+│   ├── 📄 4656.bugfix
+│   ├── 📄 4695.doc
+│   ├── 📄 4706.feature
+│   ├── 📄 5075.feature
+│   ├── 📄 5191.doc
+│   ├── 📄 5258.bugfix
+│   ├── 📄 5278.breaking.rst
+│   ├── 📄 5284.breaking.rst
+│   ├── 📄 5284.feature
+│   ├── 📄 5287.feature
+│   ├── 📄 5516.misc
+│   ├── 📄 5533.misc
+│   ├── 📄 5558.bugfix
+│   ├── 📄 5634.feature
+│   ├── 📄 5783.feature
+│   ├── 📄 5806.misc
+│   ├── 📄 5829.misc
+│   ├── 📄 5870.misc
+│   ├── 📄 5894.bugfix
+│   ├── 📄 6180.bugfix
+│   ├── 📄 6181.bugfix
+│   ├── 📄 6193.feature
+│   ├── 📄 6547.bugfix
+│   ├── 📄 6721.misc
+│   ├── 📄 6979.doc
+│   ├── 📄 6998.doc
+│   ├── 📄 7107.breaking.rst
+│   ├── 📄 7265.breaking.rst
+│   ├── 📄 7319.breaking.rst
+│   ├── 📄 7319.feature.rst
+│   ├── 📄 7677.bugfix
+│   ├── 📄 7772.bugfix
+│   ├── 📄 7815.bugfix
+│   ├── 📄 8048.breaking.rst
+│   ├── 📄 8139.contrib.rst
+│   ├── 📄 8197.doc
+│   ├── 📄 8303.breaking.rst
+│   ├── 📄 8596.breaking.rst
+│   ├── 📄 8698.breaking.rst
+│   ├── 📄 8957.breaking.rst
+│   ├── 📄 9109.breaking.rst
+│   ├── 📄 9212.breaking.rst
+│   ├── 📄 9212.packaging.rst
+│   ├── 📄 9254.breaking.rst
+│   ├── 📄 9292.breaking.rst
+│   ├── 📄 9413.misc.rst
+│   └── 📄 README.rst
+├── 📄 CHANGES.rst
+├── 📄 CODE_OF_CONDUCT.md
+├── 📄 CONTRIBUTING.rst
+├── 📄 CONTRIBUTORS.txt
+├── 📄 LICENSE.txt
+├── 📄 MANIFEST.in
 ├── 📄 Makefile
-├── 📄 README.md
-├── 📄 SUBVERS
-├── 📄 VERDATE
-├── 📄 VERSION
-├── 📁 addons
-│   ├── 📁 51degrees
-│   │   ├── 📄 51d.c
-│   │   └── 📁 dummy
-│   │       ├── 📁 cityhash
-│   │       │   └── 📄 city.c
-│   │       ├── 📁 pattern
-│   │       │   ├── 📄 51Degrees.c
-│   │       │   └── 📄 51Degrees.h
-│   │       ├── 📄 threading.c
-│   │       ├── 📁 trie
-│   │       │   ├── 📄 51Degrees.c
-│   │       │   └── 📄 51Degrees.h
-│   │       └── 📁 v4hash
-│   │           └── 📁 hash
-│   │               ├── 📄 fiftyone.h
-│   │               ├── 📄 hash.c
-│   │               └── 📄 hash.h
-│   ├── 📁 deviceatlas
-│   │   ├── 📄 Makefile.inc
-│   │   ├── 📄 da.c
-│   │   └── 📁 dummy
-│   │       ├── 📄 Makefile
-│   │       ├── 📁 Os
-│   │       │   └── 📄 daunix.c
-│   │       ├── 📄 dac.c
-│   │       ├── 📄 dac.h
-│   │       ├── 📄 dacache.cpp
-│   │       ├── 📄 dadwarc.c
-│   │       ├── 📄 dadwcom.c
-│   │       ├── 📄 dadwcurl.c
-│   │       ├── 📄 dasch.c
-│   │       └── 📄 json.c
-│   ├── 📁 ot
-│   │   ├── 📄 AUTHORS
-│   │   ├── 📄 MAINTAINERS
-│   │   ├── 📄 Makefile
-│   │   ├── 📄 README
-│   │   ├── 📄 README-func
-│   │   ├── 📄 README-pool
-│   │   ├── 📁 include
-│   │   │   ├── 📄 cli.h
-│   │   │   ├── 📄 conf.h
-│   │   │   ├── 📄 config.h
-│   │   │   ├── 📄 debug.h
-│   │   │   ├── 📄 define.h
-│   │   │   ├── 📄 event.h
-│   │   │   ├── 📄 filter.h
-│   │   │   ├── 📄 group.h
-│   │   │   ├── 📄 http.h
-│   │   │   ├── 📄 include.h
-│   │   │   ├── 📄 opentracing.h
-│   │   │   ├── 📄 parser.h
-│   │   │   ├── 📄 pool.h
-│   │   │   ├── 📄 scope.h
-│   │   │   ├── 📄 util.h
-│   │   │   └── 📄 vars.h
-│   │   ├── 📁 src
-│   │   │   ├── 📄 cli.c
-│   │   │   ├── 📄 conf.c
-│   │   │   ├── 📄 event.c
-│   │   │   ├── 📄 filter.c
-│   │   │   ├── 📄 group.c
-│   │   │   ├── 📄 http.c
-│   │   │   ├── 📄 opentracing.c
-│   │   │   ├── 📄 parser.c
-│   │   │   ├── 📄 pool.c
-│   │   │   ├── 📄 scope.c
-│   │   │   ├── 📄 util.c
-│   │   │   └── 📄 vars.c
-│   │   └── 📁 test
-│   │       ├── 📄 README-speed-cmp
-│   │       ├── 📄 README-speed-ctx
-│   │       ├── 📄 README-speed-fe-be
-│   │       ├── 📄 README-speed-sa
-│   │       ├── 📁 be
-│   │       │   ├── 📄 cfg-dd.json
-│   │       │   ├── 📄 cfg-jaeger.yml
-│   │       │   ├── 📄 cfg-zipkin.json
-│   │       │   ├── 📄 haproxy.cfg
-│   │       │   └── 📄 ot.cfg
-│   │       ├── 📁 cmp
-│   │       │   ├── 📄 cfg-dd.json
-│   │       │   ├── 📄 cfg-jaeger.yml
-│   │       │   ├── 📄 cfg-zipkin.json
-│   │       │   ├── 📄 haproxy.cfg
-│   │       │   └── 📄 ot.cfg
-│   │       ├── 📁 ctx
-│   │       │   ├── 📄 cfg-dd.json
-│   │       │   ├── 📄 cfg-jaeger.yml
-│   │       │   ├── 📄 cfg-zipkin.json
-│   │       │   ├── 📄 haproxy.cfg
-│   │       │   └── 📄 ot.cfg
-│   │       ├── 📁 empty
-│   │       │   ├── 📄 cfg-dd.json
-│   │       │   ├── 📄 cfg-jaeger.yml
-│   │       │   ├── 📄 cfg-zipkin.json
-│   │       │   ├── 📄 haproxy.cfg
-│   │       │   └── 📄 ot.cfg
-│   │       ├── 📁 fe
-│   │       │   ├── 📄 cfg-dd.json
-│   │       │   ├── 📄 cfg-jaeger.yml
-│   │       │   ├── 📄 cfg-zipkin.json
-│   │       │   ├── 📄 haproxy.cfg
-│   │       │   └── 📄 ot.cfg
-│   │       ├── 📄 func-stat.sh
-│   │       ├── 📄 get-opentracing-plugins.sh
-│   │       ├── 📄 index.html
-│   │       ├── 📄 run-cmp.sh
-│   │       ├── 📄 run-ctx.sh
-│   │       ├── 📄 run-fe-be.sh
-│   │       ├── 📄 run-sa.sh
-│   │       ├── 📁 sa
-│   │       │   ├── 📄 cfg-dd.json
-│   │       │   ├── 📄 cfg-jaeger.yml
-│   │       │   ├── 📄 cfg-zipkin.json
-│   │       │   ├── 📄 haproxy.cfg
-│   │       │   └── 📄 ot.cfg
-│   │       └── 📄 test-speed.sh
-│   ├── 📁 promex
-│   │   ├── 📄 README
-│   │   ├── 📁 include
-│   │   │   └── 📁 promex
-│   │   │       └── 📄 promex.h
-│   │   └── 📄 service-prometheus.c
-│   └── 📁 wurfl
-│       ├── 📁 dummy
-│       │   ├── 📄 Makefile
-│       │   ├── 📄 dummy-wurfl.c
-│       │   └── 📁 wurfl
-│       │       └── 📄 wurfl.h
-│       └── 📄 wurfl.c
-├── 📁 admin
-│   ├── 📁 dyncookie
-│   │   └── 📄 dyncookie.c
-│   ├── 📁 halog
-│   │   ├── 📄 README
-│   │   ├── 📄 fgets2.c
-│   │   └── 📄 halog.c
-│   ├── 📁 iprange
-│   │   ├── 📄 Makefile
-│   │   ├── 📄 ip6range.c
-│   │   └── 📄 iprange.c
-│   ├── 📁 netsnmp-perl
-│   │   ├── 📄 README
-│   │   ├── 📄 cacti_data_query_haproxy_backends.xml
-│   │   ├── 📄 cacti_data_query_haproxy_frontends.xml
-│   │   ├── 📄 haproxy.pl
-│   │   ├── 📄 haproxy_backend.xml
-│   │   ├── 📄 haproxy_frontend.xml
-│   │   └── 📄 haproxy_socket.xml
-│   ├── 📁 release-estimator
-│   │   ├── 📄 README.md
-│   │   ├── 📄 release-estimator.py
-│   │   └── 📄 requirements.txt
-│   ├── 📁 selinux
-│   │   ├── 📄 README
-│   │   ├── 📄 haproxy.fc
-│   │   ├── 📄 haproxy.if
-│   │   └── 📄 haproxy.te
-│   ├── 📁 syntax-highlight
-│   │   └── 📄 haproxy.vim
-│   ├── 📁 systemd
-│   │   ├── 📄 Makefile
-│   │   └── 📄 haproxy.service.in
-│   └── 📁 wireshark-dissectors
-│       └── 📁 peers
-│           ├── 📄 Makefile
-│           ├── 📄 README
-│           ├── 📄 packet-happp.c
-│           └── 📄 wireshark.happp.dissector.patch
-├── 📁 dev
-│   ├── 📁 base64
-│   │   └── 📄 base64rev-gen.c
-│   ├── 📁 coccinelle
-│   │   ├── 📄 bug_on.cocci
-│   │   ├── 📄 cs_endp_flags.cocci
-│   │   ├── 📄 endp_flags.cocci
-│   │   ├── 📄 ha_free.cocci
-│   │   ├── 📄 ist.cocci
-│   │   ├── 📄 realloc_leak.cocci
-│   │   ├── 📄 strcmp.cocci
-│   │   ├── 📄 unchecked-calloc.cocci
-│   │   ├── 📄 unchecked-malloc.cocci
-│   │   ├── 📄 unchecked-strdup.cocci
-│   │   ├── 📄 xalloc_cast.cocci
-│   │   └── 📄 xalloc_size.cocci
-│   ├── 📁 flags
-│   │   ├── 📄 README
-│   │   ├── 📄 flags.c
-│   │   ├── 📄 show-fd-to-flags.sh
-│   │   └── 📄 show-sess-to-flags.sh
-│   ├── 📁 gdb
-│   │   ├── 📄 ebtree.gdb
-│   │   ├── 📄 list.gdb
-│   │   ├── 📄 memprof.dbg
-│   │   ├── 📄 pools.gdb
-│   │   ├── 📄 post-mortem.gdb
-│   │   ├── 📄 proxies.gdb
-│   │   ├── 📄 servers.gdb
-│   │   └── 📄 stream.gdb
-│   ├── 📁 h2
-│   │   ├── 📄 h2-tracer.lua
-│   │   └── 📄 mkhdr.sh
-│   ├── 📁 haring
-│   │   ├── 📄 README
-│   │   └── 📄 haring.c
-│   ├── 📁 hpack
-│   │   ├── 📄 README
-│   │   ├── 📄 decode.c
-│   │   ├── 📄 gen-enc.c
-│   │   └── 📄 gen-rht.c
-│   ├── 📁 ncpu
-│   │   ├── 📄 Makefile
-│   │   └── 📄 ncpu.c
-│   ├── 📁 patchbot
-│   │   ├── 📄 README
-│   │   ├── 📁 prompts
-│   │   │   ├── 📄 prompt14-2.9-airo14-pfx.txt
-│   │   │   ├── 📄 prompt14-2.9-alpaca-pfx.txt
-│   │   │   ├── 📄 prompt14-2.9-alpaca-sfx.txt
-│   │   │   ├── 📄 prompt14-2.9-chatml-pfx.txt
-│   │   │   ├── 📄 prompt14-2.9-chatml-sfx.txt
-│   │   │   ├── 📄 prompt14-2.9-mist7b-sfx.txt
-│   │   │   ├── 📄 prompt15-3.1-mist7bv2-pfx.txt
-│   │   │   ├── 📄 prompt15-3.1-mist7bv2-sfx.txt
-│   │   │   ├── 📄 prompt15-3.2-mist7bv2-pfx.txt
-│   │   │   ├── 📄 prompt15-3.2-mist7bv2-sfx.txt
-│   │   │   ├── 📄 prompt15-3.3-mist7bv2-pfx.txt
-│   │   │   └── 📄 prompt15-3.3-mist7bv2-sfx.txt
-│   │   └── 📁 scripts
-│   │       ├── 📄 post-ai.sh
-│   │       ├── 📄 process-patch-v15.sh
-│   │       ├── 📄 submit-ai.sh
-│   │       └── 📄 update-3.0.sh
-│   ├── 📁 phash
-│   │   └── 📄 phash.c
-│   ├── 📁 plug_qdisc
-│   │   ├── 📄 README
-│   │   └── 📄 plug_qdisc.c
-│   ├── 📁 poll
-│   │   ├── 📄 Makefile
-│   │   └── 📄 poll.c
-│   ├── 📁 qpack
-│   │   └── 📄 decode.c
-│   ├── 📁 sslkeylogger
-│   │   └── 📄 sslkeylogger.lua
-│   ├── 📁 tcploop
-│   │   ├── 📄 Makefile
-│   │   └── 📄 tcploop.c
-│   ├── 📁 term_events
-│   │   └── 📄 term_events.c
-│   ├── 📁 trace
-│   │   └── 📄 trace.awk
-│   └── 📁 udp
-│       └── 📄 udp-perturb.c
-├── 📁 doc
-│   ├── 📄 51Degrees-device-detection.txt
-│   ├── 📄 DeviceAtlas-device-detection.txt
-│   ├── 📄 HAProxyCommunityEdition_60px.png
-│   ├── 📄 SOCKS4.protocol.txt
-│   ├── 📄 SPOE.txt
-│   ├── 📄 WURFL-device-detection.txt
-│   ├── 📄 acl.fig
-│   ├── 📄 coding-style.txt
-│   ├── 📄 configuration.txt
-│   ├── 📄 cookie-options.txt
-│   ├── 📁 design-thoughts
-│   │   ├── 📄 binding-possibilities.txt
-│   │   ├── 📄 connection-reuse.txt
-│   │   ├── 📄 error-reporting.txt
-│   │   ├── 📄 h2-rx-win.fig
-│   │   ├── 📄 http_load_time.url
-│   │   ├── 📄 numa-auto.txt
-│   │   ├── 📄 pool-debugging.txt
-│   │   ├── 📄 ring-v2.txt
-│   │   └── 📄 thread-group.txt
-│   ├── 📄 gpl.txt
-│   ├── 📄 haproxy.1
-│   ├── 📁 internals
-│   │   ├── 📄 acl.txt
-│   │   ├── 📁 api
-│   │   │   ├── 📄 appctx.txt
-│   │   │   ├── 📄 buffer-api.txt
-│   │   │   ├── 📄 buffer-list-api.txt
-│   │   │   ├── 📄 event_hdl.txt
-│   │   │   ├── 📄 filters.txt
-│   │   │   ├── 📄 htx-api.txt
-│   │   │   ├── 📄 initcalls.txt
-│   │   │   ├── 📄 ist.txt
-│   │   │   ├── 📄 layers.txt
-│   │   │   ├── 📄 list.txt
-│   │   │   ├── 📄 memory.txt
-│   │   │   ├── 📄 mt_list.txt
-│   │   │   ├── 📄 pools.txt
-│   │   │   └── 📄 scheduler.txt
-│   │   ├── 📄 body-parsing.txt
-│   │   ├── 📄 connect-status.txt
-│   │   ├── 📄 connection-header.txt
-│   │   ├── 📄 connection-scale.txt
-│   │   ├── 📄 fd-migration.txt
-│   │   ├── 📄 hashing.txt
-│   │   ├── 📄 list.fig
-│   │   ├── 📄 list.png
-│   │   ├── 📄 listener-states.fig
-│   │   ├── 📄 listener-states.png
-│   │   ├── 📄 lua_socket.fig
-│   │   ├── 📄 lua_socket.pdf
-│   │   ├── 📄 muxes.fig
-│   │   ├── 📄 muxes.pdf
-│   │   ├── 📄 muxes.png
-│   │   ├── 📄 muxes.svg
-│   │   ├── 📄 mworker.md
-│   │   ├── 📄 notes-layers.txt
-│   │   ├── 📄 notes-poll-connect.txt
-│   │   ├── 📄 notes-pollhup.txt
-│   │   ├── 📄 notes-polling.txt
-│   │   ├── 📄 pattern.dia
-│   │   ├── 📄 pattern.pdf
-│   │   ├── 📄 polling-states.fig
-│   │   ├── 📄 sched.fig
-│   │   ├── 📄 sched.pdf
-│   │   ├── 📄 sched.png
-│   │   ├── 📄 sched.svg
-│   │   ├── 📄 ssl_cert.dia
-│   │   ├── 📄 stats-v2.txt
-│   │   ├── 📄 stconn-close.txt
-│   │   ├── 📄 stream-sock-states.fig
-│   │   └── 📄 watchdog.txt
-│   ├── 📄 intro.txt
-│   ├── 📄 lgpl.txt
-│   ├── 📄 linux-syn-cookies.txt
-│   ├── 📁 lua-api
-│   │   ├── 📄 Makefile
-│   │   ├── 📁 _static
-│   │   │   ├── 📄 channel.fig
-│   │   │   └── 📄 channel.png
-│   │   ├── 📄 conf.py
-│   │   └── 📄 index.rst
-│   ├── 📄 lua.txt
-│   ├── 📄 management.txt
-│   ├── 📄 netscaler-client-ip-insertion-protocol.txt
-│   ├── 📄 network-namespaces.txt
-│   ├── 📄 peers-v2.0.txt
-│   ├── 📄 peers.txt
-│   ├── 📄 proxy-protocol.txt
-│   ├── 📄 queuing.fig
-│   ├── 📄 regression-testing.txt
-│   └── 📄 seamless_reload.txt
+├── 📄 README.rst
+├── 📁 aiohttp
+│   ├── 📄 __init__.py
+│   ├── 📄 _cookie_helpers.py
+│   ├── 📄 _cparser.pxd
+│   ├── 📄 _find_header.h
+│   ├── 📄 _find_header.pxd
+│   ├── 📄 _http_parser.pyx
+│   ├── 📄 _http_writer.pyx
+│   ├── 📁 _websocket
+│   │   ├── 📄 __init__.py
+│   │   ├── 📄 helpers.py
+│   │   ├── 📄 mask.pxd
+│   │   ├── 📄 mask.pyx
+│   │   ├── 📄 models.py
+│   │   ├── 📄 reader.py
+│   │   ├── 📄 reader_c.pxd
+│   │   ├── 📄 reader_c.py
+│   │   ├── 📄 reader_py.py
+│   │   └── 📄 writer.py
+│   ├── 📄 abc.py
+│   ├── 📄 base_protocol.py
+│   ├── 📄 client.py
+│   ├── 📄 client_exceptions.py
+│   ├── 📄 client_middleware_digest_auth.py
+│   ├── 📄 client_middlewares.py
+│   ├── 📄 client_proto.py
+│   ├── 📄 client_reqrep.py
+│   ├── 📄 client_ws.py
+│   ├── 📄 compression_utils.py
+│   ├── 📄 connector.py
+│   ├── 📄 cookiejar.py
+│   ├── 📄 formdata.py
+│   ├── 📄 hdrs.py
+│   ├── 📄 helpers.py
+│   ├── 📄 http.py
+│   ├── 📄 http_exceptions.py
+│   ├── 📄 http_parser.py
+│   ├── 📄 http_websocket.py
+│   ├── 📄 http_writer.py
+│   ├── 📄 log.py
+│   ├── 📄 multipart.py
+│   ├── 📄 payload.py
+│   ├── 📄 py.typed
+│   ├── 📄 pytest_plugin.py
+│   ├── 📄 resolver.py
+│   ├── 📄 streams.py
+│   ├── 📄 tcp_helpers.py
+│   ├── 📄 test_utils.py
+│   ├── 📄 tracing.py
+│   ├── 📄 typedefs.py
+│   ├── 📄 web.py
+│   ├── 📄 web_app.py
+│   ├── 📄 web_exceptions.py
+│   ├── 📄 web_fileresponse.py
+│   ├── 📄 web_log.py
+│   ├── 📄 web_middlewares.py
+│   ├── 📄 web_protocol.py
+│   ├── 📄 web_request.py
+│   ├── 📄 web_response.py
+│   ├── 📄 web_routedef.py
+│   ├── 📄 web_runner.py
+│   ├── 📄 web_server.py
+│   ├── 📄 web_urldispatcher.py
+│   ├── 📄 web_ws.py
+│   └── 📄 worker.py
+├── 📁 docs
+│   ├── 📄 Makefile
+│   ├── 📁 _static
+│   │   ├── 📁 css
+│   │   │   └── 📄 logo-adjustments.css
+│   │   └── 📁 img
+│   │       ├── 📄 contributing-cov-comment.svg
+│   │       ├── 📄 contributing-cov-header.svg
+│   │       ├── 📄 contributing-cov-miss.svg
+│   │       └── 📄 contributing-cov-partial.svg
+│   ├── 📄 abc.rst
+│   ├── 📄 aiohttp-icon.svg
+│   ├── 📄 aiohttp-plain.svg
+│   ├── 📄 built_with.rst
+│   ├── 📄 changes.rst
+│   ├── 📄 client.rst
+│   ├── 📄 client_advanced.rst
+│   ├── 📄 client_middleware_cookbook.rst
+│   ├── 📄 client_quickstart.rst
+│   ├── 📄 client_reference.rst
+│   ├── 📁 code
+│   │   └── 📄 client_middleware_cookbook.py
+│   ├── 📄 conf.py
+│   ├── 📄 contributing-admins.rst
+│   ├── 📄 contributing.rst
+│   ├── 📄 deployment.rst
+│   ├── 📄 essays.rst
+│   ├── 📄 external.rst
+│   ├── 📄 faq.rst
+│   ├── 📄 favicon.ico
+│   ├── 📄 glossary.rst
+│   ├── 📄 http_request_lifecycle.rst
+│   ├── 📄 index.rst
+│   ├── 📄 logging.rst
+│   ├── 📄 make.bat
+│   ├── 📄 migration_to_2xx.rst
+│   ├── 📄 misc.rst
+│   ├── 📄 multipart.rst
+│   ├── 📄 multipart_reference.rst
+│   ├── 📄 new_router.rst
+│   ├── 📄 old-logo.png
+│   ├── 📄 old-logo.svg
+│   ├── 📄 powered_by.rst
+│   ├── 📄 spelling_wordlist.txt
+│   ├── 📄 streams.rst
+│   ├── 📄 structures.rst
+│   ├── 📄 testing.rst
+│   ├── 📄 third_party.rst
+│   ├── 📄 tracing_reference.rst
+│   ├── 📄 utilities.rst
+│   ├── 📄 web.rst
+│   ├── 📄 web_advanced.rst
+│   ├── 📄 web_exceptions.rst
+│   ├── 📄 web_lowlevel.rst
+│   ├── 📄 web_quickstart.rst
+│   ├── 📄 web_reference.rst
+│   ├── 📄 websocket_utilities.rst
+│   ├── 📄 whats_new_1_1.rst
+│   └── 📄 whats_new_3_0.rst
 ├── 📁 examples
-│   ├── 📄 basic-config-edge.cfg
-│   ├── 📄 content-sw-sample.cfg
-│   ├── 📁 errorfiles
-│   │   ├── 📄 400.http
-│   │   ├── 📄 403.http
-│   │   ├── 📄 408.http
-│   │   ├── 📄 500.http
-│   │   ├── 📄 502.http
-│   │   ├── 📄 503.http
-│   │   ├── 📄 504.http
-│   │   └── 📄 README
-│   ├── 📄 games.cfg
-│   ├── 📄 haproxy.init
-│   ├── 📁 lua
-│   │   ├── 📄 README
-│   │   ├── 📄 event_handler.lua
-│   │   ├── 📄 mailers.lua
-│   │   └── 📄 trisdemo.lua
-│   ├── 📄 mptcp-backend.py
-│   ├── 📄 mptcp.cfg
-│   ├── 📄 option-http_proxy.cfg
-│   ├── 📄 quick-test.cfg
-│   ├── 📄 socks4.cfg
-│   ├── 📄 traces.cfg
-│   ├── 📄 transparent_proxy.cfg
-│   └── 📄 wurfl-example.cfg
-├── 📁 include
-│   ├── 📁 haproxy
-│   │   ├── 📄 acl-t.h
-│   │   ├── 📄 acl.h
-│   │   ├── 📄 acme-t.h
-│   │   ├── 📄 acme.h
-│   │   ├── 📄 action-t.h
-│   │   ├── 📄 action.h
-│   │   ├── 📄 activity-t.h
-│   │   ├── 📄 activity.h
-│   │   ├── 📄 api-t.h
-│   │   ├── 📄 api.h
-│   │   ├── 📄 applet-t.h
-│   │   ├── 📄 applet.h
-│   │   ├── 📄 arg-t.h
-│   │   ├── 📄 arg.h
-│   │   ├── 📄 atomic.h
-│   │   ├── 📄 auth-t.h
-│   │   ├── 📄 auth.h
-│   │   ├── 📄 backend-t.h
-│   │   ├── 📄 backend.h
-│   │   ├── 📄 base64.h
-│   │   ├── 📄 buf-t.h
-│   │   ├── 📄 buf.h
-│   │   ├── 📄 bug.h
-│   │   ├── 📄 capture-t.h
-│   │   ├── 📄 capture.h
-│   │   ├── 📄 cfgcond-t.h
-│   │   ├── 📄 cfgcond.h
-│   │   ├── 📄 cfgdiag.h
-│   │   ├── 📄 cfgparse.h
-│   │   ├── 📄 channel-t.h
-│   │   ├── 📄 channel.h
-│   │   ├── 📄 check-t.h
-│   │   ├── 📄 check.h
-│   │   ├── 📄 chunk.h
-│   │   ├── 📄 cli-t.h
-│   │   ├── 📄 cli.h
-│   │   ├── 📄 clock.h
-│   │   ├── 📄 compat.h
-│   │   ├── 📄 compiler.h
-│   │   ├── 📄 compression-t.h
-│   │   ├── 📄 compression.h
-│   │   ├── 📄 connection-t.h
-│   │   ├── 📄 connection.h
-│   │   ├── 📄 counters-t.h
-│   │   ├── 📄 counters.h
-│   │   ├── 📄 cpu_topo-t.h
-│   │   ├── 📄 cpu_topo.h
-│   │   ├── 📄 cpuset-t.h
-│   │   ├── 📄 cpuset.h
-│   │   ├── 📄 debug.h
-│   │   ├── 📄 defaults.h
-│   │   ├── 📄 dgram-t.h
-│   │   ├── 📄 dgram.h
-│   │   ├── 📄 dict-t.h
-│   │   ├── 📄 dict.h
-│   │   ├── 📄 dns-t.h
-│   │   ├── 📄 dns.h
-│   │   ├── 📄 dns_ring-t.h
-│   │   ├── 📄 dns_ring.h
-│   │   ├── 📄 dynbuf-t.h
-│   │   ├── 📄 dynbuf.h
-│   │   ├── 📄 errors.h
-│   │   ├── 📄 event_hdl-t.h
-│   │   ├── 📄 event_hdl.h
-│   │   ├── 📄 extcheck.h
-│   │   ├── 📄 fcgi-app-t.h
-│   │   ├── 📄 fcgi-app.h
-│   │   ├── 📄 fcgi.h
-│   │   ├── 📄 fd-t.h
-│   │   ├── 📄 fd.h
-│   │   ├── 📄 filters-t.h
-│   │   ├── 📄 filters.h
-│   │   ├── 📄 fix-t.h
-│   │   ├── 📄 fix.h
-│   │   ├── 📄 flt_http_comp.h
-│   │   ├── 📄 freq_ctr-t.h
-│   │   ├── 📄 freq_ctr.h
-│   │   ├── 📄 frontend.h
-│   │   ├── 📄 global-t.h
-│   │   ├── 📄 global.h
-│   │   ├── 📄 guid-t.h
-│   │   ├── 📄 guid.h
-│   │   ├── 📄 h1.h
-│   │   ├── 📄 h1_htx.h
-│   │   ├── 📄 h2.h
-│   │   ├── 📄 h3.h
-│   │   ├── 📄 h3_stats-t.h
-│   │   ├── 📄 h3_stats.h
-│   │   ├── 📄 hash.h
-│   │   ├── 📄 hlua-t.h
-│   │   ├── 📄 hlua.h
-│   │   ├── 📄 hlua_fcn.h
-│   │   ├── 📄 hpack-dec.h
-│   │   ├── 📄 hpack-enc.h
-│   │   ├── 📄 hpack-huff.h
-│   │   ├── 📄 hpack-tbl-t.h
-│   │   ├── 📄 hpack-tbl.h
-│   │   ├── 📄 hq_interop.h
-│   │   ├── 📄 http-hdr-t.h
-│   │   ├── 📄 http-hdr.h
-│   │   ├── 📄 http-t.h
-│   │   ├── 📄 http.h
-│   │   ├── 📄 http_ana-t.h
-│   │   ├── 📄 http_ana.h
-│   │   ├── 📄 http_client-t.h
-│   │   ├── 📄 http_client.h
-│   │   ├── 📄 http_ext-t.h
-│   │   ├── 📄 http_ext.h
-│   │   ├── 📄 http_fetch.h
-│   │   ├── 📄 http_htx-t.h
-│   │   ├── 📄 http_htx.h
-│   │   ├── 📄 http_rules.h
-│   │   ├── 📄 htx-t.h
-│   │   ├── 📄 htx.h
-│   │   ├── 📄 init-t.h
-│   │   ├── 📄 init.h
-│   │   ├── 📄 initcall.h
-│   │   ├── 📄 intops.h
-│   │   ├── 📄 istbuf.h
-│   │   ├── 📄 jws.h
-│   │   ├── 📄 jwt-t.h
-│   │   ├── 📄 jwt.h
-│   │   ├── 📄 lb_chash-t.h
-│   │   ├── 📄 lb_chash.h
-│   │   ├── 📄 lb_fas-t.h
-│   │   ├── 📄 lb_fas.h
-│   │   ├── 📄 lb_fwlc-t.h
-│   │   ├── 📄 lb_fwlc.h
-│   │   ├── 📄 lb_fwrr-t.h
-│   │   ├── 📄 lb_fwrr.h
-│   │   ├── 📄 lb_map-t.h
-│   │   ├── 📄 lb_map.h
-│   │   ├── 📄 lb_ss-t.h
-│   │   ├── 📄 lb_ss.h
-│   │   ├── 📄 limits.h
-│   │   ├── 📄 linuxcap.h
-│   │   ├── 📄 list-t.h
-│   │   ├── 📄 list.h
-│   │   ├── 📄 listener-t.h
-│   │   ├── 📄 listener.h
-│   │   ├── 📄 log-t.h
-│   │   ├── 📄 log.h
-│   │   ├── 📄 mailers-t.h
-│   │   ├── 📄 mailers.h
-│   │   ├── 📄 map-t.h
-│   │   ├── 📄 map.h
-│   │   ├── 📄 mqtt-t.h
-│   │   ├── 📄 mqtt.h
-│   │   ├── 📄 mux_fcgi-t.h
-│   │   ├── 📄 mux_h1-t.h
-│   │   ├── 📄 mux_h2-t.h
-│   │   ├── 📄 mux_quic-t.h
-│   │   ├── 📄 mux_quic.h
-│   │   ├── 📄 mux_spop-t.h
-│   │   ├── 📄 mworker-t.h
-│   │   ├── 📄 mworker.h
-│   │   ├── 📄 namespace-t.h
-│   │   ├── 📄 namespace.h
-│   │   ├── 📄 ncbuf-t.h
-│   │   ├── 📄 ncbuf.h
-│   │   ├── 📄 net_helper.h
-│   │   ├── 📄 obj_type-t.h
-│   │   ├── 📄 obj_type.h
-│   │   ├── 📄 openssl-compat.h
-│   │   ├── 📄 pattern-t.h
-│   │   ├── 📄 pattern.h
-│   │   ├── 📄 payload.h
-│   │   ├── 📄 peers-t.h
-│   │   ├── 📄 peers.h
-│   │   ├── 📄 pipe-t.h
-│   │   ├── 📄 pipe.h
-│   │   ├── 📄 pool-os.h
-│   │   ├── 📄 pool-t.h
-│   │   ├── 📄 pool.h
-│   │   ├── 📄 port_range-t.h
-│   │   ├── 📄 port_range.h
-│   │   ├── 📄 proto_quic.h
-│   │   ├── 📄 proto_rhttp-t.h
-│   │   ├── 📄 proto_rhttp.h
-│   │   ├── 📄 proto_sockpair.h
-│   │   ├── 📄 proto_tcp.h
-│   │   ├── 📄 proto_udp.h
-│   │   ├── 📄 proto_uxst.h
-│   │   ├── 📄 protobuf-t.h
-│   │   ├── 📄 protobuf.h
-│   │   ├── 📄 protocol-t.h
-│   │   ├── 📄 protocol.h
-│   │   ├── 📄 proxy-t.h
-│   │   ├── 📄 proxy.h
-│   │   ├── 📄 qmux_http.h
-│   │   ├── 📄 qmux_trace.h
-│   │   ├── 📄 qpack-dec.h
-│   │   ├── 📄 qpack-enc.h
-│   │   ├── 📄 qpack-t.h
-│   │   ├── 📄 qpack-tbl-t.h
-│   │   ├── 📄 qpack-tbl.h
-│   │   ├── 📄 queue-t.h
-│   │   ├── 📄 queue.h
-│   │   ├── 📄 quic_ack-t.h
-│   │   ├── 📄 quic_ack.h
-│   │   ├── 📄 quic_cc-t.h
-│   │   ├── 📄 quic_cc.h
-│   │   ├── 📄 quic_cc_drs.h
-│   │   ├── 📄 quic_cc_hystart.h
-│   │   ├── 📄 quic_cid-t.h
-│   │   ├── 📄 quic_cid.h
-│   │   ├── 📄 quic_cli-t.h
-│   │   ├── 📄 quic_conn-t.h
-│   │   ├── 📄 quic_conn.h
-│   │   ├── 📄 quic_enc.h
-│   │   ├── 📄 quic_fctl-t.h
-│   │   ├── 📄 quic_fctl.h
-│   │   ├── 📄 quic_frame-t.h
-│   │   ├── 📄 quic_frame.h
-│   │   ├── 📄 quic_loss-t.h
-│   │   ├── 📄 quic_loss.h
-│   │   ├── 📄 quic_openssl_compat-t.h
-│   │   ├── 📄 quic_openssl_compat.h
-│   │   ├── 📄 quic_pacing-t.h
-│   │   ├── 📄 quic_pacing.h
-│   │   ├── 📄 quic_retransmit.h
-│   │   ├── 📄 quic_retry.h
-│   │   ├── 📄 quic_rules.h
-│   │   ├── 📄 quic_rx-t.h
-│   │   ├── 📄 quic_rx.h
-│   │   ├── 📄 quic_sock-t.h
-│   │   ├── 📄 quic_sock.h
-│   │   ├── 📄 quic_ssl-t.h
-│   │   ├── 📄 quic_ssl.h
-│   │   ├── 📄 quic_stats-t.h
-│   │   ├── 📄 quic_stats.h
-│   │   ├── 📄 quic_stream-t.h
-│   │   ├── 📄 quic_stream.h
-│   │   ├── 📄 quic_tls-t.h
-│   │   ├── 📄 quic_tls.h
-│   │   ├── 📄 quic_token.h
-│   │   ├── 📄 quic_tp-t.h
-│   │   ├── 📄 quic_tp.h
-│   │   ├── 📄 quic_trace-t.h
-│   │   ├── 📄 quic_trace.h
-│   │   ├── 📄 quic_tune-t.h
-│   │   ├── 📄 quic_tune.h
-│   │   ├── 📄 quic_tx-t.h
-│   │   ├── 📄 quic_tx.h
-│   │   ├── 📄 quic_utils-t.h
-│   │   ├── 📄 quic_utils.h
-│   │   ├── 📄 receiver-t.h
-│   │   ├── 📄 regex-t.h
-│   │   ├── 📄 regex.h
-│   │   ├── 📄 resolvers-t.h
-│   │   ├── 📄 resolvers.h
-│   │   ├── 📄 ring-t.h
-│   │   ├── 📄 ring.h
-│   │   ├── 📄 sample-t.h
-│   │   ├── 📄 sample.h
-│   │   ├── 📄 sample_data-t.h
-│   │   ├── 📄 sc_strm.h
-│   │   ├── 📄 server-t.h
-│   │   ├── 📄 server.h
-│   │   ├── 📄 session-t.h
-│   │   ├── 📄 session.h
-│   │   ├── 📄 shctx-t.h
-│   │   ├── 📄 shctx.h
-│   │   ├── 📄 show_flags-t.h
-│   │   ├── 📄 signal-t.h
-│   │   ├── 📄 signal.h
-│   │   ├── 📄 sink-t.h
-│   │   ├── 📄 sink.h
-│   │   ├── 📄 sock-t.h
-│   │   ├── 📄 sock.h
-│   │   ├── 📄 sock_inet.h
-│   │   ├── 📄 sock_unix.h
-│   │   ├── 📄 spoe-t.h
-│   │   ├── 📄 spoe.h
-│   │   ├── 📄 ssl_ckch-t.h
-│   │   ├── 📄 ssl_ckch.h
-│   │   ├── 📄 ssl_crtlist-t.h
-│   │   ├── 📄 ssl_crtlist.h
-│   │   ├── 📄 ssl_gencert.h
-│   │   ├── 📄 ssl_ocsp-t.h
-│   │   ├── 📄 ssl_ocsp.h
-│   │   ├── 📄 ssl_sock-t.h
-│   │   ├── 📄 ssl_sock.h
-│   │   ├── 📄 ssl_trace.h
-│   │   ├── 📄 ssl_utils.h
-│   │   ├── 📄 stats-file-t.h
-│   │   ├── 📄 stats-file.h
-│   │   ├── 📄 stats-html-t.h
-│   │   ├── 📄 stats-html.h
-│   │   ├── 📄 stats-json.h
-│   │   ├── 📄 stats-proxy.h
-│   │   ├── 📄 stats-t.h
-│   │   ├── 📄 stats.h
-│   │   ├── 📄 stconn-t.h
-│   │   ├── 📄 stconn.h
-│   │   ├── 📄 stick_table-t.h
-│   │   ├── 📄 stick_table.h
-│   │   ├── 📄 stream-t.h
-│   │   ├── 📄 stream.h
-│   │   ├── 📄 stress.h
-│   │   ├── 📄 systemd.h
-│   │   ├── 📄 task-t.h
-│   │   ├── 📄 task.h
-│   │   ├── 📄 tcp_rules.h
-│   │   ├── 📄 tcpcheck-t.h
-│   │   ├── 📄 tcpcheck.h
-│   │   ├── 📄 thread-t.h
-│   │   ├── 📄 thread.h
-│   │   ├── 📄 ticks.h
-│   │   ├── 📄 time-t.h
-│   │   ├── 📄 time.h
-│   │   ├── 📄 timeshift.h
-│   │   ├── 📄 tinfo-t.h
-│   │   ├── 📄 tinfo.h
-│   │   ├── 📄 tools-t.h
-│   │   ├── 📄 tools.h
-│   │   ├── 📄 trace-t.h
-│   │   ├── 📄 trace.h
-│   │   ├── 📄 uri_auth-t.h
-│   │   ├── 📄 uri_auth.h
-│   │   ├── 📄 uri_normalizer-t.h
-│   │   ├── 📄 uri_normalizer.h
-│   │   ├── 📄 vars-t.h
-│   │   ├── 📄 vars.h
-│   │   ├── 📄 vecpair.h
-│   │   ├── 📄 version.h
-│   │   ├── 📄 window_filter.h
-│   │   ├── 📄 xref-t.h
-│   │   ├── 📄 xref.h
-│   │   └── 📄 xxhash.h
-│   ├── 📁 import
-│   │   ├── 📄 atomic-ops.h
-│   │   ├── 📄 cebtree-prv.h
-│   │   ├── 📄 cebtree.h
-│   │   ├── 📄 cebu32_tree.h
-│   │   ├── 📄 cebu64_tree.h
-│   │   ├── 📄 cebua_tree.h
-│   │   ├── 📄 cebub_tree.h
-│   │   ├── 📄 cebuib_tree.h
-│   │   ├── 📄 cebuis_tree.h
-│   │   ├── 📄 cebul_tree.h
-│   │   ├── 📄 cebus_tree.h
-│   │   ├── 📄 eb32sctree.h
-│   │   ├── 📄 eb32tree.h
-│   │   ├── 📄 eb64tree.h
-│   │   ├── 📄 ebimtree.h
-│   │   ├── 📄 ebistree.h
-│   │   ├── 📄 ebmbtree.h
-│   │   ├── 📄 ebpttree.h
-│   │   ├── 📄 ebsttree.h
-│   │   ├── 📄 ebtree-t.h
-│   │   ├── 📄 ebtree.h
-│   │   ├── 📄 ist.h
-│   │   ├── 📄 lru.h
-│   │   ├── 📄 mjson.h
-│   │   ├── 📄 mt_list.h
-│   │   ├── 📄 plock.h
-│   │   ├── 📄 sha1.h
-│   │   ├── 📄 slz-tables.h
-│   │   ├── 📄 slz.h
-│   │   └── 📄 xxhash.h
-│   └── 📁 make
-│       ├── 📄 compiler.mk
-│       ├── 📄 errors.mk
-│       ├── 📄 options.mk
-│       └── 📄 verbose.mk
-├── 📁 reg-tests
-│   ├── 📄 README
-│   ├── 📁 balance
-│   │   ├── 📄 balance-hash-maxconn.vtc
-│   │   ├── 📄 balance-hash-maxqueue.vtc
-│   │   ├── 📄 balance-rr.vtc
-│   │   ├── 📄 balance-uri-path-only.vtc
-│   │   └── 📄 balance-uri.vtc
-│   ├── 📁 cache
-│   │   ├── 📄 basic.vtc
-│   │   ├── 📄 caching_rules.vtc
-│   │   ├── 📄 expires.vtc
-│   │   ├── 📄 if-modified-since.vtc
-│   │   ├── 📄 if-none-match.vtc
-│   │   ├── 📄 post_on_entry.vtc
-│   │   ├── 📄 sample_fetches.vtc
-│   │   ├── 📄 vary.vtc
-│   │   └── 📄 vary_accept_encoding.vtc
-│   ├── 📁 checks
-│   │   ├── 📄 1be_40srv_odd_health_checks.vtc
-│   │   ├── 📄 40be_2srv_odd_health_checks.vtc
-│   │   ├── 📄 4be_1srv_health_checks.vtc
-│   │   ├── 📄 4be_1srv_smtpchk_httpchk_layer47errors.vtc
-│   │   ├── 📄 agent-check.vtc
-│   │   ├── 📄 common.pem
-│   │   ├── 📄 http-check-expect.vtc
-│   │   ├── 📄 http-check-send.vtc
-│   │   ├── 📄 http-check.vtc
-│   │   ├── 📄 http-monitor-uri.vtc
-│   │   ├── 📄 ldap-check.vtc
-│   │   ├── 📄 mysql-check.vtc
-│   │   ├── 📄 pgsql-check.vtc
-│   │   ├── 📄 redis-check.vtc
-│   │   ├── 📄 smtp-check.vtc
-│   │   ├── 📄 spop-check.vtc
-│   │   ├── 📄 ssl-hello-check.vtc
-│   │   ├── 📄 tcp-check-client-hello.vtc
-│   │   ├── 📄 tcp-check-ssl.vtc
-│   │   ├── 📄 tcp-check_min-recv.vtc
-│   │   ├── 📄 tcp-check_multiple_ports.vtc
-│   │   ├── 📄 tcp-checks-socks4.vtc
-│   │   └── 📄 tls_health_checks.vtc
-│   ├── 📁 compression
-│   │   ├── 📄 basic.vtc
-│   │   ├── 📄 common.pem
-│   │   ├── 📄 etags_conversion.vtc
-│   │   ├── 📄 lua_validation.lua
-│   │   ├── 📄 lua_validation.vtc
-│   │   ├── 📄 min_size.vtc
-│   │   └── 📄 vary.vtc
-│   ├── 📁 connection
-│   │   ├── 📄 ca-auth.crt
-│   │   ├── 📄 cli_src_dst.vtc
-│   │   ├── 📄 client1.pem
-│   │   ├── 📄 common.pem
-│   │   ├── 📄 dispatch.vtc
-│   │   ├── 📄 h2_glitches.vtc
-│   │   ├── 📄 http_reuse_aggressive.vtc
-│   │   ├── 📄 http_reuse_always.vtc
-│   │   ├── 📄 http_reuse_be_transparent.vtc
-│   │   ├── 📄 http_reuse_conn_hash.vtc
-│   │   ├── 📄 http_reuse_dispatch.vtc
-│   │   ├── 📄 http_reuse_never.vtc
-│   │   ├── 📄 http_reuse_safe.vtc
-│   │   ├── 📄 proxy_protocol_random_fail.vtc
-│   │   ├── 📄 proxy_protocol_send_generic.vtc
-│   │   ├── 📄 proxy_protocol_send_unique_id.vtc
-│   │   ├── 📄 proxy_protocol_send_unique_id_alpn.vtc
-│   │   ├── 📄 proxy_protocol_tlv_validation.vtc
-│   │   ├── 📄 reverse_connect_full.vtc
-│   │   ├── 📄 reverse_server.vtc
-│   │   ├── 📄 reverse_server_name.vtc
-│   │   ├── 📄 tcp_md5_signature.vtc
-│   │   └── 📄 tcp_to_http_upgrade.vtc
-│   ├── 📁 contrib
-│   │   └── 📄 prometheus.vtc
-│   ├── 📁 converter
-│   │   ├── 📄 add_item.vtc
-│   │   ├── 📄 be2dec.vtc
-│   │   ├── 📄 be2hex.vtc
-│   │   ├── 📄 bytes.vtc
-│   │   ├── 📄 digest.vtc
-│   │   ├── 📄 field.vtc
-│   │   ├── 📄 fix.vtc
-│   │   ├── 📄 hmac.vtc
-│   │   ├── 📄 iif.vtc
-│   │   ├── 📄 json.vtc
-│   │   ├── 📄 json_query.vtc
-│   │   ├── 📄 le2dec.vtc
-│   │   ├── 📄 mqtt.vtc
-│   │   ├── 📄 param.vtc
-│   │   ├── 📄 secure_memcmp.vtc
-│   │   ├── 📄 sha2.vtc
-│   │   ├── 📄 url_dec.vtc
-│   │   ├── 📄 url_enc.vtc
-│   │   └── 📄 word.vtc
-│   ├── 📁 filters
-│   │   └── 📄 random-forwarding.vtc
-│   ├── 📁 http-capture
-│   │   └── 📄 multiple_headers.vtc
-│   ├── 📁 http-cookies
-│   │   ├── 📄 cookie_insert_indirect.vtc
-│   │   └── 📄 h2_cookie_concat.vtc
-│   ├── 📁 http-errorfiles
-│   │   ├── 📄 errorfiles.vtc
-│   │   ├── 📁 errors
-│   │   │   ├── 📄 400-1.http
-│   │   │   ├── 📄 400-2.http
-│   │   │   ├── 📄 400-3.http
-│   │   │   ├── 📄 400.http
-│   │   │   ├── 📄 403-1.http
-│   │   │   ├── 📄 403-2.http
-│   │   │   ├── 📄 403.http
-│   │   │   ├── 📄 404-1.http
-│   │   │   ├── 📄 404-2.http
-│   │   │   ├── 📄 404-3.http
-│   │   │   ├── 📄 404.http
-│   │   │   ├── 📄 500-1.http
-│   │   │   ├── 📄 500.http
-│   │   │   └── 📄 lf-403.txt
-│   │   ├── 📄 http-error.vtc
-│   │   ├── 📄 http_deny_errors.vtc
-│   │   ├── 📄 http_errors.vtc
-│   │   └── 📄 http_return.vtc
-│   ├── 📁 http-messaging
-│   │   ├── 📄 common.pem
-│   │   ├── 📄 h1_host_normalization.vtc
-│   │   ├── 📄 h1_request_target_validation.vtc
-│   │   ├── 📄 h1_to_h1.vtc
-│   │   ├── 📄 h2_desync_attacks.vtc
-│   │   ├── 📄 h2_to_h1.vtc
-│   │   ├── 📄 http_abortonclose.vtc
-│   │   ├── 📄 http_bodyless_response.vtc
-│   │   ├── 📄 http_bodyless_spliced_response.vtc
-│   │   ├── 📄 http_request_buffer.vtc
-│   │   ├── 📄 http_splicing.vtc
-│   │   ├── 📄 http_splicing_chunk.vtc
-│   │   ├── 📄 http_transfer_encoding.vtc
-│   │   ├── 📄 http_wait_for_body.vtc
-│   │   ├── 📄 protocol_upgrade.vtc
-│   │   ├── 📄 scheme_based_normalize.vtc
-│   │   ├── 📄 srv_ws.vtc
-│   │   ├── 📄 truncated.vtc
-│   │   └── 📄 websocket.vtc
-│   ├── 📁 http-rules
-│   │   ├── 📄 1k.txt
-│   │   ├── 📄 acl_cli_spaces.vtc
-│   │   ├── 📄 agents.acl
-│   │   ├── 📄 converters_ipmask_concat_strcmp_field_word.map
-│   │   ├── 📄 converters_ipmask_concat_strcmp_field_word.vtc
-│   │   ├── 📄 default_rules.vtc
-│   │   ├── 📄 del_header.vtc
-│   │   ├── 📄 except-forwardfor-originalto.vtc
-│   │   ├── 📄 forwarded-header-7239.vtc
-│   │   ├── 📄 h1or2_to_h1c.vtc
-│   │   ├── 📄 http-err-fail.vtc
-│   │   ├── 📄 http_after_response.vtc
-│   │   ├── 📄 http_return.vtc
-│   │   ├── 📄 ifnone-forwardfor.vtc
-│   │   ├── 📄 lf-file.txt
-│   │   ├── 📄 map_ordering.map
-│   │   ├── 📄 map_ordering.vtc
-│   │   ├── 📄 map_redirect-be.map
-│   │   ├── 📄 map_redirect.map
-│   │   ├── 📄 map_redirect.vtc
-│   │   ├── 📄 map_regm_with_backref.map
-│   │   ├── 📄 map_regm_with_backref.vtc
-│   │   ├── 📄 normalize_uri.vtc
-│   │   ├── 📄 path_and_pathq.vtc
-│   │   ├── 📄 restrict_req_hdr_names.vtc
-│   │   └── 📄 strict_rw_mode.vtc
-│   ├── 📁 http-set-timeout
-│   │   └── 📄 set_timeout.vtc
-│   ├── 📁 jwt
-│   │   ├── 📄 build_token.py
-│   │   ├── 📄 cert.ecdsa.pem
-│   │   ├── 📄 cert.rsa.pem
-│   │   ├── 📄 es256-public.pem
-│   │   ├── 📄 es384-public.pem
-│   │   ├── 📄 es512-public.pem
-│   │   ├── 📄 jws_verify.vtc
-│   │   └── 📄 rsa-public.pem
-│   ├── 📁 log
-│   │   ├── 📄 last_rule.vtc
-│   │   ├── 📄 load_balancing.vtc
-│   │   ├── 📄 log_backend.vtc
-│   │   ├── 📄 log_forward.vtc
-│   │   ├── 📄 log_profiles.vtc
-│   │   ├── 📄 log_uri.vtc
-│   │   └── 📄 wrong_ip_port_logging.vtc
-│   ├── 📁 lua
-│   │   ├── 📄 bad_http_clt_req_duration.lua
-│   │   ├── 📄 bad_http_clt_req_duration.vtc
-│   │   ├── 📄 close_wait_lf.lua
-│   │   ├── 📄 close_wait_lf.vtc
-│   │   ├── 📄 common.pem
-│   │   ├── 📄 h_txn_get_priv.lua
-│   │   ├── 📄 h_txn_get_priv.vtc
-│   │   ├── 📄 httpclient_action.lua
-│   │   ├── 📄 httpclient_action.vtc
-│   │   ├── 📄 lua_httpclient.lua
-│   │   ├── 📄 lua_httpclient.vtc
-│   │   ├── 📄 lua_socket.lua
-│   │   ├── 📄 lua_socket.vtc
-│   │   ├── 📄 set_var.lua
-│   │   ├── 📄 set_var.vtc
-│   │   ├── 📄 txn_get_priv-print_r.lua
-│   │   ├── 📄 txn_get_priv-thread.vtc
-│   │   ├── 📄 txn_get_priv.lua
-│   │   ├── 📄 txn_get_priv.vtc
-│   │   ├── 📄 wrong_types_usage.lua
-│   │   └── 📄 wrong_types_usage.vtc
-│   ├── 📁 mailers
-│   │   ├── 📄 healthcheckmail.lua
-│   │   ├── 📄 healthcheckmail.vtc
-│   │   └── 📄 mailers.lua
-│   ├── 📁 mcli
-│   │   ├── 📄 mcli_debug_dev.vtc
-│   │   └── 📄 mcli_show_info.vtc
-│   ├── 📁 peers
-│   │   ├── 📄 basic_sync.vtc
-│   │   ├── 📄 basic_sync_wo_stkt_backend.vtc
-│   │   ├── 📄 common.pem
-│   │   ├── 📄 tls_basic_sync.vtc
-│   │   └── 📄 tls_basic_sync_wo_stkt_backend.vtc
-│   ├── 📁 pki
-│   │   ├── 📄 README
-│   │   ├── 📁 certificates
-│   │   │   ├── 📄 www.test1.com-csr.json
-│   │   │   ├── 📄 www.test1.com-key.pem
-│   │   │   ├── 📄 www.test1.com.csr
-│   │   │   └── 📄 www.test1.com.pem
-│   │   ├── 📄 config.json
-│   │   ├── 📁 intermediate
-│   │   │   ├── 📄 intermediate-ca-key.pem
-│   │   │   ├── 📄 intermediate-ca.csr
-│   │   │   ├── 📄 intermediate-ca.pem
-│   │   │   └── 📄 intermediate-csr.json
-│   │   └── 📁 root
-│   │       ├── 📄 root-ca-key.pem
-│   │       ├── 📄 root-ca.csr
-│   │       ├── 📄 root-ca.pem
-│   │       └── 📄 root-csr.json
-│   ├── 📁 quic
-│   │   ├── 📄 common.pem
-│   │   └── 📄 retry.vtc
-│   ├── 📁 sample_fetches
-│   │   ├── 📄 acl.vtc
-│   │   ├── 📄 cond_set_var.vtc
-│   │   ├── 📄 cook.vtc
-│   │   ├── 📄 hashes.vtc
-│   │   ├── 📄 so_name.vtc
-│   │   ├── 📄 srv_name.vtc
-│   │   ├── 📄 tcpinfo_rtt.vtc
-│   │   ├── 📄 tlvs.vtc
-│   │   ├── 📄 ubase64.vtc
-│   │   └── 📄 vars.vtc
-│   ├── 📁 seamless-reload
-│   │   └── 📄 abns_socket.vtc
-│   ├── 📁 server
-│   │   ├── 📄 abnsz.vtc
-│   │   ├── 📄 cli_add_check_server.vtc
-│   │   ├── 📄 cli_add_server.vtc
-│   │   ├── 📄 cli_add_ssl_server.vtc
-│   │   ├── 📄 cli_add_track_server.vtc
-│   │   ├── 📄 cli_delete_dynamic_server.vtc
-│   │   ├── 📄 cli_delete_server.vtc
-│   │   ├── 📄 cli_set_fqdn.vtc
-│   │   ├── 📄 cli_set_ssl.vtc
-│   │   ├── 📄 common.pem
-│   │   └── 📄 get_srv_stats.lua
-│   ├── 📁 spoe
-│   │   └── 📄 wrong_init.vtc
-│   ├── 📁 ssl
-│   │   ├── 📄 README
-│   │   ├── 📄 add_ssl_crt-list.vtc
-│   │   ├── 📄 bug-2265.crt
-│   │   ├── 📄 ca-auth.crt
-│   │   ├── 📄 cert1-example.com.pem.ecdsa
-│   │   ├── 📄 cert1-example.com.pem.rsa
-│   │   ├── 📄 cert2-example.com.pem.ecdsa
-│   │   ├── 📄 cert2-example.com.pem.rsa
-│   │   ├── 📄 client.ecdsa.pem
-│   │   ├── 📄 client1.pem
-│   │   ├── 📄 client2_expired.pem
-│   │   ├── 📄 client3_revoked.pem
-│   │   ├── 📄 common.4096.dh
-│   │   ├── 📄 common.crt
-│   │   ├── 📄 common.key
-│   │   ├── 📄 common.pem
-│   │   ├── 📄 crl-auth.pem
-│   │   ├── 📄 crt_store.vtc
-│   │   ├── 📄 del_ssl_crt-list.vtc
-│   │   ├── 📄 dynamic_server_ssl.vtc
-│   │   ├── 📄 ecdsa.crt
-│   │   ├── 📄 ecdsa.key
-│   │   ├── 📄 ecdsa.pem
-│   │   ├── 📄 filters.crt-list
-│   │   ├── 📁 generate_certificates
-│   │   │   ├── 📄 gen_cert_ca.pem
-│   │   │   └── 📄 gen_cert_server.pem
-│   │   ├── 📄 interCA1_crl.pem
-│   │   ├── 📄 interCA1_crl_empty.pem
-│   │   ├── 📄 interCA2_crl.pem
-│   │   ├── 📄 interCA2_crl_empty.pem
-│   │   ├── 📁 issuers-chain-path
-│   │   │   ├── 📁 ca
-│   │   │   │   └── 📄 ca.crt
-│   │   │   └── 📄 server.pem
-│   │   ├── 📄 issuers_chain_path.vtc
-│   │   ├── 📄 localhost.crt-list
-│   │   ├── 📄 log_forward_ssl.vtc
-│   │   ├── 📄 new_del_ssl_cafile.vtc
-│   │   ├── 📄 new_del_ssl_crlfile.vtc
-│   │   ├── 📄 ocsp_auto_update.vtc
-│   │   ├── 📄 ocsp_compat_check.vtc
-│   │   ├── 📁 ocsp_update
-│   │   │   ├── 📄 index.txt
-│   │   │   ├── 📁 multicert
-│   │   │   │   ├── 📄 server_ocsp.pem.ecdsa
-│   │   │   │   ├── 📄 server_ocsp.pem.ecdsa.issuer
-│   │   │   │   ├── 📄 server_ocsp.pem.ecdsa.ocsp
-│   │   │   │   ├── 📄 server_ocsp.pem.rsa
-│   │   │   │   ├── 📄 server_ocsp.pem.rsa.issuer
-│   │   │   │   ├── 📄 server_ocsp.pem.rsa.ocsp
-│   │   │   │   ├── 📄 server_ocsp_ecdsa.pem
-│   │   │   │   └── 📄 server_ocsp_ecdsa.pem.ocsp
-│   │   │   ├── 📄 multicert_both_certs.crt-list
-│   │   │   ├── 📄 multicert_ecdsa.crt-list
-│   │   │   ├── 📄 multicert_ecdsa_no_update.crt-list
-│   │   │   ├── 📁 multicert_no_ocsp
-│   │   │   │   ├── 📄 server_ocsp_ecdsa.pem
-│   │   │   │   └── 📄 server_ocsp_rsa.pem
-│   │   │   ├── 📄 multicert_rsa.crt-list
-│   │   │   ├── 📄 ocsp.haproxy.com.pem
-│   │   │   └── 📄 ocsp_update_rootca.crt
-│   │   ├── 📄 rootCA_crl.pem
-│   │   ├── 📄 set_cafile_client.pem
-│   │   ├── 📄 set_cafile_interCA1.crt
-│   │   ├── 📄 set_cafile_interCA2.crt
-│   │   ├── 📄 set_cafile_rootCA.crt
-│   │   ├── 📄 set_cafile_server.pem
-│   │   ├── 📄 set_default_cert.crt-list
-│   │   ├── 📄 set_default_cert.pem
-│   │   ├── 📄 set_ssl_bug_2265.vtc
-│   │   ├── 📄 set_ssl_cafile.vtc
-│   │   ├── 📄 set_ssl_cert.vtc
-│   │   ├── 📄 set_ssl_cert_bundle.vtc
-│   │   ├── 📄 set_ssl_cert_noext.vtc
-│   │   ├── 📄 set_ssl_crlfile.vtc
-│   │   ├── 📄 set_ssl_server_cert.vtc
-│   │   ├── 📄 show_ocsp_server.pem
-│   │   ├── 📄 show_ocsp_server.pem.issuer
-│   │   ├── 📄 show_ocsp_server.pem.ocsp
-│   │   ├── 📄 show_ocsp_server.pem.ocsp.revoked
-│   │   ├── 📄 show_ssl_ocspresponse.vtc
-│   │   ├── 📄 simple.crt-list
-│   │   ├── 📄 ssl_alpn.vtc
-│   │   ├── 📄 ssl_client_auth.vtc
-│   │   ├── 📄 ssl_client_samples.vtc
-│   │   ├── 📄 ssl_crt-list_filters.vtc
-│   │   ├── 📄 ssl_curve_name.vtc
-│   │   ├── 📄 ssl_curves.vtc
-│   │   ├── 📄 ssl_default_server.vtc
-│   │   ├── 📄 ssl_dh.vtc
-│   │   ├── 📄 ssl_errors.vtc
-│   │   ├── 📄 ssl_frontend_samples.vtc
-│   │   ├── 📄 ssl_generate_certificate.vtc
-│   │   ├── 📄 ssl_reuse.vtc
-│   │   ├── 📄 ssl_server_samples.vtc
-│   │   ├── 📄 ssl_simple_crt-list.vtc
-│   │   └── 📄 wrong_ctx_storage.vtc
-│   ├── 📁 startup
-│   │   ├── 📄 automatic_maxconn.vtc
-│   │   ├── 📄 check_condition.vtc
-│   │   ├── 📄 common.pem
-│   │   └── 📄 default_rules.vtc
-│   ├── 📁 stats
-│   │   ├── 📄 sample-stats-file
-│   │   └── 📄 stats-file.vtc
-│   ├── 📁 stick-table
-│   │   ├── 📄 converteers_ref_cnt_never_dec.vtc
-│   │   ├── 📄 src_conn_rate.vtc
-│   │   └── 📄 unknown_key.vtc
-│   ├── 📁 stickiness
-│   │   ├── 📄 lb-services.vtc
-│   │   └── 📄 srvkey-addr.vtc
-│   ├── 📁 stream
-│   │   ├── 📄 unique-id-from-proxy.vtc
-│   │   └── 📄 unique-id.vtc
-│   ├── 📁 tcp-rules
-│   │   └── 📄 default_rules.vtc
-│   └── 📁 webstats
-│       ├── 📄 missing-stats-fields.vtc
-│       └── 📄 webstats-scope-and-post-change.vtc
-├── 📁 scripts
-│   ├── 📄 announce-release
-│   ├── 📄 backport
-│   ├── 📄 build-ot.sh
-│   ├── 📄 build-ssl.sh
-│   ├── 📄 build-vtest.sh
-│   ├── 📄 create-release
-│   ├── 📄 git-show-backports
-│   ├── 📄 make-releases-json
-│   ├── 📄 mk-patch-list.sh
-│   ├── 📄 publish-release
-│   ├── 📄 run-regtests.sh
-│   └── 📄 run-unittests.sh
-├── 📁 src
-│   ├── 📄 acl.c
-│   ├── 📄 acme.c
-│   ├── 📄 action.c
-│   ├── 📄 activity.c
-│   ├── 📄 applet.c
-│   ├── 📄 arg.c
-│   ├── 📄 auth.c
-│   ├── 📄 backend.c
-│   ├── 📄 base64.c
-│   ├── 📄 buf.c
-│   ├── 📄 cache.c
-│   ├── 📄 calltrace.c
-│   ├── 📄 cebtree-prv.h
-│   ├── 📄 cebu32_tree.c
-│   ├── 📄 cebu64_tree.c
-│   ├── 📄 cebua_tree.c
-│   ├── 📄 cebub_tree.c
-│   ├── 📄 cebuib_tree.c
-│   ├── 📄 cebuis_tree.c
-│   ├── 📄 cebul_tree.c
-│   ├── 📄 cebus_tree.c
-│   ├── 📄 cfgcond.c
-│   ├── 📄 cfgdiag.c
-│   ├── 📄 cfgparse-global.c
-│   ├── 📄 cfgparse-listen.c
-│   ├── 📄 cfgparse-quic.c
-│   ├── 📄 cfgparse-ssl.c
-│   ├── 📄 cfgparse-tcp.c
-│   ├── 📄 cfgparse-unix.c
-│   ├── 📄 cfgparse.c
-│   ├── 📄 channel.c
-│   ├── 📄 check.c
-│   ├── 📄 chunk.c
-│   ├── 📄 cli.c
-│   ├── 📄 clock.c
-│   ├── 📄 compression.c
-│   ├── 📄 connection.c
-│   ├── 📄 counters.c
-│   ├── 📄 cpu_topo.c
-│   ├── 📄 cpuset.c
-│   ├── 📄 debug.c
-│   ├── 📄 dgram.c
-│   ├── 📄 dict.c
-│   ├── 📄 dns.c
-│   ├── 📄 dns_ring.c
-│   ├── 📄 dynbuf.c
-│   ├── 📄 eb32sctree.c
-│   ├── 📄 eb32tree.c
-│   ├── 📄 eb64tree.c
-│   ├── 📄 ebimtree.c
-│   ├── 📄 ebistree.c
-│   ├── 📄 ebmbtree.c
-│   ├── 📄 ebpttree.c
-│   ├── 📄 ebsttree.c
-│   ├── 📄 ebtree.c
-│   ├── 📄 errors.c
-│   ├── 📄 ev_epoll.c
-│   ├── 📄 ev_evports.c
-│   ├── 📄 ev_kqueue.c
-│   ├── 📄 ev_poll.c
-│   ├── 📄 ev_select.c
-│   ├── 📄 event_hdl.c
-│   ├── 📄 extcheck.c
-│   ├── 📄 fcgi-app.c
-│   ├── 📄 fcgi.c
-│   ├── 📄 fd.c
-│   ├── 📄 filters.c
-│   ├── 📄 fix.c
-│   ├── 📄 flt_bwlim.c
-│   ├── 📄 flt_http_comp.c
-│   ├── 📄 flt_spoe.c
-│   ├── 📄 flt_trace.c
-│   ├── 📄 freq_ctr.c
-│   ├── 📄 frontend.c
-│   ├── 📄 guid.c
-│   ├── 📄 h1.c
-│   ├── 📄 h1_htx.c
-│   ├── 📄 h2.c
-│   ├── 📄 h3.c
-│   ├── 📄 h3_stats.c
-│   ├── 📄 haproxy.c
-│   ├── 📄 hash.c
-│   ├── 📄 hlua.c
-│   ├── 📄 hlua_fcn.c
-│   ├── 📄 hpack-dec.c
-│   ├── 📄 hpack-enc.c
-│   ├── 📄 hpack-huff.c
-│   ├── 📄 hpack-tbl.c
-│   ├── 📄 hq_interop.c
-│   ├── 📄 http.c
-│   ├── 📄 http_acl.c
-│   ├── 📄 http_act.c
-│   ├── 📄 http_ana.c
-│   ├── 📄 http_client.c
-│   ├── 📄 http_conv.c
-│   ├── 📄 http_ext.c
-│   ├── 📄 http_fetch.c
-│   ├── 📄 http_htx.c
-│   ├── 📄 http_rules.c
-│   ├── 📄 httpclient_cli.c
-│   ├── 📄 htx.c
-│   ├── 📄 init.c
-│   ├── 📄 jws.c
-│   ├── 📄 jwt.c
-│   ├── 📄 lb_chash.c
-│   ├── 📄 lb_fas.c
-│   ├── 📄 lb_fwlc.c
-│   ├── 📄 lb_fwrr.c
-│   ├── 📄 lb_map.c
-│   ├── 📄 lb_ss.c
-│   ├── 📄 limits.c
-│   ├── 📄 linuxcap.c
-│   ├── 📄 listener.c
-│   ├── 📄 log.c
-│   ├── 📄 lru.c
-│   ├── 📄 mailers.c
-│   ├── 📄 map.c
-│   ├── 📄 mjson.c
-│   ├── 📄 mqtt.c
-│   ├── 📄 mux_fcgi.c
-│   ├── 📄 mux_h1.c
-│   ├── 📄 mux_h2.c
-│   ├── 📄 mux_pt.c
-│   ├── 📄 mux_quic.c
-│   ├── 📄 mux_spop.c
-│   ├── 📄 mworker.c
-│   ├── 📄 namespace.c
-│   ├── 📄 ncbuf.c
-│   ├── 📄 pattern.c
-│   ├── 📄 payload.c
-│   ├── 📄 peers.c
-│   ├── 📄 pipe.c
-│   ├── 📄 pool.c
-│   ├── 📄 proto_quic.c
-│   ├── 📄 proto_rhttp.c
-│   ├── 📄 proto_sockpair.c
-│   ├── 📄 proto_tcp.c
-│   ├── 📄 proto_udp.c
-│   ├── 📄 proto_uxdg.c
-│   ├── 📄 proto_uxst.c
-│   ├── 📄 protocol.c
-│   ├── 📄 proxy.c
-│   ├── 📄 qmux_http.c
-│   ├── 📄 qmux_trace.c
-│   ├── 📄 qpack-dec.c
-│   ├── 📄 qpack-enc.c
-│   ├── 📄 qpack-tbl.c
-│   ├── 📄 queue.c
-│   ├── 📄 quic_ack.c
-│   ├── 📄 quic_cc.c
-│   ├── 📄 quic_cc_bbr.c
-│   ├── 📄 quic_cc_cubic.c
-│   ├── 📄 quic_cc_drs.c
-│   ├── 📄 quic_cc_newreno.c
-│   ├── 📄 quic_cc_nocc.c
-│   ├── 📄 quic_cid.c
-│   ├── 📄 quic_cli.c
-│   ├── 📄 quic_conn.c
-│   ├── 📄 quic_enc.c
-│   ├── 📄 quic_fctl.c
-│   ├── 📄 quic_frame.c
-│   ├── 📄 quic_loss.c
-│   ├── 📄 quic_openssl_compat.c
-│   ├── 📄 quic_pacing.c
-│   ├── 📄 quic_retransmit.c
-│   ├── 📄 quic_retry.c
-│   ├── 📄 quic_rules.c
-│   ├── 📄 quic_rx.c
-│   ├── 📄 quic_sock.c
-│   ├── 📄 quic_ssl.c
-│   ├── 📄 quic_stats.c
-│   ├── 📄 quic_stream.c
-│   ├── 📄 quic_tls.c
-│   ├── 📄 quic_token.c
-│   ├── 📄 quic_tp.c
-│   ├── 📄 quic_trace.c
-│   ├── 📄 quic_tx.c
-│   ├── 📄 raw_sock.c
-│   ├── 📄 regex.c
-│   ├── 📄 resolvers.c
-│   ├── 📄 ring.c
-│   ├── 📄 sample.c
-│   ├── 📄 server.c
-│   ├── 📄 server_state.c
-│   ├── 📄 session.c
-│   ├── 📄 sha1.c
-│   ├── 📄 shctx.c
-│   ├── 📄 signal.c
-│   ├── 📄 sink.c
-│   ├── 📄 slz.c
-│   ├── 📄 sock.c
-│   ├── 📄 sock_inet.c
-│   ├── 📄 sock_unix.c
-│   ├── 📄 ssl_ckch.c
-│   ├── 📄 ssl_clienthello.c
-│   ├── 📄 ssl_crtlist.c
-│   ├── 📄 ssl_gencert.c
-│   ├── 📄 ssl_ocsp.c
-│   ├── 📄 ssl_sample.c
-│   ├── 📄 ssl_sock.c
-│   ├── 📄 ssl_trace.c
-│   ├── 📄 ssl_utils.c
-│   ├── 📄 stats-file.c
-│   ├── 📄 stats-html.c
-│   ├── 📄 stats-json.c
-│   ├── 📄 stats-proxy.c
-│   ├── 📄 stats.c
-│   ├── 📄 stconn.c
-│   ├── 📄 stick_table.c
-│   ├── 📄 stream.c
-│   ├── 📄 systemd.c
-│   ├── 📄 task.c
-│   ├── 📄 tcp_act.c
-│   ├── 📄 tcp_rules.c
-│   ├── 📄 tcp_sample.c
-│   ├── 📄 tcpcheck.c
-│   ├── 📄 thread.c
-│   ├── 📄 time.c
-│   ├── 📄 tools.c
-│   ├── 📄 trace.c
-│   ├── 📄 uri_auth.c
-│   ├── 📄 uri_normalizer.c
-│   ├── 📄 vars.c
-│   ├── 📄 version.c
-│   ├── 📄 wdt.c
-│   ├── 📄 xprt_handshake.c
-│   └── 📄 xprt_quic.c
-└── 📁 tests
-    ├── 📁 conf
-    │   ├── 📄 basic-check.cfg
-    │   ├── 📄 ext-check.cfg
-    │   ├── 📄 ports.cfg
-    │   ├── 📄 setstatus.lua
-    │   ├── 📄 tcp-check.cfg
-    │   ├── 📄 test-acl-args.cfg
-    │   ├── 📄 test-address-syntax.cfg
-    │   ├── 📄 test-backlog.cfg
-    │   ├── 📄 test-check-expect.cfg
-    │   ├── 📄 test-connection.cfg
-    │   ├── 📄 test-cookie-indirect.cfg
-    │   ├── 📄 test-cookie-insert.cfg
-    │   ├── 📄 test-cookie-passive.cfg
-    │   ├── 📄 test-cookie-prefix.cfg
-    │   ├── 📄 test-cookie-rewrite.cfg
-    │   ├── 📄 test-disable-404.cfg
-    │   ├── 📄 test-fsm.cfg
-    │   ├── 📄 test-fwlc.cfg
-    │   ├── 📄 test-fwrr.cfg
-    │   ├── 📄 test-handshakes-chk.cfg
-    │   ├── 📄 test-handshakes.cfg
-    │   ├── 📄 test-hash-preseve-affinity.cfg
-    │   ├── 📄 test-http-send-name-hdr.cfg
-    │   ├── 📄 test-http-set-status-lua.cfg
-    │   ├── 📄 test-http-set-status.cfg
-    │   ├── 📄 test-inspect-smtp.cfg
-    │   ├── 📄 test-inspect-ssl.cfg
-    │   ├── 📄 test-map-ports.cfg
-    │   ├── 📄 test-param-hash.cfg
-    │   ├── 📄 test-pollers.cfg
-    │   ├── 📄 test-redirect.cfg
-    │   ├── 📄 test-sample-fetch-args.cfg
-    │   ├── 📄 test-sample-fetch-conv.cfg
-    │   ├── 📄 test-sql.cfg
-    │   ├── 📄 test-srv-verify.cfg
-    │   ├── 📄 test-stats.cfg
-    │   ├── 📄 test-str2sa.cfg
-    │   ├── 📄 test-time.cfg
-    │   ├── 📄 test-timeout.cfg
-    │   ├── 📄 test-url-hash.cfg
-    │   └── 📄 test-valid-names.cfg
-    ├── 📁 exp
-    │   ├── 📄 blocksig.c
-    │   ├── 📄 filltab25.c
-    │   ├── 📄 hash_results.txt
-    │   ├── 📄 hashing-results.txt
-    │   ├── 📄 io_limits.txt
-    │   ├── 📄 ip-hash.c
-    │   ├── 📄 test_hashes.c
-    │   ├── 📄 testinet.c
-    │   └── 📄 uri_hash.c
-    └── 📁 unit
-        ├── 📄 ist.c
-        ├── 📄 ist.sh
-        ├── 📁 jwk
-        │   ├── 📄 ecdsa.key
-        │   ├── 📄 ecdsa.pub.jwk
-        │   ├── 📄 jws.sh
-        │   ├── 📄 rsa.key
-        │   ├── 📄 rsa.pub.jwk
-        │   └── 📄 test.sh
-        ├── 📁 quic
-        │   └── 📄 quic.sh
-        ├── 📁 smoke
-        │   └── 📄 test.sh
-        ├── 📄 test-1-among.c
-        ├── 📄 test-arg.c
-        ├── 📄 test-inherited-fd.py
-        ├── 📄 test-int-range.c
-        ├── 📄 test-list.c
-        └── 📄 test-sockpair.py
+│   ├── 📄 background_tasks.py
+│   ├── 📄 basic_auth_middleware.py
+│   ├── 📄 cli_app.py
+│   ├── 📄 client_auth.py
+│   ├── 📄 client_json.py
+│   ├── 📄 client_ws.py
+│   ├── 📄 combined_middleware.py
+│   ├── 📄 curl.py
+│   ├── 📄 digest_auth_qop_auth.py
+│   ├── 📄 fake_server.py
+│   ├── 📄 logging_middleware.py
+│   ├── 📄 lowlevel_srv.py
+│   ├── 📄 retry_middleware.py
+│   ├── 📄 server.crt
+│   ├── 📄 server.csr
+│   ├── 📄 server.key
+│   ├── 📄 server_simple.py
+│   ├── 📄 static_files.py
+│   ├── 📄 token_refresh_middleware.py
+│   ├── 📄 web_classview.py
+│   ├── 📄 web_cookies.py
+│   ├── 📄 web_rewrite_headers_middleware.py
+│   ├── 📄 web_srv.py
+│   ├── 📄 web_srv_route_deco.py
+│   ├── 📄 web_srv_route_table.py
+│   ├── 📄 web_ws.py
+│   └── 📄 websocket.html
+├── 📄 pyproject.toml
+├── 📁 requirements
+│   ├── 📄 base.in
+│   ├── 📄 base.txt
+│   ├── 📄 constraints.in
+│   ├── 📄 constraints.txt
+│   ├── 📄 cython.in
+│   ├── 📄 cython.txt
+│   ├── 📄 dev.in
+│   ├── 📄 dev.txt
+│   ├── 📄 doc-spelling.in
+│   ├── 📄 doc-spelling.txt
+│   ├── 📄 doc.in
+│   ├── 📄 doc.txt
+│   ├── 📄 lint.in
+│   ├── 📄 lint.txt
+│   ├── 📄 multidict.in
+│   ├── 📄 multidict.txt
+│   ├── 📄 runtime-deps.in
+│   ├── 📄 runtime-deps.txt
+│   ├── 📄 sync-direct-runtime-deps.py
+│   ├── 📄 test.in
+│   └── 📄 test.txt
+├── 📄 setup.cfg
+├── 📄 setup.py
+├── 📁 tests
+│   ├── 📄 aiohttp.jpg
+│   ├── 📄 aiohttp.png
+│   ├── 📁 autobahn
+│   │   ├── 📄 Dockerfile.aiohttp
+│   │   ├── 📄 Dockerfile.autobahn
+│   │   ├── 📁 client
+│   │   │   ├── 📄 client.py
+│   │   │   └── 📄 fuzzingserver.json
+│   │   ├── 📁 server
+│   │   │   ├── 📄 fuzzingclient.json
+│   │   │   └── 📄 server.py
+│   │   └── 📄 test_autobahn.py
+│   ├── 📄 conftest.py
+│   ├── 📄 data.unknown_mime_type
+│   ├── 📄 data.zero_bytes
+│   ├── 📄 github-urls.json
+│   ├── 📁 isolated
+│   │   ├── 📄 check_for_client_response_leak.py
+│   │   └── 📄 check_for_request_leak.py
+│   ├── 📄 sample.txt
+│   ├── 📄 test_base_protocol.py
+│   ├── 📄 test_benchmarks_client.py
+│   ├── 📄 test_benchmarks_client_request.py
+│   ├── 📄 test_benchmarks_client_ws.py
+│   ├── 📄 test_benchmarks_cookiejar.py
+│   ├── 📄 test_benchmarks_http_websocket.py
+│   ├── 📄 test_benchmarks_http_writer.py
+│   ├── 📄 test_benchmarks_web_fileresponse.py
+│   ├── 📄 test_benchmarks_web_middleware.py
+│   ├── 📄 test_benchmarks_web_response.py
+│   ├── 📄 test_benchmarks_web_urldispatcher.py
+│   ├── 📄 test_circular_imports.py
+│   ├── 📄 test_classbasedview.py
+│   ├── 📄 test_client_connection.py
+│   ├── 📄 test_client_exceptions.py
+│   ├── 📄 test_client_fingerprint.py
+│   ├── 📄 test_client_functional.py
+│   ├── 📄 test_client_middleware.py
+│   ├── 📄 test_client_middleware_digest_auth.py
+│   ├── 📄 test_client_proto.py
+│   ├── 📄 test_client_request.py
+│   ├── 📄 test_client_response.py
+│   ├── 📄 test_client_session.py
+│   ├── 📄 test_client_ws.py
+│   ├── 📄 test_client_ws_functional.py
+│   ├── 📄 test_compression_utils.py
+│   ├── 📄 test_connector.py
+│   ├── 📄 test_cookie_helpers.py
+│   ├── 📄 test_cookiejar.py
+│   ├── 📄 test_flowcontrol_streams.py
+│   ├── 📄 test_formdata.py
+│   ├── 📄 test_helpers.py
+│   ├── 📄 test_http_exceptions.py
+│   ├── 📄 test_http_parser.py
+│   ├── 📄 test_http_writer.py
+│   ├── 📄 test_imports.py
+│   ├── 📄 test_leaks.py
+│   ├── 📄 test_loop.py
+│   ├── 📄 test_multipart.py
+│   ├── 📄 test_multipart_helpers.py
+│   ├── 📄 test_payload.py
+│   ├── 📄 test_proxy.py
+│   ├── 📄 test_proxy_functional.py
+│   ├── 📄 test_pytest_plugin.py
+│   ├── 📄 test_resolver.py
+│   ├── 📄 test_route_def.py
+│   ├── 📄 test_run_app.py
+│   ├── 📄 test_streams.py
+│   ├── 📄 test_tcp_helpers.py
+│   ├── 📄 test_test_utils.py
+│   ├── 📄 test_tracing.py
+│   ├── 📄 test_urldispatch.py
+│   ├── 📄 test_web_app.py
+│   ├── 📄 test_web_cli.py
+│   ├── 📄 test_web_exceptions.py
+│   ├── 📄 test_web_functional.py
+│   ├── 📄 test_web_log.py
+│   ├── 📄 test_web_middleware.py
+│   ├── 📄 test_web_request.py
+│   ├── 📄 test_web_request_handler.py
+│   ├── 📄 test_web_response.py
+│   ├── 📄 test_web_runner.py
+│   ├── 📄 test_web_sendfile.py
+│   ├── 📄 test_web_sendfile_functional.py
+│   ├── 📄 test_web_server.py
+│   ├── 📄 test_web_urldispatcher.py
+│   ├── 📄 test_web_websocket.py
+│   ├── 📄 test_web_websocket_functional.py
+│   ├── 📄 test_websocket_data_queue.py
+│   ├── 📄 test_websocket_handshake.py
+│   ├── 📄 test_websocket_parser.py
+│   ├── 📄 test_websocket_writer.py
+│   └── 📄 test_worker.py
+├── 📁 tools
+│   ├── 📄 bench-asyncio-write.py
+│   ├── 📄 check_changes.py
+│   ├── 📄 check_sum.py
+│   ├── 📄 cleanup_changes.py
+│   ├── 📄 drop_merged_branches.sh
+│   ├── 📄 gen.py
+│   └── 📁 testing
+│       ├── 📄 Dockerfile
+│       ├── 📄 Dockerfile.dockerignore
+│       └── 📄 entrypoint.sh
+└── 📁 vendor
+    ├── 📄 README.rst
+    └── 📁 llhttp
+
 --- Fuzz Build Log ---
-go: downloading github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
-go: downloading github.com/google/s2a-go v0.1.7
-go: downloading cloud.google.com/go/iam v1.1.6
-go: downloading go.uber.org/atomic v1.9.0
-go: downloading go.uber.org/multierr v1.8.0
-go: downloading github.com/go-task/slim-sprig/v3 v3.0.0
-go: downloading gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7
-go: downloading github.com/josharian/native v1.1.0
-go: downloading github.com/mdlayher/socket v0.5.1
-go: downloading github.com/googleapis/enterprise-certificate-proxy v0.3.2
-go: downloading github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-go: downloading github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb
-go: downloading github.com/benbjohnson/clock v1.1.0
-go: downloading gopkg.in/yaml.v2 v2.4.0
-go: downloading github.com/google/pprof v0.0.0-20250423184734-337e5dd93bb4
-go: module /src/go-118-fuzz-build requires go >= 1.24.3; switching to go1.24.5
-go: downloading go1.24.5 (linux/amd64)
-go mod vendor
-mv /src/moby/daemon/volume/mounts/parser_test.go /src/moby/daemon/volume/mounts/parser_test_fuzz.go
-mv /src/moby/daemon/volume/mounts/validate_unix_test.go /src/moby/daemon/volume/mounts/validate_unix_test_fuzz.go
-compile_native_go_fuzzer github.com/docker/docker/daemon/volume/mounts FuzzParseLinux FuzzParseLinux
-Running go  [build -o FuzzParseLinux.a -buildmode c-archive -tags gofuzz_libfuzzer,libfuzzer,gofuzz -trimpath -gcflags all=-d=libfuzzer -gcflags syscall=-d=libfuzzer=0 -gcflags runtime/cgo=-d=libfuzzer=0 -gcflags runtime/pprof=-d=libfuzzer=0 -overlay /tmp/gofuzzbuild1923010709/ossFuzzOverlayFile.json1620816520 ./main.2539578835.go]
-compile_native_go_fuzzer github.com/docker/docker/pkg/jsonmessage FuzzDisplayJSONMessagesStream FuzzDisplayJSONMessagesStream
-Could not find the function: func FuzzDisplayJSONMessagesStream(f *testing.F)
-compile_native_go_fuzzer github.com/docker/docker/pkg/tailfile FuzzTailfile FuzzTailfile
-Running go  [build -o FuzzTailfile.a -buildmode c-archive -tags gofuzz_libfuzzer,libfuzzer,gofuzz -trimpath -gcflags all=-d=libfuzzer -gcflags syscall=-d=libfuzzer=0 -gcflags runtime/cgo=-d=libfuzzer=0 -gcflags runtime/pprof=-d=libfuzzer=0 -overlay /tmp/gofuzzbuild1839712543/ossFuzzOverlayFile.json2704126675 ./main.2536670502.go]
-compile_native_go_fuzzer github.com/docker/docker/daemon/logger/jsonfilelog FuzzLoggerDecode FuzzLoggerDecode
-Running go  [build -o FuzzLoggerDecode.a -buildmode c-archive -tags gofuzz_libfuzzer,libfuzzer,gofuzz -trimpath -gcflags all=-d=libfuzzer -gcflags syscall=-d=libfuzzer=0 -gcflags runtime/cgo=-d=libfuzzer=0 -gcflags runtime/pprof=-d=libfuzzer=0 -overlay /tmp/gofuzzbuild3319846656/ossFuzzOverlayFile.json3441210367 ./main.1093350158.go]
-compile_native_go_fuzzer github.com/docker/docker/libnetwork/etchosts FuzzAdd FuzzAdd
-cannot find module providing package github.com/docker/docker/libnetwork/etchosts: import lookup disabled by -mod=vendor
+INFO:__main__:Running: docker build -t gcr.io/oss-fuzz/aiohttp --file /root/oss-fuzz/projects/aiohttp/Dockerfile /root/oss-fuzz/projects/aiohttp.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.22kB done
+#1 DONE 0.0s
+Dockerfile:19
+--------------------
+  18 |     #RUN apt-get update && apt-get install -y \
+  19 | >>>   pkg-config \
+  20 | >>>   zlib1g \
+  21 | >>>   zlib1g-dev \
+  22 | >>>   libjpeg-dev \
+  23 | >>>   libpng-dev \
+  24 | >>>   libffi-dev \
+  25 | >>>   make \
+  26 | >>>   autoconf \
+  27 | >>>   libtool
+  28 |     RUN python3 -m pip install --upgrade pip
+--------------------
+ERROR: failed to solve: dockerfile parse error on line 19: unknown instruction: pkg-config
+ERROR:__main__:Docker build failed.

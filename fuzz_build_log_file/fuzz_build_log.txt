@@ -1,30 +1,22 @@
-go: downloading github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
-go: downloading github.com/google/s2a-go v0.1.7
-go: downloading cloud.google.com/go/iam v1.1.6
-go: downloading go.uber.org/atomic v1.9.0
-go: downloading go.uber.org/multierr v1.8.0
-go: downloading github.com/go-task/slim-sprig/v3 v3.0.0
-go: downloading gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7
-go: downloading github.com/josharian/native v1.1.0
-go: downloading github.com/mdlayher/socket v0.5.1
-go: downloading github.com/googleapis/enterprise-certificate-proxy v0.3.2
-go: downloading github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
-go: downloading github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb
-go: downloading github.com/benbjohnson/clock v1.1.0
-go: downloading gopkg.in/yaml.v2 v2.4.0
-go: downloading github.com/google/pprof v0.0.0-20250423184734-337e5dd93bb4
-go: module /src/go-118-fuzz-build requires go >= 1.24.3; switching to go1.24.5
-go: downloading go1.24.5 (linux/amd64)
-go mod vendor
-mv /src/moby/daemon/volume/mounts/parser_test.go /src/moby/daemon/volume/mounts/parser_test_fuzz.go
-mv /src/moby/daemon/volume/mounts/validate_unix_test.go /src/moby/daemon/volume/mounts/validate_unix_test_fuzz.go
-compile_native_go_fuzzer github.com/docker/docker/daemon/volume/mounts FuzzParseLinux FuzzParseLinux
-Running go  [build -o FuzzParseLinux.a -buildmode c-archive -tags gofuzz_libfuzzer,libfuzzer,gofuzz -trimpath -gcflags all=-d=libfuzzer -gcflags syscall=-d=libfuzzer=0 -gcflags runtime/cgo=-d=libfuzzer=0 -gcflags runtime/pprof=-d=libfuzzer=0 -overlay /tmp/gofuzzbuild1923010709/ossFuzzOverlayFile.json1620816520 ./main.2539578835.go]
-compile_native_go_fuzzer github.com/docker/docker/pkg/jsonmessage FuzzDisplayJSONMessagesStream FuzzDisplayJSONMessagesStream
-Could not find the function: func FuzzDisplayJSONMessagesStream(f *testing.F)
-compile_native_go_fuzzer github.com/docker/docker/pkg/tailfile FuzzTailfile FuzzTailfile
-Running go  [build -o FuzzTailfile.a -buildmode c-archive -tags gofuzz_libfuzzer,libfuzzer,gofuzz -trimpath -gcflags all=-d=libfuzzer -gcflags syscall=-d=libfuzzer=0 -gcflags runtime/cgo=-d=libfuzzer=0 -gcflags runtime/pprof=-d=libfuzzer=0 -overlay /tmp/gofuzzbuild1839712543/ossFuzzOverlayFile.json2704126675 ./main.2536670502.go]
-compile_native_go_fuzzer github.com/docker/docker/daemon/logger/jsonfilelog FuzzLoggerDecode FuzzLoggerDecode
-Running go  [build -o FuzzLoggerDecode.a -buildmode c-archive -tags gofuzz_libfuzzer,libfuzzer,gofuzz -trimpath -gcflags all=-d=libfuzzer -gcflags syscall=-d=libfuzzer=0 -gcflags runtime/cgo=-d=libfuzzer=0 -gcflags runtime/pprof=-d=libfuzzer=0 -overlay /tmp/gofuzzbuild3319846656/ossFuzzOverlayFile.json3441210367 ./main.1093350158.go]
-compile_native_go_fuzzer github.com/docker/docker/libnetwork/etchosts FuzzAdd FuzzAdd
-cannot find module providing package github.com/docker/docker/libnetwork/etchosts: import lookup disabled by -mod=vendor
+INFO:__main__:Running: docker build -t gcr.io/oss-fuzz/aiohttp --file /root/oss-fuzz/projects/aiohttp/Dockerfile /root/oss-fuzz/projects/aiohttp.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.22kB done
+#1 DONE 0.0s
+Dockerfile:19
+--------------------
+  18 |     #RUN apt-get update && apt-get install -y \
+  19 | >>>   pkg-config \
+  20 | >>>   zlib1g \
+  21 | >>>   zlib1g-dev \
+  22 | >>>   libjpeg-dev \
+  23 | >>>   libpng-dev \
+  24 | >>>   libffi-dev \
+  25 | >>>   make \
+  26 | >>>   autoconf \
+  27 | >>>   libtool
+  28 |     RUN python3 -m pip install --upgrade pip
+--------------------
+ERROR: failed to solve: dockerfile parse error on line 19: unknown instruction: pkg-config
+ERROR:__main__:Docker build failed.
