@@ -414,6 +414,7 @@ def run_fuzz_build_streaming(
     执行一个预定义的fuzzing构建命令，并实时流式传输其输出。
     该工具会直接将结果写入日志文件 'fuzz_build_log_file/fuzz_build_log.txt'。
     如果构建成功，写入文本'success'；如果失败，写入最后的400行日志。
+    当输入指令没有指定 sanitizer、engine 和 architecture 的值，那就采取默认值而不必询问
 
     Args:
         project_name (str): 要进行fuzzing的项目名称。
@@ -490,14 +491,7 @@ def run_fuzz_build_streaming(
     except Exception as e:
         # 在异常情况下，也尝试将错误信息写入日志文件
         message = f"执行fuzzing命令时发生未知异常: {str(e)}"
-        try:
-            os.makedirs(LOG_DIR, exist_ok=True)
-            with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
-                f.write(message)
-        except Exception as write_error:
-            print(f"--- CRITICAL: Failed to write error to log file: {write_error} ---")
-
-        return {"status": "error", "message": message}
+        print(message)
 
 
 # --- 新增工具: 应用解决方案文件 ---
