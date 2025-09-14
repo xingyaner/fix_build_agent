@@ -1,1 +1,0 @@
-Drop lowercased enum items of ``WSMsgType`` (text, binary, ...), use uppercased items instead (TEXT, BINARY, ...).

@@ -1,2 +1,0 @@
-Stopped allowing use of ``ClientResponse.text()``/``ClientResponse.json()`` after leaving ``async with`` context.
-This now matches the behaviour of ``ClientResponse.read()`` -- by :user:`Dreamsorcerer`.

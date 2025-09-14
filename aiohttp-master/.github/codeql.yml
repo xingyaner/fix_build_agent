@@ -1,5 +1,0 @@
-query-filters:
-  - exclude:
-      id:
-        - py/ineffectual-statement
-        - py/unsafe-cyclic-import

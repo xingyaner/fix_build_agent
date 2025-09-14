@@ -1,398 +1,157 @@
-📁 aiohttp-master
-├── 📁 CHANGES
-│   ├── 📄 10872.contrib.rst
-│   ├── 📄 11161.feature.rst
-│   ├── 📄 11233.doc.rst
-│   ├── 📄 11243.bugfix
-│   ├── 📄 11268.feature.rst
-│   ├── 📄 11363.packaging
-│   ├── 📄 11425.packaging.rst
-│   ├── 📄 2174.bugfix
-│   ├── 📄 2835.breaking.rst
-│   ├── 📄 2977.breaking.rst
-│   ├── 📄 3310.bugfix
-│   ├── 📄 3462.feature
-│   ├── 📄 3463.breaking.rst
-│   ├── 📄 3482.bugfix
-│   ├── 📄 3538.breaking.rst
-│   ├── 📄 3539.breaking.rst
-│   ├── 📄 3540.feature
-│   ├── 📄 3542.breaking.rst
-│   ├── 📄 3545.feature
-│   ├── 📄 3547.breaking.rst
-│   ├── 📄 3548.breaking.rst
-│   ├── 📄 3559.doc
-│   ├── 📄 3562.bugfix
-│   ├── 📄 3569.feature
-│   ├── 📄 3580.breaking.rst
-│   ├── 📄 3612.bugfix
-│   ├── 📄 3613.bugfix
-│   ├── 📄 3642.doc
-│   ├── 📄 3685.doc
-│   ├── 📄 3721.bugfix
-│   ├── 📄 3767.feature
-│   ├── 📄 3787.feature
-│   ├── 📄 3796.feature
-│   ├── 📄 3890.breaking.rst
-│   ├── 📄 3901.breaking.rst
-│   ├── 📄 3929.breaking.rst
-│   ├── 📄 3931.breaking.rst
-│   ├── 📄 3932.breaking.rst
-│   ├── 📄 3933.breaking.rst
-│   ├── 📄 3934.breaking.rst
-│   ├── 📄 3935.breaking.rst
-│   ├── 📄 3939.breaking.rst
-│   ├── 📄 3940.breaking.rst
-│   ├── 📄 3942.breaking.rst
-│   ├── 📄 3948.breaking.rst
-│   ├── 📄 3994.misc
-│   ├── 📄 4161.doc
-│   ├── 📄 4277.feature
-│   ├── 📄 4283.bugfix
-│   ├── 📄 4299.bugfix
-│   ├── 📄 4302.bugfix
-│   ├── 📄 4368.bugfix
-│   ├── 📄 4452.doc
-│   ├── 📄 4504.doc
-│   ├── 📄 4526.bugfix
-│   ├── 📄 4558.bugfix
-│   ├── 📄 4656.bugfix
-│   ├── 📄 4695.doc
-│   ├── 📄 4706.feature
-│   ├── 📄 5075.feature
-│   ├── 📄 5191.doc
-│   ├── 📄 5258.bugfix
-│   ├── 📄 5278.breaking.rst
-│   ├── 📄 5284.breaking.rst
-│   ├── 📄 5284.feature
-│   ├── 📄 5287.feature
-│   ├── 📄 5516.misc
-│   ├── 📄 5533.misc
-│   ├── 📄 5558.bugfix
-│   ├── 📄 5634.feature
-│   ├── 📄 5783.feature
-│   ├── 📄 5806.misc
-│   ├── 📄 5829.misc
-│   ├── 📄 5870.misc
-│   ├── 📄 5894.bugfix
-│   ├── 📄 6180.bugfix
-│   ├── 📄 6181.bugfix
-│   ├── 📄 6193.feature
-│   ├── 📄 6547.bugfix
-│   ├── 📄 6721.misc
-│   ├── 📄 6979.doc
-│   ├── 📄 6998.doc
-│   ├── 📄 7107.breaking.rst
-│   ├── 📄 7265.breaking.rst
-│   ├── 📄 7319.breaking.rst
-│   ├── 📄 7319.feature.rst
-│   ├── 📄 7677.bugfix
-│   ├── 📄 7772.bugfix
-│   ├── 📄 7815.bugfix
-│   ├── 📄 8048.breaking.rst
-│   ├── 📄 8139.contrib.rst
-│   ├── 📄 8197.doc
-│   ├── 📄 8303.breaking.rst
-│   ├── 📄 8596.breaking.rst
-│   ├── 📄 8698.breaking.rst
-│   ├── 📄 8957.breaking.rst
-│   ├── 📄 9109.breaking.rst
-│   ├── 📄 9212.breaking.rst
-│   ├── 📄 9212.packaging.rst
-│   ├── 📄 9254.breaking.rst
-│   ├── 📄 9292.breaking.rst
-│   ├── 📄 9413.misc.rst
-│   └── 📄 README.rst
-├── 📄 CHANGES.rst
-├── 📄 CODE_OF_CONDUCT.md
-├── 📄 CONTRIBUTING.rst
-├── 📄 CONTRIBUTORS.txt
-├── 📄 LICENSE.txt
-├── 📄 MANIFEST.in
-├── 📄 Makefile
-├── 📄 README.rst
-├── 📁 aiohttp
-│   ├── 📄 __init__.py
-│   ├── 📄 _cookie_helpers.py
-│   ├── 📄 _cparser.pxd
-│   ├── 📄 _find_header.h
-│   ├── 📄 _find_header.pxd
-│   ├── 📄 _http_parser.pyx
-│   ├── 📄 _http_writer.pyx
-│   ├── 📁 _websocket
-│   │   ├── 📄 __init__.py
-│   │   ├── 📄 helpers.py
-│   │   ├── 📄 mask.pxd
-│   │   ├── 📄 mask.pyx
-│   │   ├── 📄 models.py
-│   │   ├── 📄 reader.py
-│   │   ├── 📄 reader_c.pxd
-│   │   ├── 📄 reader_c.py
-│   │   ├── 📄 reader_py.py
-│   │   └── 📄 writer.py
-│   ├── 📄 abc.py
-│   ├── 📄 base_protocol.py
-│   ├── 📄 client.py
-│   ├── 📄 client_exceptions.py
-│   ├── 📄 client_middleware_digest_auth.py
-│   ├── 📄 client_middlewares.py
-│   ├── 📄 client_proto.py
-│   ├── 📄 client_reqrep.py
-│   ├── 📄 client_ws.py
-│   ├── 📄 compression_utils.py
-│   ├── 📄 connector.py
-│   ├── 📄 cookiejar.py
-│   ├── 📄 formdata.py
-│   ├── 📄 hdrs.py
-│   ├── 📄 helpers.py
-│   ├── 📄 http.py
-│   ├── 📄 http_exceptions.py
-│   ├── 📄 http_parser.py
-│   ├── 📄 http_websocket.py
-│   ├── 📄 http_writer.py
-│   ├── 📄 log.py
-│   ├── 📄 multipart.py
-│   ├── 📄 payload.py
-│   ├── 📄 py.typed
-│   ├── 📄 pytest_plugin.py
-│   ├── 📄 resolver.py
-│   ├── 📄 streams.py
-│   ├── 📄 tcp_helpers.py
-│   ├── 📄 test_utils.py
-│   ├── 📄 tracing.py
-│   ├── 📄 typedefs.py
-│   ├── 📄 web.py
-│   ├── 📄 web_app.py
-│   ├── 📄 web_exceptions.py
-│   ├── 📄 web_fileresponse.py
-│   ├── 📄 web_log.py
-│   ├── 📄 web_middlewares.py
-│   ├── 📄 web_protocol.py
-│   ├── 📄 web_request.py
-│   ├── 📄 web_response.py
-│   ├── 📄 web_routedef.py
-│   ├── 📄 web_runner.py
-│   ├── 📄 web_server.py
-│   ├── 📄 web_urldispatcher.py
-│   ├── 📄 web_ws.py
-│   └── 📄 worker.py
-├── 📁 docs
-│   ├── 📄 Makefile
-│   ├── 📁 _static
-│   │   ├── 📁 css
-│   │   │   └── 📄 logo-adjustments.css
-│   │   └── 📁 img
-│   │       ├── 📄 contributing-cov-comment.svg
-│   │       ├── 📄 contributing-cov-header.svg
-│   │       ├── 📄 contributing-cov-miss.svg
-│   │       └── 📄 contributing-cov-partial.svg
-│   ├── 📄 abc.rst
-│   ├── 📄 aiohttp-icon.svg
-│   ├── 📄 aiohttp-plain.svg
-│   ├── 📄 built_with.rst
-│   ├── 📄 changes.rst
-│   ├── 📄 client.rst
-│   ├── 📄 client_advanced.rst
-│   ├── 📄 client_middleware_cookbook.rst
-│   ├── 📄 client_quickstart.rst
-│   ├── 📄 client_reference.rst
-│   ├── 📁 code
-│   │   └── 📄 client_middleware_cookbook.py
-│   ├── 📄 conf.py
-│   ├── 📄 contributing-admins.rst
-│   ├── 📄 contributing.rst
-│   ├── 📄 deployment.rst
-│   ├── 📄 essays.rst
-│   ├── 📄 external.rst
-│   ├── 📄 faq.rst
-│   ├── 📄 favicon.ico
-│   ├── 📄 glossary.rst
-│   ├── 📄 http_request_lifecycle.rst
-│   ├── 📄 index.rst
-│   ├── 📄 logging.rst
-│   ├── 📄 make.bat
-│   ├── 📄 migration_to_2xx.rst
-│   ├── 📄 misc.rst
-│   ├── 📄 multipart.rst
-│   ├── 📄 multipart_reference.rst
-│   ├── 📄 new_router.rst
-│   ├── 📄 old-logo.png
-│   ├── 📄 old-logo.svg
-│   ├── 📄 powered_by.rst
-│   ├── 📄 spelling_wordlist.txt
-│   ├── 📄 streams.rst
-│   ├── 📄 structures.rst
-│   ├── 📄 testing.rst
-│   ├── 📄 third_party.rst
-│   ├── 📄 tracing_reference.rst
-│   ├── 📄 utilities.rst
-│   ├── 📄 web.rst
-│   ├── 📄 web_advanced.rst
-│   ├── 📄 web_exceptions.rst
-│   ├── 📄 web_lowlevel.rst
-│   ├── 📄 web_quickstart.rst
-│   ├── 📄 web_reference.rst
-│   ├── 📄 websocket_utilities.rst
-│   ├── 📄 whats_new_1_1.rst
-│   └── 📄 whats_new_3_0.rst
+📁 ttf-parser
+├── 📄 CHANGELOG.md
+├── 📄 Cargo.toml
+├── 📄 LICENSE-APACHE
+├── 📄 LICENSE-MIT
+├── 📄 README.md
+├── 📁 benches
+│   ├── 📄 Cargo.toml
+│   ├── 📄 README.md
+│   ├── 📁 fonts
+│   │   ├── 📄 README.md
+│   │   ├── 📄 SourceSansPro-Regular.otf
+│   │   ├── 📄 SourceSansPro-Regular.ttf
+│   │   ├── 📄 SourceSansVariable-Roman.otf
+│   │   └── 📄 SourceSansVariable-Roman.ttf
+│   ├── 📄 methods_perf.rs
+│   ├── 📄 methods_perf_x1000.rs
+│   └── 📁 outline
+│       ├── 📄 README.md
+│       ├── 📄 meson.build
+│       ├── 📄 outline.cc
+│       └── 📁 subprojects
+│           ├── 📄 google-benchmark.wrap
+│           └── 📄 stb_truetype.wrap
+├── 📁 c-api
+│   ├── 📄 Cargo.toml
+│   ├── 📄 README.md
+│   ├── 📄 cbindgen.toml
+│   ├── 📄 lib.rs
+│   ├── 📄 test.c
+│   └── 📄 ttfparser.h
 ├── 📁 examples
-│   ├── 📄 background_tasks.py
-│   ├── 📄 basic_auth_middleware.py
-│   ├── 📄 cli_app.py
-│   ├── 📄 client_auth.py
-│   ├── 📄 client_json.py
-│   ├── 📄 client_ws.py
-│   ├── 📄 combined_middleware.py
-│   ├── 📄 curl.py
-│   ├── 📄 digest_auth_qop_auth.py
-│   ├── 📄 fake_server.py
-│   ├── 📄 logging_middleware.py
-│   ├── 📄 lowlevel_srv.py
-│   ├── 📄 retry_middleware.py
-│   ├── 📄 server.crt
-│   ├── 📄 server.csr
-│   ├── 📄 server.key
-│   ├── 📄 server_simple.py
-│   ├── 📄 static_files.py
-│   ├── 📄 token_refresh_middleware.py
-│   ├── 📄 web_classview.py
-│   ├── 📄 web_cookies.py
-│   ├── 📄 web_rewrite_headers_middleware.py
-│   ├── 📄 web_srv.py
-│   ├── 📄 web_srv_route_deco.py
-│   ├── 📄 web_srv_route_table.py
-│   ├── 📄 web_ws.py
-│   └── 📄 websocket.html
-├── 📄 pyproject.toml
-├── 📁 requirements
-│   ├── 📄 base.in
-│   ├── 📄 base.txt
-│   ├── 📄 constraints.in
-│   ├── 📄 constraints.txt
-│   ├── 📄 cython.in
-│   ├── 📄 cython.txt
-│   ├── 📄 dev.in
-│   ├── 📄 dev.txt
-│   ├── 📄 doc-spelling.in
-│   ├── 📄 doc-spelling.txt
-│   ├── 📄 doc.in
-│   ├── 📄 doc.txt
-│   ├── 📄 lint.in
-│   ├── 📄 lint.txt
-│   ├── 📄 multidict.in
-│   ├── 📄 multidict.txt
-│   ├── 📄 runtime-deps.in
-│   ├── 📄 runtime-deps.txt
-│   ├── 📄 sync-direct-runtime-deps.py
-│   ├── 📄 test.in
-│   └── 📄 test.txt
-├── 📄 setup.cfg
-├── 📄 setup.py
-├── 📁 tests
-│   ├── 📄 aiohttp.jpg
-│   ├── 📄 aiohttp.png
-│   ├── 📁 autobahn
-│   │   ├── 📄 Dockerfile.aiohttp
-│   │   ├── 📄 Dockerfile.autobahn
-│   │   ├── 📁 client
-│   │   │   ├── 📄 client.py
-│   │   │   └── 📄 fuzzingserver.json
-│   │   ├── 📁 server
-│   │   │   ├── 📄 fuzzingclient.json
-│   │   │   └── 📄 server.py
-│   │   └── 📄 test_autobahn.py
-│   ├── 📄 conftest.py
-│   ├── 📄 data.unknown_mime_type
-│   ├── 📄 data.zero_bytes
-│   ├── 📄 github-urls.json
-│   ├── 📁 isolated
-│   │   ├── 📄 check_for_client_response_leak.py
-│   │   └── 📄 check_for_request_leak.py
-│   ├── 📄 sample.txt
-│   ├── 📄 test_base_protocol.py
-│   ├── 📄 test_benchmarks_client.py
-│   ├── 📄 test_benchmarks_client_request.py
-│   ├── 📄 test_benchmarks_client_ws.py
-│   ├── 📄 test_benchmarks_cookiejar.py
-│   ├── 📄 test_benchmarks_http_websocket.py
-│   ├── 📄 test_benchmarks_http_writer.py
-│   ├── 📄 test_benchmarks_web_fileresponse.py
-│   ├── 📄 test_benchmarks_web_middleware.py
-│   ├── 📄 test_benchmarks_web_response.py
-│   ├── 📄 test_benchmarks_web_urldispatcher.py
-│   ├── 📄 test_circular_imports.py
-│   ├── 📄 test_classbasedview.py
-│   ├── 📄 test_client_connection.py
-│   ├── 📄 test_client_exceptions.py
-│   ├── 📄 test_client_fingerprint.py
-│   ├── 📄 test_client_functional.py
-│   ├── 📄 test_client_middleware.py
-│   ├── 📄 test_client_middleware_digest_auth.py
-│   ├── 📄 test_client_proto.py
-│   ├── 📄 test_client_request.py
-│   ├── 📄 test_client_response.py
-│   ├── 📄 test_client_session.py
-│   ├── 📄 test_client_ws.py
-│   ├── 📄 test_client_ws_functional.py
-│   ├── 📄 test_compression_utils.py
-│   ├── 📄 test_connector.py
-│   ├── 📄 test_cookie_helpers.py
-│   ├── 📄 test_cookiejar.py
-│   ├── 📄 test_flowcontrol_streams.py
-│   ├── 📄 test_formdata.py
-│   ├── 📄 test_helpers.py
-│   ├── 📄 test_http_exceptions.py
-│   ├── 📄 test_http_parser.py
-│   ├── 📄 test_http_writer.py
-│   ├── 📄 test_imports.py
-│   ├── 📄 test_leaks.py
-│   ├── 📄 test_loop.py
-│   ├── 📄 test_multipart.py
-│   ├── 📄 test_multipart_helpers.py
-│   ├── 📄 test_payload.py
-│   ├── 📄 test_proxy.py
-│   ├── 📄 test_proxy_functional.py
-│   ├── 📄 test_pytest_plugin.py
-│   ├── 📄 test_resolver.py
-│   ├── 📄 test_route_def.py
-│   ├── 📄 test_run_app.py
-│   ├── 📄 test_streams.py
-│   ├── 📄 test_tcp_helpers.py
-│   ├── 📄 test_test_utils.py
-│   ├── 📄 test_tracing.py
-│   ├── 📄 test_urldispatch.py
-│   ├── 📄 test_web_app.py
-│   ├── 📄 test_web_cli.py
-│   ├── 📄 test_web_exceptions.py
-│   ├── 📄 test_web_functional.py
-│   ├── 📄 test_web_log.py
-│   ├── 📄 test_web_middleware.py
-│   ├── 📄 test_web_request.py
-│   ├── 📄 test_web_request_handler.py
-│   ├── 📄 test_web_response.py
-│   ├── 📄 test_web_runner.py
-│   ├── 📄 test_web_sendfile.py
-│   ├── 📄 test_web_sendfile_functional.py
-│   ├── 📄 test_web_server.py
-│   ├── 📄 test_web_urldispatcher.py
-│   ├── 📄 test_web_websocket.py
-│   ├── 📄 test_web_websocket_functional.py
-│   ├── 📄 test_websocket_data_queue.py
-│   ├── 📄 test_websocket_handshake.py
-│   ├── 📄 test_websocket_parser.py
-│   ├── 📄 test_websocket_writer.py
-│   └── 📄 test_worker.py
-├── 📁 tools
-│   ├── 📄 bench-asyncio-write.py
-│   ├── 📄 check_changes.py
-│   ├── 📄 check_sum.py
-│   ├── 📄 cleanup_changes.py
-│   ├── 📄 drop_merged_branches.sh
-│   ├── 📄 gen.py
-│   └── 📁 testing
-│       ├── 📄 Dockerfile
-│       ├── 📄 Dockerfile.dockerignore
-│       └── 📄 entrypoint.sh
-└── 📁 vendor
-    ├── 📄 README.rst
-    └── 📁 llhttp
+│   ├── 📄 font-info.rs
+│   ├── 📄 font2svg.rs
+│   └── 📁 wasm
+│       ├── 📄 README.md
+│       ├── 📄 TTC.ttc
+│       └── 📄 index.html
+├── 📄 meson.build
+├── 📁 src
+│   ├── 📄 aat.rs
+│   ├── 📄 delta_set.rs
+│   ├── 📁 ggg
+│   │   ├── 📄 chained_context.rs
+│   │   ├── 📄 context.rs
+│   │   ├── 📄 feature_variations.rs
+│   │   ├── 📄 layout_table.rs
+│   │   ├── 📄 lookup.rs
+│   │   └── 📄 mod.rs
+│   ├── 📄 language.rs
+│   ├── 📄 lib.rs
+│   ├── 📄 parser.rs
+│   ├── 📁 tables
+│   │   ├── 📄 ankr.rs
+│   │   ├── 📄 avar.rs
+│   │   ├── 📄 cbdt.rs
+│   │   ├── 📄 cblc.rs
+│   │   ├── 📁 cff
+│   │   │   ├── 📄 argstack.rs
+│   │   │   ├── 📄 cff1.rs
+│   │   │   ├── 📄 cff2.rs
+│   │   │   ├── 📄 charset.rs
+│   │   │   ├── 📄 charstring.rs
+│   │   │   ├── 📄 dict.rs
+│   │   │   ├── 📄 encoding.rs
+│   │   │   ├── 📄 index.rs
+│   │   │   ├── 📄 mod.rs
+│   │   │   └── 📄 std_names.rs
+│   │   ├── 📁 cmap
+│   │   │   ├── 📄 format0.rs
+│   │   │   ├── 📄 format10.rs
+│   │   │   ├── 📄 format12.rs
+│   │   │   ├── 📄 format13.rs
+│   │   │   ├── 📄 format14.rs
+│   │   │   ├── 📄 format2.rs
+│   │   │   ├── 📄 format4.rs
+│   │   │   ├── 📄 format6.rs
+│   │   │   └── 📄 mod.rs
+│   │   ├── 📄 colr.rs
+│   │   ├── 📄 cpal.rs
+│   │   ├── 📄 feat.rs
+│   │   ├── 📄 fvar.rs
+│   │   ├── 📄 gdef.rs
+│   │   ├── 📄 glyf.rs
+│   │   ├── 📄 gpos.rs
+│   │   ├── 📄 gsub.rs
+│   │   ├── 📄 gvar.rs
+│   │   ├── 📄 head.rs
+│   │   ├── 📄 hhea.rs
+│   │   ├── 📄 hmtx.rs
+│   │   ├── 📄 hvar.rs
+│   │   ├── 📄 kern.rs
+│   │   ├── 📄 kerx.rs
+│   │   ├── 📄 loca.rs
+│   │   ├── 📄 math.rs
+│   │   ├── 📄 maxp.rs
+│   │   ├── 📄 mod.rs
+│   │   ├── 📄 morx.rs
+│   │   ├── 📄 mvar.rs
+│   │   ├── 📄 name.rs
+│   │   ├── 📄 os2.rs
+│   │   ├── 📄 post.rs
+│   │   ├── 📄 sbix.rs
+│   │   ├── 📄 stat.rs
+│   │   ├── 📄 svg.rs
+│   │   ├── 📄 trak.rs
+│   │   ├── 📄 vhea.rs
+│   │   ├── 📄 vorg.rs
+│   │   └── 📄 vvar.rs
+│   └── 📄 var_store.rs
+├── 📁 testing-tools
+│   ├── 📁 font-view
+│   │   ├── 📄 README.md
+│   │   ├── 📄 font-view.pro
+│   │   ├── 📄 freetypefont.cpp
+│   │   ├── 📄 freetypefont.h
+│   │   ├── 📄 glyph.h
+│   │   ├── 📄 glyphsview.cpp
+│   │   ├── 📄 glyphsview.h
+│   │   ├── 📄 harfbuzzfont.cpp
+│   │   ├── 📄 harfbuzzfont.h
+│   │   ├── 📄 main.cpp
+│   │   ├── 📄 mainwindow.cpp
+│   │   ├── 📄 mainwindow.h
+│   │   ├── 📄 mainwindow.ui
+│   │   ├── 📄 ttfparserfont.cpp
+│   │   └── 📄 ttfparserfont.h
+│   └── 📁 ttf-fuzz
+│       ├── 📄 Cargo.toml
+│       ├── 📄 README.md
+│       ├── 📁 src
+│       │   ├── 📄 fuzz-glyph-index.rs
+│       │   ├── 📄 fuzz-outline.rs
+│       │   └── 📄 fuzz-variable-outline.rs
+│       └── 📄 strip-tables.py
+└── 📁 tests
+    ├── 📄 bitmap.rs
+    ├── 📁 fonts
+    │   ├── 📄 bitmap.otb
+    │   ├── 📄 colr_1.ttf
+    │   ├── 📄 colr_1_LICENSE
+    │   ├── 📄 colr_1_variable.ttf
+    │   ├── 📄 demo.ttf
+    │   └── 📄 demo.ttx
+    └── 📁 tables
+        ├── 📄 aat.rs
+        ├── 📄 ankr.rs
+        ├── 📄 cff1.rs
+        ├── 📄 cmap.rs
+        ├── 📄 colr.rs
+        ├── 📄 feat.rs
+        ├── 📄 glyf.rs
+        ├── 📄 hmtx.rs
+        ├── 📄 main.rs
+        ├── 📄 maxp.rs
+        ├── 📄 sbix.rs
+        └── 📄 trak.rs

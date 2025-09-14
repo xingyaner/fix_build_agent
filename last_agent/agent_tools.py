@@ -69,7 +69,7 @@ def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> di
         return {"status": "error", "message": error_message}
 
 
-# --- 工具 : 读取并展示文件内容 ---
+# --- 工具 : 读取文件内容 ---
 def read_file_content(file_path: str) -> dict:
     """
     读取指定文本文件的内容并返回。
@@ -335,7 +335,7 @@ def run_fuzz_build(
 
     Args:
         project_name (str): 要进行fuzzing的项目名称 (例如 'suricata')。
-        oss_fuzz_path (str): OSS-Fuzz项目的根目录的绝对路径。
+        oss_fuzz_path (str): OSS-Fuzz所在的路径，以'/oss-fuzz'为路径的最后一部分。
         sanitizer (str, optional): 使用的消毒器。默认为 'address'。
         engine (str, optional): 使用的fuzzing引擎。默认为 'libfuzzer'。
         architecture (str, optional): 目标架构。默认为 'x86_64'。
@@ -418,7 +418,7 @@ def run_fuzz_build_streaming(
 
     Args:
         project_name (str): 要进行fuzzing的项目名称。
-        oss_fuzz_path (str): OSS-Fuzz项目的根目录的绝对路径。
+        oss_fuzz_path (str): OSS-Fuzz项目的根目录的绝对路径，如：/root/oss-fuzz/
         sanitizer (str, optional): 使用的消毒器。
         engine (str, optional): 使用的fuzzing引擎。
         architecture (str, optional): 目标架构。
@@ -494,67 +494,98 @@ def run_fuzz_build_streaming(
         print(message)
 
 
-# --- 新增工具: 应用解决方案文件 ---
-def apply_solution_file(solution_file_path: str, target_directory: str) -> dict:
+import os
+
+
+def apply_solution_file(solution_file_path: str) -> dict:
     """
-    解析一个包含文件修改方案的文本文件，并将这些修改应用到指定的目标目录中。
-    解决方案文件必须使用 '---=== FILE ===---' 作为每个文件块的分隔符。
+    solution_file_path 参数可能是绝对路径或者相对路径
+    解析一个包含文件修改方案的文本文件，并将这些修改应用到指定的目标路径中。
+    此工具能够处理包含一个或多个文件修改块的解决方案文件。
+
+    预期的文件格式为：
+    ---=== FILE ===---
+    指向待修改文件的路径
+    文件1替换后的完整内容...
+    ---=== FILE ===---
+    指向待修改文件的路径
+    文件2替换后的完整内容...
     """
     print(
-        f"--- Tool: apply_solution_file called. Solution: '{solution_file_path}', Target Dir: '{target_directory}' ---")
+        f"--- Tool: apply_solution_file (最终版) called. Solution File: '{solution_file_path}' ---")
 
     if not os.path.isfile(solution_file_path):
         return {"status": "error", "message": f"错误：解决方案文件 '{solution_file_path}' 不存在。"}
-    if not os.path.isdir(target_directory):
-        return {"status": "error", "message": f"错误：目标目录 '{target_directory}' 不存在。"}
 
     try:
-        # --- 核心修改：使用分隔符进行解析 ---
         with open(solution_file_path, "r", encoding="utf-8") as f:
             content = f.read()
 
-        # 定义分隔符
+
+        print("\n" + "="*20 + " 调试信息: 完整文件内容 " + "="*20)
+        print(content)
+        print("="*58 + "\n")
+
+
         FILE_SEPARATOR = "---=== FILE ===---"
 
-        # 使用分隔符将整个文件内容切分成多个文件块
+        # 1. 使用分隔符将整个文件内容切分成多个文件块的列表
         file_blocks = content.split(FILE_SEPARATOR)
 
         parsed_files = {}
+        # 2. 循环处理每一个文件块
         for block in file_blocks:
-            if not block.strip():
-                continue  # 跳过可能存在的空块
+            # 去除每个块前后的空行或空格
+            block_content = block.strip()
+            if not block_content:
+                # 跳过因文件开头就是分隔符而产生的第一个空块
+                continue
 
-            # 将每个块按行分割，并移除前后的空行
-            lines = block.strip().split('\n')
+            # 将处理过的块按行分割
+            lines = block_content.split('\n')
 
-            # 第一行应该是文件名
-            filename = lines[0].strip()
-            # 剩下的所有行都是文件内容
+            # 【新增调试代码】: 打印处理后的行列表
+            print(f"  - 文件块 被分割为以下行:")
+            # 循环打印每一行，并显示其索引
+            for line_num, line_text in enumerate(lines):
+                print(f"    - 行 {line_num}: '{line_text}'")
+
+            # 健壮性检查：确保块至少有一行（路径），内容可以为空
+            if len(lines) < 1:
+                print(f"--- Warning: Skipping malformed block (empty): {block_content[:80]}... ---")
+                continue
+
+            # 3. 正确解析：块的第一行 (lines[0]) 是完整的绝对路径
+            full_file_path = lines[0].strip()
+
+            # 4. 正确解析：块的第二行及以后 (lines[1:]) 是文件的完整新内容
             file_content = "\n".join(lines[1:])
 
-            if filename:
-                parsed_files[filename] = file_content
+            # 简单的路径有效性检查
+            if full_file_path and full_file_path.startswith('/'):
+                parsed_files[full_file_path] = file_content
+            else:
+                print(f"--- Warning: Skipping block with invalid or non-absolute path: '{full_file_path}' ---")
 
         if not parsed_files:
             return {"status": "error",
-                    "message": "错误：未能从解决方案文件中解析出任何有效的文件内容。请确保使用了正确的分隔符。"}
-        # --- 结束核心修改 ---
+                    "message": "错误：未能从解决方案文件中解析出任何有效的文件块。请确保格式正确：分隔符后第一行是完整路径。"}
 
-        # --- 文件写入逻辑保持不变 ---
+        # 5. 循环写入所有解析出的文件
         updated_files = []
-        for filename, content in parsed_files.items():
-            target_file_path = os.path.join(target_directory, filename)
-            if not os.path.abspath(target_file_path).startswith(os.path.abspath(target_directory)):
-                print(
-                    f"--- SECURITY WARNING: Skipped writing to '{target_file_path}' as it is outside the target directory. ---")
-                continue
-            print(f"  - Applying changes to '{target_file_path}'...")
+        for target_file_path, content_to_write in parsed_files.items():
+            print(f"  - Applying changes to absolute path: '{target_file_path}'...")
+
+            # 确保目标文件的父目录存在
             target_dir_for_file = os.path.dirname(target_file_path)
             if target_dir_for_file:
                 os.makedirs(target_dir_for_file, exist_ok=True)
+
+            # 将新内容写入文件，实现整体替换
             with open(target_file_path, "w", encoding="utf-8") as f:
-                f.write(content)  # 这里不再需要strip，因为上面的逻辑已经处理好了
-            updated_files.append(filename)
+                f.write(content_to_write)
+
+            updated_files.append(target_file_path)
 
         message = f"解决方案已成功应用。共更新了 {len(updated_files)} 个文件: {', '.join(updated_files)}"
         print(f"--- Tool finished: {message} ---")
@@ -564,3 +595,4 @@ def apply_solution_file(solution_file_path: str, target_directory: str) -> dict:
         message = f"应用解决方案时发生未知错误: {str(e)}"
         print(f"--- ERROR: {message} ---")
         return {"status": "error", "message": message}
+

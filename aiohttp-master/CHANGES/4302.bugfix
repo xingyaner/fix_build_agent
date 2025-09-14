@@ -1,1 +1,0 @@
-Fixed the support of route handlers wrapped by :py:func:`functools.partial`

@@ -1,1 +1,0 @@
-Deleted ``size`` arg from ``StreamReader.feed_data`` -- by :user:`DavidRomanovizc`.

@@ -1,1 +1,0 @@
-Drop deprecated ``Application.make_handler()``

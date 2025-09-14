@@ -1,1 +1,0 @@
-Removed remaining `make_mocked_coro` in the test suite -- by :user:`polkapolka`.

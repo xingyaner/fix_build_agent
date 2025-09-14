@@ -1,12 +1,12 @@
 
     你是软件测试方面首屈一指的专家，尤其擅长fuzz编译和构建问题的解决。通常是由fuzz配置文件与项目的文件内容不匹配导致的编译或构建问题。下面我将给你提供不同项目在oss-fuzz编译过程中的报错，请你根据报错信息和配置文件内容等信息对报错给出针对性的解决方案，尽可能的不去改动与问题不相关的文件内容，最终使该项目能够成功的进行编译和build。
-    下面将给出aiohttp-master的Dockerfile、build.sh、fuzz_http_parser.py、fuzz_http_payload_parser.py、fuzz_multipart.py、fuzz_payload_url.py、fuzz_web_request.py、project.yaml、文件树、报错日志内容。请你对文件树进行读取并分析给出的信息并且指出问题可能是由哪些文件内容引起的，是fuzz测试构建的核心文件如Dockerfile、build.sh或者是aiohttp-master项目中的文件，并尝试给出解决方案。
+    下面将给出ttf-parser的Dockerfile、build.sh、project.yaml、文件树、报错日志内容。请你对文件树进行读取并分析给出的信息并且指出问题可能是由哪些文件内容引起的，是fuzz测试构建的核心文件如Dockerfile、build.sh或者是ttf-parser项目中的文件，并尝试给出解决方案。
 
 
 --- Configuration Files ---
 
 ### 内容来源: Dockerfile ###
-# Copyright 2022 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,29 +22,19 @@
 #
 ################################################################################
 
-FROM gcr.io/oss-fuzz-base/base-builder-python
-#RUN apt-get update && apt-get install -y \
-  pkg-config \
-  zlib1g \
-  zlib1g-dev \
-  libjpeg-dev \
-  libpng-dev \
-  libffi-dev \
-  make \
-  autoconf \
-  libtool
-RUN python3 -m pip install --upgrade pip
-RUN curl -sL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
-RUN bash nodesource_setup.sh && apt-get install -y nodejs
-RUN git clone --recurse-submodules https://github.com/aio-libs/aiohttp
-COPY build.sh $SRC/
-COPY fuzz_* $SRC/aiohttp/
+FROM gcr.io/oss-fuzz-base/base-builder-rust
 
-WORKDIR $SRC/aiohttp
+# Clone ttf-parser project
+RUN git clone https://github.com/RazrFalcon/ttf-parser ttf-parser
+WORKDIR $SRC/ttf-parser
+
+COPY build.sh $SRC/
+COPY fuzz $SRC/ttf-parser/fuzz
 
 ### 内容来源: build.sh ###
 #!/bin/bash -eu
-# Copyright 2022 Google LLC
+#
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -59,747 +49,189 @@ WORKDIR $SRC/aiohttp
 # limitations under the License.
 #
 ################################################################################
-# Build the llhttp parser
-git submodule update --init --recursive
-pushd "$SRC/aiohttp/vendor/llhttp/"
-npm ci
-make
-popd # "$SRC/aiohttp/vendor/llhttp/"
 
-# Build & install aiohttp
-make cythonize
-make install-dev
+# Build fuzzers
+cargo fuzz build -O
 
-# Duplicate fuzzers to use Pure python code (in addition
-# to the existing C-compiled code).
-cp fuzz_http_parser.py fuzz_http_parser_pure_python.py
-sed -i 's/AIOHTTP_VAL=0/AIOHTTP_VAL=1/g' fuzz_http_parser_pure_python.py
-cp fuzz_http_payload_parser.py fuzz_http_payload_parser_pure_python.py
-sed -i 's/AIOHTTP_VAL=0/AIOHTTP_VAL=1/g' fuzz_http_payload_parser_pure_python.py
+find $SRC/ttf-parser/fuzz/target/x86_64-unknown-linux-gnu/release -maxdepth 1 -name fuzz-* \
+    -type f -perm -u=x -exec cp {} $OUT \;
 
-# Build fuzzers in $OUT.
-for fuzzer in $(find $SRC -name 'fuzz_*.py'); do
-  compile_python_fuzzer $fuzzer
-done
-
-### 内容来源: fuzz_http_parser.py ###
-#!/usr/bin/python3
-
-# Copyright 2022 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-import os
-AIOHTTP_VAL=0
-if AIOHTTP_VAL == 0:
-  os.environ["AIOHTTP_NO_EXTENSIONS"] = ""
-else:
-  os.environ["AIOHTTP_NO_EXTENSIONS"] = "1"
-
-import sys
-import atheris
-
-# aiohttp imports
-import asyncio
-with atheris.instrument_imports():
-    import aiohttp
-    from aiohttp.base_protocol import BaseProtocol
-    from aiohttp import http_exceptions, streams
-
-@atheris.instrument_func
-def TestOneInput(data):
-    loop = asyncio.get_event_loop()
-    pr = BaseProtocol(loop)
-    h_p = aiohttp.http_parser.HttpRequestParser(pr, loop, 32768)
-    try:
-        h_p.feed_data(data)
-        h_p.feed_eof()
-    except aiohttp.http_exceptions.HttpProcessingError:
-        None
-
-def main():
-    atheris.Setup(sys.argv, TestOneInput, enable_python_coverage=True)
-    loop = asyncio.get_event_loop()
-    asyncio.set_event_loop(loop)
-    atheris.Fuzz()
-
-if __name__ == "__main__":
-    main()
-
-### 内容来源: fuzz_http_payload_parser.py ###
-#!/usr/bin/python3
-# Copyright 2022 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-import os
-AIOHTTP_VAL=0
-if AIOHTTP_VAL == 0:
-  os.environ["AIOHTTP_NO_EXTENSIONS"] = ""
-else:
-  os.environ["AIOHTTP_NO_EXTENSIONS"] = "1"
-
-import sys
-import atheris
-
-# aiohttp imports
-import asyncio
-with atheris.instrument_imports():
-    import aiohttp
-    from aiohttp.base_protocol import BaseProtocol
-    from aiohttp import http_exceptions, streams
-
-@atheris.instrument_func
-def TestOneInput(data):
-    loop = asyncio.get_event_loop()
-    pr = BaseProtocol(loop)
-    out = aiohttp.StreamReader(pr, 2**16, loop=None)
-    h_p = aiohttp.http_parser.HttpPayloadParser(out, loop, 32768)
-    try:
-        h_p.feed_data(data)
-    except aiohttp.http_exceptions.HttpProcessingError:
-        None
-
-def main():
-    atheris.Setup(sys.argv, TestOneInput, enable_python_coverage=True)
-    loop = asyncio.get_event_loop()
-    asyncio.set_event_loop(loop)
-    atheris.Fuzz()
-
-if __name__ == "__main__":
-    main()
-
-### 内容来源: fuzz_multipart.py ###
-#!/usr/bin/python3
-# Copyright 2022 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-import io
-import sys
-import atheris
-
-# aiohttp imports
-import asyncio
-with atheris.instrument_imports():
-    import aiohttp
-    from aiohttp.hdrs import (
-        CONTENT_TYPE,
-    )
-
-class FuzzStream:
-    def __init__(self, content):
-        self.content = io.BytesIO(content)
-
-    async def read(self, size = None):
-        return self.content.read(size)
-
-    def at_eof(self):
-        return self.content.tell() == len(self.content.getbuffer())
-
-    async def readline(self):
-        return self.content.readline()
-
-    def unread_data(self, data):
-        self.content = io.BytesIO(data + self.content.read())
-
-
-@atheris.instrument_func
-async def fuzz_bodypart_reader(data):
-    fdp = atheris.FuzzedDataProvider(data)
-    obj = aiohttp.BodyPartReader(
-        b"--:",
-        {
-            CONTENT_TYPE: fdp.ConsumeUnicode(30),
-        },
-        FuzzStream(fdp.ConsumeBytes(atheris.ALL_REMAINING)),
-    )
-    if not obj.at_eof():
-        await obj.form()
-
-@atheris.instrument_func
-def TestOneInput(data):
-    try:
-        asyncio.run(fuzz_bodypart_reader(data))
-    except AssertionError:
-        return
-
-def main():
-    atheris.Setup(sys.argv, TestOneInput)
-    loop = asyncio.get_event_loop()
-    asyncio.set_event_loop(loop)
-    atheris.Fuzz()
-
-if __name__ == "__main__":
-    main()
-
-### 内容来源: fuzz_payload_url.py ###
-#!/usr/bin/python3
-
-# Copyright 2022 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-import sys
-import atheris
-
-# aiohttp specific
-with atheris.instrument_imports():
-    from aiohttp import http_exceptions, payload
-    from yarl import URL
-
-@atheris.instrument_func
-def TestOneInput(data):
-    fdp = atheris.FuzzedDataProvider(data)
-    original = fdp.ConsumeString(sys.maxsize)
-
-    try:
-        p = payload.StringPayload(original)
-    except UnicodeEncodeError:
-        None
-    try:
-        u = URL(original)
-    except ValueError:
-        None
-
-def main():
-    atheris.Setup(sys.argv, TestOneInput, enable_python_coverage=True)
-    atheris.Fuzz()
-
-if __name__ == "__main__":
-    main()
-
-### 内容来源: fuzz_web_request.py ###
-#!/usr/bin/python3
-# Copyright 2022 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-import os
-import sys
-import atheris
-
-# aiohttp imports
-import asyncio
-with atheris.instrument_imports():
-    import aiohttp
-    from aiohttp.test_utils import make_mocked_request
-    from multidict import CIMultiDict
-    from yarl import URL
-
-@atheris.instrument_func
-async def fuzz_run_one_async(data):
-    fdp = atheris.FuzzedDataProvider(data)
-    url_s = fdp.ConsumeString(fdp.ConsumeIntInRange(0, 512))
-    try:
-        URL(url_s)
-    except Exception:
-        return
-
-    headers = CIMultiDict(
-        { fdp.ConsumeString(20) : fdp.ConsumeString(fdp.ConsumeIntInRange(0, 512)) }
-    )
-    req = make_mocked_request("GET", url_s, headers=headers)
-
-    l1 = len(req.forwarded)
-    ret = await req.post()
-
-@atheris.instrument_func
-def TestOneInput(data):
-    asyncio.run(fuzz_run_one_async(data))
-
-def main():
-    atheris.Setup(sys.argv, TestOneInput, enable_python_coverage=True)
-    loop = asyncio.get_event_loop()
-    asyncio.set_event_loop(loop)
-    atheris.Fuzz()
-
-if __name__ == "__main__":
-    main()
 
 ### 内容来源: project.yaml ###
-fuzzing_engines:
-- libfuzzer
-homepage: https://github.com/aio-libs/aiohttp
-language: python
-main_repo: https://github.com/aio-libs/aiohttp
+homepage: "https://github.com/RazrFalcon/ttf-parser"
+main_repo: "https://github.com/RazrFalcon/ttf-parser.git"
+language: rust
 sanitizers:
-- address
-- undefined
+  - address
+fuzzing_engines:
+  - libfuzzer
 vendor_ccs:
-- david@adalogics.com
-- adam@adalogics.com
+- "david@adalogics.com"
+- "arthur.chan@adalogics.com"
+- "fuzzing@fuchsia.dev"
 
 
 --- Project File Tree ---
-📁 aiohttp-master
-├── 📁 CHANGES
-│   ├── 📄 10872.contrib.rst
-│   ├── 📄 11161.feature.rst
-│   ├── 📄 11233.doc.rst
-│   ├── 📄 11243.bugfix
-│   ├── 📄 11268.feature.rst
-│   ├── 📄 11363.packaging
-│   ├── 📄 11425.packaging.rst
-│   ├── 📄 2174.bugfix
-│   ├── 📄 2835.breaking.rst
-│   ├── 📄 2977.breaking.rst
-│   ├── 📄 3310.bugfix
-│   ├── 📄 3462.feature
-│   ├── 📄 3463.breaking.rst
-│   ├── 📄 3482.bugfix
-│   ├── 📄 3538.breaking.rst
-│   ├── 📄 3539.breaking.rst
-│   ├── 📄 3540.feature
-│   ├── 📄 3542.breaking.rst
-│   ├── 📄 3545.feature
-│   ├── 📄 3547.breaking.rst
-│   ├── 📄 3548.breaking.rst
-│   ├── 📄 3559.doc
-│   ├── 📄 3562.bugfix
-│   ├── 📄 3569.feature
-│   ├── 📄 3580.breaking.rst
-│   ├── 📄 3612.bugfix
-│   ├── 📄 3613.bugfix
-│   ├── 📄 3642.doc
-│   ├── 📄 3685.doc
-│   ├── 📄 3721.bugfix
-│   ├── 📄 3767.feature
-│   ├── 📄 3787.feature
-│   ├── 📄 3796.feature
-│   ├── 📄 3890.breaking.rst
-│   ├── 📄 3901.breaking.rst
-│   ├── 📄 3929.breaking.rst
-│   ├── 📄 3931.breaking.rst
-│   ├── 📄 3932.breaking.rst
-│   ├── 📄 3933.breaking.rst
-│   ├── 📄 3934.breaking.rst
-│   ├── 📄 3935.breaking.rst
-│   ├── 📄 3939.breaking.rst
-│   ├── 📄 3940.breaking.rst
-│   ├── 📄 3942.breaking.rst
-│   ├── 📄 3948.breaking.rst
-│   ├── 📄 3994.misc
-│   ├── 📄 4161.doc
-│   ├── 📄 4277.feature
-│   ├── 📄 4283.bugfix
-│   ├── 📄 4299.bugfix
-│   ├── 📄 4302.bugfix
-│   ├── 📄 4368.bugfix
-│   ├── 📄 4452.doc
-│   ├── 📄 4504.doc
-│   ├── 📄 4526.bugfix
-│   ├── 📄 4558.bugfix
-│   ├── 📄 4656.bugfix
-│   ├── 📄 4695.doc
-│   ├── 📄 4706.feature
-│   ├── 📄 5075.feature
-│   ├── 📄 5191.doc
-│   ├── 📄 5258.bugfix
-│   ├── 📄 5278.breaking.rst
-│   ├── 📄 5284.breaking.rst
-│   ├── 📄 5284.feature
-│   ├── 📄 5287.feature
-│   ├── 📄 5516.misc
-│   ├── 📄 5533.misc
-│   ├── 📄 5558.bugfix
-│   ├── 📄 5634.feature
-│   ├── 📄 5783.feature
-│   ├── 📄 5806.misc
-│   ├── 📄 5829.misc
-│   ├── 📄 5870.misc
-│   ├── 📄 5894.bugfix
-│   ├── 📄 6180.bugfix
-│   ├── 📄 6181.bugfix
-│   ├── 📄 6193.feature
-│   ├── 📄 6547.bugfix
-│   ├── 📄 6721.misc
-│   ├── 📄 6979.doc
-│   ├── 📄 6998.doc
-│   ├── 📄 7107.breaking.rst
-│   ├── 📄 7265.breaking.rst
-│   ├── 📄 7319.breaking.rst
-│   ├── 📄 7319.feature.rst
-│   ├── 📄 7677.bugfix
-│   ├── 📄 7772.bugfix
-│   ├── 📄 7815.bugfix
-│   ├── 📄 8048.breaking.rst
-│   ├── 📄 8139.contrib.rst
-│   ├── 📄 8197.doc
-│   ├── 📄 8303.breaking.rst
-│   ├── 📄 8596.breaking.rst
-│   ├── 📄 8698.breaking.rst
-│   ├── 📄 8957.breaking.rst
-│   ├── 📄 9109.breaking.rst
-│   ├── 📄 9212.breaking.rst
-│   ├── 📄 9212.packaging.rst
-│   ├── 📄 9254.breaking.rst
-│   ├── 📄 9292.breaking.rst
-│   ├── 📄 9413.misc.rst
-│   └── 📄 README.rst
-├── 📄 CHANGES.rst
-├── 📄 CODE_OF_CONDUCT.md
-├── 📄 CONTRIBUTING.rst
-├── 📄 CONTRIBUTORS.txt
-├── 📄 LICENSE.txt
-├── 📄 MANIFEST.in
-├── 📄 Makefile
-├── 📄 README.rst
-├── 📁 aiohttp
-│   ├── 📄 __init__.py
-│   ├── 📄 _cookie_helpers.py
-│   ├── 📄 _cparser.pxd
-│   ├── 📄 _find_header.h
-│   ├── 📄 _find_header.pxd
-│   ├── 📄 _http_parser.pyx
-│   ├── 📄 _http_writer.pyx
-│   ├── 📁 _websocket
-│   │   ├── 📄 __init__.py
-│   │   ├── 📄 helpers.py
-│   │   ├── 📄 mask.pxd
-│   │   ├── 📄 mask.pyx
-│   │   ├── 📄 models.py
-│   │   ├── 📄 reader.py
-│   │   ├── 📄 reader_c.pxd
-│   │   ├── 📄 reader_c.py
-│   │   ├── 📄 reader_py.py
-│   │   └── 📄 writer.py
-│   ├── 📄 abc.py
-│   ├── 📄 base_protocol.py
-│   ├── 📄 client.py
-│   ├── 📄 client_exceptions.py
-│   ├── 📄 client_middleware_digest_auth.py
-│   ├── 📄 client_middlewares.py
-│   ├── 📄 client_proto.py
-│   ├── 📄 client_reqrep.py
-│   ├── 📄 client_ws.py
-│   ├── 📄 compression_utils.py
-│   ├── 📄 connector.py
-│   ├── 📄 cookiejar.py
-│   ├── 📄 formdata.py
-│   ├── 📄 hdrs.py
-│   ├── 📄 helpers.py
-│   ├── 📄 http.py
-│   ├── 📄 http_exceptions.py
-│   ├── 📄 http_parser.py
-│   ├── 📄 http_websocket.py
-│   ├── 📄 http_writer.py
-│   ├── 📄 log.py
-│   ├── 📄 multipart.py
-│   ├── 📄 payload.py
-│   ├── 📄 py.typed
-│   ├── 📄 pytest_plugin.py
-│   ├── 📄 resolver.py
-│   ├── 📄 streams.py
-│   ├── 📄 tcp_helpers.py
-│   ├── 📄 test_utils.py
-│   ├── 📄 tracing.py
-│   ├── 📄 typedefs.py
-│   ├── 📄 web.py
-│   ├── 📄 web_app.py
-│   ├── 📄 web_exceptions.py
-│   ├── 📄 web_fileresponse.py
-│   ├── 📄 web_log.py
-│   ├── 📄 web_middlewares.py
-│   ├── 📄 web_protocol.py
-│   ├── 📄 web_request.py
-│   ├── 📄 web_response.py
-│   ├── 📄 web_routedef.py
-│   ├── 📄 web_runner.py
-│   ├── 📄 web_server.py
-│   ├── 📄 web_urldispatcher.py
-│   ├── 📄 web_ws.py
-│   └── 📄 worker.py
-├── 📁 docs
-│   ├── 📄 Makefile
-│   ├── 📁 _static
-│   │   ├── 📁 css
-│   │   │   └── 📄 logo-adjustments.css
-│   │   └── 📁 img
-│   │       ├── 📄 contributing-cov-comment.svg
-│   │       ├── 📄 contributing-cov-header.svg
-│   │       ├── 📄 contributing-cov-miss.svg
-│   │       └── 📄 contributing-cov-partial.svg
-│   ├── 📄 abc.rst
-│   ├── 📄 aiohttp-icon.svg
-│   ├── 📄 aiohttp-plain.svg
-│   ├── 📄 built_with.rst
-│   ├── 📄 changes.rst
-│   ├── 📄 client.rst
-│   ├── 📄 client_advanced.rst
-│   ├── 📄 client_middleware_cookbook.rst
-│   ├── 📄 client_quickstart.rst
-│   ├── 📄 client_reference.rst
-│   ├── 📁 code
-│   │   └── 📄 client_middleware_cookbook.py
-│   ├── 📄 conf.py
-│   ├── 📄 contributing-admins.rst
-│   ├── 📄 contributing.rst
-│   ├── 📄 deployment.rst
-│   ├── 📄 essays.rst
-│   ├── 📄 external.rst
-│   ├── 📄 faq.rst
-│   ├── 📄 favicon.ico
-│   ├── 📄 glossary.rst
-│   ├── 📄 http_request_lifecycle.rst
-│   ├── 📄 index.rst
-│   ├── 📄 logging.rst
-│   ├── 📄 make.bat
-│   ├── 📄 migration_to_2xx.rst
-│   ├── 📄 misc.rst
-│   ├── 📄 multipart.rst
-│   ├── 📄 multipart_reference.rst
-│   ├── 📄 new_router.rst
-│   ├── 📄 old-logo.png
-│   ├── 📄 old-logo.svg
-│   ├── 📄 powered_by.rst
-│   ├── 📄 spelling_wordlist.txt
-│   ├── 📄 streams.rst
-│   ├── 📄 structures.rst
-│   ├── 📄 testing.rst
-│   ├── 📄 third_party.rst
-│   ├── 📄 tracing_reference.rst
-│   ├── 📄 utilities.rst
-│   ├── 📄 web.rst
-│   ├── 📄 web_advanced.rst
-│   ├── 📄 web_exceptions.rst
-│   ├── 📄 web_lowlevel.rst
-│   ├── 📄 web_quickstart.rst
-│   ├── 📄 web_reference.rst
-│   ├── 📄 websocket_utilities.rst
-│   ├── 📄 whats_new_1_1.rst
-│   └── 📄 whats_new_3_0.rst
+📁 ttf-parser
+├── 📄 CHANGELOG.md
+├── 📄 Cargo.toml
+├── 📄 LICENSE-APACHE
+├── 📄 LICENSE-MIT
+├── 📄 README.md
+├── 📁 benches
+│   ├── 📄 Cargo.toml
+│   ├── 📄 README.md
+│   ├── 📁 fonts
+│   │   ├── 📄 README.md
+│   │   ├── 📄 SourceSansPro-Regular.otf
+│   │   ├── 📄 SourceSansPro-Regular.ttf
+│   │   ├── 📄 SourceSansVariable-Roman.otf
+│   │   └── 📄 SourceSansVariable-Roman.ttf
+│   ├── 📄 methods_perf.rs
+│   ├── 📄 methods_perf_x1000.rs
+│   └── 📁 outline
+│       ├── 📄 README.md
+│       ├── 📄 meson.build
+│       ├── 📄 outline.cc
+│       └── 📁 subprojects
+│           ├── 📄 google-benchmark.wrap
+│           └── 📄 stb_truetype.wrap
+├── 📁 c-api
+│   ├── 📄 Cargo.toml
+│   ├── 📄 README.md
+│   ├── 📄 cbindgen.toml
+│   ├── 📄 lib.rs
+│   ├── 📄 test.c
+│   └── 📄 ttfparser.h
 ├── 📁 examples
-│   ├── 📄 background_tasks.py
-│   ├── 📄 basic_auth_middleware.py
-│   ├── 📄 cli_app.py
-│   ├── 📄 client_auth.py
-│   ├── 📄 client_json.py
-│   ├── 📄 client_ws.py
-│   ├── 📄 combined_middleware.py
-│   ├── 📄 curl.py
-│   ├── 📄 digest_auth_qop_auth.py
-│   ├── 📄 fake_server.py
-│   ├── 📄 logging_middleware.py
-│   ├── 📄 lowlevel_srv.py
-│   ├── 📄 retry_middleware.py
-│   ├── 📄 server.crt
-│   ├── 📄 server.csr
-│   ├── 📄 server.key
-│   ├── 📄 server_simple.py
-│   ├── 📄 static_files.py
-│   ├── 📄 token_refresh_middleware.py
-│   ├── 📄 web_classview.py
-│   ├── 📄 web_cookies.py
-│   ├── 📄 web_rewrite_headers_middleware.py
-│   ├── 📄 web_srv.py
-│   ├── 📄 web_srv_route_deco.py
-│   ├── 📄 web_srv_route_table.py
-│   ├── 📄 web_ws.py
-│   └── 📄 websocket.html
-├── 📄 pyproject.toml
-├── 📁 requirements
-│   ├── 📄 base.in
-│   ├── 📄 base.txt
-│   ├── 📄 constraints.in
-│   ├── 📄 constraints.txt
-│   ├── 📄 cython.in
-│   ├── 📄 cython.txt
-│   ├── 📄 dev.in
-│   ├── 📄 dev.txt
-│   ├── 📄 doc-spelling.in
-│   ├── 📄 doc-spelling.txt
-│   ├── 📄 doc.in
-│   ├── 📄 doc.txt
-│   ├── 📄 lint.in
-│   ├── 📄 lint.txt
-│   ├── 📄 multidict.in
-│   ├── 📄 multidict.txt
-│   ├── 📄 runtime-deps.in
-│   ├── 📄 runtime-deps.txt
-│   ├── 📄 sync-direct-runtime-deps.py
-│   ├── 📄 test.in
-│   └── 📄 test.txt
-├── 📄 setup.cfg
-├── 📄 setup.py
-├── 📁 tests
-│   ├── 📄 aiohttp.jpg
-│   ├── 📄 aiohttp.png
-│   ├── 📁 autobahn
-│   │   ├── 📄 Dockerfile.aiohttp
-│   │   ├── 📄 Dockerfile.autobahn
-│   │   ├── 📁 client
-│   │   │   ├── 📄 client.py
-│   │   │   └── 📄 fuzzingserver.json
-│   │   ├── 📁 server
-│   │   │   ├── 📄 fuzzingclient.json
-│   │   │   └── 📄 server.py
-│   │   └── 📄 test_autobahn.py
-│   ├── 📄 conftest.py
-│   ├── 📄 data.unknown_mime_type
-│   ├── 📄 data.zero_bytes
-│   ├── 📄 github-urls.json
-│   ├── 📁 isolated
-│   │   ├── 📄 check_for_client_response_leak.py
-│   │   └── 📄 check_for_request_leak.py
-│   ├── 📄 sample.txt
-│   ├── 📄 test_base_protocol.py
-│   ├── 📄 test_benchmarks_client.py
-│   ├── 📄 test_benchmarks_client_request.py
-│   ├── 📄 test_benchmarks_client_ws.py
-│   ├── 📄 test_benchmarks_cookiejar.py
-│   ├── 📄 test_benchmarks_http_websocket.py
-│   ├── 📄 test_benchmarks_http_writer.py
-│   ├── 📄 test_benchmarks_web_fileresponse.py
-│   ├── 📄 test_benchmarks_web_middleware.py
-│   ├── 📄 test_benchmarks_web_response.py
-│   ├── 📄 test_benchmarks_web_urldispatcher.py
-│   ├── 📄 test_circular_imports.py
-│   ├── 📄 test_classbasedview.py
-│   ├── 📄 test_client_connection.py
-│   ├── 📄 test_client_exceptions.py
-│   ├── 📄 test_client_fingerprint.py
-│   ├── 📄 test_client_functional.py
-│   ├── 📄 test_client_middleware.py
-│   ├── 📄 test_client_middleware_digest_auth.py
-│   ├── 📄 test_client_proto.py
-│   ├── 📄 test_client_request.py
-│   ├── 📄 test_client_response.py
-│   ├── 📄 test_client_session.py
-│   ├── 📄 test_client_ws.py
-│   ├── 📄 test_client_ws_functional.py
-│   ├── 📄 test_compression_utils.py
-│   ├── 📄 test_connector.py
-│   ├── 📄 test_cookie_helpers.py
-│   ├── 📄 test_cookiejar.py
-│   ├── 📄 test_flowcontrol_streams.py
-│   ├── 📄 test_formdata.py
-│   ├── 📄 test_helpers.py
-│   ├── 📄 test_http_exceptions.py
-│   ├── 📄 test_http_parser.py
-│   ├── 📄 test_http_writer.py
-│   ├── 📄 test_imports.py
-│   ├── 📄 test_leaks.py
-│   ├── 📄 test_loop.py
-│   ├── 📄 test_multipart.py
-│   ├── 📄 test_multipart_helpers.py
-│   ├── 📄 test_payload.py
-│   ├── 📄 test_proxy.py
-│   ├── 📄 test_proxy_functional.py
-│   ├── 📄 test_pytest_plugin.py
-│   ├── 📄 test_resolver.py
-│   ├── 📄 test_route_def.py
-│   ├── 📄 test_run_app.py
-│   ├── 📄 test_streams.py
-│   ├── 📄 test_tcp_helpers.py
-│   ├── 📄 test_test_utils.py
-│   ├── 📄 test_tracing.py
-│   ├── 📄 test_urldispatch.py
-│   ├── 📄 test_web_app.py
-│   ├── 📄 test_web_cli.py
-│   ├── 📄 test_web_exceptions.py
-│   ├── 📄 test_web_functional.py
-│   ├── 📄 test_web_log.py
-│   ├── 📄 test_web_middleware.py
-│   ├── 📄 test_web_request.py
-│   ├── 📄 test_web_request_handler.py
-│   ├── 📄 test_web_response.py
-│   ├── 📄 test_web_runner.py
-│   ├── 📄 test_web_sendfile.py
-│   ├── 📄 test_web_sendfile_functional.py
-│   ├── 📄 test_web_server.py
-│   ├── 📄 test_web_urldispatcher.py
-│   ├── 📄 test_web_websocket.py
-│   ├── 📄 test_web_websocket_functional.py
-│   ├── 📄 test_websocket_data_queue.py
-│   ├── 📄 test_websocket_handshake.py
-│   ├── 📄 test_websocket_parser.py
-│   ├── 📄 test_websocket_writer.py
-│   └── 📄 test_worker.py
-├── 📁 tools
-│   ├── 📄 bench-asyncio-write.py
-│   ├── 📄 check_changes.py
-│   ├── 📄 check_sum.py
-│   ├── 📄 cleanup_changes.py
-│   ├── 📄 drop_merged_branches.sh
-│   ├── 📄 gen.py
-│   └── 📁 testing
-│       ├── 📄 Dockerfile
-│       ├── 📄 Dockerfile.dockerignore
-│       └── 📄 entrypoint.sh
-└── 📁 vendor
-    ├── 📄 README.rst
-    └── 📁 llhttp
+│   ├── 📄 font-info.rs
+│   ├── 📄 font2svg.rs
+│   └── 📁 wasm
+│       ├── 📄 README.md
+│       ├── 📄 TTC.ttc
+│       └── 📄 index.html
+├── 📄 meson.build
+├── 📁 src
+│   ├── 📄 aat.rs
+│   ├── 📄 delta_set.rs
+│   ├── 📁 ggg
+│   │   ├── 📄 chained_context.rs
+│   │   ├── 📄 context.rs
+│   │   ├── 📄 feature_variations.rs
+│   │   ├── 📄 layout_table.rs
+│   │   ├── 📄 lookup.rs
+│   │   └── 📄 mod.rs
+│   ├── 📄 language.rs
+│   ├── 📄 lib.rs
+│   ├── 📄 parser.rs
+│   ├── 📁 tables
+│   │   ├── 📄 ankr.rs
+│   │   ├── 📄 avar.rs
+│   │   ├── 📄 cbdt.rs
+│   │   ├── 📄 cblc.rs
+│   │   ├── 📁 cff
+│   │   │   ├── 📄 argstack.rs
+│   │   │   ├── 📄 cff1.rs
+│   │   │   ├── 📄 cff2.rs
+│   │   │   ├── 📄 charset.rs
+│   │   │   ├── 📄 charstring.rs
+│   │   │   ├── 📄 dict.rs
+│   │   │   ├── 📄 encoding.rs
+│   │   │   ├── 📄 index.rs
+│   │   │   ├── 📄 mod.rs
+│   │   │   └── 📄 std_names.rs
+│   │   ├── 📁 cmap
+│   │   │   ├── 📄 format0.rs
+│   │   │   ├── 📄 format10.rs
+│   │   │   ├── 📄 format12.rs
+│   │   │   ├── 📄 format13.rs
+│   │   │   ├── 📄 format14.rs
+│   │   │   ├── 📄 format2.rs
+│   │   │   ├── 📄 format4.rs
+│   │   │   ├── 📄 format6.rs
+│   │   │   └── 📄 mod.rs
+│   │   ├── 📄 colr.rs
+│   │   ├── 📄 cpal.rs
+│   │   ├── 📄 feat.rs
+│   │   ├── 📄 fvar.rs
+│   │   ├── 📄 gdef.rs
+│   │   ├── 📄 glyf.rs
+│   │   ├── 📄 gpos.rs
+│   │   ├── 📄 gsub.rs
+│   │   ├── 📄 gvar.rs
+│   │   ├── 📄 head.rs
+│   │   ├── 📄 hhea.rs
+│   │   ├── 📄 hmtx.rs
+│   │   ├── 📄 hvar.rs
+│   │   ├── 📄 kern.rs
+│   │   ├── 📄 kerx.rs
+│   │   ├── 📄 loca.rs
+│   │   ├── 📄 math.rs
+│   │   ├── 📄 maxp.rs
+│   │   ├── 📄 mod.rs
+│   │   ├── 📄 morx.rs
+│   │   ├── 📄 mvar.rs
+│   │   ├── 📄 name.rs
+│   │   ├── 📄 os2.rs
+│   │   ├── 📄 post.rs
+│   │   ├── 📄 sbix.rs
+│   │   ├── 📄 stat.rs
+│   │   ├── 📄 svg.rs
+│   │   ├── 📄 trak.rs
+│   │   ├── 📄 vhea.rs
+│   │   ├── 📄 vorg.rs
+│   │   └── 📄 vvar.rs
+│   └── 📄 var_store.rs
+├── 📁 testing-tools
+│   ├── 📁 font-view
+│   │   ├── 📄 README.md
+│   │   ├── 📄 font-view.pro
+│   │   ├── 📄 freetypefont.cpp
+│   │   ├── 📄 freetypefont.h
+│   │   ├── 📄 glyph.h
+│   │   ├── 📄 glyphsview.cpp
+│   │   ├── 📄 glyphsview.h
+│   │   ├── 📄 harfbuzzfont.cpp
+│   │   ├── 📄 harfbuzzfont.h
+│   │   ├── 📄 main.cpp
+│   │   ├── 📄 mainwindow.cpp
+│   │   ├── 📄 mainwindow.h
+│   │   ├── 📄 mainwindow.ui
+│   │   ├── 📄 ttfparserfont.cpp
+│   │   └── 📄 ttfparserfont.h
+│   └── 📁 ttf-fuzz
+│       ├── 📄 Cargo.toml
+│       ├── 📄 README.md
+│       ├── 📁 src
+│       │   ├── 📄 fuzz-glyph-index.rs
+│       │   ├── 📄 fuzz-outline.rs
+│       │   └── 📄 fuzz-variable-outline.rs
+│       └── 📄 strip-tables.py
+└── 📁 tests
+    ├── 📄 bitmap.rs
+    ├── 📁 fonts
+    │   ├── 📄 bitmap.otb
+    │   ├── 📄 colr_1.ttf
+    │   ├── 📄 colr_1_LICENSE
+    │   ├── 📄 colr_1_variable.ttf
+    │   ├── 📄 demo.ttf
+    │   └── 📄 demo.ttx
+    └── 📁 tables
+        ├── 📄 aat.rs
+        ├── 📄 ankr.rs
+        ├── 📄 cff1.rs
+        ├── 📄 cmap.rs
+        ├── 📄 colr.rs
+        ├── 📄 feat.rs
+        ├── 📄 glyf.rs
+        ├── 📄 hmtx.rs
+        ├── 📄 main.rs
+        ├── 📄 maxp.rs
+        ├── 📄 sbix.rs
+        └── 📄 trak.rs
 
 --- Fuzz Build Log ---
-INFO:__main__:Running: docker build -t gcr.io/oss-fuzz/aiohttp --file /root/oss-fuzz/projects/aiohttp/Dockerfile /root/oss-fuzz/projects/aiohttp.
-#0 building with "default" instance using docker driver
+python3: can't open file '/root/oss-fuzz/projects/ttf-parser/infra/helper.py': [Errno 2] No such file or directory
 
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 1.22kB done
-#1 DONE 0.0s
-Dockerfile:19
---------------------
-  18 |     #RUN apt-get update && apt-get install -y \
-  19 | >>>   pkg-config \
-  20 | >>>   zlib1g \
-  21 | >>>   zlib1g-dev \
-  22 | >>>   libjpeg-dev \
-  23 | >>>   libpng-dev \
-  24 | >>>   libffi-dev \
-  25 | >>>   make \
-  26 | >>>   autoconf \
-  27 | >>>   libtool
-  28 |     RUN python3 -m pip install --upgrade pip
---------------------
-ERROR: failed to solve: dockerfile parse error on line 19: unknown instruction: pkg-config
-ERROR:__main__:Docker build failed.
+
+Error: Could not find the file /root/oss-fuzz/projects/ttf-parser/infra/helper.py. Please ensure the file exists and the path is correct. This file seems to be missing, which is causing the fuzzing build to fail. Verify the file's presence and path, and correct it if necessary. Once fixed, the build process should be able to locate and use this file. 
