@@ -521,12 +521,6 @@ def apply_solution_file(solution_file_path: str) -> dict:
         with open(solution_file_path, "r", encoding="utf-8") as f:
             content = f.read()
 
-
-        print("\n" + "="*20 + " 调试信息: 完整文件内容 " + "="*20)
-        print(content)
-        print("="*58 + "\n")
-
-
         FILE_SEPARATOR = "---=== FILE ===---"
 
         # 1. 使用分隔符将整个文件内容切分成多个文件块的列表
@@ -544,11 +538,6 @@ def apply_solution_file(solution_file_path: str) -> dict:
             # 将处理过的块按行分割
             lines = block_content.split('\n')
 
-            # 【新增调试代码】: 打印处理后的行列表
-            print(f"  - 文件块 被分割为以下行:")
-            # 循环打印每一行，并显示其索引
-            for line_num, line_text in enumerate(lines):
-                print(f"    - 行 {line_num}: '{line_text}'")
 
             # 健壮性检查：确保块至少有一行（路径），内容可以为空
             if len(lines) < 1:

@@ -1,92 +1,45 @@
 ---=== FILE ===---
-/root/oss-fuzz/projects/ttf-parser/build.sh
-#!/bin/bash
+/root/oss-fuzz/projects/ffmpeg/Dockerfile
+# Copyright 2016 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+################################################################################
 
-# Default build script for ttf-parser
-# This script might need adjustments based on the project's specific build system.
+FROM gcr.io/oss-fuzz-base/base-builder
+RUN apt-get update && apt-get install -y nasm pkg-config rsync libtool gperf
+RUN curl -LO https://mirrors.kernel.org/ubuntu/pool/main/a/automake-1.16/automake_1.16.5-1.3_all.deb && \
+    apt install ./automake_1.16.5-1.3_all.deb
+RUN apt-get update && apt-get install -y autoconf
+# Meson is pinned to get around https://github.com/mesonbuild/meson/issues/14533
+RUN python3 -m pip install --upgrade pip && python3 -m pip install -U meson==1.7.2 ninja
 
-# Example build command (adjust as needed):
-# Assume the project uses CMake or a similar build system.
-# mkdir -p build && cd build
-# cmake ..
-# make -j$(nproc)
+RUN git clone --depth 1 https://github.com/FFmpeg/FFmpeg ffmpeg
 
-# If it uses a Python setup.py:
-# python setup.py build
+RUN curl -k -O https://www.alsa-project.org/files/pub/lib/alsa-lib-1.2.12.tar.bz2
+RUN git clone --depth 1 https://github.com/mstorsjo/fdk-aac.git
+RUN git clone --depth 1 https://gitlab.freedesktop.org/fontconfig/fontconfig.git
+RUN git clone --depth 1 https://gitlab.freedesktop.org/freetype/freetype.git
+RUN git clone --depth 1 https://github.com/fribidi/fribidi
+RUN git clone --depth 1 https://github.com/harfbuzz/harfbuzz
+RUN git clone --depth 1 https://github.com/libass/libass
+RUN git clone --depth 1 https://github.com/madler/zlib
+RUN git clone --depth 1 https://gitlab.com/federicomenaquintero/bzip2
+RUN git clone --depth 1 https://chromium.googlesource.com/webm/libvpx
+RUN git clone --depth 1 https://gitlab.xiph.org/xiph/ogg.git
+RUN git clone --depth 1 https://gitlab.xiph.org/xiph/opus.git
+RUN git clone --depth 1 https://gitlab.xiph.org/xiph/theora.git
+RUN git clone --depth 1 https://gitlab.xiph.org/xiph/vorbis.git
+RUN git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git
 
-# For OSS-Fuzz, a typical build might involve compiling C/C++ code
-# or setting up a Python environment.
-
-# Placeholder for build command. Replace with actual build steps.
-# For now, we'll just ensure the directory exists and exit successfully.
-echo "Building ttf-parser..."
-exit 0
-
----=== FILE ===---
-/root/oss-fuzz/projects/ttf-parser/Dockerfile
-# Dockerfile for ttf-parser
-
-# Use a base image that has the necessary build tools (e.g., Ubuntu with build-essential)
-FROM ubuntu:latest
-
-# Install build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3 \
-    python3-pip \
-    # Add any other necessary build tools (e.g., build-essential, cmake, etc.) \
-    && rm -rf /var/lib/apt/lists/*
-
-# Set the working directory
-WORKDIR /src
-
-# Copy the project files
-COPY . .
-
-# Install Python dependencies if any (e.g., from requirements.txt)
-# RUN pip3 install --no-cache-dir -r requirements.txt
-
-# Build the project (if necessary - adjust based on your build system)
-# RUN ./build.sh
-
-# Command to run the fuzzer (this will be overridden by the OSS-Fuzz runner)
-CMD ["echo", "Dockerfile setup complete. Ready for fuzzing."]
-
----=== FILE ===---
-/root/oss-fuzz/projects/ttf-parser/project.py
-# project.py for ttf-parser
-
-# This file is typically used by OSS-Fuzz to define project-specific settings.
-# For a Python project, it might define the main fuzzer entry point.
-
-# Example:
-# import sys
-# 
-# def fuzz(data):
-#     # Your fuzzing logic here
-#     # Parse the input data using the ttf-parser library
-#     try:
-#         # Replace with actual parsing logic
-#         print(f"Received data of length: {len(data)}")
-#         # Example: ttf_parser.parse(data)
-#     except Exception as e:
-#         print(f"Error during fuzzing: {e}")
-
-# if __name__ == "__main__":
-#     # Example of how to run the fuzzer standalone (for testing)
-#     test_data = b"SOME_TEST_DATA"
-#     fuzz(test_data)
-
-print("ttf-parser project.py loaded.")
-
----=== FILE ===---
-/root/oss-fuzz/projects/ttf-parser/infra/helper.py
-# helper.py for ttf-parser
-
-# This is a placeholder file for infra/helper.py, which was reported as missing.
-# Add the actual content of helper.py here if available.
-
-print("ttf-parser infra/helper.py loaded.")
-
-def some_helper_function():
-    print("This is a helper function.")
-    return True
+COPY build.sh replay_build.sh run_tests.sh group_seed_corpus.py name_mappings.py $SRC/

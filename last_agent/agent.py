@@ -137,7 +137,7 @@ fuzzing_solver_agent = LlmAgent(
     name="fuzzing_solver_agent",
     model=GEMINI_MODEL,
     instruction=load_instruction_from_file("fuzzing_solver_instruction.txt"),
-    description="一个能够分析fuzzing上下文、生成解决方案并将其保存到文件中的专家代理。",
+    description="一个能够分析fuzzing上下文、生成解决方案并将其保存当前运行 agent 的目录中 'solution.txt' 的专家代理。",
     # 唯一的“行动”就是读取上下文文件。
     tools=[read_file_content, create_or_update_file, delay],
     output_key="solution_plan",  # 把结果存入state
@@ -149,7 +149,7 @@ solution_applier_agent = LlmAgent(
     model=GEMINI_MODEL,
     instruction=(
         "你的任务是执行一个文件修改任务。你需要两个信息："
-        "1. `solution_file_path`: 修改方案的文件，即为'/fix_build_agent/solution.txt'。"
+        "1. `solution_file_path`: 修改方案的文件，文件名为 solution.txt，位于当前运行 agent 的目录中。"
         "2. `target_directory`: 需要应用这些修改的项目配置文件的路径，该路径可以从'solution.txt'中获取"
         "获取到这两个信息后，你必须调用 `apply_solution_file` 工具来完成任务，然后向用户报告执行结果。"
         "最后必须执行'delay'工具"
