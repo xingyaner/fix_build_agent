@@ -1,6 +1,7 @@
 import asyncio
 import os
 import time
+from google.adk.models.lite_llm import LiteLlm
 from .util import load_instruction_from_file
 from google.adk.agents import LoopAgent, LlmAgent, BaseAgent, SequentialAgent
 from google.genai import types
@@ -27,8 +28,9 @@ API_DELAY_SECONDS = 40  # 定义延时常量
 APP_NAME = "fix_build_agents_v1"
 USER_ID = "dev_admin_01"
 SESSION_ID_BASE = "loop_exit_tool_session" # New Base Session ID
+DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
 # GEMINI_MODEL = "gemini-2.5-pro"
-GEMINI_MODEL = "gemini-2.5-flash"
+# GEMINI_MODEL = "gemini-2.5-flash"
 # GEMINI_MODEL = "gemini-2.5-flash-lite"
 STATE_INITIAL_TOPIC = "initial_topic"
 SUCCESS_PHRASE = "success"
@@ -59,7 +61,8 @@ def delay() -> str:
 # 1. 初始设置 Agent (工作流的第一步，只运行一次)
 initial_setup_agent = LlmAgent(
     name="initial_setup_agent",
-    model=GEMINI_MODEL,
+#    model=GEMINI_MODEL,
+    model=LiteLlm(model="deepseek/deepseek-reasoner",api_key=DPSEEK_API_KEY),
     instruction="""
     你是一个负责初始化修复工作流的助手。
     你的任务是：
@@ -85,7 +88,8 @@ initial_setup_agent = LlmAgent(
 # 通过 run_fuzz_and_collect_log_agent 来获取三个关键信息：**项目名称**, **项目配置文件路径**, **项目源码路径**
 run_fuzz_and_collect_log_agent = LlmAgent(
     name="run_fuzz_and_collect_log_agent",
-    model=GEMINI_MODEL,
+#    model=GEMINI_MODEL,
+    model=LiteLlm(model="deepseek/deepseek-reasoner",api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("run_fuzz_and_collect_log_instruction.txt"),
     description="一个能够执行Fuzzing构建命令、捕获错误并自动保存错误日志并实时显示进度的的高级代理。",
     tools=[run_fuzz_build_streaming, create_or_update_file, delay],
@@ -96,7 +100,8 @@ run_fuzz_and_collect_log_agent = LlmAgent(
 # 循环结束条件定义：fuzz_build_log_file/fuzz_build_log.txt 存储的内容为 'success'
 decision_agent = LlmAgent(
     name="decision_agent",
-    model=GEMINI_MODEL,
+#    model=GEMINI_MODEL,
+    model=LiteLlm(model="deepseek/deepseek-reasoner",api_key=DPSEEK_API_KEY),
     instruction="""
     你是一个构建流程评估员。你的任务是评估构建结果。
     1.  你**必须**首先调用 `read_file_content` 工具，并传入 'fuzz_build_log_file/fuzz_build_log.txt' 来获取构建日志。
@@ -115,7 +120,8 @@ decision_agent = LlmAgent(
 # --- Sub Agent 3: prompt generate ---
 prompt_generate_agent = LlmAgent(
     name="prompt_generate_agent",
-    model=GEMINI_MODEL,
+#    model=GEMINI_MODEL,
+    model=LiteLlm(model="deepseek/deepseek-reasoner",api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("prompt_generate_instruction.txt"),
     description="一个能够保存文件树结构和读写文件内容的prompt书写专家。",
     # --- tools列表包含了所有需要的、从外部导入的工具 ---
@@ -135,7 +141,8 @@ prompt_generate_agent = LlmAgent(
 # --- Fuzzing 问题解决 Agent ---
 fuzzing_solver_agent = LlmAgent(
     name="fuzzing_solver_agent",
-    model=GEMINI_MODEL,
+#    model=GEMINI_MODEL,
+    model=LiteLlm(model="deepseek/deepseek-reasoner",api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("fuzzing_solver_instruction.txt"),
     description="一个能够分析fuzzing上下文、生成解决方案并将其保存当前运行 agent 的目录中 'solution.txt' 的专家代理。",
     # 唯一的“行动”就是读取上下文文件。
@@ -146,7 +153,8 @@ fuzzing_solver_agent = LlmAgent(
 # --- Sub Agent 5: content modification ---
 solution_applier_agent = LlmAgent(
     name="solution_applier_agent",
-    model=GEMINI_MODEL,
+#    model=GEMINI_MODEL,
+    model=LiteLlm(model="deepseek/deepseek-reasoner",api_key=DPSEEK_API_KEY),
     instruction=(
         "你的任务是执行一个文件修改任务。你需要两个信息："
         "1. `solution_file_path`: 修改方案的文件，文件名为 solution.txt，位于当前运行 agent 的目录中。"

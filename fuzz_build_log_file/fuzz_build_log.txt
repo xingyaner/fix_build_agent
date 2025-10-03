@@ -1,400 +1,400 @@
-checking the maximum length of command line arguments... 1572864
-checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
-checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
-checking for /usr/bin/ld option to reload object files... -r
-checking for objdump... objdump
-checking how to recognize dependent libraries... pass_all
-checking for dlltool... no
-checking how to associate runtime and link libraries... printf %s\n
-checking for ar... ar
-checking for archiver @FILE support... @
-checking for strip... strip
-checking for ranlib... ranlib
-checking command to parse /usr/bin/nm -B output from clang object... ok
-checking for sysroot... no
-checking for a working dd... /usr/bin/dd
-checking how to truncate binary pipes... /usr/bin/dd bs=4096 count=1
-checking for mt... no
-checking if : is a manifest tool... no
-checking how to run the C preprocessor... clang -E
-checking for ANSI C header files... yes
-checking for sys/types.h... yes
-checking for sys/stat.h... yes
-checking for stdlib.h... yes
-checking for string.h... yes
-checking for memory.h... yes
-checking for strings.h... yes
-checking for inttypes.h... yes
-checking for stdint.h... yes
-checking for unistd.h... yes
-checking for dlfcn.h... yes
-checking for objdir... .libs
-checking if clang supports -fno-rtti -fno-exceptions... yes
-checking for clang option to produce PIC... -fPIC -DPIC
-checking if clang PIC flag -fPIC -DPIC works... yes
-checking if clang static flag -static works... no
-checking if clang supports -c -o file.o... yes
-checking if clang supports -c -o file.o... (cached) yes
-checking whether the clang linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
-checking whether -lc should be explicitly linked in... no
-checking dynamic linker characteristics... GNU/Linux ld.so
-checking how to hardcode library paths into programs... immediate
-checking whether stripping libraries is possible... yes
-checking if libtool supports shared libraries... yes
-checking whether to build shared libraries... yes
-checking whether to build static libraries... yes
-checking for clang option to accept ISO C99... none needed
-checking for an ANSI C-conforming const... yes
-checking for inline... inline
-checking dependency style of clang... gcc3
-checking for C/C++ restrict keyword... __restrict
-checking for C99 variable-size arrays... yes
-checking for cos in -lm... yes
-checking if compiler supports SSE intrinsics... yes
-checking if compiler supports SSE2 intrinsics... yes
-checking if compiler supports SSE4.1 intrinsics... no
-checking if compiler supports SSE4.1 intrinsics with -msse4.1... yes
-checking if compiler supports AVX2 intrinsics... no
-checking if compiler supports AVX2 intrinsics with -mavx -mfma -mavx2... yes
-checking How to get X86 CPU Info... Inline Assembly
-checking for doxygen... no
-checking for dot... no
-checking argument osce training data... no
-checking if clang supports -fvisibility=hidden... yes
-checking if clang supports -fstack-protector-strong... yes
-checking whether to add -D_FORTIFY_SOURCE=2 to CFLAGS... yes
-checking if clang supports -Wall -Wextra -Wcast-align -Wnested-externs -Wshadow -Wstrict-prototypes... yes
-checking for lrintf... yes
-checking for lrint... yes
-checking for __malloc_hook... yes
-checking for elf_aux_info... no
-checking that generated files are newer than configure... done
-configure: creating ./config.status
-config.status: creating Makefile
-config.status: creating opus.pc
-config.status: creating opus-uninstalled.pc
-config.status: creating celt/arm/armopts.s
-config.status: creating doc/Makefile
-config.status: creating doc/Doxyfile
-config.status: creating config.h
-config.status: executing depfiles commands
-config.status: executing libtool commands
-configure:
-------------------------------------------------------------------------
-  opus unknown:  Automatic configuration OK.
-
-    Compiler support:
-
-      C99 var arrays: ................ yes
-      C99 lrintf: .................... yes
-      Use alloca: .................... no (using var arrays)
-
-    General configuration:
-
-      Floating point support: ........ yes
-      Fast float approximations: ..... yes
-      Fixed point debugging: ......... no
-      Inline Assembly Optimizations: . No inline ASM for your platform, please send patches
-      External Assembly Optimizations: 
-      Intrinsics Optimizations: ...... x86 SSE SSE2 SSE4.1 AVX2
-      Run-time CPU detection: ........ x86 SSE4.1 AVX2
-      Custom modes: .................. no
-      Assertion checking: ............ no
-      Hardening: ..................... yes
-      Fuzzing: ....................... no
-      Check ASM: ..................... no
-
-      API documentation: ............. yes
-      Extra programs: ................ yes
-------------------------------------------------------------------------
-
- Type "make; make install" to compile and install
- Type "make check" to run the test suite
-
-++ nproc
-+ make -j6 install
-make  install-recursive
-make[1]: Entering directory '/src/opus'
-make[2]: Entering directory '/src/opus'
-  CC       src/opus.lo
-  CC       src/opus_decoder.lo
-  CC       src/opus_encoder.lo
-  CC       src/extensions.lo
-  CC       src/opus_multistream.lo
-  CC       src/opus_multistream_encoder.lo
-[1msrc/extensions.c:504:18: [0m[0;1;35mwarning: [0m[1mvariable 'trailing_short_len' set but not used [-Wunused-but-set-variable][0m
-  504 |       opus_int32 trailing_short_len;[0m
-      | [0;1;32m                 ^
-[0m  CC       src/opus_multistream_decoder.lo
-1 warning generated.
-  CC       src/repacketizer.lo
-  CC       src/opus_projection_encoder.lo
-  CC       src/opus_projection_decoder.lo
-  CC       src/mapping_matrix.lo
-  CC       src/analysis.lo
-  CC       src/mlp.lo
-  CC       src/mlp_data.lo
-  CC       src/repacketizer_demo.o
-make[3]: Entering directory '/src/opus/doc'
-make[3]: Nothing to be done for 'all'.
-make[3]: Leaving directory '/src/opus/doc'
-  CC       celt/tests/test_unit_cwrs32.o
-  CC       celt/tests/test_unit_dft.o
-  CC       celt/celt.lo
-  CC       celt/bands.lo
-  CC       celt/celt_encoder.lo
-  CC       celt/celt_decoder.lo
-  CC       celt/cwrs.lo
-  CC       celt/entcode.lo
-  CC       celt/entdec.lo
-  CC       celt/entenc.lo
-  CC       celt/kiss_fft.lo
-  CC       celt/laplace.lo
-  CC       celt/mathops.lo
-  CC       celt/mdct.lo
-  CC       celt/modes.lo
-  CC       celt/pitch.lo
-  CC       celt/celt_lpc.lo
-  CC       celt/quant_bands.lo
-  CC       celt/rate.lo
-  CC       celt/vq.lo
-  CC       celt/x86/x86cpu.lo
-  CC       celt/x86/x86_celt_map.lo
-  CC       celt/x86/pitch_sse.lo
-  CC       celt/x86/pitch_sse2.lo
-  CC       celt/x86/vq_sse2.lo
-  CC       celt/x86/celt_lpc_sse4_1.lo
-  CC       celt/x86/pitch_sse4_1.lo
-  CC       celt/x86/pitch_avx.lo
-  CC       celt/tests/test_unit_entropy.o
-  CC       celt/tests/test_unit_laplace.o
-  CC       celt/tests/test_unit_mathops.o
-  CC       celt/tests/test_unit_mdct.o
-  CC       celt/tests/test_unit_rotation.o
-  CC       celt/tests/test_unit_types.o
-  CC       src/opus_compare.o
-  CC       src/opus_demo.o
-  CC       silk/CNG.lo
-  CC       silk/code_signs.lo
-  CC       silk/init_decoder.lo
-  CC       silk/decode_core.lo
-  CC       silk/decode_frame.lo
-  CC       silk/decode_parameters.lo
-  CC       silk/decode_indices.lo
-  CC       silk/decode_pulses.lo
-  CC       silk/decoder_set_fs.lo
-  CC       silk/dec_API.lo
-  CC       silk/enc_API.lo
-  CC       silk/encode_indices.lo
-  CC       silk/encode_pulses.lo
-  CC       silk/gain_quant.lo
-  CC       silk/interpolate.lo
-  CC       silk/LP_variable_cutoff.lo
-  CC       silk/NLSF_decode.lo
-  CC       silk/NSQ.lo
-  CC       silk/NSQ_del_dec.lo
-  CC       silk/PLC.lo
-  CC       silk/shell_coder.lo
-  CC       silk/tables_gain.lo
-  CC       silk/tables_LTP.lo
-  CC       silk/tables_NLSF_CB_NB_MB.lo
-  CC       silk/tables_NLSF_CB_WB.lo
-  CC       silk/tables_other.lo
-  CC       silk/tables_pitch_lag.lo
-  CC       silk/tables_pulses_per_block.lo
-  CC       silk/VAD.lo
-  CC       silk/control_audio_bandwidth.lo
-  CC       silk/quant_LTP_gains.lo
-  CC       silk/VQ_WMat_EC.lo
-  CC       silk/HP_variable_cutoff.lo
-  CC       silk/NLSF_encode.lo
-  CC       silk/NLSF_VQ.lo
-  CC       silk/NLSF_unpack.lo
-  CC       silk/NLSF_del_dec_quant.lo
-  CC       silk/process_NLSFs.lo
-  CC       silk/stereo_LR_to_MS.lo
-  CC       silk/stereo_MS_to_LR.lo
-  CC       silk/check_control_input.lo
-  CC       silk/control_SNR.lo
-  CC       silk/init_encoder.lo
-  CC       silk/control_codec.lo
-  CC       silk/A2NLSF.lo
-  CC       silk/ana_filt_bank_1.lo
-  CC       silk/biquad_alt.lo
-  CC       silk/bwexpander_32.lo
-  CC       silk/bwexpander.lo
-  CC       silk/debug.lo
-  CC       silk/decode_pitch.lo
-  CC       silk/inner_prod_aligned.lo
-  CC       silk/lin2log.lo
-  CC       silk/log2lin.lo
-  CC       silk/LPC_analysis_filter.lo
-  CC       silk/LPC_inv_pred_gain.lo
-  CC       silk/table_LSF_cos.lo
-  CC       silk/NLSF2A.lo
-  CC       silk/NLSF_stabilize.lo
-  CC       silk/NLSF_VQ_weights_laroia.lo
-  CC       silk/pitch_est_tables.lo
-  CC       silk/resampler.lo
-  CC       silk/resampler_down2_3.lo
-  CC       silk/resampler_down2.lo
-  CC       silk/resampler_private_AR2.lo
-  CC       silk/resampler_private_down_FIR.lo
-  CC       silk/resampler_private_IIR_FIR.lo
-  CC       silk/resampler_private_up2_HQ.lo
-  CC       silk/resampler_rom.lo
-  CC       silk/sigm_Q15.lo
-  CC       silk/sort.lo
-  CC       silk/sum_sqr_shift.lo
-  CC       silk/stereo_decode_pred.lo
-  CC       silk/stereo_encode_pred.lo
-  CC       silk/stereo_find_predictor.lo
-  CC       silk/stereo_quant_pred.lo
-  CC       silk/LPC_fit.lo
-  CC       silk/float/apply_sine_window_FLP.lo
-  CC       silk/float/corrMatrix_FLP.lo
-  CC       silk/float/encode_frame_FLP.lo
-  CC       silk/float/find_LPC_FLP.lo
-  CC       silk/float/find_LTP_FLP.lo
-  CC       silk/float/find_pitch_lags_FLP.lo
-  CC       silk/float/find_pred_coefs_FLP.lo
-  CC       silk/float/LPC_analysis_filter_FLP.lo
-  CC       silk/float/LTP_analysis_filter_FLP.lo
-  CC       silk/float/LTP_scale_ctrl_FLP.lo
-  CC       silk/float/noise_shape_analysis_FLP.lo
-  CC       silk/float/process_gains_FLP.lo
-  CC       silk/float/regularize_correlations_FLP.lo
-  CC       silk/float/residual_energy_FLP.lo
-  CC       silk/float/warped_autocorrelation_FLP.lo
-  CC       silk/float/wrappers_FLP.lo
-  CC       silk/float/autocorrelation_FLP.lo
-  CC       silk/float/burg_modified_FLP.lo
-  CC       silk/float/bwexpander_FLP.lo
-  CC       silk/float/energy_FLP.lo
-  CC       silk/float/inner_product_FLP.lo
-  CC       silk/float/k2a_FLP.lo
-  CC       silk/float/LPC_inv_pred_gain_FLP.lo
-  CC       silk/float/pitch_analysis_core_FLP.lo
-  CC       silk/float/scale_copy_vector_FLP.lo
-  CC       silk/float/scale_vector_FLP.lo
-  CC       silk/float/schur_FLP.lo
-  CC       silk/float/sort_FLP.lo
-  CC       silk/x86/NSQ_sse4_1.lo
-  CC       silk/x86/NSQ_del_dec_sse4_1.lo
-  CC       silk/x86/VAD_sse4_1.lo
-  CC       silk/x86/VQ_WMat_EC_sse4_1.lo
-  CC       silk/float/x86/inner_product_FLP_avx2.lo
-  CC       silk/x86/x86_silk_map.lo
-  CC       silk/x86/NSQ_del_dec_avx2.lo
-  CC       silk/tests/test_unit_LPC_inv_pred_gain.o
-  CC       tests/test_opus_api.o
-  CC       tests/test_opus_decode.o
-  CC       tests/test_opus_dred.o
-[1msilk/x86/NSQ_del_dec_avx2.c:962:26: [0m[0;1;35mwarning: [0m[1mcast from 'opus_int32 *' (aka 'int *') to '__m128i *' increases required alignment from 4 to 16 [-Wcast-align][0m
-  962 |         _mm_storeu_si128((__m128i*)&x_sc_Q10[i], silk_cvtepi64_epi32_high(x));[0m
-      | [0;1;32m                         ^~~~~~~~~~~~~~~~~~~~~~
-[0m[1msilk/x86/NSQ_del_dec_avx2.c:989:30: [0m[0;1;35mwarning: [0m[1mcast from 'opus_int32 *' (aka 'int *') to '__m128i *' increases required alignment from 4 to 16 [-Wcast-align][0m
-  989 |             _mm_storeu_si128((__m128i*)p, silk_mm_smulww_epi32(_mm_loadu_si128((__m128i*)p), gain_adj_Q16));[0m
-      | [0;1;32m                             ^~~~~~~~~~~
-[0m[1msilk/x86/NSQ_del_dec_avx2.c:989:80: [0m[0;1;35mwarning: [0m[1mcast from 'opus_int32 *' (aka 'int *') to '__m128i *' increases required alignment from 4 to 16 [-Wcast-align][0m
-  989 |             _mm_storeu_si128((__m128i*)p, silk_mm_smulww_epi32(_mm_loadu_si128((__m128i*)p), gain_adj_Q16));[0m
-      | [0;1;32m                                                                               ^~~~~~~~~~~
-[0m[1msilk/x86/NSQ_del_dec_avx2.c:1044:62: [0m[0;1;35mwarning: [0m[1mcast from 'const opus_int16 *' (aka 'const short *') to '__m128i *' increases required alignment from 2 to 16 [-Wcast-align][0m
- 1044 |         __m256i in_v = _mm256_cvtepi16_epi32(_mm_loadu_si128((__m128i*)&in_ptr[-[0;32m8[0m]));[0m
-      | [0;1;32m                                                             ^~~~~~~~~~~~~~~~~~~~~
-[0m[1msilk/x86/NSQ_del_dec_avx2.c:1045:62: [0m[0;1;35mwarning: [0m[1mcast from 'const opus_int16 *' (aka 'const short *') to '__m128i *' increases required alignment from 2 to 16 [-Wcast-align][0m
- 1045 |         __m256i B_v  = _mm256_cvtepi16_epi32(_mm_loadu_si128((__m128i*)&      B[[0;32m0[0m]));[0m
-      | [0;1;32m                                                             ^~~~~~~~~~~~~~~~~~~~~
-[0m[1msilk/x86/NSQ_del_dec_avx2.c:1049:58: [0m[0;1;35mwarning: [0m[1mcast from 'const opus_int16 *' (aka 'const short *') to '__m128i *' increases required alignment from 2 to 16 [-Wcast-align][0m
- 1049 |             in_v = _mm256_cvtepi16_epi32(_mm_loadu_si128((__m128i*)&in_ptr[-[0;32m16[0m]));[0m
-      | [0;1;32m                                                         ^~~~~~~~~~~~~~~~~~~~~~
-[0m[1msilk/x86/NSQ_del_dec_avx2.c:1050:58: [0m[0;1;35mwarning: [0m[1mcast from 'const opus_int16 *' (aka 'const short *') to '__m128i *' increases required alignment from 2 to 16 [-Wcast-align][0m
- 1050 |             B_v  = _mm256_cvtepi16_epi32(_mm_loadu_si128((__m128i*)&B       [[0;32m8[0m]));[0m
-      | [0;1;32m                                                         ^~~~~~~~~~~~~~~~~~~~~~
-[0m  CC       tests/test_opus_encode.o
-  CC       tests/opus_encode_regressions.o
-  CC       tests/test_opus_extensions.o
-  CC       tests/test_opus_padding.o
-  CC       tests/test_opus_projection.o
-  CC       doc/trivial_example.o
-  CCLD     celt/tests/test_unit_cwrs32
-  CCLD     celt/tests/test_unit_dft
-  CCLD     celt/tests/test_unit_entropy
-  CCLD     celt/tests/test_unit_laplace
-  CCLD     celt/tests/test_unit_mathops
-7 warnings generated.
-  CCLD     celt/tests/test_unit_mdct
-  CCLD     celt/tests/test_unit_rotation
-  CCLD     celt/tests/test_unit_types
-  CCLD     opus_compare
-  CCLD     libopus.la
-  CCLD     silk/tests/test_unit_LPC_inv_pred_gain
-  CCLD     tests/test_opus_extensions
-  CCLD     tests/test_opus_projection
-  CCLD     repacketizer_demo
-  CCLD     tests/test_opus_api
-  CCLD     opus_demo
-  CCLD     tests/test_opus_decode
-  CCLD     tests/test_opus_dred
-  CCLD     tests/test_opus_encode
-  CCLD     tests/test_opus_padding
-  CCLD     trivial_example
-make[3]: Entering directory '/src/opus'
- /usr/bin/mkdir -p '/src/ffmpeg_deps/share/aclocal'
-make[4]: Entering directory '/src/opus/doc'
- /usr/bin/mkdir -p '/src/ffmpeg_deps/lib/pkgconfig'
- /usr/bin/mkdir -p '/src/ffmpeg_deps/include/opus'
- /usr/bin/install -c -m 644 opus.m4 '/src/ffmpeg_deps/share/aclocal'
-make[5]: Entering directory '/src/opus/doc'
-make[5]: Nothing to be done for 'install-exec-am'.
-make[5]: Nothing to be done for 'install-data-am'.
-make[5]: Leaving directory '/src/opus/doc'
-make[4]: Leaving directory '/src/opus/doc'
- /usr/bin/install -c -m 644 opus.pc '/src/ffmpeg_deps/lib/pkgconfig'
- /usr/bin/install -c -m 644 include/opus.h include/opus_multistream.h include/opus_types.h include/opus_defines.h include/opus_projection.h '/src/ffmpeg_deps/include/opus'
- /usr/bin/mkdir -p '/src/ffmpeg_deps/lib'
- /bin/bash ./libtool   --mode=install /usr/bin/install -c   libopus.la '/src/ffmpeg_deps/lib'
-libtool: install: /usr/bin/install -c .libs/libopus.so.0.10.1 /src/ffmpeg_deps/lib/libopus.so.0.10.1
-libtool: install: (cd /src/ffmpeg_deps/lib && { ln -s -f libopus.so.0.10.1 libopus.so.0 || { rm -f libopus.so.0 && ln -s libopus.so.0.10.1 libopus.so.0; }; })
-libtool: install: (cd /src/ffmpeg_deps/lib && { ln -s -f libopus.so.0.10.1 libopus.so || { rm -f libopus.so && ln -s libopus.so.0.10.1 libopus.so; }; })
-libtool: install: /usr/bin/install -c .libs/libopus.lai /src/ffmpeg_deps/lib/libopus.la
-libtool: install: /usr/bin/install -c .libs/libopus.a /src/ffmpeg_deps/lib/libopus.a
-libtool: install: chmod 644 /src/ffmpeg_deps/lib/libopus.a
-libtool: install: ranlib /src/ffmpeg_deps/lib/libopus.a
-libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out:/sbin" ldconfig -n /src/ffmpeg_deps/lib
-----------------------------------------------------------------------
-Libraries have been installed in:
-   /src/ffmpeg_deps/lib
-
-If you ever happen to want to link against installed libraries
-in a given directory, LIBDIR, you must either use libtool, and
-specify the full pathname of the library, or use the '-LLIBDIR'
-flag during linking and do at least one of the following:
-   - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
-     during execution
-   - add LIBDIR to the 'LD_RUN_PATH' environment variable
-     during linking
-   - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
-   - have your system administrator add LIBDIR to '/etc/ld.so.conf'
-
-See any operating system documentation about shared libraries for
-more information, such as the ld(1) and ld.so(8) manual pages.
-----------------------------------------------------------------------
-make[3]: Leaving directory '/src/opus'
-make[2]: Leaving directory '/src/opus'
-make[1]: Leaving directory '/src/opus'
-+ cd /src/theora
-+ [[ x86_64 == i386 ]]
-+ THEORA_BUILD_ARGS=
-+ CFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fno-sanitize=vptr -fno-sanitize-address-use-odr-indicator -fPIC'
-+ LDFLAGS=-L/src/ffmpeg_deps/lib/
-+ CPPFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -fno-sanitize=vptr -fno-sanitize-address-use-odr-indicator -I/src/ffmpeg_deps/include/'
-+ LD_LIBRARY_PATH=/src/ffmpeg_deps/lib/
-+ ./autogen.sh
-Updating build configuration files, please wait....
-configure.ac:17: error: Autoconf version 2.71 or higher is required
-configure.ac:17: the top level
-autom4te: /usr/bin/m4 failed with exit status: 63
-aclocal: error: /usr/bin/autom4te failed with exit status: 63
-autoreconf: aclocal failed with exit status: 63
++ for f in $fuzz_targets
+++ basename /src/wasmtime/fuzz/fuzz_targets/wast_tests
++ src_name=wast_tests
++ dst_name=wast_tests
++ cp /src/wasmtime/target/x86_64-unknown-linux-gnu/release/wast_tests /out/wast_tests
++ [[ -f /src/wast_tests.options ]]
++ cp /src/default.options /out/wast_tests.options
++ build wasm-tools wasm-tools- '' target --features wasmtime
++ project=wasm-tools
++ shift
++ fuzzer_prefix=wasm-tools-
++ shift
++ fuzz_targets=
++ shift
++ fuzz_target_path=target
++ shift
++ PROJECT_DIR=/src/wasm-tools
++ cd /src/wasm-tools
+++ cargo metadata --no-deps --format-version 1
+++ jq -r .workspace_root
++ crate_src_abspath=/src/wasm-tools
+++ find . -name '*.rs'
+++ cut -d/ -f2
+++ uniq
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs'
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples'
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates'
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests'
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz'
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci'
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground'
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src'
++ read i
++ cd /src/wasm-tools/fuzz
++ cargo fuzz build --sanitizer none --strip-dead-code -O --debug-assertions --features wasmtime
+[1m[32m    Updating[0m crates.io index
+[1m[32m    Updating[0m git repository `https://github.com/bytecodealliance/wit-bindgen`
+[1m[32m    Updating[0m git submodule `https://github.com/WebAssembly/wasi-cli`
+[1m[32m    Updating[0m git submodule `https://github.com/WebAssembly/wasi-clocks`
+[1m[32m    Updating[0m git submodule `https://github.com/WebAssembly/wasi-filesystem`
+[1m[32m    Updating[0m git submodule `https://github.com/WebAssembly/wasi-http`
+[1m[32m    Updating[0m git submodule `https://github.com/WebAssembly/wasi-io`
+[1m[32m Downloading[0m crates ...
+[1m[32m  Downloaded[0m colorchoice v1.0.4
+[1m[32m  Downloaded[0m derive_arbitrary v1.4.1
+[1m[32m  Downloaded[0m cranelift-frontend v0.121.1
+[1m[32m  Downloaded[0m autocfg v1.5.0
+[1m[32m  Downloaded[0m anyhow v1.0.98
+[1m[32m  Downloaded[0m equivalent v1.0.2
+[1m[32m  Downloaded[0m cranelift-bforest v0.121.1
+[1m[32m  Downloaded[0m instant v0.1.13
+[1m[32m  Downloaded[0m anstream v0.6.19
+[1m[32m  Downloaded[0m allocator-api2 v0.2.21
+[1m[32m  Downloaded[0m ahash v0.8.12
+[1m[32m  Downloaded[0m cranelift-assembler-x64-meta v0.121.1
+[1m[32m  Downloaded[0m errno v0.3.13
+[1m[32m  Downloaded[0m crc32fast v1.4.2
+[1m[32m  Downloaded[0m foldhash v0.1.5
+[1m[32m  Downloaded[0m anstyle v1.0.11
+[1m[32m  Downloaded[0m cfg-if v1.0.1
+[1m[32m  Downloaded[0m env_logger v0.11.8
+[1m[32m  Downloaded[0m addr2line v0.24.2
+[1m[32m  Downloaded[0m jobserver v0.1.33
+[1m[32m  Downloaded[0m indexmap v1.9.3
+[1m[32m  Downloaded[0m getrandom v0.3.3
+[1m[32m  Downloaded[0m embedded-io v0.6.1
+[1m[32m  Downloaded[0m env_filter v0.1.3
+[1m[32m  Downloaded[0m either v1.15.0
+[1m[32m  Downloaded[0m anstyle-query v1.1.3
+[1m[32m  Downloaded[0m itoa v1.0.15
+[1m[32m  Downloaded[0m cobs v0.3.0
+[1m[32m  Downloaded[0m leb128 v0.2.5
+[1m[32m  Downloaded[0m anstyle-parse v0.2.7
+[1m[32m  Downloaded[0m flagset v0.4.7
+[1m[32m  Downloaded[0m cranelift-native v0.121.1
+[1m[32m  Downloaded[0m cranelift-assembler-x64 v0.121.1
+[1m[32m  Downloaded[0m bitflags v2.9.1
+[1m[32m  Downloaded[0m cranelift-srcgen v0.121.1
+[1m[32m  Downloaded[0m cranelift-control v0.121.1
+[1m[32m  Downloaded[0m cranelift-entity v0.121.1
+[1m[32m  Downloaded[0m cranelift-codegen-shared v0.121.1
+[1m[32m  Downloaded[0m postcard v1.1.2
+[1m[32m  Downloaded[0m utf8parse v0.2.2
+[1m[32m  Downloaded[0m cranelift-bitset v0.121.1
+[1m[32m  Downloaded[0m ppv-lite86 v0.2.21
+[1m[32m  Downloaded[0m ryu v1.0.20
+[1m[32m  Downloaded[0m target-lexicon v0.13.2
+[1m[32m  Downloaded[0m version_check v0.9.5
+[1m[32m  Downloaded[0m smallvec v1.15.1
+[1m[32m  Downloaded[0m wasmprinter v0.233.0
+[1m[32m  Downloaded[0m unicode-ident v1.0.18
+[1m[32m  Downloaded[0m once_cell v1.21.3
+[1m[32m  Downloaded[0m proc-macro2 v1.0.95
+[1m[32m  Downloaded[0m unicode-xid v0.2.6
+[1m[32m  Downloaded[0m tempfile v3.20.0
+[1m[32m  Downloaded[0m wasmtime-jit-icache-coherence v34.0.1
+[1m[32m  Downloaded[0m wasmtime-component-util v34.0.1
+[1m[32m  Downloaded[0m aho-corasick v1.1.3
+[1m[32m  Downloaded[0m wasm-metadata v0.214.0
+[1m[32m  Downloaded[0m semver v1.0.26
+[1m[32m  Downloaded[0m wasmtime-asm-macros v34.0.1
+[1m[32m  Downloaded[0m pulley-macros v34.0.1
+[1m[32m  Downloaded[0m serde v1.0.222
+[1m[32m  Downloaded[0m quote v1.0.40
+[1m[32m  Downloaded[0m wasmtime-fiber v34.0.1
+[1m[32m  Downloaded[0m wasm-encoder v0.214.0
+[1m[32m  Downloaded[0m serde_derive v1.0.222
+[1m[32m  Downloaded[0m serde_core v1.0.222
+[1m[32m  Downloaded[0m cc v1.2.29
+[1m[32m  Downloaded[0m wasmtime-winch v34.0.1
+[1m[32m  Downloaded[0m wasmtime-slab v34.0.1
+[1m[32m  Downloaded[0m wasmtime-wit-bindgen v34.0.1
+[1m[32m  Downloaded[0m wasmtime-versioned-export-macros v34.0.1
+[1m[32m  Downloaded[0m jiff v0.2.15
+[1m[32m  Downloaded[0m linux-raw-sys v0.4.15
+[1m[32m  Downloaded[0m encoding_rs v0.8.35
+[1m[32m  Downloaded[0m wasmtime-math v34.0.1
+[1m[32m  Downloaded[0m linux-raw-sys v0.9.4
+[1m[32m  Downloaded[0m indexmap v2.10.0
+[1m[32m  Downloaded[0m hashbrown v0.15.4
+[1m[32m  Downloaded[0m bumpalo v3.19.0
+[1m[32m  Downloaded[0m libfuzzer-sys v0.4.10
+[1m[32m  Downloaded[0m libm v0.2.15
+[1m[32m  Downloaded[0m hashbrown v0.14.5
+[1m[32m  Downloaded[0m libc v0.2.174
+[1m[32m  Downloaded[0m cranelift-codegen v0.121.1
+[1m[32m  Downloaded[0m cranelift-isle v0.121.1
+[1m[32m  Downloaded[0m rustix v1.0.7
+[1m[32m  Downloaded[0m cranelift-codegen-meta v0.121.1
+[1m[32m  Downloaded[0m syn v2.0.104
+[1m[32m  Downloaded[0m regalloc2 v0.12.2
+[1m[32m  Downloaded[0m regex-automata v0.4.9
+[1m[32m  Downloaded[0m regex v1.11.1
+[1m[32m  Downloaded[0m rand v0.9.1
+[1m[32m  Downloaded[0m object v0.36.7
+[1m[32m  Downloaded[0m rustix v0.38.44
+[1m[32m  Downloaded[0m wasmparser v0.214.0
+[1m[32m  Downloaded[0m unicode-width v0.2.1
+[1m[32m  Downloaded[0m regex-syntax v0.8.5
+[1m[32m  Downloaded[0m wasmtime-component-macro v34.0.1
+[1m[32m  Downloaded[0m pulley-interpreter v34.0.1
+[1m[32m  Downloaded[0m memchr v2.7.5
+[1m[32m  Downloaded[0m wasm-encoder v0.233.0
+[1m[32m  Downloaded[0m wasmtime-cranelift v34.0.1
+[1m[32m  Downloaded[0m wasmtime-environ v34.0.1
+[1m[32m  Downloaded[0m wasmparser v0.233.0
+[1m[32m  Downloaded[0m wasmtime v34.0.1
+[1m[32m  Downloaded[0m spdx v0.10.8
+[1m[32m  Downloaded[0m winch-codegen v34.0.1
+[1m[32m  Downloaded[0m wit-component v0.214.0
+[1m[32m  Downloaded[0m wit-parser v0.214.0
+[1m[32m  Downloaded[0m wit-parser v0.233.0
+[1m[32m  Downloaded[0m zerocopy v0.8.26
+[1m[32m   Compiling[0m proc-macro2 v1.0.95
+[1m[32m   Compiling[0m unicode-ident v1.0.18
+[1m[32m   Compiling[0m serde_core v1.0.222
+[1m[32m   Compiling[0m serde v1.0.222
+[1m[32m   Compiling[0m foldhash v0.1.5
+[1m[32m   Compiling[0m bitflags v2.9.1
+[1m[32m   Compiling[0m equivalent v1.0.2
+[1m[32m   Compiling[0m cfg-if v1.0.1
+[1m[32m   Compiling[0m semver v1.0.26
+[1m[32m   Compiling[0m anyhow v1.0.98
+[1m[32m   Compiling[0m libc v0.2.174
+[1m[32m   Compiling[0m memchr v2.7.5
+[1m[32m   Compiling[0m log v0.4.27
+[1m[32m   Compiling[0m serde_json v1.0.140
+[1m[32m   Compiling[0m zerocopy v0.8.26
+[1m[32m   Compiling[0m hashbrown v0.15.4
+[1m[32m   Compiling[0m wasmparser v0.239.0 (/src/wasm-tools/crates/wasmparser)
+[1m[32m   Compiling[0m leb128fmt v0.1.0
+[1m[32m   Compiling[0m cranelift-srcgen v0.121.1
+[1m[32m   Compiling[0m cranelift-assembler-x64-meta v0.121.1
+[1m[32m   Compiling[0m allocator-api2 v0.2.21
+[1m[32m   Compiling[0m once_cell v1.21.3
+[1m[32m   Compiling[0m cranelift-bitset v0.121.1
+[1m[32m   Compiling[0m version_check v0.9.5
+[1m[32m   Compiling[0m libm v0.2.15
+[1m[32m   Compiling[0m cranelift-isle v0.121.1
+[1m[32m   Compiling[0m wasm-encoder v0.239.0 (/src/wasm-tools/crates/wasm-encoder)
+[1m[32m   Compiling[0m bumpalo v3.19.0
+[1m[32m   Compiling[0m ahash v0.8.12
+[1m[32m   Compiling[0m cranelift-codegen-shared v0.121.1
+[1m[32m   Compiling[0m thiserror v2.0.12
+[1m[32m   Compiling[0m target-lexicon v0.13.2
+[1m[32m   Compiling[0m cranelift-assembler-x64 v0.121.1
+[1m[32m   Compiling[0m ryu v1.0.20
+[1m[32m   Compiling[0m shlex v1.3.0
+[1m[32m   Compiling[0m itoa v1.0.15
+[1m[32m   Compiling[0m getrandom v0.3.3
+[1m[32m   Compiling[0m wasmparser v0.233.0
+[1m[32m   Compiling[0m rustc-hash v2.1.1
+[1m[32m   Compiling[0m id-arena v2.2.1
+[1m[32m   Compiling[0m unicode-xid v0.2.6
+[1m[32m   Compiling[0m autocfg v1.5.0
+[1m[32m   Compiling[0m quote v1.0.40
+[1m[32m   Compiling[0m termcolor v1.4.1
+[1m[32m   Compiling[0m syn v2.0.104
+[1m[32m   Compiling[0m jobserver v0.1.33
+[1m[32m   Compiling[0m wasm-encoder v0.233.0
+[1m[32m   Compiling[0m object v0.36.7
+[1m[32m   Compiling[0m cc v1.2.29
+[1m[32m   Compiling[0m indexmap v1.9.3
+[1m[32m   Compiling[0m aho-corasick v1.1.3
+[1m[32m   Compiling[0m crc32fast v1.4.2
+[1m[32m   Compiling[0m rustix v0.38.44
+[1m[32m   Compiling[0m wasmtime-math v34.0.1
+[1m[32m   Compiling[0m unicode-width v0.2.1
+[1m[32m   Compiling[0m regex-syntax v0.8.5
+[1m[32m   Compiling[0m rustix v1.0.7
+[1m[32m   Compiling[0m rand_core v0.9.3
+[1m[32m   Compiling[0m wasmtime-component-macro v34.0.1
+[1m[32m   Compiling[0m either v1.15.0
+[1m[32m   Compiling[0m leb128 v0.2.5
+[1m[32m   Compiling[0m ppv-lite86 v0.2.21
+[1m[32m   Compiling[0m linux-raw-sys v0.9.4
+[1m[32m   Compiling[0m linux-raw-sys v0.4.15
+[1m[32m   Compiling[0m hashbrown v0.12.3
+[1m[32m   Compiling[0m hashbrown v0.14.5
+[1m[32m   Compiling[0m utf8parse v0.2.2
+[1m[32m   Compiling[0m heck v0.5.0
+[1m[32m   Compiling[0m wasmtime-component-util v34.0.1
+[1m[32m   Compiling[0m anstyle-parse v0.2.7
+[1m[32m   Compiling[0m rand_chacha v0.9.0
+[1m[32m   Compiling[0m itertools v0.14.0
+[1m[32m   Compiling[0m regex-automata v0.4.9
+[1m[32m   Compiling[0m indexmap v2.10.0
+[1m[32m   Compiling[0m libfuzzer-sys v0.4.10
+[1m[32m   Compiling[0m instant v0.1.13
+[1m[32m   Compiling[0m anstyle-query v1.1.3
+[1m[32m   Compiling[0m symbolic_expressions v5.0.3
+[1m[32m   Compiling[0m colorchoice v1.0.4
+[1m[32m   Compiling[0m anstyle v1.0.11
+[1m[32m   Compiling[0m is_terminal_polyfill v1.70.1
+[1m[32m   Compiling[0m anstream v0.6.19
+[1m[32m   Compiling[0m rand v0.9.1
+[1m[32m   Compiling[0m wasmtime-jit-icache-coherence v34.0.1
+[1m[32m   Compiling[0m wasmtime-asm-macros v34.0.1
+[1m[32m   Compiling[0m encoding_rs v0.8.35
+[1m[32m   Compiling[0m jiff v0.2.15
+[1m[32m   Compiling[0m fastrand v2.3.0
+[1m[32m   Compiling[0m wasmtime-slab v34.0.1
+[1m[32m   Compiling[0m flagset v0.4.7
+[1m[32m   Compiling[0m memfd v0.6.4
+[1m[32m   Compiling[0m tempfile v3.20.0
+[1m[32m   Compiling[0m serde_derive v1.0.222
+[1m[32m   Compiling[0m pulley-macros v34.0.1
+[1m[32m   Compiling[0m derive_arbitrary v1.4.1
+[1m[32m   Compiling[0m thiserror-impl v2.0.12
+[1m[32m   Compiling[0m wasmtime-versioned-export-macros v34.0.1
+[1m[32m   Compiling[0m pulley-interpreter v34.0.1
+[1m[32m   Compiling[0m wasmtime v34.0.1
+[1m[32m   Compiling[0m regex v1.11.1
+[1m[32m   Compiling[0m env_filter v0.1.3
+[1m[32m   Compiling[0m arbitrary v1.4.1
+[1m[32m   Compiling[0m cobs v0.3.0
+[1m[32m   Compiling[0m cranelift-control v0.121.1
+[1m[32m   Compiling[0m cranelift-codegen-meta v0.121.1
+[1m[32m   Compiling[0m wit-parser v0.233.0
+[1m[32m   Compiling[0m env_logger v0.11.8
+[1m[32m   Compiling[0m smallvec v1.15.1
+[1m[32m   Compiling[0m postcard v1.1.2
+[1m[32m   Compiling[0m cranelift-entity v0.121.1
+[1m[32m   Compiling[0m regalloc2 v0.12.2
+[1m[32m   Compiling[0m spdx v0.10.8
+[1m[32m   Compiling[0m cranelift-bforest v0.121.1
+[1m[32m   Compiling[0m gimli v0.31.1
+[1m[32m   Compiling[0m wasmparser v0.214.0
+[1m[32m   Compiling[0m egg v0.6.0
+[1m[32m   Compiling[0m cranelift-codegen v0.121.1
+[1m[32m   Compiling[0m wasmtime-wit-bindgen v34.0.1
+[1m[32m   Compiling[0m wasm-encoder v0.214.0
+[1m[32m   Compiling[0m wit-parser v0.214.0
+[1m[32m   Compiling[0m wasmprinter v0.233.0
+[1m[32m   Compiling[0m wit-parser v0.239.0 (/src/wasm-tools/crates/wit-parser)
+[1m[32m   Compiling[0m wasm-metadata v0.214.0
+[1m[32m   Compiling[0m wast v239.0.0 (/src/wasm-tools/crates/wast)
+[1m[32m   Compiling[0m wasm-metadata v0.239.0 (/src/wasm-tools/crates/wasm-metadata)
+[1m[32m   Compiling[0m wasmtime-environ v34.0.1
+[1m[32m   Compiling[0m wit-component v0.214.0
+[1m[32m   Compiling[0m wasm-mutate v0.239.0 (/src/wasm-tools/crates/wasm-mutate)
+[1m[32m   Compiling[0m wasm-smith v0.239.0 (/src/wasm-tools/crates/wasm-smith)
+[1m[32m   Compiling[0m wasmprinter v0.239.0 (/src/wasm-tools/crates/wasmprinter)
+[1m[32m   Compiling[0m wat v1.239.0 (/src/wasm-tools/crates/wat)
+[1m[32m   Compiling[0m wit-component v0.239.0 (/src/wasm-tools/crates/wit-component)
+[1m[32m   Compiling[0m wit-smith v0.239.0 (/src/wasm-tools/crates/wit-smith)
+[1m[32m   Compiling[0m cranelift-frontend v0.121.1
+[1m[32m   Compiling[0m cranelift-native v0.121.1
+[1m[32m   Compiling[0m wasmtime-cranelift v34.0.1
+[1m[32m   Compiling[0m wasm-tools-fuzz v0.0.0 (/src/wasm-tools/fuzz)
+[1m[32m    Finished[0m `release` profile [optimized + debuginfo] target(s) in 6m 09s
++ FUZZ_TARGET_OUTPUT_DIR=/src/wasm-tools/target/x86_64-unknown-linux-gnu/release
++ '[' x = x ']'
++ fuzz_targets='/src/wasm-tools/fuzz/fuzz_targets/*.rs'
++ for f in $fuzz_targets
+++ basename /src/wasm-tools/fuzz/fuzz_targets/run
++ src_name=run
++ dst_name=wasm-tools-run
++ cp /src/wasm-tools/target/x86_64-unknown-linux-gnu/release/run /out/wasm-tools-run
++ [[ -f /src/wasm-tools-run.options ]]
++ cp /src/default.options /out/wasm-tools-run.options
++ build regalloc2 regalloc2- ion_checker fuzz/target
++ project=regalloc2
++ shift
++ fuzzer_prefix=regalloc2-
++ shift
++ fuzz_targets=ion_checker
++ shift
++ fuzz_target_path=fuzz/target
++ shift
++ PROJECT_DIR=/src/regalloc2
++ cd /src/regalloc2
+++ cargo metadata --no-deps --format-version 1
+++ jq -r .workspace_root
++ crate_src_abspath=/src/regalloc2
+++ find . -name '*.rs'
+++ cut -d/ -f2
+++ uniq
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool'
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool --remap-path-prefix fuzz=/src/regalloc2/fuzz'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool --remap-path-prefix fuzz=/src/regalloc2/fuzz'
++ read i
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool --remap-path-prefix fuzz=/src/regalloc2/fuzz --remap-path-prefix src=/src/regalloc2/src'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool --remap-path-prefix fuzz=/src/regalloc2/fuzz --remap-path-prefix src=/src/regalloc2/src'
++ read i
++ cd /src/regalloc2/fuzz
++ cargo fuzz build --sanitizer none --strip-dead-code -O --debug-assertions
+[1m[32m    Updating[0m crates.io index
+[1m[32m     Locking[0m 37 packages to latest compatible versions
+[1m[36m      Adding[0m env_logger v0.8.4 [1m[33m(available: v0.11.8)[0m
+[1m[32m Downloading[0m crates ...
+[1m[32m  Downloaded[0m atty v0.2.14
+[1m[32m  Downloaded[0m log v0.4.28
+[1m[32m  Downloaded[0m humantime v2.3.0
+[1m[32m  Downloaded[0m arbitrary v1.4.2
+[1m[32m  Downloaded[0m env_logger v0.8.4
+[1m[32m  Downloaded[0m arbtest v0.3.2
+[1m[32m  Downloaded[0m jobserver v0.1.34
+[1m[32m  Downloaded[0m find-msvc-tools v0.1.2
+[1m[32m  Downloaded[0m regex-syntax v0.8.6
+[1m[32m  Downloaded[0m libc v0.2.176
+[1m[32m  Downloaded[0m memchr v2.7.6
+[1m[32m  Downloaded[0m hashbrown v0.15.5
+[1m[32m  Downloaded[0m cc v1.2.39
+[1m[32m  Downloaded[0m regex v1.11.3
+[1m[32m  Downloaded[0m regex-automata v0.4.11
+[1m[32m   Compiling[0m libc v0.2.176
+[1m[32m   Compiling[0m memchr v2.7.6
+[1m[32m   Compiling[0m find-msvc-tools v0.1.2
+[1m[32m   Compiling[0m shlex v1.3.0
+[1m[32m   Compiling[0m regex-syntax v0.8.6
+[1m[32m   Compiling[0m arbitrary v1.4.2
+[1m[32m   Compiling[0m allocator-api2 v0.2.21
+[1m[32m   Compiling[0m log v0.4.28
+[1m[32m   Compiling[0m humantime v2.3.0
+[1m[32m   Compiling[0m termcolor v1.4.1
+[1m[32m   Compiling[0m hashbrown v0.15.5
+[1m[32m   Compiling[0m smallvec v1.15.1
+[1m[32m   Compiling[0m rustc-hash v2.1.1
+[1m[32m   Compiling[0m bumpalo v3.19.0
+[1m[32m   Compiling[0m aho-corasick v1.1.3
+[1m[32m   Compiling[0m arbtest v0.3.2
+[1m[32m   Compiling[0m regalloc2 v0.13.2 (/src/regalloc2)
+[1m[32m   Compiling[0m jobserver v0.1.34
+[1m[32m   Compiling[0m atty v0.2.14
+[1m[32m   Compiling[0m cc v1.2.39
+[1m[32m   Compiling[0m regex-automata v0.4.11
+[1m[32m   Compiling[0m libfuzzer-sys v0.4.10
+[1m[32m   Compiling[0m regex v1.11.3
+[1m[32m   Compiling[0m env_logger v0.8.4
+[1m[32m   Compiling[0m regalloc2-fuzz v0.0.0 (/src/regalloc2/fuzz)
+[1m[32m    Finished[0m `release` profile [optimized + debuginfo] target(s) in 50.65s
++ FUZZ_TARGET_OUTPUT_DIR=/src/regalloc2/fuzz/target/x86_64-unknown-linux-gnu/release
++ '[' xion_checker = x ']'
++ for f in $fuzz_targets
+++ basename ion_checker
++ src_name=ion_checker
++ dst_name=regalloc2-ion_checker
++ cp /src/regalloc2/fuzz/target/x86_64-unknown-linux-gnu/release/ion_checker /out/regalloc2-ion_checker
+cp: cannot stat '/src/regalloc2/fuzz/target/x86_64-unknown-linux-gnu/release/ion_checker': No such file or directory
 ERROR:__main__:Building fuzzers failed.
