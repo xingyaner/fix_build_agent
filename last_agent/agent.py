@@ -11,9 +11,12 @@ from google.adk.tools.tool_context import ToolContext
 from typing import AsyncGenerator, Optional
 from google.adk.events import Event, EventActions
 # --- 从 agent_tools.py 导入所有需要的工具 ---
+from agent_tools import get_shallow_file_tree
 from agent_tools import (
     prompt_generate_tool,
     save_file_tree,
+    get_shallow_file_tree,
+    search_file_structure,
     read_file_content,
     create_or_update_file,
     append_file_to_file,
@@ -117,7 +120,7 @@ decision_agent = LlmAgent(
         delay,
     ],
 )
-# --- Sub Agent 3: prompt generate ---
+# --- Sub Agent 3: prompt generate ---#####
 prompt_generate_agent = LlmAgent(
     name="prompt_generate_agent",
 #    model=GEMINI_MODEL,
@@ -128,6 +131,8 @@ prompt_generate_agent = LlmAgent(
     tools=[
         prompt_generate_tool,
         save_file_tree,
+        get_shallow_file_tree,
+        search_file_structure,
         read_file_content,
         create_or_update_file,
         append_file_to_file,
@@ -189,4 +194,5 @@ root_agent = SequentialAgent(
     ],
     description="你是一个 Fuzzing 构建修复工作流的助手"
 )
+
 

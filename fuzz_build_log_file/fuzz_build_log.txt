@@ -23,29 +23,29 @@
 ++ cut -d/ -f2
 ++ uniq
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests'
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples'
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz'
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates'
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src'
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci'
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground'
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix build.rs=/src/wasm-tools/build.rs'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix build.rs=/src/wasm-tools/build.rs'
 + read i
 + cd /src/wasm-tools/fuzz
 + cargo fuzz build --sanitizer none --strip-dead-code -O --debug-assertions --features wasmtime
@@ -57,116 +57,116 @@
 [1m[32m    Updating[0m git submodule `https://github.com/WebAssembly/wasi-http`
 [1m[32m    Updating[0m git submodule `https://github.com/WebAssembly/wasi-io`
 [1m[32m Downloading[0m crates ...
-[1m[32m  Downloaded[0m colorchoice v1.0.4
-[1m[32m  Downloaded[0m derive_arbitrary v1.4.1
-[1m[32m  Downloaded[0m cranelift-frontend v0.121.1
-[1m[32m  Downloaded[0m autocfg v1.5.0
-[1m[32m  Downloaded[0m anyhow v1.0.98
-[1m[32m  Downloaded[0m equivalent v1.0.2
-[1m[32m  Downloaded[0m cranelift-bforest v0.121.1
-[1m[32m  Downloaded[0m instant v0.1.13
-[1m[32m  Downloaded[0m anstream v0.6.19
-[1m[32m  Downloaded[0m allocator-api2 v0.2.21
-[1m[32m  Downloaded[0m ahash v0.8.12
-[1m[32m  Downloaded[0m cranelift-assembler-x64-meta v0.121.1
-[1m[32m  Downloaded[0m errno v0.3.13
-[1m[32m  Downloaded[0m crc32fast v1.4.2
-[1m[32m  Downloaded[0m foldhash v0.1.5
-[1m[32m  Downloaded[0m anstyle v1.0.11
-[1m[32m  Downloaded[0m cfg-if v1.0.1
-[1m[32m  Downloaded[0m env_logger v0.11.8
 [1m[32m  Downloaded[0m addr2line v0.24.2
-[1m[32m  Downloaded[0m jobserver v0.1.33
-[1m[32m  Downloaded[0m indexmap v1.9.3
-[1m[32m  Downloaded[0m getrandom v0.3.3
-[1m[32m  Downloaded[0m embedded-io v0.6.1
-[1m[32m  Downloaded[0m env_filter v0.1.3
-[1m[32m  Downloaded[0m either v1.15.0
+[1m[32m  Downloaded[0m cfg-if v1.0.1
+[1m[32m  Downloaded[0m colorchoice v1.0.4
 [1m[32m  Downloaded[0m anstyle-query v1.1.3
-[1m[32m  Downloaded[0m itoa v1.0.15
-[1m[32m  Downloaded[0m cobs v0.3.0
-[1m[32m  Downloaded[0m leb128 v0.2.5
-[1m[32m  Downloaded[0m anstyle-parse v0.2.7
-[1m[32m  Downloaded[0m flagset v0.4.7
-[1m[32m  Downloaded[0m cranelift-native v0.121.1
-[1m[32m  Downloaded[0m cranelift-assembler-x64 v0.121.1
-[1m[32m  Downloaded[0m bitflags v2.9.1
-[1m[32m  Downloaded[0m cranelift-srcgen v0.121.1
-[1m[32m  Downloaded[0m cranelift-control v0.121.1
-[1m[32m  Downloaded[0m cranelift-entity v0.121.1
+[1m[32m  Downloaded[0m anyhow v1.0.98
 [1m[32m  Downloaded[0m cranelift-codegen-shared v0.121.1
-[1m[32m  Downloaded[0m postcard v1.1.2
-[1m[32m  Downloaded[0m utf8parse v0.2.2
 [1m[32m  Downloaded[0m cranelift-bitset v0.121.1
+[1m[32m  Downloaded[0m anstyle-parse v0.2.7
+[1m[32m  Downloaded[0m anstyle v1.0.11
+[1m[32m  Downloaded[0m cranelift-native v0.121.1
+[1m[32m  Downloaded[0m cranelift-control v0.121.1
+[1m[32m  Downloaded[0m cranelift-bforest v0.121.1
+[1m[32m  Downloaded[0m cranelift-assembler-x64 v0.121.1
+[1m[32m  Downloaded[0m autocfg v1.5.0
+[1m[32m  Downloaded[0m cranelift-entity v0.121.1
+[1m[32m  Downloaded[0m cobs v0.3.0
+[1m[32m  Downloaded[0m anstream v0.6.19
+[1m[32m  Downloaded[0m cranelift-assembler-x64-meta v0.121.1
+[1m[32m  Downloaded[0m cranelift-frontend v0.121.1
+[1m[32m  Downloaded[0m allocator-api2 v0.2.21
+[1m[32m  Downloaded[0m bitflags v2.9.1
+[1m[32m  Downloaded[0m ahash v0.8.12
 [1m[32m  Downloaded[0m ppv-lite86 v0.2.21
-[1m[32m  Downloaded[0m ryu v1.0.20
+[1m[32m  Downloaded[0m postcard v1.1.2
+[1m[32m  Downloaded[0m indexmap v1.9.3
+[1m[32m  Downloaded[0m equivalent v1.0.2
+[1m[32m  Downloaded[0m embedded-io v0.6.1
+[1m[32m  Downloaded[0m either v1.15.0
+[1m[32m  Downloaded[0m cranelift-srcgen v0.121.1
+[1m[32m  Downloaded[0m serde_derive v1.0.222
+[1m[32m  Downloaded[0m utf8parse v0.2.2
+[1m[32m  Downloaded[0m pulley-macros v34.0.1
+[1m[32m  Downloaded[0m itoa v1.0.15
 [1m[32m  Downloaded[0m target-lexicon v0.13.2
-[1m[32m  Downloaded[0m version_check v0.9.5
-[1m[32m  Downloaded[0m smallvec v1.15.1
-[1m[32m  Downloaded[0m wasmprinter v0.233.0
-[1m[32m  Downloaded[0m unicode-ident v1.0.18
-[1m[32m  Downloaded[0m once_cell v1.21.3
+[1m[32m  Downloaded[0m semver v1.0.26
+[1m[32m  Downloaded[0m quote v1.0.40
+[1m[32m  Downloaded[0m leb128 v0.2.5
+[1m[32m  Downloaded[0m wasmtime-jit-icache-coherence v34.0.1
+[1m[32m  Downloaded[0m instant v0.1.13
+[1m[32m  Downloaded[0m wasmtime-component-util v34.0.1
+[1m[32m  Downloaded[0m tempfile v3.20.0
+[1m[32m  Downloaded[0m wasmtime-versioned-export-macros v34.0.1
+[1m[32m  Downloaded[0m wasmtime-slab v34.0.1
+[1m[32m  Downloaded[0m wasmtime-asm-macros v34.0.1
 [1m[32m  Downloaded[0m proc-macro2 v1.0.95
 [1m[32m  Downloaded[0m unicode-xid v0.2.6
-[1m[32m  Downloaded[0m tempfile v3.20.0
-[1m[32m  Downloaded[0m wasmtime-jit-icache-coherence v34.0.1
-[1m[32m  Downloaded[0m wasmtime-component-util v34.0.1
-[1m[32m  Downloaded[0m aho-corasick v1.1.3
+[1m[32m  Downloaded[0m unicode-ident v1.0.18
+[1m[32m  Downloaded[0m derive_arbitrary v1.4.1
+[1m[32m  Downloaded[0m errno v0.3.13
+[1m[32m  Downloaded[0m env_logger v0.11.8
+[1m[32m  Downloaded[0m env_filter v0.1.3
+[1m[32m  Downloaded[0m foldhash v0.1.5
+[1m[32m  Downloaded[0m version_check v0.9.5
 [1m[32m  Downloaded[0m wasm-metadata v0.214.0
-[1m[32m  Downloaded[0m semver v1.0.26
-[1m[32m  Downloaded[0m wasmtime-asm-macros v34.0.1
-[1m[32m  Downloaded[0m pulley-macros v34.0.1
-[1m[32m  Downloaded[0m serde v1.0.222
-[1m[32m  Downloaded[0m quote v1.0.40
-[1m[32m  Downloaded[0m wasmtime-fiber v34.0.1
-[1m[32m  Downloaded[0m wasm-encoder v0.214.0
-[1m[32m  Downloaded[0m serde_derive v1.0.222
-[1m[32m  Downloaded[0m serde_core v1.0.222
-[1m[32m  Downloaded[0m cc v1.2.29
+[1m[32m  Downloaded[0m once_cell v1.21.3
 [1m[32m  Downloaded[0m wasmtime-winch v34.0.1
-[1m[32m  Downloaded[0m wasmtime-slab v34.0.1
-[1m[32m  Downloaded[0m wasmtime-wit-bindgen v34.0.1
-[1m[32m  Downloaded[0m wasmtime-versioned-export-macros v34.0.1
-[1m[32m  Downloaded[0m jiff v0.2.15
-[1m[32m  Downloaded[0m linux-raw-sys v0.4.15
-[1m[32m  Downloaded[0m encoding_rs v0.8.35
-[1m[32m  Downloaded[0m wasmtime-math v34.0.1
-[1m[32m  Downloaded[0m linux-raw-sys v0.9.4
-[1m[32m  Downloaded[0m indexmap v2.10.0
-[1m[32m  Downloaded[0m hashbrown v0.15.4
-[1m[32m  Downloaded[0m bumpalo v3.19.0
-[1m[32m  Downloaded[0m libfuzzer-sys v0.4.10
-[1m[32m  Downloaded[0m libm v0.2.15
-[1m[32m  Downloaded[0m hashbrown v0.14.5
-[1m[32m  Downloaded[0m libc v0.2.174
-[1m[32m  Downloaded[0m cranelift-codegen v0.121.1
+[1m[32m  Downloaded[0m crc32fast v1.4.2
+[1m[32m  Downloaded[0m wasmtime-fiber v34.0.1
+[1m[32m  Downloaded[0m smallvec v1.15.1
+[1m[32m  Downloaded[0m jobserver v0.1.33
 [1m[32m  Downloaded[0m cranelift-isle v0.121.1
-[1m[32m  Downloaded[0m rustix v1.0.7
+[1m[32m  Downloaded[0m serde v1.0.222
+[1m[32m  Downloaded[0m flagset v0.4.7
 [1m[32m  Downloaded[0m cranelift-codegen-meta v0.121.1
-[1m[32m  Downloaded[0m syn v2.0.104
-[1m[32m  Downloaded[0m regalloc2 v0.12.2
-[1m[32m  Downloaded[0m regex-automata v0.4.9
-[1m[32m  Downloaded[0m regex v1.11.1
-[1m[32m  Downloaded[0m rand v0.9.1
-[1m[32m  Downloaded[0m object v0.36.7
-[1m[32m  Downloaded[0m rustix v0.38.44
-[1m[32m  Downloaded[0m wasmparser v0.214.0
-[1m[32m  Downloaded[0m unicode-width v0.2.1
-[1m[32m  Downloaded[0m regex-syntax v0.8.5
-[1m[32m  Downloaded[0m wasmtime-component-macro v34.0.1
-[1m[32m  Downloaded[0m pulley-interpreter v34.0.1
+[1m[32m  Downloaded[0m bumpalo v3.19.0
+[1m[32m  Downloaded[0m wasmtime-wit-bindgen v34.0.1
+[1m[32m  Downloaded[0m getrandom v0.3.3
+[1m[32m  Downloaded[0m ryu v1.0.20
+[1m[32m  Downloaded[0m wasmprinter v0.233.0
+[1m[32m  Downloaded[0m cc v1.2.29
+[1m[32m  Downloaded[0m wasm-encoder v0.214.0
+[1m[32m  Downloaded[0m serde_core v1.0.222
+[1m[32m  Downloaded[0m aho-corasick v1.1.3
 [1m[32m  Downloaded[0m memchr v2.7.5
+[1m[32m  Downloaded[0m indexmap v2.10.0
+[1m[32m  Downloaded[0m hashbrown v0.14.5
+[1m[32m  Downloaded[0m rand v0.9.1
 [1m[32m  Downloaded[0m wasm-encoder v0.233.0
+[1m[32m  Downloaded[0m pulley-interpreter v34.0.1
+[1m[32m  Downloaded[0m hashbrown v0.15.4
+[1m[32m  Downloaded[0m libfuzzer-sys v0.4.10
+[1m[32m  Downloaded[0m regalloc2 v0.12.2
+[1m[32m  Downloaded[0m libm v0.2.15
 [1m[32m  Downloaded[0m wasmtime-cranelift v34.0.1
+[1m[32m  Downloaded[0m wit-parser v0.214.0
 [1m[32m  Downloaded[0m wasmtime-environ v34.0.1
-[1m[32m  Downloaded[0m wasmparser v0.233.0
-[1m[32m  Downloaded[0m wasmtime v34.0.1
-[1m[32m  Downloaded[0m spdx v0.10.8
+[1m[32m  Downloaded[0m regex v1.11.1
+[1m[32m  Downloaded[0m wasmtime-component-macro v34.0.1
+[1m[32m  Downloaded[0m wit-parser v0.233.0
 [1m[32m  Downloaded[0m winch-codegen v34.0.1
 [1m[32m  Downloaded[0m wit-component v0.214.0
-[1m[32m  Downloaded[0m wit-parser v0.214.0
-[1m[32m  Downloaded[0m wit-parser v0.233.0
+[1m[32m  Downloaded[0m unicode-width v0.2.1
+[1m[32m  Downloaded[0m cranelift-codegen v0.121.1
+[1m[32m  Downloaded[0m wasmparser v0.233.0
+[1m[32m  Downloaded[0m syn v2.0.104
 [1m[32m  Downloaded[0m zerocopy v0.8.26
+[1m[32m  Downloaded[0m object v0.36.7
+[1m[32m  Downloaded[0m rustix v1.0.7
+[1m[32m  Downloaded[0m regex-syntax v0.8.5
+[1m[32m  Downloaded[0m rustix v0.38.44
+[1m[32m  Downloaded[0m wasmparser v0.214.0
+[1m[32m  Downloaded[0m regex-automata v0.4.9
+[1m[32m  Downloaded[0m jiff v0.2.15
+[1m[32m  Downloaded[0m libc v0.2.174
+[1m[32m  Downloaded[0m wasmtime v34.0.1
+[1m[32m  Downloaded[0m encoding_rs v0.8.35
+[1m[32m  Downloaded[0m linux-raw-sys v0.4.15
+[1m[32m  Downloaded[0m spdx v0.10.8
+[1m[32m  Downloaded[0m linux-raw-sys v0.9.4
+[1m[32m  Downloaded[0m wasmtime-math v34.0.1
 [1m[32m   Compiling[0m proc-macro2 v1.0.95
 [1m[32m   Compiling[0m unicode-ident v1.0.18
 [1m[32m   Compiling[0m serde_core v1.0.222
@@ -174,137 +174,137 @@
 [1m[32m   Compiling[0m foldhash v0.1.5
 [1m[32m   Compiling[0m bitflags v2.9.1
 [1m[32m   Compiling[0m equivalent v1.0.2
-[1m[32m   Compiling[0m cfg-if v1.0.1
+[1m[32m   Compiling[0m hashbrown v0.15.4
 [1m[32m   Compiling[0m semver v1.0.26
+[1m[32m   Compiling[0m cfg-if v1.0.1
 [1m[32m   Compiling[0m anyhow v1.0.98
 [1m[32m   Compiling[0m libc v0.2.174
 [1m[32m   Compiling[0m memchr v2.7.5
 [1m[32m   Compiling[0m log v0.4.27
+[1m[32m   Compiling[0m quote v1.0.40
 [1m[32m   Compiling[0m serde_json v1.0.140
+[1m[32m   Compiling[0m syn v2.0.104
 [1m[32m   Compiling[0m zerocopy v0.8.26
-[1m[32m   Compiling[0m hashbrown v0.15.4
-[1m[32m   Compiling[0m wasmparser v0.239.0 (/src/wasm-tools/crates/wasmparser)
-[1m[32m   Compiling[0m leb128fmt v0.1.0
 [1m[32m   Compiling[0m cranelift-srcgen v0.121.1
+[1m[32m   Compiling[0m leb128fmt v0.1.0
+[1m[32m   Compiling[0m wasmparser v0.239.0 (/src/wasm-tools/crates/wasmparser)
 [1m[32m   Compiling[0m cranelift-assembler-x64-meta v0.121.1
 [1m[32m   Compiling[0m allocator-api2 v0.2.21
 [1m[32m   Compiling[0m once_cell v1.21.3
-[1m[32m   Compiling[0m cranelift-bitset v0.121.1
-[1m[32m   Compiling[0m version_check v0.9.5
-[1m[32m   Compiling[0m libm v0.2.15
-[1m[32m   Compiling[0m cranelift-isle v0.121.1
-[1m[32m   Compiling[0m wasm-encoder v0.239.0 (/src/wasm-tools/crates/wasm-encoder)
 [1m[32m   Compiling[0m bumpalo v3.19.0
+[1m[32m   Compiling[0m version_check v0.9.5
+[1m[32m   Compiling[0m cranelift-isle v0.121.1
+[1m[32m   Compiling[0m libm v0.2.15
+[1m[32m   Compiling[0m wasm-encoder v0.239.0 (/src/wasm-tools/crates/wasm-encoder)
+[1m[32m   Compiling[0m cranelift-bitset v0.121.1
 [1m[32m   Compiling[0m ahash v0.8.12
-[1m[32m   Compiling[0m cranelift-codegen-shared v0.121.1
 [1m[32m   Compiling[0m thiserror v2.0.12
+[1m[32m   Compiling[0m cranelift-codegen-shared v0.121.1
 [1m[32m   Compiling[0m target-lexicon v0.13.2
+[1m[32m   Compiling[0m jobserver v0.1.33
 [1m[32m   Compiling[0m cranelift-assembler-x64 v0.121.1
+[1m[32m   Compiling[0m getrandom v0.3.3
+[1m[32m   Compiling[0m itoa v1.0.15
 [1m[32m   Compiling[0m ryu v1.0.20
 [1m[32m   Compiling[0m shlex v1.3.0
-[1m[32m   Compiling[0m itoa v1.0.15
-[1m[32m   Compiling[0m getrandom v0.3.3
-[1m[32m   Compiling[0m wasmparser v0.233.0
-[1m[32m   Compiling[0m rustc-hash v2.1.1
-[1m[32m   Compiling[0m id-arena v2.2.1
-[1m[32m   Compiling[0m unicode-xid v0.2.6
-[1m[32m   Compiling[0m autocfg v1.5.0
-[1m[32m   Compiling[0m quote v1.0.40
-[1m[32m   Compiling[0m termcolor v1.4.1
-[1m[32m   Compiling[0m syn v2.0.104
-[1m[32m   Compiling[0m jobserver v0.1.33
-[1m[32m   Compiling[0m wasm-encoder v0.233.0
-[1m[32m   Compiling[0m object v0.36.7
-[1m[32m   Compiling[0m cc v1.2.29
-[1m[32m   Compiling[0m indexmap v1.9.3
-[1m[32m   Compiling[0m aho-corasick v1.1.3
-[1m[32m   Compiling[0m crc32fast v1.4.2
-[1m[32m   Compiling[0m rustix v0.38.44
 [1m[32m   Compiling[0m wasmtime-math v34.0.1
-[1m[32m   Compiling[0m unicode-width v0.2.1
-[1m[32m   Compiling[0m regex-syntax v0.8.5
-[1m[32m   Compiling[0m rustix v1.0.7
-[1m[32m   Compiling[0m rand_core v0.9.3
-[1m[32m   Compiling[0m wasmtime-component-macro v34.0.1
-[1m[32m   Compiling[0m either v1.15.0
-[1m[32m   Compiling[0m leb128 v0.2.5
-[1m[32m   Compiling[0m ppv-lite86 v0.2.21
-[1m[32m   Compiling[0m linux-raw-sys v0.9.4
-[1m[32m   Compiling[0m linux-raw-sys v0.4.15
-[1m[32m   Compiling[0m hashbrown v0.12.3
-[1m[32m   Compiling[0m hashbrown v0.14.5
-[1m[32m   Compiling[0m utf8parse v0.2.2
-[1m[32m   Compiling[0m heck v0.5.0
-[1m[32m   Compiling[0m wasmtime-component-util v34.0.1
-[1m[32m   Compiling[0m anstyle-parse v0.2.7
-[1m[32m   Compiling[0m rand_chacha v0.9.0
-[1m[32m   Compiling[0m itertools v0.14.0
-[1m[32m   Compiling[0m regex-automata v0.4.9
-[1m[32m   Compiling[0m indexmap v2.10.0
-[1m[32m   Compiling[0m libfuzzer-sys v0.4.10
-[1m[32m   Compiling[0m instant v0.1.13
-[1m[32m   Compiling[0m anstyle-query v1.1.3
-[1m[32m   Compiling[0m symbolic_expressions v5.0.3
-[1m[32m   Compiling[0m colorchoice v1.0.4
-[1m[32m   Compiling[0m anstyle v1.0.11
-[1m[32m   Compiling[0m is_terminal_polyfill v1.70.1
-[1m[32m   Compiling[0m anstream v0.6.19
-[1m[32m   Compiling[0m rand v0.9.1
-[1m[32m   Compiling[0m wasmtime-jit-icache-coherence v34.0.1
-[1m[32m   Compiling[0m wasmtime-asm-macros v34.0.1
-[1m[32m   Compiling[0m encoding_rs v0.8.35
-[1m[32m   Compiling[0m jiff v0.2.15
-[1m[32m   Compiling[0m fastrand v2.3.0
-[1m[32m   Compiling[0m wasmtime-slab v34.0.1
-[1m[32m   Compiling[0m flagset v0.4.7
-[1m[32m   Compiling[0m memfd v0.6.4
-[1m[32m   Compiling[0m tempfile v3.20.0
+[1m[32m   Compiling[0m cc v1.2.29
+[1m[32m   Compiling[0m rustc-hash v2.1.1
+[1m[32m   Compiling[0m wasmparser v0.233.0
 [1m[32m   Compiling[0m serde_derive v1.0.222
 [1m[32m   Compiling[0m pulley-macros v34.0.1
 [1m[32m   Compiling[0m derive_arbitrary v1.4.1
 [1m[32m   Compiling[0m thiserror-impl v2.0.12
-[1m[32m   Compiling[0m wasmtime-versioned-export-macros v34.0.1
+[1m[32m   Compiling[0m hashbrown v0.14.5
 [1m[32m   Compiling[0m pulley-interpreter v34.0.1
-[1m[32m   Compiling[0m wasmtime v34.0.1
-[1m[32m   Compiling[0m regex v1.11.1
-[1m[32m   Compiling[0m env_filter v0.1.3
 [1m[32m   Compiling[0m arbitrary v1.4.1
-[1m[32m   Compiling[0m cobs v0.3.0
-[1m[32m   Compiling[0m cranelift-control v0.121.1
+[1m[32m   Compiling[0m id-arena v2.2.1
+[1m[32m   Compiling[0m unicode-xid v0.2.6
+[1m[32m   Compiling[0m wasm-encoder v0.233.0
+[1m[32m   Compiling[0m object v0.36.7
 [1m[32m   Compiling[0m cranelift-codegen-meta v0.121.1
-[1m[32m   Compiling[0m wit-parser v0.233.0
-[1m[32m   Compiling[0m env_logger v0.11.8
+[1m[32m   Compiling[0m cranelift-control v0.121.1
+[1m[32m   Compiling[0m termcolor v1.4.1
+[1m[32m   Compiling[0m autocfg v1.5.0
+[1m[32m   Compiling[0m indexmap v1.9.3
+[1m[32m   Compiling[0m indexmap v2.10.0
 [1m[32m   Compiling[0m smallvec v1.15.1
-[1m[32m   Compiling[0m postcard v1.1.2
 [1m[32m   Compiling[0m cranelift-entity v0.121.1
-[1m[32m   Compiling[0m regalloc2 v0.12.2
-[1m[32m   Compiling[0m spdx v0.10.8
-[1m[32m   Compiling[0m cranelift-bforest v0.121.1
 [1m[32m   Compiling[0m gimli v0.31.1
-[1m[32m   Compiling[0m wasmparser v0.214.0
-[1m[32m   Compiling[0m egg v0.6.0
+[1m[32m   Compiling[0m cranelift-bforest v0.121.1
 [1m[32m   Compiling[0m cranelift-codegen v0.121.1
-[1m[32m   Compiling[0m wasmtime-wit-bindgen v34.0.1
-[1m[32m   Compiling[0m wasm-encoder v0.214.0
-[1m[32m   Compiling[0m wit-parser v0.214.0
-[1m[32m   Compiling[0m wasmprinter v0.233.0
-[1m[32m   Compiling[0m wit-parser v0.239.0 (/src/wasm-tools/crates/wit-parser)
-[1m[32m   Compiling[0m wasm-metadata v0.214.0
+[1m[32m   Compiling[0m regalloc2 v0.12.2
+[1m[32m   Compiling[0m wasmparser v0.214.0
+[1m[32m   Compiling[0m cobs v0.3.0
+[1m[32m   Compiling[0m wasmtime-versioned-export-macros v34.0.1
+[1m[32m   Compiling[0m aho-corasick v1.1.3
+[1m[32m   Compiling[0m crc32fast v1.4.2
+[1m[32m   Compiling[0m regex-syntax v0.8.5
+[1m[32m   Compiling[0m rustix v0.38.44
+[1m[32m   Compiling[0m unicode-width v0.2.1
+[1m[32m   Compiling[0m rustix v1.0.7
 [1m[32m   Compiling[0m wast v239.0.0 (/src/wasm-tools/crates/wast)
-[1m[32m   Compiling[0m wasm-metadata v0.239.0 (/src/wasm-tools/crates/wasm-metadata)
+[1m[32m   Compiling[0m wit-parser v0.233.0
+[1m[32m   Compiling[0m regex-automata v0.4.9
+[1m[32m   Compiling[0m postcard v1.1.2
+[1m[32m   Compiling[0m wasmprinter v0.233.0
+[1m[32m   Compiling[0m rand_core v0.9.3
+[1m[32m   Compiling[0m ppv-lite86 v0.2.21
+[1m[32m   Compiling[0m linux-raw-sys v0.4.15
+[1m[32m   Compiling[0m wasmtime-component-util v34.0.1
+[1m[32m   Compiling[0m linux-raw-sys v0.9.4
+[1m[32m   Compiling[0m heck v0.5.0
+[1m[32m   Compiling[0m leb128 v0.2.5
+[1m[32m   Compiling[0m wasmtime-component-macro v34.0.1
+[1m[32m   Compiling[0m either v1.15.0
+[1m[32m   Compiling[0m hashbrown v0.12.3
+[1m[32m   Compiling[0m utf8parse v0.2.2
+[1m[32m   Compiling[0m anstyle-parse v0.2.7
+[1m[32m   Compiling[0m itertools v0.14.0
+[1m[32m   Compiling[0m wasm-encoder v0.214.0
+[1m[32m   Compiling[0m wasmtime-wit-bindgen v34.0.1
 [1m[32m   Compiling[0m wasmtime-environ v34.0.1
-[1m[32m   Compiling[0m wit-component v0.214.0
-[1m[32m   Compiling[0m wasm-mutate v0.239.0 (/src/wasm-tools/crates/wasm-mutate)
-[1m[32m   Compiling[0m wasm-smith v0.239.0 (/src/wasm-tools/crates/wasm-smith)
-[1m[32m   Compiling[0m wasmprinter v0.239.0 (/src/wasm-tools/crates/wasmprinter)
+[1m[32m   Compiling[0m rand_chacha v0.9.0
+[1m[32m   Compiling[0m regex v1.11.1
 [1m[32m   Compiling[0m wat v1.239.0 (/src/wasm-tools/crates/wat)
-[1m[32m   Compiling[0m wit-component v0.239.0 (/src/wasm-tools/crates/wit-component)
-[1m[32m   Compiling[0m wit-smith v0.239.0 (/src/wasm-tools/crates/wit-smith)
 [1m[32m   Compiling[0m cranelift-frontend v0.121.1
 [1m[32m   Compiling[0m cranelift-native v0.121.1
+[1m[32m   Compiling[0m wasmtime v34.0.1
+[1m[32m   Compiling[0m wasm-metadata v0.239.0 (/src/wasm-tools/crates/wasm-metadata)
+[1m[32m   Compiling[0m wit-parser v0.239.0 (/src/wasm-tools/crates/wit-parser)
+[1m[32m   Compiling[0m spdx v0.10.8
+[1m[32m   Compiling[0m libfuzzer-sys v0.4.10
+[1m[32m   Compiling[0m instant v0.1.13
+[1m[32m   Compiling[0m anstyle-query v1.1.3
+[1m[32m   Compiling[0m anstyle v1.0.11
+[1m[32m   Compiling[0m colorchoice v1.0.4
+[1m[32m   Compiling[0m is_terminal_polyfill v1.70.1
+[1m[32m   Compiling[0m symbolic_expressions v5.0.3
+[1m[32m   Compiling[0m anstream v0.6.19
+[1m[32m   Compiling[0m egg v0.6.0
+[1m[32m   Compiling[0m wit-component v0.239.0 (/src/wasm-tools/crates/wit-component)
+[1m[32m   Compiling[0m wasm-metadata v0.214.0
 [1m[32m   Compiling[0m wasmtime-cranelift v34.0.1
+[1m[32m   Compiling[0m env_filter v0.1.3
+[1m[32m   Compiling[0m rand v0.9.1
+[1m[32m   Compiling[0m memfd v0.6.4
+[1m[32m   Compiling[0m wit-parser v0.214.0
+[1m[32m   Compiling[0m wasmtime-jit-icache-coherence v34.0.1
+[1m[32m   Compiling[0m encoding_rs v0.8.35
+[1m[32m   Compiling[0m wasmtime-asm-macros v34.0.1
+[1m[32m   Compiling[0m flagset v0.4.7
+[1m[32m   Compiling[0m fastrand v2.3.0
+[1m[32m   Compiling[0m wasmtime-slab v34.0.1
+[1m[32m   Compiling[0m jiff v0.2.15
+[1m[32m   Compiling[0m tempfile v3.20.0
+[1m[32m   Compiling[0m wasm-smith v0.239.0 (/src/wasm-tools/crates/wasm-smith)
+[1m[32m   Compiling[0m env_logger v0.11.8
+[1m[32m   Compiling[0m wit-component v0.214.0
+[1m[32m   Compiling[0m wasm-mutate v0.239.0 (/src/wasm-tools/crates/wasm-mutate)
+[1m[32m   Compiling[0m wit-smith v0.239.0 (/src/wasm-tools/crates/wit-smith)
+[1m[32m   Compiling[0m wasmprinter v0.239.0 (/src/wasm-tools/crates/wasmprinter)
 [1m[32m   Compiling[0m wasm-tools-fuzz v0.0.0 (/src/wasm-tools/fuzz)
-[1m[32m    Finished[0m `release` profile [optimized + debuginfo] target(s) in 6m 09s
+[1m[32m    Finished[0m `release` profile [optimized + debuginfo] target(s) in 7m 58s
 + FUZZ_TARGET_OUTPUT_DIR=/src/wasm-tools/target/x86_64-unknown-linux-gnu/release
 + '[' x = x ']'
 + fuzz_targets='/src/wasm-tools/fuzz/fuzz_targets/*.rs'
@@ -333,14 +333,14 @@
 ++ cut -d/ -f2
 ++ uniq
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix fuzz=/src/regalloc2/fuzz'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix fuzz=/src/regalloc2/fuzz'
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool --remap-path-prefix fuzz=/src/regalloc2/fuzz'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool --remap-path-prefix fuzz=/src/regalloc2/fuzz'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix fuzz=/src/regalloc2/fuzz --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix fuzz=/src/regalloc2/fuzz --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool'
 + read i
-+ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool --remap-path-prefix fuzz=/src/regalloc2/fuzz --remap-path-prefix src=/src/regalloc2/src'
-+ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool --remap-path-prefix fuzz=/src/regalloc2/fuzz --remap-path-prefix src=/src/regalloc2/src'
++ export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix fuzz=/src/regalloc2/fuzz --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool --remap-path-prefix src=/src/regalloc2/src'
++ RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --remap-path-prefix tests=/src/wasmtime/tests --remap-path-prefix examples=/src/wasmtime/examples --remap-path-prefix fuzz=/src/wasmtime/fuzz --remap-path-prefix crates=/src/wasmtime/crates --remap-path-prefix benches=/src/wasmtime/benches --remap-path-prefix src=/src/wasmtime/src --remap-path-prefix ci=/src/wasmtime/ci --remap-path-prefix cranelift=/src/wasmtime/cranelift --remap-path-prefix scripts=/src/wasmtime/scripts --remap-path-prefix pulley=/src/wasmtime/pulley --remap-path-prefix winch=/src/wasmtime/winch --remap-path-prefix build.rs=/src/wasmtime/build.rs --remap-path-prefix tests=/src/wasm-tools/tests --remap-path-prefix examples=/src/wasm-tools/examples --remap-path-prefix fuzz=/src/wasm-tools/fuzz --remap-path-prefix crates=/src/wasm-tools/crates --remap-path-prefix src=/src/wasm-tools/src --remap-path-prefix ci=/src/wasm-tools/ci --remap-path-prefix playground=/src/wasm-tools/playground --remap-path-prefix build.rs=/src/wasm-tools/build.rs --remap-path-prefix fuzz=/src/regalloc2/fuzz --remap-path-prefix regalloc2-tool=/src/regalloc2/regalloc2-tool --remap-path-prefix src=/src/regalloc2/src'
 + read i
 + cd /src/regalloc2/fuzz
 + cargo fuzz build --sanitizer none --strip-dead-code -O --debug-assertions
@@ -348,47 +348,47 @@
 [1m[32m     Locking[0m 37 packages to latest compatible versions
 [1m[36m      Adding[0m env_logger v0.8.4 [1m[33m(available: v0.11.8)[0m
 [1m[32m Downloading[0m crates ...
-[1m[32m  Downloaded[0m atty v0.2.14
 [1m[32m  Downloaded[0m log v0.4.28
-[1m[32m  Downloaded[0m humantime v2.3.0
 [1m[32m  Downloaded[0m arbitrary v1.4.2
+[1m[32m  Downloaded[0m humantime v2.3.0
+[1m[32m  Downloaded[0m find-msvc-tools v0.1.3
+[1m[32m  Downloaded[0m atty v0.2.14
+[1m[32m  Downloaded[0m jobserver v0.1.34
 [1m[32m  Downloaded[0m env_logger v0.8.4
 [1m[32m  Downloaded[0m arbtest v0.3.2
-[1m[32m  Downloaded[0m jobserver v0.1.34
-[1m[32m  Downloaded[0m find-msvc-tools v0.1.2
-[1m[32m  Downloaded[0m regex-syntax v0.8.6
-[1m[32m  Downloaded[0m libc v0.2.176
-[1m[32m  Downloaded[0m memchr v2.7.6
 [1m[32m  Downloaded[0m hashbrown v0.15.5
-[1m[32m  Downloaded[0m cc v1.2.39
-[1m[32m  Downloaded[0m regex v1.11.3
+[1m[32m  Downloaded[0m regex-syntax v0.8.6
 [1m[32m  Downloaded[0m regex-automata v0.4.11
+[1m[32m  Downloaded[0m memchr v2.7.6
+[1m[32m  Downloaded[0m cc v1.2.40
+[1m[32m  Downloaded[0m regex v1.11.3
+[1m[32m  Downloaded[0m libc v0.2.176
 [1m[32m   Compiling[0m libc v0.2.176
+[1m[32m   Compiling[0m find-msvc-tools v0.1.3
 [1m[32m   Compiling[0m memchr v2.7.6
-[1m[32m   Compiling[0m find-msvc-tools v0.1.2
 [1m[32m   Compiling[0m shlex v1.3.0
 [1m[32m   Compiling[0m regex-syntax v0.8.6
 [1m[32m   Compiling[0m arbitrary v1.4.2
 [1m[32m   Compiling[0m allocator-api2 v0.2.21
 [1m[32m   Compiling[0m log v0.4.28
-[1m[32m   Compiling[0m humantime v2.3.0
-[1m[32m   Compiling[0m termcolor v1.4.1
-[1m[32m   Compiling[0m hashbrown v0.15.5
-[1m[32m   Compiling[0m smallvec v1.15.1
-[1m[32m   Compiling[0m rustc-hash v2.1.1
-[1m[32m   Compiling[0m bumpalo v3.19.0
 [1m[32m   Compiling[0m aho-corasick v1.1.3
-[1m[32m   Compiling[0m arbtest v0.3.2
-[1m[32m   Compiling[0m regalloc2 v0.13.2 (/src/regalloc2)
 [1m[32m   Compiling[0m jobserver v0.1.34
 [1m[32m   Compiling[0m atty v0.2.14
-[1m[32m   Compiling[0m cc v1.2.39
+[1m[32m   Compiling[0m arbtest v0.3.2
+[1m[32m   Compiling[0m bumpalo v3.19.0
+[1m[32m   Compiling[0m cc v1.2.40
 [1m[32m   Compiling[0m regex-automata v0.4.11
+[1m[32m   Compiling[0m hashbrown v0.15.5
+[1m[32m   Compiling[0m humantime v2.3.0
+[1m[32m   Compiling[0m termcolor v1.4.1
+[1m[32m   Compiling[0m rustc-hash v2.1.1
+[1m[32m   Compiling[0m smallvec v1.15.1
+[1m[32m   Compiling[0m regalloc2 v0.13.2 (/src/regalloc2)
 [1m[32m   Compiling[0m libfuzzer-sys v0.4.10
 [1m[32m   Compiling[0m regex v1.11.3
 [1m[32m   Compiling[0m env_logger v0.8.4
 [1m[32m   Compiling[0m regalloc2-fuzz v0.0.0 (/src/regalloc2/fuzz)
-[1m[32m    Finished[0m `release` profile [optimized + debuginfo] target(s) in 50.65s
+[1m[32m    Finished[0m `release` profile [optimized + debuginfo] target(s) in 57.89s
 + FUZZ_TARGET_OUTPUT_DIR=/src/regalloc2/fuzz/target/x86_64-unknown-linux-gnu/release
 + '[' xion_checker = x ']'
 + for f in $fuzz_targets
