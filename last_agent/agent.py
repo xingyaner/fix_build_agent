@@ -11,12 +11,11 @@ from google.adk.tools.tool_context import ToolContext
 from typing import AsyncGenerator, Optional
 from google.adk.events import Event, EventActions
 # --- 从 agent_tools.py 导入所有需要的工具 ---
-from agent_tools import get_shallow_file_tree
 from agent_tools import (
     prompt_generate_tool,
     save_file_tree,
-    get_shallow_file_tree,
-    search_file_structure,
+    save_file_tree_shallow,
+    find_and_append_file_details,
     read_file_content,
     create_or_update_file,
     append_file_to_file,
@@ -131,8 +130,8 @@ prompt_generate_agent = LlmAgent(
     tools=[
         prompt_generate_tool,
         save_file_tree,
-        get_shallow_file_tree,
-        search_file_structure,
+        save_file_tree_shallow,
+        find_and_append_file_details,
         read_file_content,
         create_or_update_file,
         append_file_to_file,

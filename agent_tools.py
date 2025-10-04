@@ -70,282 +70,168 @@ def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> di
         return {"status": "error", "message": error_message}
 
 
-def get_shallow_file_tree(directory_path: str, max_depth: int = 4, output_file: Optional[str] = None) -> dict:
+
+# --- 工具: 获取浅层文件树 ---
+def save_file_tree_shallow(directory_path: str, max_depth: int = 3, output_file: Optional[str] = None) -> dict:
     """
-    获取指定路径下前n层的浅层文件结构
+    获取指定路径下文件夹的前n层文件树结构，并将其覆盖写入到文件中。
+    此版本将传入的路径视为根，向下探索指定的层数。
 
     Args:
-        directory_path (str): 目标文件夹的绝对或相对路径
-        max_depth (int): 最大遍历深度，默认4层
-        output_file (str, optional): 输出文件路径
+        directory_path (str): 目标文件夹的绝对或相对路径。
+        max_depth (int): 需要遍历的最大深度。例如，3表示展示根目录、子目录和孙子目录三层的内容。
+        output_file (str, optional): 用于保存文件树的输出文件名。
+                                     如果未提供，将使用默认路径 'generated_prompt_file/file_tree.txt'。
 
     Returns:
-        dict: 包含操作结果和文件结构的字典
+        dict: 包含操作结果的字典。
     """
-    print(f"--- Tool: get_shallow_file_tree called for path: {directory_path} with max_depth: {max_depth} ---")
-
+    print(f"--- Tool: save_file_tree_shallow called for path: {directory_path} with max_depth: {max_depth} ---")
     if not os.path.isdir(directory_path):
         error_message = f"错误：提供的路径 '{directory_path}' 不是一个有效的目录。"
         print(error_message)
         return {"status": "error", "message": error_message}
 
-    # 与save_file_tree完全相同的存储位置设置
     if output_file is None:
         output_dir = "generated_prompt_file"
-        os.makedirs(output_dir, exist_ok=True)
         final_output_path = os.path.join(output_dir, "file_tree.txt")
     else:
         final_output_path = output_file
         output_dir = os.path.dirname(final_output_path)
-        if output_dir:  # 确保输出目录存在
-            os.makedirs(output_dir, exist_ok=True)
 
     try:
-        tree_lines = []
-        base_name = os.path.basename(os.path.abspath(directory_path))
+        if output_dir:
+            os.makedirs(output_dir, exist_ok=True)
 
-        def _build_shallow_tree(path, current_depth=0, prefix=""):
-            """修复后的递归函数"""
-            if current_depth >= max_depth:
-                # 达到最大深度时显示省略号
-                if current_depth == max_depth:
-                    tree_lines.append(f"{prefix}└── ... (depth limit: {max_depth})")
+        tree_lines = []
+
+        def _build_tree_recursive(path, prefix="", depth=0):
+            # --- 【核心修改点】 ---
+            # 如果当前深度已达到或超过最大深度，则立即停止，不再探索此路径。
+            if depth >= max_depth:
                 return
 
             try:
-                # 获取目录内容，排除隐藏文件
+                entries = sorted([e for e in os.listdir(path) if not e.startswith('.')])
+            except OSError:
                 entries = []
-                for entry in os.listdir(path):
-                    if not entry.startswith('.'):
-                        entries.append(entry)
-                entries.sort()
 
-                if not entries:
-                    return
-
-            except PermissionError:
-                tree_lines.append(f"{prefix}└── [Permission Denied]")
-                return
-            except Exception as e:
-                tree_lines.append(f"{prefix}└── [Error: {str(e)}]")
-                return
-
-            # 计算指针符号
             pointers = ["├── "] * (len(entries) - 1) + ["└── "]
-
             for pointer, entry in zip(pointers, entries):
                 full_path = os.path.join(path, entry)
+                if os.path.isdir(full_path):
+                    tree_lines.append(f"{prefix}{pointer}📁 {entry}")
+                    extension = "│   " if pointer == "├── " else "    "
+                    # 递归调用时，深度加一
+                    _build_tree_recursive(full_path, prefix + extension, depth + 1)
+                else:
+                    tree_lines.append(f"{prefix}{pointer}📄 {entry}")
 
-                try:
-                    if os.path.isdir(full_path):
-                        tree_lines.append(f"{prefix}{pointer}📁 {entry}")
-                        # 计算下一层的前缀
-                        extension = "│   " if pointer == "├── " else "    "
-                        _build_shallow_tree(full_path, current_depth + 1, prefix + extension)
-                    else:
-                        tree_lines.append(f"{prefix}{pointer}📄 {entry}")
-                except Exception as e:
-                    tree_lines.append(f"{prefix}{pointer}❓ {entry} [Access Error]")
-                    continue
+        # 打印根目录
+        tree_lines.insert(0, f"📁 {os.path.basename(os.path.abspath(directory_path))}")
+        # 从深度0开始递归
+        _build_tree_recursive(directory_path, prefix="")
 
-        # 开始构建树结构
-        tree_lines.append(f"📁 {base_name} (shallow view, depth={max_depth})")
-        _build_shallow_tree(directory_path, 0, "")
-
-        # 保存到文件
         with open(final_output_path, "w", encoding="utf-8") as f:
             f.write("\n".join(tree_lines))
 
-        # 同时返回结构内容，方便直接使用
-        structure_content = "\n".join(tree_lines)
-
-        success_message = f"浅层文件树（深度{max_depth}）已成功生成并保存到 '{final_output_path}'"
-        print(f"生成的文件树行数: {len(tree_lines)}")
+        success_message = f"文件树的前 {max_depth} 层已成功生成并保存到 '{final_output_path}'。"
         print(success_message)
-        return {
-            "status": "success",
-            "message": success_message,
-            "file_path": final_output_path,
-            "structure": structure_content,
-            "depth": max_depth,
-            "line_count": len(tree_lines)
-        }
+        return {"status": "success", "message": success_message}
     except Exception as e:
-        error_message = f"生成浅层文件树时发生错误: {str(e)}"
+        error_message = f"生成或保存浅层文件树时发生错误: {str(e)}"
         print(error_message)
         return {"status": "error", "message": error_message}
 
 
-def search_file_structure(directory_path: str, search_pattern: str, output_file: Optional[str] = None) -> dict:
+# --- 工具: 精确查找文件或目录 ---
+def find_and_append_file_details(directory_path: str, search_keyword: str, output_file: Optional[str] = None) -> dict:
     """
-    根据文件名或路径模式精确查找文件结构，并将结果追加到文件树文件中
+    根据文件名或部分路径信息查找文件或目录，并将其详细结构追加写入到文件中。
 
     Args:
-        directory_path (str): 搜索的根目录路径
-        search_pattern (str): 搜索模式（文件名、部分路径等）
-        output_file (str, optional): 输出文件路径，默认使用与save_file_tree相同的文件
+        directory_path (str): 要搜索的根目录的路径。
+        search_keyword (str): 用于搜索的文件名或部分路径的关键字。
+        output_file (str, optional): 用于追加文件树的输出文件名。
+                                     如果未提供，将使用默认路径 'generated_prompt_file/file_tree.txt'。
 
     Returns:
-        dict: 包含匹配结果和详细文件结构的字典
+        dict: 包含操作结果的字典。
     """
-    print(f"--- Tool: search_file_structure called for pattern: '{search_pattern}' in path: {directory_path} ---")
-
+    print(f"--- Tool: find_and_append_file_details called for path: {directory_path} with keyword: '{search_keyword}' ---")
     if not os.path.isdir(directory_path):
         error_message = f"错误：提供的路径 '{directory_path}' 不是一个有效的目录。"
         print(error_message)
         return {"status": "error", "message": error_message}
 
-    # 与save_file_tree完全相同的存储位置设置
+    # 设置默认输出路径
     if output_file is None:
         output_dir = "generated_prompt_file"
-        os.makedirs(output_dir, exist_ok=True)
-        final_output_path = os.path.join(output_dir, "file_tree.txt")  # 使用相同的文件名
+        final_output_path = os.path.join(output_dir, "file_tree.txt")
     else:
         final_output_path = output_file
         output_dir = os.path.dirname(final_output_path)
-        if output_dir:  # 确保输出目录存在
-            os.makedirs(output_dir, exist_ok=True)
 
     try:
-        matches = []
-        base_path = os.path.abspath(directory_path)
+        if output_dir:
+            os.makedirs(output_dir, exist_ok=True)
 
-        def _find_matches(path, relative_path=""):
-            """递归查找匹配的文件和目录"""
-            try:
-                entries = sorted(os.listdir(path))
-            except PermissionError:
-                return
+        found_paths = []
+        # 使用 os.walk 遍历整个目录树
+        for root, dirs, files in os.walk(directory_path):
+            # 组合所有条目进行搜索
+            all_entries = dirs + files
+            for entry in all_entries:
+                full_path = os.path.join(root, entry)
+                # 检查关键字是否在完整路径中
+                if search_keyword in full_path:
+                    found_paths.append(full_path)
+        
+        # 去重，因为父目录和子文件可能都会被匹配到
+        found_paths = sorted(list(set(found_paths)))
 
-            for entry in entries:
-                full_path = os.path.join(path, entry)
-                current_relative = os.path.join(relative_path, entry) if relative_path else entry
-
-                # 检查是否匹配搜索模式
-                if search_pattern.lower() in entry.lower() or search_pattern.lower() in current_relative.lower():
-                    matches.append({
-                        "relative_path": current_relative,
-                        "full_path": full_path,
-                        "is_dir": os.path.isdir(full_path)
-                    })
-
-                # 如果是目录，继续递归搜索
-                if os.path.isdir(full_path):
-                    _find_matches(full_path, current_relative)
-
-        # 执行搜索
-        _find_matches(base_path)
-
-        if not matches:
-            message = f"在 '{directory_path}' 中未找到匹配模式 '{search_pattern}' 的文件或目录"
+        if not found_paths:
+            message = f"在 '{directory_path}' 中未找到与 '{search_keyword}' 匹配的文件或目录。"
             print(message)
-
-            # 即使没有找到匹配项，也记录搜索操作到文件树文件中
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            no_match_output = f"\n\n=== 搜索记录 ===\n"
-            no_match_output += f"搜索时间: {timestamp}\n"
-            no_match_output += f"搜索模式: '{search_pattern}'\n"
-            no_match_output += f"搜索目录: {directory_path}\n"
-            no_match_output += f"结果: 未找到匹配项\n"
-
-            # 追加写入到文件树文件
+            # 即使没找到，也追加一条提示信息到文件中
             with open(final_output_path, "a", encoding="utf-8") as f:
-                f.write(no_match_output)
+                f.write(f"\n\n--- 对 '{search_keyword}' 的详细查询结果 ---\n")
+                f.write(message)
+            return {"status": "success", "message": message}
 
-            return {"status": "success", "message": message, "matches": []}
+        details_to_append = [f"\n\n--- 对 '{search_keyword}' 的详细查询结果 ---"]
+        
+        for path in found_paths:
+            relative_path = os.path.relpath(path, directory_path)
+            details_to_append.append(f"\n# 匹配路径: {relative_path}")
+            if os.path.isdir(path):
+                # 如果是目录，可以递归打印其下的结构
+                def _build_tree_recursive(sub_path, prefix=""):
+                    try:
+                        entries = sorted([e for e in os.listdir(sub_path) if not e.startswith('.')])
+                    except OSError:
+                        entries = []
+                    pointers = ["├── "] * (len(entries) - 1) + ["└── "]
+                    for pointer, entry in zip(pointers, entries):
+                        details_to_append.append(f"{prefix}{pointer}{'📁' if os.path.isdir(os.path.join(sub_path, entry)) else '📄'} {entry}")
 
-        # 为每个匹配项生成详细文件结构
-        detailed_structures = []
-        processed_paths = set()
-
-        for match in matches:
-            if match["is_dir"]:
-                target_path = match["full_path"]
-                if target_path not in processed_paths:
-                    dir_structure = _generate_detailed_structure(match["full_path"], match["relative_path"])
-                    detailed_structures.append(dir_structure)
-                    processed_paths.add(target_path)
+                _build_tree_recursive(path)
+            # 如果是文件，则只显示文件名
             else:
-                parent_dir = os.path.dirname(match["full_path"])
-                if parent_dir not in processed_paths:
-                    parent_relative = os.path.dirname(match["relative_path"])
-                    dir_structure = _generate_detailed_structure(parent_dir, parent_relative,
-                                                                 highlight_file=os.path.basename(match["full_path"]))
-                    detailed_structures.append(dir_structure)
-                    processed_paths.add(parent_dir)
+                details_to_append.append(f"📄 {os.path.basename(path)}")
 
-        # 合并所有详细结构
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        full_output = f"\n\n=== 搜索记录 ===\n"
-        full_output += f"搜索时间: {timestamp}\n"
-        full_output += f"搜索模式: '{search_pattern}'\n"
-        full_output += f"搜索目录: {directory_path}\n"
-        full_output += f"找到 {len(matches)} 个匹配项:\n\n"
-        full_output += "\n\n".join(detailed_structures)
 
-        # 追加写入到文件树文件（使用 'a' 模式）
+        # 追加写入文件
         with open(final_output_path, "a", encoding="utf-8") as f:
-            f.write(full_output)
+            f.write("\n".join(details_to_append))
 
-        success_message = f"找到 {len(matches)} 个匹配 '{search_pattern}' 的项目，详细结构已追加到 '{final_output_path}'"
+        success_message = f"已将 '{search_keyword}' 的详细搜索结果追加到 '{final_output_path}'。"
         print(success_message)
-        return {
-            "status": "success",
-            "message": success_message,
-            "file_path": final_output_path,
-            "matches_count": len(matches),
-            "matches": [m["relative_path"] for m in matches],
-            "structure": full_output
-        }
-
+        return {"status": "success", "message": success_message}
     except Exception as e:
-        error_message = f"搜索文件结构时发生错误: {str(e)}"
+        error_message = f"查找和追加文件详细信息时发生错误: {str(e)}"
         print(error_message)
         return {"status": "error", "message": error_message}
-
-
-def _generate_detailed_structure(directory_path: str, relative_path: str = "", highlight_file: str = None) -> str:
-    """
-    为指定目录生成详细文件结构（内部辅助函数）
-    """
-    tree_lines = []
-
-    def _build_detailed_tree(path, prefix="", highlight=None):
-        try:
-            entries = sorted([e for e in os.listdir(path) if not e.startswith('.')])
-        except PermissionError:
-            tree_lines.append(f"{prefix}└── [Permission Denied]")
-            return
-
-        if not entries:
-            return
-
-        pointers = ["├── "] * (len(entries) - 1) + ["└── "]
-
-        for pointer, entry in zip(pointers, entries):
-            full_path = os.path.join(path, entry)
-
-            # 高亮显示目标文件
-            display_entry = entry
-            if highlight and entry == highlight:
-                display_entry = f"**{entry}**"  # 标记重点文件
-
-            if os.path.isdir(full_path):
-                tree_lines.append(f"{prefix}{pointer}📁 {display_entry}")
-                extension = "│   " if pointer == "├── " else "    "
-                _build_detailed_tree(full_path, prefix + extension, highlight)
-            else:
-                tree_lines.append(f"{prefix}{pointer}📄 {display_entry}")
-
-    base_display = relative_path if relative_path else os.path.basename(directory_path)
-    if highlight_file:
-        tree_lines.append(f"📁 {base_display} (高亮文件: **{highlight_file}**)")
-    else:
-        tree_lines.append(f"📁 {base_display}")
-
-    _build_detailed_tree(directory_path, highlight=highlight_file)
-
-    return "\n".join(tree_lines)
 
 # --- 工具 : 读取文件内容 ---
 def read_file_content(file_path: str) -> dict:
@@ -502,29 +388,27 @@ def delete_file(file_path: str) -> dict:
 
 
 # --- 新增工具 prompt_generate 工作流工具 ---
-def prompt_generate_tool(project_main_folder_path: str, config_folder_path: str, use_shallow_tree: bool = True,
-                         max_depth: int = 3) -> dict:
+def prompt_generate_tool(project_main_folder_path: str, config_folder_path: str) -> dict:
     """
-    增强版的prompt生成工作流，支持浅层文件结构
+    自动化地收集多种fuzzing上下文信息，并将它们整合到一个prompt文件中。
+
+    此工具现在采用两阶段文件树生成策略：
+    1. 首先，生成一个浅层（前3层）的文件树，以快速概览项目结构，避免超出token限制。
+    2. 后续可以根据需要，使用 'find_and_append_file_details' 工具来获取特定部分的详细信息。
 
     Args:
-        project_main_folder_path (str): 需要分析的项目的主文件夹路径
-        config_folder_path (str): 包含所有相关fuzz配置文件的目录的路径
-        use_shallow_tree (bool): 是否使用浅层文件结构，默认为True
-        max_depth (int): 如果使用浅层结构，最大深度，默认3层
+        project_main_folder_path (str): 需要分析的项目的主文件夹路径。
+        config_folder_path (str): 包含所有相关fuzz配置文件的目录的路径。
 
     Returns:
-        dict: 包含整个工作流执行状态和最终结果信息的字典
+        dict: 包含整个工作流执行状态和最终结果信息的字典。
     """
-    print("--- Enhanced Workflow Tool: prompt_generate_tool started ---")
+    print("--- Workflow Tool: prompt_generate_tool started ---")
 
     # 定义标准化的文件路径
     PROMPT_DIR = "generated_prompt_file"
     PROMPT_FILE_PATH = os.path.join(PROMPT_DIR, "prompt.txt")
-
-    # 现在所有文件结构工具都使用相同的输出文件
     FILE_TREE_PATH = os.path.join(PROMPT_DIR, "file_tree.txt")
-
     FUZZ_LOG_PATH = "fuzz_build_log_file/fuzz_build_log.txt"
 
     # --- 自动发现配置文件 ---
@@ -549,85 +433,87 @@ def prompt_generate_tool(project_main_folder_path: str, config_folder_path: str,
     config_file_names = [os.path.basename(f) for f in all_config_files]
     config_files_str = "、".join(config_file_names) if config_file_names else "（无）"
 
-    tree_type_note = f"浅层文件结构（深度{max_depth}）" if use_shallow_tree else "完整文件结构"
-
     introductory_prompt = f"""
-    你是软件测试方面首屈一指的专家，尤其擅长fuzz编译和构建问题的解决。通常是由fuzz配置文件与项目的文件内容不匹配导致的编译或构建问题。下面我将给你提供不同项目在oss-fuzz编译过程中的报错，请你根据报错信息和配置文件内容等信息对报错给出针对性的解决方案，尽可能的不去改动与问题不相关的文件内容，最终使该项目能够成功的进行编译和build。
+    你是软件测试方面首屈一指的专家，尤其擅长fuzz编译和构建问题的解决。通常是由fuzz配置文件与项目的文件内容不匹配导致的编译或构建问题。下面我将给你提供不同项目在oss-fuzz编译过程中的报错，请你根据报错信息和配置文件内容等信息对报错给出针对 性的解决方案，尽可能的不去改动与问题不相关的文件内容，最终使该项目能够成功的进行编译和build。
+    下面将给出{project_name}的{config_files_str}、文件树、报错日志内容。请你对文件树进行读取并分析给出的信息并且指出问题可能是由哪些文件内容引起的，是fuzz测试构建的核心文件如Dockerfile、build.sh或者是{project_name}项目中的文件，并尝试给 出解决方案。
+"""
+    # 假设 create_or_update_file 和 append_string_to_file 已定义
+    # result = create_or_update_file(file_path=PROMPT_FILE_PATH, content=introductory_prompt)
+    # if result["status"] == "error":
+    #     return result
+    # 为了可独立运行，我们直接写入
+    os.makedirs(PROMPT_DIR, exist_ok=True)
+    with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
+        f.write(introductory_prompt)
 
-    下面将给出{project_name}的{config_files_str}、{tree_type_note}、报错日志内容。请你对文件树进行读取并分析给出的信息并且指出问题可能是由哪些文件内容引起的，是fuzz测试构建的核心文件如Dockerfile、build.sh或者是{project_name}项目中的文件，并尝试给出解决方案。
-
-    **注意**: 当前提供的是{tree_type_note}。如果需要查看特定目录或文件的详细结构，可以使用搜索工具进行精确查找，搜索结果会追加到文件树中。
-    """
-
-    result = create_or_update_file(file_path=PROMPT_FILE_PATH, content=introductory_prompt)
-    if result["status"] == "error":
-        return result
 
     # --- 遍历自动发现的文件列表 ---
     print("Step 2: Appending configuration files...")
-    append_string_to_file(PROMPT_FILE_PATH, "\n\n--- Configuration Files ---\n")
+    with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
+        f.write("\n\n--- Configuration Files ---\n")
+    
     for config_file in all_config_files:
-        file_name = os.path.basename(config_file)
-        append_string_to_file(PROMPT_FILE_PATH, f"\n### 内容来源: {file_name} ###\n")
+        with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
+            f.write(f"\n### 内容来源: {os.path.basename(config_file)} ###\n")
         print(f"  - Appending '{config_file}'...")
-        result = append_file_to_file(source_path=config_file, destination_path=PROMPT_FILE_PATH)
-        if result["status"] == "error":
-            print(f"    Warning: Failed to append '{config_file}': {result['message']}. Skipping.")
+        # result = append_file_to_file(source_path=config_file, destination_path=PROMPT_FILE_PATH)
+        # if result["status"] == "error":
+        #     print(f"    Warning: Failed to append '{config_file}': {result['message']}. Skipping.")
+        try:
+            with open(config_file, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
+                dest_f.write(source_f.read())
+        except Exception as e:
+            print(f"    Warning: Failed to append '{config_file}': {e}. Skipping.")
 
-    # --- 生成文件树（使用新策略）---
-    print(f"Step 3: Generating project file tree (shallow: {use_shallow_tree}, depth: {max_depth})...")
 
-    # 首先清空文件树文件，确保每次都是新的开始
-    result = create_or_update_file(file_path=FILE_TREE_PATH, content="")
-    if result["status"] == "error":
-        return result
-
-    if use_shallow_tree:
-        # 使用浅层文件结构
-        result = get_shallow_file_tree(
-            directory_path=project_main_folder_path,
-            max_depth=max_depth,
-            output_file=FILE_TREE_PATH  # 使用相同的文件路径
-        )
-    else:
-        # 使用完整文件结构
-        result = save_file_tree(
-            directory_path=project_main_folder_path,
-            output_file=FILE_TREE_PATH  # 使用相同的文件路径
-        )
-
+    # --- 【核心修改点】 ---
+    print("Step 3: Generating shallow project file tree (max_depth=3)...")
+    # 调用新的浅层文件树函数，并设定一个合理的默认深度，比如 3
+    result = save_file_tree_shallow(
+        directory_path=project_main_folder_path, 
+        max_depth=3,
+        output_file=FILE_TREE_PATH
+    )
     if result["status"] == "error":
         return result
 
     print("Step 4: Appending file tree to prompt file...")
-    append_string_to_file(PROMPT_FILE_PATH, f"\n\n--- Project File Tree ({tree_type_note}) ---\n")
+    with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
+        f.write("\n\n--- Project File Tree (Shallow View) ---\n")
+    # result = append_file_to_file(source_path=FILE_TREE_PATH, destination_path=PROMPT_FILE_PATH)
+    # if result["status"] == "error":
+    #     return result
+    try:
+        with open(FILE_TREE_PATH, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
+            dest_f.write(source_f.read())
+    except Exception as e:
+        return {"status": "error", "message": f"Failed to append file tree: {e}"}
 
-    # 读取文件树内容并追加到prompt
-    tree_result = read_file_content(FILE_TREE_PATH)
-    if tree_result["status"] == "success":
-        append_string_to_file(PROMPT_FILE_PATH, tree_result["content"])
-    else:
-        print(f"    Warning: Failed to read file tree: {tree_result['message']}")
 
     print("Step 5: Checking for and appending fuzz build log...")
     if os.path.isfile(FUZZ_LOG_PATH) and os.path.getsize(FUZZ_LOG_PATH) > 0:
         print(f"  - Found fuzz log at '{FUZZ_LOG_PATH}'. Appending...")
-        append_string_to_file(PROMPT_FILE_PATH, "\n\n--- Fuzz Build Log ---\n")
-        result = append_file_to_file(source_path=FUZZ_LOG_PATH, destination_path=PROMPT_FILE_PATH)
-        if result["status"] == "error":
-            print(f"    Warning: Failed to append fuzz log: {result['message']}.")
+        with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
+            f.write("\n\n--- Fuzz Build Log ---\n")
+        # result = append_file_to_file(source_path=FUZZ_LOG_PATH, destination_path=PROMPT_FILE_PATH)
+        # if result["status"] == "error":
+        #     print(f"    Warning: Failed to append fuzz log: {result['message']}.")
+        try:
+            with open(FUZZ_LOG_PATH, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
+                dest_f.write(source_f.read())
+        except Exception as e:
+            print(f"    Warning: Failed to append fuzz log: {e}.")
     else:
         print("  - Fuzz log not found or is empty. Skipping.")
 
-    # 添加使用说明
-    usage_note = """
-    \n\n--- 使用说明 ---
-    如果需要查看特定文件或目录的详细结构，可以使用 search_file_structure 工具。
-    """
-    append_string_to_file(PROMPT_FILE_PATH, usage_note)
-
-    final_message = f"增强版Prompt生成工作流成功完成。使用{tree_type_note}，所有上下文信息已整合到 '{PROMPT_FILE_PATH}' 文件中。文件树保存在 '{FILE_TREE_PATH}' 中。"
-    print(f"--- Enhanced Workflow Tool: prompt_generate_tool finished successfully ---")
+    # --- 【核心修改点】 ---
+    # 更新最终的成功信息，引导 Agent 进行下一步操作
+    final_message = (
+        f"Prompt生成工作流成功完成。初始上下文信息已整合到 '{PROMPT_FILE_PATH}' 文件中。"
+        f"其中包含了项目前3层的文件结构。请分析现有信息，如果需要深入了解特定目录，"
+        f"请使用 'find_and_append_file_details' 工具进行精确查找。"
+    )
+    print(f"--- Workflow Tool: prompt_generate_tool finished successfully ---")
     return {"status": "success", "message": final_message}
 
 # --- 新增工具 Fuzzing自动执行 ---
