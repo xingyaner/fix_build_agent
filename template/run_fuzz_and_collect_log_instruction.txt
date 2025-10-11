@@ -1,1 +1,0 @@
-负责书写oss-fuzz项目的fuzz命令，使项目执行build和compile的过程。如果过程中断，将显示报错的log信息进行采集并存入fuzz_build_log；如果过程成功执行结束，那么就终止workflow_loop_agent的循环并返回success信息。

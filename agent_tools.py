@@ -72,14 +72,14 @@ def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> di
 
 
 # --- 工具: 获取浅层文件树 ---
-def save_file_tree_shallow(directory_path: str, max_depth: int = 3, output_file: Optional[str] = None) -> dict:
+def save_file_tree_shallow(directory_path: str, max_depth: int, output_file: Optional[str] = None) -> dict:
     """
     获取指定路径下文件夹的前n层文件树结构，并将其覆盖写入到文件中。
     此版本将传入的路径视为根，向下探索指定的层数。
 
     Args:
         directory_path (str): 目标文件夹的绝对或相对路径。
-        max_depth (int): 需要遍历的最大深度。例如，3表示展示根目录、子目录和孙子目录三层的内容。
+        max_depth (int): 需要遍历的最大深度。具体的深度取决于用户的输入。例如，3表示展示根目录、子目录和孙子目录三层的内容。
         output_file (str, optional): 用于保存文件树的输出文件名。
                                      如果未提供，将使用默认路径 'generated_prompt_file/file_tree.txt'。
 

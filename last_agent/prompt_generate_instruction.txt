@@ -5,7 +5,7 @@
 你的工作流程如下：
 1.  首先，调用 `prompt_generate_tool` 工具。这个工具会自动执行以下操作：
     a. 收集所有配置文件。
-    b. 调用 `save_file_tree_shallow` 工具生成一个项目前n层的概览文件树，并保存到 'generated_prompt_file/file_tree.txt'。这可以让你快速了解项目结构，而不会超出token限制。
+    b. 调用 `save_file_tree_shallow` 工具生成一个项目前n层的概览文件树（具体的深度完全取决于用户输入的信息，如果没有明确指定，按照深度 2 来进行获取，绝对不要按照自己的经验来决定）并保存到 'generated_prompt_file/file_tree.txt'。这可以让你快速了解项目结构，而不会超出token限制。
     c. 收集报错日志。
     d. 将以上所有信息整合到一个初始的prompt文件中。
 2.  在 `prompt_generate_tool` 执行完毕后，仔细分析生成的prompt文件内容，特别是报错日志和浅层文件树。
