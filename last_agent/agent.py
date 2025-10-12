@@ -179,7 +179,7 @@ def delay() -> str:
     """
     暂停执行固定的40秒，以避免触发 API 速率限制。
     """
-    delay_seconds = 40
+    delay_seconds = API_DELAY_SECONDS
     print(f"  [工具调用] delay 工具被调用，将等待 40 秒...")
     time.sleep(delay_seconds)
     print(f"  ...等待结束。")
@@ -269,13 +269,9 @@ initial_setup_agent = LlmAgent(
         **项目配置文件路径** (例如: '/root/oss-fuzz/projects/aiohttp')
         **项目源码路径** (例如: '/root/fix_build_agent/aiohttp-master')
         **获取项目源码文件树的层数**(作为prompt_generate_agent获取文件树层数时的实参)
-    2. 你的最终输出必须是一个 JSON 字符串，包含三个键: "project_name", "project_config_path", "project_source_path"。
-
+    2. 你的最终输出必须是一个 JSON 字符串，包含四个键: "project_name", "project_config_path", "project_source_path","max_depth"。
     用户输入: input
-
-    最后必须执行'delay'工具
     """,
-    tools=[delay],
     output_key="basic_information",
 )
 
@@ -290,7 +286,7 @@ run_fuzz_and_collect_log_agent = LlmAgent(
     model=LiteLlm(model=MODEL,api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("run_fuzz_and_collect_log_instruction.txt"),
     description="一个能够执行Fuzzing构建命令、捕获错误并自动保存错误日志并实时显示进度的的高级代理。",
-    tools=[run_fuzz_build_streaming, create_or_update_file, delay],
+    tools=[run_fuzz_build_streaming, create_or_update_file],
     output_key="fuzz_build_log",  # 把结果存入state
 )
 
@@ -312,7 +308,6 @@ decision_agent = LlmAgent(
     tools=[
         read_file_content,
         exit_loop,
-        delay,
     ],
 )
 # --- Sub Agent 3: prompt generate ---#####
@@ -332,7 +327,6 @@ prompt_generate_agent = LlmAgent(
         create_or_update_file,
         append_file_to_file,
         append_string_to_file,
-        delay,
     ],
     output_key="generated_prompt",  # 把结果存入state
 )
@@ -346,7 +340,7 @@ fuzzing_solver_agent = LlmAgent(
     instruction=load_instruction_from_file("fuzzing_solver_instruction.txt"),
     description="一个能够分析fuzzing上下文、生成解决方案并将其保存当前运行 agent 的目录中 'solution.txt' 的专家代理。",
     # 唯一的“行动”就是读取上下文文件。
-    tools=[read_file_content, create_or_update_file, delay],
+    tools=[read_file_content, create_or_update_file],
     output_key="solution_plan",  # 把结果存入state
 )
 
@@ -360,10 +354,9 @@ solution_applier_agent = LlmAgent(
         "1. `solution_file_path`: 修改方案的文件，文件名为 solution.txt，位于当前运行 agent 的目录中。"
         "2. `target_directory`: 需要应用这些修改的项目配置文件的路径，该路径可以从'solution.txt'中获取"
         "获取到这两个信息后，你必须调用 `apply_solution_file` 工具来完成任务，然后向用户报告执行结果。"
-        "最后必须执行'delay'工具"
     ),
     description="一个能够读取解决方案文件并将其应用到目标项目中的执行代理。",
-    tools=[apply_solution_file, delay],
+    tools=[apply_solution_file],
     output_key="basic_information",  # 把结果存入state
 )
 
@@ -389,4 +382,5 @@ root_agent = SequentialAgent(
     ],
     description="你是一个 Fuzzing 构建修复工作流的助手"
 )
+
 

@@ -388,12 +388,12 @@ def delete_file(file_path: str) -> dict:
 
 
 # --- 新增工具 prompt_generate 工作流工具 ---
-def prompt_generate_tool(project_main_folder_path: str, config_folder_path: str) -> dict:
+def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str) -> dict:
     """
     自动化地收集多种fuzzing上下文信息，并将它们整合到一个prompt文件中。
 
     此工具现在采用两阶段文件树生成策略：
-    1. 首先，生成一个浅层（前3层）的文件树，以快速概览项目结构，避免超出token限制。
+    1. 首先，生成一个n层的文件树，以快速概览项目结构，避免超出token限制。n的大小即max_depth由用户指定，如果没有指定，默认为获取前2层
     2. 后续可以根据需要，使用 'find_and_append_file_details' 工具来获取特定部分的详细信息。
 
     Args:
@@ -467,11 +467,11 @@ def prompt_generate_tool(project_main_folder_path: str, config_folder_path: str)
 
 
     # --- 【核心修改点】 ---
-    print("Step 3: Generating shallow project file tree (max_depth=3)...")
-    # 调用新的浅层文件树函数，并设定一个合理的默认深度，比如 3
+    print(f"Step 3: Generating shallow project file tree (max_depth='{max_depth}')...")
+    # 调用新的浅层文件树函数，并设定一个合理的默认深度
     result = save_file_tree_shallow(
         directory_path=project_main_folder_path, 
-        max_depth=3,
+        max_depth=max_depth,
         output_file=FILE_TREE_PATH
     )
     if result["status"] == "error":
@@ -510,7 +510,7 @@ def prompt_generate_tool(project_main_folder_path: str, config_folder_path: str)
     # 更新最终的成功信息，引导 Agent 进行下一步操作
     final_message = (
         f"Prompt生成工作流成功完成。初始上下文信息已整合到 '{PROMPT_FILE_PATH}' 文件中。"
-        f"其中包含了项目前3层的文件结构。请分析现有信息，如果需要深入了解特定目录，"
+        f"其中包含了项目前'{max_depth}'层的文件结构。请分析现有信息，如果需要深入了解特定目录，"
         f"请使用 'find_and_append_file_details' 工具进行精确查找。"
     )
     print(f"--- Workflow Tool: prompt_generate_tool finished successfully ---")
@@ -688,8 +688,6 @@ def run_fuzz_build_streaming(
         print(message)
 
 
-import os
-
 
 def apply_solution_file(solution_file_path: str) -> dict:
     """
@@ -778,5 +776,6 @@ def apply_solution_file(solution_file_path: str) -> dict:
         message = f"应用解决方案时发生未知错误: {str(e)}"
         print(f"--- ERROR: {message} ---")
         return {"status": "error", "message": message}
+
 
 
