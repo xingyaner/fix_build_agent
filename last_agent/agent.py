@@ -1,17 +1,19 @@
 import os
 import time
+import json
 import asyncio
 import logging
 from datetime import datetime
-from google.adk.models.lite_llm import LiteLlm
-from .util import load_instruction_from_file
-from google.adk.agents import LoopAgent, LlmAgent, BaseAgent, SequentialAgent
 from google.genai import types
-from google.adk.runners import InMemoryRunner
-from google.adk.agents.invocation_context import InvocationContext
-from google.adk.tools.tool_context import ToolContext
 from typing import AsyncGenerator, Optional
+from .util import load_instruction_from_file
+from google.adk.runners import InMemoryRunner
+from google.adk.models.lite_llm import LiteLlm
 from google.adk.events import Event, EventActions
+from google.adk.tools.tool_context import ToolContext
+from google.adk.agents.invocation_context import InvocationContext
+from google.adk.agents import LoopAgent, LlmAgent, BaseAgent, SequentialAgent
+
 # --- 从 agent_tools.py 导入所有需要的工具 ---
 from agent_tools import (
     prompt_generate_tool,
@@ -31,31 +33,29 @@ from agent_tools import (
 class AgentLogger:
     """
     一个全局的、延迟初始化的日志记录器。
-    它首先将日志缓存在内存中，然后在获取项目名称后，
-    将所有缓存的日志刷入动态命名的文件，并继续记录。
+    它能安全地处理快速退出和异常，确保日志始终被保存。
     """
 
     def __init__(self, log_directory: str = "agent_logs"):
         self.log_directory = log_directory
         self.logger = None
         self.file_handler_setup = False
-        self.log_buffer = []  # 用于在文件名确定前缓存日志
+        self.log_buffer = []
+        self.project_name = "unknown_project"
         os.makedirs(self.log_directory, exist_ok=True)
         self._log_to_buffer("Logger initialized. Waiting for project name...")
 
     def _log_to_buffer(self, message: str):
-        """将日志消息存入内存缓冲区。"""
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f')[:-3]
-        self.log_buffer.append(f"{timestamp} - INFO - {message}")
+        self.log_buffer.append(f"{timestamp} - {message}")
 
-    def setup_file_handler(self, project_name: str):
-        """在获取到项目名称后，配置日志文件并刷入缓存。"""
+    def setup_file_handler(self):
         if self.file_handler_setup:
-            return  # 防止重复设置
+            return
 
-        safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
+        safe_project_name = "".join(c for c in self.project_name if c.isalnum() or c in ('_', '-')).rstrip()
         timestamp = datetime.now().strftime("%Y.%m.%d_%H.%M")
-        log_filename = f"{safe_project_name}_{timestamp}.log"
+        log_filename = f"{safe_project_name}_project_{timestamp}.log"
         log_filepath = os.path.join(self.log_directory, log_filename)
 
         self.logger = logging.getLogger(f"AgentLogger_{safe_project_name}_{timestamp}")
@@ -63,97 +63,118 @@ class AgentLogger:
         self.logger.propagate = False
 
         file_handler = logging.FileHandler(log_filepath, encoding='utf-8')
-        # 注意：这里的格式化器没有时间戳，因为我们的缓冲区已经带了时间戳
         formatter = logging.Formatter('%(message)s')
         file_handler.setFormatter(formatter)
 
         if not self.logger.handlers:
             self.logger.addHandler(file_handler)
 
-        print(f"✅ 日志记录器已完全初始化，日志将保存到: {log_filepath}")
+        print(f"✅ Log file created. Path: {log_filepath}")
 
-        # 将所有缓存的日志一次性写入文件
         for log_entry in self.log_buffer:
             self.logger.info(log_entry)
 
-        self.log_buffer = []  # 清空缓冲区
+        self.log_buffer = []
         self.file_handler_setup = True
-        self.logger.info(f"INFO - Flushed buffer. Live logging to file has started.")
+        self.logger.info(
+            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f')[:-3]} - INFO - Flushed buffer. Live logging to file has started.")
 
     def log_event(self, event: Event):
-        """处理并记录 Runner 发出的事件的回调函数。"""
-        if not self.file_handler_setup and \
-                event.action == EventActions.AGENT_FINISH and \
-                event.payload.get('agent_name') == 'initial_setup_agent':
+        if not self.file_handler_setup and event.actions and event.actions.state_delta:
+            if 'basic_information' in event.actions.state_delta:
+                basic_info_str = event.actions.state_delta['basic_information']
 
-            output = event.payload.get('output', {})
-            basic_info = output.get('basic_information', {})
-            project_name = basic_info.get('project_name')
-
-            if project_name:
-                self.setup_file_handler(project_name)
-            else:
-                self._log_to_buffer("WARNING - Could not find project_name in initial_setup_agent output.")
-                self.setup_file_handler("unknown_project")
+                # ==========================================================================
+                # === 修正点 2: 解析 JSON 字符串 ===
+                # ==========================================================================
+                if isinstance(basic_info_str, str):
+                    try:
+                        # 尝试将字符串解析为字典
+                        basic_info = json.loads(basic_info_str)
+                        if isinstance(basic_info, dict) and 'project_name' in basic_info:
+                            project_name = basic_info['project_name']
+                            if project_name:
+                                self.project_name = project_name
+                            # 成功提取名称后，立即设置文件处理器
+                            self.setup_file_handler()
+                    except json.JSONDecodeError:
+                        # 如果解析失败，则忽略，避免程序崩溃
+                        self._log_to_buffer(
+                            f"WARNING - Could not parse 'basic_information' JSON string: {basic_info_str}")
 
         log_message = self._format_message(event)
 
         if log_message:
-            print(log_message)  # 实时打印到控制台
+            print(log_message)
             if self.file_handler_setup:
-                # 文件处理器设置好后，直接写入文件
-                self.logger.info(f"INFO - {log_message}")
+                self.logger.info(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f')[:-3]} - {log_message}")
             else:
-                # 否则，写入内存缓冲区
-                self._log_to_buffer(log_message)
+                self._log_to_buffer(f"INFO - {log_message}")
 
     def _format_message(self, event: Event) -> str:
-        """根据事件类型格式化日志消息。"""
-        action_map = {
-            EventActions.AGENT_START: f"[AGENT START] - Name: {event.payload.get('agent_name')}, Input: {event.payload.get('input', {})}",
-            EventActions.AGENT_FINISH: f"[AGENT FINISH] - Name: {event.payload.get('agent_name')}, Output: {event.payload.get('output', {})}",
-            EventActions.TOOL_START: f"[TOOL CALL] - Agent: {event.payload.get('agent_name')}, Tool: {event.payload.get('tool_name')}, Args: {event.payload.get('tool_args', {})}",
-            EventActions.TOOL_FINISH: f"[TOOL RETURN] - Tool: {event.payload.get('tool_name')}, Output: {event.payload.get('tool_output', {})}",
-            EventActions.ERROR: f"[ERROR] - Details: {event.payload.get('details', 'No details')}"
-        }
-        return action_map.get(event.action, "")
+        # ... (这个方法保持不变) ...
+        author = event.author
+        payload = event.payload if hasattr(event, 'payload') else {}
+        actions = event.actions
+        log_parts = [f"EVENT from author: '{author}'"]
+        if hasattr(event, 'get_function_calls') and (func_calls := event.get_function_calls()):
+            for call in func_calls:
+                log_parts.append(f"  - TOOL_CALL: {call.name}({call.args})")
+        if hasattr(event, 'get_function_responses') and (func_resps := event.get_function_responses()):
+            for resp in func_resps:
+                log_parts.append(f"  - TOOL_RESPONSE for '{resp.name}': {resp.response}")
+        if actions:
+            if actions.state_delta:
+                log_parts.append(f"  - STATE_UPDATE: {actions.state_delta}")
+            if actions.escalate:
+                log_parts.append("  - ACTION: Escalate (Agent Finish)")
+            if actions.transfer_to_agent:
+                log_parts.append(f"  - ACTION: Transfer to agent '{actions.transfer_to_agent}'")
+        return "\n".join(log_parts)
 
 
-# 创建一个全局唯一的日志记录器实例
-# 当 `adk` 导入此文件时，这个实例就会被创建
+class LoggingWrapperAgent(BaseAgent):
+    """
+    这个 Agent 包装了真正的工作流。
+    它的 `run` 方法创建了一个受控的内部 Runner，
+    并为其附加了我们的全局日志记录器，同时处理异常。
+    """
+    name: str = "LoggingWrapperAgent"
+    subject_agent: BaseAgent
+
+    async def _run_async_impl(self, context: InvocationContext):
+        try:
+            # 从 subject_agent 获取异步生成器。
+            # 这不会立即运行 Agent，只是准备好了事件流。
+            agent_event_stream = self.subject_agent.run_async(context)
+
+            # 当 subject_agent 产生事件时，我们在这个循环中捕获它。
+            async for event in agent_event_stream:
+                # 1. 记录我们刚刚拦截到的事件。
+                GLOBAL_LOGGER.log_event(event)
+
+                # 2. 将事件向上 yield，这样主运行器就能正常处理它。
+                yield event
+
+        except (Exception, KeyboardInterrupt) as e:
+            print(f"\n--- Interruption or Error detected: {type(e).__name__} ---")
+            GLOBAL_LOGGER._log_to_buffer(f"ERROR - Agent execution interrupted by {type(e).__name__}: {e}")
+            raise e
+        finally:
+            # 这个块将永远执行，确保日志被保存。
+            print("--- Flushing log buffer before exit... ---")
+            GLOBAL_LOGGER.setup_file_handler()
+
+        return
+
+# --- 全局日志实例 ---
 GLOBAL_LOGGER = AgentLogger()
-
-# --- 猴子补丁开始 ---
-# 保存原始的 InMemoryRunner.run 方法
-_original_run = InMemoryRunner.run
-
-
-async def _patched_run(self, *args, **kwargs):
-    """我们自己的 run 方法，它会注入 event_callback。"""
-    print("--- Patched runner is active. Injecting logger callback. ---")
-    # 无论原始调用是否包含 event_callback，我们都强制使用我们的
-    kwargs['event_callback'] = GLOBAL_LOGGER.log_event
-
-    # 调用原始的 run 方法，但使用的是我们修改后的参数
-    result = await _original_run(self, *args, **kwargs)
-
-    # 如果 Agent 运行极快，可能在回调触发前就结束了，这里确保日志文件被创建
-    if not GLOBAL_LOGGER.file_handler_setup:
-        GLOBAL_LOGGER.setup_file_handler("fallback_project")
-
-    return result
-
-
-# 用我们打过补丁的方法替换掉原来的方法
-InMemoryRunner.run = _patched_run
-# --- 猴子补丁结束 ---
-
 
 # --- Constants ---
 API_DELAY_SECONDS = 40  # 定义延时常量
 APP_NAME = "fix_build_agents_v1"
 USER_ID = "dev_admin_01"
-SESSION_ID_BASE = "loop_exit_tool_session" # New Base Session ID
+SESSION_ID_BASE = "loop_exit_tool_session"  # New Base Session ID
 DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
 # MODEL = "deepseek/deepseek-v3"
 MODEL = "deepseek/deepseek-reasoner"
@@ -168,12 +189,14 @@ STATE_PROJECT_NAME = "project_name"
 STATE_CONFIG_PATH = "project_config_path"
 STATE_SOURCE_PATH = "project_source_path"
 
+
 # --- 工具定义 ---
 def exit_loop(tool_context: ToolContext):
     """构建成功时，由 DecisionAgent 调用此工具，以终止循环。"""
     print(f"[工具调用] exit_loop 工具被 tool_context.agent_name 触发")
     tool_context.actions.escalate = True
     return {"status": "循环因构建成功而退出。"}
+
 
 def delay() -> str:
     """
@@ -185,82 +208,12 @@ def delay() -> str:
     print(f"  ...等待结束。")
     return f"Successfully delayed for 40 seconds."
 
-# 日志记录器定义
-class AgentLogger:
-    """根据项目名称动态创建日志文件的日志记录器。"""
-
-    def __init__(self, log_directory: str = "agent_logs"):
-        self.log_directory = log_directory
-        self.logger = None
-        self.file_handler_setup = False
-        os.makedirs(self.log_directory, exist_ok=True)
-        print(f"日志目录 '{self.log_directory}' 已准备就绪。")
-
-    def setup_file_handler(self, project_name: str):
-        """获取到项目名称后，配置日志文件。"""
-        # 替换文件名中可能存在的无效字符
-        safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
-        timestamp = datetime.now().strftime("%Y.%m.%d_%H.%M")
-        log_filename = f"{safe_project_name}_{timestamp}.log"
-        log_filepath = os.path.join(self.log_directory, log_filename)
-
-        self.logger = logging.getLogger(f"AgentLogger_{safe_project_name}_{timestamp}")
-        self.logger.setLevel(logging.INFO)
-        self.logger.propagate = False
-
-        file_handler = logging.FileHandler(log_filepath, encoding='utf-8')
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-        file_handler.setFormatter(formatter)
-
-        if not self.logger.handlers:
-            self.logger.addHandler(file_handler)
-
-        self.file_handler_setup = True
-        print(f"✅ 日志记录器已完全初始化，日志将保存到: {log_filepath}")
-
-    def log_event(self, event: Event):
-        """处理并记录 Runner 发出的事件的回调函数。"""
-        if not self.file_handler_setup and \
-                event.action == EventActions.AGENT_FINISH and \
-                event.payload.get('agent_name') == 'initial_setup_agent':
-
-            output = event.payload.get('output', {})
-            basic_info = output.get('basic_information', {})
-            project_name = basic_info.get('project_name')
-
-            if project_name:
-                self.setup_file_handler(project_name)
-            else:
-                print("⚠️ 警告: 未能从 initial_setup_agent 的输出中找到 project_name，将使用 'unknown_project'。")
-                self.setup_file_handler("unknown_project")
-
-        log_message = self._format_message(event)
-
-        if log_message:
-            print(log_message)  # 实时打印到控制台
-            if self.logger and self.file_handler_setup:
-                self.logger.info(log_message)
-
-    def _format_message(self, event: Event) -> str:
-        """根据事件类型格式化日志消息。"""
-        if event.action == EventActions.AGENT_START:
-            return f"[AGENT START] - Name: {event.payload.get('agent_name')}, Input: {event.payload.get('input', {})}"
-        if event.action == EventActions.AGENT_FINISH:
-            return f"[AGENT FINISH] - Name: {event.payload.get('agent_name')}, Output: {event.payload.get('output', {})}"
-        if event.action == EventActions.TOOL_START:
-            return f"[TOOL CALL] - Agent: {event.payload.get('agent_name')}, Tool: {event.payload.get('tool_name')}, Args: {event.payload.get('tool_args', {})}"
-        if event.action == EventActions.TOOL_FINISH:
-            return f"[TOOL RETURN] - Tool: {event.payload.get('tool_name')}, Output: {event.payload.get('tool_output', {})}"
-        if event.action == EventActions.ERROR:
-            return f"[ERROR] - Details: {event.payload.get('details', 'No details')}"
-        return ""
-
 
 # 1. 初始设置 Agent (工作流的第一步，只运行一次)
 initial_setup_agent = LlmAgent(
     name="initial_setup_agent",
-#    model=GEMINI_MODEL,
-    model=LiteLlm(model=MODEL,api_key=DPSEEK_API_KEY),
+    #    model=GEMINI_MODEL,
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction="""
     你是一个负责初始化修复工作流的助手。
     你的任务是：
@@ -275,15 +228,13 @@ initial_setup_agent = LlmAgent(
     output_key="basic_information",
 )
 
-
-
 # --- Agent 定义 ---
 # --- Sub Agent 1: run fuzz and collect log ---
 # 通过 run_fuzz_and_collect_log_agent 来获取三个关键信息：**项目名称**, **项目配置文件路径**, **项目源码路径**
 run_fuzz_and_collect_log_agent = LlmAgent(
     name="run_fuzz_and_collect_log_agent",
-#    model=GEMINI_MODEL,
-    model=LiteLlm(model=MODEL,api_key=DPSEEK_API_KEY),
+    #    model=GEMINI_MODEL,
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("run_fuzz_and_collect_log_instruction.txt"),
     description="一个能够执行Fuzzing构建命令、捕获错误并自动保存错误日志并实时显示进度的的高级代理。",
     tools=[run_fuzz_build_streaming, create_or_update_file],
@@ -294,8 +245,8 @@ run_fuzz_and_collect_log_agent = LlmAgent(
 # 循环结束条件定义：fuzz_build_log_file/fuzz_build_log.txt 存储的内容为 'success'
 decision_agent = LlmAgent(
     name="decision_agent",
-#    model=GEMINI_MODEL,
-    model=LiteLlm(model=MODEL,api_key=DPSEEK_API_KEY),
+    #    model=GEMINI_MODEL,
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction="""
     你是一个构建流程评估员。你的任务是评估构建结果。
     1.  你**必须**首先调用 `read_file_content` 工具，并传入 'fuzz_build_log_file/fuzz_build_log.txt' 来获取构建日志。
@@ -313,8 +264,8 @@ decision_agent = LlmAgent(
 # --- Sub Agent 3: prompt generate ---#####
 prompt_generate_agent = LlmAgent(
     name="prompt_generate_agent",
-#    model=GEMINI_MODEL,
-    model=LiteLlm(model=MODEL,api_key=DPSEEK_API_KEY),
+    #    model=GEMINI_MODEL,
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("prompt_generate_instruction.txt"),
     description="一个能够保存文件树结构和读写文件内容的prompt书写专家。",
     # --- tools列表包含了所有需要的、从外部导入的工具 ---
@@ -335,8 +286,8 @@ prompt_generate_agent = LlmAgent(
 # --- Fuzzing 问题解决 Agent ---
 fuzzing_solver_agent = LlmAgent(
     name="fuzzing_solver_agent",
-#    model=GEMINI_MODEL,
-    model=LiteLlm(model=MODEL,api_key=DPSEEK_API_KEY),
+    #    model=GEMINI_MODEL,
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("fuzzing_solver_instruction.txt"),
     description="一个能够分析fuzzing上下文、生成解决方案并将其保存当前运行 agent 的目录中 'solution.txt' 的专家代理。",
     # 唯一的“行动”就是读取上下文文件。
@@ -347,8 +298,8 @@ fuzzing_solver_agent = LlmAgent(
 # --- Sub Agent 5: content modification ---
 solution_applier_agent = LlmAgent(
     name="solution_applier_agent",
-#    model=GEMINI_MODEL,
-    model=LiteLlm(model=MODEL,api_key=DPSEEK_API_KEY),
+    #    model=GEMINI_MODEL,
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction=(
         "你的任务是执行一个文件修改任务。你需要两个信息："
         "1. `solution_file_path`: 修改方案的文件，文件名为 solution.txt，位于当前运行 agent 的目录中。"
@@ -371,10 +322,10 @@ workflow_loop_agent = LoopAgent(
         fuzzing_solver_agent,
         solution_applier_agent,
     ],
-    max_iterations=10 # 最大循环轮数
+    max_iterations=10  # 最大循环轮数
 )
 
-root_agent = SequentialAgent(
+subject_agent = SequentialAgent(
     name="fix_fuzz_agent",
     sub_agents=[
         initial_setup_agent,
@@ -383,4 +334,6 @@ root_agent = SequentialAgent(
     description="你是一个 Fuzzing 构建修复工作流的助手"
 )
 
+# 创建日志包装器实例，这将是 ADK 的新目标
+root_agent = LoggingWrapperAgent(subject_agent=subject_agent)
 
