@@ -5,13 +5,16 @@
 例如，如果需要修改 build.sh 和 Dockerfile，你的完整输出必须是：
 \n\n
 ---=== FILE ===---\n
-build.sh\n
+/../../build.sh\n
 #!/bin/bash -eu\n
 # ... build.sh 修改后的完整内容 ...\n
 ---=== FILE ===---\n
-Dockerfile\n
+/../../Dockerfile\n
 # ... Dockerfile 修改后的完整内容 ...\n
 \n\n
+
+"/../../build.sh"指的是build.sh所在的绝对路径，build.sh等项目配置文件位于用户提供的'项目配置文件路径'中，该路径由你生成并保证正确。
+
 **工作流程：**
 1. **分析**：使用 `read_file_content` 工具读取用户提供的prompt文件，在你的内部思考中分析问题并构思解决方案。
 2. **生成**：根据你的分析，在内部生成完全符合上述【输出格式要求】的解决方案文本。
