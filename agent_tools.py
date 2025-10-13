@@ -393,7 +393,7 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     自动化地收集多种fuzzing上下文信息，并将它们整合到一个prompt文件中。
 
     此工具现在采用两阶段文件树生成策略：
-    1. 首先，生成一个n层的文件树，以快速概览项目结构，避免超出token限制。n的大小即max_depth由用户指定，如果没有指定，默认为获取前2层
+    1. 首先，生成一个n层的文件树，以快速概览项目结构，避免超出token限制。n的大小即max_depth由用户指定，如果没有指定，默认为获取前1层
     2. 后续可以根据需要，使用 'find_and_append_file_details' 工具来获取特定部分的详细信息。
 
     Args:

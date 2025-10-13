@@ -84,9 +84,6 @@ class AgentLogger:
             if 'basic_information' in event.actions.state_delta:
                 basic_info_str = event.actions.state_delta['basic_information']
 
-                # ==========================================================================
-                # === 修正点 2: 解析 JSON 字符串 ===
-                # ==========================================================================
                 if isinstance(basic_info_str, str):
                     try:
                         # 尝试将字符串解析为字典
