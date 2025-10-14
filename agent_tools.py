@@ -6,6 +6,80 @@ import subprocess
 from typing import Optional, List
 from collections import deque
 
+
+def apply_patch(file_path: str, patch_content: str) -> dict:
+    """
+    将一个 diff/patch 格式的补丁应用到指定的文件上。
+    这个函数依赖于系统中安装了 'patch' 命令行工具。
+
+    Args:
+        file_path (str): 需要被打补丁的文件的【绝对路径】。
+        patch_content (str): 以标准 diff 格式（unified diff）表示的补丁内容。
+                             补丁内容通常以 '--- a/path/to/file' 开头。
+
+    Returns:
+        dict: 一个包含操作状态和信息的字典。
+              成功时: {'status': 'success', 'message': '...'}
+              失败时: {'status': 'error', 'message': '...'}
+    """
+    # 在终端打印日志，方便调试，告知哪个工具被调用以及目标文件是什么
+    print(f"--- Tool: apply_patch called for path: {file_path} ---")
+
+    # 检查目标文件是否存在，如果不存在则直接返回错误，避免 'patch' 命令报错
+    if not os.path.exists(file_path):
+        error_message = f"Error: The file to be patched does not exist at '{file_path}'."
+        print(error_message)
+        return {"status": "error", "message": error_message}
+
+    try:
+        # 使用 Python 的 subprocess 模块来执行外部的 'patch' 命令。
+        # 'patch' 是一个在 Linux/Unix 系统中用于应用差异文件的标准工具。
+        process = subprocess.run(
+            # 命令列表：第一个元素是命令本身，后续是参数
+            ['patch', file_path],
+
+            # 'input' 参数用于将 patch_content 字符串通过标准输入(stdin)传递给 'patch' 命令
+            input=patch_content,
+
+            # 'text=True' 确保输入和输出都作为文本处理（而不是字节）
+            text=True,
+
+            # 'capture_output=True' 会捕获命令的标准输出(stdout)和标准错误(stderr)
+            capture_output=True,
+
+            # 'check=True' 是一个关键参数。如果 'patch' 命令的返回码不是0（表示执行失败），
+            # 它会自动引发一个 CalledProcessError 异常，我们可以在 except 块中捕获它。
+            check=True
+        )
+
+        # 如果 'patch' 命令成功执行（返回码为0），则构建并打印成功信息
+        success_message = f"Patch successfully applied to '{file_path}'."
+        print(success_message)
+
+        # 返回一个表示成功的字典
+        return {"status": "success", "message": success_message}
+
+    except subprocess.CalledProcessError as e:
+        # 如果 'check=True' 引发了异常，说明 'patch' 命令执行失败
+        # e.stderr 包含了 'patch' 命令输出到标准错误的详细错误信息（例如 "Hunk #1 FAILED..."）
+        error_message = (
+            f"Failed to apply patch to '{file_path}'. "
+            f"The patch content may be incorrect or conflict with the file. "
+            f"Error from patch command: {e.stderr}"
+        )
+        print(error_message)
+
+        # 返回一个表示失败的字典，并附带详细的错误原因
+        return {"status": "error", "message": error_message}
+
+    except FileNotFoundError:
+        # 如果系统找不到 'patch' 命令本身，会引发 FileNotFoundError
+        error_message = "Error: The 'patch' command was not found. Please ensure it is installed and in your system's PATH."
+        print(error_message)
+
+        # 返回一个表示环境问题的错误
+        return {"status": "error", "message": error_message}
+
 # --- 工具 : 保存文件树 ---
 def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> dict:
     #####
@@ -686,96 +760,6 @@ def run_fuzz_build_streaming(
         # 在异常情况下，也尝试将错误信息写入日志文件
         message = f"执行fuzzing命令时发生未知异常: {str(e)}"
         print(message)
-
-
-
-def apply_solution_file(solution_file_path: str) -> dict:
-    """
-    solution_file_path 参数可能是绝对路径或者相对路径
-    解析一个包含文件修改方案的文本文件，并将这些修改应用到指定的目标路径中。
-    此工具能够处理包含一个或多个文件修改块的解决方案文件。
-
-    预期的文件格式为：
-    ---=== FILE ===---
-    指向待修改文件的路径
-    文件1替换后的完整内容...
-    ---=== FILE ===---
-    指向待修改文件的路径
-    文件2替换后的完整内容...
-    """
-    print(
-        f"--- Tool: apply_solution_file (最终版) called. Solution File: '{solution_file_path}' ---")
-
-    if not os.path.isfile(solution_file_path):
-        return {"status": "error", "message": f"错误：解决方案文件 '{solution_file_path}' 不存在。"}
-
-    try:
-        with open(solution_file_path, "r", encoding="utf-8") as f:
-            content = f.read()
-
-        FILE_SEPARATOR = "---=== FILE ===---"
-
-        # 1. 使用分隔符将整个文件内容切分成多个文件块的列表
-        file_blocks = content.split(FILE_SEPARATOR)
-
-        parsed_files = {}
-        # 2. 循环处理每一个文件块
-        for block in file_blocks:
-            # 去除每个块前后的空行或空格
-            block_content = block.strip()
-            if not block_content:
-                # 跳过因文件开头就是分隔符而产生的第一个空块
-                continue
-
-            # 将处理过的块按行分割
-            lines = block_content.split('\n')
-
-
-            # 健壮性检查：确保块至少有一行（路径），内容可以为空
-            if len(lines) < 1:
-                print(f"--- Warning: Skipping malformed block (empty): {block_content[:80]}... ---")
-                continue
-
-            # 3. 正确解析：块的第一行 (lines[0]) 是完整的绝对路径
-            full_file_path = lines[0].strip()
-
-            # 4. 正确解析：块的第二行及以后 (lines[1:]) 是文件的完整新内容
-            file_content = "\n".join(lines[1:])
-
-            # 简单的路径有效性检查
-            if full_file_path and full_file_path.startswith('/'):
-                parsed_files[full_file_path] = file_content
-            else:
-                print(f"--- Warning: Skipping block with invalid or non-absolute path: '{full_file_path}' ---")
-
-        if not parsed_files:
-            return {"status": "error",
-                    "message": "错误：未能从解决方案文件中解析出任何有效的文件块。请确保格式正确：分隔符后第一行是完整路径。"}
-
-        # 5. 循环写入所有解析出的文件
-        updated_files = []
-        for target_file_path, content_to_write in parsed_files.items():
-            print(f"  - Applying changes to absolute path: '{target_file_path}'...")
-
-            # 确保目标文件的父目录存在
-            target_dir_for_file = os.path.dirname(target_file_path)
-            if target_dir_for_file:
-                os.makedirs(target_dir_for_file, exist_ok=True)
-
-            # 将新内容写入文件，实现整体替换
-            with open(target_file_path, "w", encoding="utf-8") as f:
-                f.write(content_to_write)
-
-            updated_files.append(target_file_path)
-
-        message = f"解决方案已成功应用。共更新了 {len(updated_files)} 个文件: {', '.join(updated_files)}"
-        print(f"--- Tool finished: {message} ---")
-        return {"status": "success", "message": message}
-
-    except Exception as e:
-        message = f"应用解决方案时发生未知错误: {str(e)}"
-        print(f"--- ERROR: {message} ---")
-        return {"status": "error", "message": message}
 
 
 

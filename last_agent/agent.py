@@ -24,8 +24,8 @@ from agent_tools import (
     create_or_update_file,
     append_file_to_file,
     append_string_to_file,
+    apply_patch,
     delete_file,
-    apply_solution_file,
     run_fuzz_build_streaming
 )
 
@@ -262,7 +262,7 @@ decision_agent = LlmAgent(
 prompt_generate_agent = LlmAgent(
     name="prompt_generate_agent",
     #    model=GEMINI_MODEL,
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY,max_output_tokens=16384),
     instruction=load_instruction_from_file("prompt_generate_instruction.txt"),
     description="一个能够保存文件树结构和读写文件内容的prompt书写专家。",
     # --- tools列表包含了所有需要的、从外部导入的工具 ---
@@ -284,7 +284,7 @@ prompt_generate_agent = LlmAgent(
 fuzzing_solver_agent = LlmAgent(
     name="fuzzing_solver_agent",
     #    model=GEMINI_MODEL,
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY,max_output_tokens=16384),
     instruction=load_instruction_from_file("fuzzing_solver_instruction.txt"),
     description="一个能够分析fuzzing上下文、生成解决方案并将其保存当前运行 agent 的目录中 'solution.txt' 的专家代理。",
     # 唯一的“行动”就是读取上下文文件。
@@ -296,15 +296,17 @@ fuzzing_solver_agent = LlmAgent(
 solution_applier_agent = LlmAgent(
     name="solution_applier_agent",
     #    model=GEMINI_MODEL,
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY,max_output_tokens=16384),
     instruction=(
-        "你的任务是执行一个文件修改任务。你需要两个信息："
-        "1. `solution_file_path`: 修改方案的文件，文件名为 solution.txt，位于当前运行 agent 的目录中。"
-        "2. `target_directory`: 需要应用这些修改的项目配置文件的路径，该路径可以从'solution.txt'中获取"
-        "获取到这两个信息后，你必须调用 `apply_solution_file` 工具来完成任务，然后向用户报告执行结果。"
+        "你是一个精确的代码补丁应用执行官。"
+        "你需要从 'solution.txt' 文件中读取补丁内容，solution.txt位于当前运行 agent 的目录中。"
+        "**工作流程:**"
+        "1. **必须**首先调用 `read_file_content` 工具，并传入 `file_path='solution.txt'` 来获取补丁的完整内容。"
+        "2. **分析补丁**: 在你的内部思考中，从补丁内容的第一行（例如 `--- a/path/to/file.c`）解析出需要被修改的文件的【绝对路径】。"
+        "3. **应用补丁**: **必须**调用 `apply_patch` 工具。将第 2 步解析出的【文件绝对路径】作为 `file_path` 参数，将第 1 步读取到的【完整补丁内容】作为 `patch_content` 参数。"
     ),
-    description="一个能够读取解决方案文件并将其应用到目标项目中的执行代理。",
-    tools=[apply_solution_file],
+    description="一个能够读取补丁文件并将其应用到目标源代码中的执行代理。",
+    tools=[read_file_content,apply_patch],
     output_key="basic_information",  # 把结果存入state
 )
 
@@ -333,4 +335,5 @@ subject_agent = SequentialAgent(
 
 # 创建日志包装器实例，这将是 ADK 的新目标
 root_agent = LoggingWrapperAgent(subject_agent=subject_agent)
+
 
