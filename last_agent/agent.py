@@ -268,8 +268,8 @@ prompt_generate_agent = LlmAgent(
     # --- tools列表包含了所有需要的、从外部导入的工具 ---
     tools=[
         prompt_generate_tool,
-        save_file_tree,
-        save_file_tree_shallow,
+#        save_file_tree,
+#        save_file_tree_shallow,
         find_and_append_file_details,
         read_file_content,
         create_or_update_file,
@@ -301,9 +301,7 @@ solution_applier_agent = LlmAgent(
         "你是一个精确的代码补丁应用执行官。"
         "你需要从 'solution.txt' 文件中读取补丁内容，solution.txt位于当前运行 agent 的目录中。"
         "**工作流程:**"
-        "1. **必须**首先调用 `read_file_content` 工具，并传入 `file_path='solution.txt'` 来获取补丁的完整内容。"
-        "2. **分析补丁**: 在你的内部思考中，从补丁内容的第一行（例如 `--- a/path/to/file.c`）解析出需要被修改的文件的【绝对路径】。"
-        "3. **应用补丁**: **必须**调用 `apply_patch` 工具。将第 2 步解析出的【文件绝对路径】作为 `file_path` 参数，将第 1 步读取到的【完整补丁内容】作为 `patch_content` 参数。"
+        "你**必须**调用 `apply_patch` 工具，并将 `solution_file_path` 参数设置为 'solution.txt'。"
     ),
     description="一个能够读取补丁文件并将其应用到目标源代码中的执行代理。",
     tools=[read_file_content,apply_patch],
@@ -335,5 +333,6 @@ subject_agent = SequentialAgent(
 
 # 创建日志包装器实例，这将是 ADK 的新目标
 root_agent = LoggingWrapperAgent(subject_agent=subject_agent)
+
 
 

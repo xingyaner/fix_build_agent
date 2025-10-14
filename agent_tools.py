@@ -2,82 +2,82 @@
 # 这是一个可供多个Agent共享的文件操作工具箱。
 
 import os
-import subprocess 
+import subprocess
 from typing import Optional, List
 from collections import deque
 
 
-def apply_patch(file_path: str, patch_content: str) -> dict:
+def apply_patch(solution_file_path: str) -> dict:
     """
-    将一个 diff/patch 格式的补丁应用到指定的文件上。
-    这个函数依赖于系统中安装了 'patch' 命令行工具。
+    【新版本】读取一个特殊格式的解决方案文件，并应用其中的代码替换方案。
+    这个函数不再使用 'patch' 命令，而是直接进行字符串替换。
 
     Args:
-        file_path (str): 需要被打补丁的文件的【绝对路径】。
-        patch_content (str): 以标准 diff 格式（unified diff）表示的补丁内容。
-                             补丁内容通常以 '--- a/path/to/file' 开头。
+        solution_file_path (str): 包含修复方案的文件的路径 (例如 'solution.txt')。
+                                  预期文件格式:
+                                  ---=== FILE ===---
+                                  /path/to/file.c
+                                  ---=== ORIGINAL ===---
+                                  <original code block>
+                                  ---=== REPLACEMENT ===---
+                                  <replacement code block>
 
     Returns:
         dict: 一个包含操作状态和信息的字典。
-              成功时: {'status': 'success', 'message': '...'}
-              失败时: {'status': 'error', 'message': '...'}
     """
-    # 在终端打印日志，方便调试，告知哪个工具被调用以及目标文件是什么
-    print(f"--- Tool: apply_patch called for path: {file_path} ---")
-
-    # 检查目标文件是否存在，如果不存在则直接返回错误，避免 'patch' 命令报错
-    if not os.path.exists(file_path):
-        error_message = f"Error: The file to be patched does not exist at '{file_path}'."
-        print(error_message)
-        return {"status": "error", "message": error_message}
+    print(f"--- Tool: apply_patch (New Version) called for solution file: {solution_file_path} ---")
 
     try:
-        # 使用 Python 的 subprocess 模块来执行外部的 'patch' 命令。
-        # 'patch' 是一个在 Linux/Unix 系统中用于应用差异文件的标准工具。
-        process = subprocess.run(
-            # 命令列表：第一个元素是命令本身，后续是参数
-            ['patch', file_path],
+        # 1. 读取解决方案文件的内容
+        with open(solution_file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
 
-            # 'input' 参数用于将 patch_content 字符串通过标准输入(stdin)传递给 'patch' 命令
-            input=patch_content,
+        # 2. 使用分隔符解析文件内容
+        file_part = content.split('---=== FILE ===---')[1].strip()
+        original_part = file_part.split('---=== ORIGINAL ===---')[1].strip()
+        replacement_part = original_part.split('---=== REPLACEMENT ===---')[1].strip()
 
-            # 'text=True' 确保输入和输出都作为文本处理（而不是字节）
-            text=True,
+        # 进一步精确解析
+        file_path = file_part.split('---=== ORIGINAL ===---')[0].strip()
+        original_block = original_part.split('---=== REPLACEMENT ===---')[0].strip()
+        replacement_block = replacement_part  # replacement_part 就是替换块的全部内容
 
-            # 'capture_output=True' 会捕获命令的标准输出(stdout)和标准错误(stderr)
-            capture_output=True,
+        # 健壮性检查
+        if not file_path or not original_block:
+            return {"status": "error",
+                    "message": "Solution file format is incorrect. Could not parse FILE path or ORIGINAL block."}
 
-            # 'check=True' 是一个关键参数。如果 'patch' 命令的返回码不是0（表示执行失败），
-            # 它会自动引发一个 CalledProcessError 异常，我们可以在 except 块中捕获它。
-            check=True
-        )
+        # 3. 读取目标文件的原始内容
+        if not os.path.exists(file_path):
+            return {"status": "error", "message": f"Target file does not exist: {file_path}"}
 
-        # 如果 'patch' 命令成功执行（返回码为0），则构建并打印成功信息
-        success_message = f"Patch successfully applied to '{file_path}'."
+        with open(file_path, 'r', encoding='utf-8') as f:
+            original_content = f.read()
+
+        # 4. 检查原始代码块是否存在于文件中
+        if original_block not in original_content:
+            return {"status": "error",
+                    "message": "The ORIGINAL code block was not found in the target file. The file may have already been modified or the block is incorrect."}
+
+        # 5. 执行替换（只替换第一次出现的地方，更安全）
+        new_content = original_content.replace(original_block, replacement_block, 1)
+
+        # 6. 将修改后的内容写回文件
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+
+        success_message = f"Successfully applied code fix to '{file_path}'."
         print(success_message)
-
-        # 返回一个表示成功的字典
         return {"status": "success", "message": success_message}
 
-    except subprocess.CalledProcessError as e:
-        # 如果 'check=True' 引发了异常，说明 'patch' 命令执行失败
-        # e.stderr 包含了 'patch' 命令输出到标准错误的详细错误信息（例如 "Hunk #1 FAILED..."）
-        error_message = (
-            f"Failed to apply patch to '{file_path}'. "
-            f"The patch content may be incorrect or conflict with the file. "
-            f"Error from patch command: {e.stderr}"
-        )
+    except IndexError:
+        # 如果 split 操作失败，说明格式不正确
+        error_message = "Failed to parse solution file. Make sure it contains FILE, ORIGINAL, and REPLACEMENT separators."
         print(error_message)
-
-        # 返回一个表示失败的字典，并附带详细的错误原因
         return {"status": "error", "message": error_message}
-
-    except FileNotFoundError:
-        # 如果系统找不到 'patch' 命令本身，会引发 FileNotFoundError
-        error_message = "Error: The 'patch' command was not found. Please ensure it is installed and in your system's PATH."
+    except Exception as e:
+        error_message = f"An error occurred while applying the code fix: {str(e)}"
         print(error_message)
-
-        # 返回一个表示环境问题的错误
         return {"status": "error", "message": error_message}
 
 # --- 工具 : 保存文件树 ---
@@ -142,7 +142,6 @@ def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> di
         error_message = f"生成或保存文件树时发生错误: {str(e)}"
         print(error_message)
         return {"status": "error", "message": error_message}
-
 
 
 # --- 工具: 获取浅层文件树 ---
@@ -232,7 +231,8 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
     Returns:
         dict: 包含操作结果的字典。
     """
-    print(f"--- Tool: find_and_append_file_details called for path: {directory_path} with keyword: '{search_keyword}' ---")
+    print(
+        f"--- Tool: find_and_append_file_details called for path: {directory_path} with keyword: '{search_keyword}' ---")
     if not os.path.isdir(directory_path):
         error_message = f"错误：提供的路径 '{directory_path}' 不是一个有效的目录。"
         print(error_message)
@@ -260,7 +260,7 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
                 # 检查关键字是否在完整路径中
                 if search_keyword in full_path:
                     found_paths.append(full_path)
-        
+
         # 去重，因为父目录和子文件可能都会被匹配到
         found_paths = sorted(list(set(found_paths)))
 
@@ -274,7 +274,7 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
             return {"status": "success", "message": message}
 
         details_to_append = [f"\n\n--- 对 '{search_keyword}' 的详细查询结果 ---"]
-        
+
         for path in found_paths:
             relative_path = os.path.relpath(path, directory_path)
             details_to_append.append(f"\n# 匹配路径: {relative_path}")
@@ -287,13 +287,13 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
                         entries = []
                     pointers = ["├── "] * (len(entries) - 1) + ["└── "]
                     for pointer, entry in zip(pointers, entries):
-                        details_to_append.append(f"{prefix}{pointer}{'📁' if os.path.isdir(os.path.join(sub_path, entry)) else '📄'} {entry}")
+                        details_to_append.append(
+                            f"{prefix}{pointer}{'📁' if os.path.isdir(os.path.join(sub_path, entry)) else '📄'} {entry}")
 
                 _build_tree_recursive(path)
             # 如果是文件，则只显示文件名
             else:
                 details_to_append.append(f"📄 {os.path.basename(path)}")
-
 
         # 追加写入文件
         with open(final_output_path, "a", encoding="utf-8") as f:
@@ -306,6 +306,7 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
         error_message = f"查找和追加文件详细信息时发生错误: {str(e)}"
         print(error_message)
         return {"status": "error", "message": error_message}
+
 
 # --- 工具 : 读取文件内容 ---
 def read_file_content(file_path: str) -> dict:
@@ -340,7 +341,7 @@ def read_file_content(file_path: str) -> dict:
             content = f.read()
         #  创建一条简洁的成功消息。
         success_message = f"文件 '{file_path}' 的内容已成功读取并加载到内存中。"
-        print(success_message) # 只在控制台打印这条成功消息。
+        print(success_message)  # 只在控制台打印这条成功消息。
 
         # 将读取到的'content'包含在返回的字典中，供Agent使用。
         return {"status": "success", "message": success_message, "content": content}
@@ -520,12 +521,11 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
         f.write(introductory_prompt)
 
-
     # --- 遍历自动发现的文件列表 ---
     print("Step 2: Appending configuration files...")
     with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
         f.write("\n\n--- Configuration Files ---\n")
-    
+
     for config_file in all_config_files:
         with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
             f.write(f"\n### 内容来源: {os.path.basename(config_file)} ###\n")
@@ -534,17 +534,17 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
         # if result["status"] == "error":
         #     print(f"    Warning: Failed to append '{config_file}': {result['message']}. Skipping.")
         try:
-            with open(config_file, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
+            with open(config_file, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a",
+                                                                            encoding="utf-8") as dest_f:
                 dest_f.write(source_f.read())
         except Exception as e:
             print(f"    Warning: Failed to append '{config_file}': {e}. Skipping.")
-
 
     # --- 【核心修改点】 ---
     print(f"Step 3: Generating shallow project file tree (max_depth='{max_depth}')...")
     # 调用新的浅层文件树函数，并设定一个合理的默认深度
     result = save_file_tree_shallow(
-        directory_path=project_main_folder_path, 
+        directory_path=project_main_folder_path,
         max_depth=max_depth,
         output_file=FILE_TREE_PATH
     )
@@ -558,11 +558,11 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     # if result["status"] == "error":
     #     return result
     try:
-        with open(FILE_TREE_PATH, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
+        with open(FILE_TREE_PATH, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a",
+                                                                           encoding="utf-8") as dest_f:
             dest_f.write(source_f.read())
     except Exception as e:
         return {"status": "error", "message": f"Failed to append file tree: {e}"}
-
 
     print("Step 5: Checking for and appending fuzz build log...")
     if os.path.isfile(FUZZ_LOG_PATH) and os.path.getsize(FUZZ_LOG_PATH) > 0:
@@ -573,7 +573,8 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
         # if result["status"] == "error":
         #     print(f"    Warning: Failed to append fuzz log: {result['message']}.")
         try:
-            with open(FUZZ_LOG_PATH, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
+            with open(FUZZ_LOG_PATH, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a",
+                                                                              encoding="utf-8") as dest_f:
                 dest_f.write(source_f.read())
         except Exception as e:
             print(f"    Warning: Failed to append fuzz log: {e}.")
@@ -589,6 +590,7 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     )
     print(f"--- Workflow Tool: prompt_generate_tool finished successfully ---")
     return {"status": "success", "message": final_message}
+
 
 # --- 新增工具 Fuzzing自动执行 ---
 def run_fuzz_build(
@@ -760,6 +762,4 @@ def run_fuzz_build_streaming(
         # 在异常情况下，也尝试将错误信息写入日志文件
         message = f"执行fuzzing命令时发生未知异常: {str(e)}"
         print(message)
-
-
 
