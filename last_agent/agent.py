@@ -302,6 +302,7 @@ solution_applier_agent = LlmAgent(
         "你需要从 'solution.txt' 文件中读取补丁内容，solution.txt位于当前运行 agent 的目录中。"
         "**工作流程:**"
         "你**必须**调用 `apply_patch` 工具，并将 `solution_file_path` 参数设置为 'solution.txt'。"
+        "**不要**调用其他任何工具"
     ),
     description="一个能够读取补丁文件并将其应用到目标源代码中的执行代理。",
     tools=[read_file_content,apply_patch],
