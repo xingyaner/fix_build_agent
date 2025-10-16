@@ -1,0 +1,10 @@
+--- schema_fuzzer.go
++++ schema_fuzzer.go
+@@ -26,6 +26,6 @@ func SchemaFuzzer(data []byte) int {
+ 	err := f.GenerateStruct(&pkgSpec)
+ 	if err != nil {
+ 		return 0
+ 	}
+-	_, _ = ImportSpec(pkgSpec, nil)
++	_, _ = ImportSpec(pkgSpec, nil, ValidationOptions{})
+ 	return 1
