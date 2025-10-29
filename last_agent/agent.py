@@ -175,6 +175,7 @@ SESSION_ID_BASE = "loop_exit_tool_session"  # New Base Session ID
 DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
 # MODEL = "deepseek/deepseek-v3"
 MODEL = "deepseek/deepseek-reasoner"
+
 # GEMINI_MODEL = "gemini-2.5-pro"
 # GEMINI_MODEL = "gemini-2.5-flash"
 # GEMINI_MODEL = "gemini-2.5-flash-lite"

@@ -1,0 +1,7 @@
+2025-10-21 21:56:06,619 - Logger initialized. Waiting for project name...
+2025-10-21 21:56:10,256 - ERROR - Agent execution interrupted by BadRequestError: litellm.BadRequestError: DeepseekException - {"error":{"message":"Model Not Exist","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}
+2025-10-21 21:56:10,257 - INFO - Flushed buffer. Live logging to file has started.
+2025-10-21 21:56:38,532 - Logger initialized. Waiting for project name...
+2025-10-21 21:56:39,233 - ERROR - Agent execution interrupted by BadRequestError: litellm.BadRequestError: LLM Provider NOT provided. Pass in the LLM provider you are trying to call. You passed model=deepseek-ai/deepseek-v2
+ Pass model as E.g. For 'Huggingface' inference endpoints pass in `completion(model='huggingface/starcoder',..)` Learn more: https://docs.litellm.ai/docs/providers
+2025-10-21 21:56:39,234 - INFO - Flushed buffer. Live logging to file has started.
