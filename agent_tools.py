@@ -26,7 +26,7 @@ def get_project_paths(project_name: str) -> Dict[str, str]:
         "project_name": project_name,
         "project_config_path": config_path,
         "project_source_path": source_path,
-        "max_depth": 3
+        "max_depth": 1
     }
     print(f"--- Generated paths: {paths} ---")
     return paths
@@ -62,6 +62,85 @@ def read_projects_from_excel(file_path: str) -> Dict[str, List[Dict[str, str]]]:
         return {'status': 'success', 'projects': projects_to_run}
     except Exception as e:
         return {'status': 'error', 'message': f"Failed to read or parse Excel file: {e}"}
+
+def run_command(command: str) -> Dict[str, str]:
+    """
+    执行一个 shell 命令并返回其输出。这是一个危险的工具，请谨慎使用。
+    """
+    print(f"--- Tool: run_command called with: '{command}' ---")
+    try:
+        result = subprocess.run(
+            command,
+            shell=True,
+            capture_output=True,
+            text=True,
+            check=True,
+            encoding='utf-8'
+        )
+        output = f"STDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
+        return {"status": "success", "output": output}
+    except subprocess.CalledProcessError as e:
+        output = f"Error executing command.\nReturn Code: {e.returncode}\nSTDOUT:\n{e.stdout}\nSTDERR:\n{e.stderr}"
+        return {"status": "error", "message": output}
+    except Exception as e:
+        return {"status": "error", "message": f"An unexpected error occurred: {e}"}
+
+def truncate_prompt_file(file_path: str, max_lines: int = 2000) -> Dict[str, str]:
+    """
+    读取一个文件，如果行数超过 max_lines，则从中间截断它，并保留文件头和文件尾。
+    """
+    print(f"--- Tool: truncate_prompt_file called for: {file_path} ---")
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+
+        if len(lines) <= max_lines:
+            message = "File is within line limits, no truncation needed."
+            print(f"--- {message} ---")
+            return {"status": "success", "message": message}
+
+        head_count = max_lines // 4
+        tail_count = max_lines - head_count
+        
+        truncated_content = "".join(lines[:head_count])
+        truncated_content += "\n\n... (Content truncated due to context length limit) ...\n\n"
+        truncated_content += "".join(lines[-tail_count:])
+
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(truncated_content)
+            
+        message = f"File '{file_path}' was truncated to approximately {max_lines} lines."
+        print(f"--- {message} ---")
+        return {"status": "success", "message": message}
+    except Exception as e:
+        message = f"Failed to truncate file '{file_path}': {e}"
+        print(f"--- ERROR: {message} ---")
+        return {"status": "error", "message": message}
+
+def archive_fixed_project(project_name: str, project_config_path: str) -> Dict[str, str]:
+    """
+    将成功修复的项目的配置文件目录归档到一个 'success-fix-project' 目录中。
+    """
+    print(f"--- Tool: archive_fixed_project called for: {project_name} ---")
+    try:
+        base_success_dir = "success-fix-project"
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
+        
+        destination_dir = os.path.join(base_success_dir, f"{safe_project_name}_{timestamp}")
+        
+        if not os.path.isdir(project_config_path):
+            return {"status": "error", "message": f"Source config path does not exist: {project_config_path}"}
+            
+        shutil.copytree(project_config_path, destination_dir)
+        
+        message = f"Successfully archived config files for '{project_name}' to '{destination_dir}'."
+        print(f"--- {message} ---")
+        return {"status": "success", "message": message}
+    except Exception as e:
+        message = f"Failed to archive project '{project_name}': {e}"
+        print(f"--- ERROR: {message} ---")
+        return {"status": "error", "message": message}
 
 
 def download_github_repo(project_name: str) -> Dict[str, str]:
@@ -112,6 +191,7 @@ def download_github_repo(project_name: str) -> Dict[str, str]:
     except subprocess.CalledProcessError as e:
         message = f"Git clone failed for '{project_name}': {e.stderr}"
         return {'status': 'error', 'message': message}
+
 
 # ==============================================================================
 # Section 2: 版本回退工具

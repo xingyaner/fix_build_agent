@@ -1,5 +1,3 @@
-# agent.py
-
 import os
 import time
 import json
@@ -21,6 +19,9 @@ from google.adk.agents.invocation_context import InvocationContext
 # 导入 genai 库的 types 模块，用于构建 Message 对象
 from google.genai import types
 
+# 导入 litellm 的特定异常
+from litellm.exceptions import ContextWindowExceededError
+
 # 在所有代码之前立即执行它，以加载 .env 文件
 load_dotenv()
 
@@ -29,6 +30,9 @@ from agent_tools import (
     read_projects_from_excel,
     download_github_repo,
     get_project_paths,
+    run_command,
+    truncate_prompt_file,
+    archive_fixed_project,
     find_sha_for_timestamp,
     checkout_oss_fuzz_commit,
     prompt_generate_tool,
@@ -160,6 +164,7 @@ APP_NAME = "fix_build_agent_app"
 MODEL = "deepseek/deepseek-reasoner"
 DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
 USER_ID = "default_user"
+MAX_RETRIES = 3
 
 # ==============================================================================
 # 独立的、可复用的项目处理函数
@@ -181,7 +186,7 @@ async def process_single_project(project_info: Dict, commits_file_path: str, ses
 
     GLOBAL_LOGGER.set_project_context(project_name)
 
-    # 【核心修复】在每次循环中创建全新的 Agent 实例
+    # --- 在每次循环中创建全新的 Agent 实例 ---
     
     # 1. 创建环境准备 Agent
     environment_setup_agent = LlmAgent(
@@ -211,24 +216,13 @@ async def process_single_project(project_info: Dict, commits_file_path: str, ses
     # 2. 创建修复循环中的 Agents
     def exit_loop(tool_context: ToolContext):
         tool_context.actions.escalate = True
-        return {"status": "循环因构建成功而退出。"}
+        return {"status": "SUCCESS"}
 
     run_fuzz_and_collect_log_agent = LlmAgent(
         name="run_fuzz_and_collect_log_agent",
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
-        instruction="""
-        你是一个能够执行Fuzzing构建命令的代理。
-        你将从会话状态中获取 "project_name" 和 "project_config_path"。
-        工作流程:
-        1. 调用 `run_fuzz_build_streaming` 工具。
-        2. `project_name` 参数使用会话状态中的 "project_name"。
-        3. `oss_fuzz_path` 参数的值是 `project_config_path` 中 "/projects/" 之前的部分。
-        4. 【重要】在调用工具时，你必须提供 `sanitizer`, `engine`, `architecture` 这三个参数，请使用以下值：
-           - sanitizer: "address"
-           - engine: "libfuzzer"
-           - architecture: "x86_64"
-        """,
-        tools=[read_file_content, run_fuzz_build_streaming, create_or_update_file],
+        instruction=load_instruction_from_file("instructions/run_fuzz_and_collect_log_instruction.txt"),
+        tools=[read_file_content, run_fuzz_build_streaming, create_or_update_file, run_command],
         output_key="fuzz_build_log",
     )
 
@@ -272,10 +266,8 @@ async def process_single_project(project_info: Dict, commits_file_path: str, ses
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384),
         instruction=(
             "你是一个精确的代码补丁应用执行官。"
-            "你需要从 'solution.txt' 文件中读取补丁内容，solution.txt位于当前运行 agent 的目录中。"
-            "工作流程:"
+            "你需要从 'solution.txt' 文件中读取补丁内容。"
             "你必须调用 apply_patch 工具，并将 solution_file_path 参数设置为 'solution.txt'。"
-            "不要调用其他任何工具,不要做任何超出任务的事情。"
         ),
         tools=[read_file_content, apply_patch],
         output_key="patch_application_result",
@@ -293,16 +285,29 @@ async def process_single_project(project_info: Dict, commits_file_path: str, ses
         max_iterations=10
     )
 
-    # 3. 构建本次运行的完整工作流
+    # 3. 创建归档 Agent
+    archival_agent = LlmAgent(
+        name="archival_agent",
+        model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
+        instruction="""
+        你是一个负责归档的助手。
+        从会话状态中获取 "project_name" 和 "project_config_path"。
+        调用 `archive_fixed_project` 工具，并将这两个值作为参数传递。
+        """,
+        tools=[archive_fixed_project],
+    )
+
+    # 4. 构建本次运行的完整工作流
     single_project_workflow = SequentialAgent(
         name="single_project_workflow",
         sub_agents=[
             environment_setup_agent,
-            workflow_loop_agent
+            workflow_loop_agent,
+            archival_agent
         ]
     )
 
-    # 4. 准备要通过 new_message 传递的数据
+    # 5. 准备要通过 new_message 传递的数据
     initial_data = {
         "project_name": project_name,
         "error_date": error_date,
@@ -311,16 +316,52 @@ async def process_single_project(project_info: Dict, commits_file_path: str, ses
     message_content = json.dumps(initial_data)
     message_object = types.Content(parts=[types.Part(text=message_content)], role='user')
 
-    # 5. 创建 Runner 并执行
+    # 6. 创建 Runner 并执行，并加入重试逻辑
     root_agent = LoggingWrapperAgent(subject_agent=single_project_workflow)
     runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
     
     await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=session_id)
     
-    async for _ in runner.run_async(user_id=USER_ID, session_id=session_id, new_message=message_object):
-        pass
+    is_successful = False
+    for attempt in range(MAX_RETRIES):
+        try:
+            async for event in runner.run_async(user_id=USER_ID, session_id=session_id, new_message=message_object):
+                if event.actions and event.actions.escalate:
+                    current_session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID, session_id=session_id)
+                    # 检查最后一个事件是否是成功的 exit_loop 调用
+                    if current_session.history and current_session.history[-1].content.parts[0].function_response:
+                        last_tool_response = current_session.history[-1].content.parts[0].function_response
+                        if last_tool_response.name == 'exit_loop' and last_tool_response.response.get("status") == "SUCCESS":
+                            is_successful = True
+                            # 不要在这里 break，让 SequentialAgent 自然流转到 archival_agent
+            
+            # 如果循环正常结束（达到最大迭代次数），但未成功，则跳出重试
+            if not is_successful:
+                current_session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID, session_id=session_id)
+                if len(current_session.history) > workflow_loop_agent.max_iterations * len(workflow_loop_agent.sub_agents):
+                    print(f"--- 项目 {project_name} 已达到最大迭代次数但未成功。---")
+                    break # 达到最大迭代，跳出重试
 
-    print(f"\n--- 项目 {project_name} 处理完毕。---\n")
+            # 如果成功了，也跳出重试循环
+            if is_successful:
+                break
+
+        except ContextWindowExceededError as e:
+            print(f"\n--- 警告: 第 {attempt + 1}/{MAX_RETRIES} 次尝试失败，因为上下文窗口超出限制。---")
+            if attempt + 1 >= MAX_RETRIES:
+                print(f"--- 错误: 已达到最大重试次数。放弃处理项目 {project_name}。---")
+                return
+            
+            print("--- 正在尝试截断 prompt 文件并重试... ---")
+            truncate_prompt_file("generated_prompt_file/prompt.txt")
+            await asyncio.sleep(5)
+            # 重置会话以进行下一次尝试
+            await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=session_id)
+            
+    if not is_successful:
+        print(f"--- 项目 {project_name} 在所有尝试后未能成功修复。---")
+            
+    print(f"\n--- 项目 {project_name} 处理流程结束。---\n")
     time.sleep(5)
 
 # ==============================================================================
@@ -354,19 +395,19 @@ async def main():
         """,
         output_key="initial_config"
     )
-        
+
     user_input_data = {"user_prompt": commits_file_path_input}
     message_content = json.dumps(user_input_data)
     initial_message = types.Content(parts=[types.Part(text=message_content)], role='user')
-    
+
     user_input_runner = Runner(agent=user_input_collector_agent, app_name=APP_NAME, session_service=session_service)
-    
+
     session_id = f"user-input-session-{int(time.time())}"
     await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=session_id)
-    
+
     async for _ in user_input_runner.run_async(user_id=USER_ID, session_id=session_id, new_message=initial_message):
         pass
-    
+
     try:
         current_session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID, session_id=session_id)
         initial_config_str = current_session.state.get('initial_config', '{}')
@@ -380,11 +421,11 @@ async def main():
     # --- 阶段 2: 使用工具直接读取 Excel ---
     print("\n--- 阶段 2: 从 Excel 读取项目列表 ---")
     result = read_projects_from_excel('reproduce_report.xlsx')
-    
+
     if result['status'] == 'error':
         print(f"--- 错误: 无法读取 Excel 文件。详情: {result['message']} ---")
         return
-        
+
     projects_to_run = result.get('projects', [])
     if not projects_to_run:
         print("--- 信息: 在 'reproduce_report.xlsx' 中没有找到需要处理的项目。工作流结束。 ---")
