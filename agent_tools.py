@@ -12,44 +12,42 @@ from google.adk.tools.tool_context import ToolContext
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 构建到 process 目录的相对路径
+# Build relative path to the process directory
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
-# ==============================================================================
-# Section 1: 核心工具
-# ==============================================================================
+
+# Core Tools
 def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
     print(f"--- Tool: force_clean_git_repo (v2) called for: {repo_path} ---")
-    
+
     if not os.path.isdir(os.path.join(repo_path, ".git")):
-        return {'status': 'error', 'message': f"目录 '{repo_path}' 不是一个有效的 Git 仓库。"}
+        return {'status': 'error', 'message': f"Directory '{repo_path}' is not a valid Git repository."}
 
     original_path = os.getcwd()
     try:
         os.chdir(repo_path)
-        
-        # 【核心修正】
-        # 1. 先切换到主分支。使用 -f 或 --force 选项可以强制切换，但更安全的方式是先 reset。
-        # 2. 强制重置到 HEAD，这将丢弃所有工作目录中的修改。这是最关键的一步。
+
+        # 1. First, switch to the main branch. Using -f or --force can force a switch, but resetting first is safer.
+        # 2. Force reset to HEAD, which will discard all modifications in the working directory. This is the most critical step.
         subprocess.run(["git", "reset", "--hard", "HEAD"], capture_output=True, text=True, check=True)
-        
-        # 3. 现在工作区是干净的，可以安全地切换分支了。
+
+        # 3. Now that the workspace is clean, we can safely switch branches.
         main_branch = "main" if "main" in subprocess.run(["git", "branch", "--list"], capture_output=True, text=True).stdout else "master"
         subprocess.run(["git", "switch", main_branch], capture_output=True, text=True, check=True)
-        
-        # 4. 删除所有未被 Git 跟踪的文件和目录（例如编译产物、日志等）。
+
+        # 4. Remove all untracked files and directories (e.g., build artifacts, logs).
         subprocess.run(["git", "clean", "-fdx"], capture_output=True, text=True, check=True)
-        
-        message = f"成功强制清理仓库 '{repo_path}'，所有本地修改和未跟踪文件已被删除。"
+
+        message = f"Successfully force-cleaned the repository '{repo_path}'. All local changes and untracked files have been removed."
         print(message)
         return {'status': 'success', 'message': message}
-        
+
     except subprocess.CalledProcessError as e:
-        message = f"强制清理仓库 '{repo_path}' 失败: {e.stderr.strip()}"
+        message = f"Failed to force-clean repository '{repo_path}': {e.stderr.strip()}"
         print(f"--- ERROR: {message} ---")
         return {'status': 'error', 'message': message}
     except Exception as e:
-        message = f"清理仓库时发生未知错误: {e}"
+        message = f"An unknown error occurred while cleaning the repository: {e}"
         print(f"--- ERROR: {message} ---")
         return {'status': 'error', 'message': message}
     finally:
@@ -58,14 +56,14 @@ def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
 
 def get_project_paths(project_name: str) -> Dict[str, str]:
     """
-    根据项目名称，生成并返回标准的 project_config_path 和 project_source_path。
+    Generates and returns the standard project_config_path and project_source_path based on the project name.
     """
     print(f"--- Tool: get_project_paths called for: {project_name} ---")
-    # 确保路径总是相对于当前脚本文件所在目录的父目录（即项目根目录）
+    # Ensure paths are always relative to the parent directory of the current script file (i.e., the project root)
     base_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
-    
+
     safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
-    
+
     config_path = os.path.join(base_path, "oss-fuzz", "projects", safe_project_name)
     source_path = os.path.join(base_path, "process", "project", safe_project_name)
 
@@ -73,7 +71,7 @@ def get_project_paths(project_name: str) -> Dict[str, str]:
         "project_name": project_name,
         "project_config_path": config_path,
         "project_source_path": source_path,
-        "max_depth": 1 # 默认获取1层文件树
+        "max_depth": 1 # Default to getting 1 level of the file tree
     }
     print(f"--- Generated paths: {paths} ---")
     return paths
@@ -81,7 +79,7 @@ def get_project_paths(project_name: str) -> Dict[str, str]:
 
 def save_processed_project(project_name: str) -> Dict[str, str]:
     """
-    将一个已处理的项目名称追加到 project_processed.txt 文件中。
+    Appends a processed project name to the project_processed.txt file.
     """
     print(f"--- Tool: save_processed_project called for: {project_name} ---")
     try:
@@ -98,7 +96,7 @@ def save_processed_project(project_name: str) -> Dict[str, str]:
 
 def update_excel_report(file_path: str, row_index: int, attempted: str, result: str) -> Dict[str, str]:
     """
-    【修正版】更新 .xlsx 文件中指定行的“是否尝试修复”、“修复结果”和“修复日期”列。
+    [Revised] Updates the "Whether Fix Was Attempted", "Fix Result", and "Fix Date" columns for a specified row in an .xlsx file.
     """
     print(f"--- Tool: update_excel_report called for file '{file_path}', row {row_index} ---")
     try:
@@ -106,12 +104,12 @@ def update_excel_report(file_path: str, row_index: int, attempted: str, result: 
         sheet = workbook.active
         headers = [cell.value for cell in sheet[1]]
 
-        # 动态获取列的索引
-        attempted_col_idx = headers.index("是否尝试修复") + 1
-        result_col_idx = headers.index("修复结果") + 1
-        date_col_idx = headers.index("修复日期") + 1
+        # Dynamically get column indices
+        attempted_col_idx = headers.index("是否尝试修复") + 1  # "Whether Fix Was Attempted"
+        result_col_idx = headers.index("修复结果") + 1       # "Fix Result"
+        date_col_idx = headers.index("修复日期") + 1         # "Fix Date"
 
-        # 【核心回写逻辑】
+        # [Core write-back logic]
         sheet.cell(row=row_index, column=attempted_col_idx, value=attempted)
         sheet.cell(row=row_index, column=result_col_idx, value=result)
         sheet.cell(row=row_index, column=date_col_idx, value=datetime.now().strftime('%Y-%m-%d'))
@@ -128,8 +126,8 @@ def update_excel_report(file_path: str, row_index: int, attempted: str, result: 
 
 def read_projects_from_excel(file_path: str) -> Dict:
     """
-    【修正版】从指定的 .xlsx 文件中读取项目信息。
-    只读取“报错是否一致”为“是”且“是否尝试修复”不为“是”的行。
+    [Revised] Reads project information from the specified .xlsx file.
+    Only reads rows where "报错是否一致" ("Error Consistency") is "是" ("Yes") and "是否尝试修复" ("Whether Fix Was Attempted") is not "是" ("Yes").
     """
     print(f"--- Tool: read_projects_from_excel called for: {file_path} ---")
     if not os.path.exists(file_path):
@@ -141,24 +139,24 @@ def read_projects_from_excel(file_path: str) -> Dict:
         sheet = workbook.active
         headers = [cell.value for cell in sheet[1]]
 
-        # 验证表头是否完整
+        # Verify that all required headers are present
         required_headers = ["项目名称", "复现oss-fuzz SHA", "报错是否一致", "是否尝试修复"]
         if not all(h in headers for h in required_headers):
              return {'status': 'error', 'message': f"Excel file is missing one of the required columns: {required_headers}"}
 
-        # 获取列索引以便后续使用
-        name_idx = headers.index("项目名称")
-        sha_idx = headers.index("复现oss-fuzz SHA")
-        consistent_idx = headers.index("报错是否一致")
-        attempted_idx = headers.index("是否尝试修复")
+        # Get column indices for later use
+        name_idx = headers.index("项目名称")          # "Project Name"
+        sha_idx = headers.index("复现oss-fuzz SHA")   # "Reproducible oss-fuzz SHA"
+        consistent_idx = headers.index("报错是否一致")   # "Error Consistency"
+        attempted_idx = headers.index("是否尝试修复")  # "Whether Fix Was Attempted"
 
         for row_index, row in enumerate(sheet.iter_rows(min_row=2, values_only=True), start=2):
-            # 【核心过滤逻辑】
-            if row[consistent_idx] == "是" and row[attempted_idx] != "是":
+            # [Core filtering logic]
+            if row[consistent_idx] == "是" and row[attempted_idx] != "是": # "Yes"
                 project_info = {
                     "project_name": row[name_idx],
                     "sha": str(row[sha_idx]),
-                    "row_index": row_index  # 记录行号，方便回写
+                    "row_index": row_index  # Record the row number for easy write-back
                 }
                 projects_to_run.append(project_info)
 
@@ -170,7 +168,7 @@ def read_projects_from_excel(file_path: str) -> Dict:
 
 def run_command(command: str) -> Dict[str, str]:
     """
-    执行一个 shell 命令并返回其输出。这是一个危险的工具，请谨慎使用。
+    Executes a shell command and returns its output. This is a dangerous tool; use with caution.
     """
     print(f"--- Tool: run_command called with: '{command}' ---")
     try:
@@ -192,7 +190,7 @@ def run_command(command: str) -> Dict[str, str]:
 
 def truncate_prompt_file(file_path: str, max_lines: int = 2000) -> Dict[str, str]:
     """
-    读取一个文件，如果行数超过 max_lines，则从中间截断它，并保留文件头和文件尾。
+    Reads a file, and if it exceeds max_lines, truncates it in the middle, keeping the head and tail.
     """
     print(f"--- Tool: truncate_prompt_file called for: {file_path} ---")
     try:
@@ -206,14 +204,14 @@ def truncate_prompt_file(file_path: str, max_lines: int = 2000) -> Dict[str, str
 
         head_count = max_lines // 4
         tail_count = max_lines - head_count
-        
+
         truncated_content = "".join(lines[:head_count])
         truncated_content += "\n\n... (Content truncated due to context length limit) ...\n\n"
         truncated_content += "".join(lines[-tail_count:])
 
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(truncated_content)
-            
+
         message = f"File '{file_path}' was truncated to approximately {max_lines} lines."
         print(f"--- {message} ---")
         return {"status": "success", "message": message}
@@ -224,21 +222,21 @@ def truncate_prompt_file(file_path: str, max_lines: int = 2000) -> Dict[str, str
 
 def archive_fixed_project(project_name: str, project_config_path: str) -> Dict[str, str]:
     """
-    将成功修复的项目的配置文件目录归档到一个 'success-fix-project' 目录中。
+    Archives the configuration directory of a successfully fixed project into a 'success-fix-project' directory.
     """
     print(f"--- Tool: archive_fixed_project called for: {project_name} ---")
     try:
         base_success_dir = "success-fix-project"
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
-        
+
         destination_dir = os.path.join(base_success_dir, f"{safe_project_name}_{timestamp}")
-        
+
         if not os.path.isdir(project_config_path):
             return {"status": "error", "message": f"Source config path does not exist: {project_config_path}"}
-            
+
         shutil.copytree(project_config_path, destination_dir)
-        
+
         message = f"Successfully archived config files for '{project_name}' to '{destination_dir}'."
         print(f"--- {message} ---")
         return {"status": "success", "message": message}
@@ -250,12 +248,12 @@ def archive_fixed_project(project_name: str, project_config_path: str) -> Dict[s
 
 def download_github_repo(project_name: str, target_dir: str) -> Dict[str, str]:
     """
-    在GitHub上搜索项目并将其克隆到指定的目录。
+    Searches for a project on GitHub and clones it to the specified directory.
     """
     print(f"--- Tool: download_github_repo called for '{project_name}' into '{target_dir}' ---")
 
     if os.path.isdir(target_dir):
-        # 对于 oss-fuzz，如果存在，我们可能需要更新它
+        # For oss-fuzz, if it exists, we might need to update it
         if project_name == "oss-fuzz":
              print(f"--- Directory '{target_dir}' already exists. Pulling latest changes. ---")
              try:
@@ -298,13 +296,10 @@ def download_github_repo(project_name: str, target_dir: str) -> Dict[str, str]:
         return {'status': 'error', 'message': message}
 
 
-# ==============================================================================
-# Section 2: 版本回退工具
-# ==============================================================================
-
+# Version Reverting Tool
 def find_sha_for_timestamp(commits_file_path: str, error_date: str) -> Dict[str, str]:
     """
-    在 commits 文件中为给定日期找到最合适的 commit SHA。
+    Finds the most suitable commit SHA for a given date from a commits file.
     """
     print(f"--- Tool: find_sha_for_timestamp called for date: {error_date} ---")
     try:
@@ -353,7 +348,7 @@ def find_sha_for_timestamp(commits_file_path: str, error_date: str) -> Dict[str,
 
 def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
     """
-    【修正版】在固定的 oss-fuzz 目录下，执行 git checkout 命令。
+    [Revised] Executes a git checkout command in the fixed oss-fuzz directory.
     """
     base_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
     oss_fuzz_path = os.path.join(base_path, "oss-fuzz")
@@ -380,13 +375,11 @@ def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
     finally:
         os.chdir(original_path)
 
-# ==============================================================================
-# Section 3: 文件操作与Fuzzing工具 (来自您的原始文件)
-# ==============================================================================
+# File Operations and Fuzzing Tools
 
 def apply_patch(solution_file_path: str) -> dict:
     """
-    读取一个特殊格式的解决方案文件，并应用其中的代码替换方案。
+    Reads a specially formatted solution file and applies the code replacement solution within it.
     """
     print(f"--- Tool: apply_patch (New Version) called for solution file: {solution_file_path} ---")
     try:
@@ -423,11 +416,11 @@ def apply_patch(solution_file_path: str) -> dict:
 
 def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> dict:
     """
-    获取指定路径下文件夹的文件树结构，并将其保存到文件中。
+    Gets the file tree structure of a specified directory path and saves it to a file.
     """
     print(f"--- Tool: save_file_tree called for path: {directory_path} ---")
     if not os.path.isdir(directory_path):
-        error_message = f"错误：提供的路径 '{directory_path}' 不是一个有效的目录。"
+        error_message = f"Error: The provided path '{directory_path}' is not a valid directory."
         print(error_message)
         return {"status": "error", "message": error_message}
     if output_file is None:
@@ -455,21 +448,21 @@ def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> di
         _build_tree_recursive(directory_path, prefix="")
         with open(final_output_path, "w", encoding="utf-8") as f:
             f.write("\n".join(tree_lines))
-        success_message = f"文件树已成功生成并保存到文件 '{final_output_path}' 中。"
+        success_message = f"File tree has been successfully generated and saved to '{final_output_path}'."
         print(success_message)
         return {"status": "success", "message": success_message}
     except Exception as e:
-        error_message = f"生成或保存文件树时发生错误: {str(e)}"
+        error_message = f"An error occurred while generating or saving the file tree: {str(e)}"
         print(error_message)
         return {"status": "error", "message": error_message}
 
 def save_file_tree_shallow(directory_path: str, max_depth: int, output_file: Optional[str] = None) -> dict:
     """
-    获取指定路径下文件夹的前n层文件树结构，并将其覆盖写入到文件中。
+    Gets the top N levels of the file tree structure for a specified directory and overwrites it to a file.
     """
     print(f"--- Tool: save_file_tree_shallow called for path: {directory_path} with max_depth: {max_depth} ---")
     if not os.path.isdir(directory_path):
-        error_message = f"错误：提供的路径 '{directory_path}' 不是一个有效的目录。"
+        error_message = f"Error: The provided path '{directory_path}' is not a valid directory."
         print(error_message)
         return {"status": "error", "message": error_message}
     if output_file is None:
@@ -502,21 +495,21 @@ def save_file_tree_shallow(directory_path: str, max_depth: int, output_file: Opt
         _build_tree_recursive(directory_path, prefix="")
         with open(final_output_path, "w", encoding="utf-8") as f:
             f.write("\n".join(tree_lines))
-        success_message = f"文件树的前 {max_depth} 层已成功生成并保存到 '{final_output_path}'。"
+        success_message = f"The top {max_depth} levels of the file tree have been successfully generated and saved to '{final_output_path}'."
         print(success_message)
         return {"status": "success", "message": success_message}
     except Exception as e:
-        error_message = f"生成或保存浅层文件树时发生错误: {str(e)}"
+        error_message = f"An error occurred while generating or saving the shallow file tree: {str(e)}"
         print(error_message)
         return {"status": "error", "message": error_message}
 
 def find_and_append_file_details(directory_path: str, search_keyword: str, output_file: Optional[str] = None) -> dict:
     """
-    根据文件名或部分路径信息查找文件或目录，并将其详细结构追加写入到文件中。
+    Finds a file or directory by its name or partial path and appends its detailed structure to a file.
     """
     print(f"--- Tool: find_and_append_file_details called for path: {directory_path} with keyword: '{search_keyword}' ---")
     if not os.path.isdir(directory_path):
-        error_message = f"错误：提供的路径 '{directory_path}' 不是一个有效的目录。"
+        error_message = f"Error: The provided path '{directory_path}' is not a valid directory."
         print(error_message)
         return {"status": "error", "message": error_message}
     if output_file is None:
@@ -537,16 +530,16 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
                     found_paths.append(full_path)
         found_paths = sorted(list(set(found_paths)))
         if not found_paths:
-            message = f"在 '{directory_path}' 中未找到与 '{search_keyword}' 匹配的文件或目录。"
+            message = f"No file or directory matching '{search_keyword}' was found in '{directory_path}'."
             print(message)
             with open(final_output_path, "a", encoding="utf-8") as f:
-                f.write(f"\n\n--- 对 '{search_keyword}' 的详细查询结果 ---\n")
+                f.write(f"\n\n--- Detailed query result for '{search_keyword}' ---\n")
                 f.write(message)
             return {"status": "success", "message": message}
-        details_to_append = [f"\n\n--- 对 '{search_keyword}' 的详细查询结果 ---"]
+        details_to_append = [f"\n\n--- Detailed query result for '{search_keyword}' ---"]
         for path in found_paths:
             relative_path = os.path.relpath(path, directory_path)
-            details_to_append.append(f"\n# 匹配路径: {relative_path}")
+            details_to_append.append(f"\n# Matched path: {relative_path}")
             if os.path.isdir(path):
                 def _build_tree_recursive(sub_path, prefix=""):
                     try:
@@ -561,46 +554,46 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
                 details_to_append.append(f"📄 {os.path.basename(path)}")
         with open(final_output_path, "a", encoding="utf-8") as f:
             f.write("\n".join(details_to_append))
-        success_message = f"已将 '{search_keyword}' 的详细搜索结果追加到 '{final_output_path}'。"
+        success_message = f"Detailed search results for '{search_keyword}' have been appended to '{final_output_path}'."
         print(success_message)
         return {"status": "success", "message": success_message}
     except Exception as e:
-        error_message = f"查找和追加文件详细信息时发生错误: {str(e)}"
+        error_message = f"An error occurred while finding and appending file details: {str(e)}"
         print(error_message)
         return {"status": "error", "message": error_message}
 
 def read_file_content(file_path: str) -> dict:
     """
-    读取指定文本文件的内容并返回。
+    Reads and returns the content of a specified text file.
     """
     print(f"--- Tool: read_file_content called for path: {file_path} ---")
     MAX_FILE_SIZE = 1024 * 1024
     if not os.path.exists(file_path):
-        message = f"错误：文件 '{file_path}' 不存在。"
+        message = f"Error: File '{file_path}' does not exist."
         print(message)
         return {"status": "error", "message": message}
     if not os.path.isfile(file_path):
-        message = f"错误：路径 '{file_path}' 是一个目录，而不是一个文件。"
+        message = f"Error: Path '{file_path}' is a directory, not a file."
         print(message)
         return {"status": "error", "message": message}
     if os.path.getsize(file_path) > MAX_FILE_SIZE:
-        message = f"错误：文件 '{file_path}' 过大，无法处理。"
+        message = f"Error: File '{file_path}' is too large to process."
         print(message)
         return {"status": "error", "message": message}
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()
-        success_message = f"文件 '{file_path}' 的内容已成功读取并加载到内存中。"
+        success_message = f"Content of file '{file_path}' has been successfully read into memory."
         print(success_message)
         return {"status": "success", "message": success_message, "content": content}
     except Exception as e:
-        message = f"读取文件 '{file_path}' 时发生错误: {str(e)}"
+        message = f"An error occurred while reading file '{file_path}': {str(e)}"
         print(message)
         return {"status": "error", "message": message}
 
 def create_or_update_file(file_path: str, content: str) -> dict:
     """
-    创建一个新文件并写入内容，或者覆盖一个已存在的文件。
+    Creates a new file and writes content to it, or overwrites an existing file.
     """
     print(f"--- Tool: create_or_update_file called for path: {file_path} ---")
     try:
@@ -609,25 +602,25 @@ def create_or_update_file(file_path: str, content: str) -> dict:
             os.makedirs(directory, exist_ok=True)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        message = f"文件 '{file_path}' 已成功创建/更新。"
+        message = f"File '{file_path}' has been successfully created/updated."
         print(message)
         return {"status": "success", "message": message}
     except Exception as e:
-        message = f"创建或更新文件 '{file_path}' 时发生错误: {str(e)}"
+        message = f"An error occurred while creating or updating file '{file_path}': {str(e)}"
         print(message)
         return {"status": "error", "message": message}
 
 def append_file_to_file(source_path: str, destination_path: str) -> dict:
     """
-    读取一个源文件的全部内容，并将其追加到目标文件的末尾。
+    Reads the entire content of a source file and appends it to the end of a destination file.
     """
     print(f"--- Tool: append_file_to_file called. Source: '{source_path}', Destination: '{destination_path}' ---")
     if not os.path.isfile(source_path):
-        return {"status": "error", "message": f"错误：源文件 '{source_path}' 不存在或不是一个有效的文件。"}
+        return {"status": "error", "message": f"Error: Source file '{source_path}' does not exist or is not a valid file."}
     if os.path.isdir(destination_path):
-        return {"status": "error", "message": f"错误：目标路径 '{destination_path}' 是一个目录，不能作为追加目标。"}
+        return {"status": "error", "message": f"Error: Destination path '{destination_path}' is a directory and cannot be an append target."}
     if os.path.abspath(source_path) == os.path.abspath(destination_path):
-        return {"status": "error", "message": "错误：源文件和目标文件不能是同一个文件。"}
+        return {"status": "error", "message": "Error: Source and destination files cannot be the same."}
     try:
         with open(source_path, "r", encoding="utf-8") as f_source:
             content_to_append = f_source.read()
@@ -636,13 +629,13 @@ def append_file_to_file(source_path: str, destination_path: str) -> dict:
             os.makedirs(dest_directory, exist_ok=True)
         with open(destination_path, "a", encoding="utf-8") as f_dest:
             f_dest.write(content_to_append)
-        return {"status": "success", "message": f"已成功将 '{source_path}' 的内容追加到 '{destination_path}'。"}
+        return {"status": "success", "message": f"Successfully appended the content of '{source_path}' to '{destination_path}'."}
     except Exception as e:
-        return {"status": "error", "message": f"在追加文件时发生未知错误: {str(e)}"}
+        return {"status": "error", "message": f"An unknown error occurred while appending the file: {str(e)}"}
 
 def append_string_to_file(file_path: str, content: str) -> dict:
     """
-    在指定文件的末尾追加一段字符串内容。
+    Appends a string of content to the end of a specified file.
     """
     print(f"--- Tool: append_string_to_file called for path: {file_path} ---")
     try:
@@ -651,32 +644,32 @@ def append_string_to_file(file_path: str, content: str) -> dict:
             os.makedirs(directory, exist_ok=True)
         with open(file_path, "a", encoding="utf-8") as f:
             f.write(content)
-        return {"status": "success", "message": f"内容已成功追加到文件 '{file_path}'。"}
+        return {"status": "success", "message": f"Content successfully appended to file '{file_path}'."}
     except Exception as e:
-        return {"status": "error", "message": f"向文件 '{file_path}' 追加内容时发生错误: {str(e)}"}
+        return {"status": "error", "message": f"An error occurred while appending content to file '{file_path}': {str(e)}"}
 
 def delete_file(file_path: str) -> dict:
     """
-    删除一个指定的文件。
+    Deletes a specified file.
     """
     print(f"--- Tool: delete_file called for path: {file_path} ---")
     if not os.path.exists(file_path):
-        message = f"错误：文件 '{file_path}' 不存在，无法删除。"
+        message = f"Error: File '{file_path}' does not exist and cannot be deleted."
         print(message)
         return {"status": "error", "message": message}
     try:
         os.remove(file_path)
-        message = f"文件 '{file_path}' 已被成功删除。"
+        message = f"File '{file_path}' has been successfully deleted."
         print(message)
         return {"status": "success", "message": message}
     except Exception as e:
-        message = f"删除文件 '{file_path}' 时发生错误: {str(e)}"
+        message = f"An error occurred while deleting file '{file_path}': {str(e)}"
         print(message)
         return {"status": "error", "message": message}
 
 def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str) -> dict:
     """
-    自动化地收集多种fuzzing上下文信息，并将它们整合到一个prompt文件中。
+    Automatically collects various fuzzing context information and integrates it into a single prompt file.
     """
     print("--- Workflow Tool: prompt_generate_tool started ---")
     PROMPT_DIR = "generated_prompt_file"
@@ -685,7 +678,7 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     FUZZ_LOG_PATH = "fuzz_build_log_file/fuzz_build_log.txt"
     print(f"Step 0: Discovering configuration files in '{config_folder_path}'...")
     if not os.path.isdir(config_folder_path):
-        return {"status": "error", "message": f"错误：提供的配置文件路径 '{config_folder_path}' 不是一个有效的目录。"}
+        return {"status": "error", "message": f"Error: The provided config path '{config_folder_path}' is not a valid directory."}
     try:
         all_config_files = [
             os.path.join(config_folder_path, f)
@@ -693,16 +686,16 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
             if os.path.isfile(os.path.join(config_folder_path, f))
         ]
         if not all_config_files:
-            print(f"Warning: 在目录 '{config_folder_path}' 中没有找到任何文件。")
+            print(f"Warning: No files were found in the directory '{config_folder_path}'.")
     except Exception as e:
-        return {"status": "error", "message": f"扫描配置文件目录时发生错误: {str(e)}"}
+        return {"status": "error", "message": f"An error occurred while scanning the config directory: {str(e)}"}
     print("Step 1: Generating and writing the introductory prompt...")
     project_name = os.path.basename(os.path.abspath(project_main_folder_path))
     config_file_names = [os.path.basename(f) for f in all_config_files]
-    config_files_str = "、".join(config_file_names) if config_file_names else "（无）"
+    config_files_str = ", ".join(config_file_names) if config_file_names else "(None)"
     introductory_prompt = f"""
-你是软件测试方面首屈一指的专家，尤其擅长fuzz编译和构建问题的解决。通常是由fuzz配置文件与项目的文件内容不匹配导致的编译或构建问题。下面我将给你提供不同项目在oss-fuzz编译过程中的报错，请你根据报错信息和配置文件内容等信息对报错给出针对 性的解决方案，尽可能的不去改动与问题不相关的文件内容，最终使该项目能够成功的进行编译和build。
-下面将给出{project_name}的{config_files_str}、文件树、报错日志内容。请你对文件树进行读取并分析给出的信息并且指出问题可能是由哪些文件内容引起的，是fuzz测试构建的核心文件如Dockerfile、build.sh或者是{project_name}项目中的文件，并尝试给 出解决方案。
+You are a premier expert in software testing, specializing in solving fuzzing compilation and build issues. These problems are often caused by mismatches between fuzzing configuration files and the project's source files. I will provide you with error logs from the oss-fuzz build process for different projects. Based on the error messages, configuration files, and other information, you are to provide targeted solutions. Strive to avoid altering files unrelated to the problem, with the ultimate goal of enabling the project to compile and build successfully.
+Next, the {config_files_str}, file tree, and error log for {project_name} will be provided. Please read and analyze the file tree and the given information, identify which files might be causing the problem—whether they are core fuzz testing build files like Dockerfile and build.sh, or files within the {project_name} project itself—and attempt to propose a solution.
 """
     os.makedirs(PROMPT_DIR, exist_ok=True)
     with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
@@ -712,7 +705,7 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
         f.write("\n\n--- Configuration Files ---\n")
     for config_file in all_config_files:
         with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
-            f.write(f"\n### 内容来源: {os.path.basename(config_file)} ###\n")
+            f.write(f"\n### Content from: {os.path.basename(config_file)} ###\n")
         print(f"  - Appending '{config_file}'...")
         try:
             with open(config_file, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
@@ -748,9 +741,9 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     else:
         print("  - Fuzz log not found or is empty. Skipping.")
     final_message = (
-        f"Prompt生成工作流成功完成。初始上下文信息已整合到 '{PROMPT_FILE_PATH}' 文件中。"
-        f"其中包含了项目前'{max_depth}'层的文件结构。请分析现有信息，如果需要深入了解特定目录，"
-        f"请使用 'find_and_append_file_details' 工具进行精确查找。"
+        f"Prompt generation workflow completed successfully. Initial context information has been consolidated into '{PROMPT_FILE_PATH}'. "
+        f"This includes the project's file structure up to '{max_depth}' levels deep. Please analyze the existing information. If you need to delve deeper into a specific directory, "
+        f"use the 'find_and_append_file_details' tool for a precise search."
     )
     print(f"--- Workflow Tool: prompt_generate_tool finished successfully ---")
     return {"status": "success", "message": final_message}
@@ -763,7 +756,7 @@ def run_fuzz_build_streaming(
     architecture: str
 ) -> dict:
     """
-    执行一个预定义的fuzzing构建命令，并实时流式传输其输出。
+    Executes a predefined fuzzing build command and streams its output in real-time.
     """
     print(f"--- Tool: run_fuzz_build_streaming called for project: {project_name} ---")
     LOG_DIR = "fuzz_build_log_file"
@@ -798,20 +791,20 @@ def run_fuzz_build_streaming(
         os.makedirs(LOG_DIR, exist_ok=True)
         if return_code == 0:
             content_to_write = "success"
-            message = f"Fuzzing构建命令成功完成。结果已保存到 '{LOG_FILE_PATH}'。"
+            message = f"Fuzzing build command completed successfully. Result saved to '{LOG_FILE_PATH}'."
             status = "success"
         else:
             content_to_write = "".join(log_buffer)
-            message = f"Fuzzing构建命令失败。详细日志已保存到 '{LOG_FILE_PATH}'。"
+            message = f"Fuzzing build command failed. Detailed log saved to '{LOG_FILE_PATH}'."
             status = "error"
         with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
             f.write(content_to_write)
         print(message)
         return {"status": status, "message": message}
     except Exception as e:
-        message = f"执行fuzzing命令时发生未知异常: {str(e)}"
+        message = f"An unknown exception occurred while executing the fuzzing command: {str(e)}"
         print(message)
-        # 异常时也尝试写入日志
+        # Also attempt to write to log on exception
         os.makedirs(LOG_DIR, exist_ok=True)
         with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
             f.write(message)

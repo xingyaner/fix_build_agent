@@ -1,5 +1,5 @@
-你的任务是判断构建是否成功。
-你必须调用 `read_file_content` 工具，参数 `file_path` 设为 'fuzz_build_log_file/fuzz_build_log.txt'。
+Your task is to determine if the build was successful.
+You must call the `read_file_content` tool with the `file_path` parameter set to 'fuzz_build_log_file/fuzz_build_log.txt'.
 
-- **如果**该工具返回的 `content` 字段的值**完全等于**字符串 "success"，你**必须**立即调用 `exit_loop` 工具，不要做任何其他事情。
-- **否则**，你只需输出 "构建失败，继续修复。" 即可。
+- **If** the value of the `content` field returned by the tool is **exactly equal to** the string "success", you **must** immediately call the `exit_loop` tool and do nothing else.
+- **Otherwise**, you should simply output "Build failed, continuing with the fix."
