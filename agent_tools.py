@@ -1,41 +1,135 @@
 import os
+import sys
 import shutil
 import subprocess
 import json
 import openpyxl
 from collections import deque
 from datetime import datetime
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Set
 from google.adk.tools.tool_context import ToolContext
 
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# 构建到 process 目录的相对路径
+PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
+PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
 # ==============================================================================
 # Section 1: 核心工具
 # ==============================================================================
+def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
+    print(f"--- Tool: force_clean_git_repo (v2) called for: {repo_path} ---")
+    
+    if not os.path.isdir(os.path.join(repo_path, ".git")):
+        return {'status': 'error', 'message': f"目录 '{repo_path}' 不是一个有效的 Git 仓库。"}
+
+    original_path = os.getcwd()
+    try:
+        os.chdir(repo_path)
+        
+        # 【核心修正】
+        # 1. 先切换到主分支。使用 -f 或 --force 选项可以强制切换，但更安全的方式是先 reset。
+        # 2. 强制重置到 HEAD，这将丢弃所有工作目录中的修改。这是最关键的一步。
+        subprocess.run(["git", "reset", "--hard", "HEAD"], capture_output=True, text=True, check=True)
+        
+        # 3. 现在工作区是干净的，可以安全地切换分支了。
+        main_branch = "main" if "main" in subprocess.run(["git", "branch", "--list"], capture_output=True, text=True).stdout else "master"
+        subprocess.run(["git", "switch", main_branch], capture_output=True, text=True, check=True)
+        
+        # 4. 删除所有未被 Git 跟踪的文件和目录（例如编译产物、日志等）。
+        subprocess.run(["git", "clean", "-fdx"], capture_output=True, text=True, check=True)
+        
+        message = f"成功强制清理仓库 '{repo_path}'，所有本地修改和未跟踪文件已被删除。"
+        print(message)
+        return {'status': 'success', 'message': message}
+        
+    except subprocess.CalledProcessError as e:
+        message = f"强制清理仓库 '{repo_path}' 失败: {e.stderr.strip()}"
+        print(f"--- ERROR: {message} ---")
+        return {'status': 'error', 'message': message}
+    except Exception as e:
+        message = f"清理仓库时发生未知错误: {e}"
+        print(f"--- ERROR: {message} ---")
+        return {'status': 'error', 'message': message}
+    finally:
+        os.chdir(original_path)
+
+
 def get_project_paths(project_name: str) -> Dict[str, str]:
     """
     根据项目名称，生成并返回标准的 project_config_path 和 project_source_path。
     """
     print(f"--- Tool: get_project_paths called for: {project_name} ---")
-    base_path = os.getcwd()
+    # 确保路径总是相对于当前脚本文件所在目录的父目录（即项目根目录）
+    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+    
     safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
     
     config_path = os.path.join(base_path, "oss-fuzz", "projects", safe_project_name)
     source_path = os.path.join(base_path, "process", "project", safe_project_name)
-    
+
     paths = {
         "project_name": project_name,
         "project_config_path": config_path,
         "project_source_path": source_path,
-        "max_depth": 1
+        "max_depth": 1 # 默认获取1层文件树
     }
     print(f"--- Generated paths: {paths} ---")
     return paths
 
 
-def read_projects_from_excel(file_path: str) -> Dict[str, List[Dict[str, str]]]:
+def save_processed_project(project_name: str) -> Dict[str, str]:
     """
-    从指定的 .xlsx 文件中读取项目信息。
-    只读取最后一列“报错是否一致”为“是”的行。
+    将一个已处理的项目名称追加到 project_processed.txt 文件中。
+    """
+    print(f"--- Tool: save_processed_project called for: {project_name} ---")
+    try:
+        os.makedirs(PROCESSED_PROJECTS_DIR, exist_ok=True)
+        with open(PROCESSED_PROJECTS_FILE, 'a', encoding='utf-8') as f:
+            f.write(f"{project_name}\n")
+        message = f"Successfully saved '{project_name}' to processed list."
+        print(f"--- {message} ---")
+        return {"status": "success", "message": message}
+    except Exception as e:
+        message = f"Failed to save processed project '{project_name}': {e}"
+        print(f"--- ERROR: {message} ---")
+        return {"status": "error", "message": message}
+
+def update_excel_report(file_path: str, row_index: int, attempted: str, result: str) -> Dict[str, str]:
+    """
+    【修正版】更新 .xlsx 文件中指定行的“是否尝试修复”、“修复结果”和“修复日期”列。
+    """
+    print(f"--- Tool: update_excel_report called for file '{file_path}', row {row_index} ---")
+    try:
+        workbook = openpyxl.load_workbook(file_path)
+        sheet = workbook.active
+        headers = [cell.value for cell in sheet[1]]
+
+        # 动态获取列的索引
+        attempted_col_idx = headers.index("是否尝试修复") + 1
+        result_col_idx = headers.index("修复结果") + 1
+        date_col_idx = headers.index("修复日期") + 1
+
+        # 【核心回写逻辑】
+        sheet.cell(row=row_index, column=attempted_col_idx, value=attempted)
+        sheet.cell(row=row_index, column=result_col_idx, value=result)
+        sheet.cell(row=row_index, column=date_col_idx, value=datetime.now().strftime('%Y-%m-%d'))
+
+        workbook.save(file_path)
+        message = f"Successfully updated row {row_index} in '{file_path}' with result: '{result}'."
+        print(message)
+        return {'status': 'success', 'message': message}
+    except Exception as e:
+        message = f"Failed to update Excel file: {e}"
+        print(f"--- ERROR: {message} ---")
+        return {'status': 'error', 'message': message}
+
+
+def read_projects_from_excel(file_path: str) -> Dict:
+    """
+    【修正版】从指定的 .xlsx 文件中读取项目信息。
+    只读取“报错是否一致”为“是”且“是否尝试修复”不为“是”的行。
     """
     print(f"--- Tool: read_projects_from_excel called for: {file_path} ---")
     if not os.path.exists(file_path):
@@ -47,21 +141,32 @@ def read_projects_from_excel(file_path: str) -> Dict[str, List[Dict[str, str]]]:
         sheet = workbook.active
         headers = [cell.value for cell in sheet[1]]
 
-        if "项目名称" not in headers or "日期" not in headers or "报错是否一致" not in headers:
-             return {'status': 'error', 'message': "Excel file is missing required columns: '项目名称', '日期', '报错是否一致'."}
+        # 验证表头是否完整
+        required_headers = ["项目名称", "复现oss-fuzz SHA", "报错是否一致", "是否尝试修复"]
+        if not all(h in headers for h in required_headers):
+             return {'status': 'error', 'message': f"Excel file is missing one of the required columns: {required_headers}"}
 
-        for row in sheet.iter_rows(min_row=2, values_only=True):
-            row_data = dict(zip(headers, row))
-            if row_data.get("报错是否一致") == "是":
+        # 获取列索引以便后续使用
+        name_idx = headers.index("项目名称")
+        sha_idx = headers.index("复现oss-fuzz SHA")
+        consistent_idx = headers.index("报错是否一致")
+        attempted_idx = headers.index("是否尝试修复")
+
+        for row_index, row in enumerate(sheet.iter_rows(min_row=2, values_only=True), start=2):
+            # 【核心过滤逻辑】
+            if row[consistent_idx] == "是" and row[attempted_idx] != "是":
                 project_info = {
-                    "project_name": row_data["项目名称"],
-                    "date": row_data["日期"].strftime('%Y.%m.%d') if isinstance(row_data["日期"], datetime) else str(row_data["日期"])
+                    "project_name": row[name_idx],
+                    "sha": str(row[sha_idx]),
+                    "row_index": row_index  # 记录行号，方便回写
                 }
                 projects_to_run.append(project_info)
 
+        print(f"--- Found {len(projects_to_run)} new projects to process. ---")
         return {'status': 'success', 'projects': projects_to_run}
     except Exception as e:
         return {'status': 'error', 'message': f"Failed to read or parse Excel file: {e}"}
+
 
 def run_command(command: str) -> Dict[str, str]:
     """
@@ -143,41 +248,41 @@ def archive_fixed_project(project_name: str, project_config_path: str) -> Dict[s
         return {"status": "error", "message": message}
 
 
-def download_github_repo(project_name: str) -> Dict[str, str]:
+def download_github_repo(project_name: str, target_dir: str) -> Dict[str, str]:
     """
-    在GitHub上搜索项目并克隆。
+    在GitHub上搜索项目并将其克隆到指定的目录。
     """
-    print(f"--- Tool: download_github_repo called for: {project_name} ---")
-    base_path = os.getcwd()
-
-    if project_name == "oss-fuzz":
-        target_dir = os.path.join(base_path, "oss-fuzz")
-    else:
-        safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
-        target_dir = os.path.join(base_path, "process", "project", safe_project_name)
+    print(f"--- Tool: download_github_repo called for '{project_name}' into '{target_dir}' ---")
 
     if os.path.isdir(target_dir):
-        print(f"--- Directory '{target_dir}' already exists. Skipping download. ---")
+        # 对于 oss-fuzz，如果存在，我们可能需要更新它
+        if project_name == "oss-fuzz":
+             print(f"--- Directory '{target_dir}' already exists. Pulling latest changes. ---")
+             try:
+                 subprocess.run(["git", "pull"], cwd=target_dir, check=True, capture_output=True)
+             except Exception as e:
+                 print(f"Warning: Failed to pull latest changes for oss-fuzz: {e}")
+        else:
+            print(f"--- Directory '{target_dir}' already exists. Skipping download. ---")
         return {'status': 'success', 'path': target_dir}
 
     os.makedirs(os.path.dirname(target_dir), exist_ok=True)
 
     try:
-        search_command = ["gh", "search", "repos", project_name, "--sort", "stars", "--order", "desc", "--limit", "1", "--json", "fullName"]
-        result = subprocess.run(search_command, capture_output=True, text=True, check=True, encoding='utf-8')
-        
-        # 【核心修复】处理 gh 命令可能返回列表的情况
-        parsed_output = json.loads(result.stdout.strip())
-        if isinstance(parsed_output, list) and parsed_output:
-            repo_full_name = parsed_output[0]['fullName']
-        elif isinstance(parsed_output, dict):
-            repo_full_name = parsed_output['fullName']
+        if project_name == "oss-fuzz":
+            repo_full_name = "google/oss-fuzz"
         else:
-            raise ValueError("gh search command returned unexpected empty or invalid JSON.")
-            
+            search_command = ["gh", "search", "repos", project_name, "--sort", "stars", "--order", "desc", "--limit", "1", "--json", "fullName"]
+            result = subprocess.run(search_command, capture_output=True, text=True, check=True, encoding='utf-8')
+            parsed_output = json.loads(result.stdout.strip())
+            if isinstance(parsed_output, list) and parsed_output:
+                repo_full_name = parsed_output[0]['fullName']
+            else: raise ValueError("gh search command returned unexpected JSON.")
+
         repo_url = f"https://github.com/{repo_full_name}.git"
+        print(f"--- Found repository URL: {repo_url} ---")
     except Exception as e:
-        message = f"ERROR: 'gh' CLI search or JSON parsing failed. Details: {e}"
+        message = f"ERROR: 'gh' CLI search failed for '{project_name}'. Details: {e}"
         return {'status': 'error', 'message': message}
 
     clone_command = ["git", "clone", repo_url, target_dir]
@@ -245,20 +350,27 @@ def find_sha_for_timestamp(commits_file_path: str, error_date: str) -> Dict[str,
     else:
         return {'status': 'error', 'message': f"No suitable SHA found on or before the date {error_date}."}
 
-def checkout_oss_fuzz_commit(oss_fuzz_path: str, sha: str) -> Dict[str, str]:
+
+def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
     """
-    在指定的 oss-fuzz 目录下，执行 git checkout 命令。
+    【修正版】在固定的 oss-fuzz 目录下，执行 git checkout 命令。
     """
-    print(f"--- Tool: checkout_oss_fuzz_commit called for SHA: {sha} ---")
+    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+    oss_fuzz_path = os.path.join(base_path, "oss-fuzz")
+    print(f"--- Tool: checkout_oss_fuzz_commit called for SHA: {sha} in '{oss_fuzz_path}' ---")
+
     if not os.path.isdir(os.path.join(oss_fuzz_path, ".git")):
         return {'status': 'error', 'message': f"The directory '{oss_fuzz_path}' is not a git repository."}
-    
+
     original_path = os.getcwd()
     try:
         os.chdir(oss_fuzz_path)
-        subprocess.run(["git", "switch", "master"], capture_output=True, text=True)
+        main_branch = "main" if "main" in subprocess.run(["git", "branch"], capture_output=True, text=True).stdout else "master"
+        subprocess.run(["git", "switch", main_branch], capture_output=True, text=True)
+
         command = ["git", "checkout", sha]
         result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8')
+
         if result.returncode == 0:
             return {'status': 'success', 'message': f"Successfully checked out SHA {sha}."}
         else:
@@ -267,7 +379,6 @@ def checkout_oss_fuzz_commit(oss_fuzz_path: str, sha: str) -> Dict[str, str]:
         return {'status': 'error', 'message': f"An unexpected error occurred during checkout: {e}"}
     finally:
         os.chdir(original_path)
-
 
 # ==============================================================================
 # Section 3: 文件操作与Fuzzing工具 (来自您的原始文件)
@@ -660,7 +771,7 @@ def run_fuzz_build_streaming(
     try:
         helper_script_path = os.path.join(oss_fuzz_path, "infra/helper.py")
         command = [
-            "python3", helper_script_path, "build_fuzzers",
+            "python3.10", helper_script_path, "build_fuzzers",
             "--sanitizer", sanitizer,
             "--engine", engine,
             "--architecture", architecture,
