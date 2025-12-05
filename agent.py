@@ -5,6 +5,7 @@ import json
 import re
 import asyncio
 import subprocess
+import litellm
 import logging
 from datetime import datetime
 from typing import Dict, AsyncGenerator, Tuple, Optional
@@ -25,6 +26,8 @@ from google.api_core.exceptions import DeadlineExceeded as ContextWindowExceeded
 
 # --- Import all required tools ---
 from agent_tools import (
+    read_projects_from_yaml,
+    update_yaml_report,
     read_projects_from_excel,
     force_clean_git_repo,
     archive_fixed_project,
@@ -43,6 +46,9 @@ from agent_tools import (
     append_string_to_file,
     truncate_prompt_file
 )
+
+
+
 
 # Helper function: Load instruction text from a file
 def load_instruction_from_file(filename: str) -> str:
@@ -104,7 +110,7 @@ GLOBAL_LOGGER = AgentLogger()
 
 # --- Constants and Model Configuration ---
 APP_NAME = "fix_build_agent_app"
-MODEL = os.getenv("MODEL_NAME", "deepseek/deepseek-reasoner")
+MODEL = "deepseek/deepseek-chat"
 DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
 USER_ID = "default_user"
 MAX_RETRIES = 3
@@ -303,16 +309,17 @@ async def process_single_project(
 async def main():
     print("--- Starting automated fix workflow ---")
     GLOBAL_LOGGER.init()
-    EXCEL_FILE = 'reproduce_report.xlsx'
-    session_service = InMemorySessionService() # Create once externally
 
-    projects_result = read_projects_from_excel(EXCEL_FILE)
+    YAML_FILE = 'projects.yaml'
+    session_service = InMemorySessionService() 
+    projects_result = read_projects_from_yaml(YAML_FILE)
+
     if projects_result['status'] == 'error':
-        print(f"Error: Could not process Excel file: {projects_result['message']}")
+        print(f"Error: Could not process YAML file: {projects_result['message']}")
         return
     projects_to_process = projects_result.get('projects', [])
     if not projects_to_process:
-        print("--- No new projects to process were found in the Excel file. Workflow finished. ---")
+        print("--- No new projects to process were found in the YAML file. Workflow finished. ---")
         return
     print(f"--- Found {len(projects_to_process)} projects to process ---")
 
@@ -321,13 +328,11 @@ async def main():
         row_index = project_info['row_index']
 
         print(f"\n{'='*60}")
-        print(f"--- Starting to process project: {project_name} (Row: {row_index}) ---")
+        print(f"--- Starting to process project: {project_name} (Index: {row_index}) ---")
         print(f"{'='*60}")
 
-        # Call the separate function with retry logic
         is_successful, project_config_path = await process_single_project(project_info, session_service)
 
-        # If successful, perform archiving
         if is_successful and project_config_path:
             print(f"--- Project successfully fixed. Archiving configuration files from: {project_config_path} ---")
             archive_result = archive_fixed_project(project_name, project_config_path)
@@ -336,14 +341,16 @@ async def main():
         elif is_successful and not project_config_path:
              print("--- WARNING: Project was fixed successfully, but the project config path could not be retrieved. Skipping archive. ---")
 
-        # Write back to Excel
         result_str = "Success" if is_successful else "Failure"
         print(f"--- Project {project_name} processing complete. Result: {result_str} ---")
-        update_result = update_excel_report(EXCEL_FILE, row_index, "Yes", result_str)
+        
+        # 3. 修改更新报告函数调用
+        # 注意：这里我们只需要传递 index 和 结果，'yes' 已经在函数内部写死，或者你可以修改 update_yaml_report 接受 'yes'
+        update_result = update_yaml_report(YAML_FILE, row_index, result_str)
+        
         if update_result['status'] == 'error':
-            print(f"--- CRITICAL WARNING: Could not write result back to Excel file! Error: {update_result['message']} ---")
+            print(f"--- CRITICAL WARNING: Could not write result back to YAML file! Error: {update_result['message']} ---")
 
-        # Clean up environment
         print("--- Cleaning up environment... ---")
         if os.path.exists("fuzz_build_log_file"): shutil.rmtree("fuzz_build_log_file")
         if os.path.exists("generated_prompt_file"): shutil.rmtree("generated_prompt_file")
@@ -356,6 +363,7 @@ async def main():
         await asyncio.sleep(5)
 
     print("\n--- All projects have been processed. Workflow finished normally. ---")
+
 
 if __name__ == "__main__":
     print("--- Performing pre-startup checks... ---")

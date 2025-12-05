@@ -3,6 +3,7 @@ import sys
 import shutil
 import subprocess
 import json
+import yaml
 import openpyxl
 from collections import deque
 from datetime import datetime
@@ -15,6 +16,81 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 # Build relative path to the process directory
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
+
+
+def update_yaml_report(file_path: str, row_index: int, result: str) -> Dict[str, str]:
+    """
+    [New] Updates the 'state' to 'yes' and adds 'fix_result' and 'fix_date' to the YAML file.
+    """
+    print(f"--- Tool: update_yaml_report called for file '{file_path}', index {row_index} ---")
+    try:
+        if not os.path.exists(file_path):
+             return {'status': 'error', 'message': f"YAML file not found at '{file_path}'."}
+
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+
+        if row_index < 0 or row_index >= len(data):
+            return {'status': 'error', 'message': "Invalid row index provided."}
+
+        # 更新状态
+        data[row_index]['state'] = 'yes'
+        # 记录修复结果 (Success/Failure)
+        data[row_index]['fix_result'] = result
+        # 记录修复时间
+        data[row_index]['fix_date'] = datetime.now().strftime('%Y-%m-%d')
+
+        # 写回文件
+        with open(file_path, 'w', encoding='utf-8') as f:
+            yaml.dump(data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+
+        message = f"Successfully updated project at index {row_index} in '{file_path}' with result: '{result}'."
+        print(message)
+        return {'status': 'success', 'message': message}
+    except Exception as e:
+        message = f"Failed to update YAML file: {e}"
+        print(f"--- ERROR: {message} ---")
+        return {'status': 'error', 'message': message}
+
+
+def read_projects_from_yaml(file_path: str) -> Dict:
+    """
+    [New] Reads project information from the specified .yaml file.
+    Only reads entries where "state" is "no".
+    """
+    print(f"--- Tool: read_projects_from_yaml called for: {file_path} ---")
+    if not os.path.exists(file_path):
+        return {'status': 'error', 'message': f"YAML file not found at '{file_path}'."}
+
+    projects_to_run = []
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+        
+        if not isinstance(data, list):
+            return {'status': 'error', 'message': "YAML file must contain a list of projects."}
+
+        for index, entry in enumerate(data):
+            # [Core filtering logic]
+            # 读取 state 为 "no" 的项目
+            if entry.get('state') == 'no':
+                project_name = entry.get('project')
+                sha = entry.get('oss-fuzz_sha')
+                
+                if project_name and sha:
+                    project_info = {
+                        "project_name": project_name,
+                        "sha": str(sha),
+                        "row_index": index  # 使用列表索引作为 ID，方便回写
+                    }
+                    projects_to_run.append(project_info)
+                else:
+                    print(f"Warning: Project at index {index} missing 'project' or 'oss-fuzz_sha'. Skipping.")
+
+        print(f"--- Found {len(projects_to_run)} new projects to process. ---")
+        return {'status': 'success', 'projects': projects_to_run}
+    except Exception as e:
+        return {'status': 'error', 'message': f"Failed to read or parse YAML file: {e}"}
 
 # Core Tools
 def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
