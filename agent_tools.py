@@ -53,6 +53,102 @@ def update_yaml_report(file_path: str, row_index: int, result: str) -> Dict[str,
         return {'status': 'error', 'message': message}
 
 
+def get_git_commits_around_date(project_source_path: str, error_date: str, count: int = 10) -> Dict:
+    """
+    Returns metadata for commits within the range [error_date - 1 day, error_date + 1 day].
+    Useful to handle timezone differences or build delays.
+    """
+    print(f"--- Tool: get_git_commits_around_date called. Path: {project_source_path}, Center Date: {error_date} ---")
+
+    if not os.path.isdir(os.path.join(project_source_path, ".git")):
+        return {'status': 'error', 'message': "Not a git repository."}
+
+    try:
+        # 1. 解析传入的日期
+        # 尝试处理 YYYY-MM-DD 或 YYYY-M-D
+        try:
+            target_dt = datetime.strptime(error_date, '%Y-%m-%d')
+        except ValueError:
+            # 备用尝试 YYYY.MM.DD
+            target_dt = datetime.strptime(error_date, '%Y.%m.%d')
+
+        # 2. 计算时间窗口 (前后各推1天)
+        # 例如: error_date=11-03. start=11-02, end=11-04.
+        start_date = (target_dt - timedelta(days=1)).strftime('%Y-%m-%d')
+        end_date = (target_dt + timedelta(days=1)).strftime('%Y-%m-%d')
+        
+        print(f"--- Searching commits between {start_date} and {end_date} (inclusive) ---")
+
+        # 3. 构建 Git 命令
+        # --since 和 --until 是包含边界的 (inclusive)
+        cmd = [
+            "git", "log", 
+            f"--since={start_date} 00:00:00", 
+            f"--until={end_date} 23:59:59", 
+            f"-n {count}", 
+            "--pretty=format:%H|%cd|%s", 
+            "--date=format:%Y-%m-%d %H:%M:%S"
+        ]
+        
+        result = subprocess.run(cmd, cwd=project_source_path, capture_output=True, text=True, check=False)
+
+        commits = []
+        lines = result.stdout.strip().split('\n')
+        for line in lines:
+            if not line: continue
+            parts = line.split('|', 2)
+            if len(parts) < 3: continue
+            sha, date, msg = parts
+
+            # 获取该 commit 修改的文件列表
+            cmd_files = ["git", "show", "--name-only", "--format=", sha]
+            res_files = subprocess.run(cmd_files, cwd=project_source_path, capture_output=True, text=True, check=False)
+            files = [f.strip() for f in res_files.stdout.split('\n') if f.strip()]
+
+            commits.append({
+                "sha": sha,
+                "date": date,
+                "message": msg,
+                "files_changed": files
+            })
+
+        print(f"--- Found {len(commits)} commits in range. ---")
+        return {'status': 'success', 'commits': commits}
+    except Exception as e:
+        return {'status': 'error', 'message': f"Failed to get commits: {e}"}
+
+
+def save_commit_diff_to_file(project_name: str, project_source_path: str, sha: str, error_time: str) -> Dict:
+    """
+    Gets the full diff of a specific SHA and saves it to 'generated_prompt_file/commit_changed.txt'.
+    """
+    print(f"--- Tool: save_commit_diff_to_file called. SHA: {sha} ---")
+    OUTPUT_FILE = "generated_prompt_file/commit_changed.txt"
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+    
+    try:
+        # 获取详细 Diff
+        cmd = ["git", "show", sha, "--stat", "-p"]
+        result = subprocess.run(cmd, cwd=project_source_path, capture_output=True, text=True, encoding='utf-8', errors='replace')
+        
+        if result.returncode != 0:
+            return {'status': 'error', 'message': result.stderr}
+
+        content = result.stdout
+        
+        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+            f.write("--- Commit Context Information ---\n")
+            f.write(f"Project Name: {project_name}\n")
+            f.write(f"Error Report Time: {error_time}\n")
+            f.write(f"Selected Commit SHA: {sha}\n")
+            f.write("-" * 30 + "\n\n")
+            f.write(content)
+            
+        return {'status': 'success', 'message': f"Saved diff for {sha} to {OUTPUT_FILE}"}
+    except Exception as e:
+        return {'status': 'error', 'message': f"Error saving diff: {e}"}
+
+
 def read_projects_from_yaml(file_path: str) -> Dict:
     """
     [New] Reads project information from the specified .yaml file.
@@ -66,7 +162,7 @@ def read_projects_from_yaml(file_path: str) -> Dict:
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
-        
+
         if not isinstance(data, list):
             return {'status': 'error', 'message': "YAML file must contain a list of projects."}
 
@@ -77,11 +173,16 @@ def read_projects_from_yaml(file_path: str) -> Dict:
                 project_name = entry.get('project')
                 sha = entry.get('oss-fuzz_sha')
                 
+                # --- [关键修改] 获取 error_time ---
+                error_time = entry.get('error_time') 
+
                 if project_name and sha:
                     project_info = {
                         "project_name": project_name,
                         "sha": str(sha),
-                        "row_index": index  # 使用列表索引作为 ID，方便回写
+                        "row_index": index,  # 使用列表索引作为 ID，方便回写
+                        # --- [关键修改] 存入字典 ---
+                        "error_time": str(error_time) if error_time else None
                     }
                     projects_to_run.append(project_info)
                 else:
@@ -91,6 +192,7 @@ def read_projects_from_yaml(file_path: str) -> Dict:
         return {'status': 'success', 'projects': projects_to_run}
     except Exception as e:
         return {'status': 'error', 'message': f"Failed to read or parse YAML file: {e}"}
+
 
 # Core Tools
 def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
@@ -360,8 +462,8 @@ def download_github_repo(project_name: str, target_dir: str) -> Dict[str, str]:
         return {'status': 'error', 'message': message}
 
     clone_command = ["git", "clone", repo_url, target_dir]
-    if project_name != "oss-fuzz":
-        clone_command.insert(2, "--depth=1")
+#    if project_name != "oss-fuzz":
+#        clone_command.insert(2, "--depth=1")
 
     try:
         subprocess.run(clone_command, check=True, capture_output=True, text=True)
@@ -743,6 +845,7 @@ def delete_file(file_path: str) -> dict:
         print(message)
         return {"status": "error", "message": message}
 
+
 def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str) -> dict:
     """
     Automatically collects various fuzzing context information and integrates it into a single prompt file.
@@ -752,6 +855,9 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     PROMPT_FILE_PATH = os.path.join(PROMPT_DIR, "prompt.txt")
     FILE_TREE_PATH = os.path.join(PROMPT_DIR, "file_tree.txt")
     FUZZ_LOG_PATH = "fuzz_build_log_file/fuzz_build_log.txt"
+    # --- 新增：定义 Commit 变更文件的路径 ---
+    COMMIT_DIFF_PATH = os.path.join(PROMPT_DIR, "commit_changed.txt")
+
     print(f"Step 0: Discovering configuration files in '{config_folder_path}'...")
     if not os.path.isdir(config_folder_path):
         return {"status": "error", "message": f"Error: The provided config path '{config_folder_path}' is not a valid directory."}
@@ -765,6 +871,7 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
             print(f"Warning: No files were found in the directory '{config_folder_path}'.")
     except Exception as e:
         return {"status": "error", "message": f"An error occurred while scanning the config directory: {str(e)}"}
+    
     print("Step 1: Generating and writing the introductory prompt...")
     project_name = os.path.basename(os.path.abspath(project_main_folder_path))
     config_file_names = [os.path.basename(f) for f in all_config_files]
@@ -776,6 +883,7 @@ Next, the {config_files_str}, file tree, and error log for {project_name} will b
     os.makedirs(PROMPT_DIR, exist_ok=True)
     with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
         f.write(introductory_prompt)
+    
     print("Step 2: Appending configuration files...")
     with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
         f.write("\n\n--- Configuration Files ---\n")
@@ -788,6 +896,7 @@ Next, the {config_files_str}, file tree, and error log for {project_name} will b
                 dest_f.write(source_f.read())
         except Exception as e:
             print(f"    Warning: Failed to append '{config_file}': {e}. Skipping.")
+    
     print(f"Step 3: Generating shallow project file tree (max_depth='{max_depth}')...")
     result = save_file_tree_shallow(
         directory_path=project_main_folder_path,
@@ -796,6 +905,7 @@ Next, the {config_files_str}, file tree, and error log for {project_name} will b
     )
     if result["status"] == "error":
         return result
+    
     print("Step 4: Appending file tree to prompt file...")
     with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
         f.write("\n\n--- Project File Tree (Shallow View) ---\n")
@@ -804,6 +914,22 @@ Next, the {config_files_str}, file tree, and error log for {project_name} will b
             dest_f.write(source_f.read())
     except Exception as e:
         return {"status": "error", "message": f"Failed to append file tree: {e}"}
+
+    # --- 新增步骤：Step 4.5 ---
+    print("Step 4.5: Checking for and appending commit change info...")
+    if os.path.isfile(COMMIT_DIFF_PATH) and os.path.getsize(COMMIT_DIFF_PATH) > 0:
+        print(f"  - Found commit diff at '{COMMIT_DIFF_PATH}'. Appending...")
+        with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
+            f.write("\n\n--- Recent Commit Changes (Potential Cause) ---\n")
+        try:
+            with open(COMMIT_DIFF_PATH, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
+                dest_f.write(source_f.read())
+        except Exception as e:
+            print(f"    Warning: Failed to append commit diff: {e}.")
+    else:
+        print("  - Commit diff file not found. Skipping.")
+    # -------------------------
+
     print("Step 5: Checking for and appending fuzz build log...")
     if os.path.isfile(FUZZ_LOG_PATH) and os.path.getsize(FUZZ_LOG_PATH) > 0:
         print(f"  - Found fuzz log at '{FUZZ_LOG_PATH}'. Appending...")
@@ -816,13 +942,15 @@ Next, the {config_files_str}, file tree, and error log for {project_name} will b
             print(f"    Warning: Failed to append fuzz log: {e}.")
     else:
         print("  - Fuzz log not found or is empty. Skipping.")
+    
     final_message = (
         f"Prompt generation workflow completed successfully. Initial context information has been consolidated into '{PROMPT_FILE_PATH}'. "
-        f"This includes the project's file structure up to '{max_depth}' levels deep. Please analyze the existing information. If you need to delve deeper into a specific directory, "
-        f"use the 'find_and_append_file_details' tool for a precise search."
+        f"This includes the project's file structure, relevant configuration files, "
+        f"recent commit changes (if identified), and the build error log."
     )
     print(f"--- Workflow Tool: prompt_generate_tool finished successfully ---")
     return {"status": "success", "message": final_message}
+
 
 def run_fuzz_build_streaming(
     project_name: str,

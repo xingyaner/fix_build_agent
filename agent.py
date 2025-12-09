@@ -7,7 +7,7 @@ import asyncio
 import subprocess
 import litellm
 import logging
-from datetime import datetime
+from datetime import datetime,timedelta
 from typing import Dict, AsyncGenerator, Tuple, Optional
 from dotenv import load_dotenv
 
@@ -44,6 +44,8 @@ from agent_tools import (
     save_file_tree_shallow,
     find_and_append_file_details,
     append_string_to_file,
+    get_git_commits_around_date,
+    save_commit_diff_to_file,
     truncate_prompt_file
 )
 
@@ -159,6 +161,22 @@ decision_agent = LlmAgent(
     tools=[read_file_content, exit_loop],
 )
 
+commit_finder_agent = LlmAgent(
+    name="commit_finder_agent",
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
+    instruction=load_instruction_from_file("instructions/commit_finder_instruction.txt"),
+    tools=[
+        read_projects_from_yaml, 
+        read_file_content, 
+        get_git_commits_around_date, 
+        save_commit_diff_to_file, 
+        create_or_update_file,
+        run_command,
+        get_project_paths # 备用，以防 session 中路径丢失
+    ],
+    output_key="commit_analysis_result",
+)
+
 prompt_generate_agent = LlmAgent(
     name="prompt_generate_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384),
@@ -189,6 +207,7 @@ workflow_loop_agent = LoopAgent(
     sub_agents=[
         run_fuzz_and_collect_log_agent,
         decision_agent,
+        commit_finder_agent,
         prompt_generate_agent,
         fuzzing_solver_agent,
         solution_applier_agent,
@@ -204,6 +223,38 @@ subject_agent = SequentialAgent(
 
 root_agent = LoggingWrapperAgent(subject_agent=subject_agent)
 
+def cleanup_environment(project_name: str):
+    """
+    Cleans up temporary files, directories, and the specific project source code
+    to prepare for the next run.
+    """
+    print(f"--- Cleaning up environment for project: {project_name} ---")
+    
+    # 1. 删除构建日志目录
+    if os.path.exists("fuzz_build_log_file"): 
+        shutil.rmtree("fuzz_build_log_file")
+    
+    # 2. 删除生成的 Prompt 和中间文件 (包含 commit_changed.txt)
+    if os.path.exists("generated_prompt_file"): 
+        shutil.rmtree("generated_prompt_file")
+    
+    # 3. 删除生成的修复方案
+    if os.path.exists("solution.txt"): 
+        os.remove("solution.txt")
+    
+    # 4. 删除第三方软件的源代码
+    # 注意：这里只删除当前项目的源码，避免影响 process 目录下的其他内容
+    safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
+    project_source_path = os.path.join(os.getcwd(), "process", "project", safe_project_name)
+    
+    if os.path.exists(project_source_path): 
+        try:
+            shutil.rmtree(project_source_path)
+            print(f"--- Removed project source at: {project_source_path} ---")
+        except Exception as e:
+            print(f"--- Warning: Failed to remove project source: {e} ---")
+
+    print(f"--- Cleanup complete. ---")
 
 async def process_single_project(
     project_info: Dict,
@@ -351,17 +402,8 @@ async def main():
         if update_result['status'] == 'error':
             print(f"--- CRITICAL WARNING: Could not write result back to YAML file! Error: {update_result['message']} ---")
 
-        print("--- Cleaning up environment... ---")
-        if os.path.exists("fuzz_build_log_file"): shutil.rmtree("fuzz_build_log_file")
-        if os.path.exists("generated_prompt_file"): shutil.rmtree("generated_prompt_file")
-        if os.path.exists("solution.txt"): os.remove("solution.txt")
-        safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
-        project_source_path = os.path.join(os.getcwd(), "process", "project", safe_project_name)
-        if os.path.exists(project_source_path): shutil.rmtree(project_source_path)
 
-        print(f"--- Cleaned up temporary files and project source. Preparing for the next project ---")
-        await asyncio.sleep(5)
-
+#    cleanup_environment(project_name)
     print("\n--- All projects have been processed. Workflow finished normally. ---")
 
 

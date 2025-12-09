@@ -1,7 +1,5 @@
-- project: openfga
-  language: go
-  error_time: 2025-12-3
-  oss-fuzz_sha: c72ef09ac8cf3bfc9519e630adbc8a69d21c0ab3
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2025-12-04'
+- project: ffmpeg
+  language: c
+  error_time: '2025-12-05'
+  oss-fuzz_sha: e8e7cf858985bb6309dcd76c1a87eb3458f58648
+  state: 'no'
