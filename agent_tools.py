@@ -1,10 +1,12 @@
 import os
+import re
 import sys
 import shutil
 import subprocess
 import json
 import yaml
 import openpyxl
+import subprocess
 from collections import deque
 from datetime import datetime
 from typing import Dict, List, Tuple, Optional, Set
@@ -740,34 +742,62 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
         print(error_message)
         return {"status": "error", "message": error_message}
 
-def read_file_content(file_path: str) -> dict:
+
+def read_file_content(file_path: str, tail_lines: Optional[int] = None) -> dict:
     """
-    Reads and returns the content of a specified text file.
+    【上下文优化版】读取文件内容，并自动进行瘦身以减少 token 数量。
+    - 自动剥离常见的许可证头部注释。
+    - 对过长的文件进行智能截断（保留开头和结尾）。
+    - 接受 tail_lines 参数只读取末尾行。
     """
-    print(f"--- Tool: read_file_content called for path: {file_path} ---")
-    MAX_FILE_SIZE = 1024 * 1024
-    if not os.path.exists(file_path):
-        message = f"Error: File '{file_path}' does not exist."
-        print(message)
-        return {"status": "error", "message": message}
+    print(f"--- Tool: read_file_content (Optimized) called for: {file_path} (tail_lines={tail_lines}) ---")
+    
     if not os.path.isfile(file_path):
-        message = f"Error: Path '{file_path}' is a directory, not a file."
-        print(message)
-        return {"status": "error", "message": message}
-    if os.path.getsize(file_path) > MAX_FILE_SIZE:
-        message = f"Error: File '{file_path}' is too large to process."
-        print(message)
-        return {"status": "error", "message": message}
+        return {"status": "error", "message": f"Error: Path '{file_path}' is not a valid file."}
+        
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            content = f.read()
-        success_message = f"Content of file '{file_path}' has been successfully read into memory."
-        print(success_message)
-        return {"status": "success", "message": success_message, "content": content}
+        with open(file_path, "r", encoding="utf-8", errors='ignore') as f:
+            lines = f.readlines()
+
+        # 1. 如果指定了 tail_lines，则优先处理
+        if tail_lines and isinstance(tail_lines, int) and tail_lines > 0:
+            content = "".join(lines[-tail_lines:])
+            message = f"Successfully read the last {len(lines[-tail_lines:])} lines from '{file_path}'."
+            return {"status": "success", "message": message, "content": content}
+
+        # 2. 自动剥离常见的许可证/版权头部
+        # 匹配以 #, /*, // 开头的连续行
+        license_header_pattern = re.compile(r"^(#|//|\s*\*).*$", re.MULTILINE)
+        content_str = "".join(lines)
+        
+        # 寻找第一个非注释行
+        first_code_line_index = -1
+        for i, line in enumerate(lines):
+            stripped_line = line.strip()
+            if stripped_line and not license_header_pattern.match(line):
+                first_code_line_index = i
+                break
+        
+        if first_code_line_index > 5: # 如果头部注释超过5行，就剥离它
+            lines = lines[first_code_line_index:]
+            print(f"--- Stripped license header ({first_code_line_index} lines) from '{file_path}' ---")
+
+        # 3. 对过长的文件进行智能截断
+        MAX_LINES = 400 # 设置一个合理的文件最大行数
+        if len(lines) > MAX_LINES:
+            head = lines[:MAX_LINES // 2]
+            tail = lines[-MAX_LINES // 2:]
+            content = "".join(head) + "\n\n... (File content truncated for brevity) ...\n\n" + "".join(tail)
+            message = f"File '{file_path}' was too long, content has been truncated."
+            print(f"--- Truncated long file '{file_path}' to {MAX_LINES} lines ---")
+        else:
+            content = "".join(lines)
+            message = f"Successfully read the optimized content of '{file_path}'."
+
+        return {"status": "success", "message": message, "content": content}
+
     except Exception as e:
-        message = f"An error occurred while reading file '{file_path}': {str(e)}"
-        print(message)
-        return {"status": "error", "message": message}
+        return {"status": "error", "message": f"An error occurred while reading file '{file_path}': {str(e)}"}
 
 def create_or_update_file(file_path: str, content: str) -> dict:
     """
@@ -952,6 +982,13 @@ Next, the {config_files_str}, file tree, and error log for {project_name} will b
     return {"status": "success", "message": final_message}
 
 
+# agent_tools.py
+
+# ... (保留所有其他 import 和函数) ...
+from collections import deque
+import subprocess
+
+
 def run_fuzz_build_streaming(
     project_name: str,
     oss_fuzz_path: str,
@@ -960,22 +997,22 @@ def run_fuzz_build_streaming(
     architecture: str
 ) -> dict:
     """
-    Executes a predefined fuzzing build command and streams its output in real-time.
+    【增强版】执行 Fuzzing 构建命令，并智能分析日志内容以判断真实成功与否。
     """
-    print(f"--- Tool: run_fuzz_build_streaming called for project: {project_name} ---")
+    print(f"--- Tool: run_fuzz_build_streaming (Enhanced) called for project: {project_name} ---")
     LOG_DIR = "fuzz_build_log_file"
     LOG_FILE_PATH = os.path.join(LOG_DIR, "fuzz_build_log.txt")
+    os.makedirs(LOG_DIR, exist_ok=True)
+
     try:
         helper_script_path = os.path.join(oss_fuzz_path, "infra/helper.py")
         command = [
             "python3.10", helper_script_path, "build_fuzzers",
-            "--sanitizer", sanitizer,
-            "--engine", engine,
-            "--architecture", architecture,
-            project_name
+            "--sanitizer", sanitizer, "--engine", engine,
+            "--architecture", architecture, project_name
         ]
         print(f"--- Executing command: {' '.join(command)} ---")
-        print("--- Fuzzing process started. Real-time output will be displayed below: ---")
+        
         process = subprocess.Popen(
             command,
             stdout=subprocess.PIPE,
@@ -983,33 +1020,61 @@ def run_fuzz_build_streaming(
             text=True,
             bufsize=1,
             cwd=oss_fuzz_path,
-            encoding='utf-8'
+            encoding='utf-8',
+            errors='ignore'
         )
-        log_buffer = deque(maxlen=280)
+
+        full_log_content = []
         for line in process.stdout:
             print(line, end='', flush=True)
-            log_buffer.append(line)
+            full_log_content.append(line)
+        
         process.wait()
         return_code = process.returncode
         print("\n--- Fuzzing process finished. ---")
-        os.makedirs(LOG_DIR, exist_ok=True)
-        if return_code == 0:
+
+        final_log = "".join(full_log_content)
+        
+        failure_keywords = [
+            "error:", "failed:", "timeout", "timed out", "build failed",
+            "no such package", "error loading package", "failed to fetch"
+        ]
+        
+        success_keywords = ["build completed successfully", "successfully built"]
+        
+        is_truly_successful = True
+        
+        if return_code != 0:
+            is_truly_successful = False
+            
+        if any(keyword in final_log.lower() for keyword in failure_keywords):
+            is_truly_successful = False
+            
+        if is_truly_successful:
+            if not any(keyword in final_log.lower() for keyword in success_keywords):
+                if "found 0 targets" in final_log.lower():
+                    is_truly_successful = False
+        
+        # --- 根据判断结果写入文件并返回 ---
+        if is_truly_successful:
             content_to_write = "success"
-            message = f"Fuzzing build command completed successfully. Result saved to '{LOG_FILE_PATH}'."
+            message = f"Fuzzing build command appears TRULY SUCCESSFUL. Result saved to '{LOG_FILE_PATH}'."
             status = "success"
         else:
-            content_to_write = "".join(log_buffer)
-            message = f"Fuzzing build command failed. Detailed log saved to '{LOG_FILE_PATH}'."
+            # 如果失败，保存完整的日志
+            content_to_write = final_log
+            message = f"Fuzzing build command FAILED based on log analysis. Detailed log saved to '{LOG_FILE_PATH}'."
             status = "error"
+            
         with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
             f.write(content_to_write)
+            
         print(message)
         return {"status": status, "message": message}
+
     except Exception as e:
-        message = f"An unknown exception occurred while executing the fuzzing command: {str(e)}"
+        message = f"An unknown exception occurred: {str(e)}"
         print(message)
-        # Also attempt to write to log on exception
-        os.makedirs(LOG_DIR, exist_ok=True)
         with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
             f.write(message)
         return {"status": "error", "message": message}

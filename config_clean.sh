@@ -1,5 +1,5 @@
 #!/bin/bash
-
+rm solution*
 # 检查是否传入了项目名称参数
 if [ -z "$1" ]; then
     echo "Error: Project name argument is required."
@@ -26,7 +26,7 @@ fi
 # 3. 删除生成的修复方案
 # Python: os.remove("solution.txt")
 if [ -f "solution.txt" ]; then
-    rm -f "solution.txt"
+    rm -f "solution*"
 fi
 
 # 4. 删除第三方软件的源代码
