@@ -6,42 +6,41 @@ INFO:__main__:Running: docker build -t gcr.io/oss-fuzz/mosquitto --file /root/fi
 #1 DONE 0.2s
 
 #2 [internal] load metadata for gcr.io/oss-fuzz-base/base-builder:latest
-#2 DONE 1.0s
+#2 DONE 2.6s
 
 #3 [internal] load .dockerignore
-#3 transferring context: 2B done
+#3 transferring context: 2B 0.0s done
 #3 DONE 0.2s
 
 #4 [internal] load build context
 #4 transferring context: 30B 0.0s done
 #4 DONE 0.3s
 
-#5 [1/5] FROM gcr.io/oss-fuzz-base/base-builder:latest@sha256:73cd7fc572c3f38f84b4ca6491cfff9b7f2c52d0e33034984ca446063c4afaf0
-#5 resolve gcr.io/oss-fuzz-base/base-builder:latest@sha256:73cd7fc572c3f38f84b4ca6491cfff9b7f2c52d0e33034984ca446063c4afaf0
-#5 resolve gcr.io/oss-fuzz-base/base-builder:latest@sha256:73cd7fc572c3f38f84b4ca6491cfff9b7f2c52d0e33034984ca446063c4afaf0 0.3s done
+#5 [1/5] FROM gcr.io/oss-fuzz-base/base-builder:latest@sha256:6d7dd44ebec7ae27386a7b8a37ce0e827fe1604c33ef5a3a009a10f0fdf7bc34
+#5 resolve gcr.io/oss-fuzz-base/base-builder:latest@sha256:6d7dd44ebec7ae27386a7b8a37ce0e827fe1604c33ef5a3a009a10f0fdf7bc34
+#5 resolve gcr.io/oss-fuzz-base/base-builder:latest@sha256:6d7dd44ebec7ae27386a7b8a37ce0e827fe1604c33ef5a3a009a10f0fdf7bc34 0.3s done
 #5 DONE 0.3s
 
-#6 [2/5] RUN git clone --depth 1 -b develop https://github.com/eclipse/mosquitto /src/mosquitto
+#6 [3/5] RUN /src/mosquitto/fuzzing/scripts/oss-fuzz-dependencies.sh
 #6 CACHED
 
-#7 [3/5] RUN /src/mosquitto/fuzzing/scripts/oss-fuzz-dependencies.sh
+#7 [4/5] WORKDIR /src/mosquitto
 #7 CACHED
 
-#8 [4/5] WORKDIR /src/mosquitto
+#8 [2/5] RUN git clone --depth 1 -b develop https://github.com/eclipse/mosquitto /src/mosquitto
 #8 CACHED
 
 #9 [5/5] COPY build.sh /src/
 #9 CACHED
 
 #10 exporting to image
-#10 exporting layers
 #10 exporting layers 0.0s done
-#10 exporting manifest sha256:6f25db08456d8198089544113619fcf373e2fec6cae35d300e0586730d423558 0.0s done
-#10 exporting config sha256:00e87996e0e401129e622478adf1207101137e0f63ba5a0347731c0cc63c1f56 0.1s done
-#10 exporting attestation manifest sha256:be5090a60a37eca2d0b5f2eb5f39c7c5dff15f954facd1c3ca802e307ece6add
-#10 exporting attestation manifest sha256:be5090a60a37eca2d0b5f2eb5f39c7c5dff15f954facd1c3ca802e307ece6add 0.5s done
-#10 exporting manifest list sha256:edac702f2b6e0089b7b4f868694124e42a00f9e50e304512505b800fe80e2fc2
-#10 exporting manifest list sha256:edac702f2b6e0089b7b4f868694124e42a00f9e50e304512505b800fe80e2fc2 0.2s done
+#10 exporting manifest sha256:377df55266f6e268183f4f43eae663c18284eece2e0acca229d6aced6f2147ea 0.0s done
+#10 exporting config sha256:fdae485ab09356b7b275f777769219f0803ba485f8eb9ad0b6d625f639545247 0.0s done
+#10 exporting attestation manifest sha256:62766adc298666becbaf04d9bd5816748535ea0c179d2c0020098133229f8018
+#10 exporting attestation manifest sha256:62766adc298666becbaf04d9bd5816748535ea0c179d2c0020098133229f8018 0.5s done
+#10 exporting manifest list sha256:654df27f7cf794ffef4d159e10004207f9b8a1f364a7115d5a9d232ef328254c
+#10 exporting manifest list sha256:654df27f7cf794ffef4d159e10004207f9b8a1f364a7115d5a9d232ef328254c 0.2s done
 #10 naming to gcr.io/oss-fuzz/mosquitto:latest
 #10 naming to gcr.io/oss-fuzz/mosquitto:latest 0.0s done
 #10 unpacking to gcr.io/oss-fuzz/mosquitto:latest 0.1s done
@@ -129,7 +128,7 @@ RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
 -- Performing Test FLAG_SUPPORTED_Wswitchenum - Success
 -- Performing Test FLAG_SUPPORTED_fvisibilityhidden
 -- Performing Test FLAG_SUPPORTED_fvisibilityhidden - Success
--- Configuring done (5.4s)
+-- Configuring done (5.0s)
 -- Generating done (0.0s)
 -- Build files have been written to: /src/cJSON
 [ 50%] [32mBuilding C object CMakeFiles/cjson.dir/cJSON.c.o[0m
@@ -254,12 +253,12 @@ make[3]: Entering directory '/src/mosquitto/src'
 make[3]: Entering directory '/src/mosquitto/src'
 make[3]: Entering directory '/src/mosquitto/src'
 make[3]: Entering directory '/src/mosquitto/src'
+clang  -DVERSION=\""2.0.99\"" -I.. -I. -I../include -I../common -DWITH_TLS -DWITH_TLS_PSK -DWITH_UNIX_SOCKETS -DWITH_WEBSOCKETS=WS_IS_BUILTIN -I../deps/picohttpparser -I../deps -DWITH_FUZZING -DWITH_BROKER -I../lib -I../libcommon -DWITH_BRIDGE -DWITH_CONTROL -DWITH_EPOLL -DWITH_MEMORY_TRACKING -DWITH_PERSISTENCE -DWITH_SYS_TREE -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC  -pthread -c topic_tok.c -o topic_tok.o
 clang  -DVERSION=\""2.0.99\"" -I.. -I. -I../include -I../common -DWITH_TLS -DWITH_TLS_PSK -DWITH_UNIX_SOCKETS -DWITH_WEBSOCKETS=WS_IS_BUILTIN -I../deps/picohttpparser -I../deps -DWITH_FUZZING -DWITH_BROKER -I../lib -I../libcommon -DWITH_BRIDGE -DWITH_CONTROL -DWITH_EPOLL -DWITH_MEMORY_TRACKING -DWITH_PERSISTENCE -DWITH_SYS_TREE -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC  -pthread -c persist_read.c -o persist_read.o
 clang  -DVERSION=\""2.0.99\"" -I.. -I. -I../include -I../common -DWITH_TLS -DWITH_TLS_PSK -DWITH_UNIX_SOCKETS -DWITH_WEBSOCKETS=WS_IS_BUILTIN -I../deps/picohttpparser -I../deps -DWITH_FUZZING -DWITH_BROKER -I../lib -I../libcommon -DWITH_BRIDGE -DWITH_CONTROL -DWITH_EPOLL -DWITH_MEMORY_TRACKING -DWITH_PERSISTENCE -DWITH_SYS_TREE -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC  -pthread -c persist_read_v5.c -o persist_read_v5.o
-clang  -DVERSION=\""2.0.99\"" -I.. -I. -I../include -I../common -DWITH_TLS -DWITH_TLS_PSK -DWITH_UNIX_SOCKETS -DWITH_WEBSOCKETS=WS_IS_BUILTIN -I../deps/picohttpparser -I../deps -DWITH_FUZZING -DWITH_BROKER -I../lib -I../libcommon -DWITH_BRIDGE -DWITH_CONTROL -DWITH_EPOLL -DWITH_MEMORY_TRACKING -DWITH_PERSISTENCE -DWITH_SYS_TREE -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC  -pthread -c topic_tok.c -o topic_tok.o
-clang  -DVERSION=\""2.0.99\"" -I.. -I. -I../include -I../common -DWITH_TLS -DWITH_TLS_PSK -DWITH_UNIX_SOCKETS -DWITH_WEBSOCKETS=WS_IS_BUILTIN -I../deps/picohttpparser -I../deps -DWITH_FUZZING -DWITH_BROKER -I../lib -I../libcommon -DWITH_BRIDGE -DWITH_CONTROL -DWITH_EPOLL -DWITH_MEMORY_TRACKING -DWITH_PERSISTENCE -DWITH_SYS_TREE -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC  -pthread -c ../lib/property_mosq.c -o property_mosq.o
 clang  -DVERSION=\""2.0.99\"" -I.. -I. -I../include -I../common -DWITH_TLS -DWITH_TLS_PSK -DWITH_UNIX_SOCKETS -DWITH_WEBSOCKETS=WS_IS_BUILTIN -I../deps/picohttpparser -I../deps -DWITH_FUZZING -DWITH_BROKER -I../lib -I../libcommon -DWITH_BRIDGE -DWITH_CONTROL -DWITH_EPOLL -DWITH_MEMORY_TRACKING -DWITH_PERSISTENCE -DWITH_SYS_TREE -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC  -pthread -c persist_read_v234.c -o persist_read_v234.o
 clang  -DVERSION=\""2.0.99\"" -I.. -I. -I../include -I../common -DWITH_TLS -DWITH_TLS_PSK -DWITH_UNIX_SOCKETS -DWITH_WEBSOCKETS=WS_IS_BUILTIN -I../deps/picohttpparser -I../deps -DWITH_FUZZING -DWITH_BROKER -I../lib -I../libcommon -DWITH_BRIDGE -DWITH_CONTROL -DWITH_EPOLL -DWITH_MEMORY_TRACKING -DWITH_PERSISTENCE -DWITH_SYS_TREE -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC  -pthread -c ../lib/packet_datatypes.c -o packet_datatypes.o
+clang  -DVERSION=\""2.0.99\"" -I.. -I. -I../include -I../common -DWITH_TLS -DWITH_TLS_PSK -DWITH_UNIX_SOCKETS -DWITH_WEBSOCKETS=WS_IS_BUILTIN -I../deps/picohttpparser -I../deps -DWITH_FUZZING -DWITH_BROKER -I../lib -I../libcommon -DWITH_BRIDGE -DWITH_CONTROL -DWITH_EPOLL -DWITH_MEMORY_TRACKING -DWITH_PERSISTENCE -DWITH_SYS_TREE -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC  -pthread -c ../lib/property_mosq.c -o property_mosq.o
 make[3]: Leaving directory '/src/mosquitto/src'
 make[3]: Leaving directory '/src/mosquitto/src'
 make[3]: Leaving directory '/src/mosquitto/src'
@@ -583,12 +582,12 @@ make[3]: Entering directory '/src/mosquitto/fuzzing/apps/db_dump'
 clang++ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -g -Wall -Werror -pthread  -I../../.. -I. -I../../../include -I../../../common   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link   -o db_dump_fuzz_load db_dump_fuzz_load.cpp  -fsanitize=fuzzer ../../../apps/db_dump/mosquitto_db_dump.a ../../../libcommon/libmosquitto_common.a -Wl,-Bstatic -largon2 -Wl,-Bdynamic -lcjson -lcrypto
 clang++ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -g -Wall -Werror -pthread  -I../../.. -I. -I../../../include -I../../../common   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link   -o db_dump_fuzz_load_client_stats db_dump_fuzz_load_client_stats.cpp  -fsanitize=fuzzer ../../../apps/db_dump/mosquitto_db_dump.a ../../../libcommon/libmosquitto_common.a -Wl,-Bstatic -largon2 -Wl,-Bdynamic -lcjson -lcrypto
 clang++ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -g -Wall -Werror -pthread  -I../../.. -I. -I../../../include -I../../../common   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link   -o db_dump_fuzz_load_stats db_dump_fuzz_load_stats.cpp  -fsanitize=fuzzer ../../../apps/db_dump/mosquitto_db_dump.a ../../../libcommon/libmosquitto_common.a -Wl,-Bstatic -largon2 -Wl,-Bdynamic -lcjson -lcrypto
-install db_dump_fuzz_load /out/db_dump_fuzz_load
 install db_dump_fuzz_load_client_stats /out/db_dump_fuzz_load_client_stats
+install db_dump_fuzz_load /out/db_dump_fuzz_load
 install db_dump_fuzz_load_stats /out/db_dump_fuzz_load_stats
+cp ../../../fuzzing/corpora/db_dump_seed_corpus.zip /out/db_dump_fuzz_load_stats_seed_corpus.zip
 cp ../../../fuzzing/corpora/db_dump_seed_corpus.zip /out/db_dump_fuzz_load_seed_corpus.zip
 cp ../../../fuzzing/corpora/db_dump_seed_corpus.zip /out/db_dump_fuzz_load_client_stats_seed_corpus.zip
-cp ../../../fuzzing/corpora/db_dump_seed_corpus.zip /out/db_dump_fuzz_load_stats_seed_corpus.zip
 make[3]: Leaving directory '/src/mosquitto/fuzzing/apps/db_dump'
 make -C mosquitto_passwd all
 make[3]: Entering directory '/src/mosquitto/fuzzing/apps/mosquitto_passwd'
@@ -617,19 +616,19 @@ cp ../../fuzzing/corpora/broker_conf.dict /out/broker_fuzz_test_config.dict
 install broker_fuzz_acl_file /out/broker_fuzz_acl_file
 cp ../../fuzzing/corpora/broker_acl_file_seed_corpus.zip /out/broker_fuzz_acl_file_seed_corpus.zip
 cp ../../fuzzing/corpora/broker_acl_file.dict /out/broker_fuzz_acl_file.dict
+install broker_fuzz_queue_msg /out/broker_fuzz_queue_msg
+cp ../../fuzzing/corpora/broker_queue_msg_seed_corpus.zip /out/broker_fuzz_queue_msg_seed_corpus.zip
+install broker_fuzz_psk_file /out/broker_fuzz_psk_file
+cp ../../fuzzing/corpora/broker_psk_file_seed_corpus.zip /out/broker_fuzz_psk_file_seed_corpus.zip
 install broker_fuzz_password_file /out/broker_fuzz_password_file
 cp ../../fuzzing/corpora/broker_password_file_seed_corpus.zip /out/broker_fuzz_password_file_seed_corpus.zip
-install broker_fuzz_queue_msg /out/broker_fuzz_queue_msg
-install broker_fuzz_psk_file /out/broker_fuzz_psk_file
-cp ../../fuzzing/corpora/broker_queue_msg_seed_corpus.zip /out/broker_fuzz_queue_msg_seed_corpus.zip
-cp ../../fuzzing/corpora/broker_psk_file_seed_corpus.zip /out/broker_fuzz_psk_file_seed_corpus.zip
-install broker_fuzz_handle_subscribe /out/broker_fuzz_handle_subscribe
-install broker_fuzz_handle_connect /out/broker_fuzz_handle_connect
 install broker_fuzz_read_handle /out/broker_fuzz_read_handle
 cp ../../fuzzing/corpora/broker_packet_seed_corpus.zip /out/broker_fuzz_read_handle_seed_corpus.zip
-install broker_fuzz_handle_unsubscribe /out/broker_fuzz_handle_unsubscribe
 install broker_fuzz_handle_publish /out/broker_fuzz_handle_publish
+install broker_fuzz_handle_connect /out/broker_fuzz_handle_connect
+install broker_fuzz_handle_unsubscribe /out/broker_fuzz_handle_unsubscribe
 install broker_fuzz_handle_auth /out/broker_fuzz_handle_auth
+install broker_fuzz_handle_subscribe /out/broker_fuzz_handle_subscribe
 make[2]: Leaving directory '/src/mosquitto/fuzzing/broker'
 make -C libcommon all
 make[2]: Entering directory '/src/mosquitto/fuzzing/libcommon'

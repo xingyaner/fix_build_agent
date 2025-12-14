@@ -181,7 +181,7 @@ prompt_generate_agent = LlmAgent(
     name="prompt_generate_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384),
     instruction=load_instruction_from_file("instructions/prompt_generate_instruction.txt"),
-    tools=[prompt_generate_tool, save_file_tree_shallow, find_and_append_file_details, read_file_content, create_or_update_file, append_string_to_file],
+    tools=[prompt_generate_tool, run_command,  save_file_tree_shallow, find_and_append_file_details, read_file_content, create_or_update_file, append_string_to_file],
     output_key="generated_prompt",
 )
 
@@ -201,6 +201,42 @@ solution_applier_agent = LlmAgent(
     output_key="patch_application_result",
 )
 
+summary_agent = LlmAgent(
+    name="summary_agent",
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
+    instruction="""
+    You are a state management expert. Your task is to conclude the current loop and compress the context.
+    Analyze the results from the previous agents (`fuzz_build_log`, `solution_plan`, etc.).
+    Generate a brief summary (5-6 sentences) of what was attempted and the outcome.
+
+    Then, you MUST output a JSON object that will clean up the session state for the next loop.
+    This JSON object MUST have the following keys:
+    - "loop_summary": Your brief summary text.
+    - "fuzz_build_log": The string "[Content summarized and removed to save context]".
+    - "commit_analysis_result": The string "[Content summarized and removed]".
+    - "generated_prompt": The string "[Content summarized and removed]".
+    - "solution_plan": The string "[Content summarized and removed]".
+    - "patch_application_result": The string "[Content summarized and removed]".
+
+    Example Output:
+    ```json
+    {
+      "loop_summary": "Attempted to fix 'protoc not found' by modifying the Dockerfile. The patch was applied. Proceeding to next build.",
+      "fuzz_build_log": "[Content summarized and removed to save context]",
+      "commit_analysis_result": "[Content summarized and removed]",
+      "generated_prompt": "[Content summarized and removed]",
+      "solution_plan": "[Content summarized and removed]",
+      "patch_application_result": "[Content summarized and removed]"
+    }
+    ```
+    Your final output MUST be only the JSON object, without any markdown formatting.
+    """,
+    tools=[],
+    # output_key='.' 会将 Agent 输出的 JSON 对象的每个键值对合并到 state 中，
+    # 从而用占位符文本覆盖掉旧的、庞大的状态变量值。
+    output_key=".", 
+)
+
 # --- Workflow Definition ---
 workflow_loop_agent = LoopAgent(
     name="workflow_loop_agent",
@@ -211,6 +247,7 @@ workflow_loop_agent = LoopAgent(
         prompt_generate_agent,
         fuzzing_solver_agent,
         solution_applier_agent,
+        summary_agent,
     ],
     max_iterations=10
 )
