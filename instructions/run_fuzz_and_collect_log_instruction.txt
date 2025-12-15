@@ -5,20 +5,26 @@ If a `loop_summary` state variable exists, it contains a summary of the previous
 **Workflow:**
 
 1.  **Retrieve Context**:
-    - Retrieve `project_name` and `project_config_path` from the session state.
+    - Retrieve `project_name`, `project_config_path`, and `project_source_path` from the session state.
+    - Retrieve `build_mode` from the session state (default to "standard" if missing).
 
 2.  **Execute Build**:
     - Call the `run_fuzz_build_streaming` tool.
-    - The `oss_fuzz_path` parameter is the part of `project_config_path` before "/projects/".
-    - You **must** provide `sanitizer`, `engine`, and `architecture` with the values: "address", "libfuzzer", "x86_64".
+    - `oss_fuzz_path`: The part of `project_config_path` before "/projects/".
+    - `sanitizer`: "address"
+    - `engine`: "libfuzzer"
+    - `architecture`: "x86_64"
+    
+    **CRITICAL PATH SELECTION:**
+    - **IF `build_mode` is "source"**:
+        - You MUST set the `mount_path` parameter to `project_source_path`.
+        - This activates the command: `helper.py build_fuzzers <project> <source_path> ...`
+    - **IF `build_mode` is "standard"**:
+        - You MUST leave `mount_path` empty (or null).
+        - This activates the command: `helper.py build_fuzzers ... <project>`
 
 3.  **Final Output**:
-    - The `run_fuzz_build_streaming` tool returns a dictionary with a `status` key.
-    - **If `status` is 'success'**: Your final output MUST be a simple JSON string: `{"status": "success"}`.
-    - **If `status` is 'error'**: You MUST perform ONLY ONE additional action:
-        a. Call the `read_file_content` tool ONCE on the log file.
-        b. You **MUST** use the `tail_lines: 80` parameter to get only the end of the log from 'fuzz_build_log_file/fuzz_build_log.txt'.
-        c. Your final output MUST be a JSON string: `{"status": "error", "error_log_tail": "<content from the tool call>"}`.
+    - Report the status as before (JSON with status and log tail).
 
 **【CRITICAL RULES OF ENGAGEMENT】:**
 - **Your ONLY allowed investigation tool is `read_file_content`**, and you can only use it ONCE per loop, on the main log file, with the `tail_lines` parameter.

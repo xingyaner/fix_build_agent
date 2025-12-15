@@ -989,30 +989,58 @@ from collections import deque
 import subprocess
 
 
+
 def run_fuzz_build_streaming(
     project_name: str,
     oss_fuzz_path: str,
     sanitizer: str,
     engine: str,
-    architecture: str
+    architecture: str,
+    mount_path: Optional[str] = None  # 新增可选参数
 ) -> dict:
     """
-    【增强版】执行 Fuzzing 构建命令，并智能分析日志内容以判断真实成功与否。
+    【增强版】执行 Fuzzing 构建命令。
+    如果提供了 mount_path，则使用挂载本地源码的命令格式。
     """
     print(f"--- Tool: run_fuzz_build_streaming (Enhanced) called for project: {project_name} ---")
+    if mount_path:
+        print(f"--- Build Mode: Source Mount (Path: {mount_path}) ---")
+    else:
+        print(f"--- Build Mode: Standard Configuration ---")
+
     LOG_DIR = "fuzz_build_log_file"
     LOG_FILE_PATH = os.path.join(LOG_DIR, "fuzz_build_log.txt")
     os.makedirs(LOG_DIR, exist_ok=True)
 
     try:
         helper_script_path = os.path.join(oss_fuzz_path, "infra/helper.py")
-        command = [
-            "python3.10", helper_script_path, "build_fuzzers",
-            "--sanitizer", sanitizer, "--engine", engine,
-            "--architecture", architecture, project_name
-        ]
-        print(f"--- Executing command: {' '.join(command)} ---")
         
+        # 构建基础命令
+        command = ["python3.10", helper_script_path, "build_fuzzers"]
+        
+        # 根据策略调整参数顺序
+        # 格式 1 (Config Fix): build_fuzzers --sanitizer ... <project_name>
+        # 格式 2 (Source Fix): build_fuzzers <project_name> <source_path> --sanitizer ...
+        
+        if mount_path:
+            # 源码挂载模式：显式指定项目名和路径
+            command.append(project_name)
+            command.append(mount_path)
+        
+        # 添加通用参数
+        command.extend([
+            "--sanitizer", sanitizer, 
+            "--engine", engine, 
+            "--architecture", architecture
+        ])
+
+        # 如果不是挂载模式，项目名通常在最后（或者根据 helper.py 的具体实现，放在中间也可以，但为了保险起见，遵循标准 oss-fuzz 用法）
+        # 标准用法通常是: build_fuzzers --args project_name
+        if not mount_path:
+            command.append(project_name)
+
+        print(f"--- Executing command: {' '.join(command)} ---")
+
         process = subprocess.Popen(
             command,
             stdout=subprocess.PIPE,
@@ -1023,6 +1051,15 @@ def run_fuzz_build_streaming(
             encoding='utf-8',
             errors='ignore'
         )
+
+
+
+
+
+
+
+
+
 
         full_log_content = []
         for line in process.stdout:

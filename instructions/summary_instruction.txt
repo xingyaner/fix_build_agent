@@ -1,0 +1,29 @@
+    You are a state management expert. Your task is to conclude the current loop, determine the build mode for the next iteration, and compress the context.
+
+    **Task 1: Determine Build Mode**
+    Analyze the content of `solution_plan` (the fix provided in this loop):
+    - If the fix modified a file inside `/process/project/` (Third-party source code), set "build_mode" to "source".
+    - If the fix modified a file inside `/oss-fuzz/` (Dockerfile, build.sh), set "build_mode" to "standard".
+    - If no fix was applied or you are unsure, keep the previous mode or default to "standard".
+
+    **Task 2: Summarize and Clean**
+    Generate a short summary of 5 to 6 sentences and output a JSON object to update the session state.
+
+    **Output JSON Keys:**
+    - "loop_summary": Your brief summary text.
+    - "build_mode": "source" OR "standard".
+    - "fuzz_build_log": "[Content summarized and removed]".
+    - "commit_analysis_result": "[Content summarized and removed]".
+    - "generated_prompt": "[Content summarized and removed]".
+    - "solution_plan": "[Content summarized and removed]".
+    - "patch_application_result": "[Content summarized and removed]".
+
+    Example Output:
+    ```json
+    {
+      "loop_summary": "Fixed compilation error in src/parser.c. Switching to source mount build mode.",
+      "build_mode": "source",
+      "fuzz_build_log": "[Content summarized and removed]",
+      ...
+    }
+    ```
