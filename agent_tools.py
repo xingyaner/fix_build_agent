@@ -559,40 +559,77 @@ def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
 
 def apply_patch(solution_file_path: str) -> dict:
     """
-    Reads a specially formatted solution file and applies the code replacement solution within it.
+    【多文件支持版】读取一个解决方案文件，并应用其中包含的所有代码块替换方案。
+    文件可以包含多个由 "---=== FILE ===---" 分隔的补丁块。
     """
-    print(f"--- Tool: apply_patch (New Version) called for solution file: {solution_file_path} ---")
+    print(f"--- Tool: apply_patch (Multi-File) called for solution file: {solution_file_path} ---")
+
     try:
         with open(solution_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
-        file_part = content.split('---=== FILE ===---')[1].strip()
-        original_part = file_part.split('---=== ORIGINAL ===---')[1].strip()
-        replacement_part = original_part.split('---=== REPLACEMENT ===---')[1].strip()
-        file_path = file_part.split('---=== ORIGINAL ===---')[0].strip()
-        original_block = original_part.split('---=== REPLACEMENT ===---')[0].strip()
-        replacement_block = replacement_part
-        if not file_path or not original_block:
-            return {"status": "error", "message": "Solution file format is incorrect. Could not parse FILE path or ORIGINAL block."}
-        if not os.path.exists(file_path):
-            return {"status": "error", "message": f"Target file does not exist: {file_path}"}
-        with open(file_path, 'r', encoding='utf-8') as f:
-            original_content = f.read()
-        if original_block not in original_content:
-            return {"status": "error", "message": "The ORIGINAL code block was not found in the target file. The file may have already been modified or the block is incorrect."}
-        new_content = original_content.replace(original_block, replacement_block, 1)
-        with open(file_path, 'w', encoding='utf-8') as f:
-            f.write(new_content)
-        success_message = f"Successfully applied code fix to '{file_path}'."
-        print(success_message)
-        return {"status": "success", "message": success_message}
-    except IndexError:
-        error_message = "Failed to parse solution file. Make sure it contains FILE, ORIGINAL, and REPLACEMENT separators."
-        print(error_message)
-        return {"status": "error", "message": error_message}
+
+        # 使用 "---=== FILE ===---" 分割文件内容，得到多个补丁块
+        patch_blocks = content.split('---=== FILE ===---')[1:]
+
+        if not patch_blocks:
+            return {"status": "error", "message": "Solution file is empty or has incorrect format. No '---=== FILE ===---' separator found."}
+
+        applied_patches = []
+        errors = []
+
+        for i, block in enumerate(patch_blocks):
+            try:
+                # 解析单个补丁块
+                parts = block.split('---=== ORIGINAL ===---')
+                file_path = parts[0].strip()
+
+                content_parts = parts[1].split('---=== REPLACEMENT ===---')
+                original_block = content_parts[0].strip()
+                replacement_block = content_parts[1].strip()
+
+                if not file_path or not original_block:
+                    errors.append(f"Patch #{i+1}: Format error, missing file path or original block.")
+                    continue
+
+                if not os.path.exists(file_path):
+                    errors.append(f"Patch #{i+1}: Target file does not exist: {file_path}")
+                    continue
+
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    original_content = f.read()
+
+                if original_block not in original_content:
+                    errors.append(f"Patch #{i+1}: ORIGINAL block not found in {file_path}. File may have been modified already.")
+                    continue
+
+                # 执行替换
+                new_content = original_content.replace(original_block, replacement_block, 1)
+
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    f.write(new_content)
+
+                applied_patches.append(f"Successfully applied patch to '{file_path}'.")
+
+            except IndexError:
+                errors.append(f"Patch #{i+1}: Failed to parse. Ensure it contains ORIGINAL and REPLACEMENT separators.")
+            except Exception as e:
+                errors.append(f"Patch #{i+1}: An unexpected error occurred: {str(e)}")
+
+        # 根据结果生成最终报告
+        # [FIX]: 预先处理 join 字符串，避免在 f-string 表达式中使用反斜杠 (\n)
+        joined_errors = '\n'.join(errors)
+        
+        if not errors:
+            return {"status": "success", "message": "\n".join(applied_patches)}
+        elif applied_patches:
+            joined_patches = '\n'.join(applied_patches)
+            return {"status": "partial_success", "message": f"Completed with errors.\nSuccessful:\n{joined_patches}\nErrors:\n{joined_errors}"}
+        else:
+            return {"status": "error", "message": f"All patches failed to apply.\nErrors:\n{joined_errors}"}
+
     except Exception as e:
-        error_message = f"An error occurred while applying the code fix: {str(e)}"
-        print(error_message)
-        return {"status": "error", "message": error_message}
+        return {"status": "error", "message": f"An error occurred while reading the solution file: {str(e)}"}
+
 
 def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> dict:
     """

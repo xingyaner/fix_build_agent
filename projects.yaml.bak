@@ -1,7 +1,0 @@
-- project: mosquitto
-  language: c
-  error_time: 2025-10-1
-  oss-fuzz_sha: 6f5791d8b0ca004e5d35f8d75407347c7848f3b0
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2025-12-14'

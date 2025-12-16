@@ -1,5 +1,6 @@
 #!/bin/bash
 rm solution*
+rm projects.yaml.bak
 # 检查是否传入了项目名称参数
 if [ -z "$1" ]; then
     echo "Error: Project name argument is required."

@@ -204,7 +204,7 @@ solution_applier_agent = LlmAgent(
 summary_agent = LlmAgent(
     name="summary_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
-    instruction=load_instruction_from_file("instructions/summary_instruction.txt")
+    instruction=load_instruction_from_file("instructions/summary_instruction.txt"),
     tools=[],
     # output_key='.' 会将 Agent 输出的 JSON 对象的每个键值对合并到 state 中，
     # 从而用占位符文本覆盖掉旧的、庞大的状态变量值。
