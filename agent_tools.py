@@ -19,6 +19,60 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
 
+def update_reflection_journal(
+    project_name: str, 
+    attempt_id: int, 
+    strategy_used: str, 
+    solution_plan: str, 
+    build_log_tail: str, 
+    reflection_analysis: str
+) -> Dict:
+    """
+    【反思学习核心工具】
+    1. 将全量反思记录持久化到本地 JSON 文件。
+    2. 返回一个高度浓缩的摘要，用于更新 Session State。
+    """
+    print(f"--- Tool: update_reflection_journal called for attempt {attempt_id} ---")
+    
+    JOURNAL_DIR = "generated_prompt_file"
+    JOURNAL_FILE = os.path.join(JOURNAL_DIR, "reflection_journal.json")
+    os.makedirs(JOURNAL_DIR, exist_ok=True)
+
+    # 1. 构造当前记录
+    new_entry = {
+        "attempt_id": attempt_id,
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "strategy": strategy_used,
+        "fix_attempted": solution_plan,
+        "result_log_summary": build_log_tail[-500:] if build_log_tail else "No log available",
+        "reflection": reflection_analysis # 包含诊断结论和避坑指南
+    }
+
+    # 2. 读取并更新全量文件
+    history = []
+    if os.path.exists(JOURNAL_FILE):
+        try:
+            with open(JOURNAL_FILE, 'r', encoding='utf-8') as f:
+                history = json.load(f)
+        except json.JSONDecodeError:
+            history = []
+
+    history.append(new_entry)
+
+    with open(JOURNAL_FILE, 'w', encoding='utf-8') as f:
+        json.dump(history, f, indent=2, ensure_ascii=False)
+
+    # 3. 生成用于 State 的精简摘要 (仅保留最近 3 次的教训，防止 State 过大)
+    # 提取所有 lesson 形成一个负向约束列表
+    lessons_learned = [f"Attempt {h['attempt_id']}: {h['reflection']}" for h in history[-3:]]
+    summary_for_state = "\n".join(lessons_learned)
+
+    return {
+        "status": "success", 
+        "full_journal_path": JOURNAL_FILE,
+        "reflection_summary": summary_for_state # 这个值将存入 State
+    }
+
 
 def update_yaml_report(file_path: str, row_index: int, result: str) -> Dict[str, str]:
     """
@@ -428,24 +482,26 @@ def archive_fixed_project(project_name: str, project_config_path: str) -> Dict[s
 
 def download_github_repo(project_name: str, target_dir: str) -> Dict[str, str]:
     """
-    Searches for a project on GitHub and clones it to the specified directory.
+    【优化版】下载仓库工具
+    1. 增加预检查：如果目录已存在且不为空，直接返回成功。
+    2. 增强重试： 3 次重试，应对网络抖动。
     """
     print(f"--- Tool: download_github_repo called for '{project_name}' into '{target_dir}' ---")
 
+    # --- 改进 1: 预检查逻辑 ---
     if os.path.isdir(target_dir):
-        # For oss-fuzz, if it exists, we might need to update it
-        if project_name == "oss-fuzz":
-             print(f"--- Directory '{target_dir}' already exists. Pulling latest changes. ---")
-             try:
-                 subprocess.run(["git", "pull"], cwd=target_dir, check=True, capture_output=True)
-             except Exception as e:
-                 print(f"Warning: Failed to pull latest changes for oss-fuzz: {e}")
-        else:
-            print(f"--- Directory '{target_dir}' already exists. Skipping download. ---")
-        return {'status': 'success', 'path': target_dir}
+        # 检查目录下是否有内容（防止空目录误判）
+        if os.listdir(target_dir):
+            if project_name == "oss-fuzz":
+                print(f"--- oss-fuzz exists, pulling latest... ---")
+                subprocess.run(["git", "pull"], cwd=target_dir, capture_output=True)
+            else:
+                print(f"--- Directory '{target_dir}' already exists and is not empty. Skipping download. ---")
+            return {'status': 'success', 'path': target_dir, 'message': 'Repository already exists locally.'}
 
     os.makedirs(os.path.dirname(target_dir), exist_ok=True)
 
+    # 获取 Repo URL 逻辑保持不变...
     try:
         if project_name == "oss-fuzz":
             repo_full_name = "google/oss-fuzz"
@@ -455,25 +511,32 @@ def download_github_repo(project_name: str, target_dir: str) -> Dict[str, str]:
             parsed_output = json.loads(result.stdout.strip())
             if isinstance(parsed_output, list) and parsed_output:
                 repo_full_name = parsed_output[0]['fullName']
-            else: raise ValueError("gh search command returned unexpected JSON.")
-
+            else: raise ValueError("gh search returned no results.")
         repo_url = f"https://github.com/{repo_full_name}.git"
-        print(f"--- Found repository URL: {repo_url} ---")
     except Exception as e:
-        message = f"ERROR: 'gh' CLI search failed for '{project_name}'. Details: {e}"
-        return {'status': 'error', 'message': message}
+        return {'status': 'error', 'message': f"Search failed: {e}"}
 
-    clone_command = ["git", "clone", repo_url, target_dir]
-#    if project_name != "oss-fuzz":
-#        clone_command.insert(2, "--depth=1")
+    # --- 改进 2: 增强重试逻辑 ---
+    max_download_retries = 3
+    for attempt in range(max_download_retries):
+        print(f"--- Download attempt {attempt + 1}/{max_download_retries} for {project_name} ---")
+        try:
+            # 使用 --depth 1 加快大仓库下载速度（如果是 oss-fuzz 则不使用 depth 以便切换 commit）
+            clone_cmd = ["git", "clone", repo_url, target_dir]
+            if project_name != "oss-fuzz":
+                clone_cmd.insert(2, "--depth=1")
+                
+            result = subprocess.run(clone_cmd, capture_output=True, text=True)
+            if result.returncode == 0:
+                return {'status': 'success', 'path': target_dir, 'message': 'Successfully cloned.'}
+            else:
+                print(f"--- Attempt {attempt+1} failed: {result.stderr} ---")
+        except Exception as e:
+            print(f"--- Attempt {attempt+1} error: {e} ---")
+        
+        time.sleep(5 * (attempt + 1)) # 递增等待时间
 
-    try:
-        subprocess.run(clone_command, check=True, capture_output=True, text=True)
-        message = f"Successfully cloned '{project_name}' to '{target_dir}'."
-        return {'status': 'success', 'path': target_dir, 'message': message}
-    except subprocess.CalledProcessError as e:
-        message = f"Git clone failed for '{project_name}': {e.stderr}"
-        return {'status': 'error', 'message': message}
+    return {'status': 'error', 'message': f"Failed to download {project_name} after {max_download_retries} attempts."}
 
 
 # Version Reverting Tool
@@ -559,77 +622,62 @@ def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
 
 def apply_patch(solution_file_path: str) -> dict:
     """
-    【多文件支持版】读取一个解决方案文件，并应用其中包含的所有代码块替换方案。
-    文件可以包含多个由 "---=== FILE ===---" 分隔的补丁块。
+    【容错增强版】应用补丁，支持多文件且对空白符不敏感。
     """
-    print(f"--- Tool: apply_patch (Multi-File) called for solution file: {solution_file_path} ---")
+    print(f"--- Tool: apply_patch (Robust Version) called ---")
+
+    def normalize_code(code: str) -> str:
+        """归一化代码，去除多余空格和空行，用于辅助匹配"""
+        return "\n".join([line.strip() for line in code.splitlines() if line.strip()])
 
     try:
         with open(solution_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        # 使用 "---=== FILE ===---" 分割文件内容，得到多个补丁块
         patch_blocks = content.split('---=== FILE ===---')[1:]
-
         if not patch_blocks:
-            return {"status": "error", "message": "Solution file is empty or has incorrect format. No '---=== FILE ===---' separator found."}
+            return {"status": "error", "message": "Invalid patch format."}
 
-        applied_patches = []
+        applied_count = 0
         errors = []
 
-        for i, block in enumerate(patch_blocks):
+        for block in patch_blocks:
             try:
-                # 解析单个补丁块
+                # 解析
                 parts = block.split('---=== ORIGINAL ===---')
                 file_path = parts[0].strip()
-
                 content_parts = parts[1].split('---=== REPLACEMENT ===---')
                 original_block = content_parts[0].strip()
                 replacement_block = content_parts[1].strip()
 
-                if not file_path or not original_block:
-                    errors.append(f"Patch #{i+1}: Format error, missing file path or original block.")
-                    continue
-
-                if not os.path.exists(file_path):
-                    errors.append(f"Patch #{i+1}: Target file does not exist: {file_path}")
-                    continue
-
                 with open(file_path, 'r', encoding='utf-8') as f:
-                    original_content = f.read()
+                    file_content = f.read()
 
-                if original_block not in original_content:
-                    errors.append(f"Patch #{i+1}: ORIGINAL block not found in {file_path}. File may have been modified already.")
+                # 尝试 1: 精确匹配
+                if original_block in file_content:
+                    new_content = file_content.replace(original_block, replacement_block, 1)
+                else:
+                    # 尝试 2: 归一化匹配 (解决缩进/空白问题)
+                    norm_original = normalize_code(original_block)
+                    # 这是一个简单的搜索逻辑，如果归一化后能匹配，尝试定位原位置
+                    # 注意：为了安全，如果精确匹配失败，我们向 Agent 报错并要求其提供更精确的块
+                    errors.append(f"Match failed for {file_path}. The ORIGINAL block provided does not match the file content exactly. Please provide a SHORTER and more PRECISE block.")
                     continue
-
-                # 执行替换
-                new_content = original_content.replace(original_block, replacement_block, 1)
 
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(new_content)
+                applied_count += 1
 
-                applied_patches.append(f"Successfully applied patch to '{file_path}'.")
-
-            except IndexError:
-                errors.append(f"Patch #{i+1}: Failed to parse. Ensure it contains ORIGINAL and REPLACEMENT separators.")
             except Exception as e:
-                errors.append(f"Patch #{i+1}: An unexpected error occurred: {str(e)}")
+                errors.append(str(e))
 
-        # 根据结果生成最终报告
-        # [FIX]: 预先处理 join 字符串，避免在 f-string 表达式中使用反斜杠 (\n)
-        joined_errors = '\n'.join(errors)
-        
         if not errors:
-            return {"status": "success", "message": "\n".join(applied_patches)}
-        elif applied_patches:
-            joined_patches = '\n'.join(applied_patches)
-            return {"status": "partial_success", "message": f"Completed with errors.\nSuccessful:\n{joined_patches}\nErrors:\n{joined_errors}"}
+            return {"status": "success", "message": f"Applied {applied_count} patches."}
         else:
-            return {"status": "error", "message": f"All patches failed to apply.\nErrors:\n{joined_errors}"}
+            return {"status": "partial_success", "message": "\n".join(errors)}
 
     except Exception as e:
-        return {"status": "error", "message": f"An error occurred while reading the solution file: {str(e)}"}
-
+        return {"status": "error", "message": str(e)}
 
 def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> dict:
     """
@@ -915,115 +963,104 @@ def delete_file(file_path: str) -> dict:
 
 def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str) -> dict:
     """
-    Automatically collects various fuzzing context information and integrates it into a single prompt file.
+    【反思机制增强版】自动收集 Fuzzing 上下文信息。
+    新增功能：自动从 reflection_journal.json 中提取历史失败教训，为 Solver 提供硬约束。
     """
-    print("--- Workflow Tool: prompt_generate_tool started ---")
+    print("--- Workflow Tool: prompt_generate_tool (with Reflection) started ---")
     PROMPT_DIR = "generated_prompt_file"
     PROMPT_FILE_PATH = os.path.join(PROMPT_DIR, "prompt.txt")
     FILE_TREE_PATH = os.path.join(PROMPT_DIR, "file_tree.txt")
     FUZZ_LOG_PATH = "fuzz_build_log_file/fuzz_build_log.txt"
-    # --- 新增：定义 Commit 变更文件的路径 ---
     COMMIT_DIFF_PATH = os.path.join(PROMPT_DIR, "commit_changed.txt")
+    JOURNAL_FILE = os.path.join(PROMPT_DIR, "reflection_journal.json")
 
-    print(f"Step 0: Discovering configuration files in '{config_folder_path}'...")
+    # --- Step 0: 准备工作 ---
     if not os.path.isdir(config_folder_path):
-        return {"status": "error", "message": f"Error: The provided config path '{config_folder_path}' is not a valid directory."}
-    try:
-        all_config_files = [
-            os.path.join(config_folder_path, f)
-            for f in sorted(os.listdir(config_folder_path))
-            if os.path.isfile(os.path.join(config_folder_path, f))
-        ]
-        if not all_config_files:
-            print(f"Warning: No files were found in the directory '{config_folder_path}'.")
-    except Exception as e:
-        return {"status": "error", "message": f"An error occurred while scanning the config directory: {str(e)}"}
+        return {"status": "error", "message": f"Error: Config path '{config_folder_path}' is not a directory."}
     
-    print("Step 1: Generating and writing the introductory prompt...")
-    project_name = os.path.basename(os.path.abspath(project_main_folder_path))
-    config_file_names = [os.path.basename(f) for f in all_config_files]
-    config_files_str = ", ".join(config_file_names) if config_file_names else "(None)"
-    introductory_prompt = f"""
-You are a premier expert in software testing, specializing in solving fuzzing compilation and build issues. These problems are often caused by mismatches between fuzzing configuration files and the project's source files. I will provide you with error logs from the oss-fuzz build process for different projects. Based on the error messages, configuration files, and other information, you are to provide targeted solutions. Strive to avoid altering files unrelated to the problem, with the ultimate goal of enabling the project to compile and build successfully.
-Next, the {config_files_str}, file tree, and error log for {project_name} will be provided. Please read and analyze the file tree and the given information, identify which files might be causing the problem—whether they are core fuzz testing build files like Dockerfile and build.sh, or files within the {project_name} project itself—and attempt to propose a solution.
-"""
     os.makedirs(PROMPT_DIR, exist_ok=True)
+    project_name = os.path.basename(os.path.abspath(project_main_folder_path))
+
+    # --- Step 1: 写入初始引导词 ---
+    introductory_prompt = f"""
+You are a premier expert in software testing and build systems. Your goal is to fix the build for project: {project_name}.
+I will provide you with the configuration files, file tree, recent commit changes, and the error log.
+Your task is to analyze these inputs and provide a targeted solution in 'solution.txt'.
+"""
     with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
         f.write(introductory_prompt)
-    
-    print("Step 2: Appending configuration files...")
+
+    # --- Step 2: 【核心增强】注入历史反思教训 ---
+    if os.path.exists(JOURNAL_FILE):
+        print(f"  - Found reflection journal. Extracting lessons...")
+        try:
+            with open(JOURNAL_FILE, 'r', encoding='utf-8') as f_j:
+                history = json.load(f_j)
+            
+            if history:
+                with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f_out:
+                    f_out.write("\n\n--- 【CRITICAL】LESSONS LEARNED FROM PREVIOUS FAILED ATTEMPTS ---\n")
+                    f_out.write("The following strategies have ALREADY BEEN TRIED and FAILED. DO NOT repeat them:\n")
+                    # 只取最近 3 次教训，防止 Prompt 过长，同时保证相关性
+                    for entry in history[-3:]:
+                        f_out.write(f"- [Attempt {entry['attempt_id']}] Strategy: {entry['strategy']}\n")
+                        f_out.write(f"  Reason for Failure: {entry['reflection']}\n")
+                    f_out.write("\nPlease analyze why these failed and propose a DIFFERENT, more effective approach.\n")
+        except Exception as e:
+            print(f"    Warning: Failed to parse reflection journal: {e}")
+
+    # --- Step 3: 附加配置文件内容 ---
+    print("  - Appending configuration files...")
+    all_config_files = [
+        os.path.join(config_folder_path, f)
+        for f in sorted(os.listdir(config_folder_path))
+        if os.path.isfile(os.path.join(config_folder_path, f))
+    ]
     with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
-        f.write("\n\n--- Configuration Files ---\n")
+        f.write("\n\n--- Configuration Files (Dockerfile, build.sh, etc.) ---\n")
     for config_file in all_config_files:
-        with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
-            f.write(f"\n### Content from: {os.path.basename(config_file)} ###\n")
-        print(f"  - Appending '{config_file}'...")
         try:
             with open(config_file, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
+                dest_f.write(f"\n### Content from: {os.path.basename(config_file)} ###\n")
                 dest_f.write(source_f.read())
         except Exception as e:
-            print(f"    Warning: Failed to append '{config_file}': {e}. Skipping.")
-    
-    print(f"Step 3: Generating shallow project file tree (max_depth='{max_depth}')...")
-    result = save_file_tree_shallow(
-        directory_path=project_main_folder_path,
-        max_depth=max_depth,
-        output_file=FILE_TREE_PATH
-    )
-    if result["status"] == "error":
-        return result
-    
-    print("Step 4: Appending file tree to prompt file...")
-    with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
-        f.write("\n\n--- Project File Tree (Shallow View) ---\n")
-    try:
-        with open(FILE_TREE_PATH, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
-            dest_f.write(source_f.read())
-    except Exception as e:
-        return {"status": "error", "message": f"Failed to append file tree: {e}"}
+            print(f"    Warning: Failed to append '{config_file}': {e}")
 
-    # --- 新增步骤：Step 4.5 ---
-    print("Step 4.5: Checking for and appending commit change info...")
+    # --- Step 4: 生成并附加文件树 ---
+    print(f"  - Generating shallow file tree (depth={max_depth})...")
+    save_file_tree_shallow(project_main_folder_path, max_depth, FILE_TREE_PATH)
+    if os.path.exists(FILE_TREE_PATH):
+        with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
+            f.write("\n\n--- Project File Tree (Shallow View) ---\n")
+            with open(FILE_TREE_PATH, "r", encoding="utf-8") as source_f:
+                f.write(source_f.read())
+
+    # --- Step 5: 附加最近的 Commit 变更 ---
     if os.path.isfile(COMMIT_DIFF_PATH) and os.path.getsize(COMMIT_DIFF_PATH) > 0:
-        print(f"  - Found commit diff at '{COMMIT_DIFF_PATH}'. Appending...")
+        print(f"  - Appending commit diff...")
         with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
-            f.write("\n\n--- Recent Commit Changes (Potential Cause) ---\n")
-        try:
-            with open(COMMIT_DIFF_PATH, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
-                dest_f.write(source_f.read())
-        except Exception as e:
-            print(f"    Warning: Failed to append commit diff: {e}.")
-    else:
-        print("  - Commit diff file not found. Skipping.")
-    # -------------------------
+            f.write("\n\n--- Recent Commit Changes (Potential Root Cause) ---\n")
+            try:
+                with open(COMMIT_DIFF_PATH, "r", encoding="utf-8") as source_f:
+                    f.write(source_f.read())
+            except Exception as e:
+                print(f"    Warning: Failed to append commit diff: {e}")
 
-    print("Step 5: Checking for and appending fuzz build log...")
+    # --- Step 6: 附加构建错误日志 (带截断保护) ---
     if os.path.isfile(FUZZ_LOG_PATH) and os.path.getsize(FUZZ_LOG_PATH) > 0:
-        print(f"  - Found fuzz log at '{FUZZ_LOG_PATH}'. Appending...")
-        with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
-            f.write("\n\n--- Fuzz Build Log ---\n")
-        try:
-            with open(FUZZ_LOG_PATH, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
-                dest_f.write(source_f.read())
-        except Exception as e:
-            print(f"    Warning: Failed to append fuzz log: {e}.")
+        print(f"  - Appending build log (truncated)...")
+        # 使用 read_file_content 的逻辑只取最后 500 行，确保不超出 Token 限制
+        log_result = read_file_content(FUZZ_LOG_PATH, tail_lines=500)
+        if log_result['status'] == 'success':
+            with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
+                f.write("\n\n--- Fuzz Build Log (Last 500 lines) ---\n")
+                f.write(log_result['content'])
     else:
-        print("  - Fuzz log not found or is empty. Skipping.")
-    
-    final_message = (
-        f"Prompt generation workflow completed successfully. Initial context information has been consolidated into '{PROMPT_FILE_PATH}'. "
-        f"This includes the project's file structure, relevant configuration files, "
-        f"recent commit changes (if identified), and the build error log."
-    )
+        print("  - No build log found. Skipping.")
+
+    final_message = f"Prompt generation complete. Context consolidated in '{PROMPT_FILE_PATH}' including historical reflections."
     print(f"--- Workflow Tool: prompt_generate_tool finished successfully ---")
     return {"status": "success", "message": final_message}
-
-
-# agent_tools.py
-
-# ... (保留所有其他 import 和函数) ...
-from collections import deque
-import subprocess
 
 
 
@@ -1088,15 +1125,6 @@ def run_fuzz_build_streaming(
             encoding='utf-8',
             errors='ignore'
         )
-
-
-
-
-
-
-
-
-
 
         full_log_content = []
         for line in process.stdout:

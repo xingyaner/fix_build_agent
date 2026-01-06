@@ -40,3 +40,8 @@ Your final plan MUST be a concatenation of blocks.
 - **No chit-chat**: Do not add any explanations or Markdown.
 - **Do not** call any other tools besides `create_or_update_file` and `read_file_content`.
 - **【CRITICAL】You MUST only call the `create_or_update_file` tool ONCE.** You must generate the complete, multi-file plan in one go.
+**Patching Rules (STRICT):**
+1.  **Minimal Context**: The `---=== ORIGINAL ===---` block should be as SHORT as possible (ideally 3-8 lines). Only include enough code to uniquely identify the location.
+2.  **Exact Match**: Ensure every space, tab, and newline in the ORIGINAL block matches the source file EXACTLY. 
+3.  **No Placeholders**: Do not use "..." inside the ORIGINAL or REPLACEMENT blocks.
+4.  **One Block per Location**: If you need to change two distant parts of the same file, use two separate `---=== FILE ===---` sections for that same file.

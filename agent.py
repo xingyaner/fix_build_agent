@@ -46,6 +46,7 @@ from agent_tools import (
     append_string_to_file,
     get_git_commits_around_date,
     save_commit_diff_to_file,
+    update_reflection_journal,
     truncate_prompt_file
 )
 
@@ -112,7 +113,7 @@ GLOBAL_LOGGER = AgentLogger()
 
 # --- Constants and Model Configuration ---
 APP_NAME = "fix_build_agent_app"
-MODEL = "deepseek/deepseek-chat"
+MODEL = "deepseek/deepseek-coder"
 DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
 USER_ID = "default_user"
 MAX_RETRIES = 3
@@ -177,6 +178,14 @@ commit_finder_agent = LlmAgent(
     output_key="commit_analysis_result",
 )
 
+reflection_agent = LlmAgent(
+    name="reflection_agent",
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
+    instruction=load_instruction_from_file("instructions/reflection_instruction.txt"),
+    tools=[read_file_content, update_reflection_journal],
+    output_key="last_reflection_result" # 存储工具返回的字典
+)
+
 prompt_generate_agent = LlmAgent(
     name="prompt_generate_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384),
@@ -217,6 +226,7 @@ workflow_loop_agent = LoopAgent(
     sub_agents=[
         run_fuzz_and_collect_log_agent,
         decision_agent,
+        reflection_agent,
         commit_finder_agent,
         prompt_generate_agent,
         fuzzing_solver_agent,
@@ -234,38 +244,34 @@ subject_agent = SequentialAgent(
 
 root_agent = LoggingWrapperAgent(subject_agent=subject_agent)
 
+
 def cleanup_environment(project_name: str):
     """
-    Cleans up temporary files, directories, and the specific project source code
-    to prepare for the next run.
+    【精准清理版】
+    保留第三方源代码库（process/project/），仅清理日志、中间 Prompt 和修复方案。
     """
-    print(f"--- Cleaning up environment for project: {project_name} ---")
-    
-    # 1. 删除构建日志目录
-    if os.path.exists("fuzz_build_log_file"): 
-        shutil.rmtree("fuzz_build_log_file")
-    
-    # 2. 删除生成的 Prompt 和中间文件 (包含 commit_changed.txt)
-    if os.path.exists("generated_prompt_file"): 
-        shutil.rmtree("generated_prompt_file")
-    
-    # 3. 删除生成的修复方案
-    if os.path.exists("solution.txt"): 
-        os.remove("solution.txt")
-    
-    # 4. 删除第三方软件的源代码
-    # 注意：这里只删除当前项目的源码，避免影响 process 目录下的其他内容
-    safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
-    project_source_path = os.path.join(os.getcwd(), "process", "project", safe_project_name)
-    
-    if os.path.exists(project_source_path): 
-        try:
-            shutil.rmtree(project_source_path)
-            print(f"--- Removed project source at: {project_source_path} ---")
-        except Exception as e:
-            print(f"--- Warning: Failed to remove project source: {e} ---")
+    print(f"--- Cleaning up environment (Preserving Source Code) for: {project_name} ---")
 
-    print(f"--- Cleanup complete. ---")
+    paths_to_remove = [
+        "fuzz_build_log_file",
+        "generated_prompt_file", # 包含反思日志，必须在项目切换时清理
+        "solution.txt",
+        "file_tree.txt"
+    ]
+
+    for path in paths_to_remove:
+        if os.path.exists(path):
+            try:
+                if os.path.isdir(path):
+                    shutil.rmtree(path)
+                else:
+                    os.remove(path)
+                print(f"  - Removed: {path}")
+            except Exception as e:
+                print(f"  - Warning: Failed to remove {path}: {e}")
+
+    # --- 删除了删除 process/project/ 的逻辑 ---
+    print(f"--- Cleanup complete. Source code in 'process/project/' has been preserved. ---")
 
 async def process_single_project(
     project_info: Dict,
@@ -373,7 +379,7 @@ async def main():
     GLOBAL_LOGGER.init()
 
     YAML_FILE = 'projects.yaml'
-    session_service = InMemorySessionService() 
+    session_service = InMemorySessionService()
     projects_result = read_projects_from_yaml(YAML_FILE)
 
     if projects_result['status'] == 'error':
@@ -393,8 +399,14 @@ async def main():
         print(f"--- Starting to process project: {project_name} (Index: {row_index}) ---")
         print(f"{'='*60}")
 
+        # 【MASTER FIX 1】: 项目启动前预清理
+        # 确保即使上次运行异常中断，本轮运行的初始环境（尤其是反思日志）是纯净的
+        cleanup_environment(project_name)
+
+        # 执行完整的 Agent 修复流程（包含内部最多 10 轮的 LoopAgent 迭代）
         is_successful, project_config_path = await process_single_project(project_info, session_service)
 
+        # 处理修复成功后的归档逻辑
         if is_successful and project_config_path:
             print(f"--- Project successfully fixed. Archiving configuration files from: {project_config_path} ---")
             archive_result = archive_fixed_project(project_name, project_config_path)
@@ -403,20 +415,19 @@ async def main():
         elif is_successful and not project_config_path:
              print("--- WARNING: Project was fixed successfully, but the project config path could not be retrieved. Skipping archive. ---")
 
+        # 更新 YAML 报告
         result_str = "Success" if is_successful else "Failure"
         print(f"--- Project {project_name} processing complete. Result: {result_str} ---")
-        
-        # 3. 修改更新报告函数调用
-        # 注意：这里我们只需要传递 index 和 结果，'yes' 已经在函数内部写死，或者你可以修改 update_yaml_report 接受 'yes'
         update_result = update_yaml_report(YAML_FILE, row_index, result_str)
-        
+
         if update_result['status'] == 'error':
             print(f"--- CRITICAL WARNING: Could not write result back to YAML file! Error: {update_result['message']} ---")
 
+        # 【MASTER FIX 2】: 项目结束后彻底清理
+        # 在进入下一个 project 循环前，清空当前项目的源码、反思日志和临时 Prompt
+        cleanup_environment(project_name)
 
-#    cleanup_environment(project_name)
     print("\n--- All projects have been processed. Workflow finished normally. ---")
-
 
 if __name__ == "__main__":
     print("--- Performing pre-startup checks... ---")
