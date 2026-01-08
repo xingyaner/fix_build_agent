@@ -1,7 +1,0 @@
-- project: checkstyle
-  language: java
-  error_time: 2026-1-4
-  oss-fuzz_sha: 695943e09c263525e7e6468c5eac464118cac98e
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-01-06'

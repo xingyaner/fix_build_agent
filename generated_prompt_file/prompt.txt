@@ -1,0 +1,344 @@
+
+You are a premier expert in software testing and build systems. Your goal is to fix the build for project: checkstyle.
+I will provide you with the configuration files, file tree, recent commit changes, and the error log.
+Your task is to analyze these inputs and provide a targeted solution in 'solution.txt'.
+
+
+--- 【CRITICAL】LESSONS LEARNED FROM PREVIOUS FAILED ATTEMPTS ---
+The following strategies have ALREADY BEEN TRIED and FAILED. DO NOT repeat them:
+- [Attempt 1] Strategy: Initial Build Analysis
+  Reason for Failure: Initial build failed due to Java version mismatch: project requires Java 21+ but environment has Java 17. DO NOT attempt to modify build scripts first; focus on updating the Java version in the Docker environment or adjusting the project's Java version requirements in the Maven configuration.
+- [Attempt 2] Strategy: Strategy A: Config Repair
+  Reason for Failure: Attempt 2 failed because installing OpenJDK 21 from Ubuntu 20.04 repositories had network connectivity issues. The approach was correct but implementation fragile. DO NOT rely on network-dependent package installations; instead use a more robust method like downloading Java 21 directly from official sources or adjusting the project's Java version requirements to match the available Java 17 in the base image.
+
+Please analyze why these failed and propose a DIFFERENT, more effective approach.
+
+
+--- Configuration Files (Dockerfile, build.sh, etc.) ---
+
+### Content from: CheckstyleFuzzer.java ###
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+///////////////////////////////////////////////////////////////////////////
+import com.code_intelligence.jazzer.api.FuzzedDataProvider;
+import com.puppycrawl.tools.checkstyle.JavaParser;
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+import com.puppycrawl.tools.checkstyle.api.FileContents;
+import com.puppycrawl.tools.checkstyle.api.FileText;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+// jvm-autofuzz-heuristics-1
+public class CheckstyleFuzzer {
+  public static void fuzzerTestOneInput(FuzzedDataProvider data) {
+    // Heuristic name: jvm-autofuzz-heuristics-1
+    Path path = null;
+    try {
+      path = Files.createTempFile("oss-fuzz.", ".oss-fuzz");
+      Files.write(path, data.consumeRemainingAsBytes());
+      FileContents content = new FileContents(new FileText(path.toFile(), "UTF-8"));
+
+      JavaParser.parse(content);
+    } catch (IOException | CheckstyleException | NoClassDefFoundError e) {
+      // Known exception
+    } finally {
+      if (path != null) {
+        try {
+          Files.deleteIfExists(path);
+        } catch (IOException e) {
+          // Known Exception
+        }
+      }
+    }
+  }
+}
+
+### Content from: Dockerfile ###
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+##########################################################################
+FROM gcr.io/oss-fuzz-base/base-builder-jvm
+# Install Java 21 for checkstyle build
+RUN apt-get update && apt-get install -y openjdk-21-jdk-headless
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+ENV PATH=$JAVA_HOME/bin:$PATH
+RUN curl -L https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip \
+  -o maven.zip && \
+  unzip maven.zip -d $SRC/maven && \
+  rm maven.zip
+ENV MVN $SRC/maven/apache-maven-3.6.3/bin/mvn
+RUN git clone --depth 1 https://github.com/checkstyle/checkstyle checkstyle
+COPY *.sh *Fuzzer.java $SRC/
+WORKDIR $SRC/checkstyle
+
+### Content from: build.sh ###
+#!/bin/bash -eu
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+##########################################################################
+export TARGET_PACKAGE_PREFIX="com.puppycrawl.tools.checkstyle."
+
+MAVEN_ARGS="-Dmaven.test.skip=true -Djavac.src.version=21 -Djavac.target.version=21 --update-snapshots"
+$MVN clean package $MAVEN_ARGS
+
+BUILD_CLASSPATH=
+RUNTIME_CLASSPATH=
+
+for JARFILE in $(find ./ -name *.jar)
+do
+  cp $JARFILE $OUT/
+  BUILD_CLASSPATH=$BUILD_CLASSPATH$OUT/$(basename $JARFILE):
+  RUNTIME_CLASSPATH=$RUNTIME_CLASSPATH\$this_dir/$(basename $JARFILE):
+done
+
+# Build corpus with valid java files
+mkdir $SRC/tmp-corpus
+find $SRC -name "*.java" -exec cp {} $SRC/tmp-corpus/ \;
+zip -j $OUT/CheckstyleFuzzer_seed_corpus.zip $SRC/tmp-corpus/*
+
+# Retrieve apache-common-lang3 library
+# This library provides method to translate primitive type arrays to
+# their respective class object arrays to avoid compilation error.
+wget -P $OUT/ https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar
+wget -P $OUT/ https://repo1.maven.org/maven2/org/antlr/antlr4-runtime/4.11.1/antlr4-runtime-4.11.1.jar
+
+BUILD_CLASSPATH=$BUILD_CLASSPATH:$JAZZER_API_PATH:$OUT/commons-lang3-3.12.0.jar:$OUT/antlr4-runtime-4.11.1.jar
+RUNTIME_CLASSPATH=$RUNTIME_CLASSPATH:\$this_dir/commons-lang3-3.12.0.jar:\$this_dir/antlr4-runtime-4.11.1.jar:\$this_dir
+
+for fuzzer in $(ls $SRC/*Fuzzer.java)
+do
+  fuzzer_basename=$(basename -s .java $fuzzer)
+  javac -cp $BUILD_CLASSPATH $fuzzer
+  cp $SRC/$fuzzer_basename.class $OUT/
+
+  # Create an execution wrapper that executes Jazzer with the correct arguments.
+  echo "#!/bin/bash
+
+  # LLVMFuzzerTestOneInput for fuzzer detection.
+  this_dir=\$(dirname "\$0")
+  if [[ "\$@" =~ (^| )-runs=[0-9]+($| ) ]]
+  then
+    mem_settings='-Xmx1900m:-Xss900k'
+  else
+    mem_settings='-Xmx2048m:-Xss1024k'
+  fi
+
+  LD_LIBRARY_PATH=\"$JVM_LD_LIBRARY_PATH\":\$this_dir \
+  \$this_dir/jazzer_driver --agent_path=\$this_dir/jazzer_agent_deploy.jar \
+  --cp=$RUNTIME_CLASSPATH \
+  --target_class=$fuzzer_basename \
+  --jvm_args=\"\$mem_settings\" \
+  \$@" > $OUT/$fuzzer_basename
+
+  chmod u+x $OUT/$fuzzer_basename
+done
+
+### Content from: project.yaml ###
+fuzzing_engines:
+- libfuzzer
+homepage: https://github.com/checkstyle/checkstyle
+language: jvm
+main_repo: https://github.com/checkstyle/checkstyle
+sanitizers:
+- address
+- undefined
+vendor_ccs:
+- arthur.chan@adalogics.com
+- david@adalogics.com
+- adam@adalogics.com
+
+
+--- Project File Tree (Shallow View) ---
+📁 checkstyle
+├── 📄 LICENSE
+├── 📄 LICENSE.apache20
+├── 📄 README.md
+├── 📄 RIGHTS.antlr
+├── 📄 SECURITY.md
+├── 📄 appveyor.yml
+├── 📄 azure-pipelines.yml
+├── 📄 cdg-pitest-licence.txt
+├── 📁 config
+├── 📁 docs
+├── 📄 mvnw
+├── 📄 mvnw.cmd
+├── 📄 pom.xml
+└── 📁 src
+
+--- Recent Commit Changes (Potential Root Cause) ---
+No relevant commit found.
+
+--- Fuzz Build Log (Last 500 lines) ---
+INFO:common_utils:Running: docker build -t gcr.io/oss-fuzz/checkstyle --file /root/fix_build_agent/oss-fuzz/projects/checkstyle/Dockerfile /root/fix_build_agent/oss-fuzz/projects/checkstyle.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.27kB done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for gcr.io/oss-fuzz-base/base-builder-jvm:latest
+#2 DONE 0.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.2s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/6] FROM gcr.io/oss-fuzz-base/base-builder-jvm:latest@sha256:595c94d6693da0e9616399dfa42f3b40d3004407d72444c392e9895e32dc1df5
+#5 resolve gcr.io/oss-fuzz-base/base-builder-jvm:latest@sha256:595c94d6693da0e9616399dfa42f3b40d3004407d72444c392e9895e32dc1df5
+#5 resolve gcr.io/oss-fuzz-base/base-builder-jvm:latest@sha256:595c94d6693da0e9616399dfa42f3b40d3004407d72444c392e9895e32dc1df5 0.2s done
+#5 DONE 0.3s
+
+#5 [1/6] FROM gcr.io/oss-fuzz-base/base-builder-jvm:latest@sha256:595c94d6693da0e9616399dfa42f3b40d3004407d72444c392e9895e32dc1df5
+#5 CACHED
+
+#4 [internal] load build context
+#4 transferring context: 2.78kB 0.0s done
+#4 DONE 0.4s
+
+#6 [2/6] RUN apt-get update && apt-get install -y openjdk-21-jdk-headless
+#6 4.266 Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+#6 5.388 Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+#6 5.883 Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+#6 7.824 Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+#6 8.098 Fetched 383 kB in 5s (79.5 kB/s)
+#6 8.098 Reading package lists...
+#6 10.98 Reading package lists...
+#6 12.14 Building dependency tree...
+#6 12.33 Reading state information...
+#6 12.59 The following packages were automatically installed and are no longer required:
+#6 12.59   autotools-dev libsigsegv2 m4
+#6 12.59 Use 'apt autoremove' to remove them.
+#6 12.59 The following additional packages will be installed:
+#6 12.59   alsa-topology-conf alsa-ucm-conf ca-certificates-java dbus fontconfig-config
+#6 12.59   fonts-dejavu-core java-common libapparmor1 libasound2 libasound2-data
+#6 12.59   libavahi-client3 libavahi-common-data libavahi-common3 libcups2 libdbus-1-3
+#6 12.59   libfontconfig1 libfreetype6 libglib2.0-0 libglib2.0-data libgraphite2-3
+#6 12.59   libharfbuzz0b libicu66 libjpeg-turbo8 libjpeg8 liblcms2-2 libnspr4 libnss3
+#6 12.59   libpcsclite1 libpng16-16 libxml2 openjdk-21-jre-headless shared-mime-info
+#6 12.59   ucf xdg-user-dirs
+#6 12.59 Suggested packages:
+#6 12.59   default-dbus-session-bus | dbus-session-bus default-jre libasound2-plugins
+#6 12.59   alsa-utils cups-common liblcms2-utils pcscd openjdk-21-demo
+#6 12.59   openjdk-21-source libnss-mdns fonts-dejavu-extra fonts-ipafont-gothic
+#6 12.59   fonts-ipafont-mincho fonts-wqy-microhei | fonts-wqy-zenhei fonts-indic
+#6 12.83 The following NEW packages will be installed:
+#6 12.83   alsa-topology-conf alsa-ucm-conf ca-certificates-java dbus fontconfig-config
+#6 12.83   fonts-dejavu-core java-common libapparmor1 libasound2 libasound2-data
+#6 12.83   libavahi-client3 libavahi-common-data libavahi-common3 libcups2 libdbus-1-3
+#6 12.83   libfontconfig1 libfreetype6 libglib2.0-0 libglib2.0-data libgraphite2-3
+#6 12.83   libharfbuzz0b libicu66 libjpeg-turbo8 libjpeg8 liblcms2-2 libnspr4 libnss3
+#6 12.83   libpcsclite1 libpng16-16 libxml2 openjdk-21-jdk-headless
+#6 12.83   openjdk-21-jre-headless shared-mime-info ucf xdg-user-dirs
+#6 14.15 0 upgraded, 35 newly installed, 0 to remove and 0 not upgraded.
+#6 14.15 Need to get 140 MB of archives.
+#6 14.15 After this operation, 358 MB of additional disk space will be used.
+#6 14.15 Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libapparmor1 amd64 2.13.3-7ubuntu5.4 [36.0 kB]
+#6 16.10 Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libdbus-1-3 amd64 1.12.16-2ubuntu2.3 [179 kB]
+#6 18.03 Get:3 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 dbus amd64 1.12.16-2ubuntu2.3 [151 kB]
+#6 23.05 Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-0 amd64 2.64.6-1~ubuntu20.04.9 [1290 kB]
+#6 24.00 Get:5 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-data all 2.64.6-1~ubuntu20.04.9 [5836 B]
+#6 36.09 Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+#6 40.04 Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
+#6 42.27 Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 shared-mime-info amd64 1.15-1 [430 kB]
+#6 43.50 Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 ucf all 3.0038+nmu1 [51.6 kB]
+#6 44.69 Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 xdg-user-dirs amd64 0.17-2ubuntu1 [48.3 kB]
+#6 46.28 Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 libpng16-16 amd64 1.6.37-2 [179 kB]
+#6 47.01 Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 alsa-topology-conf all 1.2.2-1 [7364 B]
+#6 48.01 Get:13 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 alsa-ucm-conf all 1.2.2-1ubuntu0.13 [27.0 kB]
+#6 48.74 Get:14 http://archive.ubuntu.com/ubuntu focal/main amd64 java-common all 0.72 [6816 B]
+#6 50.24 Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64 liblcms2-2 amd64 2.9-4 [140 kB]
+#6 51.69 Get:16 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libjpeg-turbo8 amd64 2.0.3-0ubuntu1.20.04.3 [118 kB]
+#6 52.48 Get:17 http://archive.ubuntu.com/ubuntu focal/main amd64 libjpeg8 amd64 8c-2ubuntu8 [2194 B]
+#6 54.16 Get:18 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libnspr4 amd64 2:4.35-0ubuntu0.20.04.1 [108 kB]
+#6 57.49 Get:19 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libnss3 amd64 2:3.98-0ubuntu0.20.04.2 [1391 kB]
+#6 58.55 Get:20 http://archive.ubuntu.com/ubuntu focal/main amd64 libpcsclite1 amd64 1.8.26-3 [22.0 kB]
+#6 118.6 Ign:21 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jre-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
+#6 121.7 Get:22 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 ca-certificates-java all 20190405ubuntu1.1 [12.4 kB]
+#6 169.4 Get:23 http://archive.ubuntu.com/ubuntu focal/main amd64 fonts-dejavu-core all 2.37-1 [1041 kB]
+#6 172.5 Get:24 http://archive.ubuntu.com/ubuntu focal/main amd64 fontconfig-config all 2.13.1-2ubuntu3 [28.8 kB]
+#6 173.6 Get:25 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libasound2-data all 1.2.2-2.1ubuntu2.5 [20.1 kB]
+#6 177.4 Get:26 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libasound2 amd64 1.2.2-2.1ubuntu2.5 [335 kB]
+#6 179.1 Get:27 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libavahi-common-data amd64 0.7-4ubuntu7.3 [21.4 kB]
+#6 179.6 Err:21 http://security.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jre-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
+#6 179.6   Connection failed [IP: 198.18.0.19 80]
+#6 180.9 Get:28 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libavahi-common3 amd64 0.7-4ubuntu7.3 [21.9 kB]
+#6 182.8 Get:29 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libavahi-client3 amd64 0.7-4ubuntu7.3 [25.5 kB]
+#6 186.9 Get:30 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libcups2 amd64 2.3.1-9ubuntu1.9 [234 kB]
+#6 189.9 Get:31 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libfreetype6 amd64 2.10.1-2ubuntu0.4 [341 kB]
+#6 191.8 Get:32 http://archive.ubuntu.com/ubuntu focal/main amd64 libfontconfig1 amd64 2.13.1-2ubuntu3 [114 kB]
+#6 195.6 Get:33 http://archive.ubuntu.com/ubuntu focal/main amd64 libgraphite2-3 amd64 1.3.13-11build1 [73.5 kB]
+#6 198.8 Get:34 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libharfbuzz0b amd64 2.6.4-1ubuntu4.3 [391 kB]
+#6 258.8 Ign:35 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jdk-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
+#6 318.9 Err:35 http://security.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jdk-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
+#6 318.9   Connection failed [IP: 198.18.0.19 80]
+#6 318.9 Fetched 16.0 MB in 5min 6s (52.3 kB/s)
+#6 318.9 E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/universe/o/openjdk-21/openjdk-21-jre-headless_21.0.7+6~us1-0ubuntu1~20.04_amd64.deb  Connection failed [IP: 198.18.0.19 80]
+#6 318.9 E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/universe/o/openjdk-21/openjdk-21-jdk-headless_21.0.7+6~us1-0ubuntu1~20.04_amd64.deb  Connection failed [IP: 198.18.0.19 80]
+#6 318.9 E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+#6 ERROR: process "/bin/sh -c apt-get update && apt-get install -y openjdk-21-jdk-headless" did not complete successfully: exit code: 100
+------
+ > [2/6] RUN apt-get update && apt-get install -y openjdk-21-jdk-headless:
+191.8 Get:32 http://archive.ubuntu.com/ubuntu focal/main amd64 libfontconfig1 amd64 2.13.1-2ubuntu3 [114 kB]
+195.6 Get:33 http://archive.ubuntu.com/ubuntu focal/main amd64 libgraphite2-3 amd64 1.3.13-11build1 [73.5 kB]
+198.8 Get:34 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libharfbuzz0b amd64 2.6.4-1ubuntu4.3 [391 kB]
+258.8 Ign:35 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jdk-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
+318.9 Err:35 http://security.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jdk-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
+318.9   Connection failed [IP: 198.18.0.19 80]
+318.9 Fetched 16.0 MB in 5min 6s (52.3 kB/s)
+318.9 E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/universe/o/openjdk-21/openjdk-21-jre-headless_21.0.7+6~us1-0ubuntu1~20.04_amd64.deb  Connection failed [IP: 198.18.0.19 80]
+318.9 E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/universe/o/openjdk-21/openjdk-21-jdk-headless_21.0.7+6~us1-0ubuntu1~20.04_amd64.deb  Connection failed [IP: 198.18.0.19 80]
+318.9 E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+------
+
+ [33m1 warning found (use docker --debug to expand):
+[0m - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 25)
+Dockerfile:18
+--------------------
+  16 |     FROM gcr.io/oss-fuzz-base/base-builder-jvm
+  17 |     # Install Java 21 for checkstyle build
+  18 | >>> RUN apt-get update && apt-get install -y openjdk-21-jdk-headless
+  19 |     ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+  20 |     ENV PATH=$JAVA_HOME/bin:$PATH
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c apt-get update && apt-get install -y openjdk-21-jdk-headless" did not complete successfully: exit code: 100
+ERROR:common_utils:Docker build failed.

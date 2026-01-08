@@ -7,12 +7,15 @@ import asyncio
 import subprocess
 import litellm
 import logging
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
 from typing import Dict, AsyncGenerator, Tuple, Optional
 from dotenv import load_dotenv
 
 # Load the .env file
 load_dotenv()
+litellm.request_timeout = 600  # 设置单次请求超时为 10 分钟，防止长代码生成时断连
+litellm.num_retries = 2        # litellm 内部针对 500/502/503 错误自动进行 2 次内置重试
+litellm.drop_params = True     # 自动过滤模型不支持的参数
 
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
@@ -254,8 +257,8 @@ def cleanup_environment(project_name: str):
 
     paths_to_remove = [
         "fuzz_build_log_file",
-        "generated_prompt_file", # 包含反思日志，必须在项目切换时清理
-        "solution.txt",
+#        "generated_prompt_file", # 包含反思日志，必须在项目切换时清理
+#        "solution.txt",
         "file_tree.txt"
     ]
 
@@ -273,21 +276,23 @@ def cleanup_environment(project_name: str):
     # --- 删除了删除 process/project/ 的逻辑 ---
     print(f"--- Cleanup complete. Source code in 'process/project/' has been preserved. ---")
 
+
 async def process_single_project(
     project_info: Dict,
     session_service: InMemorySessionService
 ) -> Tuple[bool, Optional[str]]:
     """
-    Processes the complete workflow for a single project, including retries and exception handling.
-    Returns a tuple: (was_successful, project_config_path_on_success)
+    【抗抖动增强版】处理单个项目的完整修复工作流。
+    集成了 API 指数退避重试、长上下文冷却时间以及鲁棒的结果解析。
     """
     project_name = project_info['project_name']
     sha = project_info['sha']
 
+    # 设置日志上下文
     GLOBAL_LOGGER.set_project_context(project_name)
 
+    # 生成唯一的 Session ID
     session_id = f"session_{project_name.replace('-', '_')}_{int(time.time())}"
-
     runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
 
     initial_input = json.dumps({"project_name": project_name, "sha": sha})
@@ -296,99 +301,117 @@ async def process_single_project(
     is_successful = False
     final_basic_information = None
 
-    # --- Core Retry Loop ---
+    # --- 核心重试循环 (处理 API 抖动和 Context 溢出) ---
     for attempt in range(MAX_RETRIES):
-        # Create a new session for each retry to ensure a clean environment
-        await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=session_id)
+        current_session_id = f"session_{project_name.replace('-', '_')}_{int(time.time())}_at{attempt}"
+        # 每一轮重试都创建全新的 Session，确保状态纯净
+        await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=current_session_id)
 
         try:
-            print(f"--- Starting to process {project_name}, attempt {attempt + 1}/{MAX_RETRIES} ---")
+            print(f"\n--- Starting attempt {attempt + 1}/{MAX_RETRIES} for project: {project_name} ---")
+            
+            # 【Master Fix】: 注入“喘息时间”与指数退避
+            # 针对长上下文调用，强制进行请求前的冷却。如果是重试，时间大幅增加。
+            wait_time = 5 if attempt == 0 else (attempt ** 2) * 20
+            if attempt > 0:
+                print(f"--- [Cooldown] API instability detected. Sleeping for {wait_time}s... ---")
+            await asyncio.sleep(wait_time)
 
-            async for event in runner.run_async(user_id=USER_ID, session_id=session_id, new_message=initial_message):
-                # Capture 'basic_information' in real-time for later archiving
+            async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id, new_message=initial_message):
+                # 实时捕获基础信息（包含路径），用于后续归档
                 if event.author == 'initial_setup_agent' and event.actions and event.actions.state_delta:
                     if 'basic_information' in event.actions.state_delta:
                         final_basic_information = event.actions.state_delta['basic_information']
 
-                # Check for success signal in real-time
+                # 实时监测决策 Agent 的成功信号
                 if (event.actions and event.actions.escalate and
                     event.author == 'decision_agent' and
                     (resp := event.get_function_responses()) and
                     resp[0].name == 'exit_loop' and resp[0].response.get('status') == 'SUCCESS'):
                     is_successful = True
 
-            # If successful, or if the agent loop finishes normally (reaches max_iterations), break the retry loop
+            # 如果代码运行到这里没有抛出异常，说明本轮修复尝试已正常结束（成功或达到 Loop 上限）
             break
 
-        except ContextWindowExceededError:
-            print(f"\n--- WARNING: Attempt {attempt + 1}/{MAX_RETRIES} failed due to context window exceeded. ---")
+        except (litellm.exceptions.InternalServerError, 
+                litellm.exceptions.BadGatewayError, 
+                litellm.exceptions.ServiceUnavailableError,
+                litellm.exceptions.APIConnectionError) as e:
+            # 专门捕获 DeepSeek 服务端 502/500 或连接断开错误
+            print(f"\n--- [API SERVER ERROR] Attempt {attempt + 1} failed: {e} ---")
             if attempt + 1 >= MAX_RETRIES:
-                print(f"--- ERROR: Maximum retry limit reached. Giving up on project {project_name}. ---")
+                print(f"--- [FATAL] Max retries reached for API issues. Giving up on {project_name}. ---")
+                return False, None
+            print("--- Preparing for backoff retry... ---")
+            continue # 进入下一轮循环，触发 wait_time
+
+        except ContextWindowExceededError:
+            # 专门处理 Token 超限错误
+            print(f"\n--- [CONTEXT EXCEEDED] Attempt {attempt + 1} failed. ---")
+            if attempt + 1 >= MAX_RETRIES:
+                print(f"--- [FATAL] Maximum retries reached. Giving up. ---")
                 return False, None
 
-            print("--- Attempting to truncate the prompt file and retry... ---")
+            print("--- Attempting to truncate prompt file and retry... ---")
             truncate_prompt_file("generated_prompt_file/prompt.txt")
-            await asyncio.sleep(5)
-            # continue will automatically proceed to the next for loop iteration
+            await asyncio.sleep(10)
+            continue
 
         except Exception as e:
-            print(f"--- FATAL ERROR: An uncaught exception occurred while processing project {project_name}: {e} ---")
+            # 捕获不可恢复的逻辑错误
+            print(f"--- [FATAL ERROR] An uncaught exception occurred: {e} ---")
             import traceback
             traceback.print_exc()
-            # On unknown fatal error, return failure directly without retrying
             return False, None
 
-    # --- After the loop, parse the final result and return ---
+    # --- 结果解析逻辑 ---
     project_config_path = None
     if is_successful and final_basic_information:
-        info_str = ""
-        if isinstance(final_basic_information, str):
-            info_str = final_basic_information
-        elif isinstance(final_basic_information, dict):
+        # 支持 dict 或 LLM 返回的 JSON 字符串格式
+        if isinstance(final_basic_information, dict):
             project_config_path = final_basic_information.get('project_config_path')
-
-        if not project_config_path and info_str:
+        elif isinstance(final_basic_information, str):
             try:
-                # 1. Try to find a ```json ... ``` code block with regex
-                match = re.search(r"```json\s*([\s\S]*?)\s*```", info_str, re.MULTILINE)
+                # 使用正则提取 JSON 块，提高容错性
+                match = re.search(r"```json\s*([\s\S]*?)\s*```", final_basic_information, re.MULTILINE)
                 if match:
-                    json_str = match.group(1)
-                    info_dict = json.loads(json_str)
+                    info_dict = json.loads(match.group(1))
                     project_config_path = info_dict.get('project_config_path')
                 else:
-                    # 2. If no code block, try to load the entire string directly
-                    try:
-                        info_dict = json.loads(info_str)
-                        project_config_path = info_dict.get('project_config_path')
-                    except json.JSONDecodeError:
-                        # 3. If direct loading fails, try to extract content between the first '{' and the last '}'
-                        start = info_str.find('{')
-                        end = info_str.rfind('}')
-                        if start != -1 and end != -1 and start < end:
-                            json_str = info_str[start:end+1]
-                            info_dict = json.loads(json_str)
-                            project_config_path = info_dict.get('project_config_path')
-            except (json.JSONDecodeError, AttributeError, IndexError) as e:
-                 print(f"--- WARNING: Failed to parse 'basic_information' to get config path. Error: {e} ---")
+                    # 尝试直接解析整个字符串
+                    info_dict = json.loads(final_basic_information)
+                    project_config_path = info_dict.get('project_config_path')
+            except Exception as e:
+                 print(f"--- [WARNING] Failed to parse config path from info: {e} ---")
 
     return is_successful, project_config_path
 
+
 # Main execution logic
 async def main():
+    """
+    【大师级主循环】
+    1. 实现了项目间的物理隔离。
+    2. 确保环境清理不损害已下载的源代码。
+    3. 完善的报告更新与归档机制。
+    """
     print("--- Starting automated fix workflow ---")
     GLOBAL_LOGGER.init()
 
     YAML_FILE = 'projects.yaml'
     session_service = InMemorySessionService()
+    
+    # 读取待处理项目
     projects_result = read_projects_from_yaml(YAML_FILE)
-
     if projects_result['status'] == 'error':
         print(f"Error: Could not process YAML file: {projects_result['message']}")
         return
+        
     projects_to_process = projects_result.get('projects', [])
     if not projects_to_process:
-        print("--- No new projects to process were found in the YAML file. Workflow finished. ---")
+        print("--- No new projects to process were found. Workflow finished. ---")
         return
+        
     print(f"--- Found {len(projects_to_process)} projects to process ---")
 
     for project_info in projects_to_process:
@@ -396,38 +419,41 @@ async def main():
         row_index = project_info['row_index']
 
         print(f"\n{'='*60}")
-        print(f"--- Starting to process project: {project_name} (Index: {row_index}) ---")
+        print(f"--- Processing Project: {project_name} (Index: {row_index}) ---")
         print(f"{'='*60}")
 
-        # 【MASTER FIX 1】: 项目启动前预清理
-        # 确保即使上次运行异常中断，本轮运行的初始环境（尤其是反思日志）是纯净的
+        # 【关键步骤 1】: 项目启动前清理
+        # 彻底清除上一项目的日志、Prompt、反思记录，但保留 process/project/ 下的源码
         cleanup_environment(project_name)
 
-        # 执行完整的 Agent 修复流程（包含内部最多 10 轮的 LoopAgent 迭代）
+        # 执行修复流程
         is_successful, project_config_path = await process_single_project(project_info, session_service)
 
-        # 处理修复成功后的归档逻辑
+        # 处理修复成功后的逻辑
         if is_successful and project_config_path:
-            print(f"--- Project successfully fixed. Archiving configuration files from: {project_config_path} ---")
+            print(f"--- [SUCCESS] Project fixed. Archiving config from: {project_config_path} ---")
             archive_result = archive_fixed_project(project_name, project_config_path)
             if archive_result['status'] == 'error':
-                print(f"--- CRITICAL WARNING: Archiving failed! Error: {archive_result['message']} ---")
+                print(f"--- [CRITICAL] Archiving failed: {archive_result['message']} ---")
         elif is_successful and not project_config_path:
-             print("--- WARNING: Project was fixed successfully, but the project config path could not be retrieved. Skipping archive. ---")
+             print("--- [WARNING] Project fixed, but config path missing. Skipping archive. ---")
 
-        # 更新 YAML 报告
+        # 更新 YAML 状态报告
         result_str = "Success" if is_successful else "Failure"
-        print(f"--- Project {project_name} processing complete. Result: {result_str} ---")
+        print(f"--- Project {project_name} complete. Result: {result_str} ---")
         update_result = update_yaml_report(YAML_FILE, row_index, result_str)
 
         if update_result['status'] == 'error':
-            print(f"--- CRITICAL WARNING: Could not write result back to YAML file! Error: {update_result['message']} ---")
+            print(f"--- [CRITICAL] Could not update YAML report: {update_result['message']} ---")
 
-        # 【MASTER FIX 2】: 项目结束后彻底清理
-        # 在进入下一个 project 循环前，清空当前项目的源码、反思日志和临时 Prompt
+        # 【关键步骤 2】: 项目结束后清理
+        # 释放磁盘空间，为下一个项目腾出环境
         cleanup_environment(project_name)
 
-    print("\n--- All projects have been processed. Workflow finished normally. ---")
+    print("\n--- All projects in the queue have been processed. Workflow finished. ---")
+
+
+
 
 if __name__ == "__main__":
     print("--- Performing pre-startup checks... ---")
