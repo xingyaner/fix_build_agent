@@ -7,14 +7,17 @@ If a `loop_summary` state variable exists, it contains a summary of the previous
 1.  **Retrieve Context**:
     - Retrieve `project_name`, `project_config_path`, and `project_source_path` from the session state.
     - Retrieve `build_mode` from the session state (default to "standard" if missing).
+    - **Retrieve Metadata**: Look into `basic_information` for the `metadata` dictionary extracted during setup.
 
 2.  **Execute Build**:
     - Call the `run_fuzz_build_streaming` tool.
     - `oss_fuzz_path`: The part of `project_config_path` before "/projects/".
-    - `sanitizer`: "address"
-    - `engine`: "libfuzzer"
-    - `architecture`: "x86_64"
-    
+    - **Dynamic Config**: Use the values from `metadata` for the following parameters:
+        - `sanitizer`: Use `metadata['sanitizer']` (e.g., "undefined", "address").
+        - `engine`: Use `metadata['engine']`.
+        - `architecture`: Use `metadata['architecture']`.
+    - *If metadata is missing, fallback to sanitizer="address", engine="libfuzzer", architecture="x86_64".*
+
     **CRITICAL PATH SELECTION:**
     - **IF `build_mode` is "source"**:
         - You MUST set the `mount_path` parameter to `project_source_path`.

@@ -50,6 +50,8 @@ from agent_tools import (
     get_git_commits_around_date,
     save_commit_diff_to_file,
     update_reflection_journal,
+    extract_build_metadata_from_log,
+    patch_project_dockerfile,
     truncate_prompt_file
 )
 
@@ -125,20 +127,13 @@ MAX_RETRIES = 3
 initial_setup_agent = LlmAgent(
     name="initial_setup_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
-    instruction="""
-    You are an automated environment configuration expert. Strictly follow these steps:
-    1.  Parse "project_name" and "sha" from the input.
-    2.  Call the `download_github_repo` tool to download "oss-fuzz". The `target_dir` must be "./oss-fuzz".
-    3.  Call the `force_clean_git_repo` tool, passing the string "./oss-fuzz" as the `repo_path` parameter to ensure the repository is clean.
-    4.  Call the `checkout_oss_fuzz_commit` tool, using the parsed `sha` to revert to the specified version.
-    5.  Call the `download_github_repo` tool to download the current project. Pass the project name you parsed from the input as the `project_name` parameter, and a new string concatenated from "./process/project/" and the parsed project name as the `target_dir` parameter.
-    6.  Call the `get_project_paths` tool, using the parsed `project_name` to generate standard paths.
-    7.  Use the return result of the `get_project_paths` tool as your final output.
-    """,
+    instruction=load_instruction_from_file("instructions/initial_setup__instruction.txt"),
     tools=[
         download_github_repo,
         force_clean_git_repo,
         checkout_oss_fuzz_commit,
+        extract_build_metadata_from_log,
+        patch_project_dockerfile,
         get_project_paths,
     ],
     output_key="basic_information",
@@ -287,6 +282,8 @@ async def process_single_project(
     """
     project_name = project_info['project_name']
     sha = project_info['sha']
+    # 关键补全：获取原始日志路径，用于元数据提取
+    original_log_path = project_info.get('log_path', "") 
 
     # 设置日志上下文
     GLOBAL_LOGGER.set_project_context(project_name)
@@ -295,7 +292,12 @@ async def process_single_project(
     session_id = f"session_{project_name.replace('-', '_')}_{int(time.time())}"
     runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
 
-    initial_input = json.dumps({"project_name": project_name, "sha": sha})
+    # 关键补全：将日志路径注入初始输入
+    initial_input = json.dumps({
+        "project_name": project_name, 
+        "sha": sha,
+        "original_log_path": original_log_path
+    })
     initial_message = types.Content(parts=[types.Part(text=initial_input)], role='user')
 
     is_successful = False
@@ -309,16 +311,15 @@ async def process_single_project(
 
         try:
             print(f"\n--- Starting attempt {attempt + 1}/{MAX_RETRIES} for project: {project_name} ---")
-            
+
             # 【Master Fix】: 注入“喘息时间”与指数退避
-            # 针对长上下文调用，强制进行请求前的冷却。如果是重试，时间大幅增加。
             wait_time = 5 if attempt == 0 else (attempt ** 2) * 20
             if attempt > 0:
                 print(f"--- [Cooldown] API instability detected. Sleeping for {wait_time}s... ---")
             await asyncio.sleep(wait_time)
 
             async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id, new_message=initial_message):
-                # 实时捕获基础信息（包含路径），用于后续归档
+                # 实时捕获基础信息（包含路径和提取出的元数据）
                 if event.author == 'initial_setup_agent' and event.actions and event.actions.state_delta:
                     if 'basic_information' in event.actions.state_delta:
                         final_basic_information = event.actions.state_delta['basic_information']
@@ -330,23 +331,19 @@ async def process_single_project(
                     resp[0].name == 'exit_loop' and resp[0].response.get('status') == 'SUCCESS'):
                     is_successful = True
 
-            # 如果代码运行到这里没有抛出异常，说明本轮修复尝试已正常结束（成功或达到 Loop 上限）
             break
 
-        except (litellm.exceptions.InternalServerError, 
-                litellm.exceptions.BadGatewayError, 
+        except (litellm.exceptions.InternalServerError,
+                litellm.exceptions.BadGatewayError,
                 litellm.exceptions.ServiceUnavailableError,
                 litellm.exceptions.APIConnectionError) as e:
-            # 专门捕获 DeepSeek 服务端 502/500 或连接断开错误
             print(f"\n--- [API SERVER ERROR] Attempt {attempt + 1} failed: {e} ---")
             if attempt + 1 >= MAX_RETRIES:
                 print(f"--- [FATAL] Max retries reached for API issues. Giving up on {project_name}. ---")
                 return False, None
-            print("--- Preparing for backoff retry... ---")
-            continue # 进入下一轮循环，触发 wait_time
+            continue 
 
         except ContextWindowExceededError:
-            # 专门处理 Token 超限错误
             print(f"\n--- [CONTEXT EXCEEDED] Attempt {attempt + 1} failed. ---")
             if attempt + 1 >= MAX_RETRIES:
                 print(f"--- [FATAL] Maximum retries reached. Giving up. ---")
@@ -358,7 +355,6 @@ async def process_single_project(
             continue
 
         except Exception as e:
-            # 捕获不可恢复的逻辑错误
             print(f"--- [FATAL ERROR] An uncaught exception occurred: {e} ---")
             import traceback
             traceback.print_exc()
@@ -367,18 +363,15 @@ async def process_single_project(
     # --- 结果解析逻辑 ---
     project_config_path = None
     if is_successful and final_basic_information:
-        # 支持 dict 或 LLM 返回的 JSON 字符串格式
         if isinstance(final_basic_information, dict):
             project_config_path = final_basic_information.get('project_config_path')
         elif isinstance(final_basic_information, str):
             try:
-                # 使用正则提取 JSON 块，提高容错性
                 match = re.search(r"```json\s*([\s\S]*?)\s*```", final_basic_information, re.MULTILINE)
                 if match:
                     info_dict = json.loads(match.group(1))
                     project_config_path = info_dict.get('project_config_path')
                 else:
-                    # 尝试直接解析整个字符串
                     info_dict = json.loads(final_basic_information)
                     project_config_path = info_dict.get('project_config_path')
             except Exception as e:

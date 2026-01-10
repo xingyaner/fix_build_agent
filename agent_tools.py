@@ -74,6 +74,87 @@ def update_reflection_journal(
     }
 
 
+def extract_build_metadata_from_log(log_path: str) -> Dict:
+    """
+    【增强版】从原始报错日志中提取构建所需的关键元数据。
+    """
+    print(f"--- Tool: extract_build_metadata from {log_path} ---")
+    try:
+        if not os.path.exists(log_path):
+            return {'status': 'error', 'message': 'Log file not found.'}
+            
+        with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+        
+        lines = content.splitlines()
+        metadata = {
+            'base_image_digest': '',
+            'engine': 'libfuzzer',
+            'sanitizer': 'address',
+            'architecture': 'x86_64',
+            'software_repo_url': '',
+            'software_sha': '',
+            'dependencies': []
+        }
+
+        # 1. 提取 Base Image Digest
+        digest_match = re.search(r'Digest: sha256:([a-f0-9]{64})', content)
+        if digest_match:
+            metadata['base_image_digest'] = digest_match.group(1)
+
+        # 2. 提取构建配置 (Step #3)
+        for line in lines:
+            if 'Starting Step #3 - "compile-' in line:
+                m = re.search(r'compile-([a-z0-9]+)-([a-z0-9]+)-([a-z0-9_]+)', line)
+                if m:
+                    metadata['engine'], metadata['sanitizer'], metadata['architecture'] = m.groups()
+                break
+
+        # 3. 提取 Git 信息 (Step #2)
+        git_pattern = re.compile(r'url: "([^"]+)", rev: "([^"]+)"')
+        found_gits = []
+        for line in lines:
+            if 'Step #2 - "srcmap"' in line:
+                match = git_pattern.search(line)
+                if match:
+                    found_gits.append({'url': match.group(1), 'rev': match.group(2)})
+
+        if found_gits:
+            metadata['software_repo_url'] = found_gits[0]['url']
+            metadata['software_sha'] = found_gits[0]['rev']
+            metadata['dependencies'] = found_gits[1:]
+
+        return {'status': 'success', 'metadata': metadata}
+    except Exception as e:
+        return {'status': 'error', 'message': str(e)}
+
+def patch_project_dockerfile(project_name: str, oss_fuzz_path: str, base_image_digest: str) -> Dict:
+    """
+    锁定 Dockerfile 中的基础镜像 Digest，确保环境一致性。
+    """
+    print(f"--- Tool: patch_project_dockerfile for {project_name} ---")
+    dockerfile_path = os.path.join(oss_fuzz_path, "projects", project_name, "Dockerfile")
+    if not os.path.exists(dockerfile_path) or not base_image_digest:
+        return {'status': 'skip', 'message': 'Dockerfile not found or no digest provided.'}
+
+    try:
+        with open(dockerfile_path, 'r') as f:
+            lines = f.readlines()
+        
+        new_lines = []
+        for line in lines:
+            if line.strip().startswith("FROM") and "oss-fuzz-base" in line:
+                base_image = line.split()[1].split(':')[0].split('@')[0]
+                line = f"FROM {base_image}@sha256:{base_image_digest}\n"
+            new_lines.append(line)
+            
+        with open(dockerfile_path, 'w') as f:
+            f.writelines(new_lines)
+        return {'status': 'success', 'message': 'Dockerfile patched with digest.'}
+    except Exception as e:
+        return {'status': 'error', 'message': str(e)}
+
+
 def update_yaml_report(file_path: str, row_index: int, result: str) -> Dict[str, str]:
     """
     [New] Updates the 'state' to 'yes' and adds 'fix_result' and 'fix_date' to the YAML file.

@@ -1,23 +1,180 @@
 
-You are a premier expert in software testing and build systems. Your goal is to fix the build for project: checkstyle.
+You are a premier expert in software testing and build systems. Your goal is to fix the build for project: pffft.
 I will provide you with the configuration files, file tree, recent commit changes, and the error log.
 Your task is to analyze these inputs and provide a targeted solution in 'solution.txt'.
 
 
 --- 【CRITICAL】LESSONS LEARNED FROM PREVIOUS FAILED ATTEMPTS ---
 The following strategies have ALREADY BEEN TRIED and FAILED. DO NOT repeat them:
+- [Attempt 11] Strategy: Strategy A: Config Repair (significant progress)
+  Reason for Failure: Attempt 11 made SIGNIFICANT progress: javaparser dependency issue is SOLVED! Build now fails only on drools-compiler:999-SNAPSHOT. However, version update step (set_project_version_in_fuzz_targets_dependency) is not appearing in logs, suggesting build fails before reaching it. DO NOT assume all fixes are applied; patch application had partial_success. The drools dependency is commented out but Maven still tries to resolve it - need to properly remove or exclude it. Focus on completely removing drools dependency and ensuring version update function executes.
+- [Attempt 12] Strategy: Strategy A: Config Repair (patch application failure)
+  Reason for Failure: Attempt 12 failed due to persistent patch application issues. Critical fixes (drools removal, version update function) were not applied despite patch attempts. The build.sh is in a hybrid state where some fixes work (javaparser build) but others don't. DO NOT continue with complex patch files; need a new approach: either use extremely short/precise ORIGINAL blocks, apply fixes manually with simple commands, or create a completely new build.sh. The core issue remains patch tool matching failures.
 - [Attempt 1] Strategy: Initial Build Analysis
-  Reason for Failure: Initial build failed due to Java version mismatch: project requires Java 21+ but environment has Java 17. DO NOT attempt to modify build scripts first; focus on updating the Java version in the Docker environment or adjusting the project's Java version requirements in the Maven configuration.
-- [Attempt 2] Strategy: Strategy A: Config Repair
-  Reason for Failure: Attempt 2 failed because installing OpenJDK 21 from Ubuntu 20.04 repositories had network connectivity issues. The approach was correct but implementation fragile. DO NOT rely on network-dependent package installations; instead use a more robust method like downloading Java 21 directly from official sources or adjusting the project's Java version requirements to match the available Java 17 in the base image.
+  Reason for Failure: The initial build failed because the generate_seed_corpus.py file is missing at runtime. The Dockerfile copies it to /src/pffft, but the container run command mounts a volume at /src/pffft which overwrites the directory. DO NOT assume files copied during Docker build will persist after volume mounts; check for mount path conflicts between Dockerfile COPY commands and container runtime volume mounts.
 
 Please analyze why these failed and propose a DIFFERENT, more effective approach.
 
 
 --- Configuration Files (Dockerfile, build.sh, etc.) ---
 
-### Content from: CheckstyleFuzzer.java ###
-// Copyright 2023 Google LLC
+### Content from: Dockerfile ###
+# Copyright 2018 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+################################################################################
+
+FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04
+RUN apt-get update && apt-get install -y mercurial
+RUN python -m pip install numpy
+RUN git clone https://bitbucket.org/jpommier/pffft $SRC/pffft
+WORKDIR pffft
+COPY run_tests.sh build.sh $SRC
+# TODO(alessiob): Move the fuzzing source code to pffft upstream.
+COPY generate_seed_corpus.py $SRC/pffft
+COPY pffft_fuzzer.cc $SRC/pffft
+
+### Content from: build.sh ###
+#!/bin/bash -eu
+# Copyright 2018 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+################################################################################
+
+SRC_DIR=$SRC/pffft
+cd $WORK
+
+# Deploy the seed corpus.
+SEED_CORPUS_ZIP_PATH=$OUT/pffft_fuzzers_seed_corpus.zip
+if [ -d seed_corpus_tmp ]; then 
+  rm -fr seed_corpus_tmp
+fi
+mkdir seed_corpus_tmp
+python $SRC_DIR/generate_seed_corpus.py seed_corpus_tmp
+cd seed_corpus_tmp
+zip -q $SEED_CORPUS_ZIP_PATH ./*
+cd ..
+rm -fr seed_corpus_tmp
+
+build_fuzzer() {
+  # Aliases for the arguments.
+  fft_transform=$1
+
+  # Fuzzer name.
+  fuzz_target_name=pffft_${fft_transform,,}_fuzzer
+
+  # Add a symbolic link for the seed corpus (same corpus for all the
+  # generated fuzzers).
+  ls -la $OUT/*.zip
+  FUZZER_SEED_CORPUS_PATH=$OUT/${fuzz_target_name}_seed_corpus.zip
+  if [ -e $FUZZER_SEED_CORPUS_PATH ]; then
+    rm $FUZZER_SEED_CORPUS_PATH
+  fi
+  ln -s $SEED_CORPUS_ZIP_PATH $FUZZER_SEED_CORPUS_PATH
+
+  # Compile fuzzer.
+  $CXX $CXXFLAGS -std=c++11 -msse2 \
+       -DTRANSFORM_${fft_transform} \
+       $SRC/pffft/pffft.c $SRC/pffft/pffft_fuzzer.cc \
+       -o $OUT/${fuzz_target_name} \
+       $LIB_FUZZING_ENGINE
+}
+
+# Build fuzzers.
+build_fuzzer REAL
+build_fuzzer COMPLEX
+
+# Build unit test
+$CXX $CXXFLAGS -x c -o $SRC/test_pffft_real -DTRANSFORM_REAL -msse2 \
+  $SRC/pffft/pffft.c $SRC/pffft/test_pffft.c $SRC/pffft/fftpack.c
+$CXX $CXXFLAGS -x c -o $SRC/test_pffft_complex -DTRANSFORM_COMPLEX -msse2 \
+  $SRC/pffft/pffft.c $SRC/pffft/test_pffft.c $SRC/pffft/fftpack.c
+
+### Content from: generate_seed_corpus.py ###
+from __future__ import division
+from __future__ import print_function
+
+import os
+import sys
+
+import numpy as np
+
+MAX_INPUT_SIZE = int(1e6)
+MAX_FLOAT32 = np.finfo(np.float32).max
+
+def IsValidSize(n):
+  if n == 0:
+    return False
+  # PFFFT only supports transforms for inputs of length N of the form
+  # N = (2^a)*(3^b)*(5^c) where a >= 5, b >=0, c >= 0.
+  FACTORS = [2, 3, 5]
+  factorization = [0, 0, 0]
+  for i, factor in enumerate(FACTORS):
+    while n % factor == 0:
+      n = n // factor
+      factorization[i] += 1
+  return factorization[0] >= 5 and n == 1
+
+
+def main():
+  if len(sys.argv) < 2:
+    print('Usage: %s <path to output directory>' % sys.argv[0])
+    sys.exit(1)
+
+  output_path = sys.argv[1]
+  if not os.path.exists(output_path):
+    print('The output path does not exists.')
+    sys.exit(2)
+
+  # List of valid input sizes.
+  N = [n for n in range(MAX_INPUT_SIZE) if IsValidSize(n)]
+
+  # Set the seed to always generate the same random data.
+  np.random.seed(0)
+
+  # Generate different types of input arrays for each target length.
+  for n in N:
+    # Zeros.
+    z = np.zeros(n, np.float32)
+    z.tofile(os.path.join(output_path, 'zeros_%d' % n))
+    # Max float 32.
+    m = np.ones(n, np.float32) * MAX_FLOAT32
+    m.tofile(os.path.join(output_path, 'max_%d' % n))
+    # Random values in the s16 range.
+    rnd_s16 = 32768.0 * 2.0 * (np.random.rand(n) - 1.0)
+    rnd_s16 = rnd_s16.astype(np.float32)
+    rnd_s16.tofile(os.path.join(output_path, 'rnd_s16_%d' % n))
+  
+  sys.exit(0)
+
+
+if __name__ == '__main__':
+  main()
+
+### Content from: pffft_fuzzer.cc ###
+// Copyright 2018 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,313 +189,686 @@ Please analyze why these failed and propose a DIFFERENT, more effective approach
 // limitations under the License.
 //
 ///////////////////////////////////////////////////////////////////////////
-import com.code_intelligence.jazzer.api.FuzzedDataProvider;
-import com.puppycrawl.tools.checkstyle.JavaParser;
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
-import com.puppycrawl.tools.checkstyle.api.FileText;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
-// jvm-autofuzz-heuristics-1
-public class CheckstyleFuzzer {
-  public static void fuzzerTestOneInput(FuzzedDataProvider data) {
-    // Heuristic name: jvm-autofuzz-heuristics-1
-    Path path = null;
-    try {
-      path = Files.createTempFile("oss-fuzz.", ".oss-fuzz");
-      Files.write(path, data.consumeRemainingAsBytes());
-      FileContents content = new FileContents(new FileText(path.toFile(), "UTF-8"));
+#include <algorithm>
+#include <array>
+#include <cassert>
+#include <cstring>
 
-      JavaParser.parse(content);
-    } catch (IOException | CheckstyleException | NoClassDefFoundError e) {
-      // Known exception
-    } finally {
-      if (path != null) {
-        try {
-          Files.deleteIfExists(path);
-        } catch (IOException e) {
-          // Known Exception
-        }
-      }
+#include "pffft.h"
+
+namespace {
+
+#if defined(TRANSFORM_REAL)
+// Real FFT.
+constexpr pffft_transform_t kTransform = PFFFT_REAL;
+constexpr size_t kSizeOfOneSample = sizeof(float);
+#elif defined(TRANSFORM_COMPLEX)
+// Complex FFT.
+constexpr pffft_transform_t kTransform = PFFFT_COMPLEX;
+constexpr size_t kSizeOfOneSample = 2 * sizeof(float);  // Real plus imaginary.
+#else
+#error FFT transform type not defined.
+#endif
+
+bool IsValidSize(size_t n) {
+  if (n == 0) { return false; }
+  // PFFFT only supports transforms for inputs of length N of the form
+  // N = (2^a)*(3^b)*(5^c) where a >= 5, b >=0, c >= 0.
+  constexpr std::array<int, 3> kFactors = {2, 3, 5};
+  std::array<int, kFactors.size()> factorization{};
+  for (size_t i = 0; i < kFactors.size(); ++i) {
+    const int factor = kFactors[i];
+    while (n % factor == 0) {
+      n /= factor;
+      factorization[i]++;
     }
   }
+  return factorization[0] >= 5 && n == 1;
 }
 
-### Content from: Dockerfile ###
-# Copyright 2023 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-##########################################################################
-FROM gcr.io/oss-fuzz-base/base-builder-jvm
-# Install Java 21 for checkstyle build
-RUN apt-get update && apt-get install -y openjdk-21-jdk-headless
-ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
-ENV PATH=$JAVA_HOME/bin:$PATH
-RUN curl -L https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip \
-  -o maven.zip && \
-  unzip maven.zip -d $SRC/maven && \
-  rm maven.zip
-ENV MVN $SRC/maven/apache-maven-3.6.3/bin/mvn
-RUN git clone --depth 1 https://github.com/checkstyle/checkstyle checkstyle
-COPY *.sh *Fuzzer.java $SRC/
-WORKDIR $SRC/checkstyle
+float* AllocatePffftBuffer(size_t number_of_bytes) {
+  return static_cast<float*>(pffft_aligned_malloc(number_of_bytes));
+}
 
-### Content from: build.sh ###
-#!/bin/bash -eu
-# Copyright 2023 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-##########################################################################
-export TARGET_PACKAGE_PREFIX="com.puppycrawl.tools.checkstyle."
+}  // namespace
 
-MAVEN_ARGS="-Dmaven.test.skip=true -Djavac.src.version=21 -Djavac.target.version=21 --update-snapshots"
-$MVN clean package $MAVEN_ARGS
+// Entry point for LibFuzzer.
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+  // Set the number of FFT points to use |data| as input vector.
+  // The latter is truncated if the number of bytes is not an integer
+  // multiple of the size of one sample (which is either a real or a complex
+  // floating point number).
+  const size_t fft_size = size / kSizeOfOneSample;
+  if (!IsValidSize(fft_size)) {
+    return 0;
+  }
 
-BUILD_CLASSPATH=
-RUNTIME_CLASSPATH=
+  const size_t number_of_bytes = fft_size * kSizeOfOneSample;
+  assert(number_of_bytes <= size);
 
-for JARFILE in $(find ./ -name *.jar)
-do
-  cp $JARFILE $OUT/
-  BUILD_CLASSPATH=$BUILD_CLASSPATH$OUT/$(basename $JARFILE):
-  RUNTIME_CLASSPATH=$RUNTIME_CLASSPATH\$this_dir/$(basename $JARFILE):
-done
+  // Allocate input and output buffers.
+  float* in = AllocatePffftBuffer(number_of_bytes);
+  float* out = AllocatePffftBuffer(number_of_bytes);
 
-# Build corpus with valid java files
-mkdir $SRC/tmp-corpus
-find $SRC -name "*.java" -exec cp {} $SRC/tmp-corpus/ \;
-zip -j $OUT/CheckstyleFuzzer_seed_corpus.zip $SRC/tmp-corpus/*
+  // Copy input data.
+  std::memcpy(in, reinterpret_cast<const float*>(data), number_of_bytes);
 
-# Retrieve apache-common-lang3 library
-# This library provides method to translate primitive type arrays to
-# their respective class object arrays to avoid compilation error.
-wget -P $OUT/ https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar
-wget -P $OUT/ https://repo1.maven.org/maven2/org/antlr/antlr4-runtime/4.11.1/antlr4-runtime-4.11.1.jar
+  // Setup FFT.
+  PFFFT_Setup* pffft_setup = pffft_new_setup(fft_size, kTransform);
 
-BUILD_CLASSPATH=$BUILD_CLASSPATH:$JAZZER_API_PATH:$OUT/commons-lang3-3.12.0.jar:$OUT/antlr4-runtime-4.11.1.jar
-RUNTIME_CLASSPATH=$RUNTIME_CLASSPATH:\$this_dir/commons-lang3-3.12.0.jar:\$this_dir/antlr4-runtime-4.11.1.jar:\$this_dir
+  // Call different PFFFT functions to maximize the coverage.
+  pffft_transform(pffft_setup, in, out, nullptr, PFFFT_FORWARD);
+  pffft_zconvolve_accumulate(pffft_setup, out, out, out, 1.f);
+  pffft_transform_ordered(pffft_setup, in, out, nullptr, PFFFT_BACKWARD);
 
-for fuzzer in $(ls $SRC/*Fuzzer.java)
-do
-  fuzzer_basename=$(basename -s .java $fuzzer)
-  javac -cp $BUILD_CLASSPATH $fuzzer
-  cp $SRC/$fuzzer_basename.class $OUT/
+  // Release memory.
+  pffft_aligned_free(in);
+  pffft_aligned_free(out);
+  pffft_destroy_setup(pffft_setup);
 
-  # Create an execution wrapper that executes Jazzer with the correct arguments.
-  echo "#!/bin/bash
-
-  # LLVMFuzzerTestOneInput for fuzzer detection.
-  this_dir=\$(dirname "\$0")
-  if [[ "\$@" =~ (^| )-runs=[0-9]+($| ) ]]
-  then
-    mem_settings='-Xmx1900m:-Xss900k'
-  else
-    mem_settings='-Xmx2048m:-Xss1024k'
-  fi
-
-  LD_LIBRARY_PATH=\"$JVM_LD_LIBRARY_PATH\":\$this_dir \
-  \$this_dir/jazzer_driver --agent_path=\$this_dir/jazzer_agent_deploy.jar \
-  --cp=$RUNTIME_CLASSPATH \
-  --target_class=$fuzzer_basename \
-  --jvm_args=\"\$mem_settings\" \
-  \$@" > $OUT/$fuzzer_basename
-
-  chmod u+x $OUT/$fuzzer_basename
-done
+  return 0;
+}
 
 ### Content from: project.yaml ###
+homepage: "https://bitbucket.org/jpommier/pffft"
+main_repo: "https://bitbucket.org/jpommier/pffft.git"
+language: c++
+primary_contact: "pommier@modartt.com"
+auto_ccs:
+  - "alessiob@webrtc.org"
+  - "mbonadei@webrtc.org"
 fuzzing_engines:
-- libfuzzer
-homepage: https://github.com/checkstyle/checkstyle
-language: jvm
-main_repo: https://github.com/checkstyle/checkstyle
+  - libfuzzer
+  - afl
+  - honggfuzz
 sanitizers:
-- address
-- undefined
-vendor_ccs:
-- arthur.chan@adalogics.com
-- david@adalogics.com
-- adam@adalogics.com
+  - address
+  - memory
+  - undefined
+architectures:
+  - x86_64
+  - i386
+
+base_os_version: ubuntu-24-04
+
+### Content from: run_tests.sh ###
+#!/bin/bash -eu
+#
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+################################################################################
+
+export ASAN_OPTIONS="detect_leaks=0"
+$SRC/test_pffft_real && $SRC/test_pffft_complex
 
 
 --- Project File Tree (Shallow View) ---
-📁 checkstyle
-├── 📄 LICENSE
-├── 📄 LICENSE.apache20
+📁 pffft
+├── 📄 CMakeLists.txt
+├── 📄 LICENSE.txt
 ├── 📄 README.md
-├── 📄 RIGHTS.antlr
-├── 📄 SECURITY.md
-├── 📄 appveyor.yml
-├── 📄 azure-pipelines.yml
-├── 📄 cdg-pitest-licence.txt
-├── 📁 config
-├── 📁 docs
-├── 📄 mvnw
-├── 📄 mvnw.cmd
-├── 📄 pom.xml
-└── 📁 src
+├── 📁 bench
+├── 📄 bench_conv.cpp
+├── 📄 bench_mixers.cpp
+├── 📄 bench_pffft.c
+├── 📁 cmake
+├── 📄 cross_build_mingw32.sh
+├── 📄 cross_build_mingw64.sh
+├── 📁 examples
+├── 📄 fftpack.c
+├── 📄 fftpack.h
+├── 📄 fmv.h
+├── 📁 greenffts
+├── 📁 kissfft
+├── 📄 mingw-w32-i686.cmake
+├── 📄 mingw-w64-x64_64.cmake
+├── 📄 papi_perf_counter.h
+├── 📄 pf_carrier.cpp
+├── 📄 pf_carrier.h
+├── 📄 pf_cic.cpp
+├── 📄 pf_cic.h
+├── 📄 pf_conv.cpp
+├── 📄 pf_conv.h
+├── 📄 pf_conv_dispatcher.cpp
+├── 📄 pf_conv_dispatcher.h
+├── 📄 pf_cplx.h
+├── 📄 pf_mixer.cpp
+├── 📄 pf_mixer.h
+├── 📄 pffastconv.c
+├── 📄 pffastconv.h
+├── 📄 pffft.c
+├── 📄 pffft.h
+├── 📄 pffft.hpp
+├── 📄 pffft_common.c
+├── 📄 pffft_double.c
+├── 📄 pffft_double.h
+├── 📄 pffft_priv_impl.h
+├── 📄 plots.sh
+├── 📁 pocketfft
+├── 📁 simd
+├── 📄 sse2neon.h
+├── 📄 test_fft_factors.c
+├── 📄 test_fftpack_float
+├── 📄 test_pffastconv.c
+├── 📄 test_pffft.c
+├── 📄 test_pffft.cpp
+├── 📄 uninstall.cmake
+└── 📄 use_gcc8.inc
 
 --- Recent Commit Changes (Potential Root Cause) ---
 No relevant commit found.
 
 --- Fuzz Build Log (Last 500 lines) ---
-INFO:common_utils:Running: docker build -t gcr.io/oss-fuzz/checkstyle --file /root/fix_build_agent/oss-fuzz/projects/checkstyle/Dockerfile /root/fix_build_agent/oss-fuzz/projects/checkstyle.
-#0 building with "default" instance using docker driver
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 153.09MB / 337.82MB 984.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 153.09MB / 337.82MB 989.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 155.19MB / 337.82MB 994.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 157.29MB / 337.82MB 999.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 157.29MB / 337.82MB 1004.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 159.38MB / 337.82MB 1009.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 159.38MB / 337.82MB 1015.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 161.48MB / 337.82MB 1020.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 162.53MB / 337.82MB 1025.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 162.53MB / 337.82MB 1030.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 163.58MB / 337.82MB 1035.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 164.63MB / 337.82MB 1040.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 165.68MB / 337.82MB 1045.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 166.72MB / 337.82MB 1050.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 166.72MB / 337.82MB 1055.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 167.77MB / 337.82MB 1060.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 167.77MB / 337.82MB 1066.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 168.82MB / 337.82MB 1071.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 169.87MB / 337.82MB 1076.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 169.87MB / 337.82MB 1081.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 170.92MB / 337.82MB 1086.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 171.97MB / 337.82MB 1091.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 174.06MB / 337.82MB 1096.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 175.11MB / 337.82MB 1101.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 176.16MB / 337.82MB 1106.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 179.31MB / 337.82MB 1111.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 179.31MB / 337.82MB 1117.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 182.45MB / 337.82MB 1122.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 182.45MB / 337.82MB 1127.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 183.50MB / 337.82MB 1132.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 183.50MB / 337.82MB 1137.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 183.50MB / 337.82MB 1142.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 185.60MB / 337.82MB 1147.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 186.65MB / 337.82MB 1152.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 186.65MB / 337.82MB 1157.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 187.70MB / 337.82MB 1162.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 188.74MB / 337.82MB 1168.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 190.84MB / 337.82MB 1173.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 191.89MB / 337.82MB 1178.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 192.94MB / 337.82MB 1183.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 193.99MB / 337.82MB 1188.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 193.99MB / 337.82MB 1193.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 195.04MB / 337.82MB 1198.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 196.08MB / 337.82MB 1203.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 197.13MB / 337.82MB 1208.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 197.13MB / 337.82MB 1213.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 197.13MB / 337.82MB 1219.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 197.13MB / 337.82MB 1224.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 199.23MB / 337.82MB 1229.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 200.28MB / 337.82MB 1234.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 201.33MB / 337.82MB 1239.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 202.38MB / 337.82MB 1244.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 205.52MB / 337.82MB 1249.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 205.52MB / 337.82MB 1254.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 205.52MB / 337.82MB 1259.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 205.52MB / 337.82MB 1264.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 207.62MB / 337.82MB 1270.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 209.72MB / 337.82MB 1275.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 212.86MB / 337.82MB 1280.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 213.91MB / 337.82MB 1285.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 214.96MB / 337.82MB 1290.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 217.06MB / 337.82MB 1295.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 219.15MB / 337.82MB 1300.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 221.25MB / 337.82MB 1305.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 222.30MB / 337.82MB 1310.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 223.35MB / 337.82MB 1315.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 226.49MB / 337.82MB 1321.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 228.59MB / 337.82MB 1326.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 229.64MB / 337.82MB 1331.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 230.69MB / 337.82MB 1336.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 232.78MB / 337.82MB 1341.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 235.93MB / 337.82MB 1346.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 238.03MB / 337.82MB 1351.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 239.08MB / 337.82MB 1356.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 240.12MB / 337.82MB 1361.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 242.22MB / 337.82MB 1366.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 244.32MB / 337.82MB 1372.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 246.42MB / 337.82MB 1377.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 249.56MB / 337.82MB 1382.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 251.66MB / 337.82MB 1387.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 252.71MB / 337.82MB 1392.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 254.80MB / 337.82MB 1397.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 255.85MB / 337.82MB 1402.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 259.00MB / 337.82MB 1407.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 261.10MB / 337.82MB 1412.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 261.10MB / 337.82MB 1417.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 261.10MB / 337.82MB 1423.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 262.14MB / 337.82MB 1428.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 266.34MB / 337.82MB 1433.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 268.44MB / 337.82MB 1438.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 270.53MB / 337.82MB 1443.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 272.63MB / 337.82MB 1448.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 273.68MB / 337.82MB 1453.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 275.78MB / 337.82MB 1458.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 276.82MB / 337.82MB 1463.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 279.97MB / 337.82MB 1468.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 282.07MB / 337.82MB 1474.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 284.16MB / 337.82MB 1479.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 287.31MB / 337.82MB 1484.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 288.36MB / 337.82MB 1489.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 290.46MB / 337.82MB 1494.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 294.65MB / 337.82MB 1499.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 295.70MB / 337.82MB 1504.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 299.89MB / 337.82MB 1509.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 300.94MB / 337.82MB 1514.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 303.04MB / 337.82MB 1519.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 305.14MB / 337.82MB 1525.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 306.18MB / 337.82MB 1530.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 308.28MB / 337.82MB 1535.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 309.33MB / 337.82MB 1540.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 309.33MB / 337.82MB 1545.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 309.33MB / 337.82MB 1550.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 310.38MB / 337.82MB 1555.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 310.38MB / 337.82MB 1560.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 311.43MB / 337.82MB 1565.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 312.48MB / 337.82MB 1570.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 312.48MB / 337.82MB 1576.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 312.48MB / 337.82MB 1581.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 313.52MB / 337.82MB 1586.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 314.57MB / 337.82MB 1591.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 315.62MB / 337.82MB 1596.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 316.67MB / 337.82MB 1601.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 319.82MB / 337.82MB 1606.6s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 320.86MB / 337.82MB 1611.7s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 321.91MB / 337.82MB 1616.8s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 324.01MB / 337.82MB 1621.9s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 326.11MB / 337.82MB 1627.0s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 328.20MB / 337.82MB 1632.1s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 329.25MB / 337.82MB 1637.2s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 331.35MB / 337.82MB 1642.3s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 333.45MB / 337.82MB 1647.4s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 335.54MB / 337.82MB 1652.5s
+#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 337.82MB / 337.82MB 1654.9s done
+#5 DONE 1655.5s
 
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 1.27kB done
-#1 DONE 0.2s
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40
+#5 extracting sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 16.1s done
+#5 DONE 1671.6s
 
-#2 [internal] load metadata for gcr.io/oss-fuzz-base/base-builder-jvm:latest
-#2 DONE 0.2s
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:401853d00bcc734e9b27b22c5aa36fac784eb4979a72a4a65dce1e7650ef142d
+#5 extracting sha256:401853d00bcc734e9b27b22c5aa36fac784eb4979a72a4a65dce1e7650ef142d 0.3s done
+#5 DONE 1671.9s
 
-#3 [internal] load .dockerignore
-#3 transferring context: 2B done
-#3 DONE 0.2s
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:c72396c204ba04e8d9219e543fe48f68007baffb680fd753e1e0e2bb538914c1
+#5 extracting sha256:c72396c204ba04e8d9219e543fe48f68007baffb680fd753e1e0e2bb538914c1 0.3s done
+#5 DONE 1672.2s
 
-#4 [internal] load build context
-#4 DONE 0.0s
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:da82a8992eed4fba474f8a13fc4b940b76ab3235e35ab0a61cc72c52d73df46c
+#5 extracting sha256:da82a8992eed4fba474f8a13fc4b940b76ab3235e35ab0a61cc72c52d73df46c 9.1s done
+#5 DONE 1681.3s
 
-#5 [1/6] FROM gcr.io/oss-fuzz-base/base-builder-jvm:latest@sha256:595c94d6693da0e9616399dfa42f3b40d3004407d72444c392e9895e32dc1df5
-#5 resolve gcr.io/oss-fuzz-base/base-builder-jvm:latest@sha256:595c94d6693da0e9616399dfa42f3b40d3004407d72444c392e9895e32dc1df5
-#5 resolve gcr.io/oss-fuzz-base/base-builder-jvm:latest@sha256:595c94d6693da0e9616399dfa42f3b40d3004407d72444c392e9895e32dc1df5 0.2s done
-#5 DONE 0.3s
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:19cd3b047a1addc35bfc79bf7b74be6c487a736a61becf8d60545b00917ddd9f
+#5 extracting sha256:19cd3b047a1addc35bfc79bf7b74be6c487a736a61becf8d60545b00917ddd9f 4.1s done
+#5 DONE 1685.4s
 
-#5 [1/6] FROM gcr.io/oss-fuzz-base/base-builder-jvm:latest@sha256:595c94d6693da0e9616399dfa42f3b40d3004407d72444c392e9895e32dc1df5
-#5 CACHED
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:e884d0f7c3099f902863180b30d81c4e1b52abf07ea0a51d567eda7824fbb033
+#5 extracting sha256:e884d0f7c3099f902863180b30d81c4e1b52abf07ea0a51d567eda7824fbb033 0.3s done
+#5 DONE 1685.7s
 
-#4 [internal] load build context
-#4 transferring context: 2.78kB 0.0s done
-#4 DONE 0.4s
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:9feeef272cec0b20c9033863a1a5ba8037e91b6ca7300906c892e9ae892dd864
+#5 extracting sha256:9feeef272cec0b20c9033863a1a5ba8037e91b6ca7300906c892e9ae892dd864 0.3s done
+#5 DONE 1686.0s
 
-#6 [2/6] RUN apt-get update && apt-get install -y openjdk-21-jdk-headless
-#6 4.266 Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
-#6 5.388 Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
-#6 5.883 Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
-#6 7.824 Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
-#6 8.098 Fetched 383 kB in 5s (79.5 kB/s)
-#6 8.098 Reading package lists...
-#6 10.98 Reading package lists...
-#6 12.14 Building dependency tree...
-#6 12.33 Reading state information...
-#6 12.59 The following packages were automatically installed and are no longer required:
-#6 12.59   autotools-dev libsigsegv2 m4
-#6 12.59 Use 'apt autoremove' to remove them.
-#6 12.59 The following additional packages will be installed:
-#6 12.59   alsa-topology-conf alsa-ucm-conf ca-certificates-java dbus fontconfig-config
-#6 12.59   fonts-dejavu-core java-common libapparmor1 libasound2 libasound2-data
-#6 12.59   libavahi-client3 libavahi-common-data libavahi-common3 libcups2 libdbus-1-3
-#6 12.59   libfontconfig1 libfreetype6 libglib2.0-0 libglib2.0-data libgraphite2-3
-#6 12.59   libharfbuzz0b libicu66 libjpeg-turbo8 libjpeg8 liblcms2-2 libnspr4 libnss3
-#6 12.59   libpcsclite1 libpng16-16 libxml2 openjdk-21-jre-headless shared-mime-info
-#6 12.59   ucf xdg-user-dirs
-#6 12.59 Suggested packages:
-#6 12.59   default-dbus-session-bus | dbus-session-bus default-jre libasound2-plugins
-#6 12.59   alsa-utils cups-common liblcms2-utils pcscd openjdk-21-demo
-#6 12.59   openjdk-21-source libnss-mdns fonts-dejavu-extra fonts-ipafont-gothic
-#6 12.59   fonts-ipafont-mincho fonts-wqy-microhei | fonts-wqy-zenhei fonts-indic
-#6 12.83 The following NEW packages will be installed:
-#6 12.83   alsa-topology-conf alsa-ucm-conf ca-certificates-java dbus fontconfig-config
-#6 12.83   fonts-dejavu-core java-common libapparmor1 libasound2 libasound2-data
-#6 12.83   libavahi-client3 libavahi-common-data libavahi-common3 libcups2 libdbus-1-3
-#6 12.83   libfontconfig1 libfreetype6 libglib2.0-0 libglib2.0-data libgraphite2-3
-#6 12.83   libharfbuzz0b libicu66 libjpeg-turbo8 libjpeg8 liblcms2-2 libnspr4 libnss3
-#6 12.83   libpcsclite1 libpng16-16 libxml2 openjdk-21-jdk-headless
-#6 12.83   openjdk-21-jre-headless shared-mime-info ucf xdg-user-dirs
-#6 14.15 0 upgraded, 35 newly installed, 0 to remove and 0 not upgraded.
-#6 14.15 Need to get 140 MB of archives.
-#6 14.15 After this operation, 358 MB of additional disk space will be used.
-#6 14.15 Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libapparmor1 amd64 2.13.3-7ubuntu5.4 [36.0 kB]
-#6 16.10 Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libdbus-1-3 amd64 1.12.16-2ubuntu2.3 [179 kB]
-#6 18.03 Get:3 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 dbus amd64 1.12.16-2ubuntu2.3 [151 kB]
-#6 23.05 Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-0 amd64 2.64.6-1~ubuntu20.04.9 [1290 kB]
-#6 24.00 Get:5 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-data all 2.64.6-1~ubuntu20.04.9 [5836 B]
-#6 36.09 Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
-#6 40.04 Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
-#6 42.27 Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 shared-mime-info amd64 1.15-1 [430 kB]
-#6 43.50 Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 ucf all 3.0038+nmu1 [51.6 kB]
-#6 44.69 Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 xdg-user-dirs amd64 0.17-2ubuntu1 [48.3 kB]
-#6 46.28 Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 libpng16-16 amd64 1.6.37-2 [179 kB]
-#6 47.01 Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 alsa-topology-conf all 1.2.2-1 [7364 B]
-#6 48.01 Get:13 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 alsa-ucm-conf all 1.2.2-1ubuntu0.13 [27.0 kB]
-#6 48.74 Get:14 http://archive.ubuntu.com/ubuntu focal/main amd64 java-common all 0.72 [6816 B]
-#6 50.24 Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64 liblcms2-2 amd64 2.9-4 [140 kB]
-#6 51.69 Get:16 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libjpeg-turbo8 amd64 2.0.3-0ubuntu1.20.04.3 [118 kB]
-#6 52.48 Get:17 http://archive.ubuntu.com/ubuntu focal/main amd64 libjpeg8 amd64 8c-2ubuntu8 [2194 B]
-#6 54.16 Get:18 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libnspr4 amd64 2:4.35-0ubuntu0.20.04.1 [108 kB]
-#6 57.49 Get:19 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libnss3 amd64 2:3.98-0ubuntu0.20.04.2 [1391 kB]
-#6 58.55 Get:20 http://archive.ubuntu.com/ubuntu focal/main amd64 libpcsclite1 amd64 1.8.26-3 [22.0 kB]
-#6 118.6 Ign:21 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jre-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
-#6 121.7 Get:22 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 ca-certificates-java all 20190405ubuntu1.1 [12.4 kB]
-#6 169.4 Get:23 http://archive.ubuntu.com/ubuntu focal/main amd64 fonts-dejavu-core all 2.37-1 [1041 kB]
-#6 172.5 Get:24 http://archive.ubuntu.com/ubuntu focal/main amd64 fontconfig-config all 2.13.1-2ubuntu3 [28.8 kB]
-#6 173.6 Get:25 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libasound2-data all 1.2.2-2.1ubuntu2.5 [20.1 kB]
-#6 177.4 Get:26 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libasound2 amd64 1.2.2-2.1ubuntu2.5 [335 kB]
-#6 179.1 Get:27 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libavahi-common-data amd64 0.7-4ubuntu7.3 [21.4 kB]
-#6 179.6 Err:21 http://security.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jre-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
-#6 179.6   Connection failed [IP: 198.18.0.19 80]
-#6 180.9 Get:28 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libavahi-common3 amd64 0.7-4ubuntu7.3 [21.9 kB]
-#6 182.8 Get:29 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libavahi-client3 amd64 0.7-4ubuntu7.3 [25.5 kB]
-#6 186.9 Get:30 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libcups2 amd64 2.3.1-9ubuntu1.9 [234 kB]
-#6 189.9 Get:31 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libfreetype6 amd64 2.10.1-2ubuntu0.4 [341 kB]
-#6 191.8 Get:32 http://archive.ubuntu.com/ubuntu focal/main amd64 libfontconfig1 amd64 2.13.1-2ubuntu3 [114 kB]
-#6 195.6 Get:33 http://archive.ubuntu.com/ubuntu focal/main amd64 libgraphite2-3 amd64 1.3.13-11build1 [73.5 kB]
-#6 198.8 Get:34 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libharfbuzz0b amd64 2.6.4-1ubuntu4.3 [391 kB]
-#6 258.8 Ign:35 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jdk-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
-#6 318.9 Err:35 http://security.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jdk-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
-#6 318.9   Connection failed [IP: 198.18.0.19 80]
-#6 318.9 Fetched 16.0 MB in 5min 6s (52.3 kB/s)
-#6 318.9 E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/universe/o/openjdk-21/openjdk-21-jre-headless_21.0.7+6~us1-0ubuntu1~20.04_amd64.deb  Connection failed [IP: 198.18.0.19 80]
-#6 318.9 E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/universe/o/openjdk-21/openjdk-21-jdk-headless_21.0.7+6~us1-0ubuntu1~20.04_amd64.deb  Connection failed [IP: 198.18.0.19 80]
-#6 318.9 E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
-#6 ERROR: process "/bin/sh -c apt-get update && apt-get install -y openjdk-21-jdk-headless" did not complete successfully: exit code: 100
-------
- > [2/6] RUN apt-get update && apt-get install -y openjdk-21-jdk-headless:
-191.8 Get:32 http://archive.ubuntu.com/ubuntu focal/main amd64 libfontconfig1 amd64 2.13.1-2ubuntu3 [114 kB]
-195.6 Get:33 http://archive.ubuntu.com/ubuntu focal/main amd64 libgraphite2-3 amd64 1.3.13-11build1 [73.5 kB]
-198.8 Get:34 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libharfbuzz0b amd64 2.6.4-1ubuntu4.3 [391 kB]
-258.8 Ign:35 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jdk-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
-318.9 Err:35 http://security.ubuntu.com/ubuntu focal-updates/universe amd64 openjdk-21-jdk-headless amd64 21.0.7+6~us1-0ubuntu1~20.04
-318.9   Connection failed [IP: 198.18.0.19 80]
-318.9 Fetched 16.0 MB in 5min 6s (52.3 kB/s)
-318.9 E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/universe/o/openjdk-21/openjdk-21-jre-headless_21.0.7+6~us1-0ubuntu1~20.04_amd64.deb  Connection failed [IP: 198.18.0.19 80]
-318.9 E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/universe/o/openjdk-21/openjdk-21-jdk-headless_21.0.7+6~us1-0ubuntu1~20.04_amd64.deb  Connection failed [IP: 198.18.0.19 80]
-318.9 E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
-------
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:595bf93195647fe13af7e9b22b4ebd2d6917e20f1dd8c8e630035c04b7de017e
+#5 extracting sha256:595bf93195647fe13af7e9b22b4ebd2d6917e20f1dd8c8e630035c04b7de017e 0.3s done
+#5 extracting sha256:9b594072c3b86cba6afa822231ec6863125af0f60da5d27ba5ade60abce045d8
+#5 extracting sha256:9b594072c3b86cba6afa822231ec6863125af0f60da5d27ba5ade60abce045d8 0.3s done
+#5 DONE 1686.5s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:d171efbf5be061fec234b13621b4c1640ab55980a7bbba480b1128ebf7d25e93
+#5 extracting sha256:d171efbf5be061fec234b13621b4c1640ab55980a7bbba480b1128ebf7d25e93 0.5s done
+#5 DONE 1687.1s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:6e788f8b01af5a33fb85fb8bb60702f2265be521810d2a6eb050b0800dc2c6fc
+#5 extracting sha256:6e788f8b01af5a33fb85fb8bb60702f2265be521810d2a6eb050b0800dc2c6fc 0.3s done
+#5 DONE 1687.3s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:c194f7f28640e3a7e3e088ee3863cf8877966ec35863069f85314158bfa0703b
+#5 extracting sha256:c194f7f28640e3a7e3e088ee3863cf8877966ec35863069f85314158bfa0703b 0.3s done
+#5 DONE 1687.6s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:7ad1a03e4670d8fdbc101fc76d0425eaa1f62555fb8bfa8831a861e32658e846
+#5 extracting sha256:7ad1a03e4670d8fdbc101fc76d0425eaa1f62555fb8bfa8831a861e32658e846 0.3s done
+#5 extracting sha256:738f4d596aa6adea63755a175a7ce7d7957e9d941e305df2b027c9364063a924
+#5 extracting sha256:738f4d596aa6adea63755a175a7ce7d7957e9d941e305df2b027c9364063a924 0.2s done
+#5 DONE 1688.1s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:bcb83e5d02f4745308fadfdd37fae5c3b127d4377d947b1cb163aab5ad5999e0
+#5 extracting sha256:bcb83e5d02f4745308fadfdd37fae5c3b127d4377d947b1cb163aab5ad5999e0 0.3s done
+#5 DONE 1688.4s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:22c64d66544a600932980fcfd22127146986c0034ff130732f5e01313ef4f33e
+#5 extracting sha256:22c64d66544a600932980fcfd22127146986c0034ff130732f5e01313ef4f33e 0.9s done
+#5 extracting sha256:7e690b0d54d411dbace6dc3bc20333c88076a9ec32a3283b73f0f29a5c37055c
+#5 extracting sha256:7e690b0d54d411dbace6dc3bc20333c88076a9ec32a3283b73f0f29a5c37055c 0.3s done
+#5 extracting sha256:2b00010b43acfdd2d26c6759abb98bb7588cf99227fea996f306bc237bf6e054
+#5 extracting sha256:2b00010b43acfdd2d26c6759abb98bb7588cf99227fea996f306bc237bf6e054 0.4s done
+#5 DONE 1689.9s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:7ae45aa1c6bd6361eb9e437de4a9cfb76b35b0fc8da7fafa3297d66b0ccefe3d
+#5 extracting sha256:7ae45aa1c6bd6361eb9e437de4a9cfb76b35b0fc8da7fafa3297d66b0ccefe3d 0.2s done
+#5 extracting sha256:3a794730652aa5958e2f7a9167ce6b3589c2d8955fc9bfda1707fbf94f0c9e91
+#5 extracting sha256:3a794730652aa5958e2f7a9167ce6b3589c2d8955fc9bfda1707fbf94f0c9e91 0.3s done
+#5 DONE 1690.4s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:97ce3e2b55b11b599651c4e0fcda547de111cae4fc7afdfd41d823251d72fbfa
+#5 extracting sha256:97ce3e2b55b11b599651c4e0fcda547de111cae4fc7afdfd41d823251d72fbfa 0.3s done
+#5 DONE 1690.7s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:4a665ba2d4c13339fc2fb827bbb814b06a9a931e2bd9e739fa7ea37000f06a13
+#5 extracting sha256:4a665ba2d4c13339fc2fb827bbb814b06a9a931e2bd9e739fa7ea37000f06a13 2.1s done
+#5 DONE 1692.8s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:c941038f6f528a0d72a9395907c0b2399d06c7579795e2216e732dd5ece3e743
+#5 extracting sha256:c941038f6f528a0d72a9395907c0b2399d06c7579795e2216e732dd5ece3e743 0.4s done
+#5 DONE 1693.2s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:d59320b1cc3eacf53388b2b1f20b461c2c4b78c35b36e8a7e6fe04662a3f7b6b
+#5 extracting sha256:d59320b1cc3eacf53388b2b1f20b461c2c4b78c35b36e8a7e6fe04662a3f7b6b 0.2s done
+#5 extracting sha256:f96dfc80d2dfba339821d83d7ee2795ef31e85f5589629a570d488c5d0082a95
+#5 extracting sha256:f96dfc80d2dfba339821d83d7ee2795ef31e85f5589629a570d488c5d0082a95 0.3s done
+#5 DONE 1693.7s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:c2783a381a5b48e68e8cdbf4fbf5129de836841071101b612bc9b23663ebf057
+#5 extracting sha256:c2783a381a5b48e68e8cdbf4fbf5129de836841071101b612bc9b23663ebf057 0.2s done
+#5 DONE 1694.0s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:60d9f04b8e0a508df7de419bf7068e6fa58b5d0f7d56f637375fb7d9c04d95a9
+#5 extracting sha256:60d9f04b8e0a508df7de419bf7068e6fa58b5d0f7d56f637375fb7d9c04d95a9 0.5s done
+#5 DONE 1694.5s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:b86b76d168edd877e4b317854e6fdf46b7f5cb0c214c33005a0da504a92809d7
+#5 extracting sha256:b86b76d168edd877e4b317854e6fdf46b7f5cb0c214c33005a0da504a92809d7 1.6s done
+#5 DONE 1696.1s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:f9422947b94009951f1e08372d50e541ad116cab4acc2995599ee21426f3a72e
+#5 extracting sha256:f9422947b94009951f1e08372d50e541ad116cab4acc2995599ee21426f3a72e 0.2s done
+#5 extracting sha256:b76b9752e6e74684e03997117b00163c8bfc1db559d146fdd6383a800c1d0cb1
+#5 extracting sha256:b76b9752e6e74684e03997117b00163c8bfc1db559d146fdd6383a800c1d0cb1 0.2s done
+#5 DONE 1696.6s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:9318eba732ed1a5bed0cf0eb212bd6d820421cdf9ea26db83609fe84af92f2b5
+#5 extracting sha256:9318eba732ed1a5bed0cf0eb212bd6d820421cdf9ea26db83609fe84af92f2b5 0.3s done
+#5 DONE 1696.8s
+
+#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
+#5 extracting sha256:35ccb028498c68c79aa2e2cb4e5049acaac441dbe196d2f2ed036dd8fb628d9c
+#5 extracting sha256:35ccb028498c68c79aa2e2cb4e5049acaac441dbe196d2f2ed036dd8fb628d9c 0.8s done
+#5 extracting sha256:a4f10e011eb80684566fc80fc5b616676e4386296da4479b9a8ab2c9fb9d6f63
+#5 extracting sha256:a4f10e011eb80684566fc80fc5b616676e4386296da4479b9a8ab2c9fb9d6f63 0.3s done
+#5 DONE 1697.9s
+
+#6 [2/8] RUN apt-get update && apt-get install -y mercurial
+#6 3.924 Hit:1 http://archive.ubuntu.com/ubuntu noble InRelease
+#6 4.714 Get:2 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+#6 6.144 Get:3 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+#6 6.168 Get:4 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+#6 9.994 Get:5 http://archive.ubuntu.com/ubuntu noble-updates/universe i386 Packages [1251 kB]
+#6 13.96 Get:6 http://archive.ubuntu.com/ubuntu noble-updates/main i386 Packages [713 kB]
+#6 19.49 Get:7 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [2137 kB]
+#6 26.71 Get:8 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1955 kB]
+#6 26.95 Fetched 6435 kB in 24s (270 kB/s)
+#6 26.95 Reading package lists...
+#6 29.87 Reading package lists...
+#6 30.81 Building dependency tree...
+#6 31.01 Reading state information...
+#6 31.24 The following packages were automatically installed and are no longer required:
+#6 31.24   autotools-dev m4
+#6 31.24 Use 'apt autoremove' to remove them.
+#6 31.24 The following additional packages will be installed:
+#6 31.24   libpython3-stdlib libpython3.12-minimal libpython3.12-stdlib media-types
+#6 31.24   mercurial-common python3 python3-minimal python3.12 python3.12-minimal ucf
+#6 31.24 Suggested packages:
+#6 31.24   kdiff3 | kdiff3-qt | kompare | meld | tkcvs | mgdiff qct python3-mysqldb
+#6 31.24   python3-openssl python3-pygments wish python3-doc python3-tk python3-venv
+#6 31.24   python3.12-venv python3.12-doc binfmt-support
+#6 31.41 The following NEW packages will be installed:
+#6 31.41   libpython3-stdlib libpython3.12-minimal libpython3.12-stdlib media-types
+#6 31.41   mercurial mercurial-common python3 python3-minimal python3.12
+#6 31.41   python3.12-minimal ucf
+#6 35.17 0 upgraded, 11 newly installed, 0 to remove and 0 not upgraded.
+#6 35.17 Need to get 9314 kB of archives.
+#6 35.17 After this operation, 40.2 MB of additional disk space will be used.
+#6 35.17 Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libpython3.12-minimal amd64 3.12.3-1ubuntu0.9 [836 kB]
+#6 40.70 Get:2 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3.12-minimal amd64 3.12.3-1ubuntu0.9 [2332 kB]
+#6 41.82 Get:3 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3-minimal amd64 3.12.3-0ubuntu2.1 [27.4 kB]
+#6 42.64 Get:4 http://archive.ubuntu.com/ubuntu noble/main amd64 media-types all 10.1.0 [27.5 kB]
+#6 49.08 Get:5 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libpython3.12-stdlib amd64 3.12.3-1ubuntu0.9 [2068 kB]
+#6 51.87 Get:6 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3.12 amd64 3.12.3-1ubuntu0.9 [651 kB]
+#6 52.50 Get:7 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libpython3-stdlib amd64 3.12.3-0ubuntu2.1 [10.1 kB]
+#6 53.37 Get:8 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3 amd64 3.12.3-0ubuntu2.1 [23.0 kB]
+#6 55.95 Get:9 http://archive.ubuntu.com/ubuntu noble/main amd64 ucf all 3.0043+nmu1 [56.5 kB]
+#6 64.21 Get:10 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 mercurial-common all 6.7.2-1ubuntu2.2 [2955 kB]
+#6 66.45 Get:11 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 mercurial amd64 6.7.2-1ubuntu2.2 [328 kB]
+#6 67.17 debconf: delaying package configuration, since apt-utils is not installed
+#6 67.31 Fetched 9314 kB in 35s (266 kB/s)
+#6 67.78 Selecting previously unselected package libpython3.12-minimal:amd64.
+#6 67.78 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 17633 files and directories currently installed.)
+#6 67.91 Preparing to unpack .../libpython3.12-minimal_3.12.3-1ubuntu0.9_amd64.deb ...
+#6 67.99 Unpacking libpython3.12-minimal:amd64 (3.12.3-1ubuntu0.9) ...
+#6 68.69 Selecting previously unselected package python3.12-minimal.
+#6 68.69 Preparing to unpack .../python3.12-minimal_3.12.3-1ubuntu0.9_amd64.deb ...
+#6 68.83 Unpacking python3.12-minimal (3.12.3-1ubuntu0.9) ...
+#6 69.34 Setting up libpython3.12-minimal:amd64 (3.12.3-1ubuntu0.9) ...
+#6 69.65 Setting up python3.12-minimal (3.12.3-1ubuntu0.9) ...
+#6 70.88 Selecting previously unselected package python3-minimal.
+#6 70.88 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 17944 files and directories currently installed.)
+#6 70.89 Preparing to unpack .../python3-minimal_3.12.3-0ubuntu2.1_amd64.deb ...
+#6 70.96 Unpacking python3-minimal (3.12.3-0ubuntu2.1) ...
+#6 71.38 Selecting previously unselected package media-types.
+#6 71.39 Preparing to unpack .../media-types_10.1.0_all.deb ...
+#6 71.46 Unpacking media-types (10.1.0) ...
+#6 71.89 Selecting previously unselected package libpython3.12-stdlib:amd64.
+#6 71.89 Preparing to unpack .../libpython3.12-stdlib_3.12.3-1ubuntu0.9_amd64.deb ...
+#6 71.96 Unpacking libpython3.12-stdlib:amd64 (3.12.3-1ubuntu0.9) ...
+#6 72.45 Selecting previously unselected package python3.12.
+#6 72.45 Preparing to unpack .../python3.12_3.12.3-1ubuntu0.9_amd64.deb ...
+#6 72.53 Unpacking python3.12 (3.12.3-1ubuntu0.9) ...
+#6 72.93 Selecting previously unselected package libpython3-stdlib:amd64.
+#6 72.93 Preparing to unpack .../libpython3-stdlib_3.12.3-0ubuntu2.1_amd64.deb ...
+#6 73.01 Unpacking libpython3-stdlib:amd64 (3.12.3-0ubuntu2.1) ...
+#6 73.42 Setting up python3-minimal (3.12.3-0ubuntu2.1) ...
+#6 74.21 Selecting previously unselected package python3.
+#6 74.21 (Reading database ... 
+(Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+(Reading database ... 65%
+(Reading database ... 70%
+(Reading database ... 75%
+(Reading database ... 80%
+(Reading database ... 85%
+(Reading database ... 90%
+(Reading database ... 95%
+(Reading database ... 100%
+(Reading database ... 18378 files and directories currently installed.)
+#6 74.22 Preparing to unpack .../python3_3.12.3-0ubuntu2.1_amd64.deb ...
+#6 74.30 Unpacking python3 (3.12.3-0ubuntu2.1) ...
+#6 74.98 Selecting previously unselected package ucf.
+#6 74.98 Preparing to unpack .../ucf_3.0043+nmu1_all.deb ...
+#6 75.06 Moving old data out of the way
+#6 75.06 Unpacking ucf (3.0043+nmu1) ...
+#6 75.71 Selecting previously unselected package mercurial-common.
+#6 75.71 Preparing to unpack .../mercurial-common_6.7.2-1ubuntu2.2_all.deb ...
+#6 75.82 Unpacking mercurial-common (6.7.2-1ubuntu2.2) ...
+#6 76.67 Selecting previously unselected package mercurial.
+#6 76.67 Preparing to unpack .../mercurial_6.7.2-1ubuntu2.2_amd64.deb ...
+#6 76.75 Unpacking mercurial (6.7.2-1ubuntu2.2) ...
+#6 77.14 Setting up media-types (10.1.0) ...
+#6 77.48 Setting up libpython3.12-stdlib:amd64 (3.12.3-1ubuntu0.9) ...
+#6 77.71 Setting up python3.12 (3.12.3-1ubuntu0.9) ...
+#6 78.63 Setting up ucf (3.0043+nmu1) ...
+#6 79.12 Setting up libpython3-stdlib:amd64 (3.12.3-0ubuntu2.1) ...
+#6 79.39 Setting up python3 (3.12.3-0ubuntu2.1) ...
+#6 79.72 Setting up mercurial-common (6.7.2-1ubuntu2.2) ...
+#6 81.33 Setting up mercurial (6.7.2-1ubuntu2.2) ...
+#6 81.70 
+#6 81.70 Creating config file /etc/mercurial/hgrc.d/hgext.rc with new version
+#6 DONE 83.8s
+
+#7 [3/8] RUN python -m pip install numpy
+#7 4.551 Collecting numpy
+#7 4.855   Downloading numpy-2.4.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+#7 5.246 Downloading numpy-2.4.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.6 MB)
+#7 41.89    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.6/16.6 MB 489.0 kB/s  0:00:36
+#7 42.03 Installing collected packages: numpy
+#7 44.81 Successfully installed numpy-2.4.0
+#7 44.82 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#7 DONE 45.9s
+
+#8 [4/8] RUN git clone https://bitbucket.org/jpommier/pffft /src/pffft
+#8 1.093 Cloning into '/src/pffft'...
+#8 DONE 4.3s
+
+#9 [5/8] WORKDIR pffft
+#9 DONE 0.8s
+
+#10 [6/8] COPY run_tests.sh build.sh /src
+#10 DONE 1.0s
+
+#11 [7/8] COPY generate_seed_corpus.py /src/pffft
+#11 DONE 0.7s
+
+#12 [8/8] COPY pffft_fuzzer.cc /src/pffft
+#12 DONE 0.8s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 8.4s done
+#13 exporting manifest sha256:6961eb4e209db4a190b9443dc29dd168a1f51c7c1967c0b5adad0e5b3520cefb
+#13 exporting manifest sha256:6961eb4e209db4a190b9443dc29dd168a1f51c7c1967c0b5adad0e5b3520cefb 0.2s done
+#13 exporting config sha256:959e8369f432a1b73098ba61d3392e2843ebfb331cf6c8902c1090871466eaa1
+#13 exporting config sha256:959e8369f432a1b73098ba61d3392e2843ebfb331cf6c8902c1090871466eaa1 0.2s done
+#13 exporting attestation manifest sha256:48a2d1dfe85cf4825f913ec2698d453fd63960cc86e191d9af081524eddec489
+#13 exporting attestation manifest sha256:48a2d1dfe85cf4825f913ec2698d453fd63960cc86e191d9af081524eddec489 0.4s done
+#13 exporting manifest list sha256:654444cb40f33ab602134796b238a9dda1cdb714b9e9067b21ae5c3cf296f0a1
+#13 exporting manifest list sha256:654444cb40f33ab602134796b238a9dda1cdb714b9e9067b21ae5c3cf296f0a1 0.2s done
+#13 naming to gcr.io/oss-fuzz/pffft:latest
+#13 naming to gcr.io/oss-fuzz/pffft:latest 0.1s done
+#13 unpacking to gcr.io/oss-fuzz/pffft:latest
+#13 unpacking to gcr.io/oss-fuzz/pffft:latest 5.4s done
+#13 DONE 15.2s
 
  [33m1 warning found (use docker --debug to expand):
-[0m - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 25)
-Dockerfile:18
---------------------
-  16 |     FROM gcr.io/oss-fuzz-base/base-builder-jvm
-  17 |     # Install Java 21 for checkstyle build
-  18 | >>> RUN apt-get update && apt-get install -y openjdk-21-jdk-headless
-  19 |     ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
-  20 |     ENV PATH=$JAVA_HOME/bin:$PATH
---------------------
-ERROR: failed to build: failed to solve: process "/bin/sh -c apt-get update && apt-get install -y openjdk-21-jdk-headless" did not complete successfully: exit code: 100
-ERROR:common_utils:Docker build failed.
+[0m - WorkdirRelativePath: Relative workdir "pffft" can have unexpected results if the base image changes (line 21)
+INFO:__main__:Keeping existing build artifacts as-is (if any).
+INFO:__main__:Running: docker run --privileged --shm-size=2g --platform linux/amd64 --rm -i -e FUZZING_ENGINE=libfuzzer -e SANITIZER=address -e ARCHITECTURE=x86_64 -e PROJECT_NAME=pffft -e HELPER=True -e FUZZING_LANGUAGE=c++ -v /root/fix_build_agent/process/project/pffft:/src/pffft -v /root/fix_build_agent/oss-fuzz/build/out/pffft/:/out -v /root/fix_build_agent/oss-fuzz/build/work/pffft:/work -t gcr.io/oss-fuzz/pffft.
+---------------------------------------------------------------
+vm.mmap_rnd_bits = 28
+Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+---------------------------------------------------------------
+CC=clang
+CXX=clang++
+CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+---------------------------------------------------------------
++ SRC_DIR=/src/pffft
++ cd /work
++ SEED_CORPUS_ZIP_PATH=/out/pffft_fuzzers_seed_corpus.zip
++ '[' -d seed_corpus_tmp ']'
++ mkdir seed_corpus_tmp
++ python /src/pffft/generate_seed_corpus.py seed_corpus_tmp
+python: can't open file '/src/pffft/generate_seed_corpus.py': [Errno 2] No such file or directory
+ERROR:__main__:Building fuzzers failed.
