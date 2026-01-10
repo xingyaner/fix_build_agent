@@ -277,25 +277,23 @@ async def process_single_project(
     session_service: InMemorySessionService
 ) -> Tuple[bool, Optional[str]]:
     """
-    【抗抖动增强版】处理单个项目的完整修复工作流。
-    集成了 API 指数退避重试、长上下文冷却时间以及鲁棒的结果解析。
+    【严谨版】处理单个项目的完整修复工作流。
+    确保由工具自动识别的绝对路径被正确透传。
     """
     project_name = project_info['project_name']
     sha = project_info['sha']
-    # 关键补全：获取原始日志路径，用于元数据提取
-    original_log_path = project_info.get('log_path', "") 
+    # 从 project_info 中提取由上一步工具自动关联的路径
+    original_log_path = project_info.get('original_log_path', "")
 
-    # 设置日志上下文
     GLOBAL_LOGGER.set_project_context(project_name)
 
-    # 生成唯一的 Session ID
     session_id = f"session_{project_name.replace('-', '_')}_{int(time.time())}"
     runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
 
-    # 关键补全：将日志路径注入初始输入
+    # 构造初始输入，确保 Agent 知道日志位置以便提取元数据
     initial_input = json.dumps({
         "project_name": project_name, 
-        "sha": sha,
+        "sha": sha, 
         "original_log_path": original_log_path
     })
     initial_message = types.Content(parts=[types.Part(text=initial_input)], role='user')
@@ -303,64 +301,37 @@ async def process_single_project(
     is_successful = False
     final_basic_information = None
 
-    # --- 核心重试循环 (处理 API 抖动和 Context 溢出) ---
     for attempt in range(MAX_RETRIES):
         current_session_id = f"session_{project_name.replace('-', '_')}_{int(time.time())}_at{attempt}"
-        # 每一轮重试都创建全新的 Session，确保状态纯净
         await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=current_session_id)
 
         try:
             print(f"\n--- Starting attempt {attempt + 1}/{MAX_RETRIES} for project: {project_name} ---")
+            if original_log_path:
+                print(f"--- Successfully linked log: {os.path.basename(original_log_path)} ---")
+            else:
+                print(f"--- [CRITICAL] No valid log file found for {project_name}! ---")
 
-            # 【Master Fix】: 注入“喘息时间”与指数退避
             wait_time = 5 if attempt == 0 else (attempt ** 2) * 20
-            if attempt > 0:
-                print(f"--- [Cooldown] API instability detected. Sleeping for {wait_time}s... ---")
             await asyncio.sleep(wait_time)
 
             async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id, new_message=initial_message):
-                # 实时捕获基础信息（包含路径和提取出的元数据）
                 if event.author == 'initial_setup_agent' and event.actions and event.actions.state_delta:
                     if 'basic_information' in event.actions.state_delta:
                         final_basic_information = event.actions.state_delta['basic_information']
 
-                # 实时监测决策 Agent 的成功信号
                 if (event.actions and event.actions.escalate and
                     event.author == 'decision_agent' and
                     (resp := event.get_function_responses()) and
                     resp[0].name == 'exit_loop' and resp[0].response.get('status') == 'SUCCESS'):
                     is_successful = True
-
             break
-
-        except (litellm.exceptions.InternalServerError,
-                litellm.exceptions.BadGatewayError,
-                litellm.exceptions.ServiceUnavailableError,
-                litellm.exceptions.APIConnectionError) as e:
-            print(f"\n--- [API SERVER ERROR] Attempt {attempt + 1} failed: {e} ---")
-            if attempt + 1 >= MAX_RETRIES:
-                print(f"--- [FATAL] Max retries reached for API issues. Giving up on {project_name}. ---")
-                return False, None
-            continue 
-
-        except ContextWindowExceededError:
-            print(f"\n--- [CONTEXT EXCEEDED] Attempt {attempt + 1} failed. ---")
-            if attempt + 1 >= MAX_RETRIES:
-                print(f"--- [FATAL] Maximum retries reached. Giving up. ---")
-                return False, None
-
-            print("--- Attempting to truncate prompt file and retry... ---")
-            truncate_prompt_file("generated_prompt_file/prompt.txt")
-            await asyncio.sleep(10)
+        except Exception as e:
+            print(f"--- [ERROR] Attempt {attempt+1} failed: {e} ---")
+            if attempt + 1 >= MAX_RETRIES: return False, None
             continue
 
-        except Exception as e:
-            print(f"--- [FATAL ERROR] An uncaught exception occurred: {e} ---")
-            import traceback
-            traceback.print_exc()
-            return False, None
-
-    # --- 结果解析逻辑 ---
+    # 结果解析逻辑保持不变...
     project_config_path = None
     if is_successful and final_basic_information:
         if isinstance(final_basic_information, dict):
@@ -375,7 +346,7 @@ async def process_single_project(
                     info_dict = json.loads(final_basic_information)
                     project_config_path = info_dict.get('project_config_path')
             except Exception as e:
-                 print(f"--- [WARNING] Failed to parse config path from info: {e} ---")
+                 print(f"--- [WARNING] Failed to parse config path: {e} ---")
 
     return is_successful, project_config_path
 

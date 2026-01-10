@@ -288,8 +288,8 @@ def save_commit_diff_to_file(project_name: str, project_source_path: str, sha: s
 
 def read_projects_from_yaml(file_path: str) -> Dict:
     """
-    [New] Reads project information from the specified .yaml file.
-    Only reads entries where "state" is "no".
+    [Rigorous Version] Reads project information and automatically finds the 
+    correct error log file using standard datetime comparison.
     """
     print(f"--- Tool: read_projects_from_yaml called for: {file_path} ---")
     if not os.path.exists(file_path):
@@ -304,31 +304,56 @@ def read_projects_from_yaml(file_path: str) -> Dict:
             return {'status': 'error', 'message': "YAML file must contain a list of projects."}
 
         for index, entry in enumerate(data):
-            # [Core filtering logic]
-            # 读取 state 为 "no" 的项目
             if entry.get('state') == 'no':
                 project_name = entry.get('project')
                 sha = entry.get('oss-fuzz_sha')
-                
-                # --- [关键修改] 获取 error_time ---
-                error_time = entry.get('error_time') 
+                error_time_str = str(entry.get('error_time', ""))
 
                 if project_name and sha:
+                    # --- 严谨的日期自动关联逻辑 ---
+                    log_dir = os.path.join("build_error_log", project_name)
+                    original_log_path = ""
+                    
+                    if os.path.isdir(log_dir):
+                        try:
+                            y, m, d = map(int, error_time_str.replace('.', '-').split('-'))
+                            base_date = datetime(y, m, d)
+                            
+                            candidates = []
+                            for filename in os.listdir(log_dir):
+                                if "error" in filename and filename.endswith(".txt"):
+                                    match = re.search(r"(\d{4})_(\d{1,2})_(\d{1,2})", filename)
+                                    if match:
+                                        fy, fm, fd = map(int, match.groups())
+                                        file_date = datetime(fy, fm, fd)
+                                        
+                                        if file_date >= base_date:
+                                            candidates.append((file_date, filename))
+                            
+                            if candidates:
+                                # 4. 排序逻辑：选择日期最接近基准日期的一个（即符合条件的最早日志）
+                                candidates.sort(key=lambda x: x[0])
+                                best_match = candidates[0][1]
+                                original_log_path = os.path.abspath(os.path.join(log_dir, best_match))
+                                print(f"  - Rigorous Match: {best_match} (>= {error_time_str})")
+                        except Exception as e:
+                            print(f"  - Warning: Date parsing error for {project_name}: {e}")
+
                     project_info = {
                         "project_name": project_name,
                         "sha": str(sha),
-                        "row_index": index,  # 使用列表索引作为 ID，方便回写
-                        # --- [关键修改] 存入字典 ---
-                        "error_time": str(error_time) if error_time else None
+                        "row_index": index,
+                        "error_time": error_time_str,
+                        "original_log_path": original_log_path
                     }
                     projects_to_run.append(project_info)
                 else:
-                    print(f"Warning: Project at index {index} missing 'project' or 'oss-fuzz_sha'. Skipping.")
+                    print(f"Warning: Project at index {index} missing core fields. Skipping.")
 
         print(f"--- Found {len(projects_to_run)} new projects to process. ---")
         return {'status': 'success', 'projects': projects_to_run}
     except Exception as e:
-        return {'status': 'error', 'message': f"Failed to read or parse YAML file: {e}"}
+        return {'status': 'error', 'message': f"Failed to read YAML: {e}"}
 
 
 # Core Tools

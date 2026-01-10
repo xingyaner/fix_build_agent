@@ -1,0 +1,115 @@
+INFO:common_utils:Running: docker build -t gcr.io/oss-fuzz/wolfssl --file /root/fix_build_agent/oss-fuzz/projects/wolfssl/Dockerfile /root/fix_build_agent/oss-fuzz/projects/wolfssl.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.22kB 0.0s done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for gcr.io/oss-fuzz-base/base-builder@sha256:72eb20ecb03ea3c4f45f4eb00d550705a833a337c7a236229efbf7d1feaabe12
+#2 DONE 1.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.2s
+
+#4 [internal] load build context
+#4 transferring context: 30B done
+#4 DONE 0.2s
+
+#5 [ 1/24] FROM gcr.io/oss-fuzz-base/base-builder@sha256:72eb20ecb03ea3c4f45f4eb00d550705a833a337c7a236229efbf7d1feaabe12
+#5 resolve gcr.io/oss-fuzz-base/base-builder@sha256:72eb20ecb03ea3c4f45f4eb00d550705a833a337c7a236229efbf7d1feaabe12
+#5 resolve gcr.io/oss-fuzz-base/base-builder@sha256:72eb20ecb03ea3c4f45f4eb00d550705a833a337c7a236229efbf7d1feaabe12 0.3s done
+#5 DONE 0.4s
+
+#5 [ 1/24] FROM gcr.io/oss-fuzz-base/base-builder@sha256:72eb20ecb03ea3c4f45f4eb00d550705a833a337c7a236229efbf7d1feaabe12
+#5 CACHED
+
+#6 [ 2/24] RUN apt-get update && apt-get install -y make autoconf automake libtool zip wget python bsdmainutils libcrypt-dev:i386
+#6 3.897 Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+#6 4.662 Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+#6 10.00 Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+#6 11.28 Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+#6 11.44 Fetched 383 kB in 8s (46.8 kB/s)
+#6 11.44 Reading package lists...
+#6 13.61 Reading package lists...
+#6 14.86 Building dependency tree...
+#6 15.09 Reading state information...
+#6 15.37 make is already the newest version (4.2.1-1.2).
+#6 15.37 make set to manually installed.
+#6 15.37 zip is already the newest version (3.0-11build1).
+#6 15.37 wget is already the newest version (1.20.3-1ubuntu2.1).
+#6 15.37 The following additional packages will be installed:
+#6 15.37   file gcc-10-base:i386 libc6:i386 libcrypt1:i386 libgcc-s1:i386
+#6 15.37   libidn2-0:i386 libltdl-dev libltdl7 libmagic-mgc libmagic1 libpython2-stdlib
+#6 15.37   libpython2.7-minimal libpython2.7-stdlib libunistring2:i386 mime-support
+#6 15.37   python2 python2-minimal python2.7 python2.7-minimal
+#6 15.37 Suggested packages:
+#6 15.37   autoconf-archive gnu-standards autoconf-doc gettext wamerican | wordlist
+#6 15.37   whois vacation glibc-doc:i386 locales:i386 libtool-doc gfortran
+#6 15.37   | fortran95-compiler gcj-jdk python2-doc python-tk python2.7-doc
+#6 15.37   binfmt-support
+#6 15.48 The following NEW packages will be installed:
+#6 15.48   autoconf automake bsdmainutils file gcc-10-base:i386 libc6:i386
+#6 15.48   libcrypt-dev:i386 libcrypt1:i386 libgcc-s1:i386 libidn2-0:i386 libltdl-dev
+#6 15.48   libltdl7 libmagic-mgc libmagic1 libpython2-stdlib libpython2.7-minimal
+#6 15.48   libpython2.7-stdlib libtool libunistring2:i386 mime-support
+#6 15.48   python-is-python2 python2 python2-minimal python2.7 python2.7-minimal
+#6 17.25 0 upgraded, 25 newly installed, 0 to remove and 0 not upgraded.
+#6 17.25 Need to get 8838 kB of archives.
+#6 17.25 After this operation, 45.1 MB of additional disk space will be used.
+#6 17.25 Get:1 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7-minimal amd64 2.7.18-1~20.04.7 [336 kB]
+#6 20.14 Get:2 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 python2.7-minimal amd64 2.7.18-1~20.04.7 [1278 kB]
+#6 20.97 Get:3 http://archive.ubuntu.com/ubuntu focal/universe amd64 python2-minimal amd64 2.7.17-2ubuntu4 [27.5 kB]
+#6 21.78 Get:4 http://archive.ubuntu.com/ubuntu focal/main amd64 mime-support all 3.64ubuntu1 [30.6 kB]
+#6 24.22 Get:5 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7-stdlib amd64 2.7.18-1~20.04.7 [1889 kB]
+#6 25.76 Get:6 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 python2.7 amd64 2.7.18-1~20.04.7 [248 kB]
+#6 26.41 Get:7 http://archive.ubuntu.com/ubuntu focal/universe amd64 libpython2-stdlib amd64 2.7.17-2ubuntu4 [7072 B]
+#6 27.21 Get:8 http://archive.ubuntu.com/ubuntu focal/universe amd64 python2 amd64 2.7.17-2ubuntu4 [26.5 kB]
+#6 27.77 Get:9 http://archive.ubuntu.com/ubuntu focal-updates/main i386 gcc-10-base i386 10.5.0-1ubuntu1~20.04 [20.8 kB]
+#6 28.76 Get:10 http://archive.ubuntu.com/ubuntu focal-updates/main i386 libgcc-s1 i386 10.5.0-1ubuntu1~20.04 [49.4 kB]
+#6 29.57 Get:11 http://archive.ubuntu.com/ubuntu focal/main i386 libcrypt1 i386 1:4.4.10-10ubuntu4 [90.9 kB]
+#6 32.54 Get:12 http://archive.ubuntu.com/ubuntu focal-updates/main i386 libc6 i386 2.31-0ubuntu9.18 [2581 kB]
+#6 34.05 Get:13 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+#6 35.44 Get:14 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+#6 36.25 Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+#6 37.97 Get:16 http://archive.ubuntu.com/ubuntu focal/main i386 libunistring2 i386 0.9.10-2 [377 kB]
+#6 38.65 Get:17 http://archive.ubuntu.com/ubuntu focal/main i386 libidn2-0 i386 2.2.0-2 [51.4 kB]
+#6 40.04 Get:18 http://archive.ubuntu.com/ubuntu focal/main amd64 bsdmainutils amd64 11.1.2ubuntu3 [181 kB]
+#6 41.27 Get:19 http://archive.ubuntu.com/ubuntu focal/main amd64 autoconf all 2.69-11.1 [321 kB]
+#6 42.64 Get:20 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+#6 52.76 Err:21 http://archive.ubuntu.com/ubuntu focal/main i386 libcrypt-dev i386 1:4.4.10-10ubuntu4
+#6 52.76   502  Bad Gateway [IP: 198.18.0.133 80]
+#6 53.61 Get:22 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+#6 54.96 Get:23 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+#6 56.29 Get:24 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+#6 56.72 Get:25 http://archive.ubuntu.com/ubuntu focal/universe amd64 python-is-python2 all 2.7.17-4 [2496 B]
+#6 56.72 Fetched 8719 kB in 41s (212 kB/s)
+#6 56.72 E: Failed to fetch http://archive.ubuntu.com/ubuntu/pool/main/libx/libxcrypt/libcrypt-dev_4.4.10-10ubuntu4_i386.deb  502  Bad Gateway [IP: 198.18.0.133 80]
+#6 56.72 E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+#6 ERROR: process "/bin/sh -c apt-get update && apt-get install -y make autoconf automake libtool zip wget python bsdmainutils libcrypt-dev:i386" did not complete successfully: exit code: 100
+------
+ > [ 2/24] RUN apt-get update && apt-get install -y make autoconf automake libtool zip wget python bsdmainutils libcrypt-dev:i386:
+42.64 Get:20 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+52.76 Err:21 http://archive.ubuntu.com/ubuntu focal/main i386 libcrypt-dev i386 1:4.4.10-10ubuntu4
+52.76   502  Bad Gateway [IP: 198.18.0.133 80]
+53.61 Get:22 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+54.96 Get:23 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+56.29 Get:24 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+56.72 Get:25 http://archive.ubuntu.com/ubuntu focal/universe amd64 python-is-python2 all 2.7.17-4 [2496 B]
+56.72 Fetched 8719 kB in 41s (212 kB/s)
+56.72 E: Failed to fetch http://archive.ubuntu.com/ubuntu/pool/main/libx/libxcrypt/libcrypt-dev_4.4.10-10ubuntu4_i386.deb  502  Bad Gateway [IP: 198.18.0.133 80]
+56.72 E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+------
+
+ [33m1 warning found (use docker --debug to expand):
+[0m - WorkdirRelativePath: Relative workdir "wolfssl" can have unexpected results if the base image changes (line 46)
+Dockerfile:19
+--------------------
+  17 |     FROM gcr.io/oss-fuzz-base/base-builder@sha256:72eb20ecb03ea3c4f45f4eb00d550705a833a337c7a236229efbf7d1feaabe12
+  18 |     
+  19 | >>> RUN apt-get update && apt-get install -y make autoconf automake libtool zip wget python bsdmainutils libcrypt-dev:i386
+  20 |     RUN git clone --depth 1 https://github.com/wolfssl/wolfssl $SRC/wolfssl
+  21 |     RUN git clone --depth 1 https://github.com/wolfSSL/wolfsm
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c apt-get update && apt-get install -y make autoconf automake libtool zip wget python bsdmainutils libcrypt-dev:i386" did not complete successfully: exit code: 100
+ERROR:common_utils:Docker build failed.
