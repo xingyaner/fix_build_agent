@@ -1,17 +1,17 @@
 
-You are a premier expert in software testing and build systems. Your goal is to fix the build for project: pffft.
+You are a premier expert in software testing and build systems. Your goal is to fix the build for project: wolfssl.
 I will provide you with the configuration files, file tree, recent commit changes, and the error log.
 Your task is to analyze these inputs and provide a targeted solution in 'solution.txt'.
 
 
 --- 【CRITICAL】LESSONS LEARNED FROM PREVIOUS FAILED ATTEMPTS ---
 The following strategies have ALREADY BEEN TRIED and FAILED. DO NOT repeat them:
-- [Attempt 11] Strategy: Strategy A: Config Repair (significant progress)
-  Reason for Failure: Attempt 11 made SIGNIFICANT progress: javaparser dependency issue is SOLVED! Build now fails only on drools-compiler:999-SNAPSHOT. However, version update step (set_project_version_in_fuzz_targets_dependency) is not appearing in logs, suggesting build fails before reaching it. DO NOT assume all fixes are applied; patch application had partial_success. The drools dependency is commented out but Maven still tries to resolve it - need to properly remove or exclude it. Focus on completely removing drools dependency and ensuring version update function executes.
-- [Attempt 12] Strategy: Strategy A: Config Repair (patch application failure)
-  Reason for Failure: Attempt 12 failed due to persistent patch application issues. Critical fixes (drools removal, version update function) were not applied despite patch attempts. The build.sh is in a hybrid state where some fixes work (javaparser build) but others don't. DO NOT continue with complex patch files; need a new approach: either use extremely short/precise ORIGINAL blocks, apply fixes manually with simple commands, or create a completely new build.sh. The core issue remains patch tool matching failures.
+- [Attempt 1] Strategy: Baseline Build Analysis
+  Reason for Failure: Baseline build revealed the hidden compilation error: unused variables 'x', 'y', 'z' in wolfcrypt/src/ecc.c line 2707. The original log only showed generic build failure. DO NOT focus on build configuration; the root cause is in the wolfssl source code itself. The fix must address these unused variables in the ecc.c file.
+- [Attempt 2] Strategy: Conditional Compilation Fix
+  Reason for Failure: Attempt 2 failed because the fix incorrectly moved 'err' variable inside conditional blocks. The 'err' variable is used in BOTH SP math and non-SP math code paths, so it must remain at function scope. DO NOT move variables that are used in both conditional branches; only move variables like 'x', 'y', 'z' that are only used in the non-SP math path. The patch application also failed due to matching issues, requiring more precise ORIGINAL blocks.
 - [Attempt 1] Strategy: Initial Build Analysis
-  Reason for Failure: The initial build failed because the generate_seed_corpus.py file is missing at runtime. The Dockerfile copies it to /src/pffft, but the container run command mounts a volume at /src/pffft which overwrites the directory. DO NOT assume files copied during Docker build will persist after volume mounts; check for mount path conflicts between Dockerfile COPY commands and container runtime volume mounts.
+  Reason for Failure: Initial build failed due to unused variables x, y, z in wolfcrypt/src/ecc.c line 2707. The build uses -Werror flag which treats warnings as errors. DO NOT try to disable warnings globally; instead fix the source code by either removing the unused variables or marking them with (void) casts to suppress the warning.
 
 Please analyze why these failed and propose a DIFFERENT, more effective approach.
 
@@ -19,7 +19,7 @@ Please analyze why these failed and propose a DIFFERENT, more effective approach
 --- Configuration Files (Dockerfile, build.sh, etc.) ---
 
 ### Content from: Dockerfile ###
-# Copyright 2018 Google Inc.
+# Copyright 2016 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,19 +35,42 @@ Please analyze why these failed and propose a DIFFERENT, more effective approach
 #
 ################################################################################
 
-FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04
-RUN apt-get update && apt-get install -y mercurial
-RUN python -m pip install numpy
-RUN git clone https://bitbucket.org/jpommier/pffft $SRC/pffft
-WORKDIR pffft
-COPY run_tests.sh build.sh $SRC
-# TODO(alessiob): Move the fuzzing source code to pffft upstream.
-COPY generate_seed_corpus.py $SRC/pffft
-COPY pffft_fuzzer.cc $SRC/pffft
+FROM gcr.io/oss-fuzz-base/base-builder@sha256:72eb20ecb03ea3c4f45f4eb00d550705a833a337c7a236229efbf7d1feaabe12
+
+RUN apt-get update && apt-get install -y make autoconf automake libtool zip wget python bsdmainutils libcrypt-dev:i386
+RUN git clone --depth 1 https://github.com/wolfssl/wolfssl $SRC/wolfssl
+RUN git clone --depth 1 https://github.com/wolfSSL/wolfsm
+RUN git clone --depth 1 https://github.com/wolfSSL/wolfssh.git
+RUN git clone --depth 1 https://github.com/JacobBarthelmeh/fuzzing-headers.git
+RUN git clone --depth 1 https://github.com/JacobBarthelmeh/wolf-ssl-ssh-fuzzers
+RUN git clone --depth 1 https://github.com/MozillaSecurity/cryptofuzz
+RUN git clone --depth 1 https://github.com/google/wycheproof.git
+RUN wget https://archives.boost.io/release/1.82.0/source/boost_1_82_0.tar.bz2
+RUN git clone https://github.com/wolfssl/oss-fuzz-targets --depth 1 $SRC/fuzz-targets
+
+# Retrieve corpora from other projects
+RUN wget https://storage.googleapis.com/pub/gsutil.tar.gz -O $SRC/gsutil.tar.gz
+RUN tar zxf $SRC/gsutil.tar.gz
+ENV PATH="${PATH}:$SRC/gsutil"
+RUN gsutil cp gs://bearssl-backup.clusterfuzz-external.appspot.com/corpus/libFuzzer/bearssl_cryptofuzz-bearssl/public.zip $SRC/corpus_bearssl.zip
+RUN gsutil cp gs://nettle-backup.clusterfuzz-external.appspot.com/corpus/libFuzzer/nettle_cryptofuzz-nettle-with-mini-gmp/public.zip $SRC/corpus_nettle.zip
+RUN gsutil cp gs://libecc-backup.clusterfuzz-external.appspot.com/corpus/libFuzzer/libecc_cryptofuzz-libecc/public.zip $SRC/corpus_libecc.zip
+RUN gsutil cp gs://relic-backup.clusterfuzz-external.appspot.com/corpus/libFuzzer/relic_cryptofuzz-relic/public.zip $SRC/corpus_relic.zip
+RUN gsutil cp gs://cryptofuzz-backup.clusterfuzz-external.appspot.com/corpus/libFuzzer/cryptofuzz_cryptofuzz-openssl/public.zip $SRC/corpus_cryptofuzz-openssl.zip
+RUN gsutil cp gs://cryptofuzz-backup.clusterfuzz-external.appspot.com/corpus/libFuzzer/cryptofuzz_cryptofuzz-boringssl/public.zip $SRC/corpus_cryptofuzz-boringssl.zip
+RUN gsutil cp gs://cryptofuzz-backup.clusterfuzz-external.appspot.com/corpus/libFuzzer/cryptofuzz_cryptofuzz-nss/public.zip $SRC/corpus_cryptofuzz-nss.zip
+
+# OpenSSL/LibreSSL corpora, which require a special import procedure
+RUN gsutil cp gs://openssl-backup.clusterfuzz-external.appspot.com/corpus/libFuzzer/openssl_bignum/public.zip $SRC/corpus_openssl_expmod.zip
+RUN gsutil cp gs://libressl-backup.clusterfuzz-external.appspot.com/corpus/libFuzzer/libressl_bignum/public.zip $SRC/corpus_libressl_expmod.zip
+
+WORKDIR wolfssl
+
+COPY build.sh $SRC/
 
 ### Content from: build.sh ###
 #!/bin/bash -eu
-# Copyright 2018 Google Inc.
+# Copyright 2016 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -63,224 +86,337 @@ COPY pffft_fuzzer.cc $SRC/pffft
 #
 ################################################################################
 
-SRC_DIR=$SRC/pffft
-cd $WORK
+if true
+then
+    cd $SRC/wolfsm/
+    ./install.sh
 
-# Deploy the seed corpus.
-SEED_CORPUS_ZIP_PATH=$OUT/pffft_fuzzers_seed_corpus.zip
-if [ -d seed_corpus_tmp ]; then 
-  rm -fr seed_corpus_tmp
+    cd $SRC/wolfssl/
+    WOLFCRYPT_CONFIGURE_PARAMS="--enable-static --enable-md2 --enable-md4 --enable-ripemd --enable-blake2 --enable-blake2s --enable-pwdbased --enable-scrypt --enable-hkdf --enable-cmac --enable-arc4 --enable-camellia --enable-aesccm --enable-aesctr --enable-xts --enable-des3 --enable-x963kdf --enable-harden --enable-aescfb --enable-aesofb --enable-aeskeywrap --enable-aessiv --enable-keygen --enable-curve25519 --enable-curve448 --enable-shake256 --disable-crypttests --disable-examples --enable-compkey --enable-ed448 --enable-ed25519 --enable-ecccustcurves --enable-xchacha --enable-cryptocb --enable-eccencrypt --enable-aesgcm-stream --enable-smallstack --enable-ed25519-stream --enable-ed448-stream --enable-aesgcm-stream --enable-shake128 --enable-siphash --enable-eccsi --with-eccminsz=0 --enable-sm2 --enable-sm3 --enable-sm4-cbc --enable-sm4-ccm --enable-sm4-ctr --enable-sm4-ecb --enable-sm4-gcm"
+    if [[ $CFLAGS = *sanitize=memory* ]]
+    then
+        WOLFCRYPT_CONFIGURE_PARAMS="$WOLFCRYPT_CONFIGURE_PARAMS --disable-asm"
+    fi
+
+    # Install Boost headers
+    cd $SRC/
+    tar jxf boost_1_82_0.tar.bz2
+    cd boost_1_82_0/
+    CFLAGS="" CXXFLAGS="" ./bootstrap.sh
+    CFLAGS="" CXXFLAGS="" ./b2 headers
+    cp -R boost/ /usr/include/
+
+    OLD_CFLAGS="$CFLAGS"
+    OLD_CXXFLAGS="$CXXFLAGS"
+
+    # Configure Cryptofuzz
+    cd $SRC/cryptofuzz
+    sed -i 's/kNegativeIntegers = false/kNegativeIntegers = true/g' config.h
+    cp -R $SRC/cryptofuzz/ $SRC/cryptofuzz-openssl-api/
+    cd $SRC/cryptofuzz-openssl-api/
+    python gen_repository.py
+    rm extra_options.h
+    echo -n '"' >>extra_options.h
+    echo -n '--force-module=wolfCrypt-OpenSSL ' >>extra_options.h
+    echo -n '"' >>extra_options.h
+
+    # Build OpenSSL API fuzzer
+    cp -R $SRC/wolfssl/ $SRC/wolfssl-openssl-api/
+    cd $SRC/wolfssl-openssl-api/
+    autoreconf -ivf
+    CFLAGS="$CFLAGS -DHAVE_AES_ECB -DWOLFSSL_DES_ECB -DHAVE_ECC_SECPR2 -DHAVE_ECC_SECPR3 -DHAVE_ECC_BRAINPOOL -DHAVE_ECC_KOBLITZ -DWOLFSSL_ECDSA_SET_K -DWOLFSSL_ECDSA_SET_K_ONE_LOOP"
+    if [[ $CFLAGS = *-m32* ]]
+    then
+        ./configure $WOLFCRYPT_CONFIGURE_PARAMS --enable-opensslall --enable-opensslextra --disable-fastmath
+    else
+        ./configure $WOLFCRYPT_CONFIGURE_PARAMS --enable-opensslall --enable-opensslextra
+    fi
+    make -j$(nproc)
+    export CXXFLAGS="$CXXFLAGS -DCRYPTOFUZZ_NO_OPENSSL -DCRYPTOFUZZ_WOLFCRYPT_OPENSSL -Wno-deprecated-literal-operator"
+    export WOLFCRYPT_LIBWOLFSSL_A_PATH="$SRC/wolfssl-openssl-api/src/.libs/libwolfssl.a"
+    export WOLFCRYPT_INCLUDE_PATH="$SRC/wolfssl-openssl-api/"
+    cd $SRC/cryptofuzz-openssl-api/modules/wolfcrypt-openssl
+    make -j$(nproc)
+    cd $SRC/cryptofuzz-openssl-api/
+    LIBFUZZER_LINK="$LIB_FUZZING_ENGINE" make -B -j$(nproc)
+    cp cryptofuzz $OUT/cryptofuzz-openssl-api
+    CFLAGS="$OLD_CFLAGS"
+    CXXFLAGS="$OLD_CXXFLAGS"
+    unset WOLFCRYPT_LIBWOLFSSL_A_PATH
+    unset WOLFCRYPT_INCLUDE_PATH
+
+    # Configure Cryptofuzz
+    cd $SRC/cryptofuzz/
+    python gen_repository.py
+
+    rm extra_options.h
+    echo -n '"' >>extra_options.h
+    echo -n '--force-module=wolfCrypt ' >>extra_options.h
+    echo -n '--digests=NULL ' >>extra_options.h
+    echo -n '--operations=' >>extra_options.h
+    echo -n 'BignumCalc,' >>extra_options.h
+    echo -n 'DH_GenerateKeyPair,' >>extra_options.h
+    echo -n 'DH_Derive,' >>extra_options.h
+    echo -n 'ECC_GenerateKeyPair,' >>extra_options.h
+    echo -n 'ECC_PrivateToPublic,' >>extra_options.h
+    echo -n 'ECC_ValidatePubkey,' >>extra_options.h
+    echo -n 'ECDSA_Verify,' >>extra_options.h
+    echo -n 'ECDSA_Sign,' >>extra_options.h
+    echo -n 'ECIES_Encrypt,' >>extra_options.h
+    echo -n 'ECIES_Decrypt,' >>extra_options.h
+    echo -n 'ECC_Point_Add,' >>extra_options.h
+    echo -n 'ECC_Point_Mul,' >>extra_options.h
+    echo -n 'ECC_Point_Dbl,' >>extra_options.h
+    echo -n 'ECDH_Derive,' >>extra_options.h
+    echo -n 'ECCSI_Sign,' >>extra_options.h
+    echo -n 'ECCSI_Verify ' >>extra_options.h
+    echo -n '"' >>extra_options.h
+
+    # Build normal math fuzzer
+    cp -R $SRC/cryptofuzz/ $SRC/cryptofuzz-normal-math/
+    cp -R $SRC/wolfssl/ $SRC/wolfssl-normal-math/
+    cd $SRC/wolfssl-normal-math/
+    autoreconf -ivf
+    CFLAGS="$CFLAGS -DHAVE_AES_ECB -DWOLFSSL_DES_ECB -DHAVE_ECC_SECPR2 -DHAVE_ECC_SECPR3 -DHAVE_ECC_BRAINPOOL -DHAVE_ECC_KOBLITZ -DWOLFSSL_ECDSA_SET_K -DWOLFSSL_ECDSA_SET_K_ONE_LOOP"
+    if [[ $CFLAGS != *-m32* ]]
+    then
+        ./configure $WOLFCRYPT_CONFIGURE_PARAMS
+    else
+        # Compiling instrumented 32 bit normal math with asm is currently
+        # not possible because it results in Clang error messages such as:
+        #
+        # wolfcrypt/src/tfm.c:3154:11: error: inline assembly requires more registers than available
+        ./configure $WOLFCRYPT_CONFIGURE_PARAMS --disable-asm
+    fi
+    make -j$(nproc)
+    export CXXFLAGS="$CXXFLAGS -DCRYPTOFUZZ_NO_OPENSSL -DCRYPTOFUZZ_WOLFCRYPT -Wno-deprecated-literal-operator"
+    export WOLFCRYPT_LIBWOLFSSL_A_PATH="$SRC/wolfssl-normal-math/src/.libs/libwolfssl.a"
+    export WOLFCRYPT_INCLUDE_PATH="$SRC/wolfssl-normal-math/"
+    cd $SRC/cryptofuzz-normal-math/modules/wolfcrypt
+    make -j$(nproc)
+    cd $SRC/cryptofuzz-normal-math/
+    LIBFUZZER_LINK="$LIB_FUZZING_ENGINE" make -B -j$(nproc)
+    cp cryptofuzz $OUT/cryptofuzz-normal-math
+    CFLAGS="$OLD_CFLAGS"
+    CXXFLAGS="$OLD_CXXFLAGS"
+    unset WOLFCRYPT_LIBWOLFSSL_A_PATH
+    unset WOLFCRYPT_INCLUDE_PATH
+
+    # Build sp-math-all fuzzer
+    cp -R $SRC/cryptofuzz/ $SRC/cryptofuzz-sp-math-all/
+    cp -R $SRC/wolfssl/ $SRC/wolfssl-sp-math-all/
+    cd $SRC/wolfssl-sp-math-all/
+    autoreconf -ivf
+    CFLAGS="$CFLAGS -DHAVE_AES_ECB -DWOLFSSL_DES_ECB -DHAVE_ECC_SECPR2 -DHAVE_ECC_SECPR3 -DHAVE_ECC_BRAINPOOL -DHAVE_ECC_KOBLITZ -DWOLFSSL_ECDSA_SET_K -DWOLFSSL_ECDSA_SET_K_ONE_LOOP -DWOLFSSL_SP_INT_NEGATIVE"
+    ./configure $WOLFCRYPT_CONFIGURE_PARAMS --enable-sp-math-all
+    make -j$(nproc)
+    export CXXFLAGS="$CXXFLAGS -DCRYPTOFUZZ_NO_OPENSSL -DCRYPTOFUZZ_WOLFCRYPT -Wno-deprecated-literal-operator"
+    export WOLFCRYPT_LIBWOLFSSL_A_PATH="$SRC/wolfssl-sp-math-all/src/.libs/libwolfssl.a"
+    export WOLFCRYPT_INCLUDE_PATH="$SRC/wolfssl-sp-math-all/"
+    cd $SRC/cryptofuzz-sp-math-all/modules/wolfcrypt
+    make -j$(nproc)
+    cd $SRC/cryptofuzz-sp-math-all/
+    LIBFUZZER_LINK="$LIB_FUZZING_ENGINE" make -B -j$(nproc)
+    cp cryptofuzz $OUT/cryptofuzz-sp-math-all
+    CFLAGS="$OLD_CFLAGS"
+    CXXFLAGS="$OLD_CXXFLAGS"
+    unset WOLFCRYPT_LIBWOLFSSL_A_PATH
+    unset WOLFCRYPT_INCLUDE_PATH
+
+    # Build sp-math-all 8bit fuzzer
+    cp -R $SRC/cryptofuzz/ $SRC/cryptofuzz-sp-math-all-8bit/
+    cp -R $SRC/wolfssl/ $SRC/wolfssl-sp-math-all-8bit/
+    cd $SRC/wolfssl-sp-math-all-8bit/
+    autoreconf -ivf
+    CFLAGS="$CFLAGS -DHAVE_AES_ECB -DWOLFSSL_DES_ECB -DHAVE_ECC_SECPR2 -DHAVE_ECC_SECPR3 -DHAVE_ECC_BRAINPOOL -DHAVE_ECC_KOBLITZ -DWOLFSSL_ECDSA_SET_K -DWOLFSSL_ECDSA_SET_K_ONE_LOOP -DSP_WORD_SIZE=8 -DWOLFSSL_SP_INT_NEGATIVE"
+    ./configure $WOLFCRYPT_CONFIGURE_PARAMS --enable-sp-math-all
+    make -j$(nproc)
+    export CXXFLAGS="$CXXFLAGS -DCRYPTOFUZZ_NO_OPENSSL -DCRYPTOFUZZ_WOLFCRYPT -Wno-deprecated-literal-operator"
+    export WOLFCRYPT_LIBWOLFSSL_A_PATH="$SRC/wolfssl-sp-math-all-8bit/src/.libs/libwolfssl.a"
+    export WOLFCRYPT_INCLUDE_PATH="$SRC/wolfssl-sp-math-all-8bit/"
+    cd $SRC/cryptofuzz-sp-math-all-8bit/modules/wolfcrypt
+    make -j$(nproc)
+    cd $SRC/cryptofuzz-sp-math-all-8bit/
+    LIBFUZZER_LINK="$LIB_FUZZING_ENGINE" make -B -j$(nproc)
+    cp cryptofuzz $OUT/cryptofuzz-sp-math-all-8bit
+    CFLAGS="$OLD_CFLAGS"
+    CXXFLAGS="$OLD_CXXFLAGS"
+    unset WOLFCRYPT_LIBWOLFSSL_A_PATH
+    unset WOLFCRYPT_INCLUDE_PATH
+
+    # Build sp-math fuzzer
+    cp -R $SRC/cryptofuzz/ $SRC/cryptofuzz-sp-math/
+    cp -R $SRC/wolfssl/ $SRC/wolfssl-sp-math/
+    cd $SRC/wolfssl-sp-math/
+    autoreconf -ivf
+    # -DHAVE_ECC_BRAINPOOL and -DHAVE_ECC_KOBLITZ are lacking from the CFLAGS; these are not supported by SP math
+    CFLAGS="$CFLAGS -DHAVE_AES_ECB -DWOLFSSL_DES_ECB -DHAVE_ECC_SECPR2 -DHAVE_ECC_SECPR3 -DWOLFSSL_ECDSA_SET_K -DWOLFSSL_ECDSA_SET_K_ONE_LOOP -DWOLFSSL_PUBLIC_ECC_ADD_DBL"
+    # SP math does not support custom curves, so remove that flag
+    export WOLFCRYPT_CONFIGURE_PARAMS_SP_MATH=${WOLFCRYPT_CONFIGURE_PARAMS//"--enable-ecccustcurves"/}
+    if [[ $CFLAGS = *-m32* ]]
+    then
+        setarch i386 ./configure $WOLFCRYPT_CONFIGURE_PARAMS_SP_MATH --enable-sp --enable-sp-math
+    elif [[ $CFLAGS = *sanitize=memory* ]]
+    then
+        ./configure $WOLFCRYPT_CONFIGURE_PARAMS_SP_MATH --enable-sp --enable-sp-math --disable-sp-asm
+    else
+        ./configure $WOLFCRYPT_CONFIGURE_PARAMS_SP_MATH --enable-sp --enable-sp-math
+    fi
+    make -j$(nproc)
+    export CXXFLAGS="$CXXFLAGS -DCRYPTOFUZZ_NO_OPENSSL -DCRYPTOFUZZ_WOLFCRYPT -Wno-deprecated-literal-operator"
+    export WOLFCRYPT_LIBWOLFSSL_A_PATH="$SRC/wolfssl-sp-math/src/.libs/libwolfssl.a"
+    export WOLFCRYPT_INCLUDE_PATH="$SRC/wolfssl-sp-math/"
+    cd $SRC/cryptofuzz-sp-math/modules/wolfcrypt
+    make -j$(nproc)
+    cd $SRC/cryptofuzz-sp-math/
+    LIBFUZZER_LINK="$LIB_FUZZING_ENGINE" make -B -j$(nproc)
+    cp cryptofuzz $OUT/cryptofuzz-sp-math
+    CFLAGS="$OLD_CFLAGS"
+    CXXFLAGS="$OLD_CXXFLAGS"
+    unset WOLFCRYPT_LIBWOLFSSL_A_PATH
+    unset WOLFCRYPT_INCLUDE_PATH
+
+    # Build fastmath fuzzer
+    cp -R $SRC/cryptofuzz/ $SRC/cryptofuzz-fastmath/
+    cp -R $SRC/wolfssl/ $SRC/wolfssl-fastmath/
+    cd $SRC/wolfssl-fastmath/
+    autoreconf -ivf
+    CFLAGS="$CFLAGS -DHAVE_AES_ECB -DWOLFSSL_DES_ECB -DHAVE_ECC_SECPR2 -DHAVE_ECC_SECPR3 -DHAVE_ECC_BRAINPOOL -DHAVE_ECC_KOBLITZ -DWOLFSSL_ECDSA_SET_K -DWOLFSSL_ECDSA_SET_K_ONE_LOOP"
+    ./configure $WOLFCRYPT_CONFIGURE_PARAMS --enable-fastmath
+    make -j$(nproc)
+    export CXXFLAGS="$CXXFLAGS -DCRYPTOFUZZ_NO_OPENSSL -DCRYPTOFUZZ_WOLFCRYPT -Wno-deprecated-literal-operator"
+    export WOLFCRYPT_LIBWOLFSSL_A_PATH="$SRC/wolfssl-fastmath/src/.libs/libwolfssl.a"
+    export WOLFCRYPT_INCLUDE_PATH="$SRC/wolfssl-fastmath/"
+    cd $SRC/cryptofuzz-fastmath/modules/wolfcrypt
+    make -j$(nproc)
+    cd $SRC/cryptofuzz-fastmath/
+    LIBFUZZER_LINK="$LIB_FUZZING_ENGINE" make -B -j$(nproc)
+    cp cryptofuzz $OUT/cryptofuzz-fastmath
+    CFLAGS="$OLD_CFLAGS"
+    CXXFLAGS="$OLD_CXXFLAGS"
+    unset WOLFCRYPT_LIBWOLFSSL_A_PATH
+    unset WOLFCRYPT_INCLUDE_PATH
+
+    # Build heapmath fuzzer
+    cp -R $SRC/cryptofuzz/ $SRC/cryptofuzz-heapmath/
+    cp -R $SRC/wolfssl/ $SRC/wolfssl-heapmath/
+    cd $SRC/wolfssl-heapmath/
+    autoreconf -ivf
+    CFLAGS="$CFLAGS -DHAVE_AES_ECB -DWOLFSSL_DES_ECB -DHAVE_ECC_SECPR2 -DHAVE_ECC_SECPR3 -DHAVE_ECC_BRAINPOOL -DHAVE_ECC_KOBLITZ -DWOLFSSL_ECDSA_SET_K -DWOLFSSL_ECDSA_SET_K_ONE_LOOP"
+    ./configure $WOLFCRYPT_CONFIGURE_PARAMS --enable-heapmath
+    make -j$(nproc)
+    export CXXFLAGS="$CXXFLAGS -DCRYPTOFUZZ_NO_OPENSSL -DCRYPTOFUZZ_WOLFCRYPT -Wno-deprecated-literal-operator"
+    export WOLFCRYPT_LIBWOLFSSL_A_PATH="$SRC/wolfssl-heapmath/src/.libs/libwolfssl.a"
+    export WOLFCRYPT_INCLUDE_PATH="$SRC/wolfssl-heapmath/"
+    cd $SRC/cryptofuzz-heapmath/modules/wolfcrypt
+    make -j$(nproc)
+    cd $SRC/cryptofuzz-heapmath/
+    LIBFUZZER_LINK="$LIB_FUZZING_ENGINE" make -B -j$(nproc)
+    cp cryptofuzz $OUT/cryptofuzz-heapmath
+    CFLAGS="$OLD_CFLAGS"
+    CXXFLAGS="$OLD_CXXFLAGS"
+    unset WOLFCRYPT_LIBWOLFSSL_A_PATH
+    unset WOLFCRYPT_INCLUDE_PATH
+
+    mkdir $SRC/cryptofuzz-seed-corpus/
+
+    # Convert Wycheproof test vectors to Cryptofuzz corpus format
+    find $SRC/wycheproof/testvectors_v1/ -type f -name 'ecdsa_*' -exec $SRC/cryptofuzz-fastmath/cryptofuzz --from-wycheproof={},$SRC/cryptofuzz-seed-corpus/ \;
+    find $SRC/wycheproof/testvectors_v1/ -type f -name 'ecdh_*' -exec $SRC/cryptofuzz-fastmath/cryptofuzz --from-wycheproof={},$SRC/cryptofuzz-seed-corpus/ \;
+
+    # Unpack corpora from other projects
+    unzip -n $SRC/corpus_bearssl.zip -d $SRC/cryptofuzz_seed_corpus/ >/dev/null
+    unzip -n $SRC/corpus_nettle.zip -d $SRC/cryptofuzz_seed_corpus/ >/dev/null
+    unzip -n $SRC/corpus_libecc.zip -d $SRC/cryptofuzz_seed_corpus/ >/dev/null
+    unzip -n $SRC/corpus_relic.zip -d $SRC/cryptofuzz_seed_corpus/ >/dev/null
+    unzip -n $SRC/corpus_cryptofuzz-openssl.zip -d $SRC/cryptofuzz_seed_corpus/ >/dev/null
+    unzip -n $SRC/corpus_cryptofuzz-boringssl.zip -d $SRC/cryptofuzz_seed_corpus/ >/dev/null
+    unzip -n $SRC/corpus_cryptofuzz-nss.zip -d $SRC/cryptofuzz_seed_corpus/ >/dev/null
+
+    # Import OpenSSL/LibreSSL corpora
+    mkdir $SRC/openssl-expmod-corpus/
+    unzip $SRC/corpus_openssl_expmod.zip -d $SRC/openssl-expmod-corpus/ >/dev/null
+    find $SRC/openssl-expmod-corpus/ -type f -exec $SRC/cryptofuzz-fastmath/cryptofuzz --from-openssl-expmod={},$SRC/cryptofuzz-seed-corpus/ \;
+
+    mkdir $SRC/libressl-expmod-corpus/
+    unzip $SRC/corpus_libressl_expmod.zip -d $SRC/libressl-expmod-corpus/ >/dev/null
+    find $SRC/libressl-expmod-corpus/ -type f -exec $SRC/cryptofuzz-fastmath/cryptofuzz --from-openssl-expmod={},$SRC/cryptofuzz-seed-corpus/ \;
+
+    # Write Cryptofuzz built-in tests
+    $SRC/cryptofuzz-fastmath/cryptofuzz --from-builtin-tests=$SRC/cryptofuzz-seed-corpus/
+
+    # Pack it
+    cd $SRC/cryptofuzz_seed_corpus
+    zip -r $SRC/cryptofuzz_seed_corpus.zip . >/dev/null
+
+    # Use it as the seed corpus for each Cryptofuzz-based fuzzer
+    cp $SRC/cryptofuzz_seed_corpus.zip $OUT/cryptofuzz-normal-math_seed_corpus.zip
+    cp $SRC/cryptofuzz_seed_corpus.zip $OUT/cryptofuzz-sp-math-all_seed_corpus.zip
+    cp $SRC/cryptofuzz_seed_corpus.zip $OUT/cryptofuzz-sp-math-all-8bit_seed_corpus.zip
+    cp $SRC/cryptofuzz_seed_corpus.zip $OUT/cryptofuzz-sp-math_seed_corpus.zip
+    cp $SRC/cryptofuzz_seed_corpus.zip $OUT/cryptofuzz-fastmath_seed_corpus.zip
+    cp $SRC/cryptofuzz_seed_corpus.zip $OUT/cryptofuzz-heapmath_seed_corpus.zip
+
+    # Remove files that are no longer needed to prevent running out of disk space
+    rm -rf $SRC/openssl-expmod-corpus/
+    rm -rf $SRC/libressl-expmod-corpus/
+    rm -rf $SRC/cryptofuzz_seed_corpus/
+    rm -rf $SRC/cryptofuzz_seed_corpus.zip
+
+    # Build SSL/SSH fuzzers
+    NEW_SRC=$SRC/wolf-ssl-ssh-fuzzers/oss-fuzz/projects/wolf-ssl-ssh/
+    cp -R $SRC/wolfssl/ $NEW_SRC
+    cp -R $SRC/wolfssh/ $NEW_SRC
+    cp -R $SRC/fuzzing-headers/ $NEW_SRC
+    OSS_FUZZ_BUILD=1 SRC="$NEW_SRC" $NEW_SRC/build.sh
+
+    # Copy corpora for SSL/SSH fuzzers
+    cp $SRC/wolf-ssl-ssh-fuzzers/corpora/fuzzer-wolfssl-client-randomize_seed_corpus.zip $OUT/
 fi
-mkdir seed_corpus_tmp
-python $SRC_DIR/generate_seed_corpus.py seed_corpus_tmp
-cd seed_corpus_tmp
-zip -q $SEED_CORPUS_ZIP_PATH ./*
-cd ..
-rm -fr seed_corpus_tmp
 
-build_fuzzer() {
-  # Aliases for the arguments.
-  fft_transform=$1
+if [[ $CFLAGS != *-m32* ]]
+then
+    cd $SRC/wolfssl
 
-  # Fuzzer name.
-  fuzz_target_name=pffft_${fft_transform,,}_fuzzer
+    # target_dir determined by Dockerfile
+    target_dir="$SRC/fuzz-targets"
 
-  # Add a symbolic link for the seed corpus (same corpus for all the
-  # generated fuzzers).
-  ls -la $OUT/*.zip
-  FUZZER_SEED_CORPUS_PATH=$OUT/${fuzz_target_name}_seed_corpus.zip
-  if [ -e $FUZZER_SEED_CORPUS_PATH ]; then
-    rm $FUZZER_SEED_CORPUS_PATH
-  fi
-  ln -s $SEED_CORPUS_ZIP_PATH $FUZZER_SEED_CORPUS_PATH
+    # build wolfssl
+    ./autogen.sh
+    ./configure --enable-static --disable-shared --prefix=/usr CC="clang"
+    make -j "$(nproc)" all
+    make install
 
-  # Compile fuzzer.
-  $CXX $CXXFLAGS -std=c++11 -msse2 \
-       -DTRANSFORM_${fft_transform} \
-       $SRC/pffft/pffft.c $SRC/pffft/pffft_fuzzer.cc \
-       -o $OUT/${fuzz_target_name} \
-       $LIB_FUZZING_ENGINE
-}
+    # put linker arguments into the environment, appending to any existing ones
+    export LDFLAGS="${LDFLAGS-""}"
+    export LDLIBS="${LDLIBS-""} -lwolfssl $LIB_FUZZING_ENGINE"
 
-# Build fuzzers.
-build_fuzzer REAL
-build_fuzzer COMPLEX
-
-# Build unit test
-$CXX $CXXFLAGS -x c -o $SRC/test_pffft_real -DTRANSFORM_REAL -msse2 \
-  $SRC/pffft/pffft.c $SRC/pffft/test_pffft.c $SRC/pffft/fftpack.c
-$CXX $CXXFLAGS -x c -o $SRC/test_pffft_complex -DTRANSFORM_COMPLEX -msse2 \
-  $SRC/pffft/pffft.c $SRC/pffft/test_pffft.c $SRC/pffft/fftpack.c
-
-### Content from: generate_seed_corpus.py ###
-from __future__ import division
-from __future__ import print_function
-
-import os
-import sys
-
-import numpy as np
-
-MAX_INPUT_SIZE = int(1e6)
-MAX_FLOAT32 = np.finfo(np.float32).max
-
-def IsValidSize(n):
-  if n == 0:
-    return False
-  # PFFFT only supports transforms for inputs of length N of the form
-  # N = (2^a)*(3^b)*(5^c) where a >= 5, b >=0, c >= 0.
-  FACTORS = [2, 3, 5]
-  factorization = [0, 0, 0]
-  for i, factor in enumerate(FACTORS):
-    while n % factor == 0:
-      n = n // factor
-      factorization[i] += 1
-  return factorization[0] >= 5 and n == 1
-
-
-def main():
-  if len(sys.argv) < 2:
-    print('Usage: %s <path to output directory>' % sys.argv[0])
-    sys.exit(1)
-
-  output_path = sys.argv[1]
-  if not os.path.exists(output_path):
-    print('The output path does not exists.')
-    sys.exit(2)
-
-  # List of valid input sizes.
-  N = [n for n in range(MAX_INPUT_SIZE) if IsValidSize(n)]
-
-  # Set the seed to always generate the same random data.
-  np.random.seed(0)
-
-  # Generate different types of input arrays for each target length.
-  for n in N:
-    # Zeros.
-    z = np.zeros(n, np.float32)
-    z.tofile(os.path.join(output_path, 'zeros_%d' % n))
-    # Max float 32.
-    m = np.ones(n, np.float32) * MAX_FLOAT32
-    m.tofile(os.path.join(output_path, 'max_%d' % n))
-    # Random values in the s16 range.
-    rnd_s16 = 32768.0 * 2.0 * (np.random.rand(n) - 1.0)
-    rnd_s16 = rnd_s16.astype(np.float32)
-    rnd_s16.tofile(os.path.join(output_path, 'rnd_s16_%d' % n))
-  
-  sys.exit(0)
-
-
-if __name__ == '__main__':
-  main()
-
-### Content from: pffft_fuzzer.cc ###
-// Copyright 2018 Google Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-///////////////////////////////////////////////////////////////////////////
-
-#include <algorithm>
-#include <array>
-#include <cassert>
-#include <cstring>
-
-#include "pffft.h"
-
-namespace {
-
-#if defined(TRANSFORM_REAL)
-// Real FFT.
-constexpr pffft_transform_t kTransform = PFFFT_REAL;
-constexpr size_t kSizeOfOneSample = sizeof(float);
-#elif defined(TRANSFORM_COMPLEX)
-// Complex FFT.
-constexpr pffft_transform_t kTransform = PFFFT_COMPLEX;
-constexpr size_t kSizeOfOneSample = 2 * sizeof(float);  // Real plus imaginary.
-#else
-#error FFT transform type not defined.
-#endif
-
-bool IsValidSize(size_t n) {
-  if (n == 0) { return false; }
-  // PFFFT only supports transforms for inputs of length N of the form
-  // N = (2^a)*(3^b)*(5^c) where a >= 5, b >=0, c >= 0.
-  constexpr std::array<int, 3> kFactors = {2, 3, 5};
-  std::array<int, kFactors.size()> factorization{};
-  for (size_t i = 0; i < kFactors.size(); ++i) {
-    const int factor = kFactors[i];
-    while (n % factor == 0) {
-      n /= factor;
-      factorization[i]++;
-    }
-  }
-  return factorization[0] >= 5 && n == 1;
-}
-
-float* AllocatePffftBuffer(size_t number_of_bytes) {
-  return static_cast<float*>(pffft_aligned_malloc(number_of_bytes));
-}
-
-}  // namespace
-
-// Entry point for LibFuzzer.
-extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
-  // Set the number of FFT points to use |data| as input vector.
-  // The latter is truncated if the number of bytes is not an integer
-  // multiple of the size of one sample (which is either a real or a complex
-  // floating point number).
-  const size_t fft_size = size / kSizeOfOneSample;
-  if (!IsValidSize(fft_size)) {
-    return 0;
-  }
-
-  const size_t number_of_bytes = fft_size * kSizeOfOneSample;
-  assert(number_of_bytes <= size);
-
-  // Allocate input and output buffers.
-  float* in = AllocatePffftBuffer(number_of_bytes);
-  float* out = AllocatePffftBuffer(number_of_bytes);
-
-  // Copy input data.
-  std::memcpy(in, reinterpret_cast<const float*>(data), number_of_bytes);
-
-  // Setup FFT.
-  PFFFT_Setup* pffft_setup = pffft_new_setup(fft_size, kTransform);
-
-  // Call different PFFFT functions to maximize the coverage.
-  pffft_transform(pffft_setup, in, out, nullptr, PFFFT_FORWARD);
-  pffft_zconvolve_accumulate(pffft_setup, out, out, out, 1.f);
-  pffft_transform_ordered(pffft_setup, in, out, nullptr, PFFFT_BACKWARD);
-
-  // Release memory.
-  pffft_aligned_free(in);
-  pffft_aligned_free(out);
-  pffft_destroy_setup(pffft_setup);
-
-  return 0;
-}
+    # make and export targets to $OUT; environment overridding internal variables
+    cd "${target_dir}"
+    make -e all
+    make -e export prefix="$OUT"
+fi
 
 ### Content from: project.yaml ###
-homepage: "https://bitbucket.org/jpommier/pffft"
-main_repo: "https://bitbucket.org/jpommier/pffft.git"
+homepage: "https://www.wolfssl.com/"
 language: c++
-primary_contact: "pommier@modartt.com"
+primary_contact: "jacob@wolfssl.com"
 auto_ccs:
-  - "alessiob@webrtc.org"
-  - "mbonadei@webrtc.org"
+  - "david@wolfssl.com"
+  - "john@wolfssl.com"
+  - "kaleb@wolfssl.com"
+  - "kaleb.himes@gmail.com"
+  - "testing@wolfssl.com"
+  - "dgarske80@gmail.com"
+  - "douzzer@mega.nu"
+  - "jordan@wolfssl.com"
+  - "jordanjphillips1@gmail.com"
+  - "anthony@wolfssl.com"
+  - "anthony.hu.76@gmail.com"
+  - "kareem@wolfssl.com"
+  - "sean@wolfssl.com"
 fuzzing_engines:
   - libfuzzer
-  - afl
   - honggfuzz
 sanitizers:
   - address
@@ -289,586 +425,590 @@ sanitizers:
 architectures:
   - x86_64
   - i386
-
-base_os_version: ubuntu-24-04
-
-### Content from: run_tests.sh ###
-#!/bin/bash -eu
-#
-# Copyright 2026 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-################################################################################
-
-export ASAN_OPTIONS="detect_leaks=0"
-$SRC/test_pffft_real && $SRC/test_pffft_complex
+main_repo: 'https://github.com/wolfssl/wolfssl'
 
 
 --- Project File Tree (Shallow View) ---
-📁 pffft
+📁 wolfssl
+├── 📄 AUTHORS
 ├── 📄 CMakeLists.txt
-├── 📄 LICENSE.txt
+├── 📄 CMakePresets.json
+├── 📄 CMakeSettings.json
+├── 📄 COPYING
+├── 📄 ChangeLog.md
+├── 📁 Docker
+├── 📁 IDE
+├── 📄 INSTALL
+├── 📄 LICENSING
+├── 📄 LPCExpresso.cproject
+├── 📄 LPCExpresso.project
+├── 📄 Makefile
+├── 📄 Makefile.am
+├── 📄 Makefile.in
+├── 📄 README
+├── 📄 README-async.md
 ├── 📄 README.md
-├── 📁 bench
-├── 📄 bench_conv.cpp
-├── 📄 bench_mixers.cpp
-├── 📄 bench_pffft.c
+├── 📁 RTOS
+├── 📄 SCRIPTS-LIST
+├── 📄 Vagrantfile
+├── 📄 aclocal.m4
+├── 📄 aminclude.am
+├── 📄 autogen.sh
+├── 📁 autom4te.cache
+├── 📁 bsdkm
+├── 📁 build-aux
+├── 📁 certs
 ├── 📁 cmake
-├── 📄 cross_build_mingw32.sh
-├── 📄 cross_build_mingw64.sh
+├── 📄 commit-tests.sh
+├── 📄 config.h
+├── 📄 config.in
+├── 📄 config.log
+├── 📄 config.status
+├── 📄 configure
+├── 📄 configure.ac
+├── 📁 debian
+├── 📄 devin_lifeguard.yaml
+├── 📁 doc
 ├── 📁 examples
-├── 📄 fftpack.c
-├── 📄 fftpack.h
-├── 📄 fmv.h
-├── 📁 greenffts
-├── 📁 kissfft
-├── 📄 mingw-w32-i686.cmake
-├── 📄 mingw-w64-x64_64.cmake
-├── 📄 papi_perf_counter.h
-├── 📄 pf_carrier.cpp
-├── 📄 pf_carrier.h
-├── 📄 pf_cic.cpp
-├── 📄 pf_cic.h
-├── 📄 pf_conv.cpp
-├── 📄 pf_conv.h
-├── 📄 pf_conv_dispatcher.cpp
-├── 📄 pf_conv_dispatcher.h
-├── 📄 pf_cplx.h
-├── 📄 pf_mixer.cpp
-├── 📄 pf_mixer.h
-├── 📄 pffastconv.c
-├── 📄 pffastconv.h
-├── 📄 pffft.c
-├── 📄 pffft.h
-├── 📄 pffft.hpp
-├── 📄 pffft_common.c
-├── 📄 pffft_double.c
-├── 📄 pffft_double.h
-├── 📄 pffft_priv_impl.h
-├── 📄 plots.sh
-├── 📁 pocketfft
-├── 📁 simd
-├── 📄 sse2neon.h
-├── 📄 test_fft_factors.c
-├── 📄 test_fftpack_float
-├── 📄 test_pffastconv.c
-├── 📄 test_pffft.c
-├── 📄 test_pffft.cpp
-├── 📄 uninstall.cmake
-└── 📄 use_gcc8.inc
+├── 📄 fips-check.sh
+├── 📄 fips-hash.sh
+├── 📄 gencertbuf.pl
+├── 📄 input
+├── 📄 libtool
+├── 📁 linuxkm
+├── 📁 m4
+├── 📁 mcapi
+├── 📁 mplabx
+├── 📁 mqx
+├── 📄 pull_to_vagrant.sh
+├── 📄 quit
+├── 📄 resource.h
+├── 📁 rpm
+├── 📁 scripts
+├── 📁 src
+├── 📁 sslSniffer
+├── 📄 stamp-h
+├── 📄 stamp-h.in
+├── 📄 stamp-h1
+├── 📁 support
+├── 📁 tests
+├── 📁 testsuite
+├── 📁 tirtos
+├── 📄 valgrind-bash.supp
+├── 📄 valgrind-error.sh
+├── 📄 wnr-example.conf
+├── 📁 wolfcrypt
+├── 📁 wolfssl
+├── 📄 wolfssl-VS2022.vcxproj
+├── 📄 wolfssl-config
+├── 📄 wolfssl.rc
+├── 📄 wolfssl.vcproj
+├── 📄 wolfssl.vcxproj
+├── 📄 wolfssl64.sln
+├── 📁 wrapper
+└── 📁 zephyr
 
 --- Recent Commit Changes (Potential Root Cause) ---
 No relevant commit found.
 
 --- Fuzz Build Log (Last 500 lines) ---
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 153.09MB / 337.82MB 984.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 153.09MB / 337.82MB 989.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 155.19MB / 337.82MB 994.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 157.29MB / 337.82MB 999.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 157.29MB / 337.82MB 1004.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 159.38MB / 337.82MB 1009.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 159.38MB / 337.82MB 1015.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 161.48MB / 337.82MB 1020.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 162.53MB / 337.82MB 1025.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 162.53MB / 337.82MB 1030.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 163.58MB / 337.82MB 1035.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 164.63MB / 337.82MB 1040.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 165.68MB / 337.82MB 1045.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 166.72MB / 337.82MB 1050.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 166.72MB / 337.82MB 1055.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 167.77MB / 337.82MB 1060.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 167.77MB / 337.82MB 1066.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 168.82MB / 337.82MB 1071.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 169.87MB / 337.82MB 1076.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 169.87MB / 337.82MB 1081.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 170.92MB / 337.82MB 1086.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 171.97MB / 337.82MB 1091.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 174.06MB / 337.82MB 1096.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 175.11MB / 337.82MB 1101.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 176.16MB / 337.82MB 1106.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 179.31MB / 337.82MB 1111.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 179.31MB / 337.82MB 1117.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 182.45MB / 337.82MB 1122.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 182.45MB / 337.82MB 1127.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 183.50MB / 337.82MB 1132.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 183.50MB / 337.82MB 1137.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 183.50MB / 337.82MB 1142.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 185.60MB / 337.82MB 1147.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 186.65MB / 337.82MB 1152.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 186.65MB / 337.82MB 1157.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 187.70MB / 337.82MB 1162.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 188.74MB / 337.82MB 1168.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 190.84MB / 337.82MB 1173.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 191.89MB / 337.82MB 1178.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 192.94MB / 337.82MB 1183.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 193.99MB / 337.82MB 1188.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 193.99MB / 337.82MB 1193.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 195.04MB / 337.82MB 1198.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 196.08MB / 337.82MB 1203.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 197.13MB / 337.82MB 1208.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 197.13MB / 337.82MB 1213.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 197.13MB / 337.82MB 1219.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 197.13MB / 337.82MB 1224.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 199.23MB / 337.82MB 1229.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 200.28MB / 337.82MB 1234.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 201.33MB / 337.82MB 1239.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 202.38MB / 337.82MB 1244.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 205.52MB / 337.82MB 1249.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 205.52MB / 337.82MB 1254.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 205.52MB / 337.82MB 1259.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 205.52MB / 337.82MB 1264.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 207.62MB / 337.82MB 1270.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 209.72MB / 337.82MB 1275.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 212.86MB / 337.82MB 1280.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 213.91MB / 337.82MB 1285.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 214.96MB / 337.82MB 1290.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 217.06MB / 337.82MB 1295.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 219.15MB / 337.82MB 1300.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 221.25MB / 337.82MB 1305.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 222.30MB / 337.82MB 1310.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 223.35MB / 337.82MB 1315.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 226.49MB / 337.82MB 1321.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 228.59MB / 337.82MB 1326.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 229.64MB / 337.82MB 1331.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 230.69MB / 337.82MB 1336.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 232.78MB / 337.82MB 1341.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 235.93MB / 337.82MB 1346.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 238.03MB / 337.82MB 1351.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 239.08MB / 337.82MB 1356.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 240.12MB / 337.82MB 1361.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 242.22MB / 337.82MB 1366.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 244.32MB / 337.82MB 1372.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 246.42MB / 337.82MB 1377.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 249.56MB / 337.82MB 1382.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 251.66MB / 337.82MB 1387.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 252.71MB / 337.82MB 1392.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 254.80MB / 337.82MB 1397.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 255.85MB / 337.82MB 1402.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 259.00MB / 337.82MB 1407.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 261.10MB / 337.82MB 1412.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 261.10MB / 337.82MB 1417.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 261.10MB / 337.82MB 1423.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 262.14MB / 337.82MB 1428.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 266.34MB / 337.82MB 1433.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 268.44MB / 337.82MB 1438.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 270.53MB / 337.82MB 1443.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 272.63MB / 337.82MB 1448.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 273.68MB / 337.82MB 1453.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 275.78MB / 337.82MB 1458.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 276.82MB / 337.82MB 1463.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 279.97MB / 337.82MB 1468.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 282.07MB / 337.82MB 1474.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 284.16MB / 337.82MB 1479.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 287.31MB / 337.82MB 1484.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 288.36MB / 337.82MB 1489.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 290.46MB / 337.82MB 1494.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 294.65MB / 337.82MB 1499.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 295.70MB / 337.82MB 1504.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 299.89MB / 337.82MB 1509.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 300.94MB / 337.82MB 1514.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 303.04MB / 337.82MB 1519.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 305.14MB / 337.82MB 1525.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 306.18MB / 337.82MB 1530.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 308.28MB / 337.82MB 1535.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 309.33MB / 337.82MB 1540.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 309.33MB / 337.82MB 1545.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 309.33MB / 337.82MB 1550.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 310.38MB / 337.82MB 1555.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 310.38MB / 337.82MB 1560.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 311.43MB / 337.82MB 1565.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 312.48MB / 337.82MB 1570.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 312.48MB / 337.82MB 1576.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 312.48MB / 337.82MB 1581.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 313.52MB / 337.82MB 1586.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 314.57MB / 337.82MB 1591.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 315.62MB / 337.82MB 1596.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 316.67MB / 337.82MB 1601.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 319.82MB / 337.82MB 1606.6s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 320.86MB / 337.82MB 1611.7s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 321.91MB / 337.82MB 1616.8s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 324.01MB / 337.82MB 1621.9s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 326.11MB / 337.82MB 1627.0s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 328.20MB / 337.82MB 1632.1s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 329.25MB / 337.82MB 1637.2s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 331.35MB / 337.82MB 1642.3s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 333.45MB / 337.82MB 1647.4s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 335.54MB / 337.82MB 1652.5s
-#5 sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 337.82MB / 337.82MB 1654.9s done
-#5 DONE 1655.5s
+   * LD Flags:                   
+   * LIB Flags:                   -pie -z relro -z now -Werror 
+   * Library Suffix:             
+   * Debug enabled:              no
+   * Coverage enabled:           
+   * Warnings as failure:        yes
+   * make -j:                    3
+   * VCS checkout:               yes
 
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40
-#5 extracting sha256:7d72dbd7c95895286f79aa6ae6f86d916bba2a0bb2d197fc3800ac3d1abecb40 16.1s done
-#5 DONE 1671.6s
+   Features 
+   * Experimental settings:      Forbidden
+   * FIPS:                       no
+   * Single threaded:            no
+   * Filesystem:                 yes
+   * OpenSSH Build:              no
+   * OpenSSL Extra API:          no
+   * OpenSSL Coexist:            no
+   * Old Names:                  yes
+   * Max Strength Build:         no
+   * Distro Build:               no
+   * Reproducible Build:         no
+   * Side-channel Hardening:     yes
+   * Single Precision Math:      yes
+   * SP implementation:          restricted
+   * Fast Math:                  no
+   * Heap Math:                  no
+   * Assembly Allowed:           yes
+   * sniffer:                    no
+   * snifftest:                  no
+   * ARC4:                       yes
+   * AES:                        yes
+   * AES-NI:                     no
+   * AVX for AES:                no
+   * AES-CBC:                    yes
+   * AES-CBC length checks:      no
+   * AES-GCM:                    yes
+   * AES-GCM streaming:          yes
+   * AES-CCM:                    yes
+   * AES-CTR:                    yes
+   * AES-CFB:                    yes
+   * AES-OFB:                    yes
+   * AES-XTS:                    yes
+   * AES-XTS streaming:          no
+   * AES-SIV:                    yes
+   * AES-EAX:                    no
+   * AES Bitspliced:             no
+   * AES Key Wrap:               yes
+   * ARIA:                       no
+   * ASCON:                      no
+   * DES3:                       yes
+   * DES3 TLS Suites:            no
+   * Camellia:                   yes
+   * CUDA:                       no
+   * SM4-ECB:                    yes
+   * SM4-CBC:                    yes
+   * SM4-CTR:                    yes
+   * SM4-GCM:                    yes
+   * SM4-CCM:                    yes
+   * NULL Cipher:                no
+   * MD2:                        yes
+   * MD4:                        yes
+   * MD5:                        yes
+   * RIPEMD:                     yes
+   * SHA:                        yes
+   * SHA-224:                    yes
+   * SHA-256:                    yes
+   * SHA-384:                    yes
+   * SHA-512:                    yes
+   * SHA3:                       yes
+   * SHAKE128:                   yes
+   * SHAKE256:                   yes
+   * SM3:                        yes
+   * BLAKE2:                     yes
+   * BLAKE2S:                    yes
+   * SipHash:                    yes
+   * CMAC:                       yes
+   * keygen:                     yes
+   * acert:                      no
+   * certgen:                    no
+   * certreq:                    no
+   * certext:                    no
+   * certgencache:               no
+   * CHACHA:                     yes
+   * XCHACHA:                    yes
+   * Hash DRBG:                  yes
+   * MmemUse Entropy:
+   * (AKA: wolfEntropy):         no
+   * PWDBASED:                   yes
+   * Encrypted keys:             no
+   * scrypt:                     yes
+   * wolfCrypt Only:             no
+   * HKDF:                       yes
+   * HPKE:                       no
+   * X9.63 KDF:                  yes
+   * SRTP-KDF:                   no
+   * PSK:                        no
+   * Poly1305:                   yes
+   * LEANPSK:                    no
+   * LEANTLS:                    no
+   * RSA:                        yes
+   * RSA-PSS:                    yes
+   * DSA:                        no
+   * DH:                         yes
+   * DH Default Parameters:      yes
+   * ECC:                        yes
+   * ECC Custom Curves:          no
+   * ECC Minimum Bits:           0
+   * FPECC:                      no
+   * ECC_ENCRYPT:                yes
+   * Brainpool:                  no
+   * SM2:                        yes
+   * CURVE25519:                 yes
+   * ED25519:                    yes
+   * ED25519 streaming:          yes
+   * CURVE448:                   yes
+   * ED448:                      yes
+   * ED448 streaming:            yes
+   * LMS:                        no
+   * LMS wolfSSL impl:           no
+   * XMSS:                       no
+   * XMSS wolfSSL impl:          no
+   * MLKEM:                      no
+   * MLKEM wolfSSL impl:         no
+   * DILITHIUM:                  no
+   * ECCSI                       yes
+   * SAKKE                       no
+   * ASN:                        yes
+   * Anonymous cipher:           no
+   * CODING:                     yes
+   * MEMORY:                     yes
+   * I/O POOL:                   no
+   * wolfSentry:                 no
+   * LIGHTY:                     no
+   * WPA Supplicant:             no
+   * HAPROXY:                    no
+   * STUNNEL:                    no
+   * tcpdump:                    no
+   * libssh2:                    no
+   * ntp:                        no
+   * rsyslog:                    no
+   * Apache httpd:               no
+   * NGINX:                      no
+   * OpenResty:                  no
+   * ASIO:                       no
+   * LIBWEBSOCKETS:              no
+   * Qt:                         no
+   * Qt Unit Testing:            no
+   * SIGNAL:                     no
+   * chrony:                     no
+   * strongSwan:                 no
+   * OpenLDAP:                   no
+   * hitch:                      no
+   * memcached:                  no
+   * Mosquitto                   no
+   * ERROR_STRINGS:              yes
+   * DTLS:                       no
+   * DTLS v1.3:                  no
+   * SCTP:                       no
+   * SRTP:                       no
+   * Indefinite Length:          no
+   * Multicast:                  no
+   * SSL v3.0 (Old):             no
+   * TLS v1.0 (Old):             no
+   * TLS v1.1 (Old):             no
+   * TLS v1.2:                   yes
+   * TLS v1.3:                   yes
+   * RPK:                        no
+   * Post-handshake Auth:        no
+   * Early Data:                 no
+   * QUIC:                       no
+   * Send State in HRR Cookie:   undefined
+   * OCSP:                       no
+   * OCSP Stapling:              no
+   * OCSP Stapling v2:           no
+   * CRL:                        no
+   * CRL-MONITOR:                no
+   * Persistent session cache:   no
+   * Persistent cert    cache:   no
+   * Atomic User Record Layer:   no
+   * Public Key Callbacks:       no
+   * libxmss:                    no
+   * liblms:                     no
+   * liboqs:                     no
+   * Whitewood netRandom:        no
+   * Server Name Indication:     yes
+   * ALPN:                       no
+   * Maximum Fragment Length:    no
+   * Trusted CA Indication:      no
+   * Truncated HMAC:             no
+   * Supported Elliptic Curves:  yes
+   * FFDHE only in client:       no
+   * Session Ticket:             no
+   * Extended Master Secret:     yes
+   * Renegotiation Indication:   no
+   * Secure Renegotiation:       no
+   * Fallback SCSV:              no
+   * Keying Material Exporter:   no
+   * All TLS Extensions:         no
+   * S/MIME:                     no
+   * PKCS#7:                     no
+   * PKCS#8:                     yes
+   * PKCS#11:                    no
+   * PKCS#12:                    yes
+   * wolfSSH:                    no
+   * wolfEngine:                 no
+   * wolfTPM:                    no
+   * wolfCLU:                    no
+   * wolfSCEP:                   no
+   * Secure Remote Password:     no
+   * Small Stack:                yes
+   * Linux Kernel Module:        no
+   * valgrind unit tests:        no
+   * LIBZ:                       no
+   * Examples:                   no
+   * Crypt tests:                no
+   * Stack sizes in tests:       no
+   * Heap stats in tests:        no
+   * Asynchronous Crypto:        no
+   * Asynchronous Crypto (sim):  no
+   * Cavium Nitrox:              no
+   * Cavium Octeon (Sync):       no
+   * Intel Quick Assist:         no
+   * ARM ASM:                    no
+   * ARM ASM SHA512/SHA3 Crypto  no
+   * ARM ASM SM3/SM4 Crypto      no
+   * RISC-V ASM                  no
+   * PPC32 ASM                   no
+   * Write duplicate:            no
+   * Xilinx Hardware Acc.:       no
+   * C89:                        no
+   * Inline Code:                yes
+   * Linux AF_ALG:               no
+   * Linux KCAPI:                no
+   * Linux devcrypto:            no
+   * PK callbacks:               no
+   * Crypto callbacks:           yes
+   * i.MX CAAM:                  no
+   * IoT-Safe:                   no
+   * IoT-Safe HWRNG:             no
+   * NXP SE050:                  no
+   * TROPIC01:                   no
+   * Maxim Integrated MAXQ10XX:  no
+   * PSA:                        no
+   * System CA certs:            yes
+   * Dual alg cert support:      no
+   * ERR Queues per Thread:      yes
+   * rwlock:                     no
+   * keylog export:              no
+   * AutoSAR :                   no
 
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:401853d00bcc734e9b27b22c5aa36fac784eb4979a72a4a65dce1e7650ef142d
-#5 extracting sha256:401853d00bcc734e9b27b22c5aa36fac784eb4979a72a4a65dce1e7650ef142d 0.3s done
-#5 DONE 1671.9s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:c72396c204ba04e8d9219e543fe48f68007baffb680fd753e1e0e2bb538914c1
-#5 extracting sha256:c72396c204ba04e8d9219e543fe48f68007baffb680fd753e1e0e2bb538914c1 0.3s done
-#5 DONE 1672.2s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:da82a8992eed4fba474f8a13fc4b940b76ab3235e35ab0a61cc72c52d73df46c
-#5 extracting sha256:da82a8992eed4fba474f8a13fc4b940b76ab3235e35ab0a61cc72c52d73df46c 9.1s done
-#5 DONE 1681.3s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:19cd3b047a1addc35bfc79bf7b74be6c487a736a61becf8d60545b00917ddd9f
-#5 extracting sha256:19cd3b047a1addc35bfc79bf7b74be6c487a736a61becf8d60545b00917ddd9f 4.1s done
-#5 DONE 1685.4s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:e884d0f7c3099f902863180b30d81c4e1b52abf07ea0a51d567eda7824fbb033
-#5 extracting sha256:e884d0f7c3099f902863180b30d81c4e1b52abf07ea0a51d567eda7824fbb033 0.3s done
-#5 DONE 1685.7s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:9feeef272cec0b20c9033863a1a5ba8037e91b6ca7300906c892e9ae892dd864
-#5 extracting sha256:9feeef272cec0b20c9033863a1a5ba8037e91b6ca7300906c892e9ae892dd864 0.3s done
-#5 DONE 1686.0s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:595bf93195647fe13af7e9b22b4ebd2d6917e20f1dd8c8e630035c04b7de017e
-#5 extracting sha256:595bf93195647fe13af7e9b22b4ebd2d6917e20f1dd8c8e630035c04b7de017e 0.3s done
-#5 extracting sha256:9b594072c3b86cba6afa822231ec6863125af0f60da5d27ba5ade60abce045d8
-#5 extracting sha256:9b594072c3b86cba6afa822231ec6863125af0f60da5d27ba5ade60abce045d8 0.3s done
-#5 DONE 1686.5s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:d171efbf5be061fec234b13621b4c1640ab55980a7bbba480b1128ebf7d25e93
-#5 extracting sha256:d171efbf5be061fec234b13621b4c1640ab55980a7bbba480b1128ebf7d25e93 0.5s done
-#5 DONE 1687.1s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:6e788f8b01af5a33fb85fb8bb60702f2265be521810d2a6eb050b0800dc2c6fc
-#5 extracting sha256:6e788f8b01af5a33fb85fb8bb60702f2265be521810d2a6eb050b0800dc2c6fc 0.3s done
-#5 DONE 1687.3s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:c194f7f28640e3a7e3e088ee3863cf8877966ec35863069f85314158bfa0703b
-#5 extracting sha256:c194f7f28640e3a7e3e088ee3863cf8877966ec35863069f85314158bfa0703b 0.3s done
-#5 DONE 1687.6s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:7ad1a03e4670d8fdbc101fc76d0425eaa1f62555fb8bfa8831a861e32658e846
-#5 extracting sha256:7ad1a03e4670d8fdbc101fc76d0425eaa1f62555fb8bfa8831a861e32658e846 0.3s done
-#5 extracting sha256:738f4d596aa6adea63755a175a7ce7d7957e9d941e305df2b027c9364063a924
-#5 extracting sha256:738f4d596aa6adea63755a175a7ce7d7957e9d941e305df2b027c9364063a924 0.2s done
-#5 DONE 1688.1s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:bcb83e5d02f4745308fadfdd37fae5c3b127d4377d947b1cb163aab5ad5999e0
-#5 extracting sha256:bcb83e5d02f4745308fadfdd37fae5c3b127d4377d947b1cb163aab5ad5999e0 0.3s done
-#5 DONE 1688.4s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:22c64d66544a600932980fcfd22127146986c0034ff130732f5e01313ef4f33e
-#5 extracting sha256:22c64d66544a600932980fcfd22127146986c0034ff130732f5e01313ef4f33e 0.9s done
-#5 extracting sha256:7e690b0d54d411dbace6dc3bc20333c88076a9ec32a3283b73f0f29a5c37055c
-#5 extracting sha256:7e690b0d54d411dbace6dc3bc20333c88076a9ec32a3283b73f0f29a5c37055c 0.3s done
-#5 extracting sha256:2b00010b43acfdd2d26c6759abb98bb7588cf99227fea996f306bc237bf6e054
-#5 extracting sha256:2b00010b43acfdd2d26c6759abb98bb7588cf99227fea996f306bc237bf6e054 0.4s done
-#5 DONE 1689.9s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:7ae45aa1c6bd6361eb9e437de4a9cfb76b35b0fc8da7fafa3297d66b0ccefe3d
-#5 extracting sha256:7ae45aa1c6bd6361eb9e437de4a9cfb76b35b0fc8da7fafa3297d66b0ccefe3d 0.2s done
-#5 extracting sha256:3a794730652aa5958e2f7a9167ce6b3589c2d8955fc9bfda1707fbf94f0c9e91
-#5 extracting sha256:3a794730652aa5958e2f7a9167ce6b3589c2d8955fc9bfda1707fbf94f0c9e91 0.3s done
-#5 DONE 1690.4s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:97ce3e2b55b11b599651c4e0fcda547de111cae4fc7afdfd41d823251d72fbfa
-#5 extracting sha256:97ce3e2b55b11b599651c4e0fcda547de111cae4fc7afdfd41d823251d72fbfa 0.3s done
-#5 DONE 1690.7s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:4a665ba2d4c13339fc2fb827bbb814b06a9a931e2bd9e739fa7ea37000f06a13
-#5 extracting sha256:4a665ba2d4c13339fc2fb827bbb814b06a9a931e2bd9e739fa7ea37000f06a13 2.1s done
-#5 DONE 1692.8s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:c941038f6f528a0d72a9395907c0b2399d06c7579795e2216e732dd5ece3e743
-#5 extracting sha256:c941038f6f528a0d72a9395907c0b2399d06c7579795e2216e732dd5ece3e743 0.4s done
-#5 DONE 1693.2s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:d59320b1cc3eacf53388b2b1f20b461c2c4b78c35b36e8a7e6fe04662a3f7b6b
-#5 extracting sha256:d59320b1cc3eacf53388b2b1f20b461c2c4b78c35b36e8a7e6fe04662a3f7b6b 0.2s done
-#5 extracting sha256:f96dfc80d2dfba339821d83d7ee2795ef31e85f5589629a570d488c5d0082a95
-#5 extracting sha256:f96dfc80d2dfba339821d83d7ee2795ef31e85f5589629a570d488c5d0082a95 0.3s done
-#5 DONE 1693.7s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:c2783a381a5b48e68e8cdbf4fbf5129de836841071101b612bc9b23663ebf057
-#5 extracting sha256:c2783a381a5b48e68e8cdbf4fbf5129de836841071101b612bc9b23663ebf057 0.2s done
-#5 DONE 1694.0s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:60d9f04b8e0a508df7de419bf7068e6fa58b5d0f7d56f637375fb7d9c04d95a9
-#5 extracting sha256:60d9f04b8e0a508df7de419bf7068e6fa58b5d0f7d56f637375fb7d9c04d95a9 0.5s done
-#5 DONE 1694.5s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:b86b76d168edd877e4b317854e6fdf46b7f5cb0c214c33005a0da504a92809d7
-#5 extracting sha256:b86b76d168edd877e4b317854e6fdf46b7f5cb0c214c33005a0da504a92809d7 1.6s done
-#5 DONE 1696.1s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:f9422947b94009951f1e08372d50e541ad116cab4acc2995599ee21426f3a72e
-#5 extracting sha256:f9422947b94009951f1e08372d50e541ad116cab4acc2995599ee21426f3a72e 0.2s done
-#5 extracting sha256:b76b9752e6e74684e03997117b00163c8bfc1db559d146fdd6383a800c1d0cb1
-#5 extracting sha256:b76b9752e6e74684e03997117b00163c8bfc1db559d146fdd6383a800c1d0cb1 0.2s done
-#5 DONE 1696.6s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:9318eba732ed1a5bed0cf0eb212bd6d820421cdf9ea26db83609fe84af92f2b5
-#5 extracting sha256:9318eba732ed1a5bed0cf0eb212bd6d820421cdf9ea26db83609fe84af92f2b5 0.3s done
-#5 DONE 1696.8s
-
-#5 [1/8] FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:03b64eca8f0ccf64bb8ba5f9793b37931a58a55ca4041f0a46c2437ce1e6b909
-#5 extracting sha256:35ccb028498c68c79aa2e2cb4e5049acaac441dbe196d2f2ed036dd8fb628d9c
-#5 extracting sha256:35ccb028498c68c79aa2e2cb4e5049acaac441dbe196d2f2ed036dd8fb628d9c 0.8s done
-#5 extracting sha256:a4f10e011eb80684566fc80fc5b616676e4386296da4479b9a8ab2c9fb9d6f63
-#5 extracting sha256:a4f10e011eb80684566fc80fc5b616676e4386296da4479b9a8ab2c9fb9d6f63 0.3s done
-#5 DONE 1697.9s
-
-#6 [2/8] RUN apt-get update && apt-get install -y mercurial
-#6 3.924 Hit:1 http://archive.ubuntu.com/ubuntu noble InRelease
-#6 4.714 Get:2 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
-#6 6.144 Get:3 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
-#6 6.168 Get:4 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
-#6 9.994 Get:5 http://archive.ubuntu.com/ubuntu noble-updates/universe i386 Packages [1251 kB]
-#6 13.96 Get:6 http://archive.ubuntu.com/ubuntu noble-updates/main i386 Packages [713 kB]
-#6 19.49 Get:7 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [2137 kB]
-#6 26.71 Get:8 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1955 kB]
-#6 26.95 Fetched 6435 kB in 24s (270 kB/s)
-#6 26.95 Reading package lists...
-#6 29.87 Reading package lists...
-#6 30.81 Building dependency tree...
-#6 31.01 Reading state information...
-#6 31.24 The following packages were automatically installed and are no longer required:
-#6 31.24   autotools-dev m4
-#6 31.24 Use 'apt autoremove' to remove them.
-#6 31.24 The following additional packages will be installed:
-#6 31.24   libpython3-stdlib libpython3.12-minimal libpython3.12-stdlib media-types
-#6 31.24   mercurial-common python3 python3-minimal python3.12 python3.12-minimal ucf
-#6 31.24 Suggested packages:
-#6 31.24   kdiff3 | kdiff3-qt | kompare | meld | tkcvs | mgdiff qct python3-mysqldb
-#6 31.24   python3-openssl python3-pygments wish python3-doc python3-tk python3-venv
-#6 31.24   python3.12-venv python3.12-doc binfmt-support
-#6 31.41 The following NEW packages will be installed:
-#6 31.41   libpython3-stdlib libpython3.12-minimal libpython3.12-stdlib media-types
-#6 31.41   mercurial mercurial-common python3 python3-minimal python3.12
-#6 31.41   python3.12-minimal ucf
-#6 35.17 0 upgraded, 11 newly installed, 0 to remove and 0 not upgraded.
-#6 35.17 Need to get 9314 kB of archives.
-#6 35.17 After this operation, 40.2 MB of additional disk space will be used.
-#6 35.17 Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libpython3.12-minimal amd64 3.12.3-1ubuntu0.9 [836 kB]
-#6 40.70 Get:2 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3.12-minimal amd64 3.12.3-1ubuntu0.9 [2332 kB]
-#6 41.82 Get:3 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3-minimal amd64 3.12.3-0ubuntu2.1 [27.4 kB]
-#6 42.64 Get:4 http://archive.ubuntu.com/ubuntu noble/main amd64 media-types all 10.1.0 [27.5 kB]
-#6 49.08 Get:5 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libpython3.12-stdlib amd64 3.12.3-1ubuntu0.9 [2068 kB]
-#6 51.87 Get:6 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3.12 amd64 3.12.3-1ubuntu0.9 [651 kB]
-#6 52.50 Get:7 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libpython3-stdlib amd64 3.12.3-0ubuntu2.1 [10.1 kB]
-#6 53.37 Get:8 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3 amd64 3.12.3-0ubuntu2.1 [23.0 kB]
-#6 55.95 Get:9 http://archive.ubuntu.com/ubuntu noble/main amd64 ucf all 3.0043+nmu1 [56.5 kB]
-#6 64.21 Get:10 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 mercurial-common all 6.7.2-1ubuntu2.2 [2955 kB]
-#6 66.45 Get:11 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 mercurial amd64 6.7.2-1ubuntu2.2 [328 kB]
-#6 67.17 debconf: delaying package configuration, since apt-utils is not installed
-#6 67.31 Fetched 9314 kB in 35s (266 kB/s)
-#6 67.78 Selecting previously unselected package libpython3.12-minimal:amd64.
-#6 67.78 (Reading database ... 
-(Reading database ... 5%
-(Reading database ... 10%
-(Reading database ... 15%
-(Reading database ... 20%
-(Reading database ... 25%
-(Reading database ... 30%
-(Reading database ... 35%
-(Reading database ... 40%
-(Reading database ... 45%
-(Reading database ... 50%
-(Reading database ... 55%
-(Reading database ... 60%
-(Reading database ... 65%
-(Reading database ... 70%
-(Reading database ... 75%
-(Reading database ... 80%
-(Reading database ... 85%
-(Reading database ... 90%
-(Reading database ... 95%
-(Reading database ... 100%
-(Reading database ... 17633 files and directories currently installed.)
-#6 67.91 Preparing to unpack .../libpython3.12-minimal_3.12.3-1ubuntu0.9_amd64.deb ...
-#6 67.99 Unpacking libpython3.12-minimal:amd64 (3.12.3-1ubuntu0.9) ...
-#6 68.69 Selecting previously unselected package python3.12-minimal.
-#6 68.69 Preparing to unpack .../python3.12-minimal_3.12.3-1ubuntu0.9_amd64.deb ...
-#6 68.83 Unpacking python3.12-minimal (3.12.3-1ubuntu0.9) ...
-#6 69.34 Setting up libpython3.12-minimal:amd64 (3.12.3-1ubuntu0.9) ...
-#6 69.65 Setting up python3.12-minimal (3.12.3-1ubuntu0.9) ...
-#6 70.88 Selecting previously unselected package python3-minimal.
-#6 70.88 (Reading database ... 
-(Reading database ... 5%
-(Reading database ... 10%
-(Reading database ... 15%
-(Reading database ... 20%
-(Reading database ... 25%
-(Reading database ... 30%
-(Reading database ... 35%
-(Reading database ... 40%
-(Reading database ... 45%
-(Reading database ... 50%
-(Reading database ... 55%
-(Reading database ... 60%
-(Reading database ... 65%
-(Reading database ... 70%
-(Reading database ... 75%
-(Reading database ... 80%
-(Reading database ... 85%
-(Reading database ... 90%
-(Reading database ... 95%
-(Reading database ... 100%
-(Reading database ... 17944 files and directories currently installed.)
-#6 70.89 Preparing to unpack .../python3-minimal_3.12.3-0ubuntu2.1_amd64.deb ...
-#6 70.96 Unpacking python3-minimal (3.12.3-0ubuntu2.1) ...
-#6 71.38 Selecting previously unselected package media-types.
-#6 71.39 Preparing to unpack .../media-types_10.1.0_all.deb ...
-#6 71.46 Unpacking media-types (10.1.0) ...
-#6 71.89 Selecting previously unselected package libpython3.12-stdlib:amd64.
-#6 71.89 Preparing to unpack .../libpython3.12-stdlib_3.12.3-1ubuntu0.9_amd64.deb ...
-#6 71.96 Unpacking libpython3.12-stdlib:amd64 (3.12.3-1ubuntu0.9) ...
-#6 72.45 Selecting previously unselected package python3.12.
-#6 72.45 Preparing to unpack .../python3.12_3.12.3-1ubuntu0.9_amd64.deb ...
-#6 72.53 Unpacking python3.12 (3.12.3-1ubuntu0.9) ...
-#6 72.93 Selecting previously unselected package libpython3-stdlib:amd64.
-#6 72.93 Preparing to unpack .../libpython3-stdlib_3.12.3-0ubuntu2.1_amd64.deb ...
-#6 73.01 Unpacking libpython3-stdlib:amd64 (3.12.3-0ubuntu2.1) ...
-#6 73.42 Setting up python3-minimal (3.12.3-0ubuntu2.1) ...
-#6 74.21 Selecting previously unselected package python3.
-#6 74.21 (Reading database ... 
-(Reading database ... 5%
-(Reading database ... 10%
-(Reading database ... 15%
-(Reading database ... 20%
-(Reading database ... 25%
-(Reading database ... 30%
-(Reading database ... 35%
-(Reading database ... 40%
-(Reading database ... 45%
-(Reading database ... 50%
-(Reading database ... 55%
-(Reading database ... 60%
-(Reading database ... 65%
-(Reading database ... 70%
-(Reading database ... 75%
-(Reading database ... 80%
-(Reading database ... 85%
-(Reading database ... 90%
-(Reading database ... 95%
-(Reading database ... 100%
-(Reading database ... 18378 files and directories currently installed.)
-#6 74.22 Preparing to unpack .../python3_3.12.3-0ubuntu2.1_amd64.deb ...
-#6 74.30 Unpacking python3 (3.12.3-0ubuntu2.1) ...
-#6 74.98 Selecting previously unselected package ucf.
-#6 74.98 Preparing to unpack .../ucf_3.0043+nmu1_all.deb ...
-#6 75.06 Moving old data out of the way
-#6 75.06 Unpacking ucf (3.0043+nmu1) ...
-#6 75.71 Selecting previously unselected package mercurial-common.
-#6 75.71 Preparing to unpack .../mercurial-common_6.7.2-1ubuntu2.2_all.deb ...
-#6 75.82 Unpacking mercurial-common (6.7.2-1ubuntu2.2) ...
-#6 76.67 Selecting previously unselected package mercurial.
-#6 76.67 Preparing to unpack .../mercurial_6.7.2-1ubuntu2.2_amd64.deb ...
-#6 76.75 Unpacking mercurial (6.7.2-1ubuntu2.2) ...
-#6 77.14 Setting up media-types (10.1.0) ...
-#6 77.48 Setting up libpython3.12-stdlib:amd64 (3.12.3-1ubuntu0.9) ...
-#6 77.71 Setting up python3.12 (3.12.3-1ubuntu0.9) ...
-#6 78.63 Setting up ucf (3.0043+nmu1) ...
-#6 79.12 Setting up libpython3-stdlib:amd64 (3.12.3-0ubuntu2.1) ...
-#6 79.39 Setting up python3 (3.12.3-0ubuntu2.1) ...
-#6 79.72 Setting up mercurial-common (6.7.2-1ubuntu2.2) ...
-#6 81.33 Setting up mercurial (6.7.2-1ubuntu2.2) ...
-#6 81.70 
-#6 81.70 Creating config file /etc/mercurial/hgrc.d/hgext.rc with new version
-#6 DONE 83.8s
-
-#7 [3/8] RUN python -m pip install numpy
-#7 4.551 Collecting numpy
-#7 4.855   Downloading numpy-2.4.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
-#7 5.246 Downloading numpy-2.4.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.6 MB)
-#7 41.89    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.6/16.6 MB 489.0 kB/s  0:00:36
-#7 42.03 Installing collected packages: numpy
-#7 44.81 Successfully installed numpy-2.4.0
-#7 44.82 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-#7 DONE 45.9s
-
-#8 [4/8] RUN git clone https://bitbucket.org/jpommier/pffft /src/pffft
-#8 1.093 Cloning into '/src/pffft'...
-#8 DONE 4.3s
-
-#9 [5/8] WORKDIR pffft
-#9 DONE 0.8s
-
-#10 [6/8] COPY run_tests.sh build.sh /src
-#10 DONE 1.0s
-
-#11 [7/8] COPY generate_seed_corpus.py /src/pffft
-#11 DONE 0.7s
-
-#12 [8/8] COPY pffft_fuzzer.cc /src/pffft
-#12 DONE 0.8s
-
-#13 exporting to image
-#13 exporting layers
-#13 exporting layers 8.4s done
-#13 exporting manifest sha256:6961eb4e209db4a190b9443dc29dd168a1f51c7c1967c0b5adad0e5b3520cefb
-#13 exporting manifest sha256:6961eb4e209db4a190b9443dc29dd168a1f51c7c1967c0b5adad0e5b3520cefb 0.2s done
-#13 exporting config sha256:959e8369f432a1b73098ba61d3392e2843ebfb331cf6c8902c1090871466eaa1
-#13 exporting config sha256:959e8369f432a1b73098ba61d3392e2843ebfb331cf6c8902c1090871466eaa1 0.2s done
-#13 exporting attestation manifest sha256:48a2d1dfe85cf4825f913ec2698d453fd63960cc86e191d9af081524eddec489
-#13 exporting attestation manifest sha256:48a2d1dfe85cf4825f913ec2698d453fd63960cc86e191d9af081524eddec489 0.4s done
-#13 exporting manifest list sha256:654444cb40f33ab602134796b238a9dda1cdb714b9e9067b21ae5c3cf296f0a1
-#13 exporting manifest list sha256:654444cb40f33ab602134796b238a9dda1cdb714b9e9067b21ae5c3cf296f0a1 0.2s done
-#13 naming to gcr.io/oss-fuzz/pffft:latest
-#13 naming to gcr.io/oss-fuzz/pffft:latest 0.1s done
-#13 unpacking to gcr.io/oss-fuzz/pffft:latest
-#13 unpacking to gcr.io/oss-fuzz/pffft:latest 5.4s done
-#13 DONE 15.2s
-
- [33m1 warning found (use docker --debug to expand):
-[0m - WorkdirRelativePath: Relative workdir "pffft" can have unexpected results if the base image changes (line 21)
-INFO:__main__:Keeping existing build artifacts as-is (if any).
-INFO:__main__:Running: docker run --privileged --shm-size=2g --platform linux/amd64 --rm -i -e FUZZING_ENGINE=libfuzzer -e SANITIZER=address -e ARCHITECTURE=x86_64 -e PROJECT_NAME=pffft -e HELPER=True -e FUZZING_LANGUAGE=c++ -v /root/fix_build_agent/process/project/pffft:/src/pffft -v /root/fix_build_agent/oss-fuzz/build/out/pffft/:/out -v /root/fix_build_agent/oss-fuzz/build/work/pffft:/work -t gcr.io/oss-fuzz/pffft.
----------------------------------------------------------------
-vm.mmap_rnd_bits = 28
-Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
----------------------------------------------------------------
-CC=clang
-CXX=clang++
-CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
-CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
-RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
----------------------------------------------------------------
-+ SRC_DIR=/src/pffft
-+ cd /work
-+ SEED_CORPUS_ZIP_PATH=/out/pffft_fuzzers_seed_corpus.zip
-+ '[' -d seed_corpus_tmp ']'
-+ mkdir seed_corpus_tmp
-+ python /src/pffft/generate_seed_corpus.py seed_corpus_tmp
-python: can't open file '/src/pffft/generate_seed_corpus.py': [Errno 2] No such file or directory
+---
+./configure flags: '--enable-static' '--enable-md2' '--enable-md4' '--enable-ripemd' '--enable-blake2' '--enable-blake2s' '--enable-pwdbased' '--enable-scrypt' '--enable-hkdf' '--enable-cmac' '--enable-arc4' '--enable-camellia' '--enable-aesccm' '--enable-aesctr' '--enable-xts' '--enable-des3' '--enable-x963kdf' '--enable-harden' '--enable-aescfb' '--enable-aesofb' '--enable-aeskeywrap' '--enable-aessiv' '--enable-keygen' '--enable-curve25519' '--enable-curve448' '--enable-shake256' '--disable-crypttests' '--disable-examples' '--enable-compkey' '--enable-ed448' '--enable-ed25519' '--enable-xchacha' '--enable-cryptocb' '--enable-eccencrypt' '--enable-smallstack' '--enable-ed25519-stream' '--enable-ed448-stream' '--enable-aesgcm-stream' '--enable-shake128' '--enable-siphash' '--enable-eccsi' '--with-eccminsz=0' '--enable-sm2' '--enable-sm3' '--enable-sm4-cbc' '--enable-sm4-ccm' '--enable-sm4-ctr' '--enable-sm4-ecb' '--enable-sm4-gcm' '--enable-sp' '--enable-sp-math' 'CC=clang' 'CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize-coverage=trace-pc-guard,indirect-calls,trace-cmp -DHAVE_AES_ECB -DWOLFSSL_DES_ECB -DHAVE_ECC_SECPR2 -DHAVE_ECC_SECPR3 -DWOLFSSL_ECDSA_SET_K -DWOLFSSL_ECDSA_SET_K_ONE_LOOP -DWOLFSSL_PUBLIC_ECC_ADD_DBL'
+---
+Note: Make sure your application includes "wolfssl/options.h" before any other wolfSSL headers.
+      You can define "WOLFSSL_USE_OPTIONS_H" in your application to include this automatically.
+++ nproc
++ make -j2
+make -j3  all-recursive
+make[1]: warning: -j3 forced in submake: resetting jobserver mode.
+make[1]: Entering directory '/src/wolfssl-sp-math'
+make[2]: Entering directory '/src/wolfssl-sp-math'
+make[2]: warning: -j3 forced in submake: resetting jobserver mode.
+  CC       wolfcrypt/src/src_libwolfssl_la-hmac.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-hash.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-cpuid.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-kdf.lo
+3 warnings generated.
+3 warnings generated.
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-random.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-sha256.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-rsa.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0;1;35mwarning: [0m[1m[0munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-sp_x86_64.lo
+  CPPAS    wolfcrypt/src/src_libwolfssl_la-sp_x86_64_asm.lo
+3 warnings generated.
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+  CC       wolfcrypt/src/src_libwolfssl_la-sp_int.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+  CC       wolfcrypt/src/src_libwolfssl_la-aes.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+3 warnings generated.
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-cmac.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-des3.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-sha.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-sha512.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+  CC       wolfcrypt/src/src_libwolfssl_la-sha3.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-sm2.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-sp_sm2_x86_64.lo
+  CPPAS    wolfcrypt/src/src_libwolfssl_la-sp_sm2_x86_64_asm.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+  CC       wolfcrypt/src/src_libwolfssl_la-sm3.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-sm4.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-siphash.lo
+3 warnings generated.
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-logging.lo
+3 warnings generated.
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-wc_port.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+  CC       wolfcrypt/src/src_libwolfssl_la-error.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-wc_encrypt.lo
+3 warnings generated.
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-signature.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+  CC       wolfcrypt/src/src_libwolfssl_la-wolfmath.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+3 warnings generated.
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+  CC       wolfcrypt/src/src_libwolfssl_la-memory.lo
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-dh.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-asn.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+  CC       wolfcrypt/src/src_libwolfssl_la-coding.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-poly1305.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-arc4.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-md4.lo
+[0;1;35m[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+warning: [0;1;35m[0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+warning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-md5.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-pwdbased.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+[0;1;35m3warning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+ warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-pkcs12.lo
+3 warnings generated.
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+  CC       wolfcrypt/src/src_libwolfssl_la-camellia.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-md2.lo
+3 warnings generated.
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-ripemd.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-blake2b.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+  CC       wolfcrypt/src/src_libwolfssl_la-blake2s.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-chacha.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+3 warnings generated.
+3 warnings generated.
+  CC       wolfcrypt/src/src_libwolfssl_la-chacha20_poly1305.lo
+  CC       wolfcrypt/src/src_libwolfssl_la-ecc.lo
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wthis-test-should-fail' [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wmaybe-uninitialized'; did you mean '-Wuninitialized'? [-Wunknown-warning-option][0m
+[0;1;35mwarning: [0m[1munknown warning option '-Wnormalized=id' [-Wunknown-warning-option][0m
+[1mwolfcrypt/src/ecc.c:2707:13: [0m[0;1;31merror: [0m[1munused variable 'x' [-Werror,-Wunused-variable][0m
+ 2707 |     mp_int *x, *y, *z;[0m
+      | [0;1;32m            ^
+[0m[1mwolfcrypt/src/ecc.c:2707:17: [0m[0;1;31merror: [0m[1munused variable 'y' [-Werror,-Wunused-variable][0m
+ 2707 |     mp_int *x, *y, *z;[0m
+      | [0;1;32m                ^
+[0m[1mwolfcrypt/src/ecc.c:2707:21: [0m[0;1;31merror: [0m[1munused variable 'z' [-Werror,-Wunused-variable][0m
+ 2707 |     mp_int *x, *y, *z;[0m
+      | [0;1;32m                    ^
+[0m3 warnings and 3 errors generated.
+make[2]: *** [Makefile:8339: wolfcrypt/src/src_libwolfssl_la-ecc.lo] Error 1
+make[2]: *** Waiting for unfinished jobs....
+3 warnings generated.
+make[2]: Leaving directory '/src/wolfssl-sp-math'
+make[1]: *** [Makefile:11173: all-recursive] Error 1
+make[1]: Leaving directory '/src/wolfssl-sp-math'
+make: *** [Makefile:6105: all] Error 2
 ERROR:__main__:Building fuzzers failed.

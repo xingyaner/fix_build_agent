@@ -3,3 +3,4 @@
   error_time: 2026-1-7
   oss-fuzz_sha: ddd62928ca713d5130e8890f0ce26c3c2c82d83b
   state: 'no'
+  fix_result: Success
