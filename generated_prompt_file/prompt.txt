@@ -1,53 +1,94 @@
 You are a premier expert in software testing. Fix the build for: nss.
 
 --- 【EXPERT KNOWLEDGE & STRATEGIC GUIDANCE】 ---
-**Build Error Analysis:**
-The fuzzing build is failing with error: `ar: /src/dist/Debug/lib/libgcm-aes-x86_c_lib.a: No such file or directory`
+INFO:common_utils:Running: docker build -t gcr.io/oss-fuzz/nss --file /root/fix_build_agent/oss-fuzz/projects/nss/Dockerfile /root/fix_build_agent/oss-fuzz/projects/nss.
+#0 building with "default" instance using docker driver
 
-**Root Cause:**
-1. The Cryptofuzz Makefile assumes `libgcm-aes-x86_c_lib.a` exists unconditionally
-2. This x86-specific GCM AES library is not being generated during the NSS build
-3. The error occurs at line 10 of the Makefile when creating `module.a`
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 1.18kB 0.1s done
+#1 DONE 0.2s
 
-**Previous Attempts:**
-1. **Attempt 1**: Added warning suppression flags only - didn't fix the missing library issue
-2. **Attempt 2**: Attempted to add conditional checks in Makefile but patch application failed due to exact string matching requirements
-3. **Attempt 3**: Successfully applied patches to add conditional checks, but Docker caching prevented changes from taking effect
+#2 [internal] load metadata for gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
+#2 DONE 1.4s
 
-**Critical Observations:**
-- The Makefile already has a conditional check for `libintel-gcm-s_lib.a`: `if [ -f ".../libintel-gcm-s_lib.a" ]; then`
-- But `libgcm-aes-x86_c_lib.a` has no such conditional check in the cached Docker image
-- Docker is using cached layers (`#6 CACHED`, `#7 CACHED`, etc.) which don't include our modifications
-- The volume mount `-v /root/fix_build_agent/process/project/nss:/src/nss` should provide our modified files, but they might not be used due to build process
+#3 [internal] load .dockerignore
+#3 transferring context: 2B 0.0s done
+#3 DONE 0.2s
 
-**Expert Recommendations:**
-1. **Primary Solution**: Address Docker caching issue to ensure modified files are used
-2. **Docker Cache Strategies**:
-   - Force Docker rebuild without cache
-   - Modify Dockerfile to add cache-busting layer (e.g., ADD a timestamp file)
-   - Ensure build process uses mounted files rather than pre-copied files
-3. **Verification**: Check that the modified Makefile is actually being used in the build container
-4. **Alternative Approach**: If Docker cache issue persists, consider modifying the build script to handle the missing library at runtime
+#4 [internal] load build context
+#4 DONE 0.0s
 
-**Specific Fix Strategy:**
-- Modify `/root/fix_build_agent/oss-fuzz/projects/nss/Dockerfile` to add a cache-busting layer
-- Force rebuild of Docker image to ensure our modifications are included
-- Verify that the build process inside the container uses the mounted `/src/nss` directory
-- Consider adding a check in the build script to conditionally handle missing libraries
+#5 [1/7] FROM gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
+#5 resolve gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
+#5 resolve gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a 0.2s done
+#5 DONE 0.3s
 
-**Important Context from Reflection Journal:**
-"Attempt 3 failed because Docker caching prevented our source code modifications from taking effect. The patches were successfully applied to the local files, but the Docker build used cached layers that didn't include our changes. DO NOT assume that modifying source files will automatically invalidate Docker cache; we need to either force a rebuild, modify the Dockerfile to ensure cache invalidation, or verify that the modified files are properly mounted into the container at build time."
+#4 [internal] load build context
+#4 transferring context: 4.10kB 0.0s done
+#4 DONE 0.2s
 
-**Docker-Specific Insights:**
-- The Docker build shows cached layers, indicating the image isn't being rebuilt with our changes
-- The `COPY *.sh /src/` command in Dockerfile might be copying unmodified scripts
-- Need to ensure Docker recognizes that source files have changed and invalidates cache appropriately
-- Consider using `--no-cache` flag or modifying Dockerfile to force rebuild of relevant layers
+#6 [3/7] RUN hg clone https://hg.mozilla.org/projects/nspr nspr
+#6 CACHED
+
+#7 [4/7] RUN hg clone https://hg.mozilla.org/projects/nss nss
+#7 CACHED
+
+#8 [5/7] RUN git clone --depth 1 https://github.com/MozillaSecurity/nss-fuzzing-corpus.git nss-corpus
+#8 CACHED
+
+#9 [6/7] COPY *.sh /src/
+#9 CACHED
+
+#10 [2/7] RUN apt-get update &&     apt-get install -y make mercurial zlib1g-dev gyp ninja-build libssl-dev python libboost-dev libsqlite3-dev
+#10 CACHED
+
+#11 [7/7] WORKDIR /src/nss
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers 0.0s done
+#12 exporting manifest sha256:d401d632cc929da82dcef838b295bbb0cda3549c7b204a2e9b2726c5d4b727e5 0.0s done
+#12 exporting config sha256:8f5c8c57e5ee803474fcd97d927e5919db18868f9681028458b02c6d0a4929cd 0.0s done
+#12 exporting attestation manifest sha256:0b1ee6f2de3efe63857124a2cf8008949db0aa699aa8ef43c40918c5afd66cdd
+#12 exporting attestation manifest sha256:0b1ee6f2de3efe63857124a2cf8008949db0aa699aa8ef43c40918c5afd66cdd 0.5s done
+#12 exporting manifest list sha256:c83e0dcf473519a61549c2d200a766df8607bf2966a4893c90f07fb9f13c182e
+#12 exporting manifest list sha256:c83e0dcf473519a61549c2d200a766df8607bf2966a4893c90f07fb9f13c182e 0.2s done
+#12 naming to gcr.io/oss-fuzz/nss:latest
+#12 naming to gcr.io/oss-fuzz/nss:latest 0.0s done
+#12 unpacking to gcr.io/oss-fuzz/nss:latest 0.1s done
+#12 DONE 1.3s
+INFO:__main__:Keeping existing build artifacts as-is (if any).
+INFO:__main__:Running: docker run --privileged --shm-size=2g --platform linux/amd64 --rm -i -e FUZZING_ENGINE=afl -e SANITIZER=address -e ARCHITECTURE=x86_64 -e PROJECT_NAME=nss -e HELPER=True -e FUZZING_LANGUAGE=c++ -v /root/fix_build_agent/process/project/nss:/src/nss -v /root/fix_build_agent/oss-fuzz/build/out/nss/:/out -v /root/fix_build_agent/oss-fuzz/build/work/nss:/work -t gcr.io/oss-fuzz/nss.
+---------------------------------------------------------------
+vm.mmap_rnd_bits = 28
+Copying precompiled AFL++
+
+AFL++ target compilation setup:
+AFL_IGNORE_UNKNOWN_ENVS=1
+AFL_QUIET=1
+AFL_IGNORE_PROBLEMS=1
+
+ done.
+---------------------------------------------------------------
+CC=/src/aflplusplus/afl-clang-fast
+CXX=/src/aflplusplus/afl-clang-fast++
+CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+---------------------------------------------------------------
++ export 'CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
++ CFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
++ export 'CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
++ CXXFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
++ sed -i s/--disable-tests//g automation/ossfuzz/build.sh
+sed: can't read automation/ossfuzz/build.sh: No such file or directory
+ERROR:__main__:Building fuzzers failed.
 
 --- 【LESSONS FROM PREVIOUS ATTEMPTS】 ---
-- [Attempt 1] Attempt 1 failed because adding warning suppression flags didn't address the missing library file error. The actual issue is that libgcm-aes-x86_c_lib.a is not being generated during the NSS build. DO NOT focus on compiler warnings; investigate why the NSS build isn't producing this specific architecture-dependent library file for x86_64.
 - [Attempt 2] Attempt 2 failed because the patch application tool couldn't find exact matches for the ORIGINAL content blocks. The fix plan was conceptually correct (adding conditional checks for missing x86-specific libraries) but was never applied. DO NOT rely on exact string matching for patch application; instead, use more flexible approaches like sed commands or check if the file needs to be modified differently. Also, verify that patch application succeeded before running the build.
 - [Attempt 3] Attempt 3 failed because Docker caching prevented our source code modifications from taking effect. The patches were successfully applied to the local files, but the Docker build used cached layers that didn't include our changes. DO NOT assume that modifying source files will automatically invalidate Docker cache; we need to either force a rebuild, modify the Dockerfile to ensure cache invalidation, or verify that the modified files are properly mounted into the container at build time.
+- [Attempt 1] The build has regressed from a compilation/linker error (missing libgcm-aes-x86_c_lib.a) to a basic file access error (automation/ossfuzz/build.sh not found). This indicates the build infrastructure is broken at a more fundamental level. The error moved from a later stage (compilation) to an earlier stage (script execution), which is a regression. The issue appears to be that the NSS source directory structure doesn't match expectations - either the source wasn't properly cloned or the working directory is incorrect.
 
 
 --- Configuration Files (Dockerfile, build.sh, etc.) ---
@@ -216,55 +257,33 @@ NSS_TESTS=gtests ./all.sh
 
 --- Project File Tree (Shallow View) ---
 📁 nss
-├── 📄 COPYING
 ├── 📄 ChangeLog.txt
-├── 📄 Makefile
 ├── 📄 README.txt
 ├── 📄 account.cpp
 ├── 📄 account.h
-├── 📁 automation
-├── 📁 botan
-├── 📄 build.sh
-├── 📁 cmd
 ├── 📄 console.cpp
 ├── 📄 console.h
-├── 📁 coreconf
-├── 📁 cpputil
-├── 📁 cryptofuzz
-├── 📁 doc
 ├── 📄 env.cpp
 ├── 📄 env.h
 ├── 📄 event.cpp
 ├── 📄 event.h
-├── 📄 exports.gyp
-├── 📁 fuzz
-├── 📁 gtests
 ├── 📄 gui.cpp
 ├── 📄 gui.h
-├── 📄 help.txt
 ├── 📄 hook.cpp
 ├── 📄 hook.h
 ├── 📄 imports.cpp
 ├── 📄 imports.h
 ├── 📄 io.cpp
 ├── 📄 io.h
-├── 📁 lib
-├── 📄 mach
-├── 📄 manifest.mn
 ├── 📄 messages.mc
-├── 📁 nss-tool
-├── 📄 nss.gyp
 ├── 📄 nssm.cpp
 ├── 📄 nssm.h
 ├── 📄 nssm.ico
 ├── 📄 nssm.rc
 ├── 📄 nssm.sln
 ├── 📄 nssm.vcproj
-├── 📁 out
-├── 📁 pkg
 ├── 📄 process.cpp
 ├── 📄 process.h
-├── 📄 readme.md
 ├── 📄 registry.cpp
 ├── 📄 registry.h
 ├── 📄 resource.h
@@ -272,9 +291,6 @@ NSS_TESTS=gtests ./all.sh
 ├── 📄 service.h
 ├── 📄 settings.cpp
 ├── 📄 settings.h
-├── 📁 taskcluster
-├── 📁 tests
-├── 📄 trademarks.txt
 ├── 📄 utf8.cpp
 ├── 📄 utf8.h
 └── 📄 version.cmd
@@ -283,503 +299,86 @@ NSS_TESTS=gtests ./all.sh
 No relevant commit found.
 
 --- Fuzz Build Log (Last 500 lines) ---
-/src/nss
-+ export 'CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCRYPTOFUZZ_BOTAN'
-+ CXXFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCRYPTOFUZZ_BOTAN'
-++ realpath botan/libbotan-3.a
-+ export LIBBOTAN_A_PATH=/src/nss/botan/libbotan-3.a
-+ LIBBOTAN_A_PATH=/src/nss/botan/libbotan-3.a
-++ realpath botan/build/include
-+ export BOTAN_INCLUDE_PATH=/src/nss/botan/build/include
-+ BOTAN_INCLUDE_PATH=/src/nss/botan/build/include
-+ pushd cryptofuzz/modules/botan
-/src/nss/cryptofuzz/modules/botan /src/nss
-++ nproc
-+ make -j2
-test /src/nss/botan/build/include
-/src/aflplusplus/afl-clang-fast++ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCRYPTOFUZZ_BOTAN -Wall -Wextra -std=c++20 -I ../../include -I ../../fuzzing-headers/include -DFUZZING_HEADERS_NO_IMPL -I /src/nss/botan/build/include/public/ -I /src/nss/botan/build/include/internal/ -c bn_ops.cpp -o bn_ops.o
-/src/aflplusplus/afl-clang-fast++ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCRYPTOFUZZ_BOTAN -Wall -Wextra -std=c++20 -I ../../include -I ../../fuzzing-headers/include -DFUZZING_HEADERS_NO_IMPL -I /src/nss/botan/build/include/public/ -I /src/nss/botan/build/include/internal/ -c module.cpp -o module.o
-In file included from bn_ops.cpp:1:
-In file included from ../../include/cryptofuzz/util.h:3:
-In file included from ../../include/cryptofuzz/components.h:In file included from 3:
-module.cppIn file included from :../../include/cryptofuzz/generic.h1::
-8In file included from :
-./module.h:3[1m:
-../../include/cryptofuzz/../../third_party/json/json.hppIn file included from :../../include/cryptofuzz/components.h22514::335:
-:In file included from  ../../include/cryptofuzz/generic.h[0m:[0;1;35m8warning: :
-[0m[1m[1m../../include/cryptofuzz/../../third_party/json/json.hppidentifier '_json' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator]:[0m22514
-:35: [0m[0;1;35mwarning: [0m[1midentifier '_json' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator][0m
-  2251422514 |  | [0;34m[0;34miinnlliinnee[0m[0m  nnlloohhmmaannnn::::jjssoonn  [0;34m[0;34mooppeerraattoorr[0m[0m  [0;32m[0;32m""""[0m[0m  __jjssoonn(([0;34m[0;34mccoonnsstt[0m[0m  [0;34m[0;34mcchhaarr[0m[0m**  ss,,  ssttdd::::ssiizzee__tt  nn))[0m[0m
+INFO:common_utils:Running: docker build -t gcr.io/oss-fuzz/nss --file /root/fix_build_agent/oss-fuzz/projects/nss/Dockerfile /root/fix_build_agent/oss-fuzz/projects/nss.
+#0 building with "default" instance using docker driver
 
-              | | [0;1;32m[0;1;32m                      ~~~~~~~~~~~~^~~~~                      ~~~~~~~~~~~~^~~~~
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 1.18kB 0.1s done
+#1 DONE 0.2s
 
-[0m[0m              | | [0;32m[0;32m                      operator""_json                      operator""_json
+#2 [internal] load metadata for gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
+#2 DONE 1.4s
 
-[0m[0m[1m../../include/cryptofuzz/../../third_party/json/json.hpp:22533:49: [0m[0;1;35mwarning: [0m[1midentifier '_json_pointer' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator][0m
-[1m../../include/cryptofuzz/../../third_party/json/json.hpp:22533:49: [0m[0;1;35mwarning: [0m[1midentifier '_json_pointer' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator] [0m22533
- | [0;34minline[0m nlohmann::json::json_pointer [0;34moperator [0m22533  | [0;32m[0;34m"i"n[0ml i_njes[0mo nn_lpoohimnatnenr:(:[0;34mjcsoonns:t:[0mj s[0;34mocnh_apro[0mi*n tse,r  s[0;34mtodp:e:rsaitzoer_[0mt  [0;32mn")"[0m[0m
-        _| j[0;1;32ms                                    ~~~~~~~~~~~~^~~~~~~~~~~~~o
-n[0m_       p| o[0;32mi                                    operator""_json_pointern
-t[0mer([0;34mconst[0m [0;34mchar[0m* s, std::size_t n)[0m
-       | [0;1;32m                                    ~~~~~~~~~~~~^~~~~~~~~~~~~
-[0m       | [0;32m                                    operator""_json_pointer
-[0mIn file included from bn_ops.cpp:4:
-[1m/src/nss/botan/build/include/public/botan/numthry.h:13:1: [0m[0;1;35mwarning: [0m[1mthis header will be made internal in the future [-W#pragma-messages][0m
-   13 | BOTAN_FUTURE_INTERNAL_HEADER(numthry.h)[0m
-      | [0;1;32m^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:77:49: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_FUTURE_INTERNAL_HEADER'[0m
-   77 |       #define BOTAN_FUTURE_INTERNAL_HEADER(hdr) _Pragma([0;32m"message \"this header will be made internal in the future\""[0m)[0m
-      | [0;1;32m                                                ^
-[0m[1m<scratch space>:97:2: [0m[0;1;36mnote: [0mexpanded from here[0m
-   97 |  message [0;32m"this header will be made internal in the future"[0m
-      | [0;1;32m ^
-[0mIn file included from bn_ops.cpp:5:
-[1m/src/nss/botan/build/include/public/botan/reducer.h:13:1: [0m[0;1;35mwarning: [0m[1mthis header is deprecated [-W#pragma-messages][0m
-   13 | BOTAN_DEPRECATED_HEADER([0;32m"reducer.h"[0m)[0m
-      | [0;1;32m^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:76:44: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED_HEADER'[0m
-   76 |       #define BOTAN_DEPRECATED_HEADER(hdr) _Pragma([0;32m"message \"this header is deprecated\""[0m)[0m
-      | [0;1;32m                                           ^
-[0m[1m<scratch space>:99:2: [0m[0;1;36mnote: [0mexpanded from here[0m
-   99 |  message [0;32m"this header is deprecated"[0m
-      | [0;1;32m ^
-[0m[1mbn_ops.cpp:23:38: [0m[0;1;35mwarning: [0m[1m'to_u32bit' is deprecated: Deprecated no replacement [-Wdeprecated-declarations][0m
-   23 |                 [0;34mreturn[0m bn.ConstRef().to_u32bit();[0m
-      | [0;1;32m                                     ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:512:7: [0m[0;1;36mnote: [0m'to_u32bit' has been explicitly marked deprecated here[0m
-  512 |       BOTAN_DEPRECATED([0;32m"Deprecated no replacement"[0m) uint32_t to_u32bit() [0;34mconst[0m;[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mbn_ops.cpp:766:43: [0m[0;1;35mwarning: [0m[1m'mod_add' is deprecated: Deprecated no replacement [-Wdeprecated-declarations][0m
-  766 |                         res = bn[[0;32m0[0m].Ref().mod_add(bn[[0;32m1[0m].Ref(), bn[[0;32m2[0m].Ref(), ws);[0m
-      | [0;1;32m                                          ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:349:7: [0m[0;1;36mnote: [0m'mod_add' has been explicitly marked deprecated here[0m
-  349 |       BOTAN_DEPRECATED([0;32m"Deprecated no replacement"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mbn_ops.cpp:816:43: [0m[0;1;35mwarning: [0m[1m'mod_sub' is deprecated: Deprecated no replacement [-Wdeprecated-declarations][0m
-  816 |                         res = bn[[0;32m0[0m].Ref().mod_sub(bn[[0;32m1[0m].Ref(), bn[[0;32m2[0m].Ref(), ws);[0m
-      | [0;1;32m                                          ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:359:7: [0m[0;1;36mnote: [0m'mod_sub' has been explicitly marked deprecated here[0m
-  359 |       BOTAN_DEPRECATED([0;32m"Deprecated no replacement"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mbn_ops.cpp:873:15: [0m[0;1;35mwarning: [0m[1m'ct_cond_assign' is deprecated: Deprecated no replacement [-Wdeprecated-declarations][0m
-  873 |     res.Ref().ct_cond_assign(bn[[0;32m1[0m].Ref() != [0;32m0[0m, bn[[0;32m0[0m].Ref());[0m
-      | [0;1;32m              ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:779:7: [0m[0;1;36mnote: [0m'ct_cond_assign' has been explicitly marked deprecated here[0m
-  779 |       BOTAN_DEPRECATED([0;32m"Deprecated no replacement"[0m) [0;34mvoid[0m ct_cond_assign([0;34mbool[0m predicate, [0;34mconst[0m BigInt& other);[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0mIn file included from module.cpp:8:
-[1m/src/nss/botan/build/include/public/botan/curve25519.h:13:1: [0m[0;1;35mwarning: [0m[1mthis header is deprecated [-W#pragma-messages][0m
-   13 | BOTAN_DEPRECATED_HEADER([0;32m"curve25519.h"[0m)[0m
-      | [0;1;32m^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:76:44: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED_HEADER'[0m
-   76 |       #define BOTAN_DEPRECATED_HEADER(hdr) _Pragma([0;32m"message \"this header is deprecated\""[0m)[0m
-      | [0;1;32m                                           ^
-[0m[1m<scratch space>:398:2: [0m[0;1;36mnote: [0mexpanded from here[0m
-  398 |  message [0;32m"this header is deprecated"[0m
-      | [0;1;32m ^
-[0mIn file included from module.cpp:11:
-[1m/src/nss/botan/build/include/public/botan/dsa.h:14:1: [0m[0;1;35mwarning: [0m[1mthis header is deprecated [-W#pragma-messages][0m
-   14 | BOTAN_DEPRECATED_HEADER([0;32m"dsa.h"[0m)[0m
-      | [0;1;32m^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:76:44: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED_HEADER'[0m
-   76 |       #define BOTAN_DEPRECATED_HEADER(hdr) _Pragma([0;32m"message \"this header is deprecated\""[0m)[0m
-      | [0;1;32m                                           ^
-[0m[1m<scratch space>:404:2: [0m[0;1;36mnote: [0mexpanded from here[0m
-  404 |  message [0;32m"this header is deprecated"[0m
-      | [0;1;32m ^
-[0m[1mmodule.cpp:36:33: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use alternate constructor [-Wdeprecated-declarations][0m
-   36 |         [0;34mconst[0m ::Botan::EC_Group secp112r1([0m
-      | [0;1;32m                                ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:118:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  118 |       BOTAN_DEPRECATED([0;32m"Use alternate constructor"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:50:33: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use alternate constructor [-Wdeprecated-declarations][0m
-   50 |         [0;34mconst[0m ::Botan::EC_Group secp112r2([0m
-      | [0;1;32m                                ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:118:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  118 |       BOTAN_DEPRECATED([0;32m"Use alternate constructor"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:64:33: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use alternate constructor [-Wdeprecated-declarations][0m
-   64 |         [0;34mconst[0m ::Botan::EC_Group secp128r1([0m
-      | [0;1;32m                                ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:118:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  118 |       BOTAN_DEPRECATED([0;32m"Use alternate constructor"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:78:33: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use alternate constructor [-Wdeprecated-declarations][0m
-   78 |         [0;34mconst[0m ::Botan::EC_Group secp128r2([0m
-      | [0;1;32m                                ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:118:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  118 |       BOTAN_DEPRECATED([0;32m"Use alternate constructor"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:919:27: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use EC_Group::from_{name,OID,PEM} [-Wdeprecated-declarations][0m
-  919 |         ::Botan::EC_Group group(*curveString);[0m
-      | [0;1;32m                          ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:200:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  200 |       BOTAN_DEPRECATED([0;32m"Use EC_Group::from_{name,OID,PEM}"[0m) [0;34mexplicit[0m EC_Group(std::string_view pem_or_oid);[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:951:27: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use EC_Group::from_{name,OID,PEM} [-Wdeprecated-declarations][0m
-  951 |         ::Botan::EC_Group group(*curveString);[0m
-      | [0;1;32m                          ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:200:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  200 |       BOTAN_DEPRECATED([0;32m"Use EC_Group::from_{name,OID,PEM}"[0m) [0;34mexplicit[0m EC_Group(std::string_view pem_or_oid);[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:980:25: [0m[0;1;35mwarning: [0m[1m'binary_encode' is deprecated: Use BigInt::serialize_to [-Wdeprecated-declarations][0m
-  980 |             priv_bigint.binary_encode(priv_bytes, [0;34msizeof[0m(priv_bytes));[0m
-      | [0;1;32m                        ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:750:7: [0m[0;1;36mnote: [0m'binary_encode' has been explicitly marked deprecated here[0m
-  750 |       BOTAN_DEPRECATED([0;32m"Use BigInt::serialize_to"[0m) [0;34mvoid[0m binary_encode(uint8_t buf[], size_t len) [0;34mconst[0m;[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:989:17: [0m[0;1;35mwarning: [0m[1m'binary_decode' is deprecated: Use BigInt::from_bytes [-Wdeprecated-declarations][0m
-  989 |             pub.binary_decode(priv.public_value());[0m
-      | [0;1;32m                ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:765:7: [0m[0;1;36mnote: [0m'binary_decode' has been explicitly marked deprecated here[0m
-  765 |       BOTAN_DEPRECATED([0;32m"Use BigInt::from_bytes"[0m) [0;34mvoid[0m binary_decode(std::span<[0;34mconst[0m uint8_t> buf) {[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:994:31: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use EC_Group::from_{name,OID,PEM} [-Wdeprecated-declarations][0m
-  994 |             ::Botan::EC_Group group(*curveString);[0m
-      | [0;1;32m                              ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:200:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  200 |       BOTAN_DEPRECATED([0;32m"Use EC_Group::from_{name,OID,PEM}"[0m) [0;34mexplicit[0m EC_Group(std::string_view pem_or_oid);[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:999:69: [0m[0;1;35mwarning: [0m[1m'ECDSA_PrivateKey' is deprecated: Use one of the other constructors [-Wdeprecated-declarations][0m
-  999 |             [0;34mauto[0m priv = std::make_unique<::Botan::ECDSA_PrivateKey>(::Botan::ECDSA_PrivateKey(rng, group, priv_bn));[0m
-      | [0;1;32m                                                                    ^
-[0m[1m/src/nss/botan/build/include/public/botan/ecdsa.h:122:7: [0m[0;1;36mnote: [0m'ECDSA_PrivateKey' has been explicitly marked deprecated here[0m
-  122 |       BOTAN_DEPRECATED([0;32m"Use one of the other constructors"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:999:69: [0m[0;1;35mwarning: [0m[1m'ECDSA_PrivateKey' is deprecated: Use one of the other constructors [-Wdeprecated-declarations][0m
-  999 |             [0;34mauto[0m priv = std::make_unique<::Botan::ECDSA_PrivateKey>(::Botan::ECDSA_PrivateKey(rng, group, priv_bn));[0m
-      | [0;1;32m                                                                    ^
-[0m[1m/src/nss/botan/build/include/public/botan/ecdsa.h:122:7: [0m[0;1;36mnote: [0m'ECDSA_PrivateKey' has been explicitly marked deprecated here[0m
-  122 |       BOTAN_DEPRECATED([0;32m"Use one of the other constructors"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1042:39: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use EC_Group::from_{name,OID,PEM} [-Wdeprecated-declarations][0m
- 1042 |                     ::Botan::EC_Group group(*curveString);[0m
-      | [0;1;32m                                      ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:200:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  200 |       BOTAN_DEPRECATED([0;32m"Use EC_Group::from_{name,OID,PEM}"[0m) [0;34mexplicit[0m EC_Group(std::string_view pem_or_oid);[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1146:32: [0m[0;1;35mwarning: [0m[1m'get_public_key' is deprecated: Use raw_public_key_bits [-Wdeprecated-declarations][0m
- 1146 |         [0;34mconst[0m [0;34mauto[0m pub = priv->get_public_key();[0m
-      | [0;1;32m                               ^
-[0m[1m/src/nss/botan/build/include/public/botan/ed25519.h:37:7: [0m[0;1;36mnote: [0m'get_public_key' has been explicitly marked deprecated here[0m
-   37 |       BOTAN_DEPRECATED([0;32m"Use raw_public_key_bits"[0m) [0;34mconst[0m std::vector<uint8_t>& get_public_key() [0;34mconst[0m {[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1188:44: [0m[0;1;35mwarning: [0m[1m'encode_fixed_length_int_pair' is deprecated: Deprecated no replacement [-Wdeprecated-declarations][0m
- 1188 |                     sig = ::Botan::BigInt::encode_fixed_length_int_pair(R, S, group->get_order_bytes());[0m
-      | [0;1;32m                                           ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:915:7: [0m[0;1;36mnote: [0m'encode_fixed_length_int_pair' has been explicitly marked deprecated here[0m
-  915 |       BOTAN_DEPRECATED([0;32m"Deprecated no replacement"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1343:57: [0m[0;1;35mwarning: [0m[1m'public_value' is deprecated: Use raw_public_key_bits [-Wdeprecated-declarations][0m
- 1343 |         [0;34mconst[0m [0;34mauto[0m derived_key = kas->derive_key([0;32m0[0m, pub.public_value());[0m
-      | [0;1;32m                                                        ^
-[0m[1m/src/nss/botan/build/include/public/botan/dh.h:51:7: [0m[0;1;36mnote: [0m'public_value' has been explicitly marked deprecated here[0m
-   51 |       BOTAN_DEPRECATED([0;32m"Use raw_public_key_bits"[0m) std::vector<uint8_t> public_value() [0;34mconst[0m {[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1746:43: [0m[0;1;35mwarning: [0m[1m'encode_fixed_length_int_pair' is deprecated: Deprecated no replacement [-Wdeprecated-declarations][0m
- 1746 |         [0;34mconst[0m [0;34mauto[0m sig = ::Botan::BigInt::encode_fixed_length_int_pair([0m
-      | [0;1;32m                                          ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:915:7: [0m[0;1;36mnote: [0m'encode_fixed_length_int_pair' has been explicitly marked deprecated here[0m
-  915 |       BOTAN_DEPRECATED([0;32m"Deprecated no replacement"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0mIn file included from module.cpp:1:
-In file included from ./module.h:3:
-In file included from ../../include/cryptofuzz/components.h:3:
-In file included from ../../include/cryptofuzz/generic.h:5:
-In file included from ../../fuzzing-headers/include/fuzzing/datasource/datasource.hpp:3:
-In file included from ../../fuzzing-headers/include/fuzzing/exception.hpp:5:
-In file included from /usr/local/bin/../include/c++/v1/string:654:
-In file included from /usr/local/bin/../include/c++/v1/string_view:953:
-In file included from /usr/local/bin/../include/c++/v1/algorithm:1865:
-In file included from /usr/local/bin/../include/c++/v1/__algorithm/inplace_merge.h:27:
-[1m/usr/local/bin/../include/c++/v1/__memory/unique_ptr.h:759:30: [0m[0;1;35mwarning: [0m[1m'Ed25519_PrivateKey' is deprecated: Use from_seed or from_bytes [-Wdeprecated-declarations][0m
-  759 |   [0;34mreturn[0m unique_ptr<_Tp>([0;34mnew[0m _Tp(std::forward<_Args>(__args)...));[0m
-      | [0;1;32m                             ^
-[0m[1mmodule.cpp:1134:32: [0m[0;1;36mnote: [0min instantiation of function template specialization 'std::make_unique<Botan::Ed25519_PrivateKey, const std::vector<unsigned char, Botan::secure_allocator<unsigned char>> &, 0>' requested here[0m
- 1134 |         [0;34mconst[0m [0;34mauto[0m priv = std::make_unique<::Botan::Ed25519_PrivateKey>(priv_bytes);[0m
-      | [0;1;32m                               ^
-[0m[1m/src/nss/botan/build/include/public/botan/ed25519.h:99:7: [0m[0;1;36mnote: [0m'Ed25519_PrivateKey' has been explicitly marked deprecated here[0m
-   99 |       BOTAN_DEPRECATED([0;32m"Use from_seed or from_bytes"[0m) [0;34mexplicit[0m Ed25519_PrivateKey(std::span<[0;34mconst[0m uint8_t> secret_key);[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1042:39: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use EC_Group::from_{name,OID,PEM} [-Wdeprecated-declarations][0m
- 1042 |                     ::Botan::EC_Group group(*curveString);[0m
-      | [0;1;32m                                      ^
-[0m[1mmodule.cpp:1157:26: [0m[0;1;36mnote: [0min instantiation of function template specialization 'cryptofuzz::module::Botan_detail::ECxDSA_Sign<Botan::ECDSA_PrivateKey, cryptofuzz::operation::ECDSA_Sign, true>' requested here[0m
- 1157 |     [0;34mreturn[0m Botan_detail::ECxDSA_Sign<::Botan::ECDSA_PrivateKey, operation::ECDSA_Sign>(op);[0m
-      | [0;1;32m                         ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:200:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  200 |       BOTAN_DEPRECATED([0;32m"Use EC_Group::from_{name,OID,PEM}"[0m) [0;34mexplicit[0m EC_Group(std::string_view pem_or_oid);[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1052:62: [0m[0;1;35mwarning: [0m[1m'ECDSA_PrivateKey' is deprecated: Use one of the other constructors [-Wdeprecated-declarations][0m
- 1052 |                         priv = std::make_unique<PrivkeyType>(PrivkeyType(rng, group, priv_bn));[0m
-      | [0;1;32m                                                             ^
-[0m[1m/src/nss/botan/build/include/public/botan/ecdsa.h:122:7: [0m[0;1;36mnote: [0m'ECDSA_PrivateKey' has been explicitly marked deprecated here[0m
-  122 |       BOTAN_DEPRECATED([0;32m"Use one of the other constructors"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1052:62: [0m[0;1;35mwarning: [0m[1m'ECDSA_PrivateKey' is deprecated: Use one of the other constructors [-Wdeprecated-declarations][0m
- 1052 |                         priv = std::make_unique<PrivkeyType>(PrivkeyType(rng, group, priv_bn));[0m
-      | [0;1;32m                                                             ^
-[0m[1m/src/nss/botan/build/include/public/botan/ecdsa.h:122:7: [0m[0;1;36mnote: [0m'ECDSA_PrivateKey' has been explicitly marked deprecated here[0m
-  122 |       BOTAN_DEPRECATED([0;32m"Use one of the other constructors"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1042:39: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use EC_Group::from_{name,OID,PEM} [-Wdeprecated-declarations][0m
- 1042 |                     ::Botan::EC_Group group(*curveString);[0m
-      | [0;1;32m                                      ^
-[0m[1mmodule.cpp:1161:26: [0m[0;1;36mnote: [0min instantiation of function template specialization 'cryptofuzz::module::Botan_detail::ECxDSA_Sign<Botan::ECGDSA_PrivateKey, cryptofuzz::operation::ECGDSA_Sign, false>' requested here[0m
- 1161 |     [0;34mreturn[0m Botan_detail::ECxDSA_Sign<::Botan::ECGDSA_PrivateKey, operation::ECGDSA_Sign, [0;32mfalse[0m>(op);[0m
-      | [0;1;32m                         ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:200:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  200 |       BOTAN_DEPRECATED([0;32m"Use EC_Group::from_{name,OID,PEM}"[0m) [0;34mexplicit[0m EC_Group(std::string_view pem_or_oid);[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1052:62: [0m[0;1;35mwarning: [0m[1m'ECGDSA_PrivateKey' is deprecated: Use one of the other constructors [-Wdeprecated-declarations][0m
- 1052 |                         priv = std::make_unique<PrivkeyType>(PrivkeyType(rng, group, priv_bn));[0m
-      | [0;1;32m                                                             ^
-[0m[1m/src/nss/botan/build/include/public/botan/ecgdsa.h:106:7: [0m[0;1;36mnote: [0m'ECGDSA_PrivateKey' has been explicitly marked deprecated here[0m
-  106 |       BOTAN_DEPRECATED([0;32m"Use one of the other constructors"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mmodule.cpp:1052:62: [0m[0;1;35mwarning: [0m[1m'ECGDSA_PrivateKey' is deprecated: Use one of the other constructors [-Wdeprecated-declarations][0m
- 1052 |                         priv = std::make_unique<PrivkeyType>(PrivkeyType(rng, group, priv_bn));[0m
-      | [0;1;32m                                                             ^
-[0m[1m/src/nss/botan/build/include/public/botan/ecgdsa.h:106:7: [0m[0;1;36mnote: [0m'ECGDSA_PrivateKey' has been explicitly marked deprecated here[0m
-  106 |       BOTAN_DEPRECATED([0;32m"Use one of the other constructors"[0m)[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0mIn file included from module.cpp:1:
-In file included from ./module.h:3:
-In file included from ../../include/cryptofuzz/components.h:3:
-In file included from ../../include/cryptofuzz/generic.h:5:
-In file included from ../../fuzzing-headers/include/fuzzing/datasource/datasource.hpp:3:
-In file included from ../../fuzzing-headers/include/fuzzing/exception.hpp:5:
-In file included from /usr/local/bin/../include/c++/v1/string:654:
-In file included from /usr/local/bin/../include/c++/v1/string_view:953:
-In file included from /usr/local/bin/../include/c++/v1/algorithm:1865:
-In file included from /usr/local/bin/../include/c++/v1/__algorithm/inplace_merge.h:27:
-[1m/usr/local/bin/../include/c++/v1/__memory/unique_ptr.h:759:30: [0m[0;1;35mwarning: [0m[1m'EC_Group' is deprecated: Use EC_Group::from_{name,OID,PEM} [-Wdeprecated-declarations][0m
-  759 |   [0;34mreturn[0m unique_ptr<_Tp>([0;34mnew[0m _Tp(std::forward<_Args>(__args)...));[0m
-      | [0;1;32m                             ^
-[0m[1mmodule.cpp:1274:22: [0m[0;1;36mnote: [0min instantiation of function template specialization 'std::make_unique<Botan::EC_Group, std::string &, 0>' requested here[0m
- 1274 |         group = std::make_unique<::Botan::EC_Group>(*curveString);[0m
-      | [0;1;32m                     ^
-[0m[1m/src/nss/botan/build/include/public/botan/ec_group.h:200:7: [0m[0;1;36mnote: [0m'EC_Group' has been explicitly marked deprecated here[0m
-  200 |       BOTAN_DEPRECATED([0;32m"Use EC_Group::from_{name,OID,PEM}"[0m) [0;34mexplicit[0m EC_Group(std::string_view pem_or_oid);[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m8 warnings generated.
-/src/aflplusplus/afl-clang-fast++ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCRYPTOFUZZ_BOTAN -Wall -Wextra -std=c++20 -I ../../include -I ../../fuzzing-headers/include -DFUZZING_HEADERS_NO_IMPL -I /src/nss/botan/build/include/public/ -I /src/nss/botan/build/include/internal/ -c bn_helper.cpp -o bn_helper.o
-In file included from bn_helper.cpp:1:
-In file included from ../../include/cryptofuzz/util.h:3:
-In file included from ../../include/cryptofuzz/components.h:3:
-In file included from ../../include/cryptofuzz/generic.h:8:
-[1m../../include/cryptofuzz/../../third_party/json/json.hpp:22514:35: [0m[0;1;35mwarning: [0m[1midentifier '_json' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator][0m
- 22514 | [0;34minline[0m nlohmann::json [0;34moperator[0m [0;32m""[0m _json([0;34mconst[0m [0;34mchar[0m* s, std::size_t n)[0m
-       | [0;1;32m                      ~~~~~~~~~~~~^~~~~
-[0m       | [0;32m                      operator""_json
-[0m[1m../../include/cryptofuzz/../../third_party/json/json.hpp:22533:49: [0m[0;1;35mwarning: [0m[1midentifier '_json_pointer' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator][0m
- 22533 | [0;34minline[0m nlohmann::json::json_pointer [0;34moperator[0m [0;32m""[0m _json_pointer([0;34mconst[0m [0;34mchar[0m* s, std::size_t n)[0m
-       | [0;1;32m                                    ~~~~~~~~~~~~^~~~~~~~~~~~~
-[0m       | [0;32m                                    operator""_json_pointer
-[0m[1mbn_helper.cpp:21:25: [0m[0;1;35mwarning: [0m[1m'binary_encode' is deprecated: Use BigInt::serialize_to [-Wdeprecated-declarations][0m
-   21 |             CF_NORET(bn.binary_encode(encoded, bn.bytes()));[0m
-      | [0;1;32m                        ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:750:7: [0m[0;1;36mnote: [0m'binary_encode' has been explicitly marked deprecated here[0m
-  750 |       BOTAN_DEPRECATED([0;32m"Use BigInt::serialize_to"[0m) [0;34mvoid[0m binary_encode(uint8_t buf[], size_t len) [0;34mconst[0m;[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mbn_helper.cpp:21:25: [0m[0;1;35mwarning: [0m[1m'binary_encode' is deprecated: Use BigInt::serialize_to [-Wdeprecated-declarations][0m
-   21 |             CF_NORET(bn.binary_encode(encoded, bn.bytes()));[0m
-      | [0;1;32m                        ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:750:7: [0m[0;1;36mnote: [0m'binary_encode' has been explicitly marked deprecated here[0m
-  750 |       BOTAN_DEPRECATED([0;32m"Use BigInt::serialize_to"[0m) [0;34mvoid[0m binary_encode(uint8_t buf[], size_t len) [0;34mconst[0m;[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mbn_helper.cpp:22:25: [0m[0;1;35mwarning: [0m[1m'binary_decode' is deprecated: Use BigInt::from_bytes [-Wdeprecated-declarations][0m
-   22 |             CF_NORET(bn.binary_decode(encoded, bn.bytes()));[0m
-      | [0;1;32m                        ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:757:7: [0m[0;1;36mnote: [0m'binary_decode' has been explicitly marked deprecated here[0m
-  757 |       BOTAN_DEPRECATED([0;32m"Use BigInt::from_bytes"[0m) [0;34mvoid[0m binary_decode([0;34mconst[0m uint8_t buf[], size_t length) {[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m[1mbn_helper.cpp:22:25: [0m[0;1;35mwarning: [0m[1m'binary_decode' is deprecated: Use BigInt::from_bytes [-Wdeprecated-declarations][0m
-   22 |             CF_NORET(bn.binary_decode(encoded, bn.bytes()));[0m
-      | [0;1;32m                        ^
-[0m[1m/src/nss/botan/build/include/public/botan/bigint.h:757:7: [0m[0;1;36mnote: [0m'binary_decode' has been explicitly marked deprecated here[0m
-  757 |       BOTAN_DEPRECATED([0;32m"Use BigInt::from_bytes"[0m) [0;34mvoid[0m binary_decode([0;34mconst[0m uint8_t buf[], size_t length) {[0m
-      | [0;1;32m      ^
-[0m[1m/src/nss/botan/build/include/public/botan/api.h:73:36: [0m[0;1;36mnote: [0mexpanded from macro 'BOTAN_DEPRECATED'[0m
-   73 |    #define BOTAN_DEPRECATED(msg) [[deprecated(msg)]][0m
-      | [0;1;32m                                   ^
-[0m6 warnings generated.
-test /src/nss/botan/libbotan-3.a
-test /src/nss/botan/build/include
-/src/aflplusplus/afl-clang-fast++ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCRYPTOFUZZ_BOTAN -Wall -Wextra -std=c++20 -I ../../include -I ../../fuzzing-headers/include -DFUZZING_HEADERS_NO_IMPL -I /src/nss/botan/build/include/public/ -I /src/nss/botan/build/include/internal/ test_strings.cpp /src/nss/botan/libbotan-3.a -o test_strings
-28 warnings generated.
-test /src/nss/botan/libbotan-3.a
-rm -rf module.a
-rm -rf tmp/
-mkdir tmp/
-cd tmp && ar x /src/nss/botan/libbotan-3.a
-ar rcs module.a module.o bn_ops.o bn_helper.o tmp/*
-ranlib module.a
-+ popd
-/src/nss
-+ export NSS_NSPR_PATH=/src
-+ NSS_NSPR_PATH=/src
-+ export 'CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCRYPTOFUZZ_BOTAN -I /src/dist/public/nss -I /src/dist/Debug/include/nspr -DCRYPTOFUZZ_NSS -DCRYPTOFUZZ_NO_OPENSSL'
-+ CXXFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCRYPTOFUZZ_BOTAN -I /src/dist/public/nss -I /src/dist/Debug/include/nspr -DCRYPTOFUZZ_NSS -DCRYPTOFUZZ_NO_OPENSSL'
-+ export 'LINK_FLAGS= -lsqlite3'
-+ LINK_FLAGS=' -lsqlite3'
-+ '[' '!' -d /src/nspr/Debug/pr/src ']'
-+ pushd cryptofuzz/modules/nss
-/src/nss/cryptofuzz/modules/nss /src/nss
-++ nproc
-+ make -j2
-test /src
-test /src
-/src/aflplusplus/afl-clang-fast++ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCRYPTOFUZZ_BOTAN -I /src/dist/public/nss -I /src/dist/Debug/include/nspr -DCRYPTOFUZZ_NSS -DCRYPTOFUZZ_NO_OPENSSL -Wall -Wextra -Werror -std=c++17 -I ../../include -I ../../fuzzing-headers/include -DFUZZING_HEADERS_NO_IMPL -I /src/dist/public/nss -I /src/dist/Debug/include/nspr -I /src/nss/lib/freebl -I /src/nss/lib/pk11wrap -I /src/nss/cpputil -fPIC -c module.cpp -o module.o
-/src/aflplusplus/afl-clang-fast++ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION -DCRYPTOFUZZ_BOTAN -I /src/dist/public/nss -I /src/dist/Debug/include/nspr -DCRYPTOFUZZ_NSS -DCRYPTOFUZZ_NO_OPENSSL -Wall -Wextra -Werror -std=c++17 -I ../../include -I ../../fuzzing-headers/include -DFUZZING_HEADERS_NO_IMPL -I /src/dist/public/nss -I /src/dist/Debug/include/nspr -I /src/nss/lib/freebl -I /src/nss/lib/freebl/mpi -c bn_ops.cpp -o bn_ops.o
-In file included from module.cpp:1:
-In file included from ./module.h:3:
-In file included from ../../include/cryptofuzz/components.h:3:
-In file included from ../../include/cryptofuzz/generic.h:8:
-[1m../../include/cryptofuzz/../../third_party/json/json.hpp:22514:35: [0m[0;1;35mwarning: [0m[1midentifier '_json' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator][0m
- 22514 | [0;34minline[0m nlohmann::json [0;34moperator[0m [0;32m""[0m _json([0;34mconst[0m [0;34mchar[0m* s, std::size_t n)[0m
-       | [0;1;32m                      ~~~~~~~~~~~~^~~~~
-[0m       | [0;32m                      operator""_json
-[0mIn file included from bn_ops.cpp:1:
-In file included from ../../include/cryptofuzz/util.h:3:
-In file included from ../../include/cryptofuzz/components.h:3:
-In file included from ../../include/cryptofuzz/generic.h:8:
-[1m../../include/cryptofuzz/../../third_party/json/json.hpp:22514:35: [0m[0;1;35mwarning: [0m[1midentifier '_json' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator][0m
- 22514 | [0;34minline[0m nlohmann::json [0;34moperator[0m [0;32m""[0m _json([0;34mconst[0m [0;34mchar[0m* s, std::size_t n)[0m
-       | [0;1;32m                      ~~~~~~~~~~~~^~~~~
-[0m       | [0;32m                      operator""_json
-[0m[1m../../include/cryptofuzz/../../third_party/json/json.hpp:22533:49: [0m[0;1;35mwarning: [0m[1midentifier '_json_pointer' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator][0m
- 22533 | [0;34minline[0m nlohmann::json::json_pointer [0;34moperator[0m [0;32m""[0m _json_pointer([0;34mconst[0m [0;34mchar[0m* s, std::size_t n)[0m
-       | [0;1;32m                                    ~~~~~~~~~~~~^~~~~~~~~~~~~
-[0m       | [0;32m                                    operator""_json_pointer
-[0m[1m../../include/cryptofuzz/../../third_party/json/json.hpp:22533:49: [0m[0;1;35mwarning: [0m[1midentifier '_json_pointer' preceded by whitespace in a literal operator declaration is deprecated [-Wdeprecated-literal-operator][0m
- 22533 | [0;34minline[0m nlohmann::json::json_pointer [0;34moperator[0m [0;32m""[0m _json_pointer([0;34mconst[0m [0;34mchar[0m* s, std::size_t n)[0m
-       | [0;1;32m                                    ~~~~~~~~~~~~^~~~~~~~~~~~~
-[0m       | [0;32m                                    operator""_json_pointer
-[0m2 warnings generated.
-2 warnings generated.
-test /src
-rm -rf module.a
-rm -rf tmp/
-mkdir tmp/
-cd tmp && \
-ar x /src/dist/Debug/lib/libnss_static.a && \
-ar x /src/dist/Debug/lib/libcertdb.a && \
-ar x /src/dist/Debug/lib/libpk11wrap_static.a && \
-ar x /src/dist/Debug/lib/libsoftokn_static.a && \
-ar x /src/dist/Debug/lib/libcerthi.a && \
-ar x /src/dist/Debug/lib/libcryptohi.a && \
-ar x /src/dist/Debug/lib/libnsspki.a && \
-ar x /src/dist/Debug/lib/libnssb.a && \
-ar x /src/dist/Debug/lib/libnssdev.a && \
-ar x /src/dist/Debug/lib/libnssutil.a && \
-ar x /src/dist/Debug/lib/libplds4.a && \
-ar x /src/nspr/Debug/pr/src/libnspr4.a && \
-ar x /src/dist/Debug/lib/libplc4.a && \
-ar x /src/dist/Debug/lib/libnss_static.a && \
-ar x /src/dist/Debug/lib/libsha-x86_c_lib.a && \
-ar x /src/dist/Debug/lib/libfreebl_static.a && \
-ar x /src/dist/Debug/lib/libhw-acc-crypto-avx.a && \
-ar x /src/dist/Debug/lib/libhw-acc-crypto-avx2.a && \
-ar x /src/dist/Debug/lib/libgcm-aes-x86_c_lib.a && \
-ar x /src/dist/Debug/lib/libintel-gcm-wrap_c_lib.a && \
-if [ -f "/src/dist/Debug/lib/libintel-gcm-s_lib.a" ]; then \
-	ar x /src/dist/Debug/lib/libintel-gcm-s_lib.a; \
-fi
-ar: /src/dist/Debug/lib/libgcm-aes-x86_c_lib.a: No such file or directory
-make: *** [Makefile:10: module.a] Error 9
+#3 [internal] load .dockerignore
+#3 transferring context: 2B 0.0s done
+#3 DONE 0.2s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/7] FROM gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
+#5 resolve gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
+#5 resolve gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a 0.2s done
+#5 DONE 0.3s
+
+#4 [internal] load build context
+#4 transferring context: 4.10kB 0.0s done
+#4 DONE 0.2s
+
+#6 [3/7] RUN hg clone https://hg.mozilla.org/projects/nspr nspr
+#6 CACHED
+
+#7 [4/7] RUN hg clone https://hg.mozilla.org/projects/nss nss
+#7 CACHED
+
+#8 [5/7] RUN git clone --depth 1 https://github.com/MozillaSecurity/nss-fuzzing-corpus.git nss-corpus
+#8 CACHED
+
+#9 [6/7] COPY *.sh /src/
+#9 CACHED
+
+#10 [2/7] RUN apt-get update &&     apt-get install -y make mercurial zlib1g-dev gyp ninja-build libssl-dev python libboost-dev libsqlite3-dev
+#10 CACHED
+
+#11 [7/7] WORKDIR /src/nss
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers 0.0s done
+#12 exporting manifest sha256:d401d632cc929da82dcef838b295bbb0cda3549c7b204a2e9b2726c5d4b727e5 0.0s done
+#12 exporting config sha256:8f5c8c57e5ee803474fcd97d927e5919db18868f9681028458b02c6d0a4929cd 0.0s done
+#12 exporting attestation manifest sha256:0b1ee6f2de3efe63857124a2cf8008949db0aa699aa8ef43c40918c5afd66cdd
+#12 exporting attestation manifest sha256:0b1ee6f2de3efe63857124a2cf8008949db0aa699aa8ef43c40918c5afd66cdd 0.5s done
+#12 exporting manifest list sha256:c83e0dcf473519a61549c2d200a766df8607bf2966a4893c90f07fb9f13c182e
+#12 exporting manifest list sha256:c83e0dcf473519a61549c2d200a766df8607bf2966a4893c90f07fb9f13c182e 0.2s done
+#12 naming to gcr.io/oss-fuzz/nss:latest
+#12 naming to gcr.io/oss-fuzz/nss:latest 0.0s done
+#12 unpacking to gcr.io/oss-fuzz/nss:latest 0.1s done
+#12 DONE 1.3s
+INFO:__main__:Keeping existing build artifacts as-is (if any).
+INFO:__main__:Running: docker run --privileged --shm-size=2g --platform linux/amd64 --rm -i -e FUZZING_ENGINE=afl -e SANITIZER=address -e ARCHITECTURE=x86_64 -e PROJECT_NAME=nss -e HELPER=True -e FUZZING_LANGUAGE=c++ -v /root/fix_build_agent/process/project/nss:/src/nss -v /root/fix_build_agent/oss-fuzz/build/out/nss/:/out -v /root/fix_build_agent/oss-fuzz/build/work/nss:/work -t gcr.io/oss-fuzz/nss.
+---------------------------------------------------------------
+vm.mmap_rnd_bits = 28
+Copying precompiled AFL++
+
+AFL++ target compilation setup:
+AFL_IGNORE_UNKNOWN_ENVS=1
+AFL_QUIET=1
+AFL_IGNORE_PROBLEMS=1
+
+ done.
+---------------------------------------------------------------
+CC=/src/aflplusplus/afl-clang-fast
+CXX=/src/aflplusplus/afl-clang-fast++
+CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+---------------------------------------------------------------
++ export 'CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
++ CFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
++ export 'CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
++ CXXFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
++ sed -i s/--disable-tests//g automation/ossfuzz/build.sh
+sed: can't read automation/ossfuzz/build.sh: No such file or directory
 ERROR:__main__:Building fuzzers failed.

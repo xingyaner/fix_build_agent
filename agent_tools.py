@@ -19,21 +19,24 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
 
+
 def update_reflection_journal(
-    project_name: str, 
-    attempt_id: int, 
-    strategy_used: str, 
-    solution_plan: str, 
-    build_log_tail: str, 
-    reflection_analysis: str
+    project_name: str,
+    attempt_id: int,
+    strategy_used: str,
+    solution_plan: str,
+    build_log_tail: str,
+    reflection_analysis: str,
+    deterioration_score: int,
+    should_rollback: bool = False
 ) -> Dict:
     """
-    【反思学习核心工具】
-    1. 将全量反思记录持久化到本地 JSON 文件。
-    2. 返回一个高度浓缩的摘要，用于更新 Session State。
+    【反思学习核心工具 - 状态树增强版】
+    1. 记录尝试、反思及恶化评分。
+    2. 判定是否触发回溯机制（包含连续高分判定）。
     """
-    print(f"--- Tool: update_reflection_journal called for attempt {attempt_id} ---")
-    
+    print(f"--- Tool: update_reflection_journal (v2) called for attempt {attempt_id} ---")
+
     JOURNAL_DIR = "generated_prompt_file"
     JOURNAL_FILE = os.path.join(JOURNAL_DIR, "reflection_journal.json")
     os.makedirs(JOURNAL_DIR, exist_ok=True)
@@ -43,35 +46,42 @@ def update_reflection_journal(
         "attempt_id": attempt_id,
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "strategy": strategy_used,
-        "fix_attempted": solution_plan,
-        "result_log_summary": build_log_tail[-500:] if build_log_tail else "No log available",
-        "reflection": reflection_analysis # 包含诊断结论和避坑指南
+        "deterioration_score": deterioration_score,
+        "reflection": reflection_analysis,
+        "should_rollback": should_rollback
     }
 
-    # 2. 读取并更新全量文件
+    # 2. 读取历史记录
     history = []
     if os.path.exists(JOURNAL_FILE):
         try:
             with open(JOURNAL_FILE, 'r', encoding='utf-8') as f:
                 history = json.load(f)
-        except json.JSONDecodeError:
+        except:
             history = []
 
     history.append(new_entry)
-
     with open(JOURNAL_FILE, 'w', encoding='utf-8') as f:
         json.dump(history, f, indent=2, ensure_ascii=False)
 
-    # 3. 生成用于 State 的精简摘要 (仅保留最近 3 次的教训，防止 State 过大)
-    # 提取所有 lesson 形成一个负向约束列表
-    lessons_learned = [f"Attempt {h['attempt_id']}: {h['reflection']}" for h in history[-3:]]
+    # 3. 判定触发机制：连续两次评分 > 7
+    consecutive_high_score = False
+    if len(history) >= 2:
+        if history[-1].get("deterioration_score", 0) > 7 and history[-2].get("deterioration_score", 0) > 7:
+            consecutive_high_score = True
+            print("!!! Triggered Rollback: Consecutive high deterioration scores (>7) !!!")
+
+    # 4. 生成用于 State 的摘要
+    lessons_learned = [f"Attempt {h['attempt_id']} (Score: {h.get('deterioration_score',0)}): {h['reflection']}" for h in history[-3:]]
     summary_for_state = "\n".join(lessons_learned)
 
     return {
-        "status": "success", 
-        "full_journal_path": JOURNAL_FILE,
-        "reflection_summary": summary_for_state # 这个值将存入 State
+        "status": "success",
+        "reflection_summary": summary_for_state,
+        "trigger_rollback": should_rollback or consecutive_high_score,
+        "history_count": len(history)
     }
+
 
 def query_expert_knowledge(log_path: str) -> Dict:
     """
@@ -107,6 +117,55 @@ def query_expert_knowledge(log_path: str) -> Dict:
             
     except Exception as e:
         return {"status": "error", "message": f"Failed to query knowledge: {str(e)}"}
+
+def manage_git_state(path: str, action: str, message: str = "", commit_sha: str = "") -> Dict:
+    """
+    【Git 状态管理器】用于实现状态树的保存与回退。
+    action: "init", "commit", "rollback"
+    """
+    print(f"--- Tool: manage_git_state | Action: {action} | Path: {path} ---")
+    if not os.path.exists(path):
+        return {"status": "error", "message": f"Path {path} does not exist."}
+
+    original_cwd = os.getcwd()
+    try:
+        os.chdir(path)
+        # 初始化检查：如果不是git仓库则初始化
+        if not os.path.exists(".git"):
+            subprocess.run(["git", "init"], check=True, capture_output=True)
+            subprocess.run(["git", "add", "."], check=True)
+            subprocess.run(["git", "commit", "-m", "Initial State"], check=True)
+
+        if action == "init":
+            return {"status": "success", "message": f"Git initialized in {path}"}
+
+        if action == "commit":
+            subprocess.run(["git", "add", "."], check=True)
+            # 检查是否有变更
+            diff_check = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True).stdout
+            if not diff_check:
+                return {"status": "success", "message": "No changes to commit."}
+            
+            subprocess.run(["git", "commit", "-m", message], capture_output=True, text=True, check=True)
+            sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+            return {"status": "success", "sha": sha, "message": f"State saved: {message}"}
+
+        elif action == "rollback":
+            # 默认回退到上一个 commit (HEAD~1)
+            target = commit_sha if commit_sha else "HEAD~1"
+            # 检查是否有可回退的提交
+            check_log = subprocess.run(["git", "rev-list", "--count", "HEAD"], capture_output=True, text=True)
+            if int(check_log.stdout.strip()) <= 1:
+                return {"status": "error", "message": "Already at the initial state, cannot rollback further."}
+            
+            subprocess.run(["git", "reset", "--hard", target], check=True)
+            subprocess.run(["git", "clean", "-fd"], check=True)
+            return {"status": "success", "message": f"Rolled back to {target}"}
+
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+    finally:
+        os.chdir(original_cwd)
 
 
 def extract_build_metadata_from_log(log_path: str) -> Dict:

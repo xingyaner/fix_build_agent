@@ -52,6 +52,7 @@ from agent_tools import (
     update_reflection_journal,
     extract_build_metadata_from_log,
     patch_project_dockerfile,
+    manage_git_state,
     truncate_prompt_file
 )
 
@@ -135,6 +136,7 @@ initial_setup_agent = LlmAgent(
         extract_build_metadata_from_log,
         patch_project_dockerfile,
         get_project_paths,
+        manage_git_state,
     ],
     output_key="basic_information",
 )
@@ -171,7 +173,7 @@ commit_finder_agent = LlmAgent(
         save_commit_diff_to_file, 
         create_or_update_file,
         run_command,
-        get_project_paths # 备用，以防 session 中路径丢失
+        get_project_paths, # 备用，以防 session 中路径丢失
     ],
     output_key="commit_analysis_result",
 )
@@ -182,6 +184,24 @@ reflection_agent = LlmAgent(
     instruction=load_instruction_from_file("instructions/reflection_instruction.txt"),
     tools=[read_file_content, update_reflection_journal],
     output_key="last_reflection_result" # 存储工具返回的字典
+)
+
+rollback_agent = LlmAgent(
+    name="rollback_agent",
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
+    instruction="""
+    You are an environment restorer. Your job is to revert the system to a previous stable state when a fix path fails.
+    
+    **Workflow**:
+    1. Check the 'last_reflection_result'.
+    2. IF 'trigger_rollback' is True:
+       - Retrieve 'project_source_path' and 'project_config_path' from session state.
+       - Call 'manage_git_state' with action='rollback' for BOTH paths.
+       - Output: "Rollback executed: Environment restored to the previous state."
+    3. ELSE:
+       - Output: "No rollback required. Continuing exploration."
+    """,
+    tools=[manage_git_state],
 )
 
 prompt_generate_agent = LlmAgent(
@@ -204,7 +224,7 @@ solution_applier_agent = LlmAgent(
     name="solution_applier_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("instructions/solution_applier_instruction.txt"),
-    tools=[apply_patch],
+    tools=[apply_patch, manage_git_state],
     output_key="patch_application_result",
 )
 
@@ -225,6 +245,7 @@ workflow_loop_agent = LoopAgent(
         run_fuzz_and_collect_log_agent,
         decision_agent,
         reflection_agent,
+        rollback_agent,
         commit_finder_agent,
         prompt_generate_agent,
         fuzzing_solver_agent,

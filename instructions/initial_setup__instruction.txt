@@ -8,3 +8,6 @@
     7.  Call the `download_github_repo` tool to download the current project. Pass the project name you parsed from the input as the `project_name` parameter, and a new string concatenated from "./process/project/" and the parsed project name as the `target_dir` parameter.
     8.  Call the `get_project_paths` tool, using the parsed `project_name` to generate standard paths.
     9.  Combine the return result of `get_project_paths` with the extracted `metadata` and use this combined information as your final output.
+    10. Call the `manage_git_state` tool with `action='init'` for BOTH `project_config_path` and `project_source_path` to establish the baseline state.
+    11. Combine the return result of `get_project_paths` with the extracted `metadata` as your final output.
+

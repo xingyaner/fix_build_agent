@@ -30,6 +30,18 @@ if [ -f "solution.txt" ]; then
     rm -f "solution*"
 fi
 
+if [ -d "oss-fuzz/.git" ]; then
+    echo "正在复位 oss-fuzz 仓库..."
+    cd oss-fuzz
+    git reset --hard HEAD > /dev/null 2>&1
+    git clean -fdx > /dev/null 2>&1
+    # 切换回主分支 (通常为 master 或 main)
+    MAIN_BRANCH=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
+    git checkout $MAIN_BRANCH > /dev/null 2>&1
+    cd ..
+    echo "  - oss-fuzz 仓库已恢复至 Baseline。"
+fi
+
 # 4. 删除第三方软件的源代码
 # 逻辑：过滤项目名称，只保留字母、数字、下划线和连字符
 # Python: "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
@@ -49,5 +61,5 @@ if [ -d "$PROJECT_SOURCE_PATH" ]; then
         echo "--- Warning: Failed to remove project source at: $PROJECT_SOURCE_PATH ---"
     fi
 fi
-
+find . -type d -name "__pycache__" -exec rm -rf {} + > /dev/null 2>&1
 echo "--- Cleanup complete. ---"

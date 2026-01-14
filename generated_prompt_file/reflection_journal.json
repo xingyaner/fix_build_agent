@@ -454,5 +454,13 @@
     "fix_attempted": "Successfully applied patches to add conditional checks for libgcm-aes-x86_c_lib.a in Makefile and build_cryptofuzz.sh, but Docker caching prevented changes from taking effect",
     "result_log_summary": "ar: /src/dist/Debug/lib/libgcm-aes-x86_c_lib.a: No such file or directory\\nmake: *** [Makefile:10: module.a] Error 9\\nERROR:__main__:Building fuzzers failed.",
     "reflection": "Attempt 3 failed because Docker caching prevented our source code modifications from taking effect. The patches were successfully applied to the local files, but the Docker build used cached layers that didn't include our changes. DO NOT assume that modifying source files will automatically invalidate Docker cache; we need to either force a rebuild, modify the Dockerfile to ensure cache invalidation, or verify that the modified files are properly mounted into the container at build time."
+  },
+  {
+    "attempt_id": 1,
+    "timestamp": "2026-01-14 18:48:22",
+    "strategy": "Strategy A: Config Repair",
+    "deterioration_score": 8,
+    "reflection": "The build has regressed from a compilation/linker error (missing libgcm-aes-x86_c_lib.a) to a basic file access error (automation/ossfuzz/build.sh not found). This indicates the build infrastructure is broken at a more fundamental level. The error moved from a later stage (compilation) to an earlier stage (script execution), which is a regression. The issue appears to be that the NSS source directory structure doesn't match expectations - either the source wasn't properly cloned or the working directory is incorrect.",
+    "should_rollback": true
   }
 ]
