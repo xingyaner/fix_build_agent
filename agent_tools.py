@@ -73,6 +73,41 @@ def update_reflection_journal(
         "reflection_summary": summary_for_state # 这个值将存入 State
     }
 
+def query_expert_knowledge(log_path: str) -> Dict:
+    """
+    【专家知识检索工具】
+    从知识库中提取通用原则，并根据日志匹配特定建议。
+    """
+    print(f"--- Tool: query_expert_knowledge called for: {log_path} ---")
+    KNOWLEDGE_FILE = "expert_knowledge.json"
+    
+    if not os.path.exists(KNOWLEDGE_FILE):
+        return {"status": "error", "message": "Expert knowledge base (JSON) not found."}
+    
+    try:
+        with open(KNOWLEDGE_FILE, 'r', encoding='utf-8') as f:
+            kb = json.load(f)
+        
+        # 1. 提取通用原则
+        general_info = "\n".join([f"- {item}" for item in kb.get("general_principles", [])])
+        
+        # 2. 匹配特定模式
+        matched_advice = []
+        if os.path.exists(log_path):
+            with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+                log_content = f.read()
+            for entry in kb.get("patterns", []):
+                if re.search(entry["pattern"], log_content, re.IGNORECASE):
+                    matched_advice.append(f"- [Specific Match]: {entry['advice']}")
+        
+        specific_info = "\n".join(matched_advice) if matched_advice else "No specific pattern matches found."
+        
+        full_knowledge = f"--- General Principles ---\n{general_info}\n\n--- Pattern-based Advice ---\n{specific_info}"
+        return {"status": "success", "knowledge": full_knowledge}
+            
+    except Exception as e:
+        return {"status": "error", "message": f"Failed to query knowledge: {str(e)}"}
+
 
 def extract_build_metadata_from_log(log_path: str) -> Dict:
     """
@@ -1067,12 +1102,11 @@ def delete_file(file_path: str) -> dict:
         return {"status": "error", "message": message}
 
 
-def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str) -> dict:
+def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str, expert_knowledge: str = "") -> dict:
     """
-    【反思机制增强版】自动收集 Fuzzing 上下文信息。
-    新增功能：自动从 reflection_journal.json 中提取历史失败教训，为 Solver 提供硬约束。
+    【专家知识集成版】自动收集 Fuzzing 上下文信息，确保专家知识被注入。
     """
-    print("--- Workflow Tool: prompt_generate_tool (with Reflection) started ---")
+    print("--- Workflow Tool: prompt_generate_tool started ---")
     PROMPT_DIR = "generated_prompt_file"
     PROMPT_FILE_PATH = os.path.join(PROMPT_DIR, "prompt.txt")
     FILE_TREE_PATH = os.path.join(PROMPT_DIR, "file_tree.txt")
@@ -1080,60 +1114,43 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     COMMIT_DIFF_PATH = os.path.join(PROMPT_DIR, "commit_changed.txt")
     JOURNAL_FILE = os.path.join(PROMPT_DIR, "reflection_journal.json")
 
-    # --- Step 0: 准备工作 ---
     if not os.path.isdir(config_folder_path):
-        return {"status": "error", "message": f"Error: Config path '{config_folder_path}' is not a directory."}
-    
+        return {"status": "error", "message": f"Config path '{config_folder_path}' is not a directory."}
+
     os.makedirs(PROMPT_DIR, exist_ok=True)
     project_name = os.path.basename(os.path.abspath(project_main_folder_path))
 
-    # --- Step 1: 写入初始引导词 ---
-    introductory_prompt = f"""
-You are a premier expert in software testing and build systems. Your goal is to fix the build for project: {project_name}.
-I will provide you with the configuration files, file tree, recent commit changes, and the error log.
-Your task is to analyze these inputs and provide a targeted solution in 'solution.txt'.
-"""
+    # --- Step 1: 写入初始引导词与专家建议 ---
     with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
-        f.write(introductory_prompt)
+        f.write(f"You are a premier expert in software testing. Fix the build for: {project_name}.\n")
+        if expert_knowledge:
+            f.write("\n--- 【EXPERT KNOWLEDGE & STRATEGIC GUIDANCE】 ---\n")
+            f.write(f"{expert_knowledge}\n")
 
-    # --- Step 2: 【核心增强】注入历史反思教训 ---
+    # --- Step 2: 注入历史反思教训 ---
     if os.path.exists(JOURNAL_FILE):
-        print(f"  - Found reflection journal. Extracting lessons...")
         try:
             with open(JOURNAL_FILE, 'r', encoding='utf-8') as f_j:
                 history = json.load(f_j)
-            
             if history:
                 with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f_out:
-                    f_out.write("\n\n--- 【CRITICAL】LESSONS LEARNED FROM PREVIOUS FAILED ATTEMPTS ---\n")
-                    f_out.write("The following strategies have ALREADY BEEN TRIED and FAILED. DO NOT repeat them:\n")
-                    # 只取最近 3 次教训，防止 Prompt 过长，同时保证相关性
+                    f_out.write("\n--- 【LESSONS FROM PREVIOUS ATTEMPTS】 ---\n")
                     for entry in history[-3:]:
-                        f_out.write(f"- [Attempt {entry['attempt_id']}] Strategy: {entry['strategy']}\n")
-                        f_out.write(f"  Reason for Failure: {entry['reflection']}\n")
-                    f_out.write("\nPlease analyze why these failed and propose a DIFFERENT, more effective approach.\n")
-        except Exception as e:
-            print(f"    Warning: Failed to parse reflection journal: {e}")
+                        f_out.write(f"- [Attempt {entry['attempt_id']}] {entry['reflection']}\n")
+        except Exception: pass
 
     # --- Step 3: 附加配置文件内容 ---
-    print("  - Appending configuration files...")
-    all_config_files = [
-        os.path.join(config_folder_path, f)
-        for f in sorted(os.listdir(config_folder_path))
-        if os.path.isfile(os.path.join(config_folder_path, f))
-    ]
+    all_config_files = [os.path.join(config_folder_path, f) for f in sorted(os.listdir(config_folder_path)) if os.path.isfile(os.path.join(config_folder_path, f))]
     with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
         f.write("\n\n--- Configuration Files (Dockerfile, build.sh, etc.) ---\n")
     for config_file in all_config_files:
         try:
-            with open(config_file, "r", encoding="utf-8") as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
+            with open(config_file, "r", encoding="utf-8", errors='ignore') as source_f, open(PROMPT_FILE_PATH, "a", encoding="utf-8") as dest_f:
                 dest_f.write(f"\n### Content from: {os.path.basename(config_file)} ###\n")
                 dest_f.write(source_f.read())
-        except Exception as e:
-            print(f"    Warning: Failed to append '{config_file}': {e}")
+        except Exception: pass
 
     # --- Step 4: 生成并附加文件树 ---
-    print(f"  - Generating shallow file tree (depth={max_depth})...")
     save_file_tree_shallow(project_main_folder_path, max_depth, FILE_TREE_PATH)
     if os.path.exists(FILE_TREE_PATH):
         with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
@@ -1142,32 +1159,20 @@ Your task is to analyze these inputs and provide a targeted solution in 'solutio
                 f.write(source_f.read())
 
     # --- Step 5: 附加最近的 Commit 变更 ---
-    if os.path.isfile(COMMIT_DIFF_PATH) and os.path.getsize(COMMIT_DIFF_PATH) > 0:
-        print(f"  - Appending commit diff...")
+    if os.path.isfile(COMMIT_DIFF_PATH):
         with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
-            f.write("\n\n--- Recent Commit Changes (Potential Root Cause) ---\n")
-            try:
-                with open(COMMIT_DIFF_PATH, "r", encoding="utf-8") as source_f:
-                    f.write(source_f.read())
-            except Exception as e:
-                print(f"    Warning: Failed to append commit diff: {e}")
+            f.write("\n\n--- Recent Commit Changes ---\n")
+            with open(COMMIT_DIFF_PATH, "r", encoding="utf-8", errors='ignore') as source_f:
+                f.write(source_f.read())
 
-    # --- Step 6: 附加构建错误日志 (带截断保护) ---
-    if os.path.isfile(FUZZ_LOG_PATH) and os.path.getsize(FUZZ_LOG_PATH) > 0:
-        print(f"  - Appending build log (truncated)...")
-        # 使用 read_file_content 的逻辑只取最后 500 行，确保不超出 Token 限制
-        log_result = read_file_content(FUZZ_LOG_PATH, tail_lines=500)
-        if log_result['status'] == 'success':
-            with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
-                f.write("\n\n--- Fuzz Build Log (Last 500 lines) ---\n")
-                f.write(log_result['content'])
-    else:
-        print("  - No build log found. Skipping.")
+    # --- Step 6: 附加构建错误日志 (最后500行) ---
+    log_result = read_file_content(FUZZ_LOG_PATH, tail_lines=500)
+    if log_result['status'] == 'success':
+        with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
+            f.write("\n\n--- Fuzz Build Log (Last 500 lines) ---\n")
+            f.write(log_result['content'])
 
-    final_message = f"Prompt generation complete. Context consolidated in '{PROMPT_FILE_PATH}' including historical reflections."
-    print(f"--- Workflow Tool: prompt_generate_tool finished successfully ---")
-    return {"status": "success", "message": final_message}
-
+    return {"status": "success", "message": "Prompt generation complete with expert knowledge integration."}
 
 
 def run_fuzz_build_streaming(
