@@ -53,6 +53,7 @@ from agent_tools import (
     extract_build_metadata_from_log,
     patch_project_dockerfile,
     manage_git_state,
+    clear_commit_analysis_state,
     truncate_prompt_file
 )
 
@@ -189,19 +190,8 @@ reflection_agent = LlmAgent(
 rollback_agent = LlmAgent(
     name="rollback_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
-    instruction="""
-    You are an environment restorer. Your job is to revert the system to a previous stable state when a fix path fails.
-    
-    **Workflow**:
-    1. Check the 'last_reflection_result'.
-    2. IF 'trigger_rollback' is True:
-       - Retrieve 'project_source_path' and 'project_config_path' from session state.
-       - Call 'manage_git_state' with action='rollback' for BOTH paths.
-       - Output: "Rollback executed: Environment restored to the previous state."
-    3. ELSE:
-       - Output: "No rollback required. Continuing exploration."
-    """,
-    tools=[manage_git_state],
+    instruction=load_instruction_from_file("instructions/rollback_instruction.txt"),
+    tools=[manage_git_state, clear_commit_analysis_state],
 )
 
 prompt_generate_agent = LlmAgent(
@@ -224,7 +214,7 @@ solution_applier_agent = LlmAgent(
     name="solution_applier_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("instructions/solution_applier_instruction.txt"),
-    tools=[apply_patch, manage_git_state],
+    tools=[apply_patch, read_file_content, manage_git_state],
     output_key="patch_application_result",
 )
 

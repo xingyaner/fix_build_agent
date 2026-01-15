@@ -168,6 +168,22 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
         os.chdir(original_cwd)
 
 
+def clear_commit_analysis_state() -> Dict[str, str]:
+    """
+    删除Commit分析的哨兵文件，以允许 commit_finder_agent 在下一个循环中重新运行。
+    这个函数应该在发生回滚时被调用。
+    """
+    commit_analysis_file = "generated_prompt_file/commit_changed.txt"
+    if os.path.exists(commit_analysis_file):
+        try:
+            os.remove(commit_analysis_file)
+            return {"status": "success", "message": f"已清除旧的Commit分析状态。'{commit_analysis_file}' 文件已被移除。"}
+        except Exception as e:
+            return {"status": "error", "message": f"移除 '{commit_analysis_file}' 失败: {e}"}
+    else:
+        return {"status": "success", "message": "没有需要清除的Commit分析状态。"}
+
+
 def extract_build_metadata_from_log(log_path: str) -> Dict:
     """
     【增强版】从原始报错日志中提取构建所需的关键元数据。
@@ -819,65 +835,87 @@ def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
         os.chdir(original_path)
 
 # File Operations and Fuzzing Tools
-
 def apply_patch(solution_file_path: str) -> dict:
     """
-    【容错增强版】应用补丁，支持多文件且对空白符不敏感。
+    【方案 A & B 增强版】应用补丁。
+    1. 支持多文件应用。
+    2. 匹配失败时，自动抓取目标文件出错位置附近的真实内容并返回，实现反馈闭环。
     """
-    print(f"--- Tool: apply_patch (Robust Version) called ---")
-
-    def normalize_code(code: str) -> str:
-        """归一化代码，去除多余空格和空行，用于辅助匹配"""
-        return "\n".join([line.strip() for line in code.splitlines() if line.strip()])
+    print(f"--- Tool: apply_patch (Robust with Feedback) called ---")
 
     try:
+        if not os.path.exists(solution_file_path):
+            return {"status": "error", "message": f"Solution file {solution_file_path} not found."}
+
         with open(solution_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
         patch_blocks = content.split('---=== FILE ===---')[1:]
         if not patch_blocks:
-            return {"status": "error", "message": "Invalid patch format."}
+            return {"status": "error", "message": "Invalid patch format. Use ---=== FILE ===--- markers."}
 
         applied_count = 0
         errors = []
 
         for block in patch_blocks:
             try:
-                # 解析
+                # 解析块
                 parts = block.split('---=== ORIGINAL ===---')
                 file_path = parts[0].strip()
                 content_parts = parts[1].split('---=== REPLACEMENT ===---')
-                original_block = content_parts[0].strip()
-                replacement_block = content_parts[1].strip()
+                original_block = content_parts[0].strip("\n\r")
+                replacement_block = content_parts[1].strip("\n\r")
+
+                if not os.path.exists(file_path):
+                    errors.append(f"File not found: {file_path}")
+                    continue
 
                 with open(file_path, 'r', encoding='utf-8') as f:
                     file_content = f.read()
 
-                # 尝试 1: 精确匹配
+                # 尝试精确匹配
                 if original_block in file_content:
                     new_content = file_content.replace(original_block, replacement_block, 1)
+                    with open(file_path, 'w', encoding='utf-8') as f:
+                        f.write(new_content)
+                    applied_count += 1
                 else:
-                    # 尝试 2: 归一化匹配 (解决缩进/空白问题)
-                    norm_original = normalize_code(original_block)
-                    # 这是一个简单的搜索逻辑，如果归一化后能匹配，尝试定位原位置
-                    # 注意：为了安全，如果精确匹配失败，我们向 Agent 报错并要求其提供更精确的块
-                    errors.append(f"Match failed for {file_path}. The ORIGINAL block provided does not match the file content exactly. Please provide a SHORTER and more PRECISE block.")
-                    continue
-
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(new_content)
-                applied_count += 1
+                    # --- 方案 B：反馈逻辑 ---
+                    # 如果匹配失败，抓取文件中包含 ORIGINAL 第一行内容的片段
+                    file_lines = file_content.splitlines()
+                    first_line_orig = original_block.splitlines()[0].strip()
+                    context_snippet = "No similar context found in the target file."
+                    
+                    for i, line in enumerate(file_lines):
+                        if first_line_orig in line:
+                            start = max(0, i - 3)
+                            end = min(len(file_lines), i + 7)
+                            context_snippet = "\n".join(file_lines[start:end])
+                            break
+                    
+                    error_msg = (
+                        f"Match failed for {file_path}. The ORIGINAL block does not match the file content exactly.\n"
+                        f"### ACTUAL CONTENT AROUND TARGET AREA ###\n"
+                        f"```\n{context_snippet}\n```\n"
+                        f"### END OF ACTUAL CONTENT ###\n"
+                        f"Please use the ACTUAL CONTENT above to correct your ORIGINAL block (check for tabs vs spaces)."
+                    )
+                    errors.append(error_msg)
 
             except Exception as e:
-                errors.append(str(e))
+                errors.append(f"Error in block for {file_path}: {str(e)}")
 
         if not errors:
-            return {"status": "success", "message": f"Applied {applied_count} patches."}
+            return {"status": "success", "message": f"Successfully applied {applied_count} patches."}
+        elif applied_count > 0:
+            return {"status": "partial_success", "message": f"Applied {applied_count} patches, but {len(errors)} failed:\n" + "\n".join(errors)}
         else:
-            return {"status": "partial_success", "message": "\n".join(errors)}
+            return {"status": "error", "message": "All patches failed:\n" + "\n".join(errors)}
 
     except Exception as e:
-        return {"status": "error", "message": str(e)}
+        return {"status": "error", "message": f"Critical failure: {str(e)}"}
+
+
 
 def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> dict:
     """

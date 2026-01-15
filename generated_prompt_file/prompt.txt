@@ -1,94 +1,91 @@
 You are a premier expert in software testing. Fix the build for: nss.
 
 --- 【EXPERT KNOWLEDGE & STRATEGIC GUIDANCE】 ---
-INFO:common_utils:Running: docker build -t gcr.io/oss-fuzz/nss --file /root/fix_build_agent/oss-fuzz/projects/nss/Dockerfile /root/fix_build_agent/oss-fuzz/projects/nss.
-#0 building with "default" instance using docker driver
+## Expert Knowledge for NSS Fuzzing Build Failure (Recursive Execution Issue)
 
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile:
-#1 transferring dockerfile: 1.18kB 0.1s done
-#1 DONE 0.2s
+### Current Error:
+`./build.sh: line 64: /usr/bin/sed: Argument list too long`
 
-#2 [internal] load metadata for gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
-#2 DONE 1.4s
+### Root Cause Analysis:
+1. **Recursive Script Execution**: The OSS-Fuzz `build.sh` is calling itself recursively
+2. **Environment Variable Accumulation**: `CFLAGS` and `CXXFLAGS` are being expanded and growing through each recursive call
+3. **Infinite Loop Pattern**: The debug messages repeat endlessly, indicating a loop
 
-#3 [internal] load .dockerignore
-#3 transferring context: 2B 0.0s done
-#3 DONE 0.2s
+### Call Chain Analysis:
+From the log pattern:
+```
+OSS-Fuzz infrastructure → /root/fix_build_agent/oss-fuzz/projects/nss/build.sh → ./automation/ossfuzz/build.sh → (recursively calls build.sh again?)
+```
 
-#4 [internal] load build context
-#4 DONE 0.0s
+### Key Observations:
+1. **Debug Message Repetition**: "=== NSS Build Debug Information ===" appears hundreds of times
+2. **Directory Change**: Script successfully changes to `/src/nss/nss` directory
+3. **sed Failure**: The `sed` command fails due to argument list being too long
+4. **Environment Variables**: `CFLAGS` and `CXXFLAGS` contain long strings that expand
 
-#5 [1/7] FROM gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
-#5 resolve gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
-#5 resolve gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a 0.2s done
-#5 DONE 0.3s
+### The Recursive Loop:
+The likely loop is:
+1. OSS-Fuzz calls project's `build.sh` (in `/root/fix_build_agent/oss-fuzz/projects/nss/build.sh`)
+2. Project's `build.sh` calls `./automation/ossfuzz/build.sh`
+3. `automation/ossfuzz/build.sh` might be calling back to the project's `build.sh` or another script
+4. This creates an infinite loop or excessive recursion
 
-#4 [internal] load build context
-#4 transferring context: 4.10kB 0.0s done
-#4 DONE 0.2s
+### Environment Variable Issue:
+The `CFLAGS` and `CXXFLAGS` variables are being exported and expanded:
+```bash
+export CFLAGS="${CFLAGS} -Wno-error=unknown-warning-option ..."
+export CXXFLAGS="${CXXFLAGS} -Wno-error=unknown-warning-option ..."
+```
+Each recursive call appends more flags, eventually exceeding command line limits.
 
-#6 [3/7] RUN hg clone https://hg.mozilla.org/projects/nspr nspr
-#6 CACHED
+### Specific Problems with Previous Fix:
+1. **Added echo/debug statements**: These get printed repeatedly, confirming recursion
+2. **Complex logic**: The directory checking and changing logic might be interfering with the normal flow
+3. **Potential infinite loop**: The script might be calling itself through indirect means
 
-#7 [4/7] RUN hg clone https://hg.mozilla.org/projects/nss nss
-#7 CACHED
+### OSS-Fuzz Build Flow Understanding:
+1. **Infrastructure Layer**: OSS-Fuzz runner calls project's `build.sh`
+2. **Project Layer**: Project's `build.sh` sets up environment and calls project-specific build script
+3. **Project-Specific Layer**: `automation/ossfuzz/build.sh` builds the actual fuzzers
+4. **No recursion should occur** between these layers
 
-#8 [5/7] RUN git clone --depth 1 https://github.com/MozillaSecurity/nss-fuzzing-corpus.git nss-corpus
-#8 CACHED
+### Debugging the Recursion:
+1. Check if `automation/ossfuzz/build.sh` calls any script that might call back to the project's `build.sh`
+2. Look for `source`, `.`, or `exec` commands that might reload scripts
+3. Check for environment variables that might cause re-execution
 
-#9 [6/7] COPY *.sh /src/
-#9 CACHED
+### Common Causes of Recursive Build Scripts:
+1. **Script sourcing itself**: `source $0` or `. $0`
+2. **Makefile/include issues**: Build system including same files multiple times
+3. **Environment triggers**: Certain environment variables causing re-execution
+4. **Wrapper scripts**: Scripts that wrap other scripts creating loops
 
-#10 [2/7] RUN apt-get update &&     apt-get install -y make mercurial zlib1g-dev gyp ninja-build libssl-dev python libboost-dev libsqlite3-dev
-#10 CACHED
+### Recommended Investigation Steps:
+1. Examine `automation/ossfuzz/build.sh` for any calls back to parent directories
+2. Check for any `source` or `.` commands that might reload scripts
+3. Look at the actual NSS build system (makefiles, etc.)
+4. Consider adding a guard variable to prevent recursion
 
-#11 [7/7] WORKDIR /src/nss
-#11 CACHED
+### Alternative Approach - Fix Root Cause:
+Instead of modifying the OSS-Fuzz `build.sh`, consider:
+1. **Fix directory structure**: Ensure mounted directory matches expected structure
+2. **Use symlinks**: Create symlinks to make `nss/` appear as current directory
+3. **Modify mount point**: Mount to different location that matches expected structure
+4. **Fix at Dockerfile level**: Adjust Dockerfile to handle mounted directories better
 
-#12 exporting to image
-#12 exporting layers 0.0s done
-#12 exporting manifest sha256:d401d632cc929da82dcef838b295bbb0cda3549c7b204a2e9b2726c5d4b727e5 0.0s done
-#12 exporting config sha256:8f5c8c57e5ee803474fcd97d927e5919db18868f9681028458b02c6d0a4929cd 0.0s done
-#12 exporting attestation manifest sha256:0b1ee6f2de3efe63857124a2cf8008949db0aa699aa8ef43c40918c5afd66cdd
-#12 exporting attestation manifest sha256:0b1ee6f2de3efe63857124a2cf8008949db0aa699aa8ef43c40918c5afd66cdd 0.5s done
-#12 exporting manifest list sha256:c83e0dcf473519a61549c2d200a766df8607bf2966a4893c90f07fb9f13c182e
-#12 exporting manifest list sha256:c83e0dcf473519a61549c2d200a766df8607bf2966a4893c90f07fb9f13c182e 0.2s done
-#12 naming to gcr.io/oss-fuzz/nss:latest
-#12 naming to gcr.io/oss-fuzz/nss:latest 0.0s done
-#12 unpacking to gcr.io/oss-fuzz/nss:latest 0.1s done
-#12 DONE 1.3s
-INFO:__main__:Keeping existing build artifacts as-is (if any).
-INFO:__main__:Running: docker run --privileged --shm-size=2g --platform linux/amd64 --rm -i -e FUZZING_ENGINE=afl -e SANITIZER=address -e ARCHITECTURE=x86_64 -e PROJECT_NAME=nss -e HELPER=True -e FUZZING_LANGUAGE=c++ -v /root/fix_build_agent/process/project/nss:/src/nss -v /root/fix_build_agent/oss-fuzz/build/out/nss/:/out -v /root/fix_build_agent/oss-fuzz/build/work/nss:/work -t gcr.io/oss-fuzz/nss.
----------------------------------------------------------------
-vm.mmap_rnd_bits = 28
-Copying precompiled AFL++
+### Critical Insight:
+The "Argument list too long" error is a symptom, not the root cause. The root cause is recursive script execution causing environment variable expansion to exceed system limits. We need to break the recursion loop.
 
-AFL++ target compilation setup:
-AFL_IGNORE_UNKNOWN_ENVS=1
-AFL_QUIET=1
-AFL_IGNORE_PROBLEMS=1
-
- done.
----------------------------------------------------------------
-CC=/src/aflplusplus/afl-clang-fast
-CXX=/src/aflplusplus/afl-clang-fast++
-CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
-CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
-RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
----------------------------------------------------------------
-+ export 'CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
-+ CFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
-+ export 'CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
-+ CXXFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
-+ sed -i s/--disable-tests//g automation/ossfuzz/build.sh
-sed: can't read automation/ossfuzz/build.sh: No such file or directory
-ERROR:__main__:Building fuzzers failed.
+### Next Steps:
+1. First, understand why recursion is happening
+2. Add recursion prevention (e.g., guard variable)
+3. Consider simpler fix: just fix the path in the `sed` command without complex logic
+4. Or fix the directory structure mismatch at its root
 
 --- 【LESSONS FROM PREVIOUS ATTEMPTS】 ---
-- [Attempt 2] Attempt 2 failed because the patch application tool couldn't find exact matches for the ORIGINAL content blocks. The fix plan was conceptually correct (adding conditional checks for missing x86-specific libraries) but was never applied. DO NOT rely on exact string matching for patch application; instead, use more flexible approaches like sed commands or check if the file needs to be modified differently. Also, verify that patch application succeeded before running the build.
-- [Attempt 3] Attempt 3 failed because Docker caching prevented our source code modifications from taking effect. The patches were successfully applied to the local files, but the Docker build used cached layers that didn't include our changes. DO NOT assume that modifying source files will automatically invalidate Docker cache; we need to either force a rebuild, modify the Dockerfile to ensure cache invalidation, or verify that the modified files are properly mounted into the container at build time.
-- [Attempt 1] The build has regressed from a compilation/linker error (missing libgcm-aes-x86_c_lib.a) to a basic file access error (automation/ossfuzz/build.sh not found). This indicates the build infrastructure is broken at a more fundamental level. The error moved from a later stage (compilation) to an earlier stage (script execution), which is a regression. The issue appears to be that the NSS source directory structure doesn't match expectations - either the source wasn't properly cloned or the working directory is incorrect.
+- [Attempt 1] The build failed because the build script is trying to modify a file that doesn't exist: automation/ossfuzz/build.sh. This suggests the project structure has changed or the build script is looking in the wrong location. The error occurs during the sed command that tries to remove "--disable-tests" from the build.sh file. This is likely part of the OSS-Fuzz build process that expects certain project files to be present in specific locations. The Docker build succeeded, but the actual fuzzer compilation failed due to missing project files.
+- [Attempt 2] The fix introduced a new error: OSS-Fuzz infrastructure doesn't allow WORKDIR to be set to /src when using local checkouts. This is a constraint of the OSS-Fuzz build system. The original WORKDIR $SRC/nss was correct for the OSS-Fuzz infrastructure. The real issue was the directory structure mismatch between cloned NSS source and mounted local source. We need a different approach that doesn't violate OSS-Fuzz constraints.
+- [Attempt 3] The fix partially worked - it successfully detected the NSS source in the nss/ subdirectory and changed to that directory. However, a new critical error emerged: the build script appears to be calling itself recursively, leading to an infinite loop or excessive recursion. The 'Argument list too long' error for sed suggests environment variable expansion or command line length issues, likely caused by recursive calls accumulating. Looking at the log, the debug messages repeat many times, indicating the OSS-Fuzz build.sh is calling the project's build.sh, which then calls automation/ossfuzz/build.sh, creating a loop. The issue is that our modified build.sh is being invoked multiple times through recursive calls.
 
 
 --- Configuration Files (Dockerfile, build.sh, etc.) ---
@@ -115,9 +112,12 @@ RUN apt-get update && \
     apt-get install -y make mercurial zlib1g-dev gyp ninja-build libssl-dev python libboost-dev libsqlite3-dev
 
 RUN hg clone https://hg.mozilla.org/projects/nspr nspr
-RUN hg clone https://hg.mozilla.org/projects/nss nss
+# Clone NSS to nss-orig first, then copy to nss
+RUN hg clone https://hg.mozilla.org/projects/nss nss-orig
 RUN git clone --depth 1 https://github.com/MozillaSecurity/nss-fuzzing-corpus.git nss-corpus
 COPY *.sh $SRC/
+# Copy NSS from nss-orig to nss as a backup in case nss gets mounted over
+RUN cp -r nss-orig nss
 WORKDIR $SRC/nss
 
 ### Content from: build.sh ###
@@ -141,15 +141,63 @@ WORKDIR $SRC/nss
 export CFLAGS="${CFLAGS} -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION"
 export CXXFLAGS="${CXXFLAGS} -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION"
 
-sed -i 's/--disable-tests//g' automation/ossfuzz/build.sh
+echo "=== NSS Build Debug Information ==="
+echo "Current directory: $(pwd)"
+echo "Checking for NSS source code..."
 
-if [[ -n ${CAPTURE_REPLAY_SCRIPT-} ]]; then
-  # Make sure we don't remove cached directory
-  sed -i 's/rm -rf/#rm -rf/g' automation/ossfuzz/build.sh
+# Function to check if we have valid NSS source
+check_nss_source() {
+  local dir=$1
+  if [[ -f "$dir/automation/ossfuzz/build.sh" ]]; then
+    echo "Found valid NSS source at: $dir"
+    return 0
+  fi
+  return 1
+}
+
+# Check current directory first
+if check_nss_source "."; then
+  echo "Building from current directory..."
+elif check_nss_source "/src/nss-orig"; then
+  echo "Current directory doesn't have NSS source, but found it at /src/nss-orig"
+  echo "Copying NSS source from /src/nss-orig to current directory..."
+  cp -r /src/nss-orig/* . 2>/dev/null || true
+  cp -r /src/nss-orig/.* . 2>/dev/null || true 2>/dev/null || true
+else
+  echo "ERROR: Could not find valid NSS source code."
+  echo ""
+  echo "Expected NSS source structure should include:"
+  echo "  - automation/ossfuzz/build.sh"
+  echo "  - nss/ directory with NSS source"
+  echo ""
+  echo "Current directory contents:"
+  ls -la
+  echo ""
+  echo "If you're trying to modify NSS source code, please ensure you have:"
+  echo "1. The correct NSS repository: https://hg.mozilla.org/projects/nss"
+  echo "2. The correct revision: c3eaddbd1b125c78ec76ee2a6f4a66e2e29e3a85"
+  echo ""
+  echo "The Dockerfile clones NSS to /src/nss-orig as a backup."
+  exit 1
 fi
 
-# Build NSS with fuzzers.
-./automation/ossfuzz/build.sh
+# Now we should have the build script
+if [[ -f automation/ossfuzz/build.sh ]]; then
+  echo "Found automation/ossfuzz/build.sh, proceeding with build..."
+  sed -i 's/--disable-tests//g' automation/ossfuzz/build.sh
+
+  if [[ -n ${CAPTURE_REPLAY_SCRIPT-} ]]; then
+    # Make sure we don't remove cached directory
+    sed -i 's/rm -rf/#rm -rf/g' automation/ossfuzz/build.sh
+  fi
+
+  # Build NSS with fuzzers.
+  ./automation/ossfuzz/build.sh
+else
+  echo "ERROR: automation/ossfuzz/build.sh not found after source check."
+  echo "This should not happen if the source was properly restored."
+  exit 1
+fi
 
 ### Content from: project.yaml ###
 homepage: "https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS"
@@ -276,6 +324,8 @@ NSS_TESTS=gtests ./all.sh
 ├── 📄 io.cpp
 ├── 📄 io.h
 ├── 📄 messages.mc
+├── 📁 nss
+├── 📁 nss-corpus
 ├── 📄 nssm.cpp
 ├── 📄 nssm.h
 ├── 📄 nssm.ico
@@ -299,86 +349,503 @@ NSS_TESTS=gtests ./all.sh
 No relevant commit found.
 
 --- Fuzz Build Log (Last 500 lines) ---
-INFO:common_utils:Running: docker build -t gcr.io/oss-fuzz/nss --file /root/fix_build_agent/oss-fuzz/projects/nss/Dockerfile /root/fix_build_agent/oss-fuzz/projects/nss.
-#0 building with "default" instance using docker driver
-
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile:
-#1 transferring dockerfile: 1.18kB 0.1s done
-#1 DONE 0.2s
-
-#2 [internal] load metadata for gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
-#2 DONE 1.4s
-
-#3 [internal] load .dockerignore
-#3 transferring context: 2B 0.0s done
-#3 DONE 0.2s
-
-#4 [internal] load build context
-#4 DONE 0.0s
-
-#5 [1/7] FROM gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
-#5 resolve gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a
-#5 resolve gcr.io/oss-fuzz-base/base-builder@sha256:1dfedd7c08462db3b427d2d4c0003b648271310cd442ba60c894d4993dfe708a 0.2s done
-#5 DONE 0.3s
-
-#4 [internal] load build context
-#4 transferring context: 4.10kB 0.0s done
-#4 DONE 0.2s
-
-#6 [3/7] RUN hg clone https://hg.mozilla.org/projects/nspr nspr
-#6 CACHED
-
-#7 [4/7] RUN hg clone https://hg.mozilla.org/projects/nss nss
-#7 CACHED
-
-#8 [5/7] RUN git clone --depth 1 https://github.com/MozillaSecurity/nss-fuzzing-corpus.git nss-corpus
-#8 CACHED
-
-#9 [6/7] COPY *.sh /src/
-#9 CACHED
-
-#10 [2/7] RUN apt-get update &&     apt-get install -y make mercurial zlib1g-dev gyp ninja-build libssl-dev python libboost-dev libsqlite3-dev
-#10 CACHED
-
-#11 [7/7] WORKDIR /src/nss
-#11 CACHED
-
-#12 exporting to image
-#12 exporting layers 0.0s done
-#12 exporting manifest sha256:d401d632cc929da82dcef838b295bbb0cda3549c7b204a2e9b2726c5d4b727e5 0.0s done
-#12 exporting config sha256:8f5c8c57e5ee803474fcd97d927e5919db18868f9681028458b02c6d0a4929cd 0.0s done
-#12 exporting attestation manifest sha256:0b1ee6f2de3efe63857124a2cf8008949db0aa699aa8ef43c40918c5afd66cdd
-#12 exporting attestation manifest sha256:0b1ee6f2de3efe63857124a2cf8008949db0aa699aa8ef43c40918c5afd66cdd 0.5s done
-#12 exporting manifest list sha256:c83e0dcf473519a61549c2d200a766df8607bf2966a4893c90f07fb9f13c182e
-#12 exporting manifest list sha256:c83e0dcf473519a61549c2d200a766df8607bf2966a4893c90f07fb9f13c182e 0.2s done
-#12 naming to gcr.io/oss-fuzz/nss:latest
-#12 naming to gcr.io/oss-fuzz/nss:latest 0.0s done
-#12 unpacking to gcr.io/oss-fuzz/nss:latest 0.1s done
-#12 DONE 1.3s
-INFO:__main__:Keeping existing build artifacts as-is (if any).
-INFO:__main__:Running: docker run --privileged --shm-size=2g --platform linux/amd64 --rm -i -e FUZZING_ENGINE=afl -e SANITIZER=address -e ARCHITECTURE=x86_64 -e PROJECT_NAME=nss -e HELPER=True -e FUZZING_LANGUAGE=c++ -v /root/fix_build_agent/process/project/nss:/src/nss -v /root/fix_build_agent/oss-fuzz/build/out/nss/:/out -v /root/fix_build_agent/oss-fuzz/build/work/nss:/work -t gcr.io/oss-fuzz/nss.
----------------------------------------------------------------
-vm.mmap_rnd_bits = 28
-Copying precompiled AFL++
-
-AFL++ target compilation setup:
-AFL_IGNORE_UNKNOWN_ENVS=1
-AFL_QUIET=1
-AFL_IGNORE_PROBLEMS=1
-
- done.
----------------------------------------------------------------
-CC=/src/aflplusplus/afl-clang-fast
-CXX=/src/aflplusplus/afl-clang-fast++
-CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
-CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
-RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
----------------------------------------------------------------
-+ export 'CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
-+ CFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
-+ export 'CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
-+ CXXFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -Wno-error=unknown-warning-option -Wno-error=character-conversion -Wno-error=deprecated-literal-operator -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION'
-+ sed -i s/--disable-tests//g automation/ossfuzz/build.sh
-sed: can't read automation/ossfuzz/build.sh: No such file or directory
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+=== NSS Build Debug Information ===
+Current directory: /src/nss/nss
+Checking for NSS source code...
+Found valid NSS source at: .
+Building from current directory...
+Found automation/ossfuzz/build.sh, proceeding with build...
+./build.sh: line 64: /usr/bin/sed: Argument list too long
 ERROR:__main__:Building fuzzers failed.
