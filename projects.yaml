@@ -2,4 +2,6 @@
   language: c++
   error_time: 2026-1-11
   oss-fuzz_sha: 19852e3510b6935f651ab275032bc1e721da7413
-  state: 'no'
+  state: 'yes'
+  fix_result: Failure
+  fix_date: '2026-02-07'
