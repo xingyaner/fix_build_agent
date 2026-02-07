@@ -2,6 +2,7 @@ import os
 import re
 import sys
 import shutil
+import requests
 import subprocess
 import json
 import yaml
@@ -18,6 +19,85 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 # Build relative path to the process directory
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
+
+
+def checkout_project_commit(project_source_path: str, sha: str) -> Dict[str, str]:
+    """
+    在目标软件项目的源代码目录中执行 git checkout 命令。
+    """
+    print(f"--- Tool: checkout_project_commit called for SHA: {sha} in '{project_source_path}' ---")
+
+    if not os.path.isdir(os.path.join(project_source_path, ".git")):
+        return {'status': 'error', 'message': f"The directory '{project_source_path}' is not a git repository."}
+
+    original_path = os.getcwd()
+    try:
+        os.chdir(project_source_path)
+
+        # 确保仓库处于干净状态，避免 checkout 冲突
+        subprocess.run(["git", "reset", "--hard", "HEAD"], capture_output=True, text=True, check=True)
+        subprocess.run(["git", "clean", "-fdx"], capture_output=True, text=True, check=True)
+
+        command = ["git", "checkout", sha]
+        result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8')
+
+        if result.returncode == 0:
+            return {'status': 'success', 'message': f"Successfully checked out SHA {sha} in project source."}
+        else:
+            return {'status': 'error', 'message': f"Git command failed in project source: {result.stderr.strip()}"}
+    except Exception as e:
+        return {'status': 'error', 'message': f"An unexpected error occurred during project source checkout: {e}"}
+    finally:
+        os.chdir(original_path)
+
+
+def download_remote_log(log_url: str, project_name: str, error_time_str: str) -> Dict[str, str]:
+    """
+    下载远程日志文件到本地指定目录，并按 '年_月_日 error.txt' 格式命名。
+    例如：build_error_log/aptos-core/2026_1_30 error.txt
+    """
+    print(f"--- Tool: download_remote_log called for URL: {log_url} ---")
+
+    try:
+        # 1. 解析 error_time_str 为日期格式
+        try:
+            # 尝试处理 YYYY-MM-DD 或 YYYY-M-D
+            error_date = datetime.strptime(error_time_str, '%Y-%m-%d').date()
+        except ValueError:
+            # 备用尝试 YYYY.MM.DD
+            error_date = datetime.strptime(error_time_str, '%Y.%m.%d').date()
+
+        # 2. 构建本地存储路径
+        local_log_dir = os.path.join("build_error_log", project_name)
+        os.makedirs(local_log_dir, exist_ok=True) # 确保项目目录存在
+
+        # 3. 构造本地文件名
+        local_log_filename = error_date.strftime("%Y_%#m_%#d") + " error.txt" # %#m 和 %#d 用于去除前导零
+        local_log_filepath = os.path.join(local_log_dir, local_log_filename)
+
+        # 4. 检查文件是否已存在，如果存在则跳过下载
+        if os.path.exists(local_log_filepath):
+            print(f"--- Log file already exists locally: {local_log_filepath}. Skipping download. ---")
+            return {"status": "success", "local_path": os.path.abspath(local_log_filepath), "message": "Log file already exists locally."}
+
+        # 5. 下载日志文件
+        print(f"--- Downloading log from {log_url} to {local_log_filepath} ---")
+        response = requests.get(log_url, stream=True)
+        response.raise_for_status() # 检查HTTP响应状态
+
+        with open(local_log_filepath, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+        print(f"--- Successfully downloaded log to: {local_log_filepath} ---")
+        return {"status": "success", "local_path": os.path.abspath(local_log_filepath), "message": "Successfully downloaded remote log."}
+
+    except requests.exceptions.RequestException as e:
+        return {"status": "error", "message": f"Failed to download log from {log_url}: {e}"}
+    except ValueError as e:
+        return {"status": "error", "message": f"Invalid error_time_str format '{error_time_str}': {e}"}
+    except Exception as e:
+        return {"status": "error", "message": f"An unexpected error occurred during log download: {e}"}
 
 
 def update_reflection_journal(
@@ -395,10 +475,9 @@ def save_commit_diff_to_file(project_name: str, project_source_path: str, sha: s
     except Exception as e:
         return {'status': 'error', 'message': f"Error saving diff: {e}"}
 
-
 def read_projects_from_yaml(file_path: str) -> Dict:
     """
-    [Rigorous Version] Reads project information and automatically finds the 
+    [Rigorous Version] Reads project information and automatically finds the
     correct error log file using standard datetime comparison.
     """
     print(f"--- Tool: read_projects_from_yaml called for: {file_path} ---")
@@ -414,51 +493,80 @@ def read_projects_from_yaml(file_path: str) -> Dict:
             return {'status': 'error', 'message': "YAML file must contain a list of projects."}
 
         for index, entry in enumerate(data):
-            if entry.get('state') == 'no':
+            if entry.get('fixed_state') == 'no':
                 project_name = entry.get('project')
                 sha = entry.get('oss-fuzz_sha')
                 error_time_str = str(entry.get('error_time', ""))
+                # --- START MODIFICATION ---
+                fuzzing_build_error_log_url = entry.get('fuzzing_build_error_log', "")
+                # --- END MODIFICATION ---
 
                 if project_name and sha:
                     # --- 严谨的日期自动关联逻辑 ---
                     log_dir = os.path.join("build_error_log", project_name)
                     original_log_path = ""
-                    
-                    if os.path.isdir(log_dir):
-                        try:
-                            y, m, d = map(int, error_time_str.replace('.', '-').split('-'))
-                            base_date = datetime(y, m, d)
-                            
-                            candidates = []
-                            for filename in os.listdir(log_dir):
-                                if "error" in filename and filename.endswith(".txt"):
-                                    match = re.search(r"(\d{4})_(\d{1,2})_(\d{1,2})", filename)
-                                    if match:
-                                        fy, fm, fd = map(int, match.groups())
-                                        file_date = datetime(fy, fm, fd)
-                                        
-                                        if file_date >= base_date:
-                                            candidates.append((file_date, filename))
-                            
-                            if candidates:
-                                # 4. 排序逻辑：选择日期最接近基准日期的一个（即符合条件的最早日志）
-                                candidates.sort(key=lambda x: x[0])
-                                best_match = candidates[0][1]
-                                original_log_path = os.path.abspath(os.path.join(log_dir, best_match))
-                                print(f"  - Rigorous Match: {best_match} (>= {error_time_str})")
-                        except Exception as e:
-                            print(f"  - Warning: Date parsing error for {project_name}: {e}")
+
+                    # --- START MODIFICATION ---
+                    # 优先处理远程日志URL
+                    if fuzzing_build_error_log_url.startswith("http"):
+                        download_result = download_remote_log(fuzzing_build_error_log_url, project_name, error_time_str)
+                        if download_result['status'] == 'success':
+                            original_log_path = download_result['local_path']
+                        else:
+                            print(f"  - CRITICAL: Failed to download remote log for {project_name}: {download_result['message']}")
+                            # 如果下载失败，仍然尝试在本地查找，或者跳过此项目
+                            # 这里选择继续尝试本地查找，但如果原始日志URL存在，则优先使用下载结果
+                    else: # 如果不是URL，则按照原有逻辑在本地查找
+                        # 现有本地查找逻辑保持不变
+                        if os.path.isdir(log_dir):
+                            try:
+                                y, m, d = map(int, error_time_str.replace('.', '-').split('-'))
+                                base_date = datetime(y, m, d)
+
+                                candidates = []
+                                for filename in os.listdir(log_dir):
+                                    # 匹配 '年_月_日 error.txt' 格式
+                                    if "error.txt" in filename and re.match(r"\d{4}_\d{1,2}_\d{1,2} error\.txt", filename):
+                                        match = re.search(r"(\d{4})_(\d{1,2})_(\d{1,2})", filename)
+                                        if match:
+                                            fy, fm, fd = map(int, match.groups())
+                                            file_date = datetime(fy, fm, fd)
+
+                                            if file_date >= base_date:
+                                                candidates.append((file_date, filename))
+
+                                if candidates:
+                                    candidates.sort(key=lambda x: x[0])
+                                    best_match = candidates[0][1]
+                                    original_log_path = os.path.abspath(os.path.join(log_dir, best_match))
+                                    print(f"  - Rigorous Match: {best_match} (>= {error_time_str})")
+                            except Exception as e:
+                                print(f"  - Warning: Date parsing error for {project_name}: {e}")
+                    # --- END MODIFICATION ---
 
                     project_info = {
                         "project_name": project_name,
                         "sha": str(sha),
                         "row_index": index,
                         "error_time": error_time_str,
-                        "original_log_path": original_log_path
+                        "original_log_path": original_log_path,
+                        # --- START MODIFICATION ---
+                        # 将从YAML中读取到的所有元数据也加入到 project_info 中
+                        "software_repo_url": entry.get('software_repo_url', ""),
+                        "software_sha": entry.get('software_sha', ""),
+                        "engine": entry.get('engine', ""),
+                        "sanitizer": entry.get('sanitizer', ""),
+                        "architecture": entry.get('architecture', ""),
+                        "base_image_digest": entry.get('base_image_digest', "")
+                        # --- END MODIFICATION ---
                     }
-                    projects_to_run.append(project_info)
+                    # 只有当 original_log_path 成功获取（无论是本地找到还是远程下载）才添加项目
+                    if original_log_path:
+                        projects_to_run.append(project_info)
+                    else:
+                        print(f"Warning: Project '{project_name}' skipped due to missing or failed log file retrieval.")
                 else:
-                    print(f"Warning: Project at index {index} missing core fields. Skipping.")
+                    print(f"Warning: Project at index {index} missing core fields (project_name or oss-fuzz_sha). Skipping.")
 
         print(f"--- Found {len(projects_to_run)} new projects to process. ---")
         return {'status': 'success', 'projects': projects_to_run}
@@ -696,64 +804,89 @@ def archive_fixed_project(project_name: str, project_config_path: str) -> Dict[s
         return {"status": "error", "message": message}
 
 
-def download_github_repo(project_name: str, target_dir: str) -> Dict[str, str]:
+def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[str] = None) -> Dict[str, str]:
     """
-    【优化版】下载仓库工具
-    1. 增加预检查：如果目录已存在且不为空，直接返回成功。
-    2. 增强重试： 3 次重试，应对网络抖动。
+    【大师级健壮版】下载仓库工具
+    1. 增加缓冲区配置，解决大仓库 RPC/TLS 错误。
+    2. 严格检查 .git 目录，防止在损坏的目录中执行 pull。
+    3. 优化空字符串 URL 处理逻辑。
     """
+    import json
+    import time
+    import subprocess
+    import os
+
     print(f"--- Tool: download_github_repo called for '{project_name}' into '{target_dir}' ---")
 
-    # --- 改进 1: 预检查逻辑 ---
-    if os.path.isdir(target_dir):
-        # 检查目录下是否有内容（防止空目录误判）
-        if os.listdir(target_dir):
-            if project_name == "oss-fuzz":
-                print(f"--- oss-fuzz exists, pulling latest... ---")
-                subprocess.run(["git", "pull"], cwd=target_dir, capture_output=True)
-            else:
-                print(f"--- Directory '{target_dir}' already exists and is not empty. Skipping download. ---")
-            return {'status': 'success', 'path': target_dir, 'message': 'Repository already exists locally.'}
+    # --- 1. 预检查逻辑：确保 Git 仓库完整性 ---
+    if os.path.isdir(target_dir) and os.path.exists(os.path.join(target_dir, ".git")):
+        if project_name == "oss-fuzz":
+            print(f"--- oss-fuzz exists, pulling latest... ---")
+            try:
+                subprocess.run(["git", "pull"], cwd=target_dir, check=True, capture_output=True)
+                return {'status': 'success', 'path': target_dir, 'message': 'oss-fuzz exists and updated.'}
+            except subprocess.CalledProcessError as e:
+                # 如果 pull 失败（可能是网络问题），我们仍尝试继续，因为本地已有代码
+                print(f"--- Warning: git pull failed, using local version: {e.stderr.decode()} ---")
+                return {'status': 'success', 'path': target_dir, 'message': 'oss-fuzz exists but update failed, using local.'}
+        else:
+            print(f"--- Repo '{project_name}' exists and is a valid git repo. Skipping download. ---")
+            return {'status': 'success', 'path': target_dir, 'message': 'Repository already exists.'}
+
+    # 如果目录存在但不是 git 仓库，先清理掉
+    if os.path.isdir(target_dir) and not os.path.exists(os.path.join(target_dir, ".git")):
+        print(f"--- Cleaning up invalid directory: {target_dir} ---")
+        import shutil
+        shutil.rmtree(target_dir)
 
     os.makedirs(os.path.dirname(target_dir), exist_ok=True)
 
-    # 获取 Repo URL 逻辑保持不变...
-    try:
+    # --- 2. 确定 Repo URL ---
+    # 处理 None 或空字符串的情况
+    final_repo_url = repo_url if repo_url and repo_url.strip() else None
+    
+    if not final_repo_url:
         if project_name == "oss-fuzz":
-            repo_full_name = "google/oss-fuzz"
+            final_repo_url = "https://github.com/google/oss-fuzz.git"
         else:
-            search_command = ["gh", "search", "repos", project_name, "--sort", "stars", "--order", "desc", "--limit", "1", "--json", "fullName"]
-            result = subprocess.run(search_command, capture_output=True, text=True, check=True, encoding='utf-8')
-            parsed_output = json.loads(result.stdout.strip())
-            if isinstance(parsed_output, list) and parsed_output:
-                repo_full_name = parsed_output[0]['fullName']
-            else: raise ValueError("gh search returned no results.")
-        repo_url = f"https://github.com/{repo_full_name}.git"
-    except Exception as e:
-        return {'status': 'error', 'message': f"Search failed: {e}"}
+            try:
+                search_cmd = ["gh", "search", "repos", project_name, "--sort", "stars", "--order", "desc", "--limit", "1", "--json", "fullName"]
+                result = subprocess.run(search_cmd, capture_output=True, text=True, check=True, encoding='utf-8')
+                parsed_output = json.loads(result.stdout.strip())
+                if parsed_output:
+                    final_repo_url = f"https://github.com/{parsed_output[0]['fullName']}.git"
+                else:
+                    return {'status': 'error', 'message': f"Could not find repo for {project_name} via gh search."}
+            except Exception as e:
+                return {'status': 'error', 'message': f"Search failed: {e}"}
 
-    # --- 改进 2: 增强重试逻辑 ---
-    max_download_retries = 3
-    for attempt in range(max_download_retries):
-        print(f"--- Download attempt {attempt + 1}/{max_download_retries} for {project_name} ---")
+    # --- 3. 配置 Git 缓冲区（解决 TLS/RPC 错误） ---
+    # 增加到 500MB，并设置低速不超时，这对于 oss-fuzz 这种大仓库至关重要
+    subprocess.run(["git", "config", "--global", "http.postBuffer", "524288000"])
+    subprocess.run(["git", "config", "--global", "http.lowSpeedLimit", "0"])
+    subprocess.run(["git", "config", "--global", "http.lowSpeedTime", "999999"])
+
+    # --- 4. 增强重试克隆逻辑 ---
+    max_retries = 3
+    for attempt in range(max_retries):
+        print(f"--- Download attempt {attempt + 1}/{max_retries} for {project_name} ---")
         try:
-            # 使用 --depth 1 加快大仓库下载速度（如果是 oss-fuzz 则不使用 depth 以便切换 commit）
-            clone_cmd = ["git", "clone", repo_url, target_dir]
+            clone_cmd = ["git", "clone", final_repo_url, target_dir]
+            # oss-fuzz 必须全量克隆以支持 checkout 到任意历史 SHA
             if project_name != "oss-fuzz":
                 clone_cmd.insert(2, "--depth=1")
-                
+
             result = subprocess.run(clone_cmd, capture_output=True, text=True)
             if result.returncode == 0:
                 return {'status': 'success', 'path': target_dir, 'message': 'Successfully cloned.'}
             else:
                 print(f"--- Attempt {attempt+1} failed: {result.stderr} ---")
         except Exception as e:
-            print(f"--- Attempt {attempt+1} error: {e} ---")
-        
-        time.sleep(5 * (attempt + 1)) # 递增等待时间
+            print(f"--- Attempt {attempt+1} exception: {e} ---")
 
-    return {'status': 'error', 'message': f"Failed to download {project_name} after {max_download_retries} attempts."}
+        time.sleep(10 * (attempt + 1))
 
+    return {'status': 'error', 'message': f"Failed to download {project_name} after {max_retries} attempts."}
 
 # Version Reverting Tool
 def find_sha_for_timestamp(commits_file_path: str, error_date: str) -> Dict[str, str]:

@@ -3,6 +3,7 @@ import shutil
 import time
 import json
 import re
+import sys
 import asyncio
 import subprocess
 import litellm
@@ -54,6 +55,8 @@ from agent_tools import (
     patch_project_dockerfile,
     manage_git_state,
     clear_commit_analysis_state,
+    download_remote_log,
+    checkout_project_commit,
     truncate_prompt_file
 )
 
@@ -141,6 +144,7 @@ initial_setup_agent = LlmAgent(
         patch_project_dockerfile,
         get_project_paths,
         manage_git_state,
+        checkout_project_commit,
     ],
     output_key="basic_information",
 )
@@ -296,7 +300,7 @@ def cleanup_environment(project_name: str):
 
 
 async def process_single_project(
-    project_info: Dict,
+    project_info: Dict, # --- MODIFIED: project_info 现在直接包含所有必要信息 ---
     session_service: InMemorySessionService
 ) -> Tuple[bool, Optional[str]]:
     """
@@ -304,9 +308,18 @@ async def process_single_project(
     确保由工具自动识别的绝对路径被正确透传。
     """
     project_name = project_info['project_name']
-    sha = project_info['sha']
-    # 从 project_info 中提取由上一步工具自动关联的路径
+    sha = project_info['sha'] # 这是 oss-fuzz_sha
     original_log_path = project_info.get('original_log_path', "")
+    # --- START MODIFICATION ---
+    # 确保所有从 YAML 读取到的元数据都通过 initial_input 传递
+    software_repo_url = project_info.get('software_repo_url', "")
+    software_sha = project_info.get('software_sha', "") # 这是目标软件的 SHA
+    engine = project_info.get('engine', "")
+    sanitizer = project_info.get('sanitizer', "")
+    architecture = project_info.get('architecture', "")
+    base_image_digest = project_info.get('base_image_digest', "")
+    # --- END MODIFICATION ---
+
 
     GLOBAL_LOGGER.set_project_context(project_name)
 
@@ -314,11 +327,19 @@ async def process_single_project(
     runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
 
     # 构造初始输入，确保 Agent 知道日志位置以便提取元数据
+    # --- START MODIFICATION ---
     initial_input = json.dumps({
-        "project_name": project_name, 
-        "sha": sha, 
-        "original_log_path": original_log_path
+        "project_name": project_name,
+        "oss_fuzz_sha": sha, # 重命名为 oss_fuzz_sha 以避免与 software_sha 混淆
+        "original_log_path": original_log_path,
+        "software_repo_url": software_repo_url,
+        "software_sha": software_sha,
+        "engine": engine,
+        "sanitizer": sanitizer,
+        "architecture": architecture,
+        "base_image_digest": base_image_digest
     })
+    # --- END MODIFICATION ---
     initial_message = types.Content(parts=[types.Part(text=initial_input)], role='user')
 
     is_successful = False
@@ -373,8 +394,6 @@ async def process_single_project(
 
     return is_successful, project_config_path
 
-
-# Main execution logic
 async def main():
     """
     【大师级主循环】
@@ -387,23 +406,38 @@ async def main():
 
     YAML_FILE = 'projects.yaml'
     session_service = InMemorySessionService()
-    
+
     # 读取待处理项目
     projects_result = read_projects_from_yaml(YAML_FILE)
     if projects_result['status'] == 'error':
         print(f"Error: Could not process YAML file: {projects_result['message']}")
         return
-        
+
     projects_to_process = projects_result.get('projects', [])
     if not projects_to_process:
         print("--- No new projects to process were found. Workflow finished. ---")
         return
-        
+
     print(f"--- Found {len(projects_to_process)} projects to process ---")
 
     for project_info in projects_to_process:
         project_name = project_info['project_name']
         row_index = project_info['row_index']
+        # --- START MODIFICATION ---
+        # 提取所有 project_info 中的字段，作为 initial_input 的一部分
+        # 这确保了所有从YAML中读取到的信息（包括下载的本地日志路径和构建元数据）都能传递给 Agent
+        initial_input_data = {
+            "project_name": project_name,
+            "sha": project_info['sha'], # oss-fuzz_sha
+            "original_log_path": project_info['original_log_path'],
+            "software_repo_url": project_info['software_repo_url'],
+            "software_sha": project_info['software_sha'], # 目标软件的SHA
+            "engine": project_info['engine'],
+            "sanitizer": project_info['sanitizer'],
+            "architecture": project_info['architecture'],
+            "base_image_digest": project_info['base_image_digest']
+        }
+        # --- END MODIFICATION ---
 
         print(f"\n{'='*60}")
         print(f"--- Processing Project: {project_name} (Index: {row_index}) ---")
@@ -414,7 +448,9 @@ async def main():
         cleanup_environment(project_name)
 
         # 执行修复流程
-        is_successful, project_config_path = await process_single_project(project_info, session_service)
+        # --- START MODIFICATION ---
+        is_successful, project_config_path = await process_single_project(initial_input_data, session_service)
+        # --- END MODIFICATION ---
 
         # 处理修复成功后的逻辑
         if is_successful and project_config_path:
@@ -441,7 +477,6 @@ async def main():
 
 
 
-
 if __name__ == "__main__":
     print("--- Performing pre-startup checks... ---")
     if not DPSEEK_API_KEY:
@@ -454,6 +489,16 @@ if __name__ == "__main__":
         try:
             subprocess.run(["gh", "--version"], check=True, capture_output=True, text=True)
             print("✅ GitHub CLI ('gh') is installed.")
+            # --- START MODIFICATION ---
+            # 检查 requests 库是否安装
+            try:
+                import requests
+                print("✅ 'requests' library is installed.")
+            except ImportError:
+                print("\n[ERROR] Startup failed: 'requests' library is not installed.")
+                print("Please install it by running: pip install requests")
+                sys.exit(1) # 退出程序
+            # --- END MODIFICATION ---
             subprocess.run(["gh", "auth", "status"], check=True, capture_output=True)
             print("✅ GitHub CLI ('gh') is logged in.")
             print("\n--- Checks complete. Preparing to start the Agent... ---")
