@@ -1,0 +1,16 @@
+2025-11-01 22:24:45,922 - ERROR - Agent 执行被 ContextWindowExceededError 中断: litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceededError: DeepseekException - {"error":{"message":"This model's maximum context length is 131072 tokens. However, you requested 147051 tokens (147051 in the messages, 0 in the completion). Please reduce the length of the messages or completion.","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}
+2025-11-01 22:24:50,945 - INFO - 缓存已清空，实时日志记录已启动。
+2025-11-01 22:24:55,593 - EVENT from author: 'environment_setup_agent'
+  - TOOL_CALL: download_github_repo({"project_name": "oss-fuzz"})
+2025-11-01 22:24:55,594 - EVENT from author: 'environment_setup_agent'
+  - TOOL_RESPONSE for 'download_github_repo': {'status': 'success', 'path': '/root/fix_build_agent/oss-fuzz'}
+2025-11-01 22:24:59,010 - EVENT from author: 'environment_setup_agent'
+  - TOOL_CALL: find_sha_for_timestamp({"commits_file_path": "/root/reproduce_note_fuzz/oss-fuzz_information_obtain/github_commits.txt", "error_date": "2025.9.25"})
+2025-11-01 22:24:59,016 - EVENT from author: 'environment_setup_agent'
+  - TOOL_RESPONSE for 'find_sha_for_timestamp': {'status': 'success', 'sha': '58a3ba8b2c0e10090f2f440f7fd15ae514b0fa68'}
+2025-11-01 22:25:02,112 - EVENT from author: 'environment_setup_agent'
+  - TOOL_CALL: checkout_oss_fuzz_commit({"oss_fuzz_path": "/root/fix_build_agent/oss-fuzz", "sha": "58a3ba8b2c0e10090f2f440f7fd15ae514b0fa68"})
+2025-11-01 22:25:02,155 - EVENT from author: 'environment_setup_agent'
+  - TOOL_RESPONSE for 'checkout_oss_fuzz_commit': {'status': 'success', 'message': 'Successfully checked out SHA 58a3ba8b2c0e10090f2f440f7fd15ae514b0fa68.'}
+2025-11-01 22:25:03,996 - EVENT from author: 'environment_setup_agent'
+  - TOOL_CALL: download_github_repo({"project_name": "apache-commons-configuration"})

@@ -1,0 +1,17 @@
+- project: aptos-core
+  language: rust
+  error_time: 2026-1-30
+  last_success_time: ''
+  oss-fuzz_sha: 261e9e8784d317c6697a57e49d0bd914295a32b6
+  fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-50ed875a-bb1b-46ea-9e45-99d924813ade.txt
+  software_repo_url: https://github.com/aptos-labs/aptos-core.git
+  software_sha: 1702f89974c05b898aa812ec930f2c54f60edcd3
+  engine: libfuzzer
+  sanitizer: address
+  architecture: x86_64
+  base_image_digest: b4e8b0e8be82a007f3e7d5459572df7fca784316f7e5407250fcad7b9874c392
+  error_category: RC13
+  fixed_state: 'no'
+  state: 'yes'
+  fix_result: Success
+  fix_date: '2026-02-08'

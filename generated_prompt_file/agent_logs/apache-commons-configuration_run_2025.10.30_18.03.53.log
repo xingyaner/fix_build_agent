@@ -1,0 +1,2 @@
+2025-10-30 18:03:53,678 - ERROR - Agent 执行被 TypeError 中断: list indices must be integers or slices, not str
+2025-10-30 18:03:53,685 - INFO - 缓存已清空，实时日志记录已启动。

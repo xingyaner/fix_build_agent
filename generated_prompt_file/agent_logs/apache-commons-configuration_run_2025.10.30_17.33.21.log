@@ -1,0 +1,2 @@
+2025-10-30 17:33:21,758 - ERROR - Agent 执行被 KeyError 中断: 'Context variable not found: `project_name`.'
+2025-10-30 17:33:21,760 - INFO - 缓存已清空，实时日志记录已启动。

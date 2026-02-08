@@ -1,0 +1,4 @@
+2025-10-30 18:03:27,551 - Logger initialized. Waiting for project context...
+2025-10-30 18:03:47,127 - INFO - 缓存已清空，实时日志记录已启动。
+2025-10-30 18:03:52,455 - EVENT from author: 'environment_setup_agent'
+  - TOOL_CALL: download_github_repo({"project_name": "oss-fuzz", "base_path": "/root/fix_build_agent"})

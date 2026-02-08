@@ -1,0 +1,41 @@
+{
+  "general_principles": [
+    "Distinguish between fatal build errors (e.g., CMake Error) and non-fatal warnings; only fix fatal errors to maintain minimal changes.",
+    "If the error occurs before code download, investigate Dockerfile configuration rather than source code changes.",
+    "Build success must be verified by checking if the number of generated fuzz targets is greater than zero, not just the exit code.",
+    "If Dockerfile pulls remote code, you must use local mounts or modify COPY instructions to make local source changes effective.",
+    "Before any read_file_content or apply_patch, you MUST ls the parent directory to confirm the exact filename and path.",
+    "The source path for COPY in Dockerfile is relative to the build context (usually projects/<name>/), not arbitrary host paths.",
+    "Path Discovery & Verification Principle: Never assume fixed directory structures or relative paths. The source code location varies significantly between 'Standard' and 'Source' build modes. Before attempting to read or patch any file, you MUST use discovery tools (e.g., ls or find) to map the environment and verify the file's existence at its absolute path.",
+    "For files with complex escape characters, prefer robust patching methods like line-number positioning or appending configuration over large text matching.",
+    "Handle missing dependencies by installing them via package manager or disabling the dependent feature in the build config.",
+    "Prioritize increasing timeouts or optimizing build parameters for network/timeout errors over modifying source code.",
+    "Non-interactive principle: Use silent installation flags (e.g., -y); never rely on interactive input or pipes for confirmation.",
+    "When handling compilation errors, consider both environment and API compatibility; 'undefined reference' often points to the latter.",
+    "If environment changes do not take effect, consider clearing build cache and retrying.",
+    "Do not assume the environment automatically mounts all resources; verify the actual file state inside the container using commands.",
+    "Always check for the existence of target artifacts before executing critical tasks.",
+    "For hardcoded absolute paths to missing tools, prioritize creating symbolic links to system tools over recompiling dependencies.",
+    "Combine 'apt-get update' and 'apt-get install' in a single RUN instruction to prevent cache-related installation failures.",
+    "Note that 'unexpected EOF' or network timeouts might stem from host network fluctuations rather than the build process itself.",
+    "Local directory mounting (-v) will override any directory with the same name in the container image.",
+    "Missing libraries/headers during configuration often indicate missing development packages (-dev) in the Dockerfile.",
+    "If compilation fails due to -Werror, precisely disable the specific warning using -Wno-... flags in build.sh.",
+    "When standard configurations fail, consider forceful strategies like invasive modification or completely bypassing the problematic component.",
+    "Classify errors: 'command not found' or 'library not found' are Environment-level; 'syntax error' or 'undefined reference' are Code-level."
+  ],
+  "patterns": [
+    {
+      "pattern": "undefined reference to",
+      "advice": "This is a Code-level linker error. Check if the required library is linked in build.sh or if the API has changed."
+    },
+    {
+      "pattern": "cannot find -l(\\w+)",
+      "advice": "Environment-level error. Missing development library. Try adding lib$1-dev to the Dockerfile."
+    },
+    {
+      "pattern": "CMake Error",
+      "advice": "Fatal configuration error. Check CMakeLists.txt or missing CMake dependencies."
+    }
+  ]
+}

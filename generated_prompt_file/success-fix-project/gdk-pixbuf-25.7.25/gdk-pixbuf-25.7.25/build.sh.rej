@@ -1,0 +1,10 @@
+--- build.sh
++++ build.sh
+@@ -42,6 +42,7 @@ meson \
+     --prefix=$PREFIX \
+     --libdir=lib \
+     --default-library=static \
+     -Dintrospection=disabled \
+     -Ddocumentation=false \
+     -Dman=false \
++    -Dglycin=disabled \
