@@ -11,6 +11,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import Dict, AsyncGenerator, Tuple, Optional
 from dotenv import load_dotenv
+from agent_tools import ENABLE_REFLECTION, ENABLE_ROLLBACK, ENABLE_EXPERT_KNOWLEDGE
 
 # Load the .env file
 load_dotenv()
@@ -245,19 +246,28 @@ summary_agent = LlmAgent(
 )
 
 # --- Workflow Definition ---
+loop_sub_agents = [
+    run_fuzz_and_collect_log_agent,
+    decision_agent,
+]
+
+if ENABLE_REFLECTION:
+    loop_sub_agents.append(reflection_agent)
+
+if ENABLE_ROLLBACK:
+    loop_sub_agents.append(rollback_agent)
+
+loop_sub_agents.extend([
+    commit_finder_agent,
+    prompt_generate_agent,
+    fuzzing_solver_agent,
+    solution_applier_agent,
+    summary_agent,
+])
+
 workflow_loop_agent = LoopAgent(
     name="workflow_loop_agent",
-    sub_agents=[
-        run_fuzz_and_collect_log_agent,
-        decision_agent,
-        reflection_agent,
-        rollback_agent,
-        commit_finder_agent,
-        prompt_generate_agent,
-        fuzzing_solver_agent,
-        solution_applier_agent,
-        summary_agent,
-    ],
+    sub_agents=loop_sub_agents,
     max_iterations=10
 )
 

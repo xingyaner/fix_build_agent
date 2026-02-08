@@ -14,12 +14,19 @@ from typing import Dict, List, Tuple, Optional, Set
 from google.adk.tools.tool_context import ToolContext
 
 
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+# =================================================================
+# --- 消融实验全局开关 (Ablation Global Config) ---
+# =================================================================
+# 建议：在运行不同版本的实验时，仅需在此处修改布尔值
+ENABLE_REFLECTION = True        # 是否开启反思学习逻辑
+ENABLE_ROLLBACK = True          # 是否开启状态树回退逻辑
+ENABLE_EXPERT_KNOWLEDGE = True   # 是否开启专家知识注入
+# =================================================================
 
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 # Build relative path to the process directory
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
-
 
 def checkout_project_commit(project_source_path: str, sha: str) -> Dict[str, str]:
     """
@@ -115,6 +122,16 @@ def update_reflection_journal(
     1. 记录尝试、反思及恶化评分。
     2. 判定是否触发回溯机制（包含连续高分判定）。
     """
+    # 如果关闭反思学习，不写磁盘，不返回触发回退的信号
+    if not ENABLE_REFLECTION:
+        print(f"--- Ablation: Reflection is DISABLED. Skipping journal update for attempt {attempt_id} ---")
+        return {
+            "status": "success",
+            "reflection_summary": "Reflection disabled.",
+            "trigger_rollback": False,
+            "history_count": 0
+        }
+
     print(f"--- Tool: update_reflection_journal (v2) called for attempt {attempt_id} ---")
 
     JOURNAL_DIR = "generated_prompt_file"
@@ -168,6 +185,12 @@ def query_expert_knowledge(log_path: str) -> Dict:
     【专家知识检索工具】
     从知识库中提取通用原则，并根据日志匹配特定建议。
     """
+    # 如果关闭专家知识，直接返回空结果，不读取 JSON，不进行正则匹配
+    if not ENABLE_EXPERT_KNOWLEDGE:
+        print("--- Ablation: Expert Knowledge is DISABLED. Returning empty guidance. ---")
+        return {"status": "success", "knowledge": "No specific expert knowledge is available for this run."}
+
+
     print(f"--- Tool: query_expert_knowledge called for: {log_path} ---")
     KNOWLEDGE_FILE = "expert_knowledge.json"
     
@@ -1358,7 +1381,7 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
             f.write(f"{expert_knowledge}\n")
 
     # --- Step 2: 注入历史反思教训 ---
-    if os.path.exists(JOURNAL_FILE):
+    if ENABLE_REFLECTION and os.path.exists(JOURNAL_FILE):
         try:
             with open(JOURNAL_FILE, 'r', encoding='utf-8') as f_j:
                 history = json.load(f_j)
@@ -1368,6 +1391,9 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
                     for entry in history[-3:]:
                         f_out.write(f"- [Attempt {entry['attempt_id']}] {entry['reflection']}\n")
         except Exception: pass
+    else:
+        # 如果关闭，即便文件存在也不读取，确保 Solver 拿不到历史经验
+        print("--- Ablation: Skipping reflection history injection. ---")
 
     # --- Step 3: 附加配置文件内容 ---
     all_config_files = [os.path.join(config_folder_path, f) for f in sorted(os.listdir(config_folder_path)) if os.path.isfile(os.path.join(config_folder_path, f))]
