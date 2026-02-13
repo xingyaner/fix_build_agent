@@ -1,6 +1,0 @@
-2025-10-15 10:45:05,830 - Logger initialized. Waiting for project name...
-2025-10-15 10:45:36,519 - INFO - Flushed buffer. Live logging to file has started.
-2025-10-15 10:45:36,519 - EVENT from author: 'initial_setup_agent'
-  - STATE_UPDATE: {'basic_information': '{\n  "project_name": "nss",\n  "project_config_path": "/root/oss-fuzz/projects/nss",\n  "project_source_path": "/root/nss",\n  "max_depth": 0\n}'}
-2025-10-15 10:45:40,936 - EVENT from author: 'run_fuzz_and_collect_log_agent'
-  - TOOL_CALL: run_fuzz_build_streaming({'project_name': 'nss', 'oss_fuzz_path': '/root/oss-fuzz'})

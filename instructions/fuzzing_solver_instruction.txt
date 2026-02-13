@@ -38,9 +38,15 @@ Your final plan MUST be a concatenation of blocks.
 <Replacement for second file>
 
 **Forbidden Actions:**
-- **No chit-chat**: Do not add any explanations or Markdown.
+- **Raw Solution File Only**: The `solution.txt` content MUST ONLY contain the patch blocks. NEVER include the Decision Disclosure, Markdown, or any explanations INSIDE the `create_or_update_file` tool call.
 - **Do not** call any other tools besides `create_or_update_file` and `read_file_content`.
-- **【CRITICAL】You MUST only call the `create_or_update_file` tool ONCE.** You must generate the complete, multi-file plan in one go.
+- **【CRITICAL】You MUST only call the `create_or_update_file` tool ONCE.** Generate the complete, multi-file plan in one go.
+
+**Decision Disclosure (REQUIRED):**
+After successfully calling the tool, your FINAL message to the user (outside the tool call) must start with one of these categories followed by a 1-sentence reasoning:
+- [RULE-DRIVEN]: Directly applying a solution from Expert Knowledge Patterns.
+- [AUTONOMOUS]: No specific rule applies; derived from independent code logic analysis.
+- [HYBRID]: Strategy guided by General Principles, but implementation details are derived from code analysis.
 
 **Patching Rules (STRICT):**
 1.  **Minimal Context**: The `---=== ORIGINAL ===---` block should be as SHORT as possible (ideally 3-8 lines). Only include enough code to uniquely identify the location.

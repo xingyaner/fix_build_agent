@@ -1,1 +1,163 @@
-No relevant commit found.
+--- Commit Context Information ---
+Project Name: croaring
+Error Report Time: 2025-10-29
+Selected Commit SHA: a5b601dd52c626e350e509cb89172389a5ee328e
+------------------------------
+
+commit a5b601dd52c626e350e509cb89172389a5ee328e
+Author: Matheus Aoki Hunsche <mthunsche@gmail.com>
+Date:   Tue Oct 28 12:28:40 2025 -0300
+
+    fix(infra): Resolve Race Condition in Parallel Base Image Builds (#14189)
+    
+    ## Summary
+    
+    This PR fixes a critical race condition in the base image build process
+    that caused the `gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04` image
+    to be incorrectly built with an Ubuntu 20.04 base.
+    
+    The fix ensures build steps are executed in the correct order by
+    explicitly defining a dependency graph, guaranteeing that versioned
+    images are always built on top of their corresponding, freshly-built
+    base layers.
+    
+    ## The Problem
+    
+    A report indicated that the `base-builder:ubuntu-24-04` image contained
+    Ubuntu 20.04. An initial investigation confirmed this behavior.
+    
+    ### Investigation Steps
+    
+    1. **Dockerfile Verification:** The entire dependency chain of
+    Dockerfiles was inspected:
+    * `base-builder:ubuntu-24-04` correctly used `FROM
+    base-clang:ubuntu-24-04`.
+    * `base-clang:ubuntu-24-04` correctly used `FROM
+    base-image:ubuntu-24-04`.
+        *   `base-image:ubuntu-24-04` correctly used `FROM ubuntu:24.04`.
+    This ruled out any static configuration errors in the Dockerfiles
+    themselves.
+    
+    2. **Build Process Analysis:** A `dry-run` of the
+    `infra/build/functions/base_images.py` script revealed that all build
+    steps for the different base images were being generated to run in
+    parallel in Google Cloud Build.
+    
+    ### Root Cause: Race Condition
+    
+    The parallel execution was the source of the problem. Because the builds
+    for `base-image`, `base-clang`, and `base-builder` were triggered
+    simultaneously, a race condition occurred:
+    
+    *   The `base-builder:ubuntu-24-04` build would start.
+    * It would immediately try to pull its base image,
+    `gcr.io/oss-fuzz-base/base-clang:ubuntu-24-04`.
+    * However, the build for the *new* `base-clang:ubuntu-24-04` had not yet
+    finished.
+    * The build process would then fall back to using the existing image
+    with that tag in the container registry, which was an older, incorrectly
+    built version based on Ubuntu 20.04.
+    
+    The same issue was happening between `base-clang` and `base-image`.
+    
+    ## The Solution
+    
+    To resolve this, we now enforce a sequential build order that respects
+    the image dependency hierarchy.
+    
+    1. **Dependency Map:** An `IMAGE_DEPENDENCIES` dictionary was introduced
+    in `infra/build/functions/base_images.py` to define the explicit build
+    order (e.g., `base-clang` depends on `base-image`).
+    
+    2. **Sequential Build Steps:** The `get_base_image_steps` function was
+    updated to read this map and inject a `waitFor` clause into each Google
+    Cloud Build step. This forces GCB to wait for a dependency to finish
+    building before starting the next step in the chain.
+    
+    ### Verification
+    
+    A `dry-run` was executed after the fix, and the generated build steps
+    now correctly reflect the sequential dependency order. A full build was
+    also triggered, confirming that the fix works in a real environment and
+    produces the correct image.
+    
+    This change ensures the integrity and correctness of our base images
+    without sacrificing the parallelism between different Ubuntu version
+    builds (e.g., the `ubuntu-20-04` and `ubuntu-24-04` builds still run in
+    parallel with each other).
+---
+ infra/build/functions/base_images.py | 40 +++++++++++++++++++++++++++++++-----
+ 1 file changed, 35 insertions(+), 5 deletions(-)
+
+diff --git a/infra/build/functions/base_images.py b/infra/build/functions/base_images.py
+index 0df75b731..b1a90ff09 100644
+--- a/infra/build/functions/base_images.py
++++ b/infra/build/functions/base_images.py
+@@ -47,6 +47,23 @@ SUPPORTED_VERSIONS = ('legacy', 'ubuntu-20-04', 'ubuntu-24-04')
+ # This version will receive the ':v1' tag.
+ DEFAULT_VERSION = 'legacy'
+ 
++# Defines the dependency graph for base images.
++IMAGE_DEPENDENCIES = {
++    'base-clang': ['base-image'],
++    'base-clang-full': ['base-clang'],
++    'base-builder': ['base-clang'],
++    'base-builder-go': ['base-builder'],
++    'base-builder-javascript': ['base-builder'],
++    'base-builder-jvm': ['base-builder'],
++    'base-builder-python': ['base-builder'],
++    'base-builder-ruby': ['base-builder'],
++    'base-builder-rust': ['base-builder'],
++    'base-builder-swift': ['base-builder'],
++    'base-runner': ['base-image', 'base-builder'],
++    'base-runner-debug': ['base-runner'],
++    'indexer': ['base-clang-full'],
++}
++
+ 
+ class ImageConfig:
+   """Configuration for a specific base image version."""
+@@ -85,6 +102,8 @@ class ImageConfig:
+       if os.path.exists(versioned_dockerfile):
+         logging.info('Using versioned Dockerfile: %s', versioned_dockerfile)
+         return versioned_dockerfile
++      raise FileNotFoundError(
++          f'Versioned Dockerfile not found for {self.name}:{self.version}')
+ 
+     legacy_dockerfile = os.path.join(self.path, 'Dockerfile')
+     logging.info('Using legacy Dockerfile: %s', legacy_dockerfile)
+@@ -156,6 +175,8 @@ BASE_IMAGE_DEFS = [
+ def get_base_image_steps(images: Sequence[ImageConfig]) -> list[dict]:
+   """Returns build steps for a given list of image configurations."""
+   steps = [build_lib.get_git_clone_step()]
++  build_ids = {}
++
+   for image_config in images:
+     # The final tag is ':v1' for the default version, or the version name
+     # (e.g., ':ubuntu-24-04') for others.
+@@ -167,11 +188,20 @@ def get_base_image_steps(images: Sequence[ImageConfig]) -> list[dict]:
+       tags.append(f'{IMAGE_NAME_PREFIX}{image_config.name}:latest')
+ 
+     dockerfile_path = os.path.join('oss-fuzz', image_config.dockerfile_path)
+-    steps.append(
+-        build_lib.get_docker_build_step(tags,
+-                                        image_config.path,
+-                                        dockerfile_path=dockerfile_path,
+-                                        build_args=image_config.build_args))
++    step = build_lib.get_docker_build_step(tags,
++                                           image_config.path,
++                                           dockerfile_path=dockerfile_path,
++                                           build_args=image_config.build_args)
++
++    # Check for dependencies and add 'waitFor' if necessary.
++    dependencies = IMAGE_DEPENDENCIES.get(image_config.name, [])
++    wait_for = [build_ids[dep] for dep in dependencies if dep in build_ids]
++    if wait_for:
++      step['waitFor'] = wait_for
++
++    build_ids[image_config.name] = step['id']
++    steps.append(step)
++
+   return steps
+ 
+ 
