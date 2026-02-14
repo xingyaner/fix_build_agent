@@ -18,6 +18,7 @@ from google.adk.tools.tool_context import ToolContext
 # --- 消融实验全局开关 (Ablation Global Config) ---
 # =================================================================
 # 建议：在运行不同版本的实验时，仅需在此处修改布尔值
+ENABLE_HISTORY_ENHANCEMENT = True  # 是否开启 HAFix 启发式历史增强
 ENABLE_REFLECTION = True        # 是否开启反思学习逻辑
 ENABLE_ROLLBACK = True          # 是否开启状态树回退逻辑
 ENABLE_EXPERT_KNOWLEDGE = True   # 是否开启专家知识注入
@@ -27,6 +28,93 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 # Build relative path to the process directory
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
+
+def extract_buggy_line_info(log_path: str) -> List[Dict]:
+    """
+    【新增】从日志中提取文件名和行号 (例如 parser.c:125)
+    """
+    if not os.path.exists(log_path): return []
+    with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+    
+    # 匹配常见的编译错误格式 filename.c:line:col: error
+    pattern = r"([\w\-\./]+\.[a-z]{1,3}):(\d+):"
+    matches = re.findall(pattern, content)
+    
+    results = []
+    seen = set()
+    for file, line in matches:
+        if (file, line) not in seen:
+            results.append({"file": file, "line": int(line)})
+            seen.add((file, line))
+    return results[:3] # 仅取前三个最相关的错误点
+
+def get_enhanced_history_context(project_source_path: str, file_rel_path: str, line_num: int) -> Dict:
+    """
+    【新增】HAFix 核心实现：提取 fn_all, fn_pair, fl_diff
+    """
+    print(f"--- Tool: get_enhanced_history_context for {file_rel_path}:{line_num} ---")
+    if not ENABLE_HISTORY_ENHANCEMENT:
+        return {"status": "skipped", "reason": "History enhancement disabled."}
+
+    original_cwd = os.getcwd()
+    try:
+        os.chdir(project_source_path)
+        
+        # 1. 定位提交 (Blame 策略 + 兜底)
+        sha = ""
+        # 尝试直接 blame
+        cmd_blame = ["git", "blame", "-L", f"{line_num},{line_num}", "--porcelain", file_rel_path]
+        res = subprocess.run(cmd_blame, capture_output=True, text=True)
+        
+        if res.returncode == 0:
+            sha = res.stdout.split('\n')[0].split(' ')[0]
+        else:
+            # 不可追溯 Bug 兜底：向上扫描 5 行
+            for offset in range(1, 6):
+                search_line = max(1, line_num - offset)
+                cmd_retry = ["git", "blame", "-L", f"{search_line},{search_line}", "--porcelain", file_rel_path]
+                res_retry = subprocess.run(cmd_retry, capture_output=True, text=True)
+                if res_retry.returncode == 0:
+                    sha = res_retry.stdout.split('\n')[0].split(' ')[0]
+                    break
+        
+        if not sha or len(sha) < 8:
+            return {"status": "error", "message": "Could not locate a valid Git blame commit."}
+
+        # 2. 提取 fl_diff (意图补丁)
+        diff_patch = subprocess.run(["git", "show", sha, "--pretty=format:%b", "-p"], capture_output=True, text=True).stdout
+
+        # 3. 提取 fn_all (协同演化函数名)
+        # 获取该提交中所有修改的文件
+        co_files = subprocess.run(["git", "show", "--name-only", "--pretty=format:", sha], capture_output=True, text=True).stdout.split()
+        fn_all = f"This commit co-modified these files: {', '.join(co_files)}"
+
+        # 4. 提取 fn_pair (函数演化快照)
+        # 简单实现：提取该行附近的 20 行作为演化上下文
+        start, end = max(1, line_num - 10), line_num + 10
+        fn_before = subprocess.run(["git", "show", f"{sha}^:{file_rel_path}"], capture_output=True, text=True).stdout.splitlines()[start:end]
+        fn_after = subprocess.run(["git", "show", f"{sha}:{file_rel_path}"], capture_output=True, text=True).stdout.splitlines()[start:end]
+
+        history_payload = {
+            "sha": sha,
+            "fl_diff": diff_patch[:5000], # 限制长度
+            "fn_all": fn_all,
+            "fn_pair": {
+                "before": "\n".join(fn_before),
+                "after": "\n".join(fn_after)
+            }
+        }
+        return {"status": "success", "data": history_payload}
+
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+    finally:
+        os.chdir(original_cwd)
+
+
+
+
 
 def checkout_project_commit(project_source_path: str, sha: str) -> Dict[str, str]:
     """
@@ -1339,8 +1427,7 @@ def delete_file(file_path: str) -> dict:
         print(message)
         return {"status": "error", "message": message}
 
-
-def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str, expert_knowledge: str = "") -> dict:
+def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str, expert_knowledge: str = "", enhanced_history: str = "") -> dict:
     """
     【专家知识集成版】自动收集 Fuzzing 上下文信息，确保专家知识被注入。
     """
@@ -1361,6 +1448,11 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     # --- Step 1: 写入初始引导词与专家建议 ---
     with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
         f.write(f"You are a premier expert in software testing. Fix the build for: {project_name}.\n")
+        
+        if enhanced_history:
+            f.write("\n--- 【ENHANCED REPOSITORY HISTORY (HAFix) 】 ---\n")
+            f.write(f"{enhanced_history}\n")
+            
         if expert_knowledge:
             f.write("\n--- 【EXPERT KNOWLEDGE & STRATEGIC GUIDANCE】 ---\n")
             f.write(f"{expert_knowledge}\n")

@@ -11,7 +11,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import Dict, AsyncGenerator, Tuple, Optional
 from dotenv import load_dotenv
-from agent_tools import ENABLE_REFLECTION, ENABLE_ROLLBACK, ENABLE_EXPERT_KNOWLEDGE
+from agent_tools import ENABLE_HISTORY_ENHANCEMENT, ENABLE_REFLECTION, ENABLE_ROLLBACK, ENABLE_EXPERT_KNOWLEDGE
 
 # Load the .env file
 load_dotenv()
@@ -188,7 +188,9 @@ commit_finder_agent = LlmAgent(
         save_commit_diff_to_file, 
         create_or_update_file,
         run_command,
-        get_project_paths, # 备用，以防 session 中路径丢失
+        get_project_paths,
+        extract_buggy_line_info,
+        get_enhanced_history_context,
     ],
     output_key="commit_analysis_result",
 )
@@ -215,6 +217,16 @@ prompt_generate_agent = LlmAgent(
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384, temperature=0.6, top_p=top_p, seed=LLM_SEED),
 #    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384),
     instruction=load_instruction_from_file("instructions/prompt_generate_instruction.txt"),
+    tools=[
+        prompt_generate_tool, 
+        run_command,  
+        save_file_tree_shallow, 
+        find_and_append_file_details, 
+        read_file_content, 
+        create_or_update_file, 
+        append_string_to_file,
+        query_expert_knowledge, 
+    ],
     tools=[prompt_generate_tool, run_command,  save_file_tree_shallow, find_and_append_file_details, read_file_content, create_or_update_file, append_string_to_file],
     output_key="generated_prompt",
 )

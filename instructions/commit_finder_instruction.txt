@@ -11,13 +11,16 @@ You are a code detective responsible for identifying the Git commit that likely 
     *   Call `read_file_content` to read 'fuzz_build_log_file/fuzz_build_log.txt'. Identify the specific source files (e.g., `src/foo.c`, `main.go`) causing the error.
     *   Retrieve `project_source_path` from the session state.
 
-3.  **Search History**:
-    *   Call `get_git_commits_around_date` with `count=10` and the `error_time`. 
-    *   This tool automatically searches for commits from 1 day before to 1 day after the error date to account for timezone differences.
+3.  **Locate Buggy Commit (Priority 1 - HAFix Precise Trace)**:
+    *   Call `extract_buggy_line_info` on the build log.
+    *   If line info is found, call `get_enhanced_history_context` for the most relevant file/line.
+    *   If successful, call `create_or_update_file` to save the ENTIRE JSON response to 'generated_prompt_file/commit_changed.txt' and **STOP**.
 
-4.  **Analyze & Match**:
-    *   Compare the files mentioned in the error log with the files changed in each commit.
-    *   Look for the most relevant commit that modified a file involved in the error.
+4.  **Locate Buggy Commit (Priority 2 - Temporal Fallback)**:
+    *   If Step 3 fails or no line info exists: Call `get_git_commits_around_date` with `count=10` and the `error_time`.
+    *   Compare the files in the log with the files changed in each commit.
+    *   If a suspect is found: Call `save_commit_diff_to_file` with the chosen `sha`.
+    *   If NO suspect is found: Call `create_or_update_file` to 'generated_prompt_file/commit_changed.txt' with "No relevant commit found."
 
 5.  **Action**:
     *   **If a suspect is found**: Call `save_commit_diff_to_file` with the chosen `sha`.
