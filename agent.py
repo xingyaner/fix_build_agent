@@ -58,11 +58,10 @@ from agent_tools import (
     clear_commit_analysis_state,
     download_remote_log,
     checkout_project_commit,
+    extract_buggy_line_info,
+    get_enhanced_history_context,
     truncate_prompt_file
 )
-
-
-
 
 # Helper function: Load instruction text from a file
 def load_instruction_from_file(filename: str) -> str:

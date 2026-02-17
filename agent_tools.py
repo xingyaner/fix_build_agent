@@ -592,8 +592,8 @@ def save_commit_diff_to_file(project_name: str, project_source_path: str, sha: s
 
 def read_projects_from_yaml(file_path: str) -> Dict:
     """
-    [Rigorous Version] Reads project information and automatically finds the
-    correct error log file using standard datetime comparison.
+    【修复版】读取项目信息。
+    增加了对 'state' 字段的检查，并兼容处理 YAML 中的布尔值。
     """
     print(f"--- Tool: read_projects_from_yaml called for: {file_path} ---")
     if not os.path.exists(file_path):
@@ -608,86 +608,72 @@ def read_projects_from_yaml(file_path: str) -> Dict:
             return {'status': 'error', 'message': "YAML file must contain a list of projects."}
 
         for index, entry in enumerate(data):
-            if entry.get('fixed_state') == 'no':
+            # --- 核心修复逻辑：增强状态判定 ---
+            # 兼容处理字符串 'no'/'yes' 和 布尔值 False/True
+            fixed_state = str(entry.get('fixed_state', 'no')).lower()
+            state = str(entry.get('state', 'no')).lower()
+
+            # 只有当 fixed_state 和 state 均为 'no' 时，才认为该项目需要处理
+            if fixed_state == 'no' and state == 'no':
                 project_name = entry.get('project')
                 sha = entry.get('oss-fuzz_sha')
                 error_time_str = str(entry.get('error_time', ""))
-                # --- START MODIFICATION ---
                 fuzzing_build_error_log_url = entry.get('fuzzing_build_error_log', "")
-                # --- END MODIFICATION ---
 
                 if project_name and sha:
-                    # --- 严谨的日期自动关联逻辑 ---
                     log_dir = os.path.join("build_error_log", project_name)
                     original_log_path = ""
 
-                    # --- START MODIFICATION ---
-                    # 优先处理远程日志URL
+                    # 1. 优先处理远程日志
                     if fuzzing_build_error_log_url.startswith("http"):
                         download_result = download_remote_log(fuzzing_build_error_log_url, project_name, error_time_str)
                         if download_result['status'] == 'success':
                             original_log_path = download_result['local_path']
-                        else:
-                            print(f"  - CRITICAL: Failed to download remote log for {project_name}: {download_result['message']}")
-                            # 如果下载失败，仍然尝试在本地查找，或者跳过此项目
-                            # 这里选择继续尝试本地查找，但如果原始日志URL存在，则优先使用下载结果
-                    else: # 如果不是URL，则按照原有逻辑在本地查找
-                        # 现有本地查找逻辑保持不变
-                        if os.path.isdir(log_dir):
-                            try:
-                                y, m, d = map(int, error_time_str.replace('.', '-').split('-'))
-                                base_date = datetime(y, m, d)
+                    
+                    # 2. 远程失败或无URL，则本地查找
+                    if not original_log_path and os.path.isdir(log_dir):
+                        try:
+                            y, m, d = map(int, error_time_str.replace('.', '-').split('-'))
+                            base_date = datetime(y, m, d)
+                            candidates = []
+                            for filename in os.listdir(log_dir):
+                                if "error.txt" in filename and re.match(r"\d{4}_\d{1,2}_\d{1,2} error\.txt", filename):
+                                    match = re.search(r"(\d{4})_(\d{1,2})_(\d{1,2})", filename)
+                                    if match:
+                                        fy, fm, fd = map(int, match.groups())
+                                        file_date = datetime(fy, fm, fd)
+                                        if file_date >= base_date:
+                                            candidates.append((file_date, filename))
+                            if candidates:
+                                candidates.sort(key=lambda x: x[0])
+                                original_log_path = os.path.abspath(os.path.join(log_dir, candidates[0][1]))
+                        except Exception: pass
 
-                                candidates = []
-                                for filename in os.listdir(log_dir):
-                                    if "error.txt" in filename and re.match(r"\d{4}_\d{1,2}_\d{1,2} error\.txt", filename):
-                                        match = re.search(r"(\d{4})_(\d{1,2})_(\d{1,2})", filename)
-                                    # 匹配 '年_月_日 error.txt' 格式
-                                        if match:
-                                            fy, fm, fd = map(int, match.groups())
-                                            file_date = datetime(fy, fm, fd)
-
-                                            if file_date >= base_date:
-                                                candidates.append((file_date, filename))
-
-                                if candidates:
-                                    candidates.sort(key=lambda x: x[0])
-                                    best_match = candidates[0][1]
-                                    original_log_path = os.path.abspath(os.path.join(log_dir, best_match))
-                                    print(f"  - Rigorous Match: {best_match} (>= {error_time_str})")
-                            except Exception as e:
-                                print(f"  - Warning: Date parsing error for {project_name}: {e}")
-                    # --- END MODIFICATION ---
-
-                    project_info = {
-                        "project_name": project_name,
-                        "sha": str(sha),
-                        "row_index": index,
-                        "error_time": error_time_str,
-                        "original_log_path": original_log_path,
-                        # --- START MODIFICATION ---
-                        # 将从YAML中读取到的所有元数据也加入到 project_info 中
-                        "software_repo_url": entry.get('software_repo_url', ""),
-                        "software_sha": entry.get('software_sha', ""),
-                        "engine": entry.get('engine', ""),
-                        "sanitizer": entry.get('sanitizer', ""),
-                        "architecture": entry.get('architecture', ""),
-                        "base_image_digest": entry.get('base_image_digest', "")
-                        # --- END MODIFICATION ---
-                    }
-                    # 只有当 original_log_path 成功获取（无论是本地找到还是远程下载）才添加项目
+                    # 3. 构造项目信息
                     if original_log_path:
+                        project_info = {
+                            "project_name": project_name,
+                            "sha": str(sha),
+                            "row_index": index,
+                            "error_time": error_time_str,
+                            "original_log_path": original_log_path,
+                            "software_repo_url": entry.get('software_repo_url', ""),
+                            "software_sha": entry.get('software_sha', ""),
+                            "engine": entry.get('engine', ""),
+                            "sanitizer": entry.get('sanitizer', ""),
+                            "architecture": entry.get('architecture', ""),
+                            "base_image_digest": entry.get('base_image_digest', "")
+                        }
                         projects_to_run.append(project_info)
                     else:
-                        print(f"Warning: Project '{project_name}' skipped due to missing or failed log file retrieval.")
+                        print(f"Warning: Project '{project_name}' skipped due to missing log file.")
                 else:
-                    print(f"Warning: Project at index {index} missing core fields (project_name or oss-fuzz_sha). Skipping.")
+                    print(f"Warning: Project at index {index} missing core fields. Skipping.")
 
-        print(f"--- Found {len(projects_to_run)} new projects to process. ---")
+        print(f"--- Found {len(projects_to_run)} projects to process (Filtered fixed/processed). ---")
         return {'status': 'success', 'projects': projects_to_run}
     except Exception as e:
         return {'status': 'error', 'message': f"Failed to read YAML: {e}"}
-
 
 # Core Tools
 def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
