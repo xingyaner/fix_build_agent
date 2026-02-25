@@ -1,0 +1,291 @@
+starting build "d6332223-bc30-40c9-bd15-360b3b794bcb"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7"
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Sending build context to Docker daemon   5.12kB
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Step 1/4 : FROM gcr.io/oss-fuzz-base/base-builder-rust:ubuntu-24-04
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": ubuntu-24-04: Pulling from oss-fuzz-base/base-builder-rust
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 76249c7cd503: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 4c4acc87d1ae: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 3c7429d50014: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": bec2b53a91bd: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 5f31fde7958b: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 7df6ded3d3a5: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 794bd4a9fc93: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": d0fd3ef75775: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 5a10927fdee9: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": b22eb47f7319: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": c8c60a2fd5c4: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": fb7c9e495b05: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 4e6892c7cc2d: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 6ead501f88e8: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 6f7975c28eb7: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": c9fbcfc74df0: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 1082315071be: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 49f091fef41e: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 362901735898: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": e4e6593bcd78: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9926750f9d2b: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59520f382ddf: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 7472006dcce2: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 8e31134aba0a: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 2d2d2c4a69e1: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 794bd4a9fc93: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9f99516037a0: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": d0fd3ef75775: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59d9d379bb6f: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 5a10927fdee9: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": cd8915cda8cb: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": b22eb47f7319: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 99a33f1d7ffc: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 06150306d210: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": c8c60a2fd5c4: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": b0de8135a2c0: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": fb7c9e495b05: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 1280dfc31d4b: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": a597c92f9fcf: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 4e6892c7cc2d: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9949bf7f2883: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": ca3769a0bdb7: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 6ead501f88e8: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": faa68359d443: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59481218cff4: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": a502477e123b: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 6f7975c28eb7: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": cf19d536ff68: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9fda04335685: Pulling fs layer
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9f99516037a0: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59d9d379bb6f: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": cd8915cda8cb: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": ca3769a0bdb7: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 99a33f1d7ffc: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": cf19d536ff68: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": c9fbcfc74df0: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 06150306d210: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9fda04335685: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": b0de8135a2c0: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 1082315071be: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 1280dfc31d4b: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 49f091fef41e: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 362901735898: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": a597c92f9fcf: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9949bf7f2883: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": e4e6593bcd78: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": faa68359d443: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": a502477e123b: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59481218cff4: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9926750f9d2b: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 7472006dcce2: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 8e31134aba0a: Waiting
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 3c7429d50014: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 3c7429d50014: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 7df6ded3d3a5: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 7df6ded3d3a5: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 5f31fde7958b: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 5f31fde7958b: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": d0fd3ef75775: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": d0fd3ef75775: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 5a10927fdee9: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 76249c7cd503: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 76249c7cd503: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": bec2b53a91bd: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": bec2b53a91bd: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 4e6892c7cc2d: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 4e6892c7cc2d: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": fb7c9e495b05: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": fb7c9e495b05: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 6f7975c28eb7: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 6f7975c28eb7: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 6ead501f88e8: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 6ead501f88e8: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 1082315071be: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 1082315071be: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 4c4acc87d1ae: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 4c4acc87d1ae: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": c9fbcfc74df0: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": c9fbcfc74df0: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": c8c60a2fd5c4: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": c8c60a2fd5c4: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": e4e6593bcd78: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": e4e6593bcd78: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 49f091fef41e: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 362901735898: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 362901735898: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59520f382ddf: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59520f382ddf: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9926750f9d2b: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9926750f9d2b: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 7472006dcce2: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 2d2d2c4a69e1: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 2d2d2c4a69e1: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 8e31134aba0a: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 8e31134aba0a: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9f99516037a0: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9f99516037a0: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59d9d379bb6f: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 76249c7cd503: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 99a33f1d7ffc: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 99a33f1d7ffc: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": cd8915cda8cb: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": cd8915cda8cb: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 06150306d210: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 06150306d210: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": b0de8135a2c0: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": b0de8135a2c0: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 1280dfc31d4b: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 1280dfc31d4b: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": ca3769a0bdb7: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": faa68359d443: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": faa68359d443: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": b22eb47f7319: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": b22eb47f7319: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59481218cff4: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59481218cff4: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": a502477e123b: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": a502477e123b: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": cf19d536ff68: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": cf19d536ff68: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": a597c92f9fcf: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": a597c92f9fcf: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9949bf7f2883: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9949bf7f2883: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 794bd4a9fc93: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 794bd4a9fc93: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 4c4acc87d1ae: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 3c7429d50014: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9fda04335685: Verifying Checksum
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9fda04335685: Download complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": bec2b53a91bd: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 5f31fde7958b: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 7df6ded3d3a5: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 794bd4a9fc93: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": d0fd3ef75775: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 5a10927fdee9: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": b22eb47f7319: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": c8c60a2fd5c4: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": fb7c9e495b05: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 4e6892c7cc2d: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 6ead501f88e8: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 6f7975c28eb7: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": c9fbcfc74df0: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 1082315071be: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 49f091fef41e: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 362901735898: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": e4e6593bcd78: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9926750f9d2b: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59520f382ddf: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 7472006dcce2: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 8e31134aba0a: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 2d2d2c4a69e1: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9f99516037a0: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59d9d379bb6f: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": cd8915cda8cb: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 99a33f1d7ffc: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 06150306d210: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": b0de8135a2c0: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 1280dfc31d4b: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": a597c92f9fcf: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9949bf7f2883: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": ca3769a0bdb7: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": faa68359d443: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 59481218cff4: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": a502477e123b: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": cf19d536ff68: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": 9fda04335685: Pull complete
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Digest: sha256:250e04396d9dc78bdffadf2dc5dcb36fabdf176bbbe02a69d648deffb21edd80
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-rust:ubuntu-24-04
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7":  ---> e1e96cbf342f
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Step 2/4 : RUN git clone https://github.com/RustCrypto/password-hashes
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7":  ---> Running in a1809cecdadb
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": [91mCloning into 'password-hashes'...
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": [0mRemoving intermediate container a1809cecdadb
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7":  ---> f9e260e8aef7
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Step 3/4 : WORKDIR $SRC/password-hashes
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7":  ---> Running in 106e1988df6a
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Removing intermediate container 106e1988df6a
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7":  ---> c22bbd563b44
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Step 4/4 : COPY build.sh $SRC/
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7":  ---> 49c7851ca6ba
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Successfully built 49c7851ca6ba
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Successfully tagged gcr.io/oss-fuzz/scrypt:latest
+Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/scrypt:latest
+Finished Step #1 - "build-ba9d7d86-f216-4c6b-8eb8-a7e2f89addd7"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/scrypt
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": WARNING: tempfile is deprecated; consider using mktemp instead.
+Step #2 - "srcmap": + SRCMAP=/tmp/fileaiObyc
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ rust == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/password-hashes/.git
+Step #2 - "srcmap": + GIT_DIR=/src/password-hashes
+Step #2 - "srcmap": + cd /src/password-hashes
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/RustCrypto/password-hashes
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=1c5b8f4aece39e191c1fc9ef3410ed21ca9eb3ef
+Step #2 - "srcmap": + jq_inplace /tmp/fileaiObyc '."/src/password-hashes" = { type: "git", url: "https://github.com/RustCrypto/password-hashes", rev: "1c5b8f4aece39e191c1fc9ef3410ed21ca9eb3ef" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": WARNING: tempfile is deprecated; consider using mktemp instead.
+Step #2 - "srcmap": + F=/tmp/fileav69Iq
+Step #2 - "srcmap": + cat /tmp/fileaiObyc
+Step #2 - "srcmap": + jq '."/src/password-hashes" = { type: "git", url: "https://github.com/RustCrypto/password-hashes", rev: "1c5b8f4aece39e191c1fc9ef3410ed21ca9eb3ef" }'
+Step #2 - "srcmap": + mv /tmp/fileav69Iq /tmp/fileaiObyc
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileaiObyc
+Step #2 - "srcmap": + rm /tmp/fileaiObyc
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/password-hashes": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/RustCrypto/password-hashes",
+Step #2 - "srcmap":     "rev": "1c5b8f4aece39e191c1fc9ef3410ed21ca9eb3ef"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + cargo fuzz build
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m crates.io index
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[31merror[0m[1m:[0m failed to get `scrypt` as a dependency of package `fuzz v0.0.0 (/src/password-hashes/fuzz)`
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": Caused by:
+Step #3 - "compile-libfuzzer-address-x86_64":   failed to load source for dependency `scrypt`
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": Caused by:
+Step #3 - "compile-libfuzzer-address-x86_64":   Unable to update /src/password-hashes/scrypt
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": Caused by:
+Step #3 - "compile-libfuzzer-address-x86_64":   failed to parse manifest at `/src/password-hashes/scrypt/Cargo.toml`
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": Caused by:
+Step #3 - "compile-libfuzzer-address-x86_64":   feature `edition2024` is required
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64":   The package requires the Cargo feature called `edition2024`, but that feature is not stabilized in this version of Cargo (1.81.0-nightly (154fdac39 2024-07-07)).
+Step #3 - "compile-libfuzzer-address-x86_64":   Consider adding `cargo-features = ["edition2024"]` to the top of Cargo.toml (above the [package] table) to tell Cargo you are opting in to use this unstable feature.
+Step #3 - "compile-libfuzzer-address-x86_64":   See https://doc.rust-lang.org/nightly/cargo/reference/unstable.html#edition-2024 for more information about the status of this feature.
+Step #3 - "compile-libfuzzer-address-x86_64": Error: failed to build fuzz script: ASAN_OPTIONS="detect_odr_violation=0" RUSTFLAGS=" -Cpasses=sancov-module -Cllvm-args=-sanitizer-coverage-level=4 -Cllvm-args=-sanitizer-coverage-inline-8bit-counters -Cllvm-args=-sanitizer-coverage-pc-table -Cllvm-args=-sanitizer-coverage-trace-compares --cfg fuzzing -Cllvm-args=-simplifycfg-branch-fold-threshold=0 -Zsanitizer=address -Cllvm-args=-sanitizer-coverage-stack-depth -Cdebug-assertions -Ccodegen-units=1 --cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers" "cargo" "build" "--manifest-path" "/src/password-hashes/fuzz/Cargo.toml" "--target" "x86_64-unknown-linux-gnu" "--release" "--config" "profile.release.debug=\"line-tables-only\"" "--bins"
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image scrypt\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 scrypt\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

@@ -1,0 +1,359 @@
+starting build "f790e381-dba0-45ad-a0fc-2b04385dff1a"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee"
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Sending build context to Docker daemon  5.632kB
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder-go
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": latest: Pulling from oss-fuzz-base/base-builder-go
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b549f31133a9: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 53857896a680: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 7efe496e0821: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 7aac26f735e9: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ad31cc38ac81: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e51a957b96fa: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 9ea01dd118f9: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": fde71e506517: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": dd6b7bda1f21: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 8b0201982d0b: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1ed93b1f2b37: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e6a65953e7da: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 4c9d846f1514: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ba7815991431: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 828929bb11e1: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e89aa43f3e15: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 2d99de89a447: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": f6d8158e6dac: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b72c91e47fd1: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 132bc51f6483: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 6ea2db2284cb: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 8d8a5e898bb8: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 0627aad1ed24: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": a0eb25bba271: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": f5faf7725626: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 213227c10e94: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ffc3882c042b: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 343ba79fda30: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": cb5959086358: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1f3670b2a3cd: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e1a12b281c6e: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b25342de0fc5: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": fde71e506517: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 105d24739e50: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 3bdc8cef7a9f: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": dd6b7bda1f21: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 03f7548b82a6: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1ed93b1f2b37: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": c5a6aaa2ce6b: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 8b0201982d0b: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": f6d8158e6dac: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e6a65953e7da: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b72c91e47fd1: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 4c9d846f1514: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 5e3bbf1b669c: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1dfe9bb499fc: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 273a67e1db0e: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 357089e2298f: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 50c0e6240e5c: Pulling fs layer
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ffc3882c042b: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e89aa43f3e15: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 343ba79fda30: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1f3670b2a3cd: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e1a12b281c6e: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 132bc51f6483: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 8d8a5e898bb8: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": cb5959086358: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 6ea2db2284cb: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 0627aad1ed24: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 357089e2298f: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b25342de0fc5: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 828929bb11e1: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": f5faf7725626: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 213227c10e94: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 9ea01dd118f9: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 273a67e1db0e: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 2d99de89a447: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1dfe9bb499fc: Waiting
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ad31cc38ac81: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ad31cc38ac81: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 7efe496e0821: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 7efe496e0821: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 9ea01dd118f9: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 9ea01dd118f9: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": fde71e506517: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": fde71e506517: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b549f31133a9: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b549f31133a9: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 7aac26f735e9: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 7aac26f735e9: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1ed93b1f2b37: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1ed93b1f2b37: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e6a65953e7da: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e6a65953e7da: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 4c9d846f1514: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 4c9d846f1514: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ba7815991431: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ba7815991431: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 828929bb11e1: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 828929bb11e1: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e89aa43f3e15: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 8b0201982d0b: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 8b0201982d0b: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 53857896a680: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 53857896a680: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b72c91e47fd1: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b72c91e47fd1: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": f6d8158e6dac: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": f6d8158e6dac: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 132bc51f6483: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 132bc51f6483: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 6ea2db2284cb: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 6ea2db2284cb: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 8d8a5e898bb8: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 8d8a5e898bb8: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 0627aad1ed24: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 0627aad1ed24: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 2d99de89a447: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 2d99de89a447: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": a0eb25bba271: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": a0eb25bba271: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": f5faf7725626: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": f5faf7725626: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b549f31133a9: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 213227c10e94: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 213227c10e94: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ffc3882c042b: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 343ba79fda30: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 343ba79fda30: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": cb5959086358: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": cb5959086358: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e1a12b281c6e: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e1a12b281c6e: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b25342de0fc5: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b25342de0fc5: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 105d24739e50: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 105d24739e50: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1f3670b2a3cd: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1f3670b2a3cd: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": dd6b7bda1f21: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": dd6b7bda1f21: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 3bdc8cef7a9f: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 3bdc8cef7a9f: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": c5a6aaa2ce6b: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 03f7548b82a6: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 273a67e1db0e: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 273a67e1db0e: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 50c0e6240e5c: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 50c0e6240e5c: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1dfe9bb499fc: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1dfe9bb499fc: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 5e3bbf1b669c: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 5e3bbf1b669c: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e51a957b96fa: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e51a957b96fa: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 53857896a680: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 357089e2298f: Verifying Checksum
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 357089e2298f: Download complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 7efe496e0821: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 7aac26f735e9: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ad31cc38ac81: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e51a957b96fa: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 9ea01dd118f9: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": fde71e506517: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": dd6b7bda1f21: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 8b0201982d0b: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1ed93b1f2b37: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e6a65953e7da: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 4c9d846f1514: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ba7815991431: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 828929bb11e1: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e89aa43f3e15: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 2d99de89a447: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": f6d8158e6dac: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b72c91e47fd1: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 132bc51f6483: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 6ea2db2284cb: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 8d8a5e898bb8: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 0627aad1ed24: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": a0eb25bba271: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": f5faf7725626: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 213227c10e94: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": ffc3882c042b: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 343ba79fda30: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": cb5959086358: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1f3670b2a3cd: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": e1a12b281c6e: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": b25342de0fc5: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 105d24739e50: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 3bdc8cef7a9f: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 03f7548b82a6: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": c5a6aaa2ce6b: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 5e3bbf1b669c: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 1dfe9bb499fc: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 273a67e1db0e: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 357089e2298f: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 50c0e6240e5c: Pull complete
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Digest: sha256:9806209b04778365618e577b790c9f6cc32b1c76478d3e3c0d36a27066a9cdd8
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-go:latest
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":  ---> 09f1140d5192
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Step 2/5 : RUN apt-get update && apt-get install -y make autoconf automake libtool
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":  ---> Running in a5c68e31f616
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Hit:2 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Fetched 383 kB in 1s (293 kB/s)
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Reading package lists...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Reading package lists...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Building dependency tree...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Reading state information...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": make set to manually installed.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": The following additional packages will be installed:
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":   file libltdl-dev libltdl7 libmagic-mgc libmagic1
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Suggested packages:
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":   autoconf-archive gnu-standards autoconf-doc gettext libtool-doc gfortran
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":   | fortran95-compiler gcj-jdk
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": The following NEW packages will be installed:
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":   autoconf automake file libltdl-dev libltdl7 libmagic-mgc libmagic1 libtool
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": 0 upgraded, 8 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Need to get 1522 kB of archives.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": After this operation, 12.3 MB of additional disk space will be used.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:2 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:4 http://archive.ubuntu.com/ubuntu focal/main amd64 autoconf all 2.69-11.1 [321 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:5 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:6 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:7 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": [0mFetched 1522 kB in 0s (4594 kB/s)
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Selecting previously unselected package libmagic-mgc.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Preparing to unpack .../0-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Selecting previously unselected package libmagic1:amd64.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Preparing to unpack .../1-libmagic1_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Selecting previously unselected package file.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Preparing to unpack .../2-file_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Unpacking file (1:5.38-4) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Selecting previously unselected package autoconf.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Preparing to unpack .../3-autoconf_2.69-11.1_all.deb ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Unpacking autoconf (2.69-11.1) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Selecting previously unselected package automake.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Preparing to unpack .../4-automake_1%3a1.16.1-4ubuntu6_all.deb ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Unpacking automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Selecting previously unselected package libltdl7:amd64.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Preparing to unpack .../5-libltdl7_2.4.6-14_amd64.deb ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Unpacking libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Selecting previously unselected package libltdl-dev:amd64.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Preparing to unpack .../6-libltdl-dev_2.4.6-14_amd64.deb ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Unpacking libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Selecting previously unselected package libtool.
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Preparing to unpack .../7-libtool_2.4.6-14_all.deb ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Unpacking libtool (2.4.6-14) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Setting up libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Setting up file (1:5.38-4) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Setting up libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Setting up autoconf (2.69-11.1) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Setting up automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": update-alternatives: using /usr/bin/automake-1.16 to provide /usr/bin/automake (automake) in auto mode
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": update-alternatives: warning: skip creation of /usr/share/man/man1/automake.1.gz because associated file /usr/share/man/man1/automake-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": update-alternatives: warning: skip creation of /usr/share/man/man1/aclocal.1.gz because associated file /usr/share/man/man1/aclocal-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Setting up libtool (2.4.6-14) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Setting up libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Removing intermediate container a5c68e31f616
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":  ---> 19884681ea65
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Step 3/5 : RUN git clone --depth 1 https://github.com/mongodb/mongo-go-driver mongo-go-driver
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":  ---> Running in b05c2ad4dd72
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": [91mCloning into 'mongo-go-driver'...
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": [0mRemoving intermediate container b05c2ad4dd72
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":  ---> 1164959e01f2
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Step 4/5 : WORKDIR mongo-go-driver
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":  ---> Running in e547ba0b4d4e
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Removing intermediate container e547ba0b4d4e
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":  ---> 0a5e806e8761
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Step 5/5 : COPY build.sh $SRC/
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee":  ---> 0e6162b862f1
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Successfully built 0e6162b862f1
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Successfully tagged gcr.io/oss-fuzz/mongo-go-driver:latest
+Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/mongo-go-driver:latest
+Finished Step #1 - "build-ab963491-03b5-4808-891b-1255dda535ee"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/mongo-go-driver
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileBEoPbK
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ go == \g\o ]]
+Step #2 - "srcmap": + PATHS_TO_SCAN='/src /root/go'
+Step #2 - "srcmap": ++ find /src /root/go -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/mongo-go-driver/.git
+Step #2 - "srcmap": + GIT_DIR=/src/mongo-go-driver
+Step #2 - "srcmap": + cd /src/mongo-go-driver
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/mongodb/mongo-go-driver
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=1e67e6d3423035599cecd7e2a71b3a6ae2d5df40
+Step #2 - "srcmap": + jq_inplace /tmp/fileBEoPbK '."/src/mongo-go-driver" = { type: "git", url: "https://github.com/mongodb/mongo-go-driver", rev: "1e67e6d3423035599cecd7e2a71b3a6ae2d5df40" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileV2zM68
+Step #2 - "srcmap": + cat /tmp/fileBEoPbK
+Step #2 - "srcmap": + jq '."/src/mongo-go-driver" = { type: "git", url: "https://github.com/mongodb/mongo-go-driver", rev: "1e67e6d3423035599cecd7e2a71b3a6ae2d5df40" }'
+Step #2 - "srcmap": + mv /tmp/fileV2zM68 /tmp/fileBEoPbK
+Step #2 - "srcmap": ++ find /src /root/go -name .svn -type d
+Step #2 - "srcmap": ++ find /src /root/go -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileBEoPbK
+Step #2 - "srcmap": + rm /tmp/fileBEoPbK
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/mongo-go-driver": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/mongodb/mongo-go-driver",
+Step #2 - "srcmap":     "rev": "1e67e6d3423035599cecd7e2a71b3a6ae2d5df40"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++ -lresolv
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + go get github.com/AdamKorcz/go-118-fuzz-build/testing
+Step #3 - "compile-libfuzzer-address-x86_64": go: downloading github.com/AdamKorcz/go-118-fuzz-build v0.0.0-20250520111509-a70c2aa677fa
+Step #3 - "compile-libfuzzer-address-x86_64": go: downloading github.com/AdaLogics/go-fuzz-headers v0.0.0-20230811130428-ced1acdcaa24
+Step #3 - "compile-libfuzzer-address-x86_64": go: added github.com/AdaLogics/go-fuzz-headers v0.0.0-20230811130428-ced1acdcaa24
+Step #3 - "compile-libfuzzer-address-x86_64": go: added github.com/AdamKorcz/go-118-fuzz-build v0.0.0-20250520111509-a70c2aa677fa
+Step #3 - "compile-libfuzzer-address-x86_64": + go run internal/cmd/build-oss-fuzz-corpus/main.go /workspace/out/libfuzzer-address-x86_64/fuzz_decode_seed_corpus.zip
+Step #3 - "compile-libfuzzer-address-x86_64": 2025/12/30 07:20:33 failed to find JSON files in directory "testdata/bson-corpus/": open testdata/bson-corpus/: no such file or directory
+Step #3 - "compile-libfuzzer-address-x86_64": panic: failed to find JSON files in directory "testdata/bson-corpus/": open testdata/bson-corpus/: no such file or directory
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": goroutine 1 [running]:
+Step #3 - "compile-libfuzzer-address-x86_64": log.Panicf({0x5ddd65?, 0x420096?}, {0xc000185e38?, 0x4175f4?, 0x417354?})
+Step #3 - "compile-libfuzzer-address-x86_64": 	/root/.go/src/log/log.go:460 +0x74
+Step #3 - "compile-libfuzzer-address-x86_64": main.seedBSONCorpus(0xc000185ec8)
+Step #3 - "compile-libfuzzer-address-x86_64": 	/src/mongo-go-driver/internal/cmd/build-oss-fuzz-corpus/main.go:128 +0xad
+Step #3 - "compile-libfuzzer-address-x86_64": main.main()
+Step #3 - "compile-libfuzzer-address-x86_64": 	/src/mongo-go-driver/internal/cmd/build-oss-fuzz-corpus/main.go:172 +0x265
+Step #3 - "compile-libfuzzer-address-x86_64": exit status 2
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image mongo-go-driver\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 mongo-go-driver\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

@@ -1,0 +1,18 @@
+
+============================================================
+🏁 FINAL PROJECT REPAIR REPORT: ntopng
+------------------------------------------------------------
+  - [RESULT]         ❌ FAILURE
+  - [TARGET SHA]     6eb2256ce6a6b6ebe1fecc02c5f3083c36b1997e
+  - [REPAIR ROUNDS]  0
+  - [ROLLBACKS]      0
+  - [DECISION TYPE]  UNKNOWN
+  - [DETERIORATION]  N/A
+  - [TOKEN USAGE]
+      Total:      0
+      Input:      0
+      Generation: 0
+  - [PATCH SCALE]    0 files, 0 lines changed
+  - [TIME COST]      0.10 minutes
+============================================================
+

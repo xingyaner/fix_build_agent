@@ -1,0 +1,764 @@
+starting build "71a4b4f8-7c46-48de-8632-eda01bfeff4f"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d"
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Sending build context to Docker daemon  5.632kB
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b549f31133a9: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 3b819e551f9a: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 606e330e495f: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a29f39c9b6e8: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5b9ec3a3d3ba: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 59c41f35a04b: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 790365daf3f5: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 378f8a1de4f7: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5edd7d52b3fe: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 61a368663d43: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": fb40419a47a5: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b3073161ef49: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": e8e96f061f07: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 44fef6d6955c: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 908c050b9c42: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 4b2962ca781d: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 70693555d4dc: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 429b8ad8f143: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": c8c103025225: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 378f8a1de4f7: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": f07af64fafbb: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 2600ae2648bf: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5edd7d52b3fe: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5906dd3f8d99: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 36485e49acc5: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": cede0a9d8603: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 61a368663d43: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 7947fe345cea: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": fb40419a47a5: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a2cc1c5b5280: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": d352b604c970: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 6452356163e2: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": df18d1c4db84: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": bca431c0d609: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 86418fd6a4bb: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": d5e26c1be460: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 790365daf3f5: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 48f4a58dc7f2: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 4ae760bbd07a: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b7a73771fcca: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 579d1834bd64: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a9c01fd7ec42: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": c0a48225cc14: Pulling fs layer
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b7a73771fcca: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 36485e49acc5: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b3073161ef49: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": e8e96f061f07: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 44fef6d6955c: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 7947fe345cea: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 908c050b9c42: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 4b2962ca781d: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": d352b604c970: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": cede0a9d8603: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": c8c103025225: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 70693555d4dc: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 429b8ad8f143: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5906dd3f8d99: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 2600ae2648bf: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": f07af64fafbb: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 6452356163e2: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": c0a48225cc14: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 86418fd6a4bb: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": df18d1c4db84: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": bca431c0d609: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a2cc1c5b5280: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 579d1834bd64: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 4ae760bbd07a: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a9c01fd7ec42: Waiting
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5b9ec3a3d3ba: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 606e330e495f: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 790365daf3f5: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 790365daf3f5: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 378f8a1de4f7: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 378f8a1de4f7: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b549f31133a9: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b549f31133a9: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a29f39c9b6e8: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a29f39c9b6e8: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": fb40419a47a5: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": fb40419a47a5: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b3073161ef49: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b3073161ef49: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": e8e96f061f07: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": e8e96f061f07: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 44fef6d6955c: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 908c050b9c42: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 908c050b9c42: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 3b819e551f9a: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 3b819e551f9a: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 4b2962ca781d: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 4b2962ca781d: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 61a368663d43: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 61a368663d43: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 429b8ad8f143: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 429b8ad8f143: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 70693555d4dc: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 70693555d4dc: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": c8c103025225: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": c8c103025225: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": f07af64fafbb: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": f07af64fafbb: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5906dd3f8d99: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": cede0a9d8603: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": cede0a9d8603: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 2600ae2648bf: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 2600ae2648bf: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b549f31133a9: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 36485e49acc5: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 36485e49acc5: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": d352b604c970: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 7947fe345cea: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 7947fe345cea: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a2cc1c5b5280: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 6452356163e2: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 6452356163e2: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5edd7d52b3fe: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5edd7d52b3fe: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": df18d1c4db84: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": df18d1c4db84: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 86418fd6a4bb: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 86418fd6a4bb: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": d5e26c1be460: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": bca431c0d609: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": bca431c0d609: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 48f4a58dc7f2: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 48f4a58dc7f2: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 4ae760bbd07a: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 4ae760bbd07a: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 579d1834bd64: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 579d1834bd64: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b7a73771fcca: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b7a73771fcca: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a9c01fd7ec42: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a9c01fd7ec42: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": c0a48225cc14: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": c0a48225cc14: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 59c41f35a04b: Verifying Checksum
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 59c41f35a04b: Download complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 3b819e551f9a: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 606e330e495f: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a29f39c9b6e8: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5b9ec3a3d3ba: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 59c41f35a04b: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 790365daf3f5: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 378f8a1de4f7: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5edd7d52b3fe: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 61a368663d43: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": fb40419a47a5: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b3073161ef49: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": e8e96f061f07: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 44fef6d6955c: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 908c050b9c42: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 4b2962ca781d: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 70693555d4dc: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 429b8ad8f143: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": c8c103025225: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": f07af64fafbb: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 2600ae2648bf: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 5906dd3f8d99: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 36485e49acc5: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": cede0a9d8603: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 7947fe345cea: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a2cc1c5b5280: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": d352b604c970: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 6452356163e2: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": df18d1c4db84: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": bca431c0d609: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 86418fd6a4bb: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": d5e26c1be460: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 48f4a58dc7f2: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 4ae760bbd07a: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": b7a73771fcca: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 579d1834bd64: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": a9c01fd7ec42: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": c0a48225cc14: Pull complete
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Digest: sha256:0c229e61349e6e5f4dbcfd433b2b0b5906012d49216675a6402ad1ed270715c4
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":  ---> 0e961f512f1c
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Step 2/5 : RUN apt-get update && apt-get install -y make cmake flex bison zlib1g-dev   libcurlpp-dev libcurl4-openssl-dev
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":  ---> Running in 85b3f45bd386
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Hit:2 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Fetched 383 kB in 1s (390 kB/s)
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Reading package lists...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Reading package lists...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Building dependency tree...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Reading state information...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": make set to manually installed.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": The following package was automatically installed and is no longer required:
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":   autotools-dev
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Use 'apt autoremove' to remove it.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": The following additional packages will be installed:
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":   cmake-data libarchive13 libcurlpp0 libfl-dev libfl2 libicu66 libjsoncpp1
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":   librhash0 libuv1 libxml2
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Suggested packages:
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":   bison-doc cmake-doc ninja-build flex-doc lrzip libcurl4-doc libidn11-dev
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":   libkrb5-dev libldap2-dev librtmp-dev libssh2-1-dev pkg-config
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": The following NEW packages will be installed:
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":   bison cmake cmake-data flex libarchive13 libcurl4-openssl-dev libcurlpp-dev
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":   libcurlpp0 libfl-dev libfl2 libicu66 libjsoncpp1 librhash0 libuv1 libxml2
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":   zlib1g-dev
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": 0 upgraded, 16 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Need to get 16.6 MB of archives.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": After this operation, 70.8 MB of additional disk space will be used.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 flex amd64 2.6.4-6.2 [317 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:3 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libuv1 amd64 1.34.2-1ubuntu1.5 [80.9 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:5 http://archive.ubuntu.com/ubuntu focal/main amd64 bison amd64 2:3.5.1+dfsg-1 [657 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 cmake-data all 3.16.3-1ubuntu1.20.04.1 [1613 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libarchive13 amd64 3.4.0-2ubuntu1.5 [327 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 libjsoncpp1 amd64 1.7.4-3.1ubuntu2 [75.6 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 librhash0 amd64 1.3.9-1 [113 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:10 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 cmake amd64 3.16.3-1ubuntu1.20.04.1 [3668 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:11 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libcurl4-openssl-dev amd64 7.68.0-1ubuntu2.25 [322 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 libfl2 amd64 2.6.4-6.2 [11.5 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:13 http://archive.ubuntu.com/ubuntu focal/main amd64 libfl-dev amd64 2.6.4-6.2 [6316 B]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 zlib1g-dev amd64 1:1.2.11.dfsg-2ubuntu1.5 [155 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:15 http://archive.ubuntu.com/ubuntu focal/universe amd64 libcurlpp0 amd64 0.8.1-2build2 [27.9 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Get:16 http://archive.ubuntu.com/ubuntu focal/universe amd64 libcurlpp-dev amd64 0.8.1-2build2 [48.7 kB]
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": [0mFetched 16.6 MB in 2s (9639 kB/s)
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package flex.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../00-flex_2.6.4-6.2_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking flex (2.6.4-6.2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package libicu66:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../01-libicu66_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package libxml2:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../02-libxml2_2.9.10+dfsg-5ubuntu0.20.04.10_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package libuv1:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../03-libuv1_1.34.2-1ubuntu1.5_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking libuv1:amd64 (1.34.2-1ubuntu1.5) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package bison.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../04-bison_2%3a3.5.1+dfsg-1_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking bison (2:3.5.1+dfsg-1) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package cmake-data.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../05-cmake-data_3.16.3-1ubuntu1.20.04.1_all.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking cmake-data (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package libarchive13:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../06-libarchive13_3.4.0-2ubuntu1.5_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking libarchive13:amd64 (3.4.0-2ubuntu1.5) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package libjsoncpp1:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../07-libjsoncpp1_1.7.4-3.1ubuntu2_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking libjsoncpp1:amd64 (1.7.4-3.1ubuntu2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package librhash0:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../08-librhash0_1.3.9-1_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking librhash0:amd64 (1.3.9-1) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package cmake.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../09-cmake_3.16.3-1ubuntu1.20.04.1_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking cmake (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package libcurl4-openssl-dev:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../10-libcurl4-openssl-dev_7.68.0-1ubuntu2.25_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking libcurl4-openssl-dev:amd64 (7.68.0-1ubuntu2.25) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package libfl2:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../11-libfl2_2.6.4-6.2_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking libfl2:amd64 (2.6.4-6.2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package libfl-dev:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../12-libfl-dev_2.6.4-6.2_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking libfl-dev:amd64 (2.6.4-6.2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package zlib1g-dev:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../13-zlib1g-dev_1%3a1.2.11.dfsg-2ubuntu1.5_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package libcurlpp0:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../14-libcurlpp0_0.8.1-2build2_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking libcurlpp0:amd64 (0.8.1-2build2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Selecting previously unselected package libcurlpp-dev:amd64.
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Preparing to unpack .../15-libcurlpp-dev_0.8.1-2build2_amd64.deb ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Unpacking libcurlpp-dev:amd64 (0.8.1-2build2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up libcurlpp0:amd64 (0.8.1-2build2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up flex (2.6.4-6.2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up libuv1:amd64 (1.34.2-1ubuntu1.5) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up libcurl4-openssl-dev:amd64 (7.68.0-1ubuntu2.25) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up libcurlpp-dev:amd64 (0.8.1-2build2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up libfl2:amd64 (2.6.4-6.2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up librhash0:amd64 (1.3.9-1) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up bison (2:3.5.1+dfsg-1) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": update-alternatives: using /usr/bin/bison.yacc to provide /usr/bin/yacc (yacc) in auto mode
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": update-alternatives: warning: skip creation of /usr/share/man/man1/yacc.1.gz because associated file /usr/share/man/man1/bison.yacc.1.gz (of link group yacc) doesn't exist
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up cmake-data (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up libjsoncpp1:amd64 (1.7.4-3.1ubuntu2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up libarchive13:amd64 (3.4.0-2ubuntu1.5) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up libfl-dev:amd64 (2.6.4-6.2) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Setting up cmake (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Removing intermediate container 85b3f45bd386
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":  ---> 7ccd2a73b613
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Step 3/5 : RUN git clone https://github.com/edenhill/librdkafka
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":  ---> Running in 7f09216e91a8
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": [91mCloning into 'librdkafka'...
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": [0mRemoving intermediate container 7f09216e91a8
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":  ---> 3c04d0c33f93
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Step 4/5 : WORKDIR $SRC
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":  ---> Running in d28066d4eaec
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Removing intermediate container d28066d4eaec
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":  ---> 0b1ab9a555dc
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Step 5/5 : COPY build.sh $SRC/
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d":  ---> bf9f3c5232c8
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Successfully built bf9f3c5232c8
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Successfully tagged gcr.io/oss-fuzz/librdkafka:latest
+Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/librdkafka:latest
+Finished Step #1 - "build-59bd0e04-0ec3-46c4-815d-1fa06e95ca4d"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/librdkafka
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/filezSoAJN
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/librdkafka/.git
+Step #2 - "srcmap": + GIT_DIR=/src/librdkafka
+Step #2 - "srcmap": + cd /src/librdkafka
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/edenhill/librdkafka
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=616fb6e8074e82e0302f1c7d2896d7e577f8eb9b
+Step #2 - "srcmap": + jq_inplace /tmp/filezSoAJN '."/src/librdkafka" = { type: "git", url: "https://github.com/edenhill/librdkafka", rev: "616fb6e8074e82e0302f1c7d2896d7e577f8eb9b" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filewoWnaa
+Step #2 - "srcmap": + cat /tmp/filezSoAJN
+Step #2 - "srcmap": + jq '."/src/librdkafka" = { type: "git", url: "https://github.com/edenhill/librdkafka", rev: "616fb6e8074e82e0302f1c7d2896d7e577f8eb9b" }'
+Step #2 - "srcmap": + mv /tmp/filewoWnaa /tmp/filezSoAJN
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/filezSoAJN
+Step #2 - "srcmap": + rm /tmp/filezSoAJN
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/librdkafka": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/edenhill/librdkafka",
+Step #2 - "srcmap":     "rev": "616fb6e8074e82e0302f1c7d2896d7e577f8eb9b"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + cd librdkafka
+Step #3 - "compile-afl-address-x86_64": + mkdir build
+Step #3 - "compile-afl-address-x86_64": + cd build
+Step #3 - "compile-afl-address-x86_64": + cmake -DRDKAFKA_BUILD_STATIC=ON -DRDKAFKA_BUILD_EXAMPLES=OFF -DHAVE_REGEX=OFF ../
+Step #3 - "compile-afl-address-x86_64": -- The C compiler identification is Clang 22.0.0
+Step #3 - "compile-afl-address-x86_64": -- The CXX compiler identification is Clang 22.0.0
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compiler ABI info
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compiler ABI info - done
+Step #3 - "compile-afl-address-x86_64": -- Check for working C compiler: /src/aflplusplus/afl-clang-fast - skipped
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compile features
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compile features - done
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compiler ABI info
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compiler ABI info - done
+Step #3 - "compile-afl-address-x86_64": -- Check for working CXX compiler: /src/aflplusplus/afl-clang-fast++ - skipped
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compile features
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compile features - done
+Step #3 - "compile-afl-address-x86_64": -- Looking for pow in m
+Step #3 - "compile-afl-address-x86_64": -- Looking for pow in m - found
+Step #3 - "compile-afl-address-x86_64": -- Could NOT find LZ4 (missing: LZ4_LIBRARY LZ4_INCLUDE_DIR) 
+Step #3 - "compile-afl-address-x86_64": -- Using bundled LZ4 implementation.
+Step #3 - "compile-afl-address-x86_64": -- Found CURL: /usr/lib/x86_64-linux-gnu/libcurl.so (found version "7.68.0")
+Step #3 - "compile-afl-address-x86_64": -- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.2.11")
+Step #3 - "compile-afl-address-x86_64": -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")
+Step #3 - "compile-afl-address-x86_64": -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+Step #3 - "compile-afl-address-x86_64": -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+Step #3 - "compile-afl-address-x86_64": -- Found Threads: TRUE
+Step #3 - "compile-afl-address-x86_64": -- Configuring done (3.2s)
+Step #3 - "compile-afl-address-x86_64": -- Generating done (0.0s)
+Step #3 - "compile-afl-address-x86_64": -- Build files have been written to: /src/librdkafka/build
+Step #3 - "compile-afl-address-x86_64": + make
+Step #3 - "compile-afl-address-x86_64": [  1%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/crc32c.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  1%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdaddr.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  1%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdavl.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  2%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdbuf.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  2%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdcrc32.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdfnv1a.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdbase64.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  4%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_assignor.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  4%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_broker.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_buf.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_cgrp.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_conf.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  6%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_event.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  6%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_feature.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  7%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_lz4.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  7%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_metadata.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  7%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_metadata_cache.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  8%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_msg.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  8%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_msgset_reader.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  9%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_msgset_writer.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  9%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_offset.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  9%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_op.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 10%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_partition.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 10%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_pattern.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_queue.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_range_assignor.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_request.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 12%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_roundrobin_assignor.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 12%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_sasl.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 12%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_sasl_plain.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 13%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_sticky_assignor.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 13%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_subscription.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_assignment.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_timer.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_topic.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 15%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_transport.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 15%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_interceptor.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 16%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_header.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 16%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_admin.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 16%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_aux.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 17%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_background.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 17%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_idempotence.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 18%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_txnmgr.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 18%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_cert.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 18%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_coord.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 19%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 19%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_mock_handlers.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 20%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_mock_cgrp.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 20%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_error.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 20%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_fetcher.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 21%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_telemetry.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 21%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_telemetry_decode.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [1m/src/librdkafka/src/rdkafka_telemetry_decode.c:898:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   896 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  897 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   898 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_CONNECTION_CREATION_RATE,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:907:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   905 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  906 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   907 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_NODE_REQUEST_LATENCY_AVG,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:916:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   914 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  915 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   916 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_NODE_REQUEST_LATENCY_MAX,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:925:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   923 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  924 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   925 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_COORDINATOR_ASSIGNED_PARTITIONS,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:934:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   932 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  933 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   934 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_COORDINATOR_REBALANCE_LATENCY_AVG,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:944:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   942 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  943 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   944 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_COORDINATOR_REBALANCE_LATENCY_MAX,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:954:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   952 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  953 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   954 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_FETCH_MANAGER_FETCH_LATENCY_AVG,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:963:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   961 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  962 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   963 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_FETCH_MANAGER_FETCH_LATENCY_MAX,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:972:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   970 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  971 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   972 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_POLL_IDLE_RATIO_AVG,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:980:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   978 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  979 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   980 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_COORDINATOR_COMMIT_LATENCY_AVG,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:989:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   987 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  988 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":   989 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_COORDINATOR_COMMIT_LATENCY_MAX,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:1018:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":  1016 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m 1017 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":  1018 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_CONNECTION_CREATION_TOTAL,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:1028:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":  1026 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m 1027 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":  1028 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_CONNECTION_CREATION_TOTAL,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m/src/librdkafka/src/rdkafka_telemetry_decode.c:1037:13: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'rd_kafka_telemetry_consumer_metric_name_t' to different enumeration type 'rd_kafka_telemetry_producer_metric_name_t' [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":  1035 |         fails += unit_test_telemetry([0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m 1036 |             RD_KAFKA_CONSUMER,[0m
+Step #3 - "compile-afl-address-x86_64":  1037 |             RD_KAFKA_TELEMETRY_METRIC_CONSUMER_COORDINATOR_REBALANCE_LATENCY_TOTAL,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m14 warnings generated.
+Step #3 - "compile-afl-address-x86_64": [ 22%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_telemetry_encode.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 22%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/nanopb/pb_encode.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 22%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/nanopb/pb_decode.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 23%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/nanopb/pb_common.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 23%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/opentelemetry/metrics.pb.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 24%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/opentelemetry/common.pb.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 24%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/opentelemetry/resource.pb.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 24%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdlist.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 25%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdlog.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 25%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdmurmur2.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 25%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdports.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 26%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdrand.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 26%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdregex.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 27%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdstring.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 27%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdunittest.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 27%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdvarint.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 28%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdmap.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 28%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/snappy.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 29%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/tinycthread.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 29%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/tinycthread_extra.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 29%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdxxhash.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 30%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/cJSON.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 30%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_ssl.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 31%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdhttp.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 31%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdhdrhistogram.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 31%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rddl.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [1;93m[!] [1;97mWARNING: [0mdlopen() detected. To have coverage for a library that your target dlopen()'s this must either happen before __AFL_INIT() or you must use AFL_PRELOAD to preload all dlopen()'ed libraries!
+Step #3 - "compile-afl-address-x86_64": [0m
+Step #3 - "compile-afl-address-x86_64": [1;93m[!] [1;97mWARNING: [0mdlopen() detected. To have coverage for a library that your target dlopen()'s this must either happen before __AFL_INIT() or you must use AFL_PRELOAD to preload all dlopen()'ed libraries!
+Step #3 - "compile-afl-address-x86_64": [0m
+Step #3 - "compile-afl-address-x86_64": [ 32%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_plugin.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 32%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdkafka_sasl_oauthbearer_oidc.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 33%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/rdgz.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 33%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/lz4.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 33%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/lz4frame.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 34%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/lz4hc.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 34%] [32mBuilding C object src/CMakeFiles/rdkafka.dir/regexp.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 35%] [32m[1mLinking C static library librdkafka.a[0m
+Step #3 - "compile-afl-address-x86_64": [ 35%] Built target rdkafka
+Step #3 - "compile-afl-address-x86_64": [ 35%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/ConfImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 35%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/ConsumerImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 36%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/HandleImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 36%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/HeadersImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 37%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/KafkaConsumerImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 37%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/MessageImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 37%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/MetadataImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 38%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/ProducerImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 38%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/QueueImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 38%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/RdKafka.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 39%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/TopicImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 39%] [32mBuilding CXX object src-cpp/CMakeFiles/rdkafka++.dir/TopicPartitionImpl.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 40%] [32m[1mLinking CXX static library librdkafka++.a[0m
+Step #3 - "compile-afl-address-x86_64": [ 40%] Built target rdkafka++
+Step #3 - "compile-afl-address-x86_64": [ 40%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0000-unittests.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 40%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0001-multiobj.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 41%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0002-unkpart.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 41%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0003-msgmaxsize.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 42%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0004-conf.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 42%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0005-order.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 42%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0006-symbols.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 43%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0007-autotopic.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 43%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0008-reqacks.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 44%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0009-mock_cluster.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 44%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0011-produce_batch.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 44%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0012-produce_consume.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 45%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0013-null-msgs.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 45%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0014-reconsume-191.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 46%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0015-offset_seeks.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 46%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0016-client_swname.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 46%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0017-compression.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 47%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0018-cgrp_term.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 47%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0019-list_groups.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 48%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0020-destroy_hang.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 48%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0021-rkt_destroy.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 48%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0022-consume_batch.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 49%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0025-timers.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 49%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0026-consume_pause.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 50%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0028-long_topicnames.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 50%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0029-assign_offset.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 50%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0030-offset_commit.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 51%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0031-get_offsets.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 51%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0033-regex_subscribe.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 51%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0034-offset_reset.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 52%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0035-api_version.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 52%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0036-partial_fetch.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 53%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0037-destroy_hang_local.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 53%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0038-performance.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 53%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0039-event.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 54%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0040-io_event.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 54%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0041-fetch_max_bytes.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 55%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0042-many_topics.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 55%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0043-no_connection.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 55%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0044-partition_cnt.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 56%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0045-subscribe_update.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 56%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0046-rkt_cache.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 57%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0047-partial_buf_tmout.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 57%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0048-partitioner.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 57%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0049-consume_conn_close.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 58%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0050-subscribe_adds.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 58%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0051-assign_adds.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 59%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0052-msg_timestamps.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 59%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0053-stats_cb.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 59%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0054-offset_time.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 60%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0055-producer_latency.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 60%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0056-balanced_group_mt.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 61%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0057-invalid_topic.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 61%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0058-log.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 61%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0059-bsearch.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 62%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0060-op_prio.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 62%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0061-consumer_lag.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 62%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0062-stats_event.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 63%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0063-clusterid.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 63%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0064-interceptors.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 64%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0065-yield.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 64%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0066-plugins.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 64%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0067-empty_topic.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 65%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0068-produce_timeout.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 65%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0069-consumer_add_parts.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 66%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0070-null_empty.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 66%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0072-headers_ut.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 66%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0073-headers.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 67%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0074-producev.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 67%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0075-retry.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 68%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0076-produce_retry.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 68%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0077-compaction.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 68%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0078-c_from_cpp.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 69%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0079-fork.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 69%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0080-admin_ut.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 70%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0081-admin.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 70%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0082-fetch_max_bytes.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 70%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0083-cb_event.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 71%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0084-destroy_flags.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 71%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0085-headers.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 72%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0086-purge.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 72%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0088-produce_metadata_timeout.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 72%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0089-max_poll_interval.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 73%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0090-idempotence.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 73%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0091-max_poll_interval_timeout.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 74%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0092-mixed_msgver.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 74%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0093-holb.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 74%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0094-idempotence_msg_timeout.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 75%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0095-all_brokers_down.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 75%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0097-ssl_verify.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 75%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0098-consumer-txn.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 76%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0099-commit_metadata.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 76%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0100-thread_interceptors.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 77%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0101-fetch-from-follower.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 77%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0102-static_group_rebalance.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 77%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0103-transactions.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 78%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0104-fetch_from_follower_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 78%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0105-transactions_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 79%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0106-cgrp_sess_timeout.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 79%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0107-topic_recreate.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 79%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0109-auto_create_topics.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 80%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0110-batch_size.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 80%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0111-delay_create_topics.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 81%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0112-assign_unknown_part.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 81%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0113-cooperative_rebalance.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 81%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0114-sticky_partitioning.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 82%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0115-producer_auth.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 82%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0116-kafkaconsumer_close.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 83%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0117-mock_errors.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 83%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0118-commit_rebalance.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 83%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0119-consumer_auth.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 84%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0120-asymmetric_subscription.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 84%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0121-clusterid.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 85%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0122-buffer_cleaning_after_rebalance.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 85%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0123-connections_max_idle.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 85%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0124-openssl_invalid_engine.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 86%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0125-immediate_flush.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 86%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0126-oauthbearer_oidc.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 87%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0127-fetch_queue_backoff.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 87%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0128-sasl_callback_queue.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 87%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0129-fetch_aborted_msgs.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 88%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0130-store_offsets.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 88%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0131-connect_timeout.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 88%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0132-strategy_ordering.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 89%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0133-ssl_keys.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 89%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0134-ssl_provider.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 90%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0135-sasl_credentials.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 90%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0136-resolve_cb.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 90%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0137-barrier_batch_consume.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 91%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0138-admin_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 91%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0139-offset_validation_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 92%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/0140-commit_metadata.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 92%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0142-reauthentication.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 92%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0143-exponential_backoff_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 93%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0144-idempotence_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 93%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0145-pause_resume_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 94%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0146-metadata_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 94%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0147-consumer_group_consumer_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [1m/src/librdkafka/tests/0147-consumer_group_consumer_mock.c:727:61: [0m[0;1;35mwarning: [0m[1mimplicit conversion from enumeration type 'test_variation_unknown_topic_id_t' (aka 'enum test_variation_unknown_topic_id_t') to different enumeration type 'test_variation_t' (aka 'enum test_variation_t') [-Wimplicit-enum-enum-cast][0m
+Step #3 - "compile-afl-address-x86_64":   727 |                        test_variation_unknown_topic_id_name(variation));[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m1 warning generated.
+Step #3 - "compile-afl-address-x86_64": [ 94%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0148-offset_fetch_commit_error_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 95%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0149-broker-same-host-port.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 95%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0150-telemetry_mock.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 96%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0151-purge-brokers.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 96%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0152-rebootstrap.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 96%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/0153-memberid.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 97%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/8000-idle.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 97%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/8001-fetch_from_follower_mock_manual.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 98%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/test.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 98%] [32mBuilding CXX object tests/CMakeFiles/test-runner.dir/testcpp.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 98%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/rusage.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 99%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/sockem.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 99%] [32mBuilding C object tests/CMakeFiles/test-runner.dir/sockem_ctrl.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [100%] [32m[1mLinking CXX executable test-runner[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: /usr/bin/ld: DWARF error: invalid or unhandled FORM value: 0x25
+Step #3 - "compile-afl-address-x86_64": CMakeFiles/test-runner.dir/test.c.o:(.data.tests[tests]+0x42de0): undefined reference to `main_0154_ssl_hostname_normalize'
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/CMakeFiles/test-runner.dir/build.make:2503: tests/test-runner] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:204: tests/CMakeFiles/test-runner.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": make: *** [Makefile:146: all] Error 2
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image librdkafka\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 librdkafka\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

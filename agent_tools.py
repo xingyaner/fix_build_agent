@@ -17,8 +17,8 @@ from google.adk.tools.tool_context import ToolContext
 # =================================================================
 # --- 消融实验全局开关 (Ablation Global Config) ---
 # =================================================================
-# 建议：在运行不同版本的实验时，仅需在此处修改布尔值
-ENABLE_HISTORY_ENHANCEMENT = True  # 是否开启 HAFix 启发式历史增强
+# 在运行不同版本的实验时，仅需在此处修改布尔值
+ENABLE_HISTORY_ENHANCEMENT = True  # 是否开启启发式历史增强根因定位
 ENABLE_REFLECTION = True        # 是否开启反思学习逻辑
 ENABLE_ROLLBACK = True          # 是否开启状态树回退逻辑
 ENABLE_EXPERT_KNOWLEDGE = True   # 是否开启专家知识注入
@@ -29,25 +29,37 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
 
-def extract_buggy_line_info(log_path: str) -> List[Dict]:
+def extract_buggy_line_info(log_path: str, project_name: str = "") -> List[Dict]:
     """
-    【新增】从日志中提取文件名和行号 (例如 parser.c:125)
+    【路径感知增强版】
+    从日志中提取文件名和行号，并自动处理 Docker 路径前缀（如 /src/project_name/）。
     """
     if not os.path.exists(log_path): return []
     with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
         content = f.read()
     
-    # 匹配常见的编译错误格式 filename.c:line:col: error
-    pattern = r"([\w\-\./]+\.[a-z]{1,3}):(\d+):"
+    # 匹配模式：支持大部分编程语言后缀
+    pattern = r"([\w\-\./]+\.(?:c|cpp|h|cc|rs|go|py|sh|java)):(\d+):"
     matches = re.findall(pattern, content)
     
     results = []
     seen = set()
-    for file, line in matches:
-        if (file, line) not in seen:
-            results.append({"file": file, "line": int(line)})
-            seen.add((file, line))
-    return results[:3] # 仅取前三个最相关的错误点
+    # 构造 Docker 内部路径的各种可能性
+    prefixes_to_strip = ["/src/" + project_name + "/", "/src/", "./"]
+    
+    for file_path, line in matches:
+        clean_path = file_path
+        # 路径归一化：将 /src/glslang/parser.c 转换为 parser.c
+        for prefix in prefixes_to_strip:
+            if clean_path.startswith(prefix):
+                clean_path = clean_path[len(prefix):]
+                break
+        
+        if (clean_path, line) not in seen:
+            results.append({"file": clean_path, "line": int(line)})
+            seen.add((clean_path, line))
+            
+    return results[:3]
 
 def get_enhanced_history_context(project_source_path: str, file_rel_path: str, line_num: int) -> Dict:
     """
@@ -1490,6 +1502,9 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
         with open(PROMPT_FILE_PATH, "a", encoding="utf-8") as f:
             f.write("\n\n--- Fuzz Build Log (Last 500 lines) ---\n")
             f.write(log_result['content'])
+
+    truncate_prompt_file(PROMPT_FILE_PATH, max_lines=2500)
+    print(f"--- Auto-Optimization: Truncated '{PROMPT_FILE_PATH}' to safe limit. ---")
 
     # --- 新增 Step 7: 读取并返回完整内容 ---
     try:

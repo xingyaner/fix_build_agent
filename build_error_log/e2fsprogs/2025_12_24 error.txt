@@ -1,0 +1,1314 @@
+starting build "2f51f9bd-5786-42db-895c-b1fff426c183"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539"
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Sending build context to Docker daemon  13.82kB
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Step 1/6 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b549f31133a9: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 53857896a680: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 7efe496e0821: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 7aac26f735e9: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ad31cc38ac81: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e51a957b96fa: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 9ea01dd118f9: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": fde71e506517: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": dd6b7bda1f21: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 8b0201982d0b: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1ed93b1f2b37: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e6a65953e7da: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 4c9d846f1514: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ba7815991431: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 828929bb11e1: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e89aa43f3e15: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 2d99de89a447: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": f6d8158e6dac: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b72c91e47fd1: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 132bc51f6483: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 6ea2db2284cb: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 8d8a5e898bb8: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 0627aad1ed24: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": a0eb25bba271: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": f5faf7725626: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 213227c10e94: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ffc3882c042b: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 343ba79fda30: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": cb5959086358: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1f3670b2a3cd: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e1a12b281c6e: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b25342de0fc5: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 9ea01dd118f9: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": fde71e506517: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": dd6b7bda1f21: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 105d24739e50: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 3bdc8cef7a9f: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 03f7548b82a6: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": c5a6aaa2ce6b: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 5e3bbf1b669c: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1dfe9bb499fc: Pulling fs layer
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 2d99de89a447: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": cb5959086358: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": f6d8158e6dac: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 03f7548b82a6: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b72c91e47fd1: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1f3670b2a3cd: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": c5a6aaa2ce6b: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e1a12b281c6e: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 132bc51f6483: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b25342de0fc5: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 6ea2db2284cb: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 8d8a5e898bb8: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 105d24739e50: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 3bdc8cef7a9f: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 0627aad1ed24: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 5e3bbf1b669c: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": a0eb25bba271: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1dfe9bb499fc: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": f5faf7725626: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 8b0201982d0b: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 343ba79fda30: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1ed93b1f2b37: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ba7815991431: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e6a65953e7da: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 4c9d846f1514: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 828929bb11e1: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ffc3882c042b: Waiting
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ad31cc38ac81: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ad31cc38ac81: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 7efe496e0821: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 7efe496e0821: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 9ea01dd118f9: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 9ea01dd118f9: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": fde71e506517: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": fde71e506517: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b549f31133a9: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b549f31133a9: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 7aac26f735e9: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 7aac26f735e9: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1ed93b1f2b37: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1ed93b1f2b37: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e6a65953e7da: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e6a65953e7da: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 4c9d846f1514: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 4c9d846f1514: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ba7815991431: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e89aa43f3e15: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e89aa43f3e15: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 828929bb11e1: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 828929bb11e1: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 8b0201982d0b: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 8b0201982d0b: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": f6d8158e6dac: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": f6d8158e6dac: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 53857896a680: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 53857896a680: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 2d99de89a447: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 2d99de89a447: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b72c91e47fd1: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b72c91e47fd1: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 6ea2db2284cb: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 6ea2db2284cb: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 8d8a5e898bb8: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 8d8a5e898bb8: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 132bc51f6483: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 132bc51f6483: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 0627aad1ed24: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 0627aad1ed24: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": a0eb25bba271: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": f5faf7725626: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": f5faf7725626: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 213227c10e94: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ffc3882c042b: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ffc3882c042b: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 343ba79fda30: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 343ba79fda30: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": cb5959086358: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": cb5959086358: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e1a12b281c6e: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e1a12b281c6e: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1f3670b2a3cd: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1f3670b2a3cd: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b25342de0fc5: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b25342de0fc5: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b549f31133a9: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 105d24739e50: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 105d24739e50: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 3bdc8cef7a9f: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": c5a6aaa2ce6b: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 03f7548b82a6: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": dd6b7bda1f21: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": dd6b7bda1f21: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 5e3bbf1b669c: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 5e3bbf1b669c: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1dfe9bb499fc: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1dfe9bb499fc: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e51a957b96fa: Verifying Checksum
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e51a957b96fa: Download complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 53857896a680: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 7efe496e0821: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 7aac26f735e9: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ad31cc38ac81: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e51a957b96fa: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 9ea01dd118f9: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": fde71e506517: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": dd6b7bda1f21: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 8b0201982d0b: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1ed93b1f2b37: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e6a65953e7da: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 4c9d846f1514: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ba7815991431: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 828929bb11e1: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e89aa43f3e15: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 2d99de89a447: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": f6d8158e6dac: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b72c91e47fd1: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 132bc51f6483: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 6ea2db2284cb: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 8d8a5e898bb8: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 0627aad1ed24: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": a0eb25bba271: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": f5faf7725626: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 213227c10e94: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": ffc3882c042b: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 343ba79fda30: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": cb5959086358: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1f3670b2a3cd: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": e1a12b281c6e: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": b25342de0fc5: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 105d24739e50: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 3bdc8cef7a9f: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 03f7548b82a6: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": c5a6aaa2ce6b: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 5e3bbf1b669c: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 1dfe9bb499fc: Pull complete
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Digest: sha256:c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":  ---> 963d5896cb27
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Step 2/6 : RUN apt-get install -y --allow-downgrades --allow-remove-essential --allow-change-held-packages git make texinfo
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":  ---> Running in a517d7e7cca7
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Reading package lists...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Building dependency tree...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Reading state information...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": make set to manually installed.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": git is already the newest version (1:2.25.1-1ubuntu3.14).
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": The following packages were automatically installed and are no longer required:
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   autotools-dev libsigsegv2 m4
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Use 'apt autoremove' to remove them.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": The following additional packages will be installed:
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libauthen-sasl-perl libdata-dump-perl libencode-locale-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libfile-listing-perl libfont-afm-perl libhtml-form-perl libhtml-format-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libhtml-parser-perl libhtml-tagset-perl libhtml-tree-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libhttp-cookies-perl libhttp-daemon-perl libhttp-date-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libhttp-message-perl libhttp-negotiate-perl libicu66 libio-html-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libio-socket-ssl-perl liblwp-mediatypes-perl liblwp-protocol-https-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libmailtools-perl libnet-http-perl libnet-smtp-ssl-perl libnet-ssleay-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libtext-unidecode-perl libtimedate-perl libtry-tiny-perl liburi-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libwww-perl libwww-robotrules-perl libxml-libxml-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libxml-namespacesupport-perl libxml-parser-perl libxml-sax-base-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libxml-sax-expat-perl libxml-sax-perl libxml2 perl-openssl-defaults
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   tex-common ucf
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Suggested packages:
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libdigest-hmac-perl libgssapi-perl libcrypt-ssleay-perl libauthen-ntlm-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libxml-sax-expatxs-perl debhelper texlive-base texlive-latex-base
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   texlive-plain-generic texlive-fonts-recommended
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": The following NEW packages will be installed:
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libauthen-sasl-perl libdata-dump-perl libencode-locale-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libfile-listing-perl libfont-afm-perl libhtml-form-perl libhtml-format-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libhtml-parser-perl libhtml-tagset-perl libhtml-tree-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libhttp-cookies-perl libhttp-daemon-perl libhttp-date-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libhttp-message-perl libhttp-negotiate-perl libicu66 libio-html-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libio-socket-ssl-perl liblwp-mediatypes-perl liblwp-protocol-https-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libmailtools-perl libnet-http-perl libnet-smtp-ssl-perl libnet-ssleay-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libtext-unidecode-perl libtimedate-perl libtry-tiny-perl liburi-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libwww-perl libwww-robotrules-perl libxml-libxml-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libxml-namespacesupport-perl libxml-parser-perl libxml-sax-base-perl
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   libxml-sax-expat-perl libxml-sax-perl libxml2 perl-openssl-defaults
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":   tex-common texinfo ucf
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 0 upgraded, 41 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Need to get 12.8 MB of archives.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": After this operation, 55.2 MB of additional disk space will be used.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 ucf all 3.0038+nmu1 [51.6 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:2 http://archive.ubuntu.com/ubuntu focal/universe amd64 tex-common all 6.13 [32.7 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:3 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:5 http://archive.ubuntu.com/ubuntu focal/main amd64 libdata-dump-perl all 1.23-1 [27.0 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:6 http://archive.ubuntu.com/ubuntu focal/main amd64 libencode-locale-perl all 1.05-1 [12.3 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:7 http://archive.ubuntu.com/ubuntu focal/main amd64 libtimedate-perl all 2.3200-1 [34.0 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 libhttp-date-perl all 6.05-1 [9920 B]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 libfile-listing-perl all 6.04-1 [9774 B]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 libfont-afm-perl all 1.20-2 [13.2 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 libhtml-tagset-perl all 3.20-4 [12.5 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 liburi-perl all 1.76-2 [77.5 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:13 http://archive.ubuntu.com/ubuntu focal/main amd64 libhtml-parser-perl amd64 3.72-5 [86.3 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:14 http://archive.ubuntu.com/ubuntu focal/main amd64 libio-html-perl all 1.001-1 [14.9 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64 liblwp-mediatypes-perl all 6.04-1 [19.5 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:16 http://archive.ubuntu.com/ubuntu focal/main amd64 libhttp-message-perl all 6.22-1 [76.1 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:17 http://archive.ubuntu.com/ubuntu focal/main amd64 libhtml-form-perl all 6.07-1 [22.2 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:18 http://archive.ubuntu.com/ubuntu focal/main amd64 libhtml-tree-perl all 5.07-2 [200 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:19 http://archive.ubuntu.com/ubuntu focal/main amd64 libhtml-format-perl all 2.12-1 [41.3 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:20 http://archive.ubuntu.com/ubuntu focal/main amd64 libhttp-cookies-perl all 6.08-1 [18.3 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:21 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libhttp-daemon-perl all 6.06-1ubuntu0.1 [22.0 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:22 http://archive.ubuntu.com/ubuntu focal/main amd64 libhttp-negotiate-perl all 6.01-1 [12.5 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:23 http://archive.ubuntu.com/ubuntu focal/main amd64 perl-openssl-defaults amd64 4 [7192 B]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:24 http://archive.ubuntu.com/ubuntu focal/main amd64 libnet-ssleay-perl amd64 1.88-2ubuntu1 [291 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:25 http://archive.ubuntu.com/ubuntu focal/main amd64 libio-socket-ssl-perl all 2.067-1 [176 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:26 http://archive.ubuntu.com/ubuntu focal/main amd64 libnet-http-perl all 6.19-1 [22.8 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:27 http://archive.ubuntu.com/ubuntu focal/main amd64 libtry-tiny-perl all 0.30-1 [20.5 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:28 http://archive.ubuntu.com/ubuntu focal/main amd64 libwww-robotrules-perl all 6.02-1 [12.6 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:29 http://archive.ubuntu.com/ubuntu focal/main amd64 libwww-perl all 6.43-1 [140 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:30 http://archive.ubuntu.com/ubuntu focal/main amd64 liblwp-protocol-https-perl all 6.07-2ubuntu2 [8560 B]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:31 http://archive.ubuntu.com/ubuntu focal/main amd64 libnet-smtp-ssl-perl all 1.04-1 [5948 B]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:32 http://archive.ubuntu.com/ubuntu focal/main amd64 libmailtools-perl all 2.21-1 [80.7 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:33 http://archive.ubuntu.com/ubuntu focal/universe amd64 libtext-unidecode-perl all 1.30-1 [99.0 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:34 http://archive.ubuntu.com/ubuntu focal/main amd64 libxml-namespacesupport-perl all 1.12-1 [13.2 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:35 http://archive.ubuntu.com/ubuntu focal/main amd64 libxml-sax-base-perl all 1.09-1 [18.8 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:36 http://archive.ubuntu.com/ubuntu focal/main amd64 libxml-sax-perl all 1.02+dfsg-1 [56.2 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:37 http://archive.ubuntu.com/ubuntu focal/main amd64 libxml-libxml-perl amd64 2.0134+dfsg-1build1 [320 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:38 http://archive.ubuntu.com/ubuntu focal/main amd64 libxml-parser-perl amd64 2.46-1 [193 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:39 http://archive.ubuntu.com/ubuntu focal/main amd64 libxml-sax-expat-perl all 0.51-1 [10.5 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:40 http://archive.ubuntu.com/ubuntu focal/universe amd64 texinfo amd64 6.7.0.dfsg.2-5 [1375 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Get:41 http://archive.ubuntu.com/ubuntu focal/main amd64 libauthen-sasl-perl all 2.1600-1 [48.7 kB]
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": [0mFetched 12.8 MB in 2s (6195 kB/s)
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package ucf.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../00-ucf_3.0038+nmu1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Moving old data out of the way
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking ucf (3.0038+nmu1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package tex-common.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../01-tex-common_6.13_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking tex-common (6.13) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libicu66:amd64.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../02-libicu66_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libxml2:amd64.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../03-libxml2_2.9.10+dfsg-5ubuntu0.20.04.10_amd64.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libdata-dump-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../04-libdata-dump-perl_1.23-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libdata-dump-perl (1.23-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libencode-locale-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../05-libencode-locale-perl_1.05-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libencode-locale-perl (1.05-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libtimedate-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../06-libtimedate-perl_2.3200-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libtimedate-perl (2.3200-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libhttp-date-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../07-libhttp-date-perl_6.05-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libhttp-date-perl (6.05-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libfile-listing-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../08-libfile-listing-perl_6.04-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libfile-listing-perl (6.04-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libfont-afm-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../09-libfont-afm-perl_1.20-2_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libfont-afm-perl (1.20-2) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libhtml-tagset-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../10-libhtml-tagset-perl_3.20-4_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libhtml-tagset-perl (3.20-4) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package liburi-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../11-liburi-perl_1.76-2_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking liburi-perl (1.76-2) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libhtml-parser-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../12-libhtml-parser-perl_3.72-5_amd64.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libhtml-parser-perl (3.72-5) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libio-html-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../13-libio-html-perl_1.001-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libio-html-perl (1.001-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package liblwp-mediatypes-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../14-liblwp-mediatypes-perl_6.04-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking liblwp-mediatypes-perl (6.04-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libhttp-message-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../15-libhttp-message-perl_6.22-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libhttp-message-perl (6.22-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libhtml-form-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../16-libhtml-form-perl_6.07-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libhtml-form-perl (6.07-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libhtml-tree-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../17-libhtml-tree-perl_5.07-2_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libhtml-tree-perl (5.07-2) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libhtml-format-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../18-libhtml-format-perl_2.12-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libhtml-format-perl (2.12-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libhttp-cookies-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../19-libhttp-cookies-perl_6.08-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libhttp-cookies-perl (6.08-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libhttp-daemon-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../20-libhttp-daemon-perl_6.06-1ubuntu0.1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libhttp-daemon-perl (6.06-1ubuntu0.1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libhttp-negotiate-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../21-libhttp-negotiate-perl_6.01-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libhttp-negotiate-perl (6.01-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package perl-openssl-defaults:amd64.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../22-perl-openssl-defaults_4_amd64.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking perl-openssl-defaults:amd64 (4) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libnet-ssleay-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../23-libnet-ssleay-perl_1.88-2ubuntu1_amd64.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libnet-ssleay-perl (1.88-2ubuntu1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libio-socket-ssl-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../24-libio-socket-ssl-perl_2.067-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libio-socket-ssl-perl (2.067-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libnet-http-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../25-libnet-http-perl_6.19-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libnet-http-perl (6.19-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libtry-tiny-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../26-libtry-tiny-perl_0.30-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libtry-tiny-perl (0.30-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libwww-robotrules-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../27-libwww-robotrules-perl_6.02-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libwww-robotrules-perl (6.02-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libwww-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../28-libwww-perl_6.43-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libwww-perl (6.43-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package liblwp-protocol-https-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../29-liblwp-protocol-https-perl_6.07-2ubuntu2_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking liblwp-protocol-https-perl (6.07-2ubuntu2) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libnet-smtp-ssl-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../30-libnet-smtp-ssl-perl_1.04-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libnet-smtp-ssl-perl (1.04-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libmailtools-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../31-libmailtools-perl_2.21-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libmailtools-perl (2.21-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libtext-unidecode-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../32-libtext-unidecode-perl_1.30-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libtext-unidecode-perl (1.30-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libxml-namespacesupport-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../33-libxml-namespacesupport-perl_1.12-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libxml-namespacesupport-perl (1.12-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libxml-sax-base-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../34-libxml-sax-base-perl_1.09-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libxml-sax-base-perl (1.09-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libxml-sax-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../35-libxml-sax-perl_1.02+dfsg-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libxml-sax-perl (1.02+dfsg-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libxml-libxml-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../36-libxml-libxml-perl_2.0134+dfsg-1build1_amd64.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libxml-libxml-perl (2.0134+dfsg-1build1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libxml-parser-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../37-libxml-parser-perl_2.46-1_amd64.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libxml-parser-perl (2.46-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libxml-sax-expat-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../38-libxml-sax-expat-perl_0.51-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libxml-sax-expat-perl (0.51-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package texinfo.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../39-texinfo_6.7.0.dfsg.2-5_amd64.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking texinfo (6.7.0.dfsg.2-5) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Selecting previously unselected package libauthen-sasl-perl.
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Preparing to unpack .../40-libauthen-sasl-perl_2.1600-1_all.deb ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Unpacking libauthen-sasl-perl (2.1600-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libfont-afm-perl (1.20-2) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libhtml-tagset-perl (3.20-4) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libauthen-sasl-perl (2.1600-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up liblwp-mediatypes-perl (6.04-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libtry-tiny-perl (0.30-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up perl-openssl-defaults:amd64 (4) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libxml-namespacesupport-perl (1.12-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libencode-locale-perl (1.05-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libxml-sax-base-perl (1.09-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libdata-dump-perl (1.23-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libio-html-perl (1.001-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up ucf (3.0038+nmu1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libtimedate-perl (2.3200-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libtext-unidecode-perl (1.30-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up liburi-perl (1.76-2) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libnet-ssleay-perl (1.88-2ubuntu1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libhttp-date-perl (6.05-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libfile-listing-perl (6.04-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libnet-http-perl (6.19-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libxml-sax-perl (1.02+dfsg-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": update-perl-sax-parsers: Registering Perl SAX parser XML::SAX::PurePerl with priority 10...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": update-perl-sax-parsers: Updating overall Perl SAX parser modules info file...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": 
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Creating config file /etc/perl/XML/SAX/ParserDetails.ini with new version
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up tex-common (6.13) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": update-language: texlive-base not installed and configured, doing nothing!
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libxml-libxml-perl (2.0134+dfsg-1build1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": update-perl-sax-parsers: Registering Perl SAX parser XML::LibXML::SAX::Parser with priority 50...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": update-perl-sax-parsers: Registering Perl SAX parser XML::LibXML::SAX with priority 50...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": update-perl-sax-parsers: Updating overall Perl SAX parser modules info file...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Replacing config file /etc/perl/XML/SAX/ParserDetails.ini with new version
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libwww-robotrules-perl (6.02-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libhtml-parser-perl (3.72-5) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libio-socket-ssl-perl (2.067-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libhttp-message-perl (6.22-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libhtml-form-perl (6.07-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libhttp-negotiate-perl (6.01-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libhttp-cookies-perl (6.08-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libhtml-tree-perl (5.07-2) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libhtml-format-perl (2.12-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libnet-smtp-ssl-perl (1.04-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libmailtools-perl (2.21-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up texinfo (6.7.0.dfsg.2-5) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libhttp-daemon-perl (6.06-1ubuntu0.1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up liblwp-protocol-https-perl (6.07-2ubuntu2) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libwww-perl (6.43-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libxml-parser-perl (2.46-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Setting up libxml-sax-expat-perl (0.51-1) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": update-perl-sax-parsers: Registering Perl SAX parser XML::SAX::Expat with priority 50...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": update-perl-sax-parsers: Updating overall Perl SAX parser modules info file...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Replacing config file /etc/perl/XML/SAX/ParserDetails.ini with new version
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Removing intermediate container a517d7e7cca7
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":  ---> e88395bb1c31
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Step 3/6 : RUN git clone --depth 1 https://github.com/tytso/e2fsprogs
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":  ---> Running in 8f465e70f1ea
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": [91mCloning into 'e2fsprogs'...
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": [0mRemoving intermediate container 8f465e70f1ea
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":  ---> 49993de9a18e
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Step 4/6 : COPY build.sh $SRC/
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":  ---> 89fa74827ca7
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Step 5/6 : COPY fuzz/ $SRC/fuzz/
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":  ---> 783fa65968a5
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Step 6/6 : WORKDIR $SRC/e2fsprogs
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":  ---> Running in 1715c0696db6
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Removing intermediate container 1715c0696db6
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539":  ---> e64e5bd92264
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Successfully built e64e5bd92264
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Successfully tagged gcr.io/oss-fuzz/e2fsprogs:latest
+Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/e2fsprogs:latest
+Finished Step #1 - "build-b1f1aaa9-e3de-4320-b2c2-d1cd552ab539"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/e2fsprogs
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/filegdpObO
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/e2fsprogs/.git
+Step #2 - "srcmap": + GIT_DIR=/src/e2fsprogs
+Step #2 - "srcmap": + cd /src/e2fsprogs
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/tytso/e2fsprogs
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=0b2752ce6276b383a5254cd766204f81f41b6631
+Step #2 - "srcmap": + jq_inplace /tmp/filegdpObO '."/src/e2fsprogs" = { type: "git", url: "https://github.com/tytso/e2fsprogs", rev: "0b2752ce6276b383a5254cd766204f81f41b6631" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filesddtuc
+Step #2 - "srcmap": + cat /tmp/filegdpObO
+Step #2 - "srcmap": + jq '."/src/e2fsprogs" = { type: "git", url: "https://github.com/tytso/e2fsprogs", rev: "0b2752ce6276b383a5254cd766204f81f41b6631" }'
+Step #2 - "srcmap": + mv /tmp/filesddtuc /tmp/filegdpObO
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/filegdpObO
+Step #2 - "srcmap": + rm /tmp/filegdpObO
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/e2fsprogs": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/tytso/e2fsprogs",
+Step #2 - "srcmap":     "rev": "0b2752ce6276b383a5254cd766204f81f41b6631"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + export 'LDFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++'
+Step #3 - "compile-afl-address-x86_64": + LDFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++'
+Step #3 - "compile-afl-address-x86_64": + /src/e2fsprogs/configure
+Step #3 - "compile-afl-address-x86_64": checking for gcc... /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": checking whether the C compiler works... yes
+Step #3 - "compile-afl-address-x86_64": checking for C compiler default output file name... a.out
+Step #3 - "compile-afl-address-x86_64": checking for suffix of executables... 
+Step #3 - "compile-afl-address-x86_64": checking whether we are cross compiling... no
+Step #3 - "compile-afl-address-x86_64": checking for suffix of object files... o
+Step #3 - "compile-afl-address-x86_64": checking whether the compiler supports GNU C... yes
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast accepts -g... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to enable C11 features... none needed
+Step #3 - "compile-afl-address-x86_64": checking for stdio.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdlib.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for string.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for inttypes.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdint.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for strings.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/stat.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/types.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for unistd.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for wchar.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for minix/config.h... no
+Step #3 - "compile-afl-address-x86_64": checking whether it is safe to define __EXTENSIONS__... yes
+Step #3 - "compile-afl-address-x86_64": checking whether _XOPEN_SOURCE should be defined... no
+Step #3 - "compile-afl-address-x86_64": Generating configuration file for e2fsprogs version 1.47.3
+Step #3 - "compile-afl-address-x86_64": Package version 1.47.3 release 
+Step #3 - "compile-afl-address-x86_64": Release date is July, 2025
+Step #3 - "compile-afl-address-x86_64": checking build system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking host system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking for dlopen in -ldl... yes
+Step #3 - "compile-afl-address-x86_64": checking for gcc... (cached) /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": checking whether the compiler supports GNU C... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast accepts -g... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to enable C11 features... (cached) none needed
+Step #3 - "compile-afl-address-x86_64": checking how to run the C preprocessor... /src/aflplusplus/afl-clang-fast -E
+Step #3 - "compile-afl-address-x86_64": checking for additional special compiler flags... (none)
+Step #3 - "compile-afl-address-x86_64": Disabling maintainer mode by default
+Step #3 - "compile-afl-address-x86_64": Disabling symlinks for install by default
+Step #3 - "compile-afl-address-x86_64": Disabling relative symlinks for install by default
+Step #3 - "compile-afl-address-x86_64": Disabling symlinks for build by default
+Step #3 - "compile-afl-address-x86_64": Disabling verbose make commands
+Step #3 - "compile-afl-address-x86_64": Disabling ELF shared libraries by default
+Step #3 - "compile-afl-address-x86_64": Disabling BSD shared libraries by default
+Step #3 - "compile-afl-address-x86_64": Disabling profiling libraries by default
+Step #3 - "compile-afl-address-x86_64": Disabling journal debugging by default
+Step #3 - "compile-afl-address-x86_64": Disabling blkid debugging by default
+Step #3 - "compile-afl-address-x86_64": Enabling testio debugging by default
+Step #3 - "compile-afl-address-x86_64": Disabling ext4 developer features by default
+Step #3 - "compile-afl-address-x86_64": checking for pkg-config... no
+Step #3 - "compile-afl-address-x86_64": Enabling private uuid library by default
+Step #3 - "compile-afl-address-x86_64": checking for pkg-config... no
+Step #3 - "compile-afl-address-x86_64": Enabling private blkid library by default
+Step #3 - "compile-afl-address-x86_64": Enabling use of backtrace by default
+Step #3 - "compile-afl-address-x86_64": Enabling debugfs support by default
+Step #3 - "compile-afl-address-x86_64": Enabling e2image support by default
+Step #3 - "compile-afl-address-x86_64": Enabling e2resize support by default
+Step #3 - "compile-afl-address-x86_64": Enabling e4defrag support by default
+Step #3 - "compile-afl-address-x86_64": Building fsck wrapper by default
+Step #3 - "compile-afl-address-x86_64": Building e2initrd helper by default
+Step #3 - "compile-afl-address-x86_64": Try using thread local support by default
+Step #3 - "compile-afl-address-x86_64": checking for thread local storage (TLS) class... _Thread_local
+Step #3 - "compile-afl-address-x86_64": Try testing for pthread support by default
+Step #3 - "compile-afl-address-x86_64": checking for a sed that does not truncate output... /usr/bin/sed
+Step #3 - "compile-afl-address-x86_64": checking for egrep -e... /usr/bin/grep -E
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast is Clang... yes
+Step #3 - "compile-afl-address-x86_64": checking whether pthreads work with "-pthread" and "-lpthread"... yes
+Step #3 - "compile-afl-address-x86_64": checking whether Clang needs flag to prevent "argument unused" warning when linking with -pthread... no
+Step #3 - "compile-afl-address-x86_64": checking for joinable pthread attribute... PTHREAD_CREATE_JOINABLE
+Step #3 - "compile-afl-address-x86_64": checking whether more special flags are required for pthreads... no
+Step #3 - "compile-afl-address-x86_64": checking for PTHREAD_PRIO_INHERIT... yes
+Step #3 - "compile-afl-address-x86_64": Building uuidd by default
+Step #3 - "compile-afl-address-x86_64": Enabling mmp support by default
+Step #3 - "compile-afl-address-x86_64": Enabling tdb support by default
+Step #3 - "compile-afl-address-x86_64": Enabling bitmap statistics support by default
+Step #3 - "compile-afl-address-x86_64": Disabling additional bitmap statistics by default
+Step #3 - "compile-afl-address-x86_64": checking whether make sets $(MAKE)... yes
+Step #3 - "compile-afl-address-x86_64": checking for a BSD-compatible install... /usr/bin/install -c
+Step #3 - "compile-afl-address-x86_64": checking for a race-free mkdir -p... /usr/bin/mkdir -p
+Step #3 - "compile-afl-address-x86_64": checking whether NLS is requested... yes
+Step #3 - "compile-afl-address-x86_64": checking for msgfmt... no
+Step #3 - "compile-afl-address-x86_64": checking for gmsgfmt... :
+Step #3 - "compile-afl-address-x86_64": checking for xgettext... no
+Step #3 - "compile-afl-address-x86_64": checking for msgmerge... no
+Step #3 - "compile-afl-address-x86_64": checking for ld used by /src/aflplusplus/afl-clang-fast... /usr/bin/ld
+Step #3 - "compile-afl-address-x86_64": checking if the linker (/usr/bin/ld) is GNU ld... yes
+Step #3 - "compile-afl-address-x86_64": checking for shared library run path origin... done
+Step #3 - "compile-afl-address-x86_64": checking 32-bit host C ABI... no
+Step #3 - "compile-afl-address-x86_64": checking for ELF binary format... yes
+Step #3 - "compile-afl-address-x86_64": checking for the common suffixes of directories in the library search path... lib,lib,lib64
+Step #3 - "compile-afl-address-x86_64": checking for CFPreferencesCopyAppValue... no
+Step #3 - "compile-afl-address-x86_64": checking for CFLocaleCopyPreferredLanguages... no
+Step #3 - "compile-afl-address-x86_64": checking for GNU gettext in libc... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to use NLS... yes
+Step #3 - "compile-afl-address-x86_64": checking where the gettext function comes from... libc
+Step #3 - "compile-afl-address-x86_64": checking whether make sets $(MAKE)... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for gawk... no
+Step #3 - "compile-afl-address-x86_64": checking for mawk... mawk
+Step #3 - "compile-afl-address-x86_64": checking for GNU make... make
+Step #3 - "compile-afl-address-x86_64": checking for ln... /usr/bin/ln
+Step #3 - "compile-afl-address-x86_64": checking whether ln -s works... yes
+Step #3 - "compile-afl-address-x86_64": checking for mv... /usr/bin/mv
+Step #3 - "compile-afl-address-x86_64": checking for cp... /usr/bin/cp
+Step #3 - "compile-afl-address-x86_64": checking for rm... /usr/bin/rm
+Step #3 - "compile-afl-address-x86_64": checking for chmod... /usr/bin/chmod
+Step #3 - "compile-afl-address-x86_64": checking for gawk... (cached) mawk
+Step #3 - "compile-afl-address-x86_64": checking for grep that handles long lines and -e... /usr/bin/grep
+Step #3 - "compile-afl-address-x86_64": checking for egrep... /usr/bin/grep -E
+Step #3 - "compile-afl-address-x86_64": checking for sed... (cached) /usr/bin/sed
+Step #3 - "compile-afl-address-x86_64": checking for perl... /usr/bin/perl
+Step #3 - "compile-afl-address-x86_64": checking for ldconfig... /usr/sbin/ldconfig
+Step #3 - "compile-afl-address-x86_64": checking for ar... ar
+Step #3 - "compile-afl-address-x86_64": checking for ranlib... ranlib
+Step #3 - "compile-afl-address-x86_64": checking for strip... strip
+Step #3 - "compile-afl-address-x86_64": checking for makeinfo... makeinfo
+Step #3 - "compile-afl-address-x86_64": checking for dirent.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for errno.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for execinfo.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for getopt.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for malloc.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for mntent.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for paths.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for pthread.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for semaphore.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for setjmp.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for signal.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdarg.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdint.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for stdlib.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for termios.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for termio.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for unistd.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for utime.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for attr/xattr.h... no
+Step #3 - "compile-afl-address-x86_64": checking for linux/falloc.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for linux/fd.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for linux/fsmap.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for linux/fsverity.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for linux/major.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for linux/loop.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for linux/types.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for net/if_dl.h... no
+Step #3 - "compile-afl-address-x86_64": checking for netinet/in.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/acl.h... no
+Step #3 - "compile-afl-address-x86_64": checking for sys/disklabel.h... no
+Step #3 - "compile-afl-address-x86_64": checking for sys/disk.h... no
+Step #3 - "compile-afl-address-x86_64": checking for sys/file.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/ioctl.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/key.h... no
+Step #3 - "compile-afl-address-x86_64": checking for sys/mkdev.h... no
+Step #3 - "compile-afl-address-x86_64": checking for sys/mman.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/mount.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/prctl.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/random.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/resource.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/select.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/socket.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/sockio.h... no
+Step #3 - "compile-afl-address-x86_64": checking for sys/stat.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/syscall.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/sysmacros.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/time.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/types.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/un.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/wait.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/xattr.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for a dd(1) program that supports iflag=fullblock... dd
+Step #3 - "compile-afl-address-x86_64": checking for net/if.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for vprintf... yes
+Step #3 - "compile-afl-address-x86_64": checking for struct dirent.d_reclen... yes
+Step #3 - "compile-afl-address-x86_64": checking for struct stat.st_atim... yes
+Step #3 - "compile-afl-address-x86_64": checking for ssize_t... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast options needed to detect all undeclared functions... -fno-builtin
+Step #3 - "compile-afl-address-x86_64": checking whether llseek is declared... no
+Step #3 - "compile-afl-address-x86_64": checking whether lseek64 is declared... yes
+Step #3 - "compile-afl-address-x86_64": checking whether fsmap_sizeof is declared... no
+Step #3 - "compile-afl-address-x86_64": checking for  option for large files... none needed
+Step #3 - "compile-afl-address-x86_64": checking size of short... 2
+Step #3 - "compile-afl-address-x86_64": checking size of int... 4
+Step #3 - "compile-afl-address-x86_64": checking size of long... 8
+Step #3 - "compile-afl-address-x86_64": checking size of long long... 8
+Step #3 - "compile-afl-address-x86_64": checking size of off_t... 8
+Step #3 - "compile-afl-address-x86_64": checking size of time_t... 8
+Step #3 - "compile-afl-address-x86_64": checking size of void *... 8
+Step #3 - "compile-afl-address-x86_64": checking whether byte ordering is bigendian... no
+Step #3 - "compile-afl-address-x86_64": checking for __uNN types... using <asm/types.h>
+Step #3 - "compile-afl-address-x86_64": checking for inttypes.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for intptr_t... yes
+Step #3 - "compile-afl-address-x86_64": checking whether struct stat has a st_flags field... no
+Step #3 - "compile-afl-address-x86_64": checking for struct sockaddr.sa_len... no
+Step #3 - "compile-afl-address-x86_64": checking for __secure_getenv... no
+Step #3 - "compile-afl-address-x86_64": checking for add_key... no
+Step #3 - "compile-afl-address-x86_64": checking for backtrace... yes
+Step #3 - "compile-afl-address-x86_64": checking for chflags... no
+Step #3 - "compile-afl-address-x86_64": checking for dlopen... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for fadvise64... no
+Step #3 - "compile-afl-address-x86_64": checking for fallocate... yes
+Step #3 - "compile-afl-address-x86_64": checking for fallocate64... yes
+Step #3 - "compile-afl-address-x86_64": checking for fchown... yes
+Step #3 - "compile-afl-address-x86_64": checking for fcntl... yes
+Step #3 - "compile-afl-address-x86_64": checking for fdatasync... yes
+Step #3 - "compile-afl-address-x86_64": checking for fstat64... yes
+Step #3 - "compile-afl-address-x86_64": checking for fsync... yes
+Step #3 - "compile-afl-address-x86_64": checking for ftruncate64... yes
+Step #3 - "compile-afl-address-x86_64": checking for futimes... yes
+Step #3 - "compile-afl-address-x86_64": checking for getcwd... yes
+Step #3 - "compile-afl-address-x86_64": checking for getdtablesize... yes
+Step #3 - "compile-afl-address-x86_64": checking for getentropy... yes
+Step #3 - "compile-afl-address-x86_64": checking for gethostname... yes
+Step #3 - "compile-afl-address-x86_64": checking for getmntinfo... no
+Step #3 - "compile-afl-address-x86_64": checking for getpwuid_r... yes
+Step #3 - "compile-afl-address-x86_64": checking for getrandom... yes
+Step #3 - "compile-afl-address-x86_64": checking for getrlimit... yes
+Step #3 - "compile-afl-address-x86_64": checking for getrusage... yes
+Step #3 - "compile-afl-address-x86_64": checking for jrand48... yes
+Step #3 - "compile-afl-address-x86_64": checking for keyctl... no
+Step #3 - "compile-afl-address-x86_64": checking for llistxattr... yes
+Step #3 - "compile-afl-address-x86_64": checking for llseek... no
+Step #3 - "compile-afl-address-x86_64": checking for lseek64... yes
+Step #3 - "compile-afl-address-x86_64": checking for mallinfo... yes
+Step #3 - "compile-afl-address-x86_64": checking for mallinfo2... no
+Step #3 - "compile-afl-address-x86_64": checking for mbstowcs... yes
+Step #3 - "compile-afl-address-x86_64": checking for memalign... yes
+Step #3 - "compile-afl-address-x86_64": checking for mempcpy... yes
+Step #3 - "compile-afl-address-x86_64": checking for mmap... yes
+Step #3 - "compile-afl-address-x86_64": checking for msync... yes
+Step #3 - "compile-afl-address-x86_64": checking for nanosleep... yes
+Step #3 - "compile-afl-address-x86_64": checking for open64... yes
+Step #3 - "compile-afl-address-x86_64": checking for pathconf... yes
+Step #3 - "compile-afl-address-x86_64": checking for posix_fadvise... yes
+Step #3 - "compile-afl-address-x86_64": checking for posix_fadvise64... yes
+Step #3 - "compile-afl-address-x86_64": checking for posix_memalign... yes
+Step #3 - "compile-afl-address-x86_64": checking for prctl... yes
+Step #3 - "compile-afl-address-x86_64": checking for pread... yes
+Step #3 - "compile-afl-address-x86_64": checking for pwrite... yes
+Step #3 - "compile-afl-address-x86_64": checking for pread64... yes
+Step #3 - "compile-afl-address-x86_64": checking for pwrite64... yes
+Step #3 - "compile-afl-address-x86_64": checking for qsort_r... yes
+Step #3 - "compile-afl-address-x86_64": checking for secure_getenv... yes
+Step #3 - "compile-afl-address-x86_64": checking for setmntent... yes
+Step #3 - "compile-afl-address-x86_64": checking for setresgid... yes
+Step #3 - "compile-afl-address-x86_64": checking for setresuid... yes
+Step #3 - "compile-afl-address-x86_64": checking for snprintf... yes
+Step #3 - "compile-afl-address-x86_64": checking for srandom... yes
+Step #3 - "compile-afl-address-x86_64": checking for stpcpy... yes
+Step #3 - "compile-afl-address-x86_64": checking for strcasecmp... yes
+Step #3 - "compile-afl-address-x86_64": checking for strdup... yes
+Step #3 - "compile-afl-address-x86_64": checking for strnlen... yes
+Step #3 - "compile-afl-address-x86_64": checking for strptime... yes
+Step #3 - "compile-afl-address-x86_64": checking for strtoull... yes
+Step #3 - "compile-afl-address-x86_64": checking for sync_file_range... yes
+Step #3 - "compile-afl-address-x86_64": checking for sysconf... yes
+Step #3 - "compile-afl-address-x86_64": checking for usleep... yes
+Step #3 - "compile-afl-address-x86_64": checking for utime... yes
+Step #3 - "compile-afl-address-x86_64": checking for utimes... yes
+Step #3 - "compile-afl-address-x86_64": checking for valloc... yes
+Step #3 - "compile-afl-address-x86_64": checking for socket in -lsocket... no
+Step #3 - "compile-afl-address-x86_64": checking for magic_file in -lmagic... no
+Step #3 - "compile-afl-address-x86_64": Try testing for libarchive support (with dlopen) by default
+Step #3 - "compile-afl-address-x86_64": checking for libarchive... no
+Step #3 - "compile-afl-address-x86_64": checking for archive_read_new in -larchive... no
+Step #3 - "compile-afl-address-x86_64": checking for clock_gettime in -lrt... yes
+Step #3 - "compile-afl-address-x86_64": checking for fuse3... no
+Step #3 - "compile-afl-address-x86_64": checking for pthread.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for fuse.h... no
+Step #3 - "compile-afl-address-x86_64": checking for optreset... no
+Step #3 - "compile-afl-address-x86_64": GL_THREADS_API:
+Step #3 - "compile-afl-address-x86_64": checking for sem_init... yes
+Step #3 - "compile-afl-address-x86_64": checking whether qsort_r is GNU version... yes
+Step #3 - "compile-afl-address-x86_64": checking whether qsort_r is BSD version... no
+Step #3 - "compile-afl-address-x86_64": checking for unified diff option... -u
+Step #3 - "compile-afl-address-x86_64": checking for mount 'nosuid' option... yes
+Step #3 - "compile-afl-address-x86_64": checking for mount 'nodev' option... yes
+Step #3 - "compile-afl-address-x86_64": On linux-gnu systems, root_prefix defaults to ''
+Step #3 - "compile-afl-address-x86_64": On linux-gnu systems, prefix defaults to /usr
+Step #3 - "compile-afl-address-x86_64": checking whether we can link with -static... no
+Step #3 - "compile-afl-address-x86_64": checking for udev... no
+Step #3 - "compile-afl-address-x86_64": checking for udev rules dir... no
+Step #3 - "compile-afl-address-x86_64": checking for system crontab dir... /etc/cron.d
+Step #3 - "compile-afl-address-x86_64": checking for systemd... no
+Step #3 - "compile-afl-address-x86_64": checking for systemd system unit dir... no
+Step #3 - "compile-afl-address-x86_64": configure: creating ./config.status
+Step #3 - "compile-afl-address-x86_64": config.status: creating MCONFIG
+Step #3 - "compile-afl-address-x86_64": config.status: creating Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating util/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating util/subst.conf
+Step #3 - "compile-afl-address-x86_64": config.status: creating util/gen-tarball
+Step #3 - "compile-afl-address-x86_64": config.status: creating util/install-symlink
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/et/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/ss/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/e2p/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/ext2fs/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/ext2fs/ext2_types.h
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/uuid/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/uuid/uuid.pc
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/uuid/uuid_types.h
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/blkid/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/blkid/blkid.pc
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/blkid/blkid_types.h
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/support/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/ss/ss.pc
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/et/com_err.pc
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/e2p/e2p.pc
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/ext2fs/ext2fs.pc
+Step #3 - "compile-afl-address-x86_64": config.status: creating misc/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating ext2ed/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating e2fsck/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating debugfs/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating tests/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating tests/progs/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating tests/fuzz/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating resize/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating doc/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating po/Makefile.in
+Step #3 - "compile-afl-address-x86_64": config.status: creating scrub/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/config.h
+Step #3 - "compile-afl-address-x86_64": config.status: executing po-directories commands
+Step #3 - "compile-afl-address-x86_64": config.status: creating po/POTFILES
+Step #3 - "compile-afl-address-x86_64": config.status: creating po/Makefile
+Step #3 - "compile-afl-address-x86_64": ++ nproc
+Step #3 - "compile-afl-address-x86_64": + make -j32 all
+Step #3 - "compile-afl-address-x86_64": cd ./util ; make subst
+Step #3 - "compile-afl-address-x86_64": cd ./util ; make symlinks
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs/util'
+Step #3 - "compile-afl-address-x86_64": 	CREATE dirpaths.h
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs/util'
+Step #3 - "compile-afl-address-x86_64": 	CC symlinks.c
+Step #3 - "compile-afl-address-x86_64": 	CC subst.c
+Step #3 - "compile-afl-address-x86_64": 	LD symlinks
+Step #3 - "compile-afl-address-x86_64": 	LD subst
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs/util'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs/util'
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[1]: 'util/subst.conf' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[1]: 'lib/config.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": 	SUBST lib/dirpaths.h
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": cd .; CONFIG_FILES=./lib/ext2fs/ext2_types.h ./config.status
+Step #3 - "compile-afl-address-x86_64": config.status: creating ./lib/ext2fs/ext2_types.h
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/config.h
+Step #3 - "compile-afl-address-x86_64": config.status: lib/config.h is unchanged
+Step #3 - "compile-afl-address-x86_64": config.status: executing po-directories commands
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": cd .; CONFIG_FILES=./lib/blkid/blkid_types.h ./config.status
+Step #3 - "compile-afl-address-x86_64": config.status: creating ./lib/blkid/blkid_types.h
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/config.h
+Step #3 - "compile-afl-address-x86_64": config.status: lib/config.h is unchanged
+Step #3 - "compile-afl-address-x86_64": config.status: executing po-directories commands
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": cd .; CONFIG_FILES=./lib/uuid/uuid_types.h ./config.status
+Step #3 - "compile-afl-address-x86_64": config.status: creating ./lib/uuid/uuid_types.h
+Step #3 - "compile-afl-address-x86_64": config.status: creating lib/config.h
+Step #3 - "compile-afl-address-x86_64": config.status: lib/config.h is unchanged
+Step #3 - "compile-afl-address-x86_64": config.status: executing po-directories commands
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs/lib/et'
+Step #3 - "compile-afl-address-x86_64": 	SUBST compile_et
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs/lib/et'
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs/lib/ext2fs'
+Step #3 - "compile-afl-address-x86_64": 	SUBST ext2_err.et
+Step #3 - "compile-afl-address-x86_64": 	COMPILE_ET ext2_err.et
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs/lib/ext2fs'
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs/lib/support'
+Step #3 - "compile-afl-address-x86_64": 	COMPILE_ET prof_err.et
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs/lib/support'
+Step #3 - "compile-afl-address-x86_64": make libs
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'util/subst.conf' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'lib/config.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'lib/dirpaths.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'lib/ext2fs/ext2_types.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'lib/blkid/blkid_types.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'lib/uuid/uuid_types.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/et'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'compile_et' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/et'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/ext2fs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'ext2_err.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/ext2fs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/support'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'prof_err.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/support'
+Step #3 - "compile-afl-address-x86_64": making all in lib/et
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/et'
+Step #3 - "compile-afl-address-x86_64": 	CC error_message.c
+Step #3 - "compile-afl-address-x86_64": 	CC et_name.c
+Step #3 - "compile-afl-address-x86_64": 	CC init_et.c
+Step #3 - "compile-afl-address-x86_64": 	CC com_err.c
+Step #3 - "compile-afl-address-x86_64": 	CC com_right.c
+Step #3 - "compile-afl-address-x86_64": 	GEN_LIB libcom_err.a
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/et'
+Step #3 - "compile-afl-address-x86_64": making all in lib/ss
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/ss'
+Step #3 - "compile-afl-address-x86_64": 	SUBST mk_cmds
+Step #3 - "compile-afl-address-x86_64": 	COMPILE_ET ss_err.et
+Step #3 - "compile-afl-address-x86_64": 	MK_CMDS std_rqs.c
+Step #3 - "compile-afl-address-x86_64": 	COMPILE_ET ss_err.et
+Step #3 - "compile-afl-address-x86_64": 	CC ss_err.c
+Step #3 - "compile-afl-address-x86_64": 	CC invocation.c
+Step #3 - "compile-afl-address-x86_64": 	CC help.c
+Step #3 - "compile-afl-address-x86_64": 	CC execute_cmd.c
+Step #3 - "compile-afl-address-x86_64": 	CC listen.c
+Step #3 - "compile-afl-address-x86_64": 	CC parse.c
+Step #3 - "compile-afl-address-x86_64": 	CC error.c
+Step #3 - "compile-afl-address-x86_64": 	CC prompt.c
+Step #3 - "compile-afl-address-x86_64": 	CC request_tbl.c
+Step #3 - "compile-afl-address-x86_64": 	CC list_rqs.c
+Step #3 - "compile-afl-address-x86_64": 	CC pager.c
+Step #3 - "compile-afl-address-x86_64": 	CC requests.c
+Step #3 - "compile-afl-address-x86_64": 	CC data.c
+Step #3 - "compile-afl-address-x86_64": 	CC get_readline.c
+Step #3 - "compile-afl-address-x86_64": [1;93m[!] [1;97mWARNING: [0mdlopen() detected. To have coverage for a library that your target dlopen()'s this must either happen before __AFL_INIT() or you must use AFL_PRELOAD to preload all dlopen()'ed libraries!
+Step #3 - "compile-afl-address-x86_64": [0m
+Step #3 - "compile-afl-address-x86_64": 	CC std_rqs.c
+Step #3 - "compile-afl-address-x86_64": 	GEN_LIB libss.a
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/ss'
+Step #3 - "compile-afl-address-x86_64": making all in lib/e2p
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/e2p'
+Step #3 - "compile-afl-address-x86_64": 	CC feature.c
+Step #3 - "compile-afl-address-x86_64": 	CC fgetflags.c
+Step #3 - "compile-afl-address-x86_64": 	CC fsetflags.c
+Step #3 - "compile-afl-address-x86_64": 	CC fgetversion.c
+Step #3 - "compile-afl-address-x86_64": 	CC fsetversion.c
+Step #3 - "compile-afl-address-x86_64": 	CC getflags.c
+Step #3 - "compile-afl-address-x86_64": 	CC getversion.c
+Step #3 - "compile-afl-address-x86_64": 	CC hashstr.c
+Step #3 - "compile-afl-address-x86_64": 	CC iod.c
+Step #3 - "compile-afl-address-x86_64": 	CC ls.c
+Step #3 - "compile-afl-address-x86_64": 	CC ljs.c
+Step #3 - "compile-afl-address-x86_64": 	CC mntopts.c
+Step #3 - "compile-afl-address-x86_64": 	CC parse_num.c
+Step #3 - "compile-afl-address-x86_64": 	CC pe.c
+Step #3 - "compile-afl-address-x86_64": 	CC pf.c
+Step #3 - "compile-afl-address-x86_64": 	CC ps.c
+Step #3 - "compile-afl-address-x86_64": 	CC setflags.c
+Step #3 - "compile-afl-address-x86_64": 	CC setversion.c
+Step #3 - "compile-afl-address-x86_64": 	CC uuid.c
+Step #3 - "compile-afl-address-x86_64": 	CC ostype.c
+Step #3 - "compile-afl-address-x86_64": 	CC percent.c
+Step #3 - "compile-afl-address-x86_64": 	CC crypto_mode.c
+Step #3 - "compile-afl-address-x86_64": 	CC fgetproject.c
+Step #3 - "compile-afl-address-x86_64": 	CC fsetproject.c
+Step #3 - "compile-afl-address-x86_64": 	CC encoding.c
+Step #3 - "compile-afl-address-x86_64": 	CC errcode.c
+Step #3 - "compile-afl-address-x86_64": 	GEN_LIB libe2p.a
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/e2p'
+Step #3 - "compile-afl-address-x86_64": making all in lib/uuid
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/uuid'
+Step #3 - "compile-afl-address-x86_64": 	CP uuid.h
+Step #3 - "compile-afl-address-x86_64": 	CC clear.c
+Step #3 - "compile-afl-address-x86_64": 	CC compare.c
+Step #3 - "compile-afl-address-x86_64": 	CC copy.c
+Step #3 - "compile-afl-address-x86_64": 	CC gen_uuid.c
+Step #3 - "compile-afl-address-x86_64": 	CC isnull.c
+Step #3 - "compile-afl-address-x86_64": 	CC pack.c
+Step #3 - "compile-afl-address-x86_64": 	CC parse.c
+Step #3 - "compile-afl-address-x86_64": 	CC unpack.c
+Step #3 - "compile-afl-address-x86_64": 	CC unparse.c
+Step #3 - "compile-afl-address-x86_64": 	CC uuid_time.c
+Step #3 - "compile-afl-address-x86_64": 	GEN_LIB libuuid.a
+Step #3 - "compile-afl-address-x86_64": 	CC tst_uuid.o
+Step #3 - "compile-afl-address-x86_64": 	LD uuid_time
+Step #3 - "compile-afl-address-x86_64": 	SUBST uuid.3
+Step #3 - "compile-afl-address-x86_64": 	SUBST uuid_clear.3
+Step #3 - "compile-afl-address-x86_64": 	SUBST uuid_compare.3
+Step #3 - "compile-afl-address-x86_64": 	SUBST uuid_copy.3
+Step #3 - "compile-afl-address-x86_64": 	SUBST uuid_generate.3
+Step #3 - "compile-afl-address-x86_64": 	SUBST uuid_is_null.3
+Step #3 - "compile-afl-address-x86_64": 	SUBST uuid_parse.3
+Step #3 - "compile-afl-address-x86_64": 	SUBST uuid_time.3
+Step #3 - "compile-afl-address-x86_64": 	SUBST uuid_unparse.3
+Step #3 - "compile-afl-address-x86_64": 	LD tst_uuid
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/uuid'
+Step #3 - "compile-afl-address-x86_64": making all in lib/blkid
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/blkid'
+Step #3 - "compile-afl-address-x86_64": 	CP blkid.h
+Step #3 - "compile-afl-address-x86_64": 	CC cache.c
+Step #3 - "compile-afl-address-x86_64": 	CC dev.c
+Step #3 - "compile-afl-address-x86_64": 	CC devname.c
+Step #3 - "compile-afl-address-x86_64": 	CC devno.c
+Step #3 - "compile-afl-address-x86_64": 	CC getsize.c
+Step #3 - "compile-afl-address-x86_64": 	CC llseek.c
+Step #3 - "compile-afl-address-x86_64": 	CC probe.c
+Step #3 - "compile-afl-address-x86_64": 	CC read.c
+Step #3 - "compile-afl-address-x86_64": 	CC resolve.c
+Step #3 - "compile-afl-address-x86_64": 	CC save.c
+Step #3 - "compile-afl-address-x86_64": 	CC tag.c
+Step #3 - "compile-afl-address-x86_64": 	CC version.c
+Step #3 - "compile-afl-address-x86_64": 	GEN_LIB libblkid.a
+Step #3 - "compile-afl-address-x86_64": 	SUBST libblkid.3
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/blkid'
+Step #3 - "compile-afl-address-x86_64": making all in lib/support
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/support'
+Step #3 - "compile-afl-address-x86_64": 	CC cstring.c
+Step #3 - "compile-afl-address-x86_64": 	CC mkquota.c
+Step #3 - "compile-afl-address-x86_64": 	CC plausible.c
+Step #3 - "compile-afl-address-x86_64": 	CC profile.c
+Step #3 - "compile-afl-address-x86_64": 	CC parse_qtype.c
+Step #3 - "compile-afl-address-x86_64": 	CC print_fs_flags.c
+Step #3 - "compile-afl-address-x86_64": 	CC profile_helpers.c
+Step #3 - "compile-afl-address-x86_64": 	CC prof_err.c
+Step #3 - "compile-afl-address-x86_64": 	CC quotaio.c
+Step #3 - "compile-afl-address-x86_64": 	CC quotaio_v2.c
+Step #3 - "compile-afl-address-x86_64": 	CC quotaio_tree.c
+Step #3 - "compile-afl-address-x86_64": 	CC dict.c
+Step #3 - "compile-afl-address-x86_64": 	CC devname.c
+Step #3 - "compile-afl-address-x86_64": 	GEN_LIB libsupport.a
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/support'
+Step #3 - "compile-afl-address-x86_64": making all in lib/ext2fs
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/ext2fs'
+Step #3 - "compile-afl-address-x86_64": 	CC gen_crc32ctable
+Step #3 - "compile-afl-address-x86_64": 	CC bb_compat.c
+Step #3 - "compile-afl-address-x86_64": 	CC inode_io.c
+Step #3 - "compile-afl-address-x86_64": 	CC write_bb_file.c
+Step #3 - "compile-afl-address-x86_64": 	CC dupfs.c
+Step #3 - "compile-afl-address-x86_64": 	CC imager.c
+Step #3 - "compile-afl-address-x86_64": 	CC test_io.c
+Step #3 - "compile-afl-address-x86_64": 	CC ext2_err.c
+Step #3 - "compile-afl-address-x86_64": 	CC alloc.c
+Step #3 - "compile-afl-address-x86_64": 	CC alloc_sb.c
+Step #3 - "compile-afl-address-x86_64": 	CC alloc_stats.c
+Step #3 - "compile-afl-address-x86_64": 	CC alloc_tables.c
+Step #3 - "compile-afl-address-x86_64": 	CC atexit.c
+Step #3 - "compile-afl-address-x86_64": 	CC badblocks.c
+Step #3 - "compile-afl-address-x86_64": 	CC bb_inode.c
+Step #3 - "compile-afl-address-x86_64": 	CC bitmaps.c
+Step #3 - "compile-afl-address-x86_64": 	CC bitops.c
+Step #3 - "compile-afl-address-x86_64": 	CC blkmap64_ba.c
+Step #3 - "compile-afl-address-x86_64": 	CC blkmap64_rb.c
+Step #3 - "compile-afl-address-x86_64": 	CC blknum.c
+Step #3 - "compile-afl-address-x86_64": 	CC block.c
+Step #3 - "compile-afl-address-x86_64": 	CC bmap.c
+Step #3 - "compile-afl-address-x86_64": 	CC check_desc.c
+Step #3 - "compile-afl-address-x86_64": 	CC closefs.c
+Step #3 - "compile-afl-address-x86_64": 	CC crc16.c
+Step #3 - "compile-afl-address-x86_64": 	CC csum.c
+Step #3 - "compile-afl-address-x86_64": 	CC dblist.c
+Step #3 - "compile-afl-address-x86_64": 	CC dblist_dir.c
+Step #3 - "compile-afl-address-x86_64": 	CC dirblock.c
+Step #3 - "compile-afl-address-x86_64": 	CC dirhash.c
+Step #3 - "compile-afl-address-x86_64": 	CC dir_iterate.c
+Step #3 - "compile-afl-address-x86_64": 	CC expanddir.c
+Step #3 - "compile-afl-address-x86_64": 	CC ext_attr.c
+Step #3 - "compile-afl-address-x86_64": 	CC extent.c
+Step #3 - "compile-afl-address-x86_64": 	CC fallocate.c
+Step #3 - "compile-afl-address-x86_64": 	CC fileio.c
+Step #3 - "compile-afl-address-x86_64": 	CC finddev.c
+Step #3 - "compile-afl-address-x86_64": 	CC flushb.c
+Step #3 - "compile-afl-address-x86_64": 	CC freefs.c
+Step #3 - "compile-afl-address-x86_64": 	CC gen_bitmap.c
+Step #3 - "compile-afl-address-x86_64": 	CC gen_bitmap64.c
+Step #3 - "compile-afl-address-x86_64": 	CC get_num_dirs.c
+Step #3 - "compile-afl-address-x86_64": 	CC get_pathname.c
+Step #3 - "compile-afl-address-x86_64": 	CC getenv.c
+Step #3 - "compile-afl-address-x86_64": 	CC getsize.c
+Step #3 - "compile-afl-address-x86_64": 	CC getsectsize.c
+Step #3 - "compile-afl-address-x86_64": 	CC hashmap.c
+Step #3 - "compile-afl-address-x86_64": 	CC i_block.c
+Step #3 - "compile-afl-address-x86_64": 	CC icount.c
+Step #3 - "compile-afl-address-x86_64": 	CC ind_block.c
+Step #3 - "compile-afl-address-x86_64": 	CC initialize.c
+Step #3 - "compile-afl-address-x86_64": 	CC inline.c
+Step #3 - "compile-afl-address-x86_64": 	CC inline_data.c
+Step #3 - "compile-afl-address-x86_64": 	CC inode.c
+Step #3 - "compile-afl-address-x86_64": 	CC io_manager.c
+Step #3 - "compile-afl-address-x86_64": 	CC ismounted.c
+Step #3 - "compile-afl-address-x86_64": 	CC link.c
+Step #3 - "compile-afl-address-x86_64": 	CC llseek.c
+Step #3 - "compile-afl-address-x86_64": 	CC lookup.c
+Step #3 - "compile-afl-address-x86_64": 	CC mkdir.c
+Step #3 - "compile-afl-address-x86_64": 	CC mkjournal.c
+Step #3 - "compile-afl-address-x86_64": 	CC mmp.c
+Step #3 - "compile-afl-address-x86_64": 	CC namei.c
+Step #3 - "compile-afl-address-x86_64": 	CC native.c
+Step #3 - "compile-afl-address-x86_64": 	CC newdir.c
+Step #3 - "compile-afl-address-x86_64": 	CC nls_utf8.c
+Step #3 - "compile-afl-address-x86_64": 	CC openfs.c
+Step #3 - "compile-afl-address-x86_64": 	CC orphan.c
+Step #3 - "compile-afl-address-x86_64": 	CC progress.c
+Step #3 - "compile-afl-address-x86_64": 	CC punch.c
+Step #3 - "compile-afl-address-x86_64": 	CC qcow2.c
+Step #3 - "compile-afl-address-x86_64": 	CC read_bb.c
+Step #3 - "compile-afl-address-x86_64": 	CC read_bb_file.c
+Step #3 - "compile-afl-address-x86_64": 	CC res_gdt.c
+Step #3 - "compile-afl-address-x86_64": 	CC rw_bitmaps.c
+Step #3 - "compile-afl-address-x86_64": 	CC sha512.c
+Step #3 - "compile-afl-address-x86_64": 	CC swapfs.c
+Step #3 - "compile-afl-address-x86_64": 	CC symlink.c
+Step #3 - "compile-afl-address-x86_64": 	CC tdb.c
+Step #3 - "compile-afl-address-x86_64": 	CC undo_io.c
+Step #3 - "compile-afl-address-x86_64": 	CC unix_io.c
+Step #3 - "compile-afl-address-x86_64": 	CC sparse_io.c
+Step #3 - "compile-afl-address-x86_64": 	CC unlink.c
+Step #3 - "compile-afl-address-x86_64": 	CC valid_blk.c
+Step #3 - "compile-afl-address-x86_64": 	CC version.c
+Step #3 - "compile-afl-address-x86_64": 	CC rbtree.c
+Step #3 - "compile-afl-address-x86_64": 	GEN32CTABLE crc32c_table.h
+Step #3 - "compile-afl-address-x86_64": 	CC crc32c.c
+Step #3 - "compile-afl-address-x86_64": 	GEN_LIB libext2fs.a
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/ext2fs'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make progs
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'util/subst.conf' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'lib/config.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'lib/dirpaths.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'lib/ext2fs/ext2_types.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'lib/blkid/blkid_types.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'lib/uuid/uuid_types.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/et'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'compile_et' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/et'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/ext2fs'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'ext2_err.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/ext2fs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/support'
+Step #3 - "compile-afl-address-x86_64": make[2]: 'prof_err.h' is up to date.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/support'
+Step #3 - "compile-afl-address-x86_64": making all in lib/et
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/et'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/et'
+Step #3 - "compile-afl-address-x86_64": making all in lib/ss
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/ss'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/ss'
+Step #3 - "compile-afl-address-x86_64": making all in lib/e2p
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/e2p'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/e2p'
+Step #3 - "compile-afl-address-x86_64": making all in lib/uuid
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/uuid'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/uuid'
+Step #3 - "compile-afl-address-x86_64": making all in lib/blkid
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/blkid'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/blkid'
+Step #3 - "compile-afl-address-x86_64": making all in lib/support
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/support'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/support'
+Step #3 - "compile-afl-address-x86_64": making all in lib/ext2fs
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/lib/ext2fs'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/lib/ext2fs'
+Step #3 - "compile-afl-address-x86_64": making all in e2fsck
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/e2fsck'
+Step #3 - "compile-afl-address-x86_64": 	CC unix.c
+Step #3 - "compile-afl-address-x86_64": 	CC e2fsck.c
+Step #3 - "compile-afl-address-x86_64": 	CC super.c
+Step #3 - "compile-afl-address-x86_64": 	CC pass1.c
+Step #3 - "compile-afl-address-x86_64": 	CC pass1b.c
+Step #3 - "compile-afl-address-x86_64": 	CC pass2.c
+Step #3 - "compile-afl-address-x86_64": 	CC pass3.c
+Step #3 - "compile-afl-address-x86_64": 	CC pass4.c
+Step #3 - "compile-afl-address-x86_64": 	CC pass5.c
+Step #3 - "compile-afl-address-x86_64": 	CC journal.c
+Step #3 - "compile-afl-address-x86_64": 	CC badblocks.c
+Step #3 - "compile-afl-address-x86_64": 	CC util.c
+Step #3 - "compile-afl-address-x86_64": 	CC dirinfo.c
+Step #3 - "compile-afl-address-x86_64": 	CC dx_dirinfo.c
+Step #3 - "compile-afl-address-x86_64": 	CC ehandler.c
+Step #3 - "compile-afl-address-x86_64": 	CC problem.c
+Step #3 - "compile-afl-address-x86_64": 	CC message.c
+Step #3 - "compile-afl-address-x86_64": 	CC quota.c
+Step #3 - "compile-afl-address-x86_64": 	CC recovery.c
+Step #3 - "compile-afl-address-x86_64": 	CC region.c
+Step #3 - "compile-afl-address-x86_64": 	CC revoke.c
+Step #3 - "compile-afl-address-x86_64": 	CC ea_refcount.c
+Step #3 - "compile-afl-address-x86_64": 	CC rehash.c
+Step #3 - "compile-afl-address-x86_64": 	CC logfile.c
+Step #3 - "compile-afl-address-x86_64": 	CC sigcatcher.c
+Step #3 - "compile-afl-address-x86_64": 	CC readahead.c
+Step #3 - "compile-afl-address-x86_64": 	CC extents.c
+Step #3 - "compile-afl-address-x86_64": 	CC encrypted_files.c
+Step #3 - "compile-afl-address-x86_64": 	SUBST e2fsck.8
+Step #3 - "compile-afl-address-x86_64": 	SUBST e2fsck.conf.5
+Step #3 - "compile-afl-address-x86_64": 	LD e2fsck
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/e2fsck'
+Step #3 - "compile-afl-address-x86_64": making all in debugfs
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/e2fsprogs/debugfs'
+Step #3 - "compile-afl-address-x86_64": 	MK_CMDS debug_cmds.c
+Step #3 - "compile-afl-address-x86_64": 	CC debugfs.c
+Step #3 - "compile-afl-address-x86_64": 	CC util.c
+Step #3 - "compile-afl-address-x86_64": 	CC ncheck.c
+Step #3 - "compile-afl-address-x86_64": 	CC icheck.c
+Step #3 - "compile-afl-address-x86_64": 	CC ls.c
+Step #3 - "compile-afl-address-x86_64": 	CC lsdel.c
+Step #3 - "compile-afl-address-x86_64": 	CC dump.c
+Step #3 - "compile-afl-address-x86_64": 	CC set_fields.c
+Step #3 - "compile-afl-address-x86_64": 	CC logdump.c
+Step #3 - "compile-afl-address-x86_64": 	CC htree.c
+Step #3 - "compile-afl-address-x86_64": 	CC unused.c
+Step #3 - "compile-afl-address-x86_64": 	CC e2freefrag.o
+Step #3 - "compile-afl-address-x86_64": 	CC filefrag.c
+Step #3 - "compile-afl-address-x86_64": 	MK_CMDS extent_cmds.c
+Step #3 - "compile-afl-address-x86_64": 	CC extent_inode.c
+Step #3 - "compile-afl-address-x86_64": 	CC zap.c
+Step #3 - "compile-afl-address-x86_64": 	CC create_inode.o
+Step #3 - "compile-afl-address-x86_64": 	CC create_inode_libarchive.o
+Step #3 - "compile-afl-address-x86_64": 	CC quota.c
+Step #3 - "compile-afl-address-x86_64": 	CC xattrs.c
+Step #3 - "compile-afl-address-x86_64": 	CC journal.c
+Step #3 - "compile-afl-address-x86_64": 	CC revoke.o
+Step #3 - "compile-afl-address-x86_64": 	CC recovery.o
+Step #3 - "compile-afl-address-x86_64": 	CC do_journal.c
+Step #3 - "compile-afl-address-x86_64": 	CC do_orphan.c
+Step #3 - "compile-afl-address-x86_64": 	SUBST debugfs.8
+Step #3 - "compile-afl-address-x86_64": 	CC debug_cmds.c
+Step #3 - "compile-afl-address-x86_64": 	CC extent_cmds.c
+Step #3 - "compile-afl-address-x86_64": [1m./../misc/create_inode.c:589:37: [0m[0;1;31merror: [0m[1mvariable has incomplete type 'struct fsverity_read_metadata_arg'[0m
+Step #3 - "compile-afl-address-x86_64":   589 |                 [0;34mstruct[0m fsverity_read_metadata_arg arg = {[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                                  ^
+Step #3 - "compile-afl-address-x86_64": [0m[1m./../misc/create_inode.c:589:10: [0m[0;1;36mnote: [0mforward declaration of 'struct fsverity_read_metadata_arg'[0m
+Step #3 - "compile-afl-address-x86_64":   589 |                 [0;34mstruct[0m fsverity_read_metadata_arg arg = {[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                       ^
+Step #3 - "compile-afl-address-x86_64": [0m[1m./../misc/create_inode.c:600:20: [0m[0;1;31merror: [0m[1muse of undeclared identifier 'FS_IOC_READ_VERITY_METADATA'[0m
+Step #3 - "compile-afl-address-x86_64":   600 |                 size = ioctl(fd, FS_IOC_READ_VERITY_METADATA, &arg);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m./../misc/create_inode.c:617:24: [0m[0;1;31merror: [0m[1muse of undeclared identifier 'FS_VERITY_METADATA_TYPE_DESCRIPTOR'[0m
+Step #3 - "compile-afl-address-x86_64":   617 |                 [0;34mif[0m (metadata_type == FS_VERITY_METADATA_TYPE_DESCRIPTOR) {[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m./../misc/create_inode.c:621:24: [0m[0;1;31merror: [0m[1muse of undeclared identifier 'FS_VERITY_METADATA_TYPE_SIGNATURE'[0m
+Step #3 - "compile-afl-address-x86_64":   621 |                         arg.metadata_type = FS_VERITY_METADATA_TYPE_SIGNATURE;[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m./../misc/create_inode.c:625:25: [0m[0;1;31merror: [0m[1muse of undeclared identifier 'FS_IOC_READ_VERITY_METADATA'[0m
+Step #3 - "compile-afl-address-x86_64":   625 |                         sig_size = ioctl(fd, FS_IOC_READ_VERITY_METADATA, &arg);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m./../misc/create_inode.c:627:9: [0m[0;1;31merror: [0m[1mincomplete definition of type 'struct fsverity_descriptor'[0m
+Step #3 - "compile-afl-address-x86_64":   627 |                                 desc->__reserved_0x04 =[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                ~~~~^
+Step #3 - "compile-afl-address-x86_64": [0m[1m./../misc/create_inode.c:619:11: [0m[0;1;36mnote: [0mforward declaration of 'struct fsverity_descriptor'[0m
+Step #3 - "compile-afl-address-x86_64":   619 |                         [0;34mstruct[0m fsverity_descriptor *desc = ([0;34mvoid[0m *) buf;[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                               ^
+Step #3 - "compile-afl-address-x86_64": [0m[1m./../misc/create_inode.c:671:7: [0m[0;1;31merror: [0m[1muse of undeclared identifier 'FS_VERITY_METADATA_TYPE_MERKLE_TREE'[0m
+Step #3 - "compile-afl-address-x86_64":   671 |                                   FS_VERITY_METADATA_TYPE_MERKLE_TREE,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1m./../misc/create_inode.c:688:7: [0m[0;1;31merror: [0m[1muse of undeclared identifier 'FS_VERITY_METADATA_TYPE_DESCRIPTOR'[0m
+Step #3 - "compile-afl-address-x86_64":   688 |                                   FS_VERITY_METADATA_TYPE_DESCRIPTOR,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m8 errors generated.
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [Makefile:452: create_inode.o] Error 1
+Step #3 - "compile-afl-address-x86_64": make[2]: *** Waiting for unfinished jobs....
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/e2fsprogs/debugfs'
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [Makefile:445: all-progs-recursive] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/e2fsprogs'
+Step #3 - "compile-afl-address-x86_64": make: *** [Makefile:373: all] Error 2
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image e2fsprogs\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 e2fsprogs\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

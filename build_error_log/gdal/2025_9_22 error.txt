@@ -1,0 +1,467 @@
+starting build "e0c17106-07ce-4e0f-acca-5ae4ed91a5f0"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65"
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Sending build context to Docker daemon  3.584kB
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b549f31133a9: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 434ea960668c: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 868f576a1a60: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": d2b7fac4fa91: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e7df5d4b7fe9: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": abe9120609af: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 4912b874168a: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 220d818e8d56: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 7e71ad9e90dc: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 9c93ab725cd0: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 1c5487e81b8a: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 14b97fd07233: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 6d3e7d7d13d1: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e2fa7baf7482: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 9ba30d4ad6d9: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": ea8cc11d148d: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": fb3e0ebed05c: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": a901b1da50ac: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 59e4be53efa2: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 5e93e2a1ffd7: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b0176b5e2b47: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": a6320af92a2e: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e3e9238e3106: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 786a103563fc: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": f91541548774: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": c520c89dd6f0: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 885b00c53a72: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": ccbd52fb1553: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": abe9120609af: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 4344b11fc156: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b3ec0a72fa98: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 4912b874168a: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b5c5f999d55c: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 953986c847fa: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 220d818e8d56: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 579741777197: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0f69490f99cd: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 7e71ad9e90dc: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 26e21c65feb0: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0d17d40502b9: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 9c93ab725cd0: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 22de810cc064: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 91c6318ab85f: Pulling fs layer
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 1c5487e81b8a: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 6d3e7d7d13d1: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 14b97fd07233: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e2fa7baf7482: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": d2b7fac4fa91: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 9ba30d4ad6d9: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": ccbd52fb1553: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": ea8cc11d148d: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 4344b11fc156: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": fb3e0ebed05c: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": a901b1da50ac: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0d17d40502b9: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 26e21c65feb0: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b3ec0a72fa98: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 59e4be53efa2: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 953986c847fa: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e7df5d4b7fe9: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 22de810cc064: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 91c6318ab85f: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 5e93e2a1ffd7: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b0176b5e2b47: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e3e9238e3106: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": a6320af92a2e: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 786a103563fc: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": f91541548774: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 579741777197: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": c520c89dd6f0: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 885b00c53a72: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0f69490f99cd: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b5c5f999d55c: Waiting
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 868f576a1a60: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 868f576a1a60: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b549f31133a9: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b549f31133a9: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e7df5d4b7fe9: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e7df5d4b7fe9: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": d2b7fac4fa91: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": d2b7fac4fa91: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 4912b874168a: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 434ea960668c: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 434ea960668c: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 220d818e8d56: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 220d818e8d56: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b549f31133a9: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 9c93ab725cd0: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 9c93ab725cd0: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 1c5487e81b8a: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 1c5487e81b8a: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 14b97fd07233: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 14b97fd07233: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 6d3e7d7d13d1: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 6d3e7d7d13d1: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e2fa7baf7482: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e2fa7baf7482: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 7e71ad9e90dc: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 7e71ad9e90dc: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": ea8cc11d148d: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": ea8cc11d148d: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 9ba30d4ad6d9: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 9ba30d4ad6d9: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": a901b1da50ac: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": a901b1da50ac: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": fb3e0ebed05c: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": fb3e0ebed05c: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 59e4be53efa2: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 59e4be53efa2: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 5e93e2a1ffd7: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 5e93e2a1ffd7: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b0176b5e2b47: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b0176b5e2b47: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": a6320af92a2e: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": a6320af92a2e: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e3e9238e3106: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e3e9238e3106: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 786a103563fc: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 786a103563fc: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": f91541548774: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": f91541548774: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": c520c89dd6f0: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": c520c89dd6f0: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 885b00c53a72: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": ccbd52fb1553: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": ccbd52fb1553: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 434ea960668c: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 4344b11fc156: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 4344b11fc156: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 868f576a1a60: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": abe9120609af: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": abe9120609af: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b5c5f999d55c: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b5c5f999d55c: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b3ec0a72fa98: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b3ec0a72fa98: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 953986c847fa: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 953986c847fa: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 579741777197: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 579741777197: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0f69490f99cd: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0f69490f99cd: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 26e21c65feb0: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0d17d40502b9: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0d17d40502b9: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 22de810cc064: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 22de810cc064: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 91c6318ab85f: Verifying Checksum
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 91c6318ab85f: Download complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": d2b7fac4fa91: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e7df5d4b7fe9: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": abe9120609af: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 4912b874168a: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 220d818e8d56: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 7e71ad9e90dc: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 9c93ab725cd0: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 1c5487e81b8a: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 14b97fd07233: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 6d3e7d7d13d1: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e2fa7baf7482: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 9ba30d4ad6d9: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": ea8cc11d148d: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": fb3e0ebed05c: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": a901b1da50ac: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 59e4be53efa2: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 5e93e2a1ffd7: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b0176b5e2b47: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": a6320af92a2e: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": e3e9238e3106: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 786a103563fc: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": f91541548774: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": c520c89dd6f0: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 885b00c53a72: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": ccbd52fb1553: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 4344b11fc156: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b3ec0a72fa98: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": b5c5f999d55c: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 953986c847fa: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 579741777197: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0f69490f99cd: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 26e21c65feb0: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0d17d40502b9: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 22de810cc064: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 91c6318ab85f: Pull complete
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Digest: sha256:da1935bce8ffd5308f198945e0902752866aeb835b461aa0e64367b144af0327
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":  ---> 742f1912ab79
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Step 2/5 : RUN apt-get update &&     apt-get install -y make autoconf automake libtool g++ curl cmake sqlite3 pkg-config
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":  ---> Running in b9ccd1b2bcf6
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Fetched 383 kB in 1s (386 kB/s)
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Reading package lists...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Reading package lists...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Building dependency tree...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Reading state information...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": g++ is already the newest version (4:9.3.0-1ubuntu2).
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": g++ set to manually installed.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": make set to manually installed.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": curl is already the newest version (7.68.0-1ubuntu2.25).
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": The following additional packages will be installed:
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":   cmake-data file libarchive13 libglib2.0-0 libglib2.0-data libicu66
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":   libjsoncpp1 libltdl-dev libltdl7 libmagic-mgc libmagic1 librhash0 libuv1
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":   libxml2 shared-mime-info xdg-user-dirs
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Suggested packages:
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":   autoconf-archive gnu-standards autoconf-doc gettext cmake-doc ninja-build
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":   lrzip libtool-doc gfortran | fortran95-compiler gcj-jdk sqlite3-doc
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": The following NEW packages will be installed:
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":   autoconf automake cmake cmake-data file libarchive13 libglib2.0-0
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":   libglib2.0-data libicu66 libjsoncpp1 libltdl-dev libltdl7 libmagic-mgc
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":   libmagic1 librhash0 libtool libuv1 libxml2 pkg-config shared-mime-info
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":   sqlite3 xdg-user-dirs
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": 0 upgraded, 22 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Need to get 19.2 MB of archives.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": After this operation, 87.7 MB of additional disk space will be used.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:2 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-0 amd64 2.64.6-1~ubuntu20.04.9 [1290 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:5 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-data all 2.64.6-1~ubuntu20.04.9 [5836 B]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 shared-mime-info amd64 1.15-1 [430 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 xdg-user-dirs amd64 0.17-2ubuntu1 [48.3 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:10 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libuv1 amd64 1.34.2-1ubuntu1.5 [80.9 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 autoconf all 2.69-11.1 [321 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:13 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 cmake-data all 3.16.3-1ubuntu1.20.04.1 [1613 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libarchive13 amd64 3.4.0-2ubuntu1.5 [327 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64 libjsoncpp1 amd64 1.7.4-3.1ubuntu2 [75.6 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:16 http://archive.ubuntu.com/ubuntu focal/main amd64 librhash0 amd64 1.3.9-1 [113 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:17 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 cmake amd64 3.16.3-1ubuntu1.20.04.1 [3668 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:18 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:19 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:20 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:21 http://archive.ubuntu.com/ubuntu focal/main amd64 pkg-config amd64 0.29.1-0ubuntu4 [45.5 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Get:22 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 sqlite3 amd64 3.31.1-4ubuntu0.7 [860 kB]
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": [0mFetched 19.2 MB in 3s (5789 kB/s)
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libmagic-mgc.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../00-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libmagic1:amd64.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../01-libmagic1_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package file.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../02-file_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking file (1:5.38-4) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libglib2.0-0:amd64.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../03-libglib2.0-0_2.64.6-1~ubuntu20.04.9_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libglib2.0-data.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../04-libglib2.0-data_2.64.6-1~ubuntu20.04.9_all.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libicu66:amd64.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../05-libicu66_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libxml2:amd64.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../06-libxml2_2.9.10+dfsg-5ubuntu0.20.04.10_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package shared-mime-info.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../07-shared-mime-info_1.15-1_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking shared-mime-info (1.15-1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package xdg-user-dirs.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../08-xdg-user-dirs_0.17-2ubuntu1_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libuv1:amd64.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../09-libuv1_1.34.2-1ubuntu1.5_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libuv1:amd64 (1.34.2-1ubuntu1.5) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package autoconf.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../10-autoconf_2.69-11.1_all.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking autoconf (2.69-11.1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package automake.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../11-automake_1%3a1.16.1-4ubuntu6_all.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package cmake-data.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../12-cmake-data_3.16.3-1ubuntu1.20.04.1_all.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking cmake-data (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libarchive13:amd64.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../13-libarchive13_3.4.0-2ubuntu1.5_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libarchive13:amd64 (3.4.0-2ubuntu1.5) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libjsoncpp1:amd64.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../14-libjsoncpp1_1.7.4-3.1ubuntu2_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libjsoncpp1:amd64 (1.7.4-3.1ubuntu2) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package librhash0:amd64.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../15-librhash0_1.3.9-1_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking librhash0:amd64 (1.3.9-1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package cmake.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../16-cmake_3.16.3-1ubuntu1.20.04.1_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking cmake (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libltdl7:amd64.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../17-libltdl7_2.4.6-14_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libltdl-dev:amd64.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../18-libltdl-dev_2.4.6-14_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package libtool.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../19-libtool_2.4.6-14_all.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking libtool (2.4.6-14) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package pkg-config.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../20-pkg-config_0.29.1-0ubuntu4_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Selecting previously unselected package sqlite3.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Preparing to unpack .../21-sqlite3_3.31.1-4ubuntu0.7_amd64.deb ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Unpacking sqlite3 (3.31.1-4ubuntu0.7) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": No schema files found: doing nothing.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up file (1:5.38-4) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libuv1:amd64 (1.34.2-1ubuntu1.5) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up autoconf (2.69-11.1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up librhash0:amd64 (1.3.9-1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up cmake-data (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up sqlite3 (3.31.1-4ubuntu0.7) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libjsoncpp1:amd64 (1.7.4-3.1ubuntu2) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": update-alternatives: using /usr/bin/automake-1.16 to provide /usr/bin/automake (automake) in auto mode
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": update-alternatives: warning: skip creation of /usr/share/man/man1/automake.1.gz because associated file /usr/share/man/man1/automake-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": update-alternatives: warning: skip creation of /usr/share/man/man1/aclocal.1.gz because associated file /usr/share/man/man1/aclocal-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libtool (2.4.6-14) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libarchive13:amd64 (3.4.0-2ubuntu1.5) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up shared-mime-info (1.15-1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Setting up cmake (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Removing intermediate container b9ccd1b2bcf6
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":  ---> 6ca8e24b88ac
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Step 3/5 : RUN git clone --depth 1 https://github.com/OSGeo/gdal gdal
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":  ---> Running in 5387073eb0eb
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": [91mCloning into 'gdal'...
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": [0m[91mUpdating files:  90% (10035/11070)[0m[91mUpdating files:  91% (10074/11070)[0m[91mUpdating files:  92% (10185/11070)[0m[91mUpdating files:  93% (10296/11070)[0m[91mUpdating files:  94% (10406/11070)[0m[91mUpdating files:  95% (10517/11070)[0m[91mUpdating files:  96% (10628/11070)[0m[91mUpdating files:  97% (10738/11070)[0m[91mUpdating files:  98% (10849/11070)[0m[91mUpdating files:  99% (10960/11070)[0m[91mUpdating files: 100% (11070/11070)[0m[91mUpdating files: 100% (11070/11070), done.
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": [0mRemoving intermediate container 5387073eb0eb
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":  ---> bd03db6eb450
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Step 4/5 : RUN cp gdal/fuzzers/build.sh $SRC/
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":  ---> Running in 5618b430ef3f
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Removing intermediate container 5618b430ef3f
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":  ---> bfa53ba15216
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Step 5/5 : WORKDIR gdal
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":  ---> Running in 201d4bc974c8
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Removing intermediate container 201d4bc974c8
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65":  ---> e1bdffc5a082
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Successfully built e1bdffc5a082
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Successfully tagged gcr.io/oss-fuzz/gdal:latest
+Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/gdal:latest
+Finished Step #1 - "build-6c428e87-7579-482c-b6e5-fe9bd29f8e65"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/gdal
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/filewy75kM
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/gdal/.git
+Step #2 - "srcmap": + GIT_DIR=/src/gdal
+Step #2 - "srcmap": + cd /src/gdal
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/OSGeo/gdal
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=8e39cf905b4ad0a7b5e32dbb890d3b952ce164d6
+Step #2 - "srcmap": + jq_inplace /tmp/filewy75kM '."/src/gdal" = { type: "git", url: "https://github.com/OSGeo/gdal", rev: "8e39cf905b4ad0a7b5e32dbb890d3b952ce164d6" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileAhA0wb
+Step #2 - "srcmap": + cat /tmp/filewy75kM
+Step #2 - "srcmap": + jq '."/src/gdal" = { type: "git", url: "https://github.com/OSGeo/gdal", rev: "8e39cf905b4ad0a7b5e32dbb890d3b952ce164d6" }'
+Step #2 - "srcmap": + mv /tmp/fileAhA0wb /tmp/filewy75kM
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/filewy75kM
+Step #2 - "srcmap": + rm /tmp/filewy75kM
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/gdal": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/OSGeo/gdal",
+Step #2 - "srcmap":     "rev": "8e39cf905b4ad0a7b5e32dbb890d3b952ce164d6"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + BUILD_SH_FROM_REPO=/src/gdal/fuzzers/build.sh
+Step #3 - "compile-afl-address-x86_64": + test -f /src/gdal/fuzzers/build.sh
+Step #3 - "compile-afl-address-x86_64": + test /src/build.sh '!=' /src/gdal/fuzzers/build.sh
+Step #3 - "compile-afl-address-x86_64": + echo 'Running /src/gdal/fuzzers/build.sh'
+Step #3 - "compile-afl-address-x86_64": Running /src/gdal/fuzzers/build.sh
+Step #3 - "compile-afl-address-x86_64": + exec /src/gdal/fuzzers/build.sh
+Step #3 - "compile-afl-address-x86_64": Cloning into 'proj'...
+Step #3 - "compile-afl-address-x86_64": remote: Enumerating objects: 1312, done.[K
+Step #3 - "compile-afl-address-x86_64": remote: Counting objects:   0% (1/1312)[Kremote: Counting objects:   1% (14/1312)[Kremote: Counting objects:   2% (27/1312)[Kremote: Counting objects:   3% (40/1312)[Kremote: Counting objects:   4% (53/1312)[Kremote: Counting objects:   5% (66/1312)[Kremote: Counting objects:   6% (79/1312)[Kremote: Counting objects:   7% (92/1312)[Kremote: Counting objects:   8% (105/1312)[Kremote: Counting objects:   9% (119/1312)[Kremote: Counting objects:  10% (132/1312)[Kremote: Counting objects:  11% (145/1312)[Kremote: Counting objects:  12% (158/1312)[Kremote: Counting objects:  13% (171/1312)[Kremote: Counting objects:  14% (184/1312)[Kremote: Counting objects:  15% (197/1312)[Kremote: Counting objects:  16% (210/1312)[Kremote: Counting objects:  17% (224/1312)[Kremote: Counting objects:  18% (237/1312)[Kremote: Counting objects:  19% (250/1312)[Kremote: Counting objects:  20% (263/1312)[Kremote: Counting objects:  21% (276/1312)[Kremote: Counting objects:  22% (289/1312)[Kremote: Counting objects:  23% (302/1312)[Kremote: Counting objects:  24% (315/1312)[Kremote: Counting objects:  25% (328/1312)[Kremote: Counting objects:  26% (342/1312)[Kremote: Counting objects:  27% (355/1312)[Kremote: Counting objects:  28% (368/1312)[Kremote: Counting objects:  29% (381/1312)[Kremote: Counting objects:  30% (394/1312)[Kremote: Counting objects:  31% (407/1312)[Kremote: Counting objects:  32% (420/1312)[Kremote: Counting objects:  33% (433/1312)[Kremote: Counting objects:  34% (447/1312)[Kremote: Counting objects:  35% (460/1312)[Kremote: Counting objects:  36% (473/1312)[Kremote: Counting objects:  37% (486/1312)[Kremote: Counting objects:  38% (499/1312)[Kremote: Counting objects:  39% (512/1312)[Kremote: Counting objects:  40% (525/1312)[Kremote: Counting objects:  41% (538/1312)[Kremote: Counting objects:  42% (552/1312)[Kremote: Counting objects:  43% (565/1312)[Kremote: Counting objects:  44% (578/1312)[Kremote: Counting objects:  45% (591/1312)[Kremote: Counting objects:  46% (604/1312)[Kremote: Counting objects:  47% (617/1312)[Kremote: Counting objects:  48% (630/1312)[Kremote: Counting objects:  49% (643/1312)[Kremote: Counting objects:  50% (656/1312)[Kremote: Counting objects:  51% (670/1312)[Kremote: Counting objects:  52% (683/1312)[Kremote: Counting objects:  53% (696/1312)[Kremote: Counting objects:  54% (709/1312)[Kremote: Counting objects:  55% (722/1312)[Kremote: Counting objects:  56% (735/1312)[Kremote: Counting objects:  57% (748/1312)[Kremote: Counting objects:  58% (761/1312)[Kremote: Counting objects:  59% (775/1312)[Kremote: Counting objects:  60% (788/1312)[Kremote: Counting objects:  61% (801/1312)[Kremote: Counting objects:  62% (814/1312)[Kremote: Counting objects:  63% (827/1312)[Kremote: Counting objects:  64% (840/1312)[Kremote: Counting objects:  65% (853/1312)[Kremote: Counting objects:  66% (866/1312)[Kremote: Counting objects:  67% (880/1312)[Kremote: Counting objects:  68% (893/1312)[Kremote: Counting objects:  69% (906/1312)[Kremote: Counting objects:  70% (919/1312)[Kremote: Counting objects:  71% (932/1312)[Kremote: Counting objects:  72% (945/1312)[Kremote: Counting objects:  73% (958/1312)[Kremote: Counting objects:  74% (971/1312)[Kremote: Counting objects:  75% (984/1312)[Kremote: Counting objects:  76% (998/1312)[Kremote: Counting objects:  77% (1011/1312)[Kremote: Counting objects:  78% (1024/1312)[Kremote: Counting objects:  79% (1037/1312)[Kremote: Counting objects:  80% (1050/1312)[Kremote: Counting objects:  81% (1063/1312)[Kremote: Counting objects:  82% (1076/1312)[Kremote: Counting objects:  83% (1089/1312)[Kremote: Counting objects:  84% (1103/1312)[Kremote: Counting objects:  85% (1116/1312)[Kremote: Counting objects:  86% (1129/1312)[Kremote: Counting objects:  87% (1142/1312)[Kremote: Counting objects:  88% (1155/1312)[Kremote: Counting objects:  89% (1168/1312)[Kremote: Counting objects:  90% (1181/1312)[Kremote: Counting objects:  91% (1194/1312)[Kremote: Counting objects:  92% (1208/1312)[Kremote: Counting objects:  93% (1221/1312)[Kremote: Counting objects:  94% (1234/1312)[Kremote: Counting objects:  95% (1247/1312)[Kremote: Counting objects:  96% (1260/1312)[Kremote: Counting objects:  97% (1273/1312)[Kremote: Counting objects:  98% (1286/1312)[Kremote: Counting objects:  99% (1299/1312)[Kremote: Counting objects: 100% (1312/1312)[Kremote: Counting objects: 100% (1312/1312), done.[K
+Step #3 - "compile-afl-address-x86_64": remote: Compressing objects:   0% (1/1090)[Kremote: Compressing objects:   1% (11/1090)[Kremote: Compressing objects:   2% (22/1090)[Kremote: Compressing objects:   3% (33/1090)[Kremote: Compressing objects:   4% (44/1090)[Kremote: Compressing objects:   5% (55/1090)[Kremote: Compressing objects:   6% (66/1090)[Kremote: Compressing objects:   7% (77/1090)[Kremote: Compressing objects:   8% (88/1090)[Kremote: Compressing objects:   9% (99/1090)[Kremote: Compressing objects:  10% (109/1090)[Kremote: Compressing objects:  11% (120/1090)[Kremote: Compressing objects:  12% (131/1090)[Kremote: Compressing objects:  13% (142/1090)[Kremote: Compressing objects:  14% (153/1090)[Kremote: Compressing objects:  15% (164/1090)[Kremote: Compressing objects:  16% (175/1090)[Kremote: Compressing objects:  17% (186/1090)[Kremote: Compressing objects:  18% (197/1090)[Kremote: Compressing objects:  19% (208/1090)[Kremote: Compressing objects:  20% (218/1090)[Kremote: Compressing objects:  21% (229/1090)[Kremote: Compressing objects:  22% (240/1090)[Kremote: Compressing objects:  23% (251/1090)[Kremote: Compressing objects:  24% (262/1090)[Kremote: Compressing objects:  25% (273/1090)[Kremote: Compressing objects:  26% (284/1090)[Kremote: Compressing objects:  27% (295/1090)[Kremote: Compressing objects:  28% (306/1090)[Kremote: Compressing objects:  29% (317/1090)[Kremote: Compressing objects:  30% (327/1090)[Kremote: Compressing objects:  31% (338/1090)[Kremote: Compressing objects:  32% (349/1090)[Kremote: Compressing objects:  33% (360/1090)[Kremote: Compressing objects:  34% (371/1090)[Kremote: Compressing objects:  35% (382/1090)[Kremote: Compressing objects:  36% (393/1090)[Kremote: Compressing objects:  37% (404/1090)[Kremote: Compressing objects:  38% (415/1090)[Kremote: Compressing objects:  39% (426/1090)[Kremote: Compressing objects:  40% (436/1090)[Kremote: Compressing objects:  41% (447/1090)[Kremote: Compressing objects:  42% (458/1090)[Kremote: Compressing objects:  43% (469/1090)[Kremote: Compressing objects:  44% (480/1090)[Kremote: Compressing objects:  45% (491/1090)[Kremote: Compressing objects:  46% (502/1090)[Kremote: Compressing objects:  47% (513/1090)[Kremote: Compressing objects:  48% (524/1090)[Kremote: Compressing objects:  49% (535/1090)[Kremote: Compressing objects:  50% (545/1090)[Kremote: Compressing objects:  51% (556/1090)[Kremote: Compressing objects:  52% (567/1090)[Kremote: Compressing objects:  53% (578/1090)[Kremote: Compressing objects:  54% (589/1090)[Kremote: Compressing objects:  55% (600/1090)[Kremote: Compressing objects:  56% (611/1090)[Kremote: Compressing objects:  57% (622/1090)[Kremote: Compressing objects:  58% (633/1090)[Kremote: Compressing objects:  59% (644/1090)[Kremote: Compressing objects:  60% (654/1090)[Kremote: Compressing objects:  61% (665/1090)[Kremote: Compressing objects:  62% (676/1090)[Kremote: Compressing objects:  63% (687/1090)[Kremote: Compressing objects:  64% (698/1090)[Kremote: Compressing objects:  65% (709/1090)[Kremote: Compressing objects:  66% (720/1090)[Kremote: Compressing objects:  67% (731/1090)[Kremote: Compressing objects:  68% (742/1090)[Kremote: Compressing objects:  69% (753/1090)[Kremote: Compressing objects:  70% (763/1090)[Kremote: Compressing objects:  71% (774/1090)[Kremote: Compressing objects:  72% (785/1090)[Kremote: Compressing objects:  73% (796/1090)[Kremote: Compressing objects:  74% (807/1090)[Kremote: Compressing objects:  75% (818/1090)[Kremote: Compressing objects:  76% (829/1090)[Kremote: Compressing objects:  77% (840/1090)[Kremote: Compressing objects:  78% (851/1090)[Kremote: Compressing objects:  79% (862/1090)[Kremote: Compressing objects:  80% (872/1090)[Kremote: Compressing objects:  81% (883/1090)[Kremote: Compressing objects:  82% (894/1090)[Kremote: Compressing objects:  83% (905/1090)[Kremote: Compressing objects:  84% (916/1090)[Kremote: Compressing objects:  85% (927/1090)[Kremote: Compressing objects:  86% (938/1090)[Kremote: Compressing objects:  87% (949/1090)[Kremote: Compressing objects:  88% (960/1090)[Kremote: Compressing objects:  89% (971/1090)[Kremote: Compressing objects:  90% (981/1090)[Kremote: Compressing objects:  91% (992/1090)[Kremote: Compressing objects:  92% (1003/1090)[Kremote: Compressing objects:  93% (1014/1090)[Kremote: Compressing objects:  94% (1025/1090)[Kremote: Compressing objects:  95% (1036/1090)[Kremote: Compressing objects:  96% (1047/1090)[Kremote: Compressing objects:  97% (1058/1090)[Kremote: Compressing objects:  98% (1069/1090)[Kremote: Compressing objects:  99% (1080/1090)[Kremote: Compressing objects: 100% (1090/1090)[Kremote: Compressing objects: 100% (1090/1090), done.[K
+Step #3 - "compile-afl-address-x86_64": Receiving objects:   0% (1/1312)Receiving objects:   1% (14/1312)Receiving objects:   2% (27/1312)Receiving objects:   3% (40/1312)Receiving objects:   4% (53/1312)Receiving objects:   5% (66/1312)Receiving objects:   6% (79/1312)Receiving objects:   7% (92/1312)Receiving objects:   8% (105/1312)Receiving objects:   9% (119/1312)Receiving objects:  10% (132/1312)Receiving objects:  11% (145/1312)Receiving objects:  12% (158/1312)Receiving objects:  13% (171/1312)Receiving objects:  14% (184/1312)Receiving objects:  15% (197/1312)Receiving objects:  16% (210/1312)Receiving objects:  17% (224/1312)Receiving objects:  18% (237/1312)Receiving objects:  19% (250/1312)Receiving objects:  20% (263/1312)Receiving objects:  21% (276/1312)Receiving objects:  22% (289/1312)Receiving objects:  23% (302/1312)Receiving objects:  24% (315/1312)Receiving objects:  25% (328/1312)Receiving objects:  26% (342/1312)Receiving objects:  27% (355/1312)Receiving objects:  28% (368/1312)Receiving objects:  29% (381/1312)Receiving objects:  30% (394/1312)Receiving objects:  31% (407/1312)Receiving objects:  32% (420/1312)Receiving objects:  33% (433/1312)Receiving objects:  34% (447/1312)Receiving objects:  35% (460/1312)Receiving objects:  36% (473/1312)Receiving objects:  37% (486/1312)Receiving objects:  38% (499/1312)Receiving objects:  39% (512/1312)Receiving objects:  40% (525/1312)Receiving objects:  41% (538/1312)Receiving objects:  42% (552/1312)Receiving objects:  43% (565/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  44% (578/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  45% (591/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  46% (604/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  47% (617/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  48% (630/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  49% (643/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  50% (656/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  51% (670/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  52% (683/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  53% (696/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  54% (709/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  55% (722/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  56% (735/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  57% (748/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  58% (761/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  59% (775/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  60% (788/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  61% (801/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  62% (814/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  63% (827/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  64% (840/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  65% (853/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  66% (866/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  67% (880/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  68% (893/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  69% (906/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  70% (919/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  71% (932/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  72% (945/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  73% (958/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  74% (971/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  75% (984/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  76% (998/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  77% (1011/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  78% (1024/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  79% (1037/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  80% (1050/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  81% (1063/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  82% (1076/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  83% (1089/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  84% (1103/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  85% (1116/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  86% (1129/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  87% (1142/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  88% (1155/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  89% (1168/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  90% (1181/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  91% (1194/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  92% (1208/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  93% (1221/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  94% (1234/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  95% (1247/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  96% (1260/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  97% (1273/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  98% (1286/1312), 26.97 MiB | 53.93 MiB/sReceiving objects:  99% (1299/1312), 26.97 MiB | 53.93 MiB/sremote: Total 1312 (delta 289), reused 723 (delta 201), pack-reused 0 (from 0)[K
+Step #3 - "compile-afl-address-x86_64": Receiving objects: 100% (1312/1312), 26.97 MiB | 53.93 MiB/sReceiving objects: 100% (1312/1312), 42.90 MiB | 50.84 MiB/s, done.
+Step #3 - "compile-afl-address-x86_64": Resolving deltas:   0% (0/289)Resolving deltas:   1% (3/289)Resolving deltas:   2% (6/289)Resolving deltas:   3% (9/289)Resolving deltas:   5% (15/289)Resolving deltas:   8% (26/289)Resolving deltas:   9% (28/289)Resolving deltas:  10% (29/289)Resolving deltas:  11% (32/289)Resolving deltas:  12% (35/289)Resolving deltas:  13% (38/289)Resolving deltas:  15% (46/289)Resolving deltas:  17% (50/289)Resolving deltas:  19% (55/289)Resolving deltas:  20% (58/289)Resolving deltas:  21% (61/289)Resolving deltas:  52% (152/289)Resolving deltas:  53% (154/289)Resolving deltas:  55% (161/289)Resolving deltas:  60% (174/289)Resolving deltas:  61% (177/289)Resolving deltas:  63% (184/289)Resolving deltas:  66% (192/289)Resolving deltas:  67% (196/289)Resolving deltas:  68% (198/289)Resolving deltas:  69% (200/289)Resolving deltas:  70% (203/289)Resolving deltas:  74% (214/289)Resolving deltas:  75% (218/289)Resolving deltas:  76% (220/289)Resolving deltas:  77% (223/289)Resolving deltas:  78% (227/289)Resolving deltas:  79% (229/289)Resolving deltas:  80% (232/289)Resolving deltas:  82% (237/289)Resolving deltas:  83% (241/289)Resolving deltas:  84% (243/289)Resolving deltas:  85% (246/289)Resolving deltas:  86% (250/289)Resolving deltas:  87% (252/289)Resolving deltas:  88% (255/289)Resolving deltas:  89% (258/289)Resolving deltas:  90% (261/289)Resolving deltas:  93% (270/289)Resolving deltas:  94% (272/289)Resolving deltas:  95% (277/289)Resolving deltas:  96% (278/289)Resolving deltas:  97% (281/289)Resolving deltas:  98% (284/289)Resolving deltas:  99% (287/289)Resolving deltas: 100% (289/289)Resolving deltas: 100% (289/289), done.
+Step #3 - "compile-afl-address-x86_64": Cloning into 'curl'...
+Step #3 - "compile-afl-address-x86_64": remote: Enumerating objects: 4162, done.[K
+Step #3 - "compile-afl-address-x86_64": remote: Counting objects:   0% (1/4162)[Kremote: Counting objects:   1% (42/4162)[Kremote: Counting objects:   2% (84/4162)[Kremote: Counting objects:   3% (125/4162)[Kremote: Counting objects:   4% (167/4162)[Kremote: Counting objects:   5% (209/4162)[Kremote: Counting objects:   6% (250/4162)[Kremote: Counting objects:   7% (292/4162)[Kremote: Counting objects:   8% (333/4162)[Kremote: Counting objects:   9% (375/4162)[Kremote: Counting objects:  10% (417/4162)[Kremote: Counting objects:  11% (458/4162)[Kremote: Counting objects:  12% (500/4162)[Kremote: Counting objects:  13% (542/4162)[Kremote: Counting objects:  14% (583/4162)[Kremote: Counting objects:  15% (625/4162)[Kremote: Counting objects:  16% (666/4162)[Kremote: Counting objects:  17% (708/4162)[Kremote: Counting objects:  18% (750/4162)[Kremote: Counting objects:  19% (791/4162)[Kremote: Counting objects:  20% (833/4162)[Kremote: Counting objects:  21% (875/4162)[Kremote: Counting objects:  22% (916/4162)[Kremote: Counting objects:  23% (958/4162)[Kremote: Counting objects:  24% (999/4162)[Kremote: Counting objects:  25% (1041/4162)[Kremote: Counting objects:  26% (1083/4162)[Kremote: Counting objects:  27% (1124/4162)[Kremote: Counting objects:  28% (1166/4162)[Kremote: Counting objects:  29% (1207/4162)[Kremote: Counting objects:  30% (1249/4162)[Kremote: Counting objects:  31% (1291/4162)[Kremote: Counting objects:  32% (1332/4162)[Kremote: Counting objects:  33% (1374/4162)[Kremote: Counting objects:  34% (1416/4162)[Kremote: Counting objects:  35% (1457/4162)[Kremote: Counting objects:  36% (1499/4162)[Kremote: Counting objects:  37% (1540/4162)[Kremote: Counting objects:  38% (1582/4162)[Kremote: Counting objects:  39% (1624/4162)[Kremote: Counting objects:  40% (1665/4162)[Kremote: Counting objects:  41% (1707/4162)[Kremote: Counting objects:  42% (1749/4162)[Kremote: Counting objects:  43% (1790/4162)[Kremote: Counting objects:  44% (1832/4162)[Kremote: Counting objects:  45% (1873/4162)[Kremote: Counting objects:  46% (1915/4162)[Kremote: Counting objects:  47% (1957/4162)[Kremote: Counting objects:  48% (1998/4162)[Kremote: Counting objects:  49% (2040/4162)[Kremote: Counting objects:  50% (2081/4162)[Kremote: Counting objects:  51% (2123/4162)[Kremote: Counting objects:  52% (2165/4162)[Kremote: Counting objects:  53% (2206/4162)[Kremote: Counting objects:  54% (2248/4162)[Kremote: Counting objects:  55% (2290/4162)[Kremote: Counting objects:  56% (2331/4162)[Kremote: Counting objects:  57% (2373/4162)[Kremote: Counting objects:  58% (2414/4162)[Kremote: Counting objects:  59% (2456/4162)[Kremote: Counting objects:  60% (2498/4162)[Kremote: Counting objects:  61% (2539/4162)[Kremote: Counting objects:  62% (2581/4162)[Kremote: Counting objects:  63% (2623/4162)[Kremote: Counting objects:  64% (2664/4162)[Kremote: Counting objects:  65% (2706/4162)[Kremote: Counting objects:  66% (2747/4162)[Kremote: Counting objects:  67% (2789/4162)[Kremote: Counting objects:  68% (2831/4162)[Kremote: Counting objects:  69% (2872/4162)[Kremote: Counting objects:  70% (2914/4162)[Kremote: Counting objects:  71% (2956/4162)[Kremote: Counting objects:  72% (2997/4162)[Kremote: Counting objects:  73% (3039/4162)[Kremote: Counting objects:  74% (3080/4162)[Kremote: Counting objects:  75% (3122/4162)[Kremote: Counting objects:  76% (3164/4162)[Kremote: Counting objects:  77% (3205/4162)[Kremote: Counting objects:  78% (3247/4162)[Kremote: Counting objects:  79% (3288/4162)[Kremote: Counting objects:  80% (3330/4162)[Kremote: Counting objects:  81% (3372/4162)[Kremote: Counting objects:  82% (3413/4162)[Kremote: Counting objects:  83% (3455/4162)[Kremote: Counting objects:  84% (3497/4162)[Kremote: Counting objects:  85% (3538/4162)[Kremote: Counting objects:  86% (3580/4162)[Kremote: Counting objects:  87% (3621/4162)[Kremote: Counting objects:  88% (3663/4162)[Kremote: Counting objects:  89% (3705/4162)[Kremote: Counting objects:  90% (3746/4162)[Kremote: Counting objects:  91% (3788/4162)[Kremote: Counting objects:  92% (3830/4162)[Kremote: Counting objects:  93% (3871/4162)[Kremote: Counting objects:  94% (3913/4162)[Kremote: Counting objects:  95% (3954/4162)[Kremote: Counting objects:  96% (3996/4162)[Kremote: Counting objects:  97% (4038/4162)[Kremote: Counting objects:  98% (4079/4162)[Kremote: Counting objects:  99% (4121/4162)[Kremote: Counting objects: 100% (4162/4162)[Kremote: Counting objects: 100% (4162/4162), done.[K
+Step #3 - "compile-afl-address-x86_64": remote: Compressing objects:   0% (1/3115)[Kremote: Compressing objects:   1% (32/3115)[Kremote: Compressing objects:   2% (63/3115)[Kremote: Compressing objects:   3% (94/3115)[Kremote: Compressing objects:   4% (125/3115)[Kremote: Compressing objects:   5% (156/3115)[Kremote: Compressing objects:   6% (187/3115)[Kremote: Compressing objects:   7% (219/3115)[Kremote: Compressing objects:   8% (250/3115)[Kremote: Compressing objects:   9% (281/3115)[Kremote: Compressing objects:  10% (312/3115)[Kremote: Compressing objects:  11% (343/3115)[Kremote: Compressing objects:  12% (374/3115)[Kremote: Compressing objects:  13% (405/3115)[Kremote: Compressing objects:  14% (437/3115)[Kremote: Compressing objects:  15% (468/3115)[Kremote: Compressing objects:  16% (499/3115)[Kremote: Compressing objects:  17% (530/3115)[Kremote: Compressing objects:  18% (561/3115)[Kremote: Compressing objects:  19% (592/3115)[Kremote: Compressing objects:  20% (623/3115)[Kremote: Compressing objects:  21% (655/3115)[Kremote: Compressing objects:  22% (686/3115)[Kremote: Compressing objects:  23% (717/3115)[Kremote: Compressing objects:  24% (748/3115)[Kremote: Compressing objects:  25% (779/3115)[Kremote: Compressing objects:  26% (810/3115)[Kremote: Compressing objects:  27% (842/3115)[Kremote: Compressing objects:  28% (873/3115)[Kremote: Compressing objects:  29% (904/3115)[Kremote: Compressing objects:  30% (935/3115)[Kremote: Compressing objects:  31% (966/3115)[Kremote: Compressing objects:  32% (997/3115)[Kremote: Compressing objects:  33% (1028/3115)[Kremote: Compressing objects:  34% (1060/3115)[Kremote: Compressing objects:  35% (1091/3115)[Kremote: Compressing objects:  36% (1122/3115)[Kremote: Compressing objects:  37% (1153/3115)[Kremote: Compressing objects:  38% (1184/3115)[Kremote: Compressing objects:  39% (1215/3115)[Kremote: Compressing objects:  40% (1246/3115)[Kremote: Compressing objects:  41% (1278/3115)[Kremote: Compressing objects:  42% (1309/3115)[Kremote: Compressing objects:  43% (1340/3115)[Kremote: Compressing objects:  44% (1371/3115)[Kremote: Compressing objects:  45% (1402/3115)[Kremote: Compressing objects:  46% (1433/3115)[Kremote: Compressing objects:  47% (1465/3115)[Kremote: Compressing objects:  48% (1496/3115)[Kremote: Compressing objects:  49% (1527/3115)[Kremote: Compressing objects:  50% (1558/3115)[Kremote: Compressing objects:  51% (1589/3115)[Kremote: Compressing objects:  52% (1620/3115)[Kremote: Compressing objects:  53% (1651/3115)[Kremote: Compressing objects:  54% (1683/3115)[Kremote: Compressing objects:  55% (1714/3115)[Kremote: Compressing objects:  56% (1745/3115)[Kremote: Compressing objects:  57% (1776/3115)[Kremote: Compressing objects:  58% (1807/3115)[Kremote: Compressing objects:  59% (1838/3115)[Kremote: Compressing objects:  60% (1869/3115)[Kremote: Compressing objects:  61% (1901/3115)[Kremote: Compressing objects:  62% (1932/3115)[Kremote: Compressing objects:  63% (1963/3115)[Kremote: Compressing objects:  64% (1994/3115)[Kremote: Compressing objects:  65% (2025/3115)[Kremote: Compressing objects:  66% (2056/3115)[Kremote: Compressing objects:  67% (2088/3115)[Kremote: Compressing objects:  68% (2119/3115)[Kremote: Compressing objects:  69% (2150/3115)[Kremote: Compressing objects:  70% (2181/3115)[Kremote: Compressing objects:  71% (2212/3115)[Kremote: Compressing objects:  72% (2243/3115)[Kremote: Compressing objects:  73% (2274/3115)[Kremote: Compressing objects:  74% (2306/3115)[Kremote: Compressing objects:  75% (2337/3115)[Kremote: Compressing objects:  76% (2368/3115)[Kremote: Compressing objects:  77% (2399/3115)[Kremote: Compressing objects:  78% (2430/3115)[Kremote: Compressing objects:  79% (2461/3115)[Kremote: Compressing objects:  80% (2492/3115)[Kremote: Compressing objects:  81% (2524/3115)[Kremote: Compressing objects:  82% (2555/3115)[Kremote: Compressing objects:  83% (2586/3115)[Kremote: Compressing objects:  84% (2617/3115)[Kremote: Compressing objects:  85% (2648/3115)[Kremote: Compressing objects:  86% (2679/3115)[Kremote: Compressing objects:  87% (2711/3115)[Kremote: Compressing objects:  88% (2742/3115)[Kremote: Compressing objects:  89% (2773/3115)[Kremote: Compressing objects:  90% (2804/3115)[Kremote: Compressing objects:  91% (2835/3115)[Kremote: Compressing objects:  92% (2866/3115)[Kremote: Compressing objects:  93% (2897/3115)[Kremote: Compressing objects:  94% (2929/3115)[Kremote: Compressing objects:  95% (2960/3115)[Kremote: Compressing objects:  96% (2991/3115)[Kremote: Compressing objects:  97% (3022/3115)[Kremote: Compressing objects:  98% (3053/3115)[Kremote: Compressing objects:  99% (3084/3115)[Kremote: Compressing objects: 100% (3115/3115)[Kremote: Compressing objects: 100% (3115/3115), done.[K
+Step #3 - "compile-afl-address-x86_64": Receiving objects:   0% (1/4162)Receiving objects:   1% (42/4162)Receiving objects:   2% (84/4162)Receiving objects:   3% (125/4162)Receiving objects:   4% (167/4162)Receiving objects:   5% (209/4162)Receiving objects:   6% (250/4162)Receiving objects:   7% (292/4162)Receiving objects:   8% (333/4162)Receiving objects:   9% (375/4162)Receiving objects:  10% (417/4162)Receiving objects:  11% (458/4162)Receiving objects:  12% (500/4162)Receiving objects:  13% (542/4162)Receiving objects:  14% (583/4162)Receiving objects:  15% (625/4162)Receiving objects:  16% (666/4162)Receiving objects:  17% (708/4162)Receiving objects:  18% (750/4162)Receiving objects:  19% (791/4162)Receiving objects:  20% (833/4162)Receiving objects:  21% (875/4162)Receiving objects:  22% (916/4162)Receiving objects:  23% (958/4162)Receiving objects:  24% (999/4162)Receiving objects:  25% (1041/4162)Receiving objects:  26% (1083/4162)Receiving objects:  27% (1124/4162)Receiving objects:  28% (1166/4162)Receiving objects:  29% (1207/4162)Receiving objects:  30% (1249/4162)Receiving objects:  31% (1291/4162)Receiving objects:  32% (1332/4162)Receiving objects:  33% (1374/4162)Receiving objects:  34% (1416/4162)Receiving objects:  35% (1457/4162)Receiving objects:  36% (1499/4162)Receiving objects:  37% (1540/4162)Receiving objects:  38% (1582/4162)Receiving objects:  39% (1624/4162)Receiving objects:  40% (1665/4162)Receiving objects:  41% (1707/4162)Receiving objects:  42% (1749/4162)Receiving objects:  43% (1790/4162)Receiving objects:  44% (1832/4162)Receiving objects:  45% (1873/4162)Receiving objects:  46% (1915/4162)Receiving objects:  47% (1957/4162)Receiving objects:  48% (1998/4162)Receiving objects:  49% (2040/4162)Receiving objects:  50% (2081/4162)Receiving objects:  51% (2123/4162)Receiving objects:  52% (2165/4162)Receiving objects:  53% (2206/4162)Receiving objects:  54% (2248/4162)Receiving objects:  55% (2290/4162)Receiving objects:  56% (2331/4162)Receiving objects:  57% (2373/4162)Receiving objects:  58% (2414/4162)Receiving objects:  59% (2456/4162)Receiving objects:  60% (2498/4162)Receiving objects:  61% (2539/4162)Receiving objects:  62% (2581/4162)Receiving objects:  63% (2623/4162)Receiving objects:  64% (2664/4162)Receiving objects:  65% (2706/4162)Receiving objects:  66% (2747/4162)Receiving objects:  67% (2789/4162)Receiving objects:  68% (2831/4162)Receiving objects:  69% (2872/4162)Receiving objects:  70% (2914/4162)Receiving objects:  71% (2956/4162)Receiving objects:  72% (2997/4162)Receiving objects:  73% (3039/4162)Receiving objects:  74% (3080/4162)Receiving objects:  75% (3122/4162)Receiving objects:  76% (3164/4162)Receiving objects:  77% (3205/4162)Receiving objects:  78% (3247/4162)Receiving objects:  79% (3288/4162)Receiving objects:  80% (3330/4162)Receiving objects:  81% (3372/4162)Receiving objects:  82% (3413/4162)Receiving objects:  83% (3455/4162)Receiving objects:  84% (3497/4162)Receiving objects:  85% (3538/4162)Receiving objects:  86% (3580/4162)Receiving objects:  87% (3621/4162)Receiving objects:  88% (3663/4162)Receiving objects:  89% (3705/4162)Receiving objects:  90% (3746/4162)Receiving objects:  91% (3788/4162)Receiving objects:  92% (3830/4162)Receiving objects:  93% (3871/4162)Receiving objects:  94% (3913/4162)Receiving objects:  95% (3954/4162)Receiving objects:  96% (3996/4162)Receiving objects:  97% (4038/4162)Receiving objects:  98% (4079/4162)Receiving objects:  99% (4121/4162)Receiving objects: 100% (4162/4162)remote: Total 4162 (delta 1614), reused 1513 (delta 1045), pack-reused 0 (from 0)[K
+Step #3 - "compile-afl-address-x86_64": Receiving objects: 100% (4162/4162), 4.52 MiB | 9.97 MiB/s, done.
+Step #3 - "compile-afl-address-x86_64": Resolving deltas:   0% (0/1614)Resolving deltas:   1% (20/1614)Resolving deltas:   2% (38/1614)Resolving deltas:   3% (49/1614)Resolving deltas:   4% (66/1614)Resolving deltas:   5% (81/1614)Resolving deltas:   6% (101/1614)Resolving deltas:   7% (117/1614)Resolving deltas:   8% (133/1614)Resolving deltas:   9% (148/1614)Resolving deltas:  10% (162/1614)Resolving deltas:  11% (178/1614)Resolving deltas:  12% (194/1614)Resolving deltas:  13% (210/1614)Resolving deltas:  14% (233/1614)Resolving deltas:  15% (248/1614)Resolving deltas:  16% (259/1614)Resolving deltas:  17% (276/1614)Resolving deltas:  18% (292/1614)Resolving deltas:  19% (310/1614)Resolving deltas:  20% (327/1614)Resolving deltas:  21% (339/1614)Resolving deltas:  22% (356/1614)Resolving deltas:  23% (372/1614)Resolving deltas:  24% (389/1614)Resolving deltas:  25% (404/1614)Resolving deltas:  26% (424/1614)Resolving deltas:  27% (442/1614)Resolving deltas:  28% (453/1614)Resolving deltas:  29% (473/1614)Resolving deltas:  30% (489/1614)Resolving deltas:  31% (501/1614)Resolving deltas:  32% (518/1614)Resolving deltas:  33% (533/1614)Resolving deltas:  34% (549/1614)Resolving deltas:  35% (565/1614)Resolving deltas:  36% (582/1614)Resolving deltas:  37% (598/1614)Resolving deltas:  38% (615/1614)Resolving deltas:  39% (631/1614)Resolving deltas:  40% (647/1614)Resolving deltas:  41% (662/1614)Resolving deltas:  42% (678/1614)Resolving deltas:  43% (702/1614)Resolving deltas:  44% (713/1614)Resolving deltas:  45% (730/1614)Resolving deltas:  46% (744/1614)Resolving deltas:  47% (762/1614)Resolving deltas:  48% (775/1614)Resolving deltas:  49% (793/1614)Resolving deltas:  50% (809/1614)Resolving deltas:  51% (824/1614)Resolving deltas:  52% (844/1614)Resolving deltas:  53% (859/1614)Resolving deltas:  54% (873/1614)Resolving deltas:  55% (893/1614)Resolving deltas:  56% (906/1614)Resolving deltas:  57% (926/1614)Resolving deltas:  58% (941/1614)Resolving deltas:  59% (955/1614)Resolving deltas:  60% (970/1614)Resolving deltas:  61% (986/1614)Resolving deltas:  62% (1003/1614)Resolving deltas:  63% (1017/1614)Resolving deltas:  64% (1036/1614)Resolving deltas:  65% (1065/1614)Resolving deltas:  66% (1066/1614)Resolving deltas:  67% (1083/1614)Resolving deltas:  68% (1099/1614)Resolving deltas:  69% (1116/1614)Resolving deltas:  70% (1134/1614)Resolving deltas:  71% (1147/1614)Resolving deltas:  72% (1178/1614)Resolving deltas:  73% (1181/1614)Resolving deltas:  74% (1198/1614)Resolving deltas:  75% (1211/1614)Resolving deltas:  76% (1227/1614)Resolving deltas:  77% (1243/1614)Resolving deltas:  78% (1264/1614)Resolving deltas:  79% (1276/1614)Resolving deltas:  80% (1294/1614)Resolving deltas:  81% (1308/1614)Resolving deltas:  82% (1324/1614)Resolving deltas:  83% (1341/1614)Resolving deltas:  84% (1356/1614)Resolving deltas:  85% (1375/1614)Resolving deltas:  86% (1389/1614)Resolving deltas:  87% (1410/1614)Resolving deltas:  88% (1421/1614)Resolving deltas:  89% (1437/1614)Resolving deltas:  90% (1456/1614)Resolving deltas:  91% (1475/1614)Resolving deltas:  92% (1488/1614)Resolving deltas:  93% (1517/1614)Resolving deltas:  94% (1518/1614)Resolving deltas:  95% (1534/1614)Resolving deltas:  97% (1570/1614)Resolving deltas:  98% (1583/1614)Resolving deltas:  99% (1598/1614)Resolving deltas: 100% (1614/1614)Resolving deltas: 100% (1614/1614), done.
+Step #3 - "compile-afl-address-x86_64":   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+Step #3 - "compile-afl-address-x86_64":                                  Dload  Upload   Total   Spent    Left  Speed
+Step #3 - "compile-afl-address-x86_64":   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+Step #3 - "compile-afl-address-x86_64":   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100 7044k    0 7044k    0     0  5393k      0 --:--:--  0:00:01 --:--:-- 6657k100 10.0M    0 10.0M    0     0  4563k      0 --:--:--  0:00:02 --:--:-- 5124k100 13.7M    0 13.7M    0     0  4305k      0 --:--:--  0:00:03 --:--:-- 4658k100 16.7M    0 16.7M    0     0  4039k      0 --:--:--  0:00:04 --:--:-- 4290k100 18.7M    0 18.7M    0     0  4117k      0 --:--:--  0:00:04 --:--:-- 4348k
+Step #3 - "compile-afl-address-x86_64": patching file ./libhdf5/hdf5internal.c
+Step #3 - "compile-afl-address-x86_64":   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+Step #3 - "compile-afl-address-x86_64":                                  Dload  Upload   Total   Spent    Left  Speed
+Step #3 - "compile-afl-address-x86_64":   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+Step #3 - "compile-afl-address-x86_64":   1 2443k    1 49134    0     0  45748      0  0:00:54  0:00:01  0:00:53 45748100 2443k  100 2443k    0     0  1448k      0  0:00:01  0:00:01 --:--:-- 3907k
+Step #3 - "compile-afl-address-x86_64":   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+Step #3 - "compile-afl-address-x86_64":                                  Dload  Upload   Total   Spent    Left  Speed
+Step #3 - "compile-afl-address-x86_64":   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0100 1875k  100 1875k    0     0  1091k      0  0:00:01  0:00:01 --:--:-- 1090k
+Step #3 - "compile-afl-address-x86_64": Cloning into 'xerces-c'...
+Step #3 - "compile-afl-address-x86_64": error: RPC failed; curl 16 Error in the HTTP2 framing layer
+Step #3 - "compile-afl-address-x86_64": fatal: the remote end hung up unexpectedly
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************
+Step #3 - "compile-afl-address-x86_64": Failed to build.
+Step #3 - "compile-afl-address-x86_64": To reproduce, run:
+Step #3 - "compile-afl-address-x86_64": python infra/helper.py build_image gdal
+Step #3 - "compile-afl-address-x86_64": python infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 gdal
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

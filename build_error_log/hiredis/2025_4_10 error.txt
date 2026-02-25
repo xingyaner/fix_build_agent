@@ -1,0 +1,274 @@
+starting build "ce84f796-6b52-4784-8e5a-c41c52a879b9"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55"
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Sending build context to Docker daemon   5.12kB
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Step 1/4 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b549f31133a9: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 53857896a680: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 7efe496e0821: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 7aac26f735e9: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ad31cc38ac81: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e51a957b96fa: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 9ea01dd118f9: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": fde71e506517: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": dd6b7bda1f21: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 8b0201982d0b: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1ed93b1f2b37: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e6a65953e7da: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 4c9d846f1514: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ba7815991431: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 828929bb11e1: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e89aa43f3e15: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 2d99de89a447: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": f6d8158e6dac: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b72c91e47fd1: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 132bc51f6483: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 6ea2db2284cb: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 8d8a5e898bb8: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 0627aad1ed24: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": a0eb25bba271: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 9ea01dd118f9: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": f5faf7725626: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 213227c10e94: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ffc3882c042b: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e6a65953e7da: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 343ba79fda30: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": fde71e506517: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 828929bb11e1: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": cb5959086358: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": dd6b7bda1f21: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1f3670b2a3cd: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 4c9d846f1514: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 8b0201982d0b: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e89aa43f3e15: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ba7815991431: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e1a12b281c6e: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1ed93b1f2b37: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b25342de0fc5: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 105d24739e50: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 3bdc8cef7a9f: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": f6d8158e6dac: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 03f7548b82a6: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 8d8a5e898bb8: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": c5a6aaa2ce6b: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 6ea2db2284cb: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 5e3bbf1b669c: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b72c91e47fd1: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 0627aad1ed24: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1dfe9bb499fc: Pulling fs layer
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 132bc51f6483: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 213227c10e94: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": a0eb25bba271: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": f5faf7725626: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1f3670b2a3cd: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 343ba79fda30: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e1a12b281c6e: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": cb5959086358: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": c5a6aaa2ce6b: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1dfe9bb499fc: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 5e3bbf1b669c: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ffc3882c042b: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b25342de0fc5: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 105d24739e50: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 03f7548b82a6: Waiting
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ad31cc38ac81: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 7efe496e0821: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 7efe496e0821: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 9ea01dd118f9: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 9ea01dd118f9: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": fde71e506517: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b549f31133a9: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b549f31133a9: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 7aac26f735e9: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 7aac26f735e9: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1ed93b1f2b37: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1ed93b1f2b37: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e6a65953e7da: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e6a65953e7da: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ba7815991431: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ba7815991431: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 4c9d846f1514: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 4c9d846f1514: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 828929bb11e1: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 828929bb11e1: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e89aa43f3e15: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e89aa43f3e15: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 8b0201982d0b: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 8b0201982d0b: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 53857896a680: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 53857896a680: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": f6d8158e6dac: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": f6d8158e6dac: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 2d99de89a447: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b72c91e47fd1: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b72c91e47fd1: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 132bc51f6483: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 132bc51f6483: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 8d8a5e898bb8: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 6ea2db2284cb: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 6ea2db2284cb: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 0627aad1ed24: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": a0eb25bba271: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": f5faf7725626: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": f5faf7725626: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 213227c10e94: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 213227c10e94: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ffc3882c042b: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 343ba79fda30: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 343ba79fda30: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": cb5959086358: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": cb5959086358: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b549f31133a9: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e1a12b281c6e: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e1a12b281c6e: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b25342de0fc5: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b25342de0fc5: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1f3670b2a3cd: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 105d24739e50: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 3bdc8cef7a9f: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 3bdc8cef7a9f: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": c5a6aaa2ce6b: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": c5a6aaa2ce6b: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 03f7548b82a6: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 03f7548b82a6: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": dd6b7bda1f21: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": dd6b7bda1f21: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 5e3bbf1b669c: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 5e3bbf1b669c: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1dfe9bb499fc: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1dfe9bb499fc: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e51a957b96fa: Verifying Checksum
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e51a957b96fa: Download complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 53857896a680: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 7efe496e0821: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 7aac26f735e9: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ad31cc38ac81: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e51a957b96fa: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 9ea01dd118f9: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": fde71e506517: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": dd6b7bda1f21: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 8b0201982d0b: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1ed93b1f2b37: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e6a65953e7da: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 4c9d846f1514: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ba7815991431: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 828929bb11e1: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e89aa43f3e15: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 2d99de89a447: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": f6d8158e6dac: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b72c91e47fd1: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 132bc51f6483: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 6ea2db2284cb: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 8d8a5e898bb8: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 0627aad1ed24: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": a0eb25bba271: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": f5faf7725626: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 213227c10e94: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": ffc3882c042b: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 343ba79fda30: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": cb5959086358: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1f3670b2a3cd: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": e1a12b281c6e: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": b25342de0fc5: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 105d24739e50: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 3bdc8cef7a9f: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 03f7548b82a6: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": c5a6aaa2ce6b: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 5e3bbf1b669c: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": 1dfe9bb499fc: Pull complete
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Digest: sha256:c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55":  ---> 963d5896cb27
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Step 2/4 : RUN git clone --depth 1 https://github.com/redis/hiredis
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55":  ---> Running in 6c1ca400acb3
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": [91mCloning into 'hiredis'...
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": [0mRemoving intermediate container 6c1ca400acb3
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55":  ---> c3e33a4e81f6
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Step 3/4 : WORKDIR hiredis
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55":  ---> Running in f404a6c6d05a
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Removing intermediate container f404a6c6d05a
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55":  ---> feaa7b2e68a5
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Step 4/4 : COPY build.sh $SRC/
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55":  ---> 3b63f228b9d5
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Successfully built 3b63f228b9d5
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Successfully tagged gcr.io/oss-fuzz/hiredis:latest
+Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/hiredis:latest
+Finished Step #1 - "build-910cc6f2-3e06-43f5-9aa3-98cc1cc81e55"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/hiredis
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileavlQHM
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/hiredis/.git
+Step #2 - "srcmap": + GIT_DIR=/src/hiredis
+Step #2 - "srcmap": + cd /src/hiredis
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/redis/hiredis
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=e834b57f05871c05f7f13e461b78d20907aa3a02
+Step #2 - "srcmap": + jq_inplace /tmp/fileavlQHM '."/src/hiredis" = { type: "git", url: "https://github.com/redis/hiredis", rev: "e834b57f05871c05f7f13e461b78d20907aa3a02" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/file24JJG9
+Step #2 - "srcmap": + cat /tmp/fileavlQHM
+Step #2 - "srcmap": + jq '."/src/hiredis" = { type: "git", url: "https://github.com/redis/hiredis", rev: "e834b57f05871c05f7f13e461b78d20907aa3a02" }'
+Step #2 - "srcmap": + mv /tmp/file24JJG9 /tmp/fileavlQHM
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileavlQHM
+Step #2 - "srcmap": + rm /tmp/fileavlQHM
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/hiredis": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/redis/hiredis",
+Step #2 - "srcmap":     "rev": "e834b57f05871c05f7f13e461b78d20907aa3a02"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + make USE_SSL=0 static
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast -std=c99 -c -O3 -fPIC  -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wall -Wextra -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -Werror -g -ggdb  -pedantic alloc.c
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast -std=c99 -c -O3 -fPIC  -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wall -Wextra -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -Werror -g -ggdb  -pedantic net.c
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast -std=c99 -c -O3 -fPIC  -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wall -Wextra -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -Werror -g -ggdb  -pedantic hiredis.c
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast -std=c99 -c -O3 -fPIC  -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wall -Wextra -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -Werror -g -ggdb  -pedantic sds.c
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast -std=c99 -c -O3 -fPIC  -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wall -Wextra -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -Werror -g -ggdb  -pedantic async.c
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast -std=c99 -c -O3 -fPIC  -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wall -Wextra -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -Werror -g -ggdb  -pedantic read.c
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast -std=c99 -c -O3 -fPIC  -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -Wall -Wextra -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers -Werror -g -ggdb  -pedantic sockcompat.c
+Step #3 - "compile-afl-address-x86_64": ar rcs libhiredis.a alloc.o net.o hiredis.o sds.o async.o read.o sockcompat.o
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -std=c99 -pedantic -c -O3 -fPIC -I./ fuzzing/format_command_fuzzer.c -o format_command_fuzzer.o
+Step #3 - "compile-afl-address-x86_64": clang: [0;1;31merror: [0m[1mno such file or directory: 'fuzzing/format_command_fuzzer.c'[0m
+Step #3 - "compile-afl-address-x86_64": clang: [0;1;31merror: [0m[1mno input files[0m
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image hiredis\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 hiredis\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

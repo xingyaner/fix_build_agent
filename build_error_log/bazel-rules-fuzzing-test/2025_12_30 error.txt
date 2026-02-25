@@ -1,0 +1,722 @@
+starting build "8b0f371c-c0ba-4acd-b14b-103ac46e7767"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa"
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Sending build context to Docker daemon   5.12kB
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b549f31133a9: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 53857896a680: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 7efe496e0821: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 7aac26f735e9: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ad31cc38ac81: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e51a957b96fa: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 9ea01dd118f9: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": fde71e506517: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": dd6b7bda1f21: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 8b0201982d0b: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1ed93b1f2b37: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e6a65953e7da: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 4c9d846f1514: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ba7815991431: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 828929bb11e1: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e89aa43f3e15: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 2d99de89a447: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": f6d8158e6dac: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b72c91e47fd1: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 132bc51f6483: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 6ea2db2284cb: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 8d8a5e898bb8: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 0627aad1ed24: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": a0eb25bba271: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": f5faf7725626: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 213227c10e94: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ffc3882c042b: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 343ba79fda30: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": cb5959086358: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1f3670b2a3cd: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 8b0201982d0b: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e1a12b281c6e: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b25342de0fc5: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 105d24739e50: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1ed93b1f2b37: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e6a65953e7da: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 3bdc8cef7a9f: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 03f7548b82a6: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": c5a6aaa2ce6b: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 9ea01dd118f9: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 5e3bbf1b669c: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1dfe9bb499fc: Pulling fs layer
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b72c91e47fd1: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 132bc51f6483: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 6ea2db2284cb: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 8d8a5e898bb8: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 0627aad1ed24: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": a0eb25bba271: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": f5faf7725626: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 4c9d846f1514: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 213227c10e94: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ffc3882c042b: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ba7815991431: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": f6d8158e6dac: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": fde71e506517: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 828929bb11e1: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": dd6b7bda1f21: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 2d99de89a447: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e89aa43f3e15: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 343ba79fda30: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 5e3bbf1b669c: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": c5a6aaa2ce6b: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 03f7548b82a6: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": cb5959086358: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b25342de0fc5: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 3bdc8cef7a9f: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1f3670b2a3cd: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 105d24739e50: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1dfe9bb499fc: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e1a12b281c6e: Waiting
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 7efe496e0821: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ad31cc38ac81: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ad31cc38ac81: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": fde71e506517: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": fde71e506517: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 9ea01dd118f9: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b549f31133a9: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b549f31133a9: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 7aac26f735e9: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 7aac26f735e9: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1ed93b1f2b37: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1ed93b1f2b37: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e6a65953e7da: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e6a65953e7da: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 4c9d846f1514: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 4c9d846f1514: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ba7815991431: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ba7815991431: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e89aa43f3e15: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 828929bb11e1: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 828929bb11e1: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 53857896a680: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 53857896a680: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 8b0201982d0b: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 8b0201982d0b: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b72c91e47fd1: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b72c91e47fd1: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": f6d8158e6dac: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": f6d8158e6dac: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 2d99de89a447: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 2d99de89a447: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 132bc51f6483: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 132bc51f6483: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 6ea2db2284cb: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 6ea2db2284cb: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 8d8a5e898bb8: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 8d8a5e898bb8: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": a0eb25bba271: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 0627aad1ed24: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": f5faf7725626: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": f5faf7725626: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b549f31133a9: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 213227c10e94: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 213227c10e94: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ffc3882c042b: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 343ba79fda30: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 343ba79fda30: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": cb5959086358: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": cb5959086358: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b25342de0fc5: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b25342de0fc5: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e1a12b281c6e: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e1a12b281c6e: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1f3670b2a3cd: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1f3670b2a3cd: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 105d24739e50: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 105d24739e50: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": dd6b7bda1f21: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": dd6b7bda1f21: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 3bdc8cef7a9f: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 3bdc8cef7a9f: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 03f7548b82a6: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 03f7548b82a6: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": c5a6aaa2ce6b: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": c5a6aaa2ce6b: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 5e3bbf1b669c: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 5e3bbf1b669c: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1dfe9bb499fc: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e51a957b96fa: Verifying Checksum
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e51a957b96fa: Download complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 53857896a680: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 7efe496e0821: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 7aac26f735e9: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ad31cc38ac81: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e51a957b96fa: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 9ea01dd118f9: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": fde71e506517: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": dd6b7bda1f21: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 8b0201982d0b: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1ed93b1f2b37: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e6a65953e7da: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 4c9d846f1514: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ba7815991431: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 828929bb11e1: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e89aa43f3e15: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 2d99de89a447: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": f6d8158e6dac: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b72c91e47fd1: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 132bc51f6483: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 6ea2db2284cb: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 8d8a5e898bb8: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 0627aad1ed24: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": a0eb25bba271: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": f5faf7725626: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 213227c10e94: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": ffc3882c042b: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 343ba79fda30: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": cb5959086358: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1f3670b2a3cd: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": e1a12b281c6e: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": b25342de0fc5: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 105d24739e50: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 3bdc8cef7a9f: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 03f7548b82a6: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": c5a6aaa2ce6b: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 5e3bbf1b669c: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 1dfe9bb499fc: Pull complete
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Digest: sha256:c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":  ---> 963d5896cb27
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Step 2/5 : RUN apt-get update &&     apt-get install -y python-is-python3
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":  ---> Running in 8eab0bcead77
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Hit:2 http://security.ubuntu.com/ubuntu focal-security InRelease
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Hit:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Hit:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Reading package lists...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Reading package lists...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Building dependency tree...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Reading state information...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": The following packages were automatically installed and are no longer required:
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":   autotools-dev libsigsegv2 m4
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Use 'apt autoremove' to remove them.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": The following additional packages will be installed:
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":   file libmagic-mgc libmagic1 libmpdec2 libpython3-stdlib libpython3.8-minimal
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":   libpython3.8-stdlib mime-support python3 python3-minimal python3.8
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":   python3.8-minimal
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Suggested packages:
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":   python3-doc python3-tk python3-venv python3.8-venv python3.8-doc
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":   binfmt-support
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": The following NEW packages will be installed:
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":   file libmagic-mgc libmagic1 libmpdec2 libpython3-stdlib libpython3.8-minimal
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":   libpython3.8-stdlib mime-support python-is-python3 python3 python3-minimal
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":   python3.8 python3.8-minimal
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": 0 upgraded, 13 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Need to get 5193 kB of archives.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": After this operation, 26.1 MB of additional disk space will be used.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpython3.8-minimal amd64 3.8.10-0ubuntu1~20.04.18 [721 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3.8-minimal amd64 3.8.10-0ubuntu1~20.04.18 [1900 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 python3-minimal amd64 3.8.2-0ubuntu2 [23.6 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:4 http://archive.ubuntu.com/ubuntu focal/main amd64 mime-support all 3.64ubuntu1 [30.6 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:5 http://archive.ubuntu.com/ubuntu focal/main amd64 libmpdec2 amd64 2.4.2-3 [81.1 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpython3.8-stdlib amd64 3.8.10-0ubuntu1~20.04.18 [1676 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3.8 amd64 3.8.10-0ubuntu1~20.04.18 [387 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 libpython3-stdlib amd64 3.8.2-0ubuntu2 [7068 B]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 python3 amd64 3.8.2-0ubuntu2 [47.6 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Get:13 http://archive.ubuntu.com/ubuntu focal/main amd64 python-is-python3 all 3.8.2-4 [2364 B]
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": [0mFetched 5193 kB in 2s (3099 kB/s)
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package libpython3.8-minimal:amd64.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../libpython3.8-minimal_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking libpython3.8-minimal:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package python3.8-minimal.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../python3.8-minimal_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking python3.8-minimal (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up libpython3.8-minimal:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up python3.8-minimal (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package python3-minimal.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17766 files and directories currently installed.)
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../0-python3-minimal_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking python3-minimal (3.8.2-0ubuntu2) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package mime-support.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../1-mime-support_3.64ubuntu1_all.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking mime-support (3.64ubuntu1) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package libmpdec2:amd64.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../2-libmpdec2_2.4.2-3_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking libmpdec2:amd64 (2.4.2-3) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package libpython3.8-stdlib:amd64.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../3-libpython3.8-stdlib_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking libpython3.8-stdlib:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package python3.8.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../4-python3.8_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking python3.8 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package libpython3-stdlib:amd64.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../5-libpython3-stdlib_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking libpython3-stdlib:amd64 (3.8.2-0ubuntu2) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up python3-minimal (3.8.2-0ubuntu2) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package python3.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 18168 files and directories currently installed.)
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../python3_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking python3 (3.8.2-0ubuntu2) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package libmagic-mgc.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package libmagic1:amd64.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../libmagic1_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package file.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../file_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking file (1:5.38-4) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Selecting previously unselected package python-is-python3.
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Preparing to unpack .../python-is-python3_3.8.2-4_all.deb ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Unpacking python-is-python3 (3.8.2-4) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up mime-support (3.64ubuntu1) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up file (1:5.38-4) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up libmpdec2:amd64 (2.4.2-3) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up libpython3.8-stdlib:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up python3.8 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up libpython3-stdlib:amd64 (3.8.2-0ubuntu2) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up python3 (3.8.2-0ubuntu2) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Setting up python-is-python3 (3.8.2-4) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Removing intermediate container 8eab0bcead77
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":  ---> fd716a4af88b
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Step 3/5 : RUN git clone https://github.com/bazelbuild/rules_fuzzing.git
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":  ---> Running in 10575e712151
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": [91mCloning into 'rules_fuzzing'...
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": [0mRemoving intermediate container 10575e712151
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":  ---> 79c5862fc439
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Step 4/5 : WORKDIR $SRC/rules_fuzzing/
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":  ---> Running in e94c3df60827
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Removing intermediate container e94c3df60827
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":  ---> 0dd62ceabf7d
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Step 5/5 : COPY build.sh $SRC/
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa":  ---> f6df1ef55e81
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Successfully built f6df1ef55e81
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Successfully tagged gcr.io/oss-fuzz/bazel-rules-fuzzing-test:latest
+Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/bazel-rules-fuzzing-test:latest
+Finished Step #1 - "build-c06d05a8-5429-4cef-90d0-534b5367aefa"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/bazel-rules-fuzzing-test
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileJw74pO
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/rules_fuzzing/.git
+Step #2 - "srcmap": + GIT_DIR=/src/rules_fuzzing
+Step #2 - "srcmap": + cd /src/rules_fuzzing
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/bazelbuild/rules_fuzzing.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=7a7159c2952e3eddfaae3fc273c8d0e7b0423151
+Step #2 - "srcmap": + jq_inplace /tmp/fileJw74pO '."/src/rules_fuzzing" = { type: "git", url: "https://github.com/bazelbuild/rules_fuzzing.git", rev: "7a7159c2952e3eddfaae3fc273c8d0e7b0423151" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileM3RpIa
+Step #2 - "srcmap": + cat /tmp/fileJw74pO
+Step #2 - "srcmap": + jq '."/src/rules_fuzzing" = { type: "git", url: "https://github.com/bazelbuild/rules_fuzzing.git", rev: "7a7159c2952e3eddfaae3fc273c8d0e7b0423151" }'
+Step #2 - "srcmap": + mv /tmp/fileM3RpIa /tmp/fileJw74pO
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileJw74pO
+Step #2 - "srcmap": + rm /tmp/fileJw74pO
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/rules_fuzzing": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/bazelbuild/rules_fuzzing.git",
+Step #2 - "srcmap":     "rev": "7a7159c2952e3eddfaae3fc273c8d0e7b0423151"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + export BAZEL_EXTRA_BUILD_FLAGS=--spawn_strategy=sandboxed
+Step #3 - "compile-afl-address-x86_64": + BAZEL_EXTRA_BUILD_FLAGS=--spawn_strategy=sandboxed
+Step #3 - "compile-afl-address-x86_64": + bazel_build_fuzz_tests
+Step #3 - "compile-afl-address-x86_64": Using Bazel query to find fuzz targets: 
+Step #3 - "compile-afl-address-x86_64":         let all_fuzz_tests = attr(tags, "fuzz-test", "//...") in
+Step #3 - "compile-afl-address-x86_64":         let lang_fuzz_tests = attr(generator_function, "^cc_fuzz_test$", $all_fuzz_tests) in
+Step #3 - "compile-afl-address-x86_64":         $lang_fuzz_tests - attr(tags, "no-oss-fuzz", $lang_fuzz_tests)
+Step #3 - "compile-afl-address-x86_64":     
+Step #3 - "compile-afl-address-x86_64": 2025/12/30 06:34:16 Downloading https://releases.bazel.build/8.4.2/release/bazel-8.4.2-linux-x86_64...
+Step #3 - "compile-afl-address-x86_64": Extracting Bazel installation...
+Step #3 - "compile-afl-address-x86_64": Starting local Bazel server (8.4.2) and connecting to it...
+Step #3 - "compile-afl-address-x86_64":  no actions running
+Step #3 - "compile-afl-address-x86_64": WARNING: For repository 'bazel_features', the root module requires module version bazel_features@1.20.0, but got bazel_features@1.30.0 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": WARNING: For repository 'com_google_absl', the root module requires module version abseil-cpp@20240116.1, but got abseil-cpp@20250512.1 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": WARNING: For repository 'bazel_skylib', the root module requires module version bazel_skylib@1.5.0, but got bazel_skylib@1.7.1 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": WARNING: For repository 'platforms', the root module requires module version platforms@0.0.8, but got platforms@1.0.0 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": WARNING: For repository 'rules_python', the root module requires module version rules_python@0.28.0, but got rules_python@1.5.1 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": WARNING: For repository 'rules_cc', the root module requires module version rules_cc@0.2.1, but got rules_cc@0.2.8 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": WARNING: For repository 'rules_java', the root module requires module version rules_java@6.5.2, but got rules_java@8.14.0 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": WARNING: For repository 'io_bazel_stardoc', the root module requires module version stardoc@0.6.2, but got stardoc@0.7.2 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": WARNING: For repository 're2', the root module requires module version re2@2023-11-01, but got re2@2025-08-12.bcr.1 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64":  no actions running
+Step #3 - "compile-afl-address-x86_64": Loading: 0 packages loaded
+Step #3 - "compile-afl-address-x86_64": Loading: 0 packages loaded
+Step #3 - "compile-afl-address-x86_64": Found 6 fuzz test packages:
+Step #3 - "compile-afl-address-x86_64":   //examples:empty_fuzz_test_oss_fuzz
+Step #3 - "compile-afl-address-x86_64":   //examples:empty_fuzz_test_with_corpus_oss_fuzz
+Step #3 - "compile-afl-address-x86_64":   //examples:empty_fuzz_test_with_dict_oss_fuzz
+Step #3 - "compile-afl-address-x86_64":   //examples:fuzzed_data_provider_fuzz_test_oss_fuzz
+Step #3 - "compile-afl-address-x86_64":   //examples:re2_fuzz_test_oss_fuzz
+Step #3 - "compile-afl-address-x86_64":   //examples:runfiles_fuzz_test_oss_fuzz
+Step #3 - "compile-afl-address-x86_64": Building the fuzz tests with the following Bazel options:
+Step #3 - "compile-afl-address-x86_64":   --@rules_fuzzing//fuzzing:cc_engine=@rules_fuzzing_oss_fuzz//:oss_fuzz_engine --@rules_fuzzing//fuzzing:java_engine=@rules_fuzzing_oss_fuzz//:oss_fuzz_java_engine --@rules_fuzzing//fuzzing:cc_engine_instrumentation=oss-fuzz --@rules_fuzzing//fuzzing:cc_engine_sanitizer=none --cxxopt=-stdlib=libc++ --linkopt=-lc++ --verbose_failures --spawn_strategy=standalone --action_env=CC=/src/aflplusplus/afl-clang-fast --action_env=CXX=/src/aflplusplus/afl-clang-fast++ --spawn_strategy=sandboxed
+Step #3 - "compile-afl-address-x86_64": [32mComputing main repo mapping:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[35mWARNING: [0mFor repository 'bazel_features', the root module requires module version bazel_features@1.20.0, but got bazel_features@1.30.0 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": [32mComputing main repo mapping:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[35mWARNING: [0mFor repository 'com_google_absl', the root module requires module version abseil-cpp@20240116.1, but got abseil-cpp@20250512.1 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": [32mComputing main repo mapping:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[35mWARNING: [0mFor repository 'bazel_skylib', the root module requires module version bazel_skylib@1.5.0, but got bazel_skylib@1.7.1 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": [32mComputing main repo mapping:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[35mWARNING: [0mFor repository 'platforms', the root module requires module version platforms@0.0.8, but got platforms@1.0.0 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": [32mComputing main repo mapping:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[35mWARNING: [0mFor repository 'rules_python', the root module requires module version rules_python@0.28.0, but got rules_python@1.5.1 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": [32mComputing main repo mapping:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[35mWARNING: [0mFor repository 'rules_cc', the root module requires module version rules_cc@0.2.1, but got rules_cc@0.2.8 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": [32mComputing main repo mapping:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[35mWARNING: [0mFor repository 'rules_java', the root module requires module version rules_java@6.5.2, but got rules_java@8.14.0 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": [32mComputing main repo mapping:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[35mWARNING: [0mFor repository 'io_bazel_stardoc', the root module requires module version stardoc@0.6.2, but got stardoc@0.7.2 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": [32mComputing main repo mapping:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[35mWARNING: [0mFor repository 're2', the root module requires module version re2@2023-11-01, but got re2@2025-08-12.bcr.1 in the resolved dependency graph. Please update the version in your MODULE.bazel or set --check_direct_dependencies=off
+Step #3 - "compile-afl-address-x86_64": [32mComputing main repo mapping:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[32mLoading:[0m 
+Step #3 - "compile-afl-address-x86_64": [1A[K[32mLoading:[0m 1 packages loaded
+Step #3 - "compile-afl-address-x86_64": [1A[K[32mAnalyzing:[0m 6 targets (2 packages loaded, 0 targets configured)
+Step #3 - "compile-afl-address-x86_64": [1A[K[32mAnalyzing:[0m 6 targets (2 packages loaded, 0 targets configured)
+Step #3 - "compile-afl-address-x86_64":     currently loading: @@bazel_tools//tools
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (8 packages loaded, 6 targets configured)
+Step #3 - "compile-afl-address-x86_64":     currently loading: @@rules_cc+//cc/private/toolchain
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (57 packages loaded, 22 targets configured)
+Step #3 - "compile-afl-address-x86_64":     currently loading: @@apple_support++apple_cc_configure_extension+local_con\
+Step #3 - "compile-afl-address-x86_64": fig_apple_cc_toolchains//
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@rules_kotlin+; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching https://github.com/.../download/v1.9.6/rules_kotlin-v1.9.6.tar.gz
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (58 packages loaded, 22 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@rules_kotlin+; Patching repository
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[32mAnalyzing:[0m 6 targets (71 packages loaded, 1159 targets configured)
+Step #3 - "compile-afl-address-x86_64":     currently loading: @@protobuf+//
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@rules_pkg+; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching https://github.com/.../download/1.0.1/rules_pkg-1.0.1.tar.gz
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (79 packages loaded, 1207 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...y @@rules_cc++cc_configure_extension+local_config_cc; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ..._python++python+python_3_12_x86_64-unknown-linux-gnu; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...3_12_host; Symlinking interpreter files to the target platform
+Step #3 - "compile-afl-address-x86_64":     Fetching https://github.com/...86_64-unknown-linux-gnu-install_only.tar.gz
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (79 packages loaded, 1207 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...y @@rules_cc++cc_configure_extension+local_config_cc; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ..._python++python+python_3_12_x86_64-unknown-linux-gnu; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...3_12_host; Symlinking interpreter files to the target platform
+Step #3 - "compile-afl-address-x86_64":     Fetching https://github.com/...x-gnu-install_only.tar.gz; 38.0 MiB (37.8%)
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (79 packages loaded, 1207 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...y @@rules_cc++cc_configure_extension+local_config_cc; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ..._python++python+python_3_12_x86_64-unknown-linux-gnu; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...3_12_host; Symlinking interpreter files to the target platform
+Step #3 - "compile-afl-address-x86_64":     Fetching https://github.com/...x-gnu-install_only.tar.gz; 75.9 MiB (75.4%)
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (79 packages loaded, 1207 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...y @@rules_cc++cc_configure_extension+local_config_cc; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ..._python++python+python_3_12_x86_64-unknown-linux-gnu; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...3_12_host; Symlinking interpreter files to the target platform
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (79 packages loaded, 1207 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...y @@rules_cc++cc_configure_extension+local_config_cc; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ..._python++python+python_3_12_x86_64-unknown-linux-gnu; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...3_12_host; Symlinking interpreter files to the target platform
+Step #3 - "compile-afl-address-x86_64":     Fetching ...ux-gnu; Extracting cpython-3.12.11+20250610-x86_64-unknown-lin\
+Step #3 - "compile-afl-address-x86_64": ux-gnu-install_only.tar.gz
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (79 packages loaded, 1207 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...y @@rules_cc++cc_configure_extension+local_config_cc; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ..._python++python+python_3_12_x86_64-unknown-linux-gnu; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...3_12_host; Symlinking interpreter files to the target platform
+Step #3 - "compile-afl-address-x86_64":     Fetching ...ux-gnu; Extracting cpython-3.12.11+20250610-x86_64-unknown-lin\
+Step #3 - "compile-afl-address-x86_64": ux-gnu-install_only.tar.gz
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (85 packages loaded, 1844 targets configured)
+Step #3 - "compile-afl-address-x86_64":     currently loading: @@rules_cc+//
+Step #3 - "compile-afl-address-x86_64":     Fetching ..._python++python+python_3_12_x86_64-unknown-linux-gnu; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...3_12_host; Symlinking interpreter files to the target platform
+Step #3 - "compile-afl-address-x86_64":     Fetching ...ux-gnu; Extracting cpython-3.12.11+20250610-x86_64-unknown-lin\
+Step #3 - "compile-afl-address-x86_64": ux-gnu-install_only.tar.gz
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (86 packages loaded, 1858 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ..._python++python+python_3_12_x86_64-unknown-linux-gnu; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...3_12_host; Symlinking interpreter files to the target platform
+Step #3 - "compile-afl-address-x86_64":     Fetching ...ux-gnu; Extracting cpython-3.12.11+20250610-x86_64-unknown-lin\
+Step #3 - "compile-afl-address-x86_64": ux-gnu-install_only.tar.gz
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (86 packages loaded, 1858 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ..._python++python+python_3_12_x86_64-unknown-linux-gnu; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...3_12_host; Symlinking interpreter files to the target platform
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (89 packages loaded, 3865 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@rules_python++internal_deps+pypi__build; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching https://files.pythonhosted.org/.../build-1.2.1-py3-none-any.whl
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (89 packages loaded, 3865 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@rules_python++internal_deps+pypi__pep517; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching https://files.pythonhosted.org/.../pep517-0.13.1-py3-none-any.whl
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (89 packages loaded, 3865 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...@rules_python++pip+rules_fuzzing_py_deps_312_absl_py; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching ...itory @@rules_python++internal_deps+pypi__setuptools; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching https://files.pythonhosted.org/...uptools-78.1.1-py3-none-any.whl
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (89 packages loaded, 3865 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...bsl_py; Running whl_library.ResolveRequirement(rules_python++p\
+Step #3 - "compile-afl-address-x86_64": ip+rules_fuzzing_py_deps_312_absl_py, absl-py==2.0.0)
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (89 packages loaded, 3865 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...bsl_py; Running whl_library.ResolveRequirement(rules_python++p\
+Step #3 - "compile-afl-address-x86_64": ip+rules_fuzzing_py_deps_312_absl_py, absl-py==2.0.0) 4s
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (89 packages loaded, 3865 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching ...bsl_py; Running whl_library.ExtractWheel(rules_python++pip+rul\
+Step #3 - "compile-afl-address-x86_64": es_fuzzing_py_deps_312_absl_py, /root/.cache/bazel/_bazel_root/17db7bb59affe64\
+Step #3 - "compile-afl-address-x86_64": 429348778697da03a/external/rules_python++pip+rules_fuzzing_py_deps_312_absl_py\
+Step #3 - "compile-afl-address-x86_64": /absl_py-2.0.0-py3-none-any.whl) 5s
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[32mAnalyzing:[0m 6 targets (90 packages loaded, 3910 targets configured)
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@re2+; starting
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[32mAnalyzing:[0m 6 targets (92 packages loaded, 3928 targets configured)
+Step #3 - "compile-afl-address-x86_64": [32m[31 / 53][0m 8 actions, 6 running
+Step #3 - "compile-afl-address-x86_64":     Compiling examples/fuzzed_data_provider_fuzz_test.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Compiling examples/empty_fuzz_test.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Compiling cc/runfiles/runfiles.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Compiling examples/runfiles_fuzz_test.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     //fuzzing/tools:validate_dict; 0s local
+Step #3 - "compile-afl-address-x86_64":     //fuzzing/tools:make_corpus_dir; 0s local
+Step #3 - "compile-afl-address-x86_64":     [Prepa] Linking examples/empty_fuzz_test_with_corpus_raw_
+Step #3 - "compile-afl-address-x86_64":     [Prepa] Linking examples/empty_fuzz_test_raw_
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@re2+; starting
+Step #3 - "compile-afl-address-x86_64":     Fetching https://github.com/.../download/2025-08-12/re2-2025-08-12.zip
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[31m[1mERROR: [0m/src/rules_fuzzing/examples/BUILD:34:13: Linking examples/empty_fuzz_test_with_corpus_raw_ failed: (Exit 1): clang-22 failed: error executing CppLink command (from target //examples:empty_fuzz_test_with_corpus_raw_) 
+Step #3 - "compile-afl-address-x86_64":   (cd /root/.cache/bazel/_bazel_root/17db7bb59affe64429348778697da03a/sandbox/linux-sandbox/7/execroot/_main && \
+Step #3 - "compile-afl-address-x86_64":   exec env - \
+Step #3 - "compile-afl-address-x86_64":     CC=/src/aflplusplus/afl-clang-fast \
+Step #3 - "compile-afl-address-x86_64":     CXX=/src/aflplusplus/afl-clang-fast++ \
+Step #3 - "compile-afl-address-x86_64":     FUZZINTRO_OUTDIR=/src \
+Step #3 - "compile-afl-address-x86_64":     PATH=/root/.cache/bazelisk/downloads/bazelbuild/bazel-8.4.2-linux-x86_64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out \
+Step #3 - "compile-afl-address-x86_64":     PWD=/proc/self/cwd \
+Step #3 - "compile-afl-address-x86_64":     ZERO_AR_DATE=1 \
+Step #3 - "compile-afl-address-x86_64":   /usr/local/bin/clang-22 @bazel-out/k8-fastbuild-ST-cfa085705c88/bin/examples/empty_fuzz_test_with_corpus_raw_-0.params)
+Step #3 - "compile-afl-address-x86_64": # Configuration: dd0d6f52d7cd5757701ce13c9943a1af89c5bc38c27c601838f2c2e7851d67a8
+Step #3 - "compile-afl-address-x86_64": # Execution platform: @@platforms//host:host
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": Use --sandbox_debug to see verbose messages from the sandbox and retain the sandbox build root for debugging
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_manual_init
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:399 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:399)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_fuzz_ptr
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:401 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:401)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_persistent_loop
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:407 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:407)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:440 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:440)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_fuzz_len
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_area_ptr
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_map_size
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:429 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:429)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": clang-22: error: linker command failed with exit code 1 (use -v to see invocation)
+Step #3 - "compile-afl-address-x86_64": [32mAnalyzing:[0m 6 targets (92 packages loaded, 3928 targets configured)
+Step #3 - "compile-afl-address-x86_64": [32m[32 / 53][0m 8 actions running
+Step #3 - "compile-afl-address-x86_64":     Compiling examples/fuzzed_data_provider_fuzz_test.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Compiling cc/runfiles/runfiles.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Compiling examples/runfiles_fuzz_test.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     //fuzzing/tools:validate_dict; 0s local
+Step #3 - "compile-afl-address-x86_64":     //fuzzing/tools:make_corpus_dir; 0s local
+Step #3 - "compile-afl-address-x86_64":     Linking examples/empty_fuzz_test_with_corpus_raw_; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Linking examples/empty_fuzz_test_raw_; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Linking examples/empty_fuzz_test_with_dict_raw_; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@re2+; Patching repository
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[31m[1mERROR: [0m/src/rules_fuzzing/examples/BUILD:45:13: Linking examples/empty_fuzz_test_with_dict_raw_ failed: (Exit 1): clang-22 failed: error executing CppLink command (from target //examples:empty_fuzz_test_with_dict_raw_) 
+Step #3 - "compile-afl-address-x86_64":   (cd /root/.cache/bazel/_bazel_root/17db7bb59affe64429348778697da03a/sandbox/linux-sandbox/9/execroot/_main && \
+Step #3 - "compile-afl-address-x86_64":   exec env - \
+Step #3 - "compile-afl-address-x86_64":     CC=/src/aflplusplus/afl-clang-fast \
+Step #3 - "compile-afl-address-x86_64":     CXX=/src/aflplusplus/afl-clang-fast++ \
+Step #3 - "compile-afl-address-x86_64":     FUZZINTRO_OUTDIR=/src \
+Step #3 - "compile-afl-address-x86_64":     PATH=/root/.cache/bazelisk/downloads/bazelbuild/bazel-8.4.2-linux-x86_64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out \
+Step #3 - "compile-afl-address-x86_64":     PWD=/proc/self/cwd \
+Step #3 - "compile-afl-address-x86_64":     ZERO_AR_DATE=1 \
+Step #3 - "compile-afl-address-x86_64":   /usr/local/bin/clang-22 @bazel-out/k8-fastbuild-ST-cfa085705c88/bin/examples/empty_fuzz_test_with_dict_raw_-0.params)
+Step #3 - "compile-afl-address-x86_64": # Configuration: dd0d6f52d7cd5757701ce13c9943a1af89c5bc38c27c601838f2c2e7851d67a8
+Step #3 - "compile-afl-address-x86_64": # Execution platform: @@platforms//host:host
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": Use --sandbox_debug to see verbose messages from the sandbox and retain the sandbox build root for debugging
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_manual_init
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:399 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:399)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_fuzz_ptr
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:401 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:401)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_persistent_loop
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:407 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:407)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:440 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:440)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_fuzz_len
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_area_ptr
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_map_size
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:429 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:429)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": clang-22: error: linker command failed with exit code 1 (use -v to see invocation)
+Step #3 - "compile-afl-address-x86_64": [32mAnalyzing:[0m 6 targets (92 packages loaded, 3928 targets configured)
+Step #3 - "compile-afl-address-x86_64": [32m[33 / 53][0m 7 actions running
+Step #3 - "compile-afl-address-x86_64":     Compiling examples/fuzzed_data_provider_fuzz_test.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Compiling cc/runfiles/runfiles.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Compiling examples/runfiles_fuzz_test.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     //fuzzing/tools:validate_dict; 0s local
+Step #3 - "compile-afl-address-x86_64":     //fuzzing/tools:make_corpus_dir; 0s local
+Step #3 - "compile-afl-address-x86_64":     Linking examples/empty_fuzz_test_raw_; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Linking examples/empty_fuzz_test_with_dict_raw_; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@re2+; Patching repository
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[31m[1mERROR: [0m/src/rules_fuzzing/examples/BUILD:22:13: Linking examples/empty_fuzz_test_raw_ failed: (Exit 1): clang-22 failed: error executing CppLink command (from target //examples:empty_fuzz_test_raw_) 
+Step #3 - "compile-afl-address-x86_64":   (cd /root/.cache/bazel/_bazel_root/17db7bb59affe64429348778697da03a/sandbox/linux-sandbox/8/execroot/_main && \
+Step #3 - "compile-afl-address-x86_64":   exec env - \
+Step #3 - "compile-afl-address-x86_64":     CC=/src/aflplusplus/afl-clang-fast \
+Step #3 - "compile-afl-address-x86_64":     CXX=/src/aflplusplus/afl-clang-fast++ \
+Step #3 - "compile-afl-address-x86_64":     FUZZINTRO_OUTDIR=/src \
+Step #3 - "compile-afl-address-x86_64":     PATH=/root/.cache/bazelisk/downloads/bazelbuild/bazel-8.4.2-linux-x86_64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out \
+Step #3 - "compile-afl-address-x86_64":     PWD=/proc/self/cwd \
+Step #3 - "compile-afl-address-x86_64":     ZERO_AR_DATE=1 \
+Step #3 - "compile-afl-address-x86_64":   /usr/local/bin/clang-22 @bazel-out/k8-fastbuild-ST-cfa085705c88/bin/examples/empty_fuzz_test_raw_-0.params)
+Step #3 - "compile-afl-address-x86_64": # Configuration: dd0d6f52d7cd5757701ce13c9943a1af89c5bc38c27c601838f2c2e7851d67a8
+Step #3 - "compile-afl-address-x86_64": # Execution platform: @@platforms//host:host
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": Use --sandbox_debug to see verbose messages from the sandbox and retain the sandbox build root for debugging
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_manual_init
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:399 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:399)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_fuzz_ptr
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:401 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:401)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_persistent_loop
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:407 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:407)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:440 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:440)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_fuzz_len
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_area_ptr
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ld.lld: error: undefined symbol: __afl_map_size
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:429 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:429)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": >>> referenced by aflpp_driver.c:0 (/src/aflplusplus/utils/aflpp_driver/aflpp_driver.c:0)
+Step #3 - "compile-afl-address-x86_64": >>>               aflpp_driver.o:(LLVMFuzzerRunDriver) in archive external/+non_module_dependencies+rules_fuzzing_oss_fuzz/oss_fuzz_engine.a
+Step #3 - "compile-afl-address-x86_64": clang-22: error: linker command failed with exit code 1 (use -v to see invocation)
+Step #3 - "compile-afl-address-x86_64": [32mAnalyzing:[0m 6 targets (92 packages loaded, 3928 targets configured)
+Step #3 - "compile-afl-address-x86_64": [32m[34 / 53][0m 6 actions running
+Step #3 - "compile-afl-address-x86_64":     Compiling examples/fuzzed_data_provider_fuzz_test.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Compiling cc/runfiles/runfiles.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Compiling examples/runfiles_fuzz_test.cc; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     //fuzzing/tools:validate_dict; 0s local
+Step #3 - "compile-afl-address-x86_64":     //fuzzing/tools:make_corpus_dir; 0s local
+Step #3 - "compile-afl-address-x86_64":     Linking examples/empty_fuzz_test_raw_; 0s linux-sandbox
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@re2+; Patching repository
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[32mINFO: [0mElapsed time: 8.189s, Critical Path: 0.32s
+Step #3 - "compile-afl-address-x86_64": [32mAnalyzing:[0m 6 targets (92 packages loaded, 3928 targets configured)
+Step #3 - "compile-afl-address-x86_64": [32m[40 / 53][0m checking cached actions
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@re2+; Patching repository
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[32mINFO: [0m40 processes: 37 internal, 3 linux-sandbox.
+Step #3 - "compile-afl-address-x86_64": [32mAnalyzing:[0m 6 targets (92 packages loaded, 3928 targets configured)
+Step #3 - "compile-afl-address-x86_64": [32m[40 / 53][0m checking cached actions
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@re2+; Patching repository
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[1A[K[31m[1mERROR: [0mBuild did NOT complete successfully
+Step #3 - "compile-afl-address-x86_64": [31m[1mFAILED:[0m 
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@re2+; Patching repository
+Step #3 - "compile-afl-address-x86_64": [1A[K[1A[K[31m[1mFAILED:[0m 
+Step #3 - "compile-afl-address-x86_64":     Fetching repository @@re2+; Patching repository
+Step #3 - "compile-afl-address-x86_64": [0m********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image bazel-rules-fuzzing-test\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 bazel-rules-fuzzing-test\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

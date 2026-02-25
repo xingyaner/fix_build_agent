@@ -1,0 +1,997 @@
+starting build "01341f9e-36a2-484e-a86c-da0b6cf9dff4"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7"
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Sending build context to Docker daemon  3.584kB
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b549f31133a9: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 53857896a680: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 7efe496e0821: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 7aac26f735e9: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ad31cc38ac81: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e51a957b96fa: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 9ea01dd118f9: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": fde71e506517: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": dd6b7bda1f21: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 8b0201982d0b: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1ed93b1f2b37: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e6a65953e7da: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 4c9d846f1514: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": fde71e506517: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ba7815991431: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 828929bb11e1: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1ed93b1f2b37: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e89aa43f3e15: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 2d99de89a447: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": f6d8158e6dac: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b72c91e47fd1: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 132bc51f6483: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 8b0201982d0b: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 6ea2db2284cb: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 8d8a5e898bb8: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 0627aad1ed24: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": a0eb25bba271: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": f5faf7725626: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 213227c10e94: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ffc3882c042b: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 343ba79fda30: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": cb5959086358: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1f3670b2a3cd: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e1a12b281c6e: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b25342de0fc5: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 105d24739e50: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 3bdc8cef7a9f: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 03f7548b82a6: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": c5a6aaa2ce6b: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 5e3bbf1b669c: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1dfe9bb499fc: Pulling fs layer
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": dd6b7bda1f21: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": cb5959086358: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": f6d8158e6dac: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 828929bb11e1: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e89aa43f3e15: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 9ea01dd118f9: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 3bdc8cef7a9f: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 03f7548b82a6: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b25342de0fc5: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b72c91e47fd1: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 132bc51f6483: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e1a12b281c6e: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 4c9d846f1514: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 2d99de89a447: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 6ea2db2284cb: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": f5faf7725626: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e6a65953e7da: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 8d8a5e898bb8: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 343ba79fda30: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 213227c10e94: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ffc3882c042b: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 105d24739e50: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": a0eb25bba271: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 0627aad1ed24: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 5e3bbf1b669c: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": c5a6aaa2ce6b: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1dfe9bb499fc: Waiting
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 7efe496e0821: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 7efe496e0821: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ad31cc38ac81: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ad31cc38ac81: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 9ea01dd118f9: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 9ea01dd118f9: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": fde71e506517: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b549f31133a9: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b549f31133a9: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 7aac26f735e9: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 7aac26f735e9: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1ed93b1f2b37: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1ed93b1f2b37: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e6a65953e7da: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e6a65953e7da: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 4c9d846f1514: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 4c9d846f1514: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ba7815991431: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ba7815991431: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e89aa43f3e15: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e89aa43f3e15: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 828929bb11e1: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 828929bb11e1: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 53857896a680: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 53857896a680: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 8b0201982d0b: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 8b0201982d0b: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": f6d8158e6dac: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": f6d8158e6dac: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b72c91e47fd1: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 2d99de89a447: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 2d99de89a447: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 6ea2db2284cb: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 6ea2db2284cb: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 132bc51f6483: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 8d8a5e898bb8: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 8d8a5e898bb8: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 0627aad1ed24: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 0627aad1ed24: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": a0eb25bba271: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": f5faf7725626: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": f5faf7725626: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 213227c10e94: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 213227c10e94: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b549f31133a9: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 343ba79fda30: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 343ba79fda30: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ffc3882c042b: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ffc3882c042b: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": cb5959086358: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": cb5959086358: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1f3670b2a3cd: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1f3670b2a3cd: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e1a12b281c6e: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e1a12b281c6e: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b25342de0fc5: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b25342de0fc5: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 105d24739e50: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 105d24739e50: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": c5a6aaa2ce6b: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 3bdc8cef7a9f: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 3bdc8cef7a9f: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": dd6b7bda1f21: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": dd6b7bda1f21: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 03f7548b82a6: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 5e3bbf1b669c: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 5e3bbf1b669c: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1dfe9bb499fc: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1dfe9bb499fc: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e51a957b96fa: Verifying Checksum
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e51a957b96fa: Download complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 53857896a680: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 7efe496e0821: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 7aac26f735e9: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ad31cc38ac81: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e51a957b96fa: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 9ea01dd118f9: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": fde71e506517: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": dd6b7bda1f21: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 8b0201982d0b: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1ed93b1f2b37: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e6a65953e7da: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 4c9d846f1514: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ba7815991431: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 828929bb11e1: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e89aa43f3e15: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 2d99de89a447: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": f6d8158e6dac: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b72c91e47fd1: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 132bc51f6483: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 6ea2db2284cb: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 8d8a5e898bb8: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 0627aad1ed24: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": a0eb25bba271: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": f5faf7725626: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 213227c10e94: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": ffc3882c042b: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 343ba79fda30: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": cb5959086358: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1f3670b2a3cd: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": e1a12b281c6e: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": b25342de0fc5: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 105d24739e50: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 3bdc8cef7a9f: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 03f7548b82a6: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": c5a6aaa2ce6b: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 5e3bbf1b669c: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 1dfe9bb499fc: Pull complete
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Digest: sha256:c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":  ---> 963d5896cb27
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Step 2/5 : RUN apt-get update && apt-get install -y libpcre3-dev zlib1g-dev cmake libssl-dev libpcre2-dev pkg-config
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":  ---> Running in 1c7c654d9b3b
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:2 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:3 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:4 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Fetched 383 kB in 1s (429 kB/s)
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Reading package lists...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Reading package lists...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Building dependency tree...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Reading state information...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": libssl-dev is already the newest version (1.1.1f-1ubuntu2.24).
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": The following packages were automatically installed and are no longer required:
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":   autotools-dev libsigsegv2 m4
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Use 'apt autoremove' to remove them.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": The following additional packages will be installed:
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":   cmake-data libarchive13 libglib2.0-0 libglib2.0-data libicu66 libjsoncpp1
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":   libpcre16-3 libpcre2-16-0 libpcre2-32-0 libpcre2-posix2 libpcre32-3
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":   libpcrecpp0v5 librhash0 libuv1 libxml2 shared-mime-info xdg-user-dirs
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Suggested packages:
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":   cmake-doc ninja-build lrzip
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": The following NEW packages will be installed:
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":   cmake cmake-data libarchive13 libglib2.0-0 libglib2.0-data libicu66
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":   libjsoncpp1 libpcre16-3 libpcre2-16-0 libpcre2-32-0 libpcre2-dev
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":   libpcre2-posix2 libpcre3-dev libpcre32-3 libpcrecpp0v5 librhash0 libuv1
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":   libxml2 pkg-config shared-mime-info xdg-user-dirs zlib1g-dev
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": 0 upgraded, 22 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Need to get 18.9 MB of archives.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": After this operation, 80.5 MB of additional disk space will be used.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-0 amd64 2.64.6-1~ubuntu20.04.9 [1290 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-data all 2.64.6-1~ubuntu20.04.9 [5836 B]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:3 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:5 http://archive.ubuntu.com/ubuntu focal/main amd64 shared-mime-info amd64 1.15-1 [430 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:6 http://archive.ubuntu.com/ubuntu focal/main amd64 xdg-user-dirs amd64 0.17-2ubuntu1 [48.3 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libuv1 amd64 1.34.2-1ubuntu1.5 [80.9 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:8 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 cmake-data all 3.16.3-1ubuntu1.20.04.1 [1613 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:9 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libarchive13 amd64 3.4.0-2ubuntu1.5 [327 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 libjsoncpp1 amd64 1.7.4-3.1ubuntu2 [75.6 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 librhash0 amd64 1.3.9-1 [113 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:12 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 cmake amd64 3.16.3-1ubuntu1.20.04.1 [3668 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:13 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre16-3 amd64 2:8.39-12ubuntu0.1 [150 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre2-16-0 amd64 10.34-7ubuntu0.1 [181 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:15 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre2-32-0 amd64 10.34-7ubuntu0.1 [170 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:16 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre2-posix2 amd64 10.34-7ubuntu0.1 [5988 B]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:17 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre2-dev amd64 10.34-7ubuntu0.1 [672 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:18 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre32-3 amd64 2:8.39-12ubuntu0.1 [140 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:19 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcrecpp0v5 amd64 2:8.39-12ubuntu0.1 [15.5 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:20 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre3-dev amd64 2:8.39-12ubuntu0.1 [540 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:21 http://archive.ubuntu.com/ubuntu focal/main amd64 pkg-config amd64 0.29.1-0ubuntu4 [45.5 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Get:22 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 zlib1g-dev amd64 1:1.2.11.dfsg-2ubuntu1.5 [155 kB]
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": [0mFetched 18.9 MB in 1s (32.5 MB/s)
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libglib2.0-0:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../00-libglib2.0-0_2.64.6-1~ubuntu20.04.9_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libglib2.0-data.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../01-libglib2.0-data_2.64.6-1~ubuntu20.04.9_all.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libicu66:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../02-libicu66_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libxml2:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../03-libxml2_2.9.10+dfsg-5ubuntu0.20.04.10_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package shared-mime-info.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../04-shared-mime-info_1.15-1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking shared-mime-info (1.15-1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package xdg-user-dirs.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../05-xdg-user-dirs_0.17-2ubuntu1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libuv1:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../06-libuv1_1.34.2-1ubuntu1.5_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libuv1:amd64 (1.34.2-1ubuntu1.5) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package cmake-data.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../07-cmake-data_3.16.3-1ubuntu1.20.04.1_all.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking cmake-data (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libarchive13:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../08-libarchive13_3.4.0-2ubuntu1.5_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libarchive13:amd64 (3.4.0-2ubuntu1.5) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libjsoncpp1:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../09-libjsoncpp1_1.7.4-3.1ubuntu2_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libjsoncpp1:amd64 (1.7.4-3.1ubuntu2) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package librhash0:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../10-librhash0_1.3.9-1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking librhash0:amd64 (1.3.9-1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package cmake.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../11-cmake_3.16.3-1ubuntu1.20.04.1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking cmake (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libpcre16-3:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../12-libpcre16-3_2%3a8.39-12ubuntu0.1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libpcre16-3:amd64 (2:8.39-12ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libpcre2-16-0:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../13-libpcre2-16-0_10.34-7ubuntu0.1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libpcre2-16-0:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libpcre2-32-0:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../14-libpcre2-32-0_10.34-7ubuntu0.1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libpcre2-32-0:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libpcre2-posix2:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../15-libpcre2-posix2_10.34-7ubuntu0.1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libpcre2-posix2:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libpcre2-dev:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../16-libpcre2-dev_10.34-7ubuntu0.1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libpcre2-dev:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libpcre32-3:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../17-libpcre32-3_2%3a8.39-12ubuntu0.1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libpcre32-3:amd64 (2:8.39-12ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libpcrecpp0v5:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../18-libpcrecpp0v5_2%3a8.39-12ubuntu0.1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libpcrecpp0v5:amd64 (2:8.39-12ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package libpcre3-dev:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../19-libpcre3-dev_2%3a8.39-12ubuntu0.1_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking libpcre3-dev:amd64 (2:8.39-12ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package pkg-config.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../20-pkg-config_0.29.1-0ubuntu4_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Selecting previously unselected package zlib1g-dev:amd64.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Preparing to unpack .../21-zlib1g-dev_1%3a1.2.11.dfsg-2ubuntu1.5_amd64.deb ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Unpacking zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libpcrecpp0v5:amd64 (2:8.39-12ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libpcre16-3:amd64 (2:8.39-12ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": No schema files found: doing nothing.
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libpcre2-16-0:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libpcre2-32-0:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libuv1:amd64 (1.34.2-1ubuntu1.5) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libpcre32-3:amd64 (2:8.39-12ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libpcre2-posix2:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up librhash0:amd64 (1.3.9-1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up cmake-data (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libjsoncpp1:amd64 (1.7.4-3.1ubuntu2) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libpcre2-dev:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libarchive13:amd64 (3.4.0-2ubuntu1.5) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up libpcre3-dev:amd64 (2:8.39-12ubuntu0.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up shared-mime-info (1.15-1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Setting up cmake (3.16.3-1ubuntu1.20.04.1) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Removing intermediate container 1c7c654d9b3b
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":  ---> b9e274bff744
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Step 3/5 : RUN git clone --depth 1 https://github.com/apache/trafficserver.git
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":  ---> Running in 6e09cddda192
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": [91mCloning into 'trafficserver'...
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": [0mRemoving intermediate container 6e09cddda192
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":  ---> c7eea02a3a8d
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Step 4/5 : RUN cp $SRC/trafficserver/tests/fuzzing/oss-fuzz.sh $SRC/build.sh
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":  ---> Running in f7b14dace880
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Removing intermediate container f7b14dace880
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":  ---> 1b4d4cb36988
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Step 5/5 : WORKDIR $SRC/trafficserver/
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":  ---> Running in 05523d85eaaf
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Removing intermediate container 05523d85eaaf
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7":  ---> ac72f6a89472
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Successfully built ac72f6a89472
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Successfully tagged gcr.io/oss-fuzz/trafficserver:latest
+Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/trafficserver:latest
+Finished Step #1 - "build-578a112c-909c-495c-b594-83a819656fd7"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/trafficserver
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileEy5UtO
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/trafficserver/.git
+Step #2 - "srcmap": + GIT_DIR=/src/trafficserver
+Step #2 - "srcmap": + cd /src/trafficserver
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/apache/trafficserver.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=61593411e354271c0fa9cd14889dcccb7b875169
+Step #2 - "srcmap": + jq_inplace /tmp/fileEy5UtO '."/src/trafficserver" = { type: "git", url: "https://github.com/apache/trafficserver.git", rev: "61593411e354271c0fa9cd14889dcccb7b875169" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filejQquad
+Step #2 - "srcmap": + cat /tmp/fileEy5UtO
+Step #2 - "srcmap": + jq '."/src/trafficserver" = { type: "git", url: "https://github.com/apache/trafficserver.git", rev: "61593411e354271c0fa9cd14889dcccb7b875169" }'
+Step #2 - "srcmap": + mv /tmp/filejQquad /tmp/fileEy5UtO
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileEy5UtO
+Step #2 - "srcmap": + rm /tmp/fileEy5UtO
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/trafficserver": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/apache/trafficserver.git",
+Step #2 - "srcmap":     "rev": "61593411e354271c0fa9cd14889dcccb7b875169"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + CFLAGS_SAVE='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope '
+Step #3 - "compile-afl-address-x86_64": + CXXFLAGS_SAVE='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++'
+Step #3 - "compile-afl-address-x86_64": + RUSTFLAGS_SAVE='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers'
+Step #3 - "compile-afl-address-x86_64": + unset CFLAGS
+Step #3 - "compile-afl-address-x86_64": + unset CXXFLAGS
+Step #3 - "compile-afl-address-x86_64": + unset RUSTFLAGS
+Step #3 - "compile-afl-address-x86_64": + export AFL_NOOPT=1
+Step #3 - "compile-afl-address-x86_64": + AFL_NOOPT=1
+Step #3 - "compile-afl-address-x86_64": + apt-get install -y libev-dev libjemalloc-dev python2-dev libxml2-dev libpython2-dev libc-ares-dev libsystemd-dev libevent-dev libjansson-dev zlib1g-dev sudo autoconf libtool pkg-config
+Step #3 - "compile-afl-address-x86_64": Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 2%Reading package lists... 2%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 28%Reading package lists... 28%Reading package lists... 41%Reading package lists... 41%Reading package lists... 41%Reading package lists... 41%Reading package lists... 42%Reading package lists... 42%Reading package lists... 52%Reading package lists... 52%Reading package lists... 55%Reading package lists... 55%Reading package lists... 56%Reading package lists... 66%Reading package lists... 66%Reading package lists... 66%Reading package lists... 66%Reading package lists... 69%Reading package lists... 69%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 82%Reading package lists... 82%Reading package lists... 84%Reading package lists... 84%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 97%Reading package lists... 97%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
+Step #3 - "compile-afl-address-x86_64": Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree       
+Step #3 - "compile-afl-address-x86_64": Reading state information... 0%Reading state information... 0%Reading state information... Done
+Step #3 - "compile-afl-address-x86_64": pkg-config is already the newest version (0.29.1-0ubuntu4).
+Step #3 - "compile-afl-address-x86_64": zlib1g-dev is already the newest version (1:1.2.11.dfsg-2ubuntu1.5).
+Step #3 - "compile-afl-address-x86_64": The following additional packages will be installed:
+Step #3 - "compile-afl-address-x86_64":   automake file icu-devtools libc-ares2 libev4 libevent-2.1-7
+Step #3 - "compile-afl-address-x86_64":   libevent-core-2.1-7 libevent-extra-2.1-7 libevent-openssl-2.1-7
+Step #3 - "compile-afl-address-x86_64":   libevent-pthreads-2.1-7 libexpat1-dev libicu-dev libjansson4 libjemalloc2
+Step #3 - "compile-afl-address-x86_64":   libltdl-dev libltdl7 libmagic-mgc libmagic1 libpython2-stdlib libpython2.7
+Step #3 - "compile-afl-address-x86_64":   libpython2.7-dev libpython2.7-minimal libpython2.7-stdlib mime-support
+Step #3 - "compile-afl-address-x86_64":   python2 python2-minimal python2.7 python2.7-dev python2.7-minimal
+Step #3 - "compile-afl-address-x86_64": Suggested packages:
+Step #3 - "compile-afl-address-x86_64":   autoconf-archive gnu-standards autoconf-doc gettext icu-doc libtool-doc
+Step #3 - "compile-afl-address-x86_64":   gfortran | fortran95-compiler gcj-jdk python2-doc python-tk python2.7-doc
+Step #3 - "compile-afl-address-x86_64":   binfmt-support
+Step #3 - "compile-afl-address-x86_64": The following NEW packages will be installed:
+Step #3 - "compile-afl-address-x86_64":   autoconf automake file icu-devtools libc-ares-dev libc-ares2 libev-dev
+Step #3 - "compile-afl-address-x86_64":   libev4 libevent-2.1-7 libevent-core-2.1-7 libevent-dev libevent-extra-2.1-7
+Step #3 - "compile-afl-address-x86_64":   libevent-openssl-2.1-7 libevent-pthreads-2.1-7 libexpat1-dev libicu-dev
+Step #3 - "compile-afl-address-x86_64":   libjansson-dev libjansson4 libjemalloc-dev libjemalloc2 libltdl-dev libltdl7
+Step #3 - "compile-afl-address-x86_64":   libmagic-mgc libmagic1 libpython2-dev libpython2-stdlib libpython2.7
+Step #3 - "compile-afl-address-x86_64":   libpython2.7-dev libpython2.7-minimal libpython2.7-stdlib libsystemd-dev
+Step #3 - "compile-afl-address-x86_64":   libtool libxml2-dev mime-support python2 python2-dev python2-minimal
+Step #3 - "compile-afl-address-x86_64":   python2.7 python2.7-dev python2.7-minimal sudo
+Step #3 - "compile-afl-address-x86_64": 0 upgraded, 41 newly installed, 0 to remove and 0 not upgraded.
+Step #3 - "compile-afl-address-x86_64": Need to get 22.0 MB of archives.
+Step #3 - "compile-afl-address-x86_64": After this operation, 107 MB of additional disk space will be used.
+Step #3 - "compile-afl-address-x86_64": 0% [Working]            Get:1 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7-minimal amd64 2.7.18-1~20.04.7 [336 kB]
+Step #3 - "compile-afl-address-x86_64": 0% [1 libpython2.7-minimal 14.2 kB/336 kB 4%]                                             2% [Working]            Get:2 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 python2.7-minimal amd64 2.7.18-1~20.04.7 [1278 kB]
+Step #3 - "compile-afl-address-x86_64": 2% [2 python2.7-minimal 12.7 kB/1278 kB 1%]                                           7% [Waiting for headers]                        Get:3 http://archive.ubuntu.com/ubuntu focal/universe amd64 python2-minimal amd64 2.7.17-2ubuntu4 [27.5 kB]
+Step #3 - "compile-afl-address-x86_64": 7% [3 python2-minimal 16.4 kB/27.5 kB 60%]                                          7% [Waiting for headers]                        Get:4 http://archive.ubuntu.com/ubuntu focal/main amd64 mime-support all 3.64ubuntu1 [30.6 kB]
+Step #3 - "compile-afl-address-x86_64": 8% [4 mime-support 20.4 kB/30.6 kB 67%]                                       8% [Waiting for headers]                        Get:5 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7-stdlib amd64 2.7.18-1~20.04.7 [1889 kB]
+Step #3 - "compile-afl-address-x86_64": 8% [5 libpython2.7-stdlib 16.4 kB/1889 kB 1%]                                             15% [Waiting for headers]                         Get:6 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 python2.7 amd64 2.7.18-1~20.04.7 [248 kB]
+Step #3 - "compile-afl-address-x86_64": 16% [6 python2.7 41.3 kB/248 kB 17%]                                    17% [Waiting for headers]                         Get:7 http://archive.ubuntu.com/ubuntu focal/universe amd64 libpython2-stdlib amd64 2.7.17-2ubuntu4 [7072 B]
+Step #3 - "compile-afl-address-x86_64": 17% [7 libpython2-stdlib 7072 B/7072 B 100%]                                            17% [Working]             Get:8 http://archive.ubuntu.com/ubuntu focal/universe amd64 python2 amd64 2.7.17-2ubuntu4 [26.5 kB]
+Step #3 - "compile-afl-address-x86_64": 17% [8 python2 12.3 kB/26.5 kB 46%]                                   18% [Waiting for headers]                         Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #3 - "compile-afl-address-x86_64": 18% [9 libmagic-mgc 20.8 kB/218 kB 10%]                                       19% [Working]             Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #3 - "compile-afl-address-x86_64": 19% [10 libmagic1 41.0 kB/75.9 kB 54%]                                      20% [Waiting for headers]                         Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #3 - "compile-afl-address-x86_64": 20% [11 file 23.3 kB/23.3 kB 100%]                                  20% [Working]             Get:12 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 sudo amd64 1.8.31-1ubuntu1.5 [515 kB]
+Step #3 - "compile-afl-address-x86_64": 21% [12 sudo 24.6 kB/515 kB 5%]                               23% [Waiting for headers]                         Get:13 http://archive.ubuntu.com/ubuntu focal/main amd64 autoconf all 2.69-11.1 [321 kB]
+Step #3 - "compile-afl-address-x86_64": 23% [13 autoconf 39.6 kB/321 kB 12%]                                    24% [Waiting for headers]                         Get:14 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+Step #3 - "compile-afl-address-x86_64": 25% [14 automake 45.6 kB/522 kB 9%]                                   27% [Waiting for headers]                         Get:15 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 icu-devtools amd64 66.1-2ubuntu2.1 [189 kB]
+Step #3 - "compile-afl-address-x86_64": 27% [15 icu-devtools 16.4 kB/189 kB 9%]                                       28% [Waiting for headers]                         Get:16 http://archive.ubuntu.com/ubuntu focal/main amd64 libevent-2.1-7 amd64 2.1.11-stable-1 [138 kB]
+Step #3 - "compile-afl-address-x86_64": 28% [16 libevent-2.1-7 36.9 kB/138 kB 27%]                                          29% [Waiting for headers]                         Get:17 http://archive.ubuntu.com/ubuntu focal/main amd64 libevent-core-2.1-7 amd64 2.1.11-stable-1 [89.1 kB]
+Step #3 - "compile-afl-address-x86_64": 29% [17 libevent-core-2.1-7 48.2 kB/89.1 kB 54%]                                                30% [Waiting for headers]                         Get:18 http://archive.ubuntu.com/ubuntu focal/main amd64 libevent-extra-2.1-7 amd64 2.1.11-stable-1 [60.0 kB]
+Step #3 - "compile-afl-address-x86_64": 30% [18 libevent-extra-2.1-7 24.3 kB/60.0 kB 40%]                                                 31% [Working]             Get:19 http://archive.ubuntu.com/ubuntu focal/main amd64 libevent-pthreads-2.1-7 amd64 2.1.11-stable-1 [7372 B]
+Step #3 - "compile-afl-address-x86_64": 31% [19 libevent-pthreads-2.1-7 7372 B/7372 B 100%]                                                   31% [Waiting for headers]                         Get:20 http://archive.ubuntu.com/ubuntu focal/main amd64 libevent-openssl-2.1-7 amd64 2.1.11-stable-1 [14.3 kB]
+Step #3 - "compile-afl-address-x86_64": 31% [20 libevent-openssl-2.1-7 14.3 kB/14.3 kB 100%]                                                    32% [Working]             Get:21 http://archive.ubuntu.com/ubuntu focal/main amd64 libevent-dev amd64 2.1.11-stable-1 [261 kB]
+Step #3 - "compile-afl-address-x86_64": 32% [21 libevent-dev 7316 B/261 kB 3%]                                      33% [Waiting for headers]                         Get:22 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libexpat1-dev amd64 2.2.9-1ubuntu0.8 [117 kB]
+Step #3 - "compile-afl-address-x86_64": 33% [22 libexpat1-dev 7692 B/117 kB 7%]                                       34% [Waiting for headers]                         Get:23 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu-dev amd64 66.1-2ubuntu2.1 [9451 kB]
+Step #3 - "compile-afl-address-x86_64": 34% [23 libicu-dev 20.5 kB/9451 kB 0%]                                      69% [Waiting for headers]                         Get:24 http://archive.ubuntu.com/ubuntu focal/main amd64 libjansson4 amd64 2.12-1build1 [28.9 kB]
+Step #3 - "compile-afl-address-x86_64": 69% [24 libjansson4 28.9 kB/28.9 kB 100%]                                         69% [Working]             Get:25 http://archive.ubuntu.com/ubuntu focal/main amd64 libjansson-dev amd64 2.12-1build1 [30.3 kB]
+Step #3 - "compile-afl-address-x86_64": 69% [25 libjansson-dev 0 B/30.3 kB 0%]                                      70% [Waiting for headers]                         Get:26 http://archive.ubuntu.com/ubuntu focal/universe amd64 libjemalloc2 amd64 5.2.1-1ubuntu1 [235 kB]
+Step #3 - "compile-afl-address-x86_64": 70% [26 libjemalloc2 16.4 kB/235 kB 7%]                                       71% [Waiting for headers]                         Get:27 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+Step #3 - "compile-afl-address-x86_64": 72% [Waiting for headers]                         Get:28 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+Step #3 - "compile-afl-address-x86_64": 72% [28 libltdl-dev 65.5 kB/162 kB 40%]                                       73% [Waiting for headers]                         Get:29 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7 amd64 2.7.18-1~20.04.7 [1038 kB]
+Step #3 - "compile-afl-address-x86_64": 73% [29 libpython2.7 35.5 kB/1038 kB 3%]                                        77% [Working]             Get:30 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7-dev amd64 2.7.18-1~20.04.7 [2468 kB]
+Step #3 - "compile-afl-address-x86_64": 77% [30 libpython2.7-dev 45.9 kB/2468 kB 2%]                                            87% [Waiting for headers]                         Get:31 http://archive.ubuntu.com/ubuntu focal/universe amd64 libpython2-dev amd64 2.7.17-2ubuntu4 [7140 B]
+Step #3 - "compile-afl-address-x86_64": 87% [31 libpython2-dev 7140 B/7140 B 100%]                                          87% [Working]             Get:32 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libsystemd-dev amd64 245.4-4ubuntu3.24 [246 kB]
+Step #3 - "compile-afl-address-x86_64": 87% [32 libsystemd-dev 4096 B/246 kB 2%]                                        89% [Waiting for headers]                         Get:33 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+Step #3 - "compile-afl-address-x86_64": 89% [33 libtool 11.2 kB/161 kB 7%]                                  90% [Waiting for headers]                         Get:34 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2-dev amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [735 kB]
+Step #3 - "compile-afl-address-x86_64": 90% [34 libxml2-dev 47.0 kB/735 kB 6%]                                      93% [Waiting for headers]                         Get:35 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 python2.7-dev amd64 2.7.18-1~20.04.7 [294 kB]
+Step #3 - "compile-afl-address-x86_64": 93% [35 python2.7-dev 4096 B/294 kB 1%]                                       94% [Waiting for headers]                         Get:36 http://archive.ubuntu.com/ubuntu focal/universe amd64 python2-dev amd64 2.7.17-2ubuntu4 [1268 B]
+Step #3 - "compile-afl-address-x86_64": 94% [36 python2-dev 1268 B/1268 B 100%]                                       95% [Waiting for headers]                         Get:37 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libc-ares2 amd64 1.15.0-1ubuntu0.5 [36.9 kB]
+Step #3 - "compile-afl-address-x86_64": 95% [37 libc-ares2 36.9 kB/36.9 kB 100%]                                        96% [Waiting for headers]                         Get:38 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libc-ares-dev amd64 1.15.0-1ubuntu0.5 [115 kB]
+Step #3 - "compile-afl-address-x86_64": 96% [38 libc-ares-dev 27.5 kB/115 kB 24%]                                         96% [Waiting for headers]                         Get:39 http://archive.ubuntu.com/ubuntu focal/universe amd64 libev4 amd64 1:4.31-1 [31.2 kB]
+Step #3 - "compile-afl-address-x86_64": 97% [39 libev4 31.2 kB/31.2 kB 100%]                                    97% [Waiting for headers]                         Get:40 http://archive.ubuntu.com/ubuntu focal/universe amd64 libev-dev amd64 1:4.31-1 [124 kB]
+Step #3 - "compile-afl-address-x86_64": 97% [40 libev-dev 12.2 kB/124 kB 10%]                                     98% [Waiting for headers]                         Get:41 http://archive.ubuntu.com/ubuntu focal/universe amd64 libjemalloc-dev amd64 5.2.1-1ubuntu1 [425 kB]
+Step #3 - "compile-afl-address-x86_64": 98% [41 libjemalloc-dev 16.4 kB/425 kB 4%]                                          100% [Working]              Fetched 22.0 MB in 1s (32.9 MB/s)
+Step #3 - "compile-afl-address-x86_64": debconf: delaying package configuration, since apt-utils is not installed
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libpython2.7-minimal:amd64.
+Step #3 - "compile-afl-address-x86_64": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 20954 files and directories currently installed.)
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../0-libpython2.7-minimal_2.7.18-1~20.04.7_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libpython2.7-minimal:amd64 (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package python2.7-minimal.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../1-python2.7-minimal_2.7.18-1~20.04.7_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking python2.7-minimal (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package python2-minimal.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../2-python2-minimal_2.7.17-2ubuntu4_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking python2-minimal (2.7.17-2ubuntu4) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package mime-support.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../3-mime-support_3.64ubuntu1_all.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking mime-support (3.64ubuntu1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libpython2.7-stdlib:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../4-libpython2.7-stdlib_2.7.18-1~20.04.7_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libpython2.7-stdlib:amd64 (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package python2.7.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../5-python2.7_2.7.18-1~20.04.7_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking python2.7 (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libpython2-stdlib:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../6-libpython2-stdlib_2.7.17-2ubuntu4_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libpython2-stdlib:amd64 (2.7.17-2ubuntu4) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libpython2.7-minimal:amd64 (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Setting up python2.7-minimal (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Setting up python2-minimal (2.7.17-2ubuntu4) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package python2.
+Step #3 - "compile-afl-address-x86_64": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 21730 files and directories currently installed.)
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../00-python2_2.7.17-2ubuntu4_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking python2 (2.7.17-2ubuntu4) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libmagic-mgc.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../01-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libmagic1:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../02-libmagic1_1%3a5.38-4_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package file.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../03-file_1%3a5.38-4_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking file (1:5.38-4) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package sudo.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../04-sudo_1.8.31-1ubuntu1.5_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking sudo (1.8.31-1ubuntu1.5) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package autoconf.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../05-autoconf_2.69-11.1_all.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking autoconf (2.69-11.1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package automake.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../06-automake_1%3a1.16.1-4ubuntu6_all.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking automake (1:1.16.1-4ubuntu6) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package icu-devtools.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../07-icu-devtools_66.1-2ubuntu2.1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking icu-devtools (66.1-2ubuntu2.1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libevent-2.1-7:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../08-libevent-2.1-7_2.1.11-stable-1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libevent-2.1-7:amd64 (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libevent-core-2.1-7:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../09-libevent-core-2.1-7_2.1.11-stable-1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libevent-core-2.1-7:amd64 (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libevent-extra-2.1-7:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../10-libevent-extra-2.1-7_2.1.11-stable-1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libevent-extra-2.1-7:amd64 (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libevent-pthreads-2.1-7:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../11-libevent-pthreads-2.1-7_2.1.11-stable-1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libevent-pthreads-2.1-7:amd64 (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libevent-openssl-2.1-7:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../12-libevent-openssl-2.1-7_2.1.11-stable-1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libevent-openssl-2.1-7:amd64 (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libevent-dev.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../13-libevent-dev_2.1.11-stable-1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libevent-dev (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libexpat1-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../14-libexpat1-dev_2.2.9-1ubuntu0.8_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libexpat1-dev:amd64 (2.2.9-1ubuntu0.8) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libicu-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../15-libicu-dev_66.1-2ubuntu2.1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libicu-dev:amd64 (66.1-2ubuntu2.1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libjansson4:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../16-libjansson4_2.12-1build1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libjansson4:amd64 (2.12-1build1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libjansson-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../17-libjansson-dev_2.12-1build1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libjansson-dev:amd64 (2.12-1build1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libjemalloc2:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../18-libjemalloc2_5.2.1-1ubuntu1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libjemalloc2:amd64 (5.2.1-1ubuntu1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libltdl7:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../19-libltdl7_2.4.6-14_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libltdl7:amd64 (2.4.6-14) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libltdl-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../20-libltdl-dev_2.4.6-14_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libltdl-dev:amd64 (2.4.6-14) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libpython2.7:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../21-libpython2.7_2.7.18-1~20.04.7_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libpython2.7:amd64 (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libpython2.7-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../22-libpython2.7-dev_2.7.18-1~20.04.7_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libpython2.7-dev:amd64 (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libpython2-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../23-libpython2-dev_2.7.17-2ubuntu4_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libpython2-dev:amd64 (2.7.17-2ubuntu4) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libsystemd-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../24-libsystemd-dev_245.4-4ubuntu3.24_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libsystemd-dev:amd64 (245.4-4ubuntu3.24) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libtool.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../25-libtool_2.4.6-14_all.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libtool (2.4.6-14) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libxml2-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../26-libxml2-dev_2.9.10+dfsg-5ubuntu0.20.04.10_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libxml2-dev:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package python2.7-dev.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../27-python2.7-dev_2.7.18-1~20.04.7_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking python2.7-dev (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package python2-dev.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../28-python2-dev_2.7.17-2ubuntu4_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking python2-dev (2.7.17-2ubuntu4) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libc-ares2:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../29-libc-ares2_1.15.0-1ubuntu0.5_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libc-ares2:amd64 (1.15.0-1ubuntu0.5) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libc-ares-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../30-libc-ares-dev_1.15.0-1ubuntu0.5_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libc-ares-dev:amd64 (1.15.0-1ubuntu0.5) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libev4:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../31-libev4_1%3a4.31-1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libev4:amd64 (1:4.31-1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libev-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../32-libev-dev_1%3a4.31-1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libev-dev:amd64 (1:4.31-1) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libjemalloc-dev.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../33-libjemalloc-dev_5.2.1-1ubuntu1_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libjemalloc-dev (5.2.1-1ubuntu1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up mime-support (3.64ubuntu1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libmagic-mgc (1:5.38-4) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libev4:amd64 (1:4.31-1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libc-ares2:amd64 (1.15.0-1ubuntu0.5) ...
+Step #3 - "compile-afl-address-x86_64": Setting up file (1:5.38-4) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libjemalloc2:amd64 (5.2.1-1ubuntu1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libjansson4:amd64 (2.12-1build1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libpython2.7-stdlib:amd64 (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libjemalloc-dev (5.2.1-1ubuntu1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libexpat1-dev:amd64 (2.2.9-1ubuntu0.8) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libc-ares-dev:amd64 (1.15.0-1ubuntu0.5) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libevent-core-2.1-7:amd64 (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libevent-2.1-7:amd64 (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up icu-devtools (66.1-2ubuntu2.1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up sudo (1.8.31-1ubuntu1.5) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libltdl7:amd64 (2.4.6-14) ...
+Step #3 - "compile-afl-address-x86_64": Setting up autoconf (2.69-11.1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libev-dev:amd64 (1:4.31-1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libicu-dev:amd64 (66.1-2ubuntu2.1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libjansson-dev:amd64 (2.12-1build1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libsystemd-dev:amd64 (245.4-4ubuntu3.24) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libevent-pthreads-2.1-7:amd64 (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up automake (1:1.16.1-4ubuntu6) ...
+Step #3 - "compile-afl-address-x86_64": update-alternatives: using /usr/bin/automake-1.16 to provide /usr/bin/automake (automake) in auto mode
+Step #3 - "compile-afl-address-x86_64": update-alternatives: warning: skip creation of /usr/share/man/man1/automake.1.gz because associated file /usr/share/man/man1/automake-1.16.1.gz (of link group automake) doesn't exist
+Step #3 - "compile-afl-address-x86_64": update-alternatives: warning: skip creation of /usr/share/man/man1/aclocal.1.gz because associated file /usr/share/man/man1/aclocal-1.16.1.gz (of link group automake) doesn't exist
+Step #3 - "compile-afl-address-x86_64": Setting up libevent-extra-2.1-7:amd64 (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libpython2.7:amd64 (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libpython2.7-dev:amd64 (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Setting up python2.7 (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libtool (2.4.6-14) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libpython2-stdlib:amd64 (2.7.17-2ubuntu4) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libevent-openssl-2.1-7:amd64 (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up python2 (2.7.17-2ubuntu4) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libltdl-dev:amd64 (2.4.6-14) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libxml2-dev:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libevent-dev (2.1.11-stable-1) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libpython2-dev:amd64 (2.7.17-2ubuntu4) ...
+Step #3 - "compile-afl-address-x86_64": Setting up python2.7-dev (2.7.18-1~20.04.7) ...
+Step #3 - "compile-afl-address-x86_64": Setting up python2-dev (2.7.17-2ubuntu4) ...
+Step #3 - "compile-afl-address-x86_64": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #3 - "compile-afl-address-x86_64": + curl https://sh.rustup.rs -sSf
+Step #3 - "compile-afl-address-x86_64": + sh -s -- -y --default-toolchain=nightly
+Step #3 - "compile-afl-address-x86_64": [1minfo:[0m downloading installer
+Step #3 - "compile-afl-address-x86_64": [0m[1m[33mwarn: [0mIt looks like you have an existing installation of Rust at:
+Step #3 - "compile-afl-address-x86_64": [0m[1m[33mwarn: [0m/usr/local/bin
+Step #3 - "compile-afl-address-x86_64": [0m[1m[33mwarn: [0mIt is recommended that rustup be the primary Rust installation.
+Step #3 - "compile-afl-address-x86_64": [0m[1m[33mwarn: [0mOtherwise you may have confusion unless you are careful with your PATH.
+Step #3 - "compile-afl-address-x86_64": [0m[1m[33mwarn: [0mIf you are sure that you want both rustup and your already installed Rust
+Step #3 - "compile-afl-address-x86_64": [0m[1m[33mwarn: [0mthen please reply `y' or `yes' or set RUSTUP_INIT_SKIP_PATH_CHECK to yes
+Step #3 - "compile-afl-address-x86_64": [0m[1m[33mwarn: [0mor pass `-y' to ignore all ignorable checks.
+Step #3 - "compile-afl-address-x86_64": [0m[1m[31merror: [0mcannot install while Rust is installed
+Step #3 - "compile-afl-address-x86_64": [0m[1m[33mwarn: [0mcontinuing (because the -y flag is set and the error is ignorable)
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0mprofile set to 'default'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0mdefault host triple is x86_64-unknown-linux-gnu
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0msyncing channel updates for 'nightly-x86_64-unknown-linux-gnu'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0mlatest update on 2025-12-30, rust version 1.94.0-nightly (56f24e00c 2025-12-29)
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0mdownloading component 'cargo'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0mdownloading component 'clippy'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0mdownloading component 'rust-docs'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0mdownloading component 'rust-std'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0mdownloading component 'rustc'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0mdownloading component 'rustfmt'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0minstalling component 'cargo'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0minstalling component 'clippy'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0minstalling component 'rust-docs'
+Step #3 - "compile-afl-address-x86_64":   9.1 MiB /  20.5 MiB ( 44 %)   0 B/s in  1s ETA: Unknown                                                          20.5 MiB /  20.5 MiB (100 %)   9.1 MiB/s in  1s
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0minstalling component 'rust-std'
+Step #3 - "compile-afl-address-x86_64":  16.9 MiB /  28.3 MiB ( 60 %)   0 B/s in  1s ETA: Unknown                                                          28.3 MiB /  28.3 MiB (100 %)  16.9 MiB/s in  1s
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0minstalling component 'rustc'
+Step #3 - "compile-afl-address-x86_64":  19.1 MiB /  74.7 MiB ( 26 %)   0 B/s in  1s ETA: Unknown                                                          36.5 MiB /  74.7 MiB ( 49 %)  19.1 MiB/s in  2s ETA:  1s                                                          52.6 MiB /  74.7 MiB ( 70 %)  18.3 MiB/s in  3s ETA:  1s                                                          69.0 MiB /  74.7 MiB ( 92 %)  17.5 MiB/s in  4s                                                 74.7 MiB /  74.7 MiB (100 %)  17.2 MiB/s in  4s
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0minstalling component 'rustfmt'
+Step #3 - "compile-afl-address-x86_64": [0m[1minfo: [0mdefault toolchain set to 'nightly-x86_64-unknown-linux-gnu'
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":   [0m[1m[0m[1m[32mnightly-x86_64-unknown-linux-gnu installed[0m - rustc 1.94.0-nightly (56f24e00c 2025-12-29)
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": [0m[1m
+Step #3 - "compile-afl-address-x86_64": Rust is installed now. Great!
+Step #3 - "compile-afl-address-x86_64": [0m
+Step #3 - "compile-afl-address-x86_64": To get started you may need to restart your current shell.
+Step #3 - "compile-afl-address-x86_64": This would reload your [0m[1mPATH[0m environment variable to include
+Step #3 - "compile-afl-address-x86_64": Cargo's bin directory ($HOME/.cargo/bin).
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": To configure your current shell, you need to source
+Step #3 - "compile-afl-address-x86_64": the corresponding [0m[1menv[0m file under $HOME/.cargo.
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": This is usually done by running one of the following (note the leading DOT):
+Step #3 - "compile-afl-address-x86_64": . "$HOME/.cargo/env"            # For sh/bash/zsh/ash/dash/pdksh
+Step #3 - "compile-afl-address-x86_64": source "$HOME/.cargo/env.fish"  # For fish
+Step #3 - "compile-afl-address-x86_64": source $"($nu.home-path)/.cargo/env.nu"  # For nushell
+Step #3 - "compile-afl-address-x86_64": + export PATH=/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out
+Step #3 - "compile-afl-address-x86_64": + PATH=/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out
+Step #3 - "compile-afl-address-x86_64": + BASE=/opt
+Step #3 - "compile-afl-address-x86_64": + /src/trafficserver/tools/build_h3_tools.sh
+Step #3 - "compile-afl-address-x86_64": Building boringssl H3 dependencies in /tmp/tmp.gBDF9P2uas. Installation will be done in /opt/h3-tools-boringssl
+Step #3 - "compile-afl-address-x86_64": +-------------------------------------------------------------------------+
+Step #3 - "compile-afl-address-x86_64": | You probably need to run this, or something like this, for your system: |
+Step #3 - "compile-afl-address-x86_64": |                                                                         |
+Step #3 - "compile-afl-address-x86_64": |   sudo apt -y install libev-dev libjemalloc-dev python3-dev libxml2-dev |
+Step #3 - "compile-afl-address-x86_64": |   sudo apt -y install libpython3-dev libc-ares-dev libsystemd-dev       |
+Step #3 - "compile-afl-address-x86_64": |   sudo apt -y install libevent-dev libjansson-dev zlib1g-dev libpsl-dev |
+Step #3 - "compile-afl-address-x86_64": |                                                                         |
+Step #3 - "compile-afl-address-x86_64": | Rust may be needed too, see https://rustup.rs for the details           |
+Step #3 - "compile-afl-address-x86_64": +-------------------------------------------------------------------------+
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ++ uname -s
+Step #3 - "compile-afl-address-x86_64": + '[' Linux = Linux ']'
+Step #3 - "compile-afl-address-x86_64": ++ nproc
+Step #3 - "compile-afl-address-x86_64": + num_threads=32
+Step #3 - "compile-afl-address-x86_64": + echo 'Building boringssl...'
+Step #3 - "compile-afl-address-x86_64": Building boringssl...
+Step #3 - "compile-afl-address-x86_64": + sudo mkdir -p /opt/h3-tools-boringssl/go
+Step #3 - "compile-afl-address-x86_64": ++ uname -m
+Step #3 - "compile-afl-address-x86_64": ++ uname -m
+Step #3 - "compile-afl-address-x86_64": + '[' x86_64 = arm64 -o x86_64 = aarch64 ']'
+Step #3 - "compile-afl-address-x86_64": + ARCH=amd64
+Step #3 - "compile-afl-address-x86_64": ++ uname -s
+Step #3 - "compile-afl-address-x86_64": + '[' Linux = Darwin ']'
+Step #3 - "compile-afl-address-x86_64": ++ uname -s
+Step #3 - "compile-afl-address-x86_64": + '[' Linux = FreeBSD ']'
+Step #3 - "compile-afl-address-x86_64": + OS=linux
+Step #3 - "compile-afl-address-x86_64": + go_version=1.24.1
+Step #3 - "compile-afl-address-x86_64": + wget https://go.dev/dl/go1.24.1.linux-amd64.tar.gz
+Step #3 - "compile-afl-address-x86_64": --2025-12-30 07:24:47--  https://go.dev/dl/go1.24.1.linux-amd64.tar.gz
+Step #3 - "compile-afl-address-x86_64": Resolving go.dev (go.dev)... 216.239.36.21, 216.239.34.21, 216.239.32.21, ...
+Step #3 - "compile-afl-address-x86_64": Connecting to go.dev (go.dev)|216.239.36.21|:443... connected.
+Step #3 - "compile-afl-address-x86_64": HTTP request sent, awaiting response... 302 Found
+Step #3 - "compile-afl-address-x86_64": Location: https://dl.google.com/go/go1.24.1.linux-amd64.tar.gz [following]
+Step #3 - "compile-afl-address-x86_64": --2025-12-30 07:24:47--  https://dl.google.com/go/go1.24.1.linux-amd64.tar.gz
+Step #3 - "compile-afl-address-x86_64": Resolving dl.google.com (dl.google.com)... 192.178.210.190, 192.178.210.136, 192.178.210.93, ...
+Step #3 - "compile-afl-address-x86_64": Connecting to dl.google.com (dl.google.com)|192.178.210.190|:443... connected.
+Step #3 - "compile-afl-address-x86_64": HTTP request sent, awaiting response... 200 OK
+Step #3 - "compile-afl-address-x86_64": Length: 78503123 (75M) [application/x-gzip]
+Step #3 - "compile-afl-address-x86_64": Saving to: 'go1.24.1.linux-amd64.tar.gz'
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":           go1.24.1.   0%[                    ]       0  --.-KB/s                        go1.24.1.l   0%[                    ]  49.16K   225KB/s                       go1.24.1.li   0%[                    ] 193.16K   448KB/s                      go1.24.1.lin   0%[                    ] 465.16K   731KB/s                     go1.24.1.linu   1%[                    ]   1009K  1.17MB/s                    go1.24.1.linux   2%[                    ]   2.10M  2.02MB/s                   go1.24.1.linux-   6%[>                   ]   4.62M  3.71MB/s                  go1.24.1.linux-a  11%[=>                  ]   8.88M  6.13MB/s                 go1.24.1.linux-am  17%[==>                 ]  13.35M  8.10MB/s                go1.24.1.linux-amd  24%[===>                ]  18.01M  9.74MB/s               go1.24.1.linux-amd6  30%[=====>              ]  22.70M  11.0MB/s               o1.24.1.linux-amd64  36%[======>             ]  27.16M  12.0MB/s               1.24.1.linux-amd64.  42%[=======>            ]  31.63M  12.8MB/s               .24.1.linux-amd64.t  48%[========>           ]  36.51M  13.6MB/s               24.1.linux-amd64.ta  53%[=========>          ]  40.01M  13.8MB/s               4.1.linux-amd64.tar  61%[===========>        ]  45.85M  14.8MB/s    eta 2s     .1.linux-amd64.tar.  67%[============>       ]  50.73M  15.4MB/s    eta 2s     1.linux-amd64.tar.g  73%[=============>      ]  54.95M  17.5MB/s    eta 2s     .linux-amd64.tar.gz  80%[===============>    ]  60.48M  18.9MB/s    eta 2s     linux-amd64.tar.gz   87%[================>   ]  65.35M  20.1MB/s    eta 2s     inux-amd64.tar.gz    92%[=================>  ]  69.62M  21.8MB/s    eta 0s     go1.24.1.linux-amd6 100%[===================>]  74.87M  22.8MB/s    in 4.3s    
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": 2025-12-30 07:24:52 (17.4 MB/s) - 'go1.24.1.linux-amd64.tar.gz' saved [78503123/78503123]
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": + rm -rf /opt/h3-tools-boringssl/go
+Step #3 - "compile-afl-address-x86_64": + tar -C /opt/h3-tools-boringssl -xf go1.24.1.linux-amd64.tar.gz
+Step #3 - "compile-afl-address-x86_64": + rm go1.24.1.linux-amd64.tar.gz
+Step #3 - "compile-afl-address-x86_64": + GO_BINARY_PATH=/opt/h3-tools-boringssl/go/bin/go
+Step #3 - "compile-afl-address-x86_64": + '[' '!' -d boringssl ']'
+Step #3 - "compile-afl-address-x86_64": + git clone https://boringssl.googlesource.com/boringssl
+Step #3 - "compile-afl-address-x86_64": Cloning into 'boringssl'...
+Step #3 - "compile-afl-address-x86_64": remote: Sending approximately 331.59 MiB ...[K
+Step #3 - "compile-afl-address-x86_64": remote: Counting objects: 1   [Kremote: Counting objects: 43, done[K
+Step #3 - "compile-afl-address-x86_64": remote: Finding sources:   9% (1/11)   [Kremote: Finding sources:  18% (2/11)   [Kremote: Finding sources:  27% (3/11)   [Kremote: Finding sources:  36% (4/11)   [Kremote: Finding sources:  45% (5/11)   [Kremote: Finding sources:  55% (6/11)   [Kremote: Finding sources:  64% (7/11)   [Kremote: Finding sources:  73% (8/11)   [Kremote: Finding sources:  82% (9/11)   [Kremote: Finding sources:  91% (10/11)   [Kremote: Finding sources: 100% (11/11)   [Kremote: Finding sources: 100% (11/11)[K
+Step #3 - "compile-afl-address-x86_64": Receiving objects:   0% (1/128398)Receiving objects:   1% (1284/128398)Receiving objects:   2% (2568/128398)Receiving objects:   3% (3852/128398)Receiving objects:   4% (5136/128398)Receiving objects:   5% (6420/128398)Receiving objects:   6% (7704/128398)Receiving objects:   7% (8988/128398)Receiving objects:   8% (10272/128398)Receiving objects:   9% (11556/128398)Receiving objects:  10% (12840/128398)Receiving objects:  11% (14124/128398)Receiving objects:  12% (15408/128398)Receiving objects:  13% (16692/128398)Receiving objects:  14% (17976/128398)Receiving objects:  15% (19260/128398)Receiving objects:  16% (20544/128398)Receiving objects:  17% (21828/128398)Receiving objects:  18% (23112/128398)Receiving objects:  19% (24396/128398)Receiving objects:  20% (25680/128398)Receiving objects:  21% (26964/128398)Receiving objects:  22% (28248/128398)Receiving objects:  23% (29532/128398)Receiving objects:  24% (30816/128398)Receiving objects:  25% (32100/128398)Receiving objects:  26% (33384/128398)Receiving objects:  27% (34668/128398)Receiving objects:  28% (35952/128398)Receiving objects:  29% (37236/128398)Receiving objects:  30% (38520/128398)Receiving objects:  31% (39804/128398)Receiving objects:  32% (41088/128398)Receiving objects:  33% (42372/128398)Receiving objects:  34% (43656/128398)Receiving objects:  35% (44940/128398)Receiving objects:  36% (46224/128398)Receiving objects:  37% (47508/128398)Receiving objects:  38% (48792/128398)Receiving objects:  39% (50076/128398)Receiving objects:  40% (51360/128398)Receiving objects:  41% (52644/128398)Receiving objects:  42% (53928/128398)Receiving objects:  43% (55212/128398)Receiving objects:  44% (56496/128398)Receiving objects:  45% (57780/128398)Receiving objects:  46% (59064/128398)Receiving objects:  47% (60348/128398)Receiving objects:  48% (61632/128398)Receiving objects:  49% (62916/128398)Receiving objects:  50% (64199/128398)Receiving objects:  51% (65483/128398)Receiving objects:  52% (66767/128398)Receiving objects:  53% (68051/128398), 21.48 MiB | 42.95 MiB/sReceiving objects:  53% (69331/128398), 21.48 MiB | 42.95 MiB/sReceiving objects:  54% (69335/128398), 21.48 MiB | 42.95 MiB/sReceiving objects:  55% (70619/128398), 42.88 MiB | 42.88 MiB/sReceiving objects:  56% (71903/128398), 42.88 MiB | 42.88 MiB/sReceiving objects:  57% (73187/128398), 42.88 MiB | 42.88 MiB/sReceiving objects:  58% (74471/128398), 42.88 MiB | 42.88 MiB/sReceiving objects:  59% (75755/128398), 42.88 MiB | 42.88 MiB/sReceiving objects:  60% (77039/128398), 42.88 MiB | 42.88 MiB/sReceiving objects:  61% (78323/128398), 62.51 MiB | 41.67 MiB/sReceiving objects:  61% (78511/128398), 62.51 MiB | 41.67 MiB/sReceiving objects:  62% (79607/128398), 83.11 MiB | 41.55 MiB/sReceiving objects:  63% (80891/128398), 83.11 MiB | 41.55 MiB/sReceiving objects:  64% (82175/128398), 83.11 MiB | 41.55 MiB/sReceiving objects:  65% (83459/128398), 101.12 MiB | 40.45 MiB/sReceiving objects:  66% (84743/128398), 101.12 MiB | 40.45 MiB/sReceiving objects:  67% (86027/128398), 101.12 MiB | 40.45 MiB/sReceiving objects:  67% (86845/128398), 101.12 MiB | 40.45 MiB/sReceiving objects:  68% (87311/128398), 118.44 MiB | 39.48 MiB/sReceiving objects:  69% (88595/128398), 138.48 MiB | 39.56 MiB/sReceiving objects:  70% (89879/128398), 138.48 MiB | 39.56 MiB/sReceiving objects:  71% (91163/128398), 138.48 MiB | 39.56 MiB/sReceiving objects:  72% (92447/128398), 138.48 MiB | 39.56 MiB/sReceiving objects:  73% (93731/128398), 138.48 MiB | 39.56 MiB/sReceiving objects:  74% (95015/128398), 138.48 MiB | 39.56 MiB/sReceiving objects:  74% (95742/128398), 138.48 MiB | 39.56 MiB/sReceiving objects:  75% (96299/128398), 155.54 MiB | 38.88 MiB/sReceiving objects:  76% (97583/128398), 155.54 MiB | 38.88 MiB/sReceiving objects:  77% (98867/128398), 174.21 MiB | 38.72 MiB/sReceiving objects:  77% (99476/128398), 174.21 MiB | 38.72 MiB/sReceiving objects:  78% (100151/128398), 193.76 MiB | 38.29 MiB/sReceiving objects:  79% (101435/128398), 212.27 MiB | 37.65 MiB/sReceiving objects:  80% (102719/128398), 212.27 MiB | 37.65 MiB/sReceiving objects:  81% (104003/128398), 212.27 MiB | 37.65 MiB/sReceiving objects:  81% (104148/128398), 212.27 MiB | 37.65 MiB/sReceiving objects:  82% (105287/128398), 231.30 MiB | 37.52 MiB/sReceiving objects:  83% (106571/128398), 251.28 MiB | 37.38 MiB/sReceiving objects:  84% (107855/128398), 251.28 MiB | 37.38 MiB/sReceiving objects:  84% (108233/128398), 251.28 MiB | 37.38 MiB/sReceiving objects:  85% (109139/128398), 270.90 MiB | 37.74 MiB/sReceiving objects:  86% (110423/128398), 290.85 MiB | 38.32 MiB/sReceiving objects:  87% (111707/128398), 290.85 MiB | 38.32 MiB/sReceiving objects:  88% (112991/128398), 290.85 MiB | 38.32 MiB/sReceiving objects:  89% (114275/128398), 290.85 MiB | 38.32 MiB/sReceiving objects:  90% (115559/128398), 290.85 MiB | 38.32 MiB/sReceiving objects:  90% (116375/128398), 290.85 MiB | 38.32 MiB/sReceiving objects:  91% (116843/128398), 310.26 MiB | 38.18 MiB/sReceiving objects:  92% (118127/128398), 310.26 MiB | 38.18 MiB/sReceiving objects:  93% (119411/128398), 310.26 MiB | 38.18 MiB/sReceiving objects:  94% (120695/128398), 310.26 MiB | 38.18 MiB/sReceiving objects:  95% (121979/128398), 310.26 MiB | 38.18 MiB/sReceiving objects:  96% (123263/128398), 310.26 MiB | 38.18 MiB/sReceiving objects:  97% (124547/128398), 310.26 MiB | 38.18 MiB/sReceiving objects:  98% (125831/128398), 310.26 MiB | 38.18 MiB/sReceiving objects:  99% (127115/128398), 310.26 MiB | 38.18 MiB/sremote: Total 128398 (delta 75736), reused 128394 (delta 75736)[K
+Step #3 - "compile-afl-address-x86_64": Receiving objects: 100% (128398/128398), 328.67 MiB | 38.48 MiB/sReceiving objects: 100% (128398/128398), 331.20 MiB | 38.55 MiB/s, done.
+Step #3 - "compile-afl-address-x86_64": Resolving deltas:   0% (0/75736)Resolving deltas:   1% (758/75736)Resolving deltas:   2% (1515/75736)Resolving deltas:   3% (2273/75736)Resolving deltas:   4% (3033/75736)Resolving deltas:   5% (3790/75736)Resolving deltas:   6% (4549/75736)Resolving deltas:   7% (5323/75736)Resolving deltas:   8% (6060/75736)Resolving deltas:   9% (6820/75736)Resolving deltas:  10% (7577/75736)Resolving deltas:  11% (8344/75736)Resolving deltas:  12% (9098/75736)Resolving deltas:  13% (9846/75736)Resolving deltas:  14% (10612/75736)Resolving deltas:  15% (11366/75736)Resolving deltas:  16% (12124/75736)Resolving deltas:  17% (12881/75736)Resolving deltas:  18% (13633/75736)Resolving deltas:  19% (14402/75736)Resolving deltas:  20% (15151/75736)Resolving deltas:  21% (15907/75736)Resolving deltas:  22% (16665/75736)Resolving deltas:  23% (17427/75736)Resolving deltas:  24% (18178/75736)Resolving deltas:  25% (18934/75736)Resolving deltas:  26% (19693/75736)Resolving deltas:  27% (20451/75736)Resolving deltas:  28% (21207/75736)Resolving deltas:  29% (21968/75736)Resolving deltas:  30% (22721/75736)Resolving deltas:  31% (23480/75736)Resolving deltas:  32% (24241/75736)Resolving deltas:  33% (25003/75736)Resolving deltas:  34% (25754/75736)Resolving deltas:  35% (26508/75736)Resolving deltas:  36% (27277/75736)Resolving deltas:  37% (28023/75736)Resolving deltas:  38% (28782/75736)Resolving deltas:  39% (29637/75736)Resolving deltas:  40% (30306/75736)Resolving deltas:  41% (31060/75736)Resolving deltas:  42% (31893/75736)Resolving deltas:  43% (32567/75736)Resolving deltas:  44% (33327/75736)Resolving deltas:  45% (34083/75736)Resolving deltas:  46% (34849/75736)Resolving deltas:  47% (35597/75736)Resolving deltas:  48% (36358/75736)Resolving deltas:  49% (37173/75736)Resolving deltas:  50% (37876/75736)Resolving deltas:  51% (38628/75736)Resolving deltas:  52% (39384/75736)Resolving deltas:  53% (40143/75736)Resolving deltas:  54% (40904/75736)Resolving deltas:  55% (41663/75736)Resolving deltas:  56% (42425/75736)Resolving deltas:  57% (43178/75736)Resolving deltas:  58% (43940/75736)Resolving deltas:  59% (44685/75736)Resolving deltas:  60% (45444/75736)Resolving deltas:  61% (46200/75736)Resolving deltas:  62% (46959/75736)Resolving deltas:  63% (47737/75736)Resolving deltas:  64% (48482/75736)Resolving deltas:  65% (49236/75736)Resolving deltas:  66% (50002/75736)Resolving deltas:  67% (50767/75736)Resolving deltas:  68% (51505/75736)Resolving deltas:  69% (52266/75736)Resolving deltas:  70% (53024/75736)Resolving deltas:  70% (53439/75736)Resolving deltas:  71% (53783/75736)Resolving deltas:  72% (54539/75736)Resolving deltas:  73% (55301/75736)Resolving deltas:  74% (56048/75736)Resolving deltas:  75% (56803/75736)Resolving deltas:  76% (57571/75736)Resolving deltas:  77% (58317/75736)Resolving deltas:  78% (59077/75736)Resolving deltas:  79% (59833/75736)Resolving deltas:  79% (59920/75736)Resolving deltas:  80% (60589/75736)Resolving deltas:  81% (61351/75736)Resolving deltas:  82% (62104/75736)Resolving deltas:  82% (62668/75736)Resolving deltas:  83% (62862/75736)Resolving deltas:  84% (63622/75736)Resolving deltas:  84% (63813/75736)Resolving deltas:  85% (64379/75736)Resolving deltas:  86% (65134/75736)Resolving deltas:  87% (65895/75736)Resolving deltas:  88% (66656/75736)Resolving deltas:  89% (67406/75736)Resolving deltas:  90% (68166/75736)Resolving deltas:  91% (68948/75736)Resolving deltas:  92% (69679/75736)Resolving deltas:  93% (70435/75736)Resolving deltas:  94% (71194/75736)Resolving deltas:  95% (71952/75736)Resolving deltas:  96% (72710/75736)Resolving deltas:  97% (73469/75736)Resolving deltas:  97% (73727/75736)Resolving deltas:  98% (74234/75736)Resolving deltas:  99% (75003/75736)Resolving deltas: 100% (75736/75736)Resolving deltas: 100% (75736/75736), done.
+Step #3 - "compile-afl-address-x86_64": Updating files:  93% (7838/8368)Updating files:  94% (7866/8368)Updating files:  95% (7950/8368)Updating files:  96% (8034/8368)Updating files:  97% (8117/8368)Updating files:  98% (8201/8368)Updating files:  99% (8285/8368)Updating files: 100% (8368/8368)Updating files: 100% (8368/8368), done.
+Step #3 - "compile-afl-address-x86_64": + cd boringssl
+Step #3 - "compile-afl-address-x86_64": + git checkout 45b2464158379f48cec6e35a1ef503ddea1511a6
+Step #3 - "compile-afl-address-x86_64": Note: switching to '45b2464158379f48cec6e35a1ef503ddea1511a6'.
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": You are in 'detached HEAD' state. You can look around, make experimental
+Step #3 - "compile-afl-address-x86_64": changes and commit them, and you can discard any commits you make in this
+Step #3 - "compile-afl-address-x86_64": state without impacting any branches by switching back to a branch.
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": If you want to create a new branch to retain commits you create, you may
+Step #3 - "compile-afl-address-x86_64": do so (now or later) by using -c with the switch command. Example:
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":   git switch -c <new-branch-name>
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": Or undo this operation with:
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":   git switch -
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": Turn off this advice by setting config variable advice.detachedHead to false
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": HEAD is now at 45b246415 Rewrite CBS_get_asn1_int64 slightly
+Step #3 - "compile-afl-address-x86_64": + cd ..
+Step #3 - "compile-afl-address-x86_64": + cd boringssl
+Step #3 - "compile-afl-address-x86_64": + set +e
+Step #3 - "compile-afl-address-x86_64": + BSSL_C_FLAGS=-Wdangling-pointer=0
+Step #3 - "compile-afl-address-x86_64": ++ eval 'gcc --help=warnings | grep dangling-pointer='
+Step #3 - "compile-afl-address-x86_64": +++ gcc --help=warnings
+Step #3 - "compile-afl-address-x86_64": +++ grep dangling-pointer=
+Step #3 - "compile-afl-address-x86_64": + GCCO=
+Step #3 - "compile-afl-address-x86_64": + retVal=1
+Step #3 - "compile-afl-address-x86_64": + '[' 1 -eq 1 ']'
+Step #3 - "compile-afl-address-x86_64": + BSSL_C_FLAGS=
+Step #3 - "compile-afl-address-x86_64": + set -e
+Step #3 - "compile-afl-address-x86_64": + cmake -B build-shared -DGO_EXECUTABLE=/opt/h3-tools-boringssl/go/bin/go -DCMAKE_INSTALL_PREFIX=/opt/h3-tools-boringssl/boringssl -DCMAKE_BUILD_TYPE=Release '-DCMAKE_CXX_FLAGS=-Wno-error=ignored-attributes -UBORINGSSL_HAVE_LIBUNWIND' -DCMAKE_C_FLAGS= -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DBUILD_SHARED_LIBS=1
+Step #3 - "compile-afl-address-x86_64": -- The C compiler identification is Clang 22.0.0
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compiler ABI info
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compiler ABI info - done
+Step #3 - "compile-afl-address-x86_64": -- Check for working C compiler: /src/aflplusplus/afl-clang-fast - skipped
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compile features
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compile features - done
+Step #3 - "compile-afl-address-x86_64": -- The CXX compiler identification is Clang 22.0.0
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compiler ABI info
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compiler ABI info - done
+Step #3 - "compile-afl-address-x86_64": -- Check for working CXX compiler: /src/aflplusplus/afl-clang-fast++ - skipped
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compile features
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compile features - done
+Step #3 - "compile-afl-address-x86_64": -- Checking for module 'libunwind-generic>=1.3.0'
+Step #3 - "compile-afl-address-x86_64": --   No package 'libunwind-generic' found
+Step #3 - "compile-afl-address-x86_64": [0mlibunwind not found. Disabling unwind tests.[0m
+Step #3 - "compile-afl-address-x86_64": -- The ASM compiler identification is Clang with GNU-like command-line
+Step #3 - "compile-afl-address-x86_64": -- Found assembler: /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+Step #3 - "compile-afl-address-x86_64": -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_create in pthreads
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_create in pthreads - not found
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_create in pthread
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_create in pthread - found
+Step #3 - "compile-afl-address-x86_64": -- Found Threads: TRUE
+Step #3 - "compile-afl-address-x86_64": -- Configuring done (0.6s)
+Step #3 - "compile-afl-address-x86_64": -- Generating done (0.1s)
+Step #3 - "compile-afl-address-x86_64": -- Build files have been written to: /tmp/tmp.gBDF9P2uas/boringssl/build-shared
+Step #3 - "compile-afl-address-x86_64": + cmake -B build-static -DGO_EXECUTABLE=/opt/h3-tools-boringssl/go/bin/go -DCMAKE_INSTALL_PREFIX=/opt/h3-tools-boringssl/boringssl -DCMAKE_BUILD_TYPE=Release '-DCMAKE_CXX_FLAGS=-Wno-error=ignored-attributes -UBORINGSSL_HAVE_LIBUNWIND' -DCMAKE_C_FLAGS= -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DBUILD_SHARED_LIBS=0
+Step #3 - "compile-afl-address-x86_64": -- The C compiler identification is Clang 22.0.0
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compiler ABI info
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compiler ABI info - done
+Step #3 - "compile-afl-address-x86_64": -- Check for working C compiler: /src/aflplusplus/afl-clang-fast - skipped
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compile features
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compile features - done
+Step #3 - "compile-afl-address-x86_64": -- The CXX compiler identification is Clang 22.0.0
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compiler ABI info
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compiler ABI info - done
+Step #3 - "compile-afl-address-x86_64": -- Check for working CXX compiler: /src/aflplusplus/afl-clang-fast++ - skipped
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compile features
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compile features - done
+Step #3 - "compile-afl-address-x86_64": -- Checking for module 'libunwind-generic>=1.3.0'
+Step #3 - "compile-afl-address-x86_64": --   No package 'libunwind-generic' found
+Step #3 - "compile-afl-address-x86_64": [0mlibunwind not found. Disabling unwind tests.[0m
+Step #3 - "compile-afl-address-x86_64": -- The ASM compiler identification is Clang with GNU-like command-line
+Step #3 - "compile-afl-address-x86_64": -- Found assembler: /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+Step #3 - "compile-afl-address-x86_64": -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_create in pthreads
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_create in pthreads - not found
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_create in pthread
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_create in pthread - found
+Step #3 - "compile-afl-address-x86_64": -- Found Threads: TRUE
+Step #3 - "compile-afl-address-x86_64": -- Configuring done (0.6s)
+Step #3 - "compile-afl-address-x86_64": -- Generating done (0.1s)
+Step #3 - "compile-afl-address-x86_64": -- Build files have been written to: /tmp/tmp.gBDF9P2uas/boringssl/build-static
+Step #3 - "compile-afl-address-x86_64": + cmake --build build-shared -j 32
+Step #3 - "compile-afl-address-x86_64": [  0%] Built target boringssl_prefix_symbols
+Step #3 - "compile-afl-address-x86_64": [  0%] [32mBuilding CXX object CMakeFiles/boringssl_gtest.dir/third_party/googletest/googlemock/src/gmock-all.cc.o[0m
+Step #3 - "compile-afl-address-x86_64": [  0%] [32mBuilding CXX object CMakeFiles/boringssl_gtest.dir/third_party/googletest/googletest/src/gtest-all.cc.o[0m
+Step #3 - "compile-afl-address-x86_64": [  0%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesni-gcm-x86_64-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  0%] [32mBuilding C object CMakeFiles/fipsmodule.dir/crypto/fipsmodule/bcm.c.o[0m
+Step #3 - "compile-afl-address-x86_64": [  0%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesni-gcm-x86_64-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  0%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesni-x86-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  1%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesni-x86-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  1%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesni-x86_64-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  1%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesni-x86_64-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  1%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesv8-armv7-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  1%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesv8-armv8-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  1%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesv8-armv8-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  2%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesv8-armv8-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  2%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesv8-gcm-armv8-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  2%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesv8-gcm-armv8-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  2%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/aesv8-gcm-armv8-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  2%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/armv4-mont-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  2%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/armv8-mont-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/armv8-mont-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/armv8-mont-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/bn-586-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/bn-586-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/bn-armv8-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/bn-armv8-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/bn-armv8-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  4%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/bsaes-armv7-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  4%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/co-586-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  4%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/co-586-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  4%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-armv4-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  4%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-neon-armv8-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-neon-armv8-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-neon-armv8-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-ssse3-x86-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-ssse3-x86-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-ssse3-x86_64-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-ssse3-x86_64-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-x86-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  6%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-x86_64-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  6%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-x86-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  6%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghashv8-armv7-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  6%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghashv8-armv8-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  6%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghashv8-armv8-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  6%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghash-x86_64-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  7%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/ghashv8-armv8-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  7%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/md5-586-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  7%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/md5-586-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  7%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/md5-x86_64-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  7%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/p256-armv8-asm-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  7%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/p256-armv8-asm-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  8%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/p256-armv8-asm-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  8%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/p256-x86_64-asm-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  8%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/md5-x86_64-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  8%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/p256-x86_64-asm-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  8%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/p256_beeu-armv8-asm-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  8%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/p256_beeu-armv8-asm-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  8%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/p256_beeu-armv8-asm-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  9%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/p256_beeu-x86_64-asm-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  9%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/p256_beeu-x86_64-asm-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  9%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/rdrand-x86_64-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  9%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/rdrand-x86_64-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  9%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/rsaz-avx2-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [  9%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/rsaz-avx2-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 10%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha1-586-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 10%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha1-586-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 10%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha1-armv8-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 10%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha1-armv4-large-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 10%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha1-armv8-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 10%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha1-armv8-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha1-x86_64-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha1-x86_64-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha256-586-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha256-586-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha256-armv4-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha256-armv8-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha256-armv8-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 12%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha256-armv8-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 12%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha256-x86_64-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 12%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha256-x86_64-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 12%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha512-586-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 12%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha512-586-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 12%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha512-armv4-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 13%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha512-armv8-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 13%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha512-armv8-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 13%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha512-x86_64-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 13%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha512-x86_64-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 13%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/sha512-armv8-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 13%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/vpaes-armv7-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/vpaes-armv8-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/vpaes-armv8-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/vpaes-armv8-win.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/vpaes-x86-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/vpaes-x86-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/vpaes-x86_64-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 15%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/x86-mont-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 15%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/vpaes-x86_64-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 15%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/x86_64-mont-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 15%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/x86-mont-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 15%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/x86_64-mont-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 15%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/x86_64-mont5-apple.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 15%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/gen/bcm/x86_64-mont5-linux.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 15%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/third_party/fiat/asm/fiat_p256_adx_sqr.S.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 16%] [32mBuilding ASM object CMakeFiles/fipsmodule.dir/third_party/fiat/asm/fiat_p256_adx_mul.S.o[0m
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/src/gtest-all.cc:38:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/include/gtest/gtest.h:64:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/include/gtest/gtest-death-test.h:43:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/include/gtest/internal/gtest-death-test-internal.h:47:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/include/gtest/gtest-matchers.h:49:
+Step #3 - "compile-afl-address-x86_64": [1m/tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/include/gtest/gtest-printers.h:521:35: [0m[0;1;31merror: [0m[1mimplicit conversion from 'char16_t' to 'char32_t' may change the meaning of the represented code unit [-Werror,-Wcharacter-conversion][0m
+Step #3 - "compile-afl-address-x86_64":   521 |   PrintTo(ImplicitCast_<[0;34mchar32_t[0m>(c), os);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m          ~~~~~~~~~~~~~           ^
+Step #3 - "compile-afl-address-x86_64": [0mIn file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googlemock/src/gmock-all.cc:39:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googlemock/include/gmock/gmock.h:56:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googlemock/include/gmock/gmock-actions.h:145:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googlemock/include/gmock/internal/gmock-internal-utils.h:50:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/include/gtest/gtest.h:64:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/include/gtest/gtest-death-test.h:43:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/include/gtest/internal/gtest-death-test-internal.h:47:
+Step #3 - "compile-afl-address-x86_64": In file included from /tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/include/gtest/gtest-matchers.h:49:
+Step #3 - "compile-afl-address-x86_64": [1m/tmp/tmp.gBDF9P2uas/boringssl/third_party/googletest/googletest/include/gtest/gtest-printers.h:521:35: [0m[0;1;31merror: [0m[1mimplicit conversion from 'char16_t' to 'char32_t' may change the meaning of the represented code unit [-Werror,-Wcharacter-conversion][0m
+Step #3 - "compile-afl-address-x86_64":   521 |   PrintTo(ImplicitCast_<[0;34mchar32_t[0m>(c), os);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m          ~~~~~~~~~~~~~           ^
+Step #3 - "compile-afl-address-x86_64": [0m1 error generated.
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [CMakeFiles/boringssl_gtest.dir/build.make:76: CMakeFiles/boringssl_gtest.dir/third_party/googletest/googlemock/src/gmock-all.cc.o] Error 1
+Step #3 - "compile-afl-address-x86_64": make[2]: *** Waiting for unfinished jobs....
+Step #3 - "compile-afl-address-x86_64": 1 error generated.
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [CMakeFiles/boringssl_gtest.dir/build.make:90: CMakeFiles/boringssl_gtest.dir/third_party/googletest/googletest/src/gtest-all.cc.o] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:192: CMakeFiles/boringssl_gtest.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": make[1]: *** Waiting for unfinished jobs....
+Step #3 - "compile-afl-address-x86_64": [ 16%] Built target fipsmodule
+Step #3 - "compile-afl-address-x86_64": make: *** [Makefile:136: all] Error 2
+Step #3 - "compile-afl-address-x86_64": build_boringssl_h3_tools script Failed.
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image trafficserver\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 trafficserver\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

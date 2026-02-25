@@ -1,0 +1,476 @@
+starting build "26e2e2a3-d98f-4f65-afe2-e539c8f4482d"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943"
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Sending build context to Docker daemon  7.168kB
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Step 1/4 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b549f31133a9: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 7472a7568298: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 6e98f6b9a95a: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 02c21ec6f741: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b42248ce3d09: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 31df4e290c6b: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b41218bc63be: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 39a37149491d: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b3d424b2e916: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b790b656e3fc: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": e5b26bb70ef4: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 50f4361567fd: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": cc4f86122e8d: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 08561d226fe9: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": c9fdf039fd1f: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 9f9b03cc2add: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": a108fa6552fe: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": dad4390236dd: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 3f6602cb861e: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 737163a251a1: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": f7b6af9dbd05: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 006028397f6e: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 6a81e2f8f88d: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 21cf4669f9cb: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d59a9c3381c9: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d7cfe046a102: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d44a2a1bd2f9: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 0f2cad7f3b6a: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": a4806bc285a1: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": c8ae4be785c3: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": ae64ae256fb9: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 180a2cc1bc3e: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 14fc0ecc5200: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b42248ce3d09: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 50e58bb70e85: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 5c2e9db7e241: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 31df4e290c6b: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 16c7e9eee326: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 50f4361567fd: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 860e99bf4684: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 81c2d526fc2d: Pulling fs layer
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b41218bc63be: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": cc4f86122e8d: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 39a37149491d: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 08561d226fe9: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b3d424b2e916: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": c9fdf039fd1f: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": a108fa6552fe: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 9f9b03cc2add: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b790b656e3fc: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": dad4390236dd: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": e5b26bb70ef4: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": c8ae4be785c3: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 14fc0ecc5200: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 50e58bb70e85: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": ae64ae256fb9: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 180a2cc1bc3e: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 3f6602cb861e: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 02c21ec6f741: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 81c2d526fc2d: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 737163a251a1: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": f7b6af9dbd05: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 006028397f6e: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d59a9c3381c9: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 0f2cad7f3b6a: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d44a2a1bd2f9: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 5c2e9db7e241: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 6a81e2f8f88d: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 16c7e9eee326: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d7cfe046a102: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 860e99bf4684: Waiting
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 6e98f6b9a95a: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 6e98f6b9a95a: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b549f31133a9: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b549f31133a9: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b42248ce3d09: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b42248ce3d09: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 02c21ec6f741: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 02c21ec6f741: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b41218bc63be: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b41218bc63be: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 39a37149491d: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 7472a7568298: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 7472a7568298: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b549f31133a9: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b790b656e3fc: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b790b656e3fc: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": e5b26bb70ef4: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": e5b26bb70ef4: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 50f4361567fd: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 50f4361567fd: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": cc4f86122e8d: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": cc4f86122e8d: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 08561d226fe9: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b3d424b2e916: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b3d424b2e916: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": c9fdf039fd1f: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": c9fdf039fd1f: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 9f9b03cc2add: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": a108fa6552fe: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": a108fa6552fe: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": dad4390236dd: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": dad4390236dd: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 3f6602cb861e: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 3f6602cb861e: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 737163a251a1: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 737163a251a1: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": f7b6af9dbd05: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": f7b6af9dbd05: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 006028397f6e: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 006028397f6e: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 6a81e2f8f88d: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 6a81e2f8f88d: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 21cf4669f9cb: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 21cf4669f9cb: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d59a9c3381c9: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d59a9c3381c9: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d7cfe046a102: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d44a2a1bd2f9: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 0f2cad7f3b6a: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 0f2cad7f3b6a: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": a4806bc285a1: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": a4806bc285a1: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": c8ae4be785c3: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": c8ae4be785c3: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": ae64ae256fb9: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": ae64ae256fb9: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 180a2cc1bc3e: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 180a2cc1bc3e: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 14fc0ecc5200: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 50e58bb70e85: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 50e58bb70e85: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 5c2e9db7e241: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 5c2e9db7e241: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 7472a7568298: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 16c7e9eee326: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 16c7e9eee326: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 31df4e290c6b: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 31df4e290c6b: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 6e98f6b9a95a: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 860e99bf4684: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 860e99bf4684: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 81c2d526fc2d: Verifying Checksum
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 81c2d526fc2d: Download complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 02c21ec6f741: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b42248ce3d09: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 31df4e290c6b: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b41218bc63be: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 39a37149491d: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b3d424b2e916: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": b790b656e3fc: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": e5b26bb70ef4: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 50f4361567fd: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": cc4f86122e8d: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 08561d226fe9: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": c9fdf039fd1f: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 9f9b03cc2add: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": a108fa6552fe: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": dad4390236dd: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 3f6602cb861e: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 737163a251a1: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": f7b6af9dbd05: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 006028397f6e: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 6a81e2f8f88d: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 21cf4669f9cb: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d59a9c3381c9: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d7cfe046a102: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": d44a2a1bd2f9: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 0f2cad7f3b6a: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": a4806bc285a1: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": c8ae4be785c3: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": ae64ae256fb9: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 180a2cc1bc3e: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 14fc0ecc5200: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 50e58bb70e85: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 5c2e9db7e241: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 16c7e9eee326: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 860e99bf4684: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": 81c2d526fc2d: Pull complete
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Digest: sha256:192b038764086fcd174a3afd7341abe6e922701b0d8440524552fd9976e72a30
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943":  ---> c1c7c430b735
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Step 2/4 : RUN git clone --depth 1 https://github.com/stephenberry/glaze
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943":  ---> Running in 33e105039c0f
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": [91mCloning into 'glaze'...
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": [0mRemoving intermediate container 33e105039c0f
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943":  ---> a3a658da0310
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Step 3/4 : WORKDIR glaze
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943":  ---> Running in 8a6436afc8b5
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Removing intermediate container 8a6436afc8b5
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943":  ---> d86603ad5e4f
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Step 4/4 : COPY build.sh run_tests.sh $SRC/
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943":  ---> d98bf60e6dd6
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Successfully built d98bf60e6dd6
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Successfully tagged gcr.io/oss-fuzz/glaze:latest
+Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/glaze:latest
+Finished Step #1 - "build-c18a0c00-c331-4947-ab43-841687752943"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/glaze
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/file4u5yzM
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/glaze/.git
+Step #2 - "srcmap": + GIT_DIR=/src/glaze
+Step #2 - "srcmap": + cd /src/glaze
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/stephenberry/glaze
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=e5540f239d99853bc4611c8f348be565810fa6cd
+Step #2 - "srcmap": + jq_inplace /tmp/file4u5yzM '."/src/glaze" = { type: "git", url: "https://github.com/stephenberry/glaze", rev: "e5540f239d99853bc4611c8f348be565810fa6cd" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileUv3wod
+Step #2 - "srcmap": + cat /tmp/file4u5yzM
+Step #2 - "srcmap": + jq '."/src/glaze" = { type: "git", url: "https://github.com/stephenberry/glaze", rev: "e5540f239d99853bc4611c8f348be565810fa6cd" }'
+Step #2 - "srcmap": + mv /tmp/fileUv3wod /tmp/file4u5yzM
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/file4u5yzM
+Step #2 - "srcmap": + rm /tmp/file4u5yzM
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/glaze": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/stephenberry/glaze",
+Step #2 - "srcmap":     "rev": "e5540f239d99853bc4611c8f348be565810fa6cd"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + sed -i '/add_subdirectory(networking_tests)/d' ./tests/CMakeLists.txt
+Step #3 - "compile-afl-address-x86_64": + sed -i '/target_compile_options(glz_test_common INTERFACE -fno-exceptions -fno-rtti)/d' ./tests/CMakeLists.txt
+Step #3 - "compile-afl-address-x86_64": + mkdir build
+Step #3 - "compile-afl-address-x86_64": + cmake -B build -DCMAKE_BUILD_TYPE=Release
+Step #3 - "compile-afl-address-x86_64": -- The CXX compiler identification is Clang 22.0.0
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compiler ABI info
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compiler ABI info - done
+Step #3 - "compile-afl-address-x86_64": -- Check for working CXX compiler: /src/aflplusplus/afl-clang-fast++ - skipped
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compile features
+Step #3 - "compile-afl-address-x86_64": -- Detecting CXX compile features - done
+Step #3 - "compile-afl-address-x86_64": -- Fetching dependencies...
+Step #3 - "compile-afl-address-x86_64": -- ...finished fetching dependencies.
+Step #3 - "compile-afl-address-x86_64": -- The C compiler identification is Clang 22.0.0
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compiler ABI info
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compiler ABI info - done
+Step #3 - "compile-afl-address-x86_64": -- Check for working C compiler: /src/aflplusplus/afl-clang-fast - skipped
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compile features
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compile features - done
+Step #3 - "compile-afl-address-x86_64": -- Performing Test haslibfuzzer
+Step #3 - "compile-afl-address-x86_64": -- Performing Test haslibfuzzer - Success
+Step #3 - "compile-afl-address-x86_64": -- Configuring done (6.0s)
+Step #3 - "compile-afl-address-x86_64": -- Generating done (0.1s)
+Step #3 - "compile-afl-address-x86_64": -- Build files have been written to: /src/glaze/build
+Step #3 - "compile-afl-address-x86_64": ++ nproc
+Step #3 - "compile-afl-address-x86_64": + cmake --build build --config Release -j32
+Step #3 - "compile-afl-address-x86_64": [  1%] [32mBuilding CXX object tests/api_test/CMakeFiles/api_test.dir/api_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [  2%] [32mBuilding CXX object tests/beve_test/CMakeFiles/beve_test.dir/beve_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [  3%] [32mBuilding CXX object tests/compare_test/CMakeFiles/compare_test.dir/compare_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding CXX object CMakeFiles/glaze_ide.dir/src/interop/client.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [  5%] [32mBuilding CXX object CMakeFiles/glaze_ide.dir/src/interop/i_glaze.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [  6%] [32mBuilding CXX object tests/csv_test/CMakeFiles/csv_test.dir/csv_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [  7%] [32mBuilding CXX object CMakeFiles/glaze_ide.dir/src/interop/interop.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding CXX object tests/eigen_test/CMakeFiles/eigen_test.dir/eigen_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding CXX object tests/cli_menu_test/CMakeFiles/cli_menu_test.dir/cli_menu_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding CXX object CMakeFiles/glaze_ide.dir/src/main.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 11%] [32mBuilding CXX object tests/example_json/CMakeFiles/example_json.dir/example_json.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 12%] [32mBuilding CXX object tests/exceptions_test/CMakeFiles/exceptions_test.dir/exceptions_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding CXX object tests/inplace_vector/CMakeFiles/inplace_vector_test.dir/inplace_vector_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 14%] [32mBuilding CXX object tests/inplace_vector/CMakeFiles/inplace_vector_test_noexceptions.dir/inplace_vector_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 16%] [32mBuilding CXX object tests/jmespath/CMakeFiles/jmespath.dir/jmespath.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 16%] [32mBuilding CXX object tests/int_parsing/CMakeFiles/int_parsing.dir/int_parsing.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 17%] [32mBuilding CXX object tests/jsonrpc_test/CMakeFiles/jsonrpc_test.dir/jsonrpc_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 18%] [32mBuilding CXX object tests/key_transformers_test/CMakeFiles/key_transformers_test.dir/key_transformers_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 20%] [32mBuilding CXX object tests/reflection/CMakeFiles/reflection.dir/reflection.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 21%] [32mBuilding CXX object tests/mock_json_test/CMakeFiles/mock_json_test.dir/mock_json_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 22%] [32mBuilding CXX object tests/lib_test/test_lib/CMakeFiles/test_lib.dir/test_lib.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 23%] [32mBuilding CXX object tests/roundtrip/CMakeFiles/roundtrip_JSON.dir/roundtrip.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 24%] [32mBuilding CXX object tests/roundtrip/CMakeFiles/roundtrip_BEVE.dir/roundtrip.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 25%] [32mBuilding CXX object tests/stencil/CMakeFiles/stencil_test.dir/stencil_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 27%] [32mBuilding CXX object tests/utility_formats/CMakeFiles/utility_formats.dir/utility_formats.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 27%] [32mBuilding CXX object tests/toml_test/CMakeFiles/toml_test.dir/toml_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 28%] [32mBuilding CXX object tests/threading_test/CMakeFiles/threading_test.dir/threading_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 29%] [32mBuilding CXX object tests/json_conformance/CMakeFiles/json_conformance.dir/json_conformance.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 31%] [32mBuilding CXX object tests/json_reflection_test/CMakeFiles/json_reflection_test.dir/json_reflection_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 31%] [32mBuilding CXX object tests/json_performance/CMakeFiles/json_performance.dir/json_performance.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 32%] [32mBuilding CXX object tests/json_test/CMakeFiles/json_test.dir/json_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 33%] [32mBuilding CXX object tests/json_test/CMakeFiles/json_test_non_null.dir/json_test.cpp.o[0m
+Step #3 - "compile-afl-address-x86_64": [ 34%] [32m[1mLinking CXX executable utility_formats[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/utility_formats/CMakeFiles/utility_formats.dir/build.make:97: tests/utility_formats/utility_formats] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:2016: tests/utility_formats/CMakeFiles/utility_formats.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": make[1]: *** Waiting for unfinished jobs....
+Step #3 - "compile-afl-address-x86_64": [ 35%] [32m[1mLinking CXX executable compare_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/compare_test/CMakeFiles/compare_test.dir/build.make:97: tests/compare_test/compare_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1496: tests/compare_test/CMakeFiles/compare_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [1;93m[!] [1;97mWARNING: [0mdlopen() detected. To have coverage for a library that your target dlopen()'s this must either happen before __AFL_INIT() or you must use AFL_PRELOAD to preload all dlopen()'ed libraries!
+Step #3 - "compile-afl-address-x86_64": [0m
+Step #3 - "compile-afl-address-x86_64": [ 36%] [32m[1mLinking CXX executable cli_menu_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/cli_menu_test/CMakeFiles/cli_menu_test.dir/build.make:97: tests/cli_menu_test/cli_menu_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1470: tests/cli_menu_test/CMakeFiles/cli_menu_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 37%] [32m[1mLinking CXX executable glaze_ide[0m
+Step #3 - "compile-afl-address-x86_64": [ 38%] [32m[1mLinking CXX executable roundtrip_BEVE[0m
+Step #3 - "compile-afl-address-x86_64": [ 40%] [32m[1mLinking CXX executable inplace_vector_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/roundtrip/CMakeFiles/roundtrip_BEVE.dir/build.make:97: tests/roundtrip/roundtrip_BEVE] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1912: tests/roundtrip/CMakeFiles/roundtrip_BEVE.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/inplace_vector/CMakeFiles/inplace_vector_test.dir/build.make:97: tests/inplace_vector/inplace_vector_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1626: tests/inplace_vector/CMakeFiles/inplace_vector_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 40%] Built target glaze_ide
+Step #3 - "compile-afl-address-x86_64": [ 41%] [32m[1mLinking CXX executable key_transformers_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/key_transformers_test/CMakeFiles/key_transformers_test.dir/build.make:97: tests/key_transformers_test/key_transformers_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1756: tests/key_transformers_test/CMakeFiles/key_transformers_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 42%] [32m[1mLinking CXX executable inplace_vector_test_noexceptions[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": [ 43%] [32m[1mLinking CXX executable roundtrip_JSON[0m
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/inplace_vector/CMakeFiles/inplace_vector_test_noexceptions.dir/build.make:97: tests/inplace_vector/inplace_vector_test_noexceptions] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1652: tests/inplace_vector/CMakeFiles/inplace_vector_test_noexceptions.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 44%] [32m[1mLinking CXX executable int_parsing[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/roundtrip/CMakeFiles/roundtrip_JSON.dir/build.make:97: tests/roundtrip/roundtrip_JSON] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1886: tests/roundtrip/CMakeFiles/roundtrip_JSON.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/int_parsing/CMakeFiles/int_parsing.dir/build.make:97: tests/int_parsing/int_parsing] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1678: tests/int_parsing/CMakeFiles/int_parsing.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 45%] [32m[1mLinking CXX shared library /src/glaze/bin/libtest_lib.so[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/lib_test/test_lib/CMakeFiles/test_lib.dir/build.make:97: /src/glaze/bin/libtest_lib.so] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1808: tests/lib_test/test_lib/CMakeFiles/test_lib.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 46%] [32m[1mLinking CXX executable json_conformance[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/json_conformance/CMakeFiles/json_conformance.dir/build.make:97: tests/json_conformance/json_conformance] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:2042: tests/json_conformance/CMakeFiles/json_conformance.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 47%] [32m[1mLinking CXX executable exceptions_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/exceptions_test/CMakeFiles/exceptions_test.dir/build.make:97: tests/exceptions_test/exceptions_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1600: tests/exceptions_test/CMakeFiles/exceptions_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 48%] [32m[1mLinking CXX executable stencil_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/stencil/CMakeFiles/stencil_test.dir/build.make:97: tests/stencil/stencil_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1938: tests/stencil/CMakeFiles/stencil_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 49%] [32m[1mLinking CXX executable eigen_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/eigen_test/CMakeFiles/eigen_test.dir/build.make:97: tests/eigen_test/eigen_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1548: tests/eigen_test/CMakeFiles/eigen_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 50%] [32m[1mLinking CXX executable jmespath[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/jmespath/CMakeFiles/jmespath.dir/build.make:97: tests/jmespath/jmespath] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1704: tests/jmespath/CMakeFiles/jmespath.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 51%] [32m[1mLinking CXX executable threading_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/threading_test/CMakeFiles/threading_test.dir/build.make:97: tests/threading_test/threading_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1964: tests/threading_test/CMakeFiles/threading_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 52%] [32m[1mLinking CXX executable toml_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/toml_test/CMakeFiles/toml_test.dir/build.make:97: tests/toml_test/toml_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1990: tests/toml_test/CMakeFiles/toml_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 53%] [32m[1mLinking CXX executable api_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/api_test/CMakeFiles/api_test.dir/build.make:97: tests/api_test/api_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1418: tests/api_test/CMakeFiles/api_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 54%] [32m[1mLinking CXX executable reflection[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/reflection/CMakeFiles/reflection.dir/build.make:97: tests/reflection/reflection] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1860: tests/reflection/CMakeFiles/reflection.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 55%] [32m[1mLinking CXX executable jsonrpc_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/jsonrpc_test/CMakeFiles/jsonrpc_test.dir/build.make:97: tests/jsonrpc_test/jsonrpc_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1730: tests/jsonrpc_test/CMakeFiles/jsonrpc_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 56%] [32m[1mLinking CXX executable mock_json_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/mock_json_test/CMakeFiles/mock_json_test.dir/build.make:97: tests/mock_json_test/mock_json_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1834: tests/mock_json_test/CMakeFiles/mock_json_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 57%] [32m[1mLinking CXX executable example_json[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/example_json/CMakeFiles/example_json.dir/build.make:97: tests/example_json/example_json] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1574: tests/example_json/CMakeFiles/example_json.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 58%] [32m[1mLinking CXX executable json_performance[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/json_performance/CMakeFiles/json_performance.dir/build.make:97: tests/json_performance/json_performance] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:2068: tests/json_performance/CMakeFiles/json_performance.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 60%] [32m[1mLinking CXX executable csv_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/csv_test/CMakeFiles/csv_test.dir/build.make:97: tests/csv_test/csv_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1522: tests/csv_test/CMakeFiles/csv_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 61%] [32m[1mLinking CXX executable json_reflection_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/json_reflection_test/CMakeFiles/json_reflection_test.dir/build.make:97: tests/json_reflection_test/json_reflection_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:2094: tests/json_reflection_test/CMakeFiles/json_reflection_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 62%] [32m[1mLinking CXX executable beve_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/beve_test/CMakeFiles/beve_test.dir/build.make:97: tests/beve_test/beve_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:1444: tests/beve_test/CMakeFiles/beve_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 63%] [32m[1mLinking CXX executable json_test[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/json_test/CMakeFiles/json_test.dir/build.make:97: tests/json_test/json_test] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:2120: tests/json_test/CMakeFiles/json_test.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": [ 64%] [32m[1mLinking CXX executable json_test_non_null[0m
+Step #3 - "compile-afl-address-x86_64": /usr/bin/ld: cannot find -lglz_asio
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": make[2]: *** [tests/json_test/CMakeFiles/json_test_non_null.dir/build.make:97: tests/json_test/json_test_non_null] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [CMakeFiles/Makefile2:2146: tests/json_test/CMakeFiles/json_test_non_null.dir/all] Error 2
+Step #3 - "compile-afl-address-x86_64": make: *** [Makefile:166: all] Error 2
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************
+Step #3 - "compile-afl-address-x86_64": Failed to build.
+Step #3 - "compile-afl-address-x86_64": To reproduce, run:
+Step #3 - "compile-afl-address-x86_64": python infra/helper.py build_image glaze
+Step #3 - "compile-afl-address-x86_64": python infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 glaze
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

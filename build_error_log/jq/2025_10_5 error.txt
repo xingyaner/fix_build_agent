@@ -1,0 +1,988 @@
+starting build "cf0ca5dc-4e34-478e-8bfd-2b979bafa762"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e"
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Sending build context to Docker daemon  9.216kB
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b549f31133a9: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": f9108208bba7: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 6ea475a41b2d: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e5fef3e2af01: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7c2b2fa04aa8: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 85618da4b503: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": cb7b2a5fe163: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7f6a5b0379d6: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0914b70046dd: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e7da350ff694: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0de45df73449: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b7bad838c7ff: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e6b2068c9ed0: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4faaa04adad0: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e61d56928c49: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 41a899398fa6: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4d9b6833d43f: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 5fc76afe3d8e: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 24ebf1a2133e: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 91fc6ff39424: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e5fef3e2af01: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 866e76707922: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 06f4c909ad06: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 75bd79b21fde: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": a5d339d9c9f1: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4a854cbf553b: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 1a9d1b67aa69: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 93f7318fbad4: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 85618da4b503: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": c8022838a4c8: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": cb7b2a5fe163: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b08567086eb7: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 36a53ee643c4: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7f6a5b0379d6: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 51a1fa50b1b7: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": fd28c05f8f09: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0c59ed322e35: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": d5fd17987c78: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7c5ef2b07b5b: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 09544f1545db: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 3f139e052803: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e6b2068c9ed0: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 687280b5a649: Pulling fs layer
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4faaa04adad0: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 5fc76afe3d8e: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e61d56928c49: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 24ebf1a2133e: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7c2b2fa04aa8: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0914b70046dd: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 91fc6ff39424: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 41a899398fa6: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 866e76707922: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4d9b6833d43f: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 06f4c909ad06: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e7da350ff694: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 75bd79b21fde: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": fd28c05f8f09: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": a5d339d9c9f1: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4a854cbf553b: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 3f139e052803: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 1a9d1b67aa69: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 687280b5a649: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 93f7318fbad4: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b7bad838c7ff: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0c59ed322e35: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b08567086eb7: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": c8022838a4c8: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 09544f1545db: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 51a1fa50b1b7: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 36a53ee643c4: Waiting
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 6ea475a41b2d: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 6ea475a41b2d: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b549f31133a9: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b549f31133a9: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7c2b2fa04aa8: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e5fef3e2af01: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e5fef3e2af01: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": cb7b2a5fe163: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": cb7b2a5fe163: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7f6a5b0379d6: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7f6a5b0379d6: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b549f31133a9: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": f9108208bba7: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": f9108208bba7: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e7da350ff694: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e7da350ff694: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0de45df73449: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0de45df73449: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b7bad838c7ff: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b7bad838c7ff: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0914b70046dd: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0914b70046dd: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e6b2068c9ed0: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e6b2068c9ed0: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4faaa04adad0: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4faaa04adad0: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e61d56928c49: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e61d56928c49: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 41a899398fa6: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 41a899398fa6: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 5fc76afe3d8e: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 5fc76afe3d8e: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4d9b6833d43f: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4d9b6833d43f: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 24ebf1a2133e: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 24ebf1a2133e: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 91fc6ff39424: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 91fc6ff39424: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 866e76707922: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 866e76707922: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 06f4c909ad06: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 06f4c909ad06: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": a5d339d9c9f1: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 75bd79b21fde: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": f9108208bba7: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 1a9d1b67aa69: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 6ea475a41b2d: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4a854cbf553b: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4a854cbf553b: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 85618da4b503: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 85618da4b503: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 93f7318fbad4: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": c8022838a4c8: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": c8022838a4c8: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b08567086eb7: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b08567086eb7: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 51a1fa50b1b7: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 36a53ee643c4: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 36a53ee643c4: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": fd28c05f8f09: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": fd28c05f8f09: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0c59ed322e35: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0c59ed322e35: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": d5fd17987c78: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": d5fd17987c78: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7c5ef2b07b5b: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7c5ef2b07b5b: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 09544f1545db: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 3f139e052803: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 3f139e052803: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 687280b5a649: Verifying Checksum
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 687280b5a649: Download complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e5fef3e2af01: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7c2b2fa04aa8: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 85618da4b503: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": cb7b2a5fe163: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7f6a5b0379d6: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0914b70046dd: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e7da350ff694: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0de45df73449: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b7bad838c7ff: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e6b2068c9ed0: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4faaa04adad0: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": e61d56928c49: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 41a899398fa6: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4d9b6833d43f: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 5fc76afe3d8e: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 24ebf1a2133e: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 91fc6ff39424: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 866e76707922: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 06f4c909ad06: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 75bd79b21fde: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": a5d339d9c9f1: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 4a854cbf553b: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 1a9d1b67aa69: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 93f7318fbad4: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": c8022838a4c8: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": b08567086eb7: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 36a53ee643c4: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 51a1fa50b1b7: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": fd28c05f8f09: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0c59ed322e35: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": d5fd17987c78: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 7c5ef2b07b5b: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 09544f1545db: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 3f139e052803: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 687280b5a649: Pull complete
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Digest: sha256:95d5aea07f19d05e50eef7b71717da9c964b72481fff94d0a4efe3fe5284c7f2
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":  ---> ca8839069176
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Step 2/5 : RUN apt-get update && apt-get install -y   make flex bison libtool automake autoconf
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":  ---> Running in 56b103ea9028
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Fetched 383 kB in 1s (742 kB/s)
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Reading package lists...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Reading package lists...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Building dependency tree...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Reading state information...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": make set to manually installed.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": The following additional packages will be installed:
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":   file libfl-dev libfl2 libltdl-dev libltdl7 libmagic-mgc libmagic1
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Suggested packages:
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":   autoconf-archive gnu-standards autoconf-doc gettext bison-doc flex-doc
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":   libtool-doc gfortran | fortran95-compiler gcj-jdk
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": The following NEW packages will be installed:
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":   autoconf automake bison file flex libfl-dev libfl2 libltdl-dev libltdl7
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":   libmagic-mgc libmagic1 libtool
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": 0 upgraded, 12 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Need to get 2513 kB of archives.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": After this operation, 15.4 MB of additional disk space will be used.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 flex amd64 2.6.4-6.2 [317 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:2 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:4 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:5 http://archive.ubuntu.com/ubuntu focal/main amd64 autoconf all 2.69-11.1 [321 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:6 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:7 http://archive.ubuntu.com/ubuntu focal/main amd64 bison amd64 2:3.5.1+dfsg-1 [657 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 libfl2 amd64 2.6.4-6.2 [11.5 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 libfl-dev amd64 2.6.4-6.2 [6316 B]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": [0mFetched 2513 kB in 1s (2080 kB/s)
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package flex.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../00-flex_2.6.4-6.2_amd64.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking flex (2.6.4-6.2) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package libmagic-mgc.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../01-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package libmagic1:amd64.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../02-libmagic1_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package file.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../03-file_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking file (1:5.38-4) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package autoconf.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../04-autoconf_2.69-11.1_all.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking autoconf (2.69-11.1) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package automake.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../05-automake_1%3a1.16.1-4ubuntu6_all.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package bison.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../06-bison_2%3a3.5.1+dfsg-1_amd64.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking bison (2:3.5.1+dfsg-1) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package libfl2:amd64.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../07-libfl2_2.6.4-6.2_amd64.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking libfl2:amd64 (2.6.4-6.2) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package libfl-dev:amd64.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../08-libfl-dev_2.6.4-6.2_amd64.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking libfl-dev:amd64 (2.6.4-6.2) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package libltdl7:amd64.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../09-libltdl7_2.4.6-14_amd64.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package libltdl-dev:amd64.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../10-libltdl-dev_2.4.6-14_amd64.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Selecting previously unselected package libtool.
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Preparing to unpack .../11-libtool_2.4.6-14_all.deb ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Unpacking libtool (2.4.6-14) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up flex (2.6.4-6.2) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up file (1:5.38-4) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up libfl2:amd64 (2.6.4-6.2) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up autoconf (2.69-11.1) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up bison (2:3.5.1+dfsg-1) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": update-alternatives: using /usr/bin/bison.yacc to provide /usr/bin/yacc (yacc) in auto mode
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": update-alternatives: warning: skip creation of /usr/share/man/man1/yacc.1.gz because associated file /usr/share/man/man1/bison.yacc.1.gz (of link group yacc) doesn't exist
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": update-alternatives: using /usr/bin/automake-1.16 to provide /usr/bin/automake (automake) in auto mode
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": update-alternatives: warning: skip creation of /usr/share/man/man1/automake.1.gz because associated file /usr/share/man/man1/automake-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": update-alternatives: warning: skip creation of /usr/share/man/man1/aclocal.1.gz because associated file /usr/share/man/man1/aclocal-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up libtool (2.4.6-14) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up libfl-dev:amd64 (2.6.4-6.2) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Setting up libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Removing intermediate container 56b103ea9028
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":  ---> 036ce3e3d1aa
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Step 3/5 : RUN git clone --depth 1 https://github.com/jqlang/jq
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":  ---> Running in 40e71ef33793
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": [91mCloning into 'jq'...
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": [0mRemoving intermediate container 40e71ef33793
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":  ---> 30aad1c14c3d
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Step 4/5 : WORKDIR $SRC/jq
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":  ---> Running in ea7627919907
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Removing intermediate container ea7627919907
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":  ---> 8fc850b1c022
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Step 5/5 : COPY build.sh *.dict $SRC/
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e":  ---> b3f1f50f3ac7
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Successfully built b3f1f50f3ac7
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Successfully tagged gcr.io/oss-fuzz/jq:latest
+Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/jq:latest
+Finished Step #1 - "build-555a441f-23b1-4bd9-bc62-4e18fca2431e"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/jq
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/filekzv8AM
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/jq/.git
+Step #2 - "srcmap": + GIT_DIR=/src/jq
+Step #2 - "srcmap": + cd /src/jq
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/jqlang/jq
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=589a6947fa5e6f6f1d3f340053a8c92fa8b9f445
+Step #2 - "srcmap": + jq_inplace /tmp/filekzv8AM '."/src/jq" = { type: "git", url: "https://github.com/jqlang/jq", rev: "589a6947fa5e6f6f1d3f340053a8c92fa8b9f445" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileBZ3Eha
+Step #2 - "srcmap": + cat /tmp/filekzv8AM
+Step #2 - "srcmap": + jq '."/src/jq" = { type: "git", url: "https://github.com/jqlang/jq", rev: "589a6947fa5e6f6f1d3f340053a8c92fa8b9f445" }'
+Step #2 - "srcmap": + mv /tmp/fileBZ3Eha /tmp/filekzv8AM
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/filekzv8AM
+Step #2 - "srcmap": + rm /tmp/filekzv8AM
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/jq": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/jqlang/jq",
+Step #2 - "srcmap":     "rev": "589a6947fa5e6f6f1d3f340053a8c92fa8b9f445"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + git submodule init
+Step #3 - "compile-afl-address-x86_64": Submodule 'vendor/oniguruma' (https://github.com/kkos/oniguruma.git) registered for path 'vendor/oniguruma'
+Step #3 - "compile-afl-address-x86_64": + git submodule update
+Step #3 - "compile-afl-address-x86_64": Cloning into '/src/jq/vendor/oniguruma'...
+Step #3 - "compile-afl-address-x86_64": Submodule path 'vendor/oniguruma': checked out '4ef89209a239c1aea328cf13c05a2807e5c146d1'
+Step #3 - "compile-afl-address-x86_64": + autoreconf -fi
+Step #3 - "compile-afl-address-x86_64": libtoolize: putting auxiliary files in '.'.
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file './ltmain.sh'
+Step #3 - "compile-afl-address-x86_64": libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'm4'.
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/libtool.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltoptions.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltsugar.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltversion.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/lt~obsolete.m4'
+Step #3 - "compile-afl-address-x86_64": configure.ac:55: installing './compile'
+Step #3 - "compile-afl-address-x86_64": configure.ac:6: installing './missing'
+Step #3 - "compile-afl-address-x86_64": sample/Makefile.am: installing './depcomp'
+Step #3 - "compile-afl-address-x86_64": libtoolize: putting auxiliary files in AC_CONFIG_AUX_DIR, 'config'.
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'config/ltmain.sh'
+Step #3 - "compile-afl-address-x86_64": libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'config/m4'.
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'config/m4/libtool.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'config/m4/ltoptions.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'config/m4/ltsugar.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'config/m4/ltversion.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'config/m4/lt~obsolete.m4'
+Step #3 - "compile-afl-address-x86_64": configure.ac:11: installing 'config/ar-lib'
+Step #3 - "compile-afl-address-x86_64": configure.ac:8: installing 'config/compile'
+Step #3 - "compile-afl-address-x86_64": configure.ac:19: installing 'config/config.guess'
+Step #3 - "compile-afl-address-x86_64": configure.ac:19: installing 'config/config.sub'
+Step #3 - "compile-afl-address-x86_64": configure.ac:9: installing 'config/install-sh'
+Step #3 - "compile-afl-address-x86_64": configure.ac:9: installing 'config/missing'
+Step #3 - "compile-afl-address-x86_64": Makefile.am: installing 'config/depcomp'
+Step #3 - "compile-afl-address-x86_64": configure.ac: installing 'config/ylwrap'
+Step #3 - "compile-afl-address-x86_64": parallel-tests: installing 'config/test-driver'
+Step #3 - "compile-afl-address-x86_64": + ./configure --with-oniguruma=builtin
+Step #3 - "compile-afl-address-x86_64": checking for gcc... /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": checking whether the C compiler works... yes
+Step #3 - "compile-afl-address-x86_64": checking for C compiler default output file name... a.out
+Step #3 - "compile-afl-address-x86_64": checking for suffix of executables... 
+Step #3 - "compile-afl-address-x86_64": checking whether we are cross compiling... no
+Step #3 - "compile-afl-address-x86_64": checking for suffix of object files... o
+Step #3 - "compile-afl-address-x86_64": checking whether we are using the GNU C compiler... yes
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast accepts -g... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to accept ISO C89... none needed
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast understands -c and -o together... yes
+Step #3 - "compile-afl-address-x86_64": checking how to run the C preprocessor... /src/aflplusplus/afl-clang-fast -E
+Step #3 - "compile-afl-address-x86_64": checking for grep that handles long lines and -e... /usr/bin/grep
+Step #3 - "compile-afl-address-x86_64": checking for egrep... /usr/bin/grep -E
+Step #3 - "compile-afl-address-x86_64": checking for ANSI C header files... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/types.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/stat.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdlib.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for string.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for memory.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for strings.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for inttypes.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdint.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for unistd.h... yes
+Step #3 - "compile-afl-address-x86_64": checking minix/config.h usability... no
+Step #3 - "compile-afl-address-x86_64": checking minix/config.h presence... no
+Step #3 - "compile-afl-address-x86_64": checking for minix/config.h... no
+Step #3 - "compile-afl-address-x86_64": checking whether it is safe to define __EXTENSIONS__... yes
+Step #3 - "compile-afl-address-x86_64": checking for a BSD-compatible install... /usr/bin/install -c
+Step #3 - "compile-afl-address-x86_64": checking whether build environment is sane... yes
+Step #3 - "compile-afl-address-x86_64": checking for a thread-safe mkdir -p... /usr/bin/mkdir -p
+Step #3 - "compile-afl-address-x86_64": checking for gawk... no
+Step #3 - "compile-afl-address-x86_64": checking for mawk... mawk
+Step #3 - "compile-afl-address-x86_64": checking whether make sets $(MAKE)... yes
+Step #3 - "compile-afl-address-x86_64": checking whether make supports the include directive... yes (GNU style)
+Step #3 - "compile-afl-address-x86_64": checking whether make supports nested variables... yes
+Step #3 - "compile-afl-address-x86_64": checking dependency style of /src/aflplusplus/afl-clang-fast... gcc3
+Step #3 - "compile-afl-address-x86_64": checking whether make supports nested variables... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for ar... ar
+Step #3 - "compile-afl-address-x86_64": checking the archiver (ar) interface... ar
+Step #3 - "compile-afl-address-x86_64": checking whether to enable maintainer-specific portions of Makefiles... no
+Step #3 - "compile-afl-address-x86_64": checking for gcc... (cached) /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": checking whether we are using the GNU C compiler... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast accepts -g... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to accept ISO C89... (cached) none needed
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast understands -c and -o together... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to accept ISO C99... none needed
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to accept ISO Standard C... (cached) none needed
+Step #3 - "compile-afl-address-x86_64": checking for bison... bison -y
+Step #3 - "compile-afl-address-x86_64": checking build system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking host system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking how to print strings... printf
+Step #3 - "compile-afl-address-x86_64": checking for a sed that does not truncate output... /usr/bin/sed
+Step #3 - "compile-afl-address-x86_64": checking for fgrep... /usr/bin/grep -F
+Step #3 - "compile-afl-address-x86_64": checking for ld used by /src/aflplusplus/afl-clang-fast... /usr/bin/ld
+Step #3 - "compile-afl-address-x86_64": checking if the linker (/usr/bin/ld) is GNU ld... yes
+Step #3 - "compile-afl-address-x86_64": checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+Step #3 - "compile-afl-address-x86_64": checking the name lister (/usr/bin/nm -B) interface... BSD nm
+Step #3 - "compile-afl-address-x86_64": checking whether ln -s works... yes
+Step #3 - "compile-afl-address-x86_64": checking the maximum length of command line arguments... 1572864
+Step #3 - "compile-afl-address-x86_64": checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+Step #3 - "compile-afl-address-x86_64": checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+Step #3 - "compile-afl-address-x86_64": checking for /usr/bin/ld option to reload object files... -r
+Step #3 - "compile-afl-address-x86_64": checking for objdump... objdump
+Step #3 - "compile-afl-address-x86_64": checking how to recognize dependent libraries... pass_all
+Step #3 - "compile-afl-address-x86_64": checking for dlltool... no
+Step #3 - "compile-afl-address-x86_64": checking how to associate runtime and link libraries... printf %s\n
+Step #3 - "compile-afl-address-x86_64": checking for archiver @FILE support... @
+Step #3 - "compile-afl-address-x86_64": checking for strip... strip
+Step #3 - "compile-afl-address-x86_64": checking for ranlib... ranlib
+Step #3 - "compile-afl-address-x86_64": checking command to parse /usr/bin/nm -B output from /src/aflplusplus/afl-clang-fast object... ok
+Step #3 - "compile-afl-address-x86_64": checking for sysroot... no
+Step #3 - "compile-afl-address-x86_64": checking for a working dd... /usr/bin/dd
+Step #3 - "compile-afl-address-x86_64": checking how to truncate binary pipes... /usr/bin/dd bs=4096 count=1
+Step #3 - "compile-afl-address-x86_64": checking for mt... no
+Step #3 - "compile-afl-address-x86_64": checking if : is a manifest tool... no
+Step #3 - "compile-afl-address-x86_64": checking for dlfcn.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for objdir... .libs
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -fno-rtti -fno-exceptions... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to produce PIC... -fPIC -DPIC
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast PIC flag -fPIC -DPIC works... yes
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast static flag -static works... no
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -c -o file.o... yes
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -c -o file.o... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking whether the /src/aflplusplus/afl-clang-fast linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether -lc should be explicitly linked in... no
+Step #3 - "compile-afl-address-x86_64": checking dynamic linker characteristics... GNU/Linux ld.so
+Step #3 - "compile-afl-address-x86_64": checking how to hardcode library paths into programs... immediate
+Step #3 - "compile-afl-address-x86_64": checking whether stripping libraries is possible... yes
+Step #3 - "compile-afl-address-x86_64": checking if libtool supports shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build static libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking for special C compiler options needed for large files... no
+Step #3 - "compile-afl-address-x86_64": checking for _FILE_OFFSET_BITS value needed for large files... no
+Step #3 - "compile-afl-address-x86_64": checking for memmem... yes
+Step #3 - "compile-afl-address-x86_64": checking sys/cygwin.h usability... no
+Step #3 - "compile-afl-address-x86_64": checking sys/cygwin.h presence... no
+Step #3 - "compile-afl-address-x86_64": checking for sys/cygwin.h... no
+Step #3 - "compile-afl-address-x86_64": checking shlwapi.h usability... no
+Step #3 - "compile-afl-address-x86_64": checking shlwapi.h presence... no
+Step #3 - "compile-afl-address-x86_64": checking for shlwapi.h... no
+Step #3 - "compile-afl-address-x86_64": checking for pipenv... no
+Step #3 - "compile-afl-address-x86_64": checking for Python dependencies... no
+Step #3 - "compile-afl-address-x86_64": configure: WARNING: Error checking python dependencies: 
+Step #3 - "compile-afl-address-x86_64": *****************************************************************
+Step #3 - "compile-afl-address-x86_64": *  Python dependencies for building jq documentation not found. *
+Step #3 - "compile-afl-address-x86_64": *  You can still build, install and hack on jq, but the manpage *
+Step #3 - "compile-afl-address-x86_64": *  will not be rebuilt and new manpage tests will not be run.   *
+Step #3 - "compile-afl-address-x86_64": *  See docs/README.md for how to install the docs dependencies. *
+Step #3 - "compile-afl-address-x86_64": *****************************************************************
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast is Clang... yes
+Step #3 - "compile-afl-address-x86_64": checking whether pthreads work with "-pthread" and "-lpthread"... yes
+Step #3 - "compile-afl-address-x86_64": checking whether Clang needs flag to prevent "argument unused" warning when linking with -pthread... no
+Step #3 - "compile-afl-address-x86_64": checking for joinable pthread attribute... PTHREAD_CREATE_JOINABLE
+Step #3 - "compile-afl-address-x86_64": checking whether more special flags are required for pthreads... no
+Step #3 - "compile-afl-address-x86_64": checking for PTHREAD_PRIO_INHERIT... yes
+Step #3 - "compile-afl-address-x86_64": checking for size_t... yes
+Step #3 - "compile-afl-address-x86_64": checking for working alloca.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for alloca... yes
+Step #3 - "compile-afl-address-x86_64": checking for isatty... yes
+Step #3 - "compile-afl-address-x86_64": checking for _isatty... no
+Step #3 - "compile-afl-address-x86_64": checking for strptime... yes
+Step #3 - "compile-afl-address-x86_64": checking for strftime... yes
+Step #3 - "compile-afl-address-x86_64": checking for setenv... yes
+Step #3 - "compile-afl-address-x86_64": checking for timegm... yes
+Step #3 - "compile-afl-address-x86_64": checking for gmtime_r... yes
+Step #3 - "compile-afl-address-x86_64": checking for gmtime... yes
+Step #3 - "compile-afl-address-x86_64": checking for localtime_r... yes
+Step #3 - "compile-afl-address-x86_64": checking for localtime... yes
+Step #3 - "compile-afl-address-x86_64": checking for gettimeofday... yes
+Step #3 - "compile-afl-address-x86_64": checking for struct tm.tm_gmtoff... yes
+Step #3 - "compile-afl-address-x86_64": checking for struct tm.__tm_gmtoff... no
+Step #3 - "compile-afl-address-x86_64": checking for setlocale... yes
+Step #3 - "compile-afl-address-x86_64": checking for pthread_key_create... yes
+Step #3 - "compile-afl-address-x86_64": checking for pthread_once... yes
+Step #3 - "compile-afl-address-x86_64": checking for atexit... yes
+Step #3 - "compile-afl-address-x86_64": checking for acos in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for acosh in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for asin in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for asinh in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for atan2 in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for atan in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for atanh in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for cbrt in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for ceil in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for copysign in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for cos in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for cosh in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for drem in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for erf in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for erfc in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for exp10 in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for __exp10 in -lm... no
+Step #3 - "compile-afl-address-x86_64": checking for exp2 in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for exp in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for expm1 in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for fabs in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for fdim in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for floor in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for fma in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for fmax in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for fmin in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for fmod in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for frexp in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for gamma in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for hypot in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for j0 in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for j1 in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for jn in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for ldexp in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for lgamma in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for log10 in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for log1p in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for log2 in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for log in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for logb in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for modf in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for lgamma_r in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for nearbyint in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for nextafter in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for nexttoward in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for pow in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for remainder in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for rint in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for round in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for scalb in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for scalbln in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for significand in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for scalbn in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for ilogb in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for sin in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for sinh in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for sqrt in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for tan in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for tanh in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for tgamma in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for trunc in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for y0 in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for y1 in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for yn in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for thread-local storage... yes
+Step #3 - "compile-afl-address-x86_64": checking whether byte ordering is bigendian... no
+Step #3 - "compile-afl-address-x86_64": checking that generated files are newer than configure... done
+Step #3 - "compile-afl-address-x86_64": configure: creating ./config.status
+Step #3 - "compile-afl-address-x86_64": config.status: creating Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating libjq.pc
+Step #3 - "compile-afl-address-x86_64": config.status: executing depfiles commands
+Step #3 - "compile-afl-address-x86_64": config.status: executing libtool commands
+Step #3 - "compile-afl-address-x86_64": === configuring in vendor/oniguruma (/src/jq/vendor/oniguruma)
+Step #3 - "compile-afl-address-x86_64": configure: running /bin/bash ./configure --disable-option-checking '--prefix=/usr/local'  '--with-oniguruma=builtin' 'CC=/src/aflplusplus/afl-clang-fast' 'CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope ' --cache-file=/dev/null --srcdir=.
+Step #3 - "compile-afl-address-x86_64": checking for a BSD-compatible install... /usr/bin/install -c
+Step #3 - "compile-afl-address-x86_64": checking whether build environment is sane... yes
+Step #3 - "compile-afl-address-x86_64": checking for a thread-safe mkdir -p... /usr/bin/mkdir -p
+Step #3 - "compile-afl-address-x86_64": checking for gawk... no
+Step #3 - "compile-afl-address-x86_64": checking for mawk... mawk
+Step #3 - "compile-afl-address-x86_64": checking whether make sets $(MAKE)... yes
+Step #3 - "compile-afl-address-x86_64": checking whether make supports nested variables... yes
+Step #3 - "compile-afl-address-x86_64": checking for gcc... /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": checking whether the C compiler works... yes
+Step #3 - "compile-afl-address-x86_64": checking for C compiler default output file name... a.out
+Step #3 - "compile-afl-address-x86_64": checking for suffix of executables... 
+Step #3 - "compile-afl-address-x86_64": checking whether we are cross compiling... no
+Step #3 - "compile-afl-address-x86_64": checking for suffix of object files... o
+Step #3 - "compile-afl-address-x86_64": checking whether we are using the GNU C compiler... yes
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast accepts -g... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to accept ISO C89... none needed
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast understands -c and -o together... yes
+Step #3 - "compile-afl-address-x86_64": checking whether make supports the include directive... yes (GNU style)
+Step #3 - "compile-afl-address-x86_64": checking dependency style of /src/aflplusplus/afl-clang-fast... gcc3
+Step #3 - "compile-afl-address-x86_64": checking build system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking host system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking how to print strings... printf
+Step #3 - "compile-afl-address-x86_64": checking for a sed that does not truncate output... /usr/bin/sed
+Step #3 - "compile-afl-address-x86_64": checking for grep that handles long lines and -e... /usr/bin/grep
+Step #3 - "compile-afl-address-x86_64": checking for egrep... /usr/bin/grep -E
+Step #3 - "compile-afl-address-x86_64": checking for fgrep... /usr/bin/grep -F
+Step #3 - "compile-afl-address-x86_64": checking for ld used by /src/aflplusplus/afl-clang-fast... /usr/bin/ld
+Step #3 - "compile-afl-address-x86_64": checking if the linker (/usr/bin/ld) is GNU ld... yes
+Step #3 - "compile-afl-address-x86_64": checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+Step #3 - "compile-afl-address-x86_64": checking the name lister (/usr/bin/nm -B) interface... BSD nm
+Step #3 - "compile-afl-address-x86_64": checking whether ln -s works... yes
+Step #3 - "compile-afl-address-x86_64": checking the maximum length of command line arguments... 1572864
+Step #3 - "compile-afl-address-x86_64": checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+Step #3 - "compile-afl-address-x86_64": checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+Step #3 - "compile-afl-address-x86_64": checking for /usr/bin/ld option to reload object files... -r
+Step #3 - "compile-afl-address-x86_64": checking for objdump... objdump
+Step #3 - "compile-afl-address-x86_64": checking how to recognize dependent libraries... pass_all
+Step #3 - "compile-afl-address-x86_64": checking for dlltool... no
+Step #3 - "compile-afl-address-x86_64": checking how to associate runtime and link libraries... printf %s\n
+Step #3 - "compile-afl-address-x86_64": checking for ar... ar
+Step #3 - "compile-afl-address-x86_64": checking for archiver @FILE support... @
+Step #3 - "compile-afl-address-x86_64": checking for strip... strip
+Step #3 - "compile-afl-address-x86_64": checking for ranlib... ranlib
+Step #3 - "compile-afl-address-x86_64": checking command to parse /usr/bin/nm -B output from /src/aflplusplus/afl-clang-fast object... ok
+Step #3 - "compile-afl-address-x86_64": checking for sysroot... no
+Step #3 - "compile-afl-address-x86_64": checking for a working dd... /usr/bin/dd
+Step #3 - "compile-afl-address-x86_64": checking how to truncate binary pipes... /usr/bin/dd bs=4096 count=1
+Step #3 - "compile-afl-address-x86_64": checking for mt... no
+Step #3 - "compile-afl-address-x86_64": checking if : is a manifest tool... no
+Step #3 - "compile-afl-address-x86_64": checking how to run the C preprocessor... /src/aflplusplus/afl-clang-fast -E
+Step #3 - "compile-afl-address-x86_64": checking for ANSI C header files... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/types.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/stat.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdlib.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for string.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for memory.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for strings.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for inttypes.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdint.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for unistd.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for dlfcn.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for objdir... .libs
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -fno-rtti -fno-exceptions... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to produce PIC... -fPIC -DPIC
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast PIC flag -fPIC -DPIC works... yes
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast static flag -static works... no
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -c -o file.o... yes
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -c -o file.o... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking whether the /src/aflplusplus/afl-clang-fast linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether -lc should be explicitly linked in... no
+Step #3 - "compile-afl-address-x86_64": checking dynamic linker characteristics... GNU/Linux ld.so
+Step #3 - "compile-afl-address-x86_64": checking how to hardcode library paths into programs... immediate
+Step #3 - "compile-afl-address-x86_64": checking whether stripping libraries is possible... yes
+Step #3 - "compile-afl-address-x86_64": checking if libtool supports shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build static libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether make sets $(MAKE)... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking sys/time.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking sys/time.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/time.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for unistd.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking sys/times.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking sys/times.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/times.h... yes
+Step #3 - "compile-afl-address-x86_64": checking size of int... 4
+Step #3 - "compile-afl-address-x86_64": checking size of long... 8
+Step #3 - "compile-afl-address-x86_64": checking size of long long... 8
+Step #3 - "compile-afl-address-x86_64": checking size of void*... 8
+Step #3 - "compile-afl-address-x86_64": checking for size_t... yes
+Step #3 - "compile-afl-address-x86_64": checking for working alloca.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for alloca... yes
+Step #3 - "compile-afl-address-x86_64": checking that generated files are newer than configure... done
+Step #3 - "compile-afl-address-x86_64": configure: creating ./config.status
+Step #3 - "compile-afl-address-x86_64": config.status: creating Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating src/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating test/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating sample/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating onig-config
+Step #3 - "compile-afl-address-x86_64": config.status: creating src/config.h
+Step #3 - "compile-afl-address-x86_64": config.status: executing depfiles commands
+Step #3 - "compile-afl-address-x86_64": config.status: executing libtool commands
+Step #3 - "compile-afl-address-x86_64": config.status: executing default commands
+Step #3 - "compile-afl-address-x86_64": ++ nproc
+Step #3 - "compile-afl-address-x86_64": + make -j32
+Step #3 - "compile-afl-address-x86_64": mkdir -p src
+Step #3 - "compile-afl-address-x86_64": mkdir -p src
+Step #3 - "compile-afl-address-x86_64":   GEN      src/builtin.inc
+Step #3 - "compile-afl-address-x86_64":   GEN      src/config_opts.inc
+Step #3 - "compile-afl-address-x86_64": mkdir -p src
+Step #3 - "compile-afl-address-x86_64":   GEN      src/version.h
+Step #3 - "compile-afl-address-x86_64": make  all-recursive
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/jq'
+Step #3 - "compile-afl-address-x86_64": Making all in vendor/oniguruma
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/jq/vendor/oniguruma'
+Step #3 - "compile-afl-address-x86_64": Making all in src
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/jq/vendor/oniguruma/src'
+Step #3 - "compile-afl-address-x86_64": make  all-am
+Step #3 - "compile-afl-address-x86_64": make[4]: Entering directory '/src/jq/vendor/oniguruma/src'
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT regparse.lo -MD -MP -MF .deps/regparse.Tpo -c -o regparse.lo regparse.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT regcomp.lo -MD -MP -MF .deps/regcomp.Tpo -c -o regcomp.lo regcomp.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT regexec.lo -MD -MP -MF .deps/regexec.Tpo -c -o regexec.lo regexec.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT regenc.lo -MD -MP -MF .deps/regenc.Tpo -c -o regenc.lo regenc.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT regerror.lo -MD -MP -MF .deps/regerror.Tpo -c -o regerror.lo regerror.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT regext.lo -MD -MP -MF .deps/regext.Tpo -c -o regext.lo regext.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT regsyntax.lo -MD -MP -MF .deps/regsyntax.Tpo -c -o regsyntax.lo regsyntax.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT regtrav.lo -MD -MP -MF .deps/regtrav.Tpo -c -o regtrav.lo regtrav.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT regversion.lo -MD -MP -MF .deps/regversion.Tpo -c -o regversion.lo regversion.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT st.lo -MD -MP -MF .deps/st.Tpo -c -o st.lo st.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT reggnu.lo -MD -MP -MF .deps/reggnu.Tpo -c -o reggnu.lo reggnu.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT unicode.lo -MD -MP -MF .deps/unicode.Tpo -c -o unicode.lo unicode.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT unicode_unfold_key.lo -MD -MP -MF .deps/unicode_unfold_key.Tpo -c -o unicode_unfold_key.lo unicode_unfold_key.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT unicode_fold1_key.lo -MD -MP -MF .deps/unicode_fold1_key.Tpo -c -o unicode_fold1_key.lo unicode_fold1_key.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT unicode_fold2_key.lo -MD -MP -MF .deps/unicode_fold2_key.Tpo -c -o unicode_fold2_key.lo unicode_fold2_key.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT unicode_fold3_key.lo -MD -MP -MF .deps/unicode_fold3_key.Tpo -c -o unicode_fold3_key.lo unicode_fold3_key.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT ascii.lo -MD -MP -MF .deps/ascii.Tpo -c -o ascii.lo ascii.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT utf8.lo -MD -MP -MF .deps/utf8.Tpo -c -o utf8.lo utf8.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT utf16_be.lo -MD -MP -MF .deps/utf16_be.Tpo -c -o utf16_be.lo utf16_be.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT utf16_le.lo -MD -MP -MF .deps/utf16_le.Tpo -c -o utf16_le.lo utf16_le.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT utf32_be.lo -MD -MP -MF .deps/utf32_be.Tpo -c -o utf32_be.lo utf32_be.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT utf32_le.lo -MD -MP -MF .deps/utf32_le.Tpo -c -o utf32_le.lo utf32_le.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT euc_jp.lo -MD -MP -MF .deps/euc_jp.Tpo -c -o euc_jp.lo euc_jp.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT euc_jp_prop.lo -MD -MP -MF .deps/euc_jp_prop.Tpo -c -o euc_jp_prop.lo euc_jp_prop.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT sjis.lo -MD -MP -MF .deps/sjis.Tpo -c -o sjis.lo sjis.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT sjis_prop.lo -MD -MP -MF .deps/sjis_prop.Tpo -c -o sjis_prop.lo sjis_prop.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_1.lo -MD -MP -MF .deps/iso8859_1.Tpo -c -o iso8859_1.lo iso8859_1.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_2.lo -MD -MP -MF .deps/iso8859_2.Tpo -c -o iso8859_2.lo iso8859_2.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_3.lo -MD -MP -MF .deps/iso8859_3.Tpo -c -o iso8859_3.lo iso8859_3.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_4.lo -MD -MP -MF .deps/iso8859_4.Tpo -c -o iso8859_4.lo iso8859_4.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_5.lo -MD -MP -MF .deps/iso8859_5.Tpo -c -o iso8859_5.lo iso8859_5.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_6.lo -MD -MP -MF .deps/iso8859_6.Tpo -c -o iso8859_6.lo iso8859_6.c
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regcomp.lo -MD -MP -MF .deps/regcomp.Tpo -c regcomp.c  -fPIC -DPIC -o .libs/regcomp.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regversion.lo -MD -MP -MF .deps/regversion.Tpo -c regversion.c  -fPIC -DPIC -o .libs/regversion.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regerror.lo -MD -MP -MF .deps/regerror.Tpo -c regerror.c  -fPIC -DPIC -o .libs/regerror.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT reggnu.lo -MD -MP -MF .deps/reggnu.Tpo -c reggnu.c  -fPIC -DPIC -o .libs/reggnu.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regsyntax.lo -MD -MP -MF .deps/regsyntax.Tpo -c regsyntax.c  -fPIC -DPIC -o .libs/regsyntax.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regenc.lo -MD -MP -MF .deps/regenc.Tpo -c regenc.c  -fPIC -DPIC -o .libs/regenc.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regext.lo -MD -MP -MF .deps/regext.Tpo -c regext.c  -fPIC -DPIC -o .libs/regext.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT unicode.lo -MD -MP -MF .deps/unicode.Tpo -c unicode.c  -fPIC -DPIC -o .libs/unicode.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT unicode_fold2_key.lo -MD -MP -MF .deps/unicode_fold2_key.Tpo -c unicode_fold2_key.c  -fPIC -DPIC -o .libs/unicode_fold2_key.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT unicode_fold3_key.lo -MD -MP -MF .deps/unicode_fold3_key.Tpo -c unicode_fold3_key.c  -fPIC -DPIC -o .libs/unicode_fold3_key.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT unicode_fold1_key.lo -MD -MP -MF .deps/unicode_fold1_key.Tpo -c unicode_fold1_key.c  -fPIC -DPIC -o .libs/unicode_fold1_key.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT utf16_le.lo -MD -MP -MF .deps/utf16_le.Tpo -c utf16_le.c  -fPIC -DPIC -o .libs/utf16_le.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regtrav.lo -MD -MP -MF .deps/regtrav.Tpo -c regtrav.c  -fPIC -DPIC -o .libs/regtrav.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regexec.lo -MD -MP -MF .deps/regexec.Tpo -c regexec.c  -fPIC -DPIC -o .libs/regexec.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT utf8.lo -MD -MP -MF .deps/utf8.Tpo -c utf8.c  -fPIC -DPIC -o .libs/utf8.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT utf16_be.lo -MD -MP -MF .deps/utf16_be.Tpo -c utf16_be.c  -fPIC -DPIC -o .libs/utf16_be.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT utf32_be.lo -MD -MP -MF .deps/utf32_be.Tpo -c utf32_be.c  -fPIC -DPIC -o .libs/utf32_be.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT st.lo -MD -MP -MF .deps/st.Tpo -c st.c  -fPIC -DPIC -o .libs/st.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT utf32_le.lo -MD -MP -MF .deps/utf32_le.Tpo -c utf32_le.c  -fPIC -DPIC -o .libs/utf32_le.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regparse.lo -MD -MP -MF .deps/regparse.Tpo -c regparse.c  -fPIC -DPIC -o .libs/regparse.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT unicode_unfold_key.lo -MD -MP -MF .deps/unicode_unfold_key.Tpo -c unicode_unfold_key.c  -fPIC -DPIC -o .libs/unicode_unfold_key.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT ascii.lo -MD -MP -MF .deps/ascii.Tpo -c ascii.c  -fPIC -DPIC -o .libs/ascii.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT sjis.lo -MD -MP -MF .deps/sjis.Tpo -c sjis.c  -fPIC -DPIC -o .libs/sjis.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT euc_jp.lo -MD -MP -MF .deps/euc_jp.Tpo -c euc_jp.c  -fPIC -DPIC -o .libs/euc_jp.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT euc_jp_prop.lo -MD -MP -MF .deps/euc_jp_prop.Tpo -c euc_jp_prop.c  -fPIC -DPIC -o .libs/euc_jp_prop.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_3.lo -MD -MP -MF .deps/iso8859_3.Tpo -c iso8859_3.c  -fPIC -DPIC -o .libs/iso8859_3.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_4.lo -MD -MP -MF .deps/iso8859_4.Tpo -c iso8859_4.c  -fPIC -DPIC -o .libs/iso8859_4.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_1.lo -MD -MP -MF .deps/iso8859_1.Tpo -c iso8859_1.c  -fPIC -DPIC -o .libs/iso8859_1.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_6.lo -MD -MP -MF .deps/iso8859_6.Tpo -c iso8859_6.c  -fPIC -DPIC -o .libs/iso8859_6.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_5.lo -MD -MP -MF .deps/iso8859_5.Tpo -c iso8859_5.c  -fPIC -DPIC -o .libs/iso8859_5.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_2.lo -MD -MP -MF .deps/iso8859_2.Tpo -c iso8859_2.c  -fPIC -DPIC -o .libs/iso8859_2.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT sjis_prop.lo -MD -MP -MF .deps/sjis_prop.Tpo -c sjis_prop.c  -fPIC -DPIC -o .libs/sjis_prop.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_6.lo -MD -MP -MF .deps/iso8859_6.Tpo -c iso8859_6.c -o iso8859_6.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regversion.lo -MD -MP -MF .deps/regversion.Tpo -c regversion.c -o regversion.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_4.lo -MD -MP -MF .deps/iso8859_4.Tpo -c iso8859_4.c -o iso8859_4.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regext.lo -MD -MP -MF .deps/regext.Tpo -c regext.c -o regext.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT unicode_fold3_key.lo -MD -MP -MF .deps/unicode_fold3_key.Tpo -c unicode_fold3_key.c -o unicode_fold3_key.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_5.lo -MD -MP -MF .deps/iso8859_5.Tpo -c iso8859_5.c -o iso8859_5.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT unicode_fold2_key.lo -MD -MP -MF .deps/unicode_fold2_key.Tpo -c unicode_fold2_key.c -o unicode_fold2_key.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_3.lo -MD -MP -MF .deps/iso8859_3.Tpo -c iso8859_3.c -o iso8859_3.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_2.lo -MD -MP -MF .deps/iso8859_2.Tpo -c iso8859_2.c -o iso8859_2.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT unicode_fold1_key.lo -MD -MP -MF .deps/unicode_fold1_key.Tpo -c unicode_fold1_key.c -o unicode_fold1_key.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT utf32_be.lo -MD -MP -MF .deps/utf32_be.Tpo -c utf32_be.c -o utf32_be.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT utf32_le.lo -MD -MP -MF .deps/utf32_le.Tpo -c utf32_le.c -o utf32_le.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT euc_jp_prop.lo -MD -MP -MF .deps/euc_jp_prop.Tpo -c euc_jp_prop.c -o euc_jp_prop.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT sjis_prop.lo -MD -MP -MF .deps/sjis_prop.Tpo -c sjis_prop.c -o sjis_prop.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regtrav.lo -MD -MP -MF .deps/regtrav.Tpo -c regtrav.c -o regtrav.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT reggnu.lo -MD -MP -MF .deps/reggnu.Tpo -c reggnu.c -o reggnu.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regsyntax.lo -MD -MP -MF .deps/regsyntax.Tpo -c regsyntax.c -o regsyntax.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT ascii.lo -MD -MP -MF .deps/ascii.Tpo -c ascii.c -o ascii.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_6.Tpo .deps/iso8859_6.Plo
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_7.lo -MD -MP -MF .deps/iso8859_7.Tpo -c -o iso8859_7.lo iso8859_7.c
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT utf8.lo -MD -MP -MF .deps/utf8.Tpo -c utf8.c -o utf8.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT unicode_unfold_key.lo -MD -MP -MF .deps/unicode_unfold_key.Tpo -c unicode_unfold_key.c -o unicode_unfold_key.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_4.Tpo .deps/iso8859_4.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/regversion.Tpo .deps/regversion.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_3.Tpo .deps/iso8859_3.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_2.Tpo .deps/iso8859_2.Plo
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_8.lo -MD -MP -MF .deps/iso8859_8.Tpo -c -o iso8859_8.lo iso8859_8.c
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_5.Tpo .deps/iso8859_5.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT utf16_be.lo -MD -MP -MF .deps/utf16_be.Tpo -c utf16_be.c -o utf16_be.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT utf16_le.lo -MD -MP -MF .deps/utf16_le.Tpo -c utf16_le.c -o utf16_le.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_9.lo -MD -MP -MF .deps/iso8859_9.Tpo -c -o iso8859_9.lo iso8859_9.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_10.lo -MD -MP -MF .deps/iso8859_10.Tpo -c -o iso8859_10.lo iso8859_10.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_11.lo -MD -MP -MF .deps/iso8859_11.Tpo -c -o iso8859_11.lo iso8859_11.c
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/unicode_fold2_key.Tpo .deps/unicode_fold2_key.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/regext.Tpo .deps/regext.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/unicode_fold3_key.Tpo .deps/unicode_fold3_key.Plo
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_13.lo -MD -MP -MF .deps/iso8859_13.Tpo -c -o iso8859_13.lo iso8859_13.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_14.lo -MD -MP -MF .deps/iso8859_14.Tpo -c -o iso8859_14.lo iso8859_14.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_15.lo -MD -MP -MF .deps/iso8859_15.Tpo -c -o iso8859_15.lo iso8859_15.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT iso8859_16.lo -MD -MP -MF .deps/iso8859_16.Tpo -c -o iso8859_16.lo iso8859_16.c
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_1.lo -MD -MP -MF .deps/iso8859_1.Tpo -c iso8859_1.c -o iso8859_1.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/unicode_fold1_key.Tpo .deps/unicode_fold1_key.Plo
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT euc_tw.lo -MD -MP -MF .deps/euc_tw.Tpo -c -o euc_tw.lo euc_tw.c
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/utf32_be.Tpo .deps/utf32_be.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/utf32_le.Tpo .deps/utf32_le.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/sjis_prop.Tpo .deps/sjis_prop.Plo
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT euc_kr.lo -MD -MP -MF .deps/euc_kr.Tpo -c -o euc_kr.lo euc_kr.c
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/euc_jp_prop.Tpo .deps/euc_jp_prop.Plo
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT big5.lo -MD -MP -MF .deps/big5.Tpo -c -o big5.lo big5.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT gb18030.lo -MD -MP -MF .deps/gb18030.Tpo -c -o gb18030.lo gb18030.c
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT koi8_r.lo -MD -MP -MF .deps/koi8_r.Tpo -c -o koi8_r.lo koi8_r.c
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_7.lo -MD -MP -MF .deps/iso8859_7.Tpo -c iso8859_7.c  -fPIC -DPIC -o .libs/iso8859_7.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT sjis.lo -MD -MP -MF .deps/sjis.Tpo -c sjis.c -o sjis.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT euc_jp.lo -MD -MP -MF .deps/euc_jp.Tpo -c euc_jp.c -o euc_jp.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/regtrav.Tpo .deps/regtrav.Plo
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT cp1251.lo -MD -MP -MF .deps/cp1251.Tpo -c -o cp1251.lo cp1251.c
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/ascii.Tpo .deps/ascii.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/regsyntax.Tpo .deps/regsyntax.Plo
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=compile /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I.  -I..  -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -MT onig_init.lo -MD -MP -MF .deps/onig_init.Tpo -c -o onig_init.lo onig_init.c
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_11.lo -MD -MP -MF .deps/iso8859_11.Tpo -c iso8859_11.c  -fPIC -DPIC -o .libs/iso8859_11.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_8.lo -MD -MP -MF .deps/iso8859_8.Tpo -c iso8859_8.c  -fPIC -DPIC -o .libs/iso8859_8.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_13.lo -MD -MP -MF .deps/iso8859_13.Tpo -c iso8859_13.c  -fPIC -DPIC -o .libs/iso8859_13.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_14.lo -MD -MP -MF .deps/iso8859_14.Tpo -c iso8859_14.c  -fPIC -DPIC -o .libs/iso8859_14.o
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/reggnu.Tpo .deps/reggnu.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_10.lo -MD -MP -MF .deps/iso8859_10.Tpo -c iso8859_10.c  -fPIC -DPIC -o .libs/iso8859_10.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_15.lo -MD -MP -MF .deps/iso8859_15.Tpo -c iso8859_15.c  -fPIC -DPIC -o .libs/iso8859_15.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_9.lo -MD -MP -MF .deps/iso8859_9.Tpo -c iso8859_9.c  -fPIC -DPIC -o .libs/iso8859_9.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_16.lo -MD -MP -MF .deps/iso8859_16.Tpo -c iso8859_16.c  -fPIC -DPIC -o .libs/iso8859_16.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT euc_kr.lo -MD -MP -MF .deps/euc_kr.Tpo -c euc_kr.c  -fPIC -DPIC -o .libs/euc_kr.o
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/unicode_unfold_key.Tpo .deps/unicode_unfold_key.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT big5.lo -MD -MP -MF .deps/big5.Tpo -c big5.c  -fPIC -DPIC -o .libs/big5.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT koi8_r.lo -MD -MP -MF .deps/koi8_r.Tpo -c koi8_r.c  -fPIC -DPIC -o .libs/koi8_r.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT euc_tw.lo -MD -MP -MF .deps/euc_tw.Tpo -c euc_tw.c  -fPIC -DPIC -o .libs/euc_tw.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_7.lo -MD -MP -MF .deps/iso8859_7.Tpo -c iso8859_7.c -o iso8859_7.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT gb18030.lo -MD -MP -MF .deps/gb18030.Tpo -c gb18030.c  -fPIC -DPIC -o .libs/gb18030.o
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/utf8.Tpo .deps/utf8.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regerror.lo -MD -MP -MF .deps/regerror.Tpo -c regerror.c -o regerror.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_8.lo -MD -MP -MF .deps/iso8859_8.Tpo -c iso8859_8.c -o iso8859_8.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_11.lo -MD -MP -MF .deps/iso8859_11.Tpo -c iso8859_11.c -o iso8859_11.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT onig_init.lo -MD -MP -MF .deps/onig_init.Tpo -c onig_init.c  -fPIC -DPIC -o .libs/onig_init.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_13.lo -MD -MP -MF .deps/iso8859_13.Tpo -c iso8859_13.c -o iso8859_13.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT cp1251.lo -MD -MP -MF .deps/cp1251.Tpo -c cp1251.c  -fPIC -DPIC -o .libs/cp1251.o
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_9.lo -MD -MP -MF .deps/iso8859_9.Tpo -c iso8859_9.c -o iso8859_9.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_14.lo -MD -MP -MF .deps/iso8859_14.Tpo -c iso8859_14.c -o iso8859_14.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_15.lo -MD -MP -MF .deps/iso8859_15.Tpo -c iso8859_15.c -o iso8859_15.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_10.lo -MD -MP -MF .deps/iso8859_10.Tpo -c iso8859_10.c -o iso8859_10.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT koi8_r.lo -MD -MP -MF .deps/koi8_r.Tpo -c koi8_r.c -o koi8_r.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/utf16_le.Tpo .deps/utf16_le.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_7.Tpo .deps/iso8859_7.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_8.Tpo .deps/iso8859_8.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT iso8859_16.lo -MD -MP -MF .deps/iso8859_16.Tpo -c iso8859_16.c -o iso8859_16.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_1.Tpo .deps/iso8859_1.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/utf16_be.Tpo .deps/utf16_be.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_11.Tpo .deps/iso8859_11.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT euc_kr.lo -MD -MP -MF .deps/euc_kr.Tpo -c euc_kr.c -o euc_kr.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT big5.lo -MD -MP -MF .deps/big5.Tpo -c big5.c -o big5.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_13.Tpo .deps/iso8859_13.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT onig_init.lo -MD -MP -MF .deps/onig_init.Tpo -c onig_init.c -o onig_init.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_9.Tpo .deps/iso8859_9.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT cp1251.lo -MD -MP -MF .deps/cp1251.Tpo -c cp1251.c -o cp1251.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT euc_tw.lo -MD -MP -MF .deps/euc_tw.Tpo -c euc_tw.c -o euc_tw.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_14.Tpo .deps/iso8859_14.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_16.Tpo .deps/iso8859_16.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_15.Tpo .deps/iso8859_15.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/koi8_r.Tpo .deps/koi8_r.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/sjis.Tpo .deps/sjis.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/iso8859_10.Tpo .deps/iso8859_10.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/euc_jp.Tpo .deps/euc_jp.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/cp1251.Tpo .deps/cp1251.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT st.lo -MD -MP -MF .deps/st.Tpo -c st.c -o st.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/euc_kr.Tpo .deps/euc_kr.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/onig_init.Tpo .deps/onig_init.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/big5.Tpo .deps/big5.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/euc_tw.Tpo .deps/euc_tw.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT gb18030.lo -MD -MP -MF .deps/gb18030.Tpo -c gb18030.c -o gb18030.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/regerror.Tpo .deps/regerror.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regenc.lo -MD -MP -MF .deps/regenc.Tpo -c regenc.c -o regenc.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/gb18030.Tpo .deps/gb18030.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/st.Tpo .deps/st.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/regenc.Tpo .deps/regenc.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT unicode.lo -MD -MP -MF .deps/unicode.Tpo -c unicode.c -o unicode.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/unicode.Tpo .deps/unicode.Plo
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regcomp.lo -MD -MP -MF .deps/regcomp.Tpo -c regcomp.c -o regcomp.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regexec.lo -MD -MP -MF .deps/regexec.Tpo -c regexec.c -o regexec.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": libtool: compile:  /src/aflplusplus/afl-clang-fast -DHAVE_CONFIG_H -I. -I.. -Wall -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -MT regparse.lo -MD -MP -MF .deps/regparse.Tpo -c regparse.c -o regparse.o >/dev/null 2>&1
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/regcomp.Tpo .deps/regcomp.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/regexec.Tpo .deps/regexec.Plo
+Step #3 - "compile-afl-address-x86_64": mv -f .deps/regparse.Tpo .deps/regparse.Plo
+Step #3 - "compile-afl-address-x86_64": /bin/bash ../libtool  --tag=CC   --mode=link /src/aflplusplus/afl-clang-fast -Wall   -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope   -version-info 10:0:5   -o libonig.la -rpath /usr/local/lib regparse.lo regcomp.lo regexec.lo regenc.lo regerror.lo regext.lo regsyntax.lo regtrav.lo regversion.lo st.lo reggnu.lo  unicode.lo unicode_unfold_key.lo unicode_fold1_key.lo unicode_fold2_key.lo unicode_fold3_key.lo ascii.lo utf8.lo utf16_be.lo utf16_le.lo utf32_be.lo utf32_le.lo euc_jp.lo euc_jp_prop.lo sjis.lo sjis_prop.lo iso8859_1.lo iso8859_2.lo iso8859_3.lo iso8859_4.lo iso8859_5.lo iso8859_6.lo iso8859_7.lo iso8859_8.lo iso8859_9.lo iso8859_10.lo iso8859_11.lo iso8859_13.lo iso8859_14.lo iso8859_15.lo iso8859_16.lo euc_tw.lo euc_kr.lo big5.lo gb18030.lo koi8_r.lo cp1251.lo onig_init.lo  
+Step #3 - "compile-afl-address-x86_64": libtool: link: /src/aflplusplus/afl-clang-fast -shared  -fPIC -DPIC  .libs/regparse.o .libs/regcomp.o .libs/regexec.o .libs/regenc.o .libs/regerror.o .libs/regext.o .libs/regsyntax.o .libs/regtrav.o .libs/regversion.o .libs/st.o .libs/reggnu.o .libs/unicode.o .libs/unicode_unfold_key.o .libs/unicode_fold1_key.o .libs/unicode_fold2_key.o .libs/unicode_fold3_key.o .libs/ascii.o .libs/utf8.o .libs/utf16_be.o .libs/utf16_le.o .libs/utf32_be.o .libs/utf32_le.o .libs/euc_jp.o .libs/euc_jp_prop.o .libs/sjis.o .libs/sjis_prop.o .libs/iso8859_1.o .libs/iso8859_2.o .libs/iso8859_3.o .libs/iso8859_4.o .libs/iso8859_5.o .libs/iso8859_6.o .libs/iso8859_7.o .libs/iso8859_8.o .libs/iso8859_9.o .libs/iso8859_10.o .libs/iso8859_11.o .libs/iso8859_13.o .libs/iso8859_14.o .libs/iso8859_15.o .libs/iso8859_16.o .libs/euc_tw.o .libs/euc_kr.o .libs/big5.o .libs/gb18030.o .libs/koi8_r.o .libs/cp1251.o .libs/onig_init.o    -O1 -gline-tables-only -fsanitize=address   -Wl,-soname -Wl,libonig.so.5 -o .libs/libonig.so.5.5.0
+Step #3 - "compile-afl-address-x86_64": libtool: link: (cd ".libs" && rm -f "libonig.so.5" && ln -s "libonig.so.5.5.0" "libonig.so.5")
+Step #3 - "compile-afl-address-x86_64": libtool: link: (cd ".libs" && rm -f "libonig.so" && ln -s "libonig.so.5.5.0" "libonig.so")
+Step #3 - "compile-afl-address-x86_64": libtool: link: ar cr .libs/libonig.a  regparse.o regcomp.o regexec.o regenc.o regerror.o regext.o regsyntax.o regtrav.o regversion.o st.o reggnu.o unicode.o unicode_unfold_key.o unicode_fold1_key.o unicode_fold2_key.o unicode_fold3_key.o ascii.o utf8.o utf16_be.o utf16_le.o utf32_be.o utf32_le.o euc_jp.o euc_jp_prop.o sjis.o sjis_prop.o iso8859_1.o iso8859_2.o iso8859_3.o iso8859_4.o iso8859_5.o iso8859_6.o iso8859_7.o iso8859_8.o iso8859_9.o iso8859_10.o iso8859_11.o iso8859_13.o iso8859_14.o iso8859_15.o iso8859_16.o euc_tw.o euc_kr.o big5.o gb18030.o koi8_r.o cp1251.o onig_init.o
+Step #3 - "compile-afl-address-x86_64": libtool: link: ranlib .libs/libonig.a
+Step #3 - "compile-afl-address-x86_64": libtool: link: ( cd ".libs" && rm -f "libonig.la" && ln -s "../libonig.la" "libonig.la" )
+Step #3 - "compile-afl-address-x86_64": make[4]: Leaving directory '/src/jq/vendor/oniguruma/src'
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/jq/vendor/oniguruma/src'
+Step #3 - "compile-afl-address-x86_64": Making all in test
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/jq/vendor/oniguruma/test'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/jq/vendor/oniguruma/test'
+Step #3 - "compile-afl-address-x86_64": Making all in sample
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/jq/vendor/oniguruma/sample'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/jq/vendor/oniguruma/sample'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/jq/vendor/oniguruma'
+Step #3 - "compile-afl-address-x86_64": sed -e 's,[@]datadir[@],/usr/local/share,g' -e 's,[@]datarootdir[@],/usr/local/share,g' -e 's,[@]PACKAGE_VERSION[@],6.9.10,g' -e 's,[@]prefix[@],/usr/local,g' -e 's,[@]exec_prefix[@],/usr/local,g' -e 's,[@]libdir[@],/usr/local/lib,g' -e 's,[@]includedir[@],/usr/local/include,g' < ./oniguruma.pc.in > oniguruma.pc
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/jq/vendor/oniguruma'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/jq/vendor/oniguruma'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/jq'
+Step #3 - "compile-afl-address-x86_64":   GEN      jq.1
+Step #3 - "compile-afl-address-x86_64":   CC       src/builtin.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/bytecode.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/compile.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/execute.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/jq_test.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/jv.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/jv_alloc.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/jv_aux.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/jv_dtoa.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/jv_file.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/jv_parse.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/jv_print.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/jv_unicode.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/linker.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/locfile.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/util.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/jv_dtoa_tsd.lo
+Step #3 - "compile-afl-address-x86_64":   CC       vendor/decNumber/decContext.lo
+Step #3 - "compile-afl-address-x86_64":   CC       vendor/decNumber/decNumber.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/lexer.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/parser.lo
+Step #3 - "compile-afl-address-x86_64":   CC       src/main.o
+Step #3 - "compile-afl-address-x86_64": [1msrc/parser.c:2241:9: [0m[0;1;35mwarning: [0m[1mvariable 'yynerrs' set but not used [-Wunused-but-set-variable][0m
+Step #3 - "compile-afl-address-x86_64":  2241 |     [0;34mint[0m yynerrs = [0;32m0[0m;[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m        ^
+Step #3 - "compile-afl-address-x86_64": [0m1 warning generated.
+Step #3 - "compile-afl-address-x86_64":   CCLD     libjq.la
+Step #3 - "compile-afl-address-x86_64":   CCLD     jq
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/jq'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/jq'
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -c tests/jq_fuzz_parse.c -I./src -o ./jq_fuzz_parse.o
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ /usr/lib/libFuzzingEngine.a ./jq_fuzz_parse.o ./.libs/libjq.a ./vendor/oniguruma/src/.libs/libonig.a -o /workspace/out/afl-address-x86_64/jq_fuzz_parse -I./src
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -c tests/jq_fuzz_compile.c -I./src -o ./jq_fuzz_compile.o
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ /usr/lib/libFuzzingEngine.a ./jq_fuzz_compile.o ./.libs/libjq.a ./vendor/oniguruma/src/.libs/libonig.a -o /workspace/out/afl-address-x86_64/jq_fuzz_compile -I./src
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -c tests/jq_fuzz_load_file.c -I./src -o ./jq_fuzz_load_file.o
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ /usr/lib/libFuzzingEngine.a ./jq_fuzz_load_file.o ./.libs/libjq.a ./vendor/oniguruma/src/.libs/libonig.a -o /workspace/out/afl-address-x86_64/jq_fuzz_load_file -I./src
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -c tests/jq_fuzz_parse_extended.c -I./src -o ./jq_fuzz_parse_extended.o
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ /usr/lib/libFuzzingEngine.a ./jq_fuzz_parse_extended.o ./.libs/libjq.a ./vendor/oniguruma/src/.libs/libonig.a -o /workspace/out/afl-address-x86_64/jq_fuzz_parse_extended -I./src
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -c tests/jq_fuzz_parse_stream.c -I./src -o ./jq_fuzz_parse_stream.o
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ /usr/lib/libFuzzingEngine.a ./jq_fuzz_parse_stream.o ./.libs/libjq.a ./vendor/oniguruma/src/.libs/libonig.a -o /workspace/out/afl-address-x86_64/jq_fuzz_parse_stream -I./src
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ /usr/lib/libFuzzingEngine.a ./tests/jq_fuzz_execute.cpp -I./src ./.libs/libjq.a ./vendor/oniguruma/src/.libs/libonig.a -o /workspace/out/afl-address-x86_64/jq_fuzz_execute -I./src
+Step #3 - "compile-afl-address-x86_64": [1m./tests/jq_fuzz_execute.cpp:6:10: [0m[0;1;31mfatal error: [0m[1m'oniguruma.h' file not found[0m
+Step #3 - "compile-afl-address-x86_64":     6 | #include [0;32m"oniguruma.h"[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m         ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m1 error generated.
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************
+Step #3 - "compile-afl-address-x86_64": Failed to build.
+Step #3 - "compile-afl-address-x86_64": To reproduce, run:
+Step #3 - "compile-afl-address-x86_64": python infra/helper.py build_image jq
+Step #3 - "compile-afl-address-x86_64": python infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 jq
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

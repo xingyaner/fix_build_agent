@@ -1,0 +1,647 @@
+starting build "26e3881c-33e4-44ce-a381-e1bd4afbab2d"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0"
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Sending build context to Docker daemon   12.8kB
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Step 1/7 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": b549f31133a9: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 4cab2e9940c4: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": b2d6cb003f96: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": c5ec622c42d5: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 76a8da3bd377: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 14f53b14f02e: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 7f1353e6e254: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 52ca464d533f: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 75bdb4b0a6ee: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8ec5c0f7ce63: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": dd5488d9d92f: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": c14c4e4bf959: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 56d811f45d53: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 47129490b488: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": a22b9cc82a87: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f37aabbf5378: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 60885dd8685c: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 2a4eda99b39d: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 503dd44e6582: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": ffd7a4a02cd7: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": cecb76a0eeeb: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8a98b72756b0: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 7eb7765bb32e: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 310b72b462ed: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": ebb8e741a3d1: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": dd7cddead71d: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 43ee29b25f02: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f1bc67d99a5e: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 6c12abd78e9f: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 4f37e418f520: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": d3c3787c69b1: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 52ca464d533f: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 786ba5cb8e87: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 6e870e8e2bc1: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 756c38c339b4: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 75bdb4b0a6ee: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f642f0edb40e: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8615c4186726: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8ec5c0f7ce63: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 98e3d3db37fc: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": dd5488d9d92f: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 3806054f9efe: Pulling fs layer
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": c14c4e4bf959: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": a22b9cc82a87: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f1bc67d99a5e: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8a98b72756b0: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 6c12abd78e9f: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 7eb7765bb32e: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 4f37e418f520: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 56d811f45d53: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f37aabbf5378: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 310b72b462ed: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": d3c3787c69b1: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 47129490b488: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 786ba5cb8e87: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": ebb8e741a3d1: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 60885dd8685c: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 2a4eda99b39d: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 6e870e8e2bc1: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": ffd7a4a02cd7: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 503dd44e6582: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 756c38c339b4: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": dd7cddead71d: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": cecb76a0eeeb: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8615c4186726: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": c5ec622c42d5: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 98e3d3db37fc: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 3806054f9efe: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f642f0edb40e: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 76a8da3bd377: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 14f53b14f02e: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 7f1353e6e254: Waiting
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": b2d6cb003f96: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": b2d6cb003f96: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": b549f31133a9: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": b549f31133a9: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 4cab2e9940c4: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 4cab2e9940c4: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 7f1353e6e254: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": c5ec622c42d5: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": c5ec622c42d5: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 52ca464d533f: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 52ca464d533f: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": b549f31133a9: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8ec5c0f7ce63: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8ec5c0f7ce63: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": dd5488d9d92f: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": dd5488d9d92f: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": c14c4e4bf959: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": c14c4e4bf959: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 56d811f45d53: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 56d811f45d53: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 47129490b488: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 47129490b488: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": a22b9cc82a87: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": a22b9cc82a87: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f37aabbf5378: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f37aabbf5378: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 60885dd8685c: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 60885dd8685c: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 2a4eda99b39d: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 2a4eda99b39d: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 503dd44e6582: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 503dd44e6582: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": ffd7a4a02cd7: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": ffd7a4a02cd7: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 4cab2e9940c4: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 75bdb4b0a6ee: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 75bdb4b0a6ee: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": b2d6cb003f96: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": cecb76a0eeeb: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": cecb76a0eeeb: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8a98b72756b0: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8a98b72756b0: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 14f53b14f02e: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 14f53b14f02e: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 310b72b462ed: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": ebb8e741a3d1: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": ebb8e741a3d1: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 7eb7765bb32e: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 7eb7765bb32e: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 43ee29b25f02: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": dd7cddead71d: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f1bc67d99a5e: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f1bc67d99a5e: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": d3c3787c69b1: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": d3c3787c69b1: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 6c12abd78e9f: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 6c12abd78e9f: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 4f37e418f520: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 4f37e418f520: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 786ba5cb8e87: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 786ba5cb8e87: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 6e870e8e2bc1: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 6e870e8e2bc1: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 756c38c339b4: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 756c38c339b4: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8615c4186726: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f642f0edb40e: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": c5ec622c42d5: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 76a8da3bd377: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 98e3d3db37fc: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 98e3d3db37fc: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 3806054f9efe: Verifying Checksum
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 3806054f9efe: Download complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 14f53b14f02e: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 7f1353e6e254: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 52ca464d533f: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 75bdb4b0a6ee: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8ec5c0f7ce63: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": dd5488d9d92f: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": c14c4e4bf959: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 56d811f45d53: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 47129490b488: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": a22b9cc82a87: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f37aabbf5378: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 60885dd8685c: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 2a4eda99b39d: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 503dd44e6582: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": ffd7a4a02cd7: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": cecb76a0eeeb: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8a98b72756b0: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 7eb7765bb32e: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 310b72b462ed: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": ebb8e741a3d1: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": dd7cddead71d: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 43ee29b25f02: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f1bc67d99a5e: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 6c12abd78e9f: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 4f37e418f520: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": d3c3787c69b1: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 786ba5cb8e87: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 6e870e8e2bc1: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 756c38c339b4: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": f642f0edb40e: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 8615c4186726: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 98e3d3db37fc: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 3806054f9efe: Pull complete
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Digest: sha256:7c5b9586c5189795eda6f25b32ba708fa0a302bc08f9d68c00f0197dac978104
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> e656cee10f82
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Step 2/7 : RUN apt-get update && apt-get install -y make libpcre2-dev zlib1g-dev
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> Running in 6619c476839b
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Hit:2 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Fetched 383 kB in 1s (391 kB/s)
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Reading package lists...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Reading package lists...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Building dependency tree...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Reading state information...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": make set to manually installed.
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": The following packages were automatically installed and are no longer required:
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":   autotools-dev libsigsegv2 m4
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Use 'apt autoremove' to remove them.
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": The following additional packages will be installed:
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":   libpcre2-16-0 libpcre2-32-0 libpcre2-posix2
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": The following NEW packages will be installed:
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":   libpcre2-16-0 libpcre2-32-0 libpcre2-dev libpcre2-posix2 zlib1g-dev
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": 0 upgraded, 5 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Need to get 1185 kB of archives.
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": After this operation, 4276 kB of additional disk space will be used.
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre2-16-0 amd64 10.34-7ubuntu0.1 [181 kB]
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre2-32-0 amd64 10.34-7ubuntu0.1 [170 kB]
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Get:3 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre2-posix2 amd64 10.34-7ubuntu0.1 [5988 B]
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpcre2-dev amd64 10.34-7ubuntu0.1 [672 kB]
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Get:5 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 zlib1g-dev amd64 1:1.2.11.dfsg-2ubuntu1.5 [155 kB]
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": [0mFetched 1185 kB in 1s (1081 kB/s)
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Selecting previously unselected package libpcre2-16-0:amd64.
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Preparing to unpack .../libpcre2-16-0_10.34-7ubuntu0.1_amd64.deb ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Unpacking libpcre2-16-0:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Selecting previously unselected package libpcre2-32-0:amd64.
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Preparing to unpack .../libpcre2-32-0_10.34-7ubuntu0.1_amd64.deb ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Unpacking libpcre2-32-0:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Selecting previously unselected package libpcre2-posix2:amd64.
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Preparing to unpack .../libpcre2-posix2_10.34-7ubuntu0.1_amd64.deb ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Unpacking libpcre2-posix2:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Selecting previously unselected package libpcre2-dev:amd64.
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Preparing to unpack .../libpcre2-dev_10.34-7ubuntu0.1_amd64.deb ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Unpacking libpcre2-dev:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Selecting previously unselected package zlib1g-dev:amd64.
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Preparing to unpack .../zlib1g-dev_1%3a1.2.11.dfsg-2ubuntu1.5_amd64.deb ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Unpacking zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Setting up libpcre2-16-0:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Setting up libpcre2-32-0:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Setting up libpcre2-posix2:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Setting up zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Setting up libpcre2-dev:amd64 (10.34-7ubuntu0.1) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Removing intermediate container 6619c476839b
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> 1e1f09f3a6a6
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Step 3/7 : RUN git clone https://github.com/haproxy/haproxy
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> Running in 76a4c842574d
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": [91mCloning into 'haproxy'...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": [0mRemoving intermediate container 76a4c842574d
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> 9eea7aee6ed8
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Step 4/7 : RUN git clone https://github.com/vtest/VTest2 --depth=1
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> Running in c155cd713c0d
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": [91mCloning into 'VTest2'...
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": [0mRemoving intermediate container c155cd713c0d
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> 01f7f6c801b9
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Step 5/7 : WORKDIR $SRC
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> Running in 6b610783eb94
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Removing intermediate container 6b610783eb94
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> 69215ac38f79
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Step 6/7 : COPY build.sh run_tests.sh $SRC/
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> d88e3e87f71b
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Step 7/7 : COPY fuzz* $SRC/
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0":  ---> fc06e675cccf
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Successfully built fc06e675cccf
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Successfully tagged gcr.io/oss-fuzz/haproxy:latest
+Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/haproxy:latest
+Finished Step #1 - "build-a747c828-ae28-4cba-8e05-dcf66a3f5aa0"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/haproxy
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/filevV8sWO
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/VTest2/.git
+Step #2 - "srcmap": + GIT_DIR=/src/VTest2
+Step #2 - "srcmap": + cd /src/VTest2
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/vtest/VTest2
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=d04a2007518130abe25a1e0d310fd661f2c79ec3
+Step #2 - "srcmap": + jq_inplace /tmp/filevV8sWO '."/src/VTest2" = { type: "git", url: "https://github.com/vtest/VTest2", rev: "d04a2007518130abe25a1e0d310fd661f2c79ec3" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileBo14nc
+Step #2 - "srcmap": + cat /tmp/filevV8sWO
+Step #2 - "srcmap": + jq '."/src/VTest2" = { type: "git", url: "https://github.com/vtest/VTest2", rev: "d04a2007518130abe25a1e0d310fd661f2c79ec3" }'
+Step #2 - "srcmap": + mv /tmp/fileBo14nc /tmp/filevV8sWO
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/haproxy/.git
+Step #2 - "srcmap": + GIT_DIR=/src/haproxy
+Step #2 - "srcmap": + cd /src/haproxy
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/haproxy/haproxy
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=bece70412810b47e5eb98eda059252bf535b2992
+Step #2 - "srcmap": + jq_inplace /tmp/filevV8sWO '."/src/haproxy" = { type: "git", url: "https://github.com/haproxy/haproxy", rev: "bece70412810b47e5eb98eda059252bf535b2992" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileqrJhrG
+Step #2 - "srcmap": + cat /tmp/filevV8sWO
+Step #2 - "srcmap": + jq '."/src/haproxy" = { type: "git", url: "https://github.com/haproxy/haproxy", rev: "bece70412810b47e5eb98eda059252bf535b2992" }'
+Step #2 - "srcmap": + mv /tmp/fileqrJhrG /tmp/filevV8sWO
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/filevV8sWO
+Step #2 - "srcmap": + rm /tmp/filevV8sWO
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/VTest2": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/vtest/VTest2",
+Step #2 - "srcmap":     "rev": "d04a2007518130abe25a1e0d310fd661f2c79ec3"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/haproxy": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/haproxy/haproxy",
+Step #2 - "srcmap":     "rev": "bece70412810b47e5eb98eda059252bf535b2992"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + export 'ORIG_CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope '
+Step #3 - "compile-afl-address-x86_64": + ORIG_CFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope '
+Step #3 - "compile-afl-address-x86_64": + cd haproxy
+Step #3 - "compile-afl-address-x86_64": + sed 's/COPTS += $(DEBUG) $(OPTIONS_CFLAGS) $(CFLAGS) $(ADDINC)/COPTS += $(DEBUG) $(OPTIONS_CFLAGS) $(CFLAGS) $(ADDINC) ${ORIG_CFLAGS}/g' -i Makefile
+Step #3 - "compile-afl-address-x86_64": + sed 's/LDOPTS = $(TARGET_LDFLAGS) $(OPTIONS_LDFLAGS) $(ADDLIB)/LDOPTS = $(TARGET_LDFLAGS) $(OPTIONS_LDFLAGS) $(ADDLIB) ${CXXFLAGS}/g' -i Makefile
+Step #3 - "compile-afl-address-x86_64": + make TARGET=generic CC=/src/aflplusplus/afl-clang-fast LD=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64":   CC      dev/flags/flags.o
+Step #3 - "compile-afl-address-x86_64":   LD      dev/flags/flags
+Step #3 - "compile-afl-address-x86_64":   CC      src/slz.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ev_poll.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/mux_h2.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/mux_h1.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/mux_fcgi.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/log.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/server.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/stream.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/tcpcheck.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/http_ana.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/stick_table.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/tools.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/mux_spop.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/sample.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/activity.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cfgparse.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/peers.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cli.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/backend.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/connection.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/resolvers.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/proxy.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cache.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/stconn.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/http_htx.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/debug.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/check.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/stats-html.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/haproxy.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/listener.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/applet.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/pattern.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cfgparse-listen.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/flt_spoe.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cebis_tree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/http_ext.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/http_act.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/http_fetch.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cebs_tree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cebib_tree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/http_client.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/dns.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cebb_tree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/vars.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/event_hdl.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/tcp_rules.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/trace.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/stats-proxy.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/pool.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/stats.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cfgparse-global.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/filters.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/mux_pt.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/flt_http_comp.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/sock.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/h1.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/sink.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ceba_tree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/session.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/payload.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/htx.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cebl_tree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ceb32_tree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ceb64_tree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/server_state.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/proto_rhttp.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/flt_trace.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/fd.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/task.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/map.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/fcgi-app.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/h2.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/mworker.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/tcp_sample.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/mjson.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/h1_htx.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/tcp_act.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ring.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/flt_bwlim.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/acl.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/thread.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/queue.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/http_rules.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/http.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/channel.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/proto_tcp.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/mqtt.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/lb_chash.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/extcheck.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/dns_ring.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/errors.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ncbuf.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/compression.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/http_conv.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/frontend.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/stats-json.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/proto_sockpair.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/raw_sock.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/action.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/stats-file.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/buf.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/xprt_handshake.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/proto_uxst.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/lb_fwrr.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/uri_normalizer.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/mailers.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/protocol.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cfgcond.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/proto_udp.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/lb_fwlc.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ebmbtree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/proto_uxdg.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cfgdiag.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/sock_unix.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/sha1.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/lb_fas.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/clock.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/sock_inet.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ev_select.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/lb_map.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/shctx.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/hpack-dec.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/arg.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/signal.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/fix.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/dynbuf.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/guid.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cfgparse-tcp.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/lb_ss.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/chunk.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/counters.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/cfgparse-unix.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/regex.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/fcgi.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/uri_auth.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/eb64tree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/eb32tree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/eb32sctree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/lru.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/limits.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ebimtree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/wdt.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/hpack-tbl.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ebistree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/base64.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/auth.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/time.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ebsttree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/freq_ctr.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/systemd.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/init.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/http_acl.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/dict.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/dgram.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/pipe.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/hpack-huff.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/hpack-enc.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/ebtree.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/hash.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/httpclient_cli.o
+Step #3 - "compile-afl-address-x86_64":   CC      src/version.o
+Step #3 - "compile-afl-address-x86_64":   LD      haproxy
+Step #3 - "compile-afl-address-x86_64": + cd /src/haproxy
+Step #3 - "compile-afl-address-x86_64": + sed 's/int main(int argc/int main2(int argc/g' -i ./src/haproxy.c
+Step #3 - "compile-afl-address-x86_64": + sed 's/dladdr(main,/dladdr(main2,/g' -i ./src/tools.c
+Step #3 - "compile-afl-address-x86_64": + sed 's/(void*)main/(void*)main2/g' -i ./src/tools.c
+Step #3 - "compile-afl-address-x86_64": + SETTINGS='-Iinclude -g -DUSE_POLL -DUSE_TPROXY -DCONFIG_HAPROXY_VERSION="" -DCONFIG_HAPROXY_DATE=""'
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -Iinclude -g -DUSE_POLL -DUSE_TPROXY '-DCONFIG_HAPROXY_VERSION=""' '-DCONFIG_HAPROXY_DATE=""' -c -o ./src/haproxy.o ./src/haproxy.c
+Step #3 - "compile-afl-address-x86_64": In file included from ./src/haproxy.c:75:
+Step #3 - "compile-afl-address-x86_64": In file included from include/haproxy/cli.h:26:
+Step #3 - "compile-afl-address-x86_64": In file included from include/haproxy/applet.h:29:
+Step #3 - "compile-afl-address-x86_64": In file included from include/haproxy/channel.h:30:
+Step #3 - "compile-afl-address-x86_64": In file included from include/haproxy/stream.h:32:
+Step #3 - "compile-afl-address-x86_64": In file included from include/haproxy/session.h:26:
+Step #3 - "compile-afl-address-x86_64": In file included from include/haproxy/connection.h:37:
+Step #3 - "compile-afl-address-x86_64": In file included from include/haproxy/server.h:37:
+Step #3 - "compile-afl-address-x86_64": In file included from include/haproxy/task.h:28:
+Step #3 - "compile-afl-address-x86_64": In file included from include/import/eb32tree.h:24:
+Step #3 - "compile-afl-address-x86_64": [1minclude/import/ebtree.h:464:35: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   464 |         eb_troot_t *new_left = eb_dotag(&new->branches, EB_LEFT);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                         ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:465:35: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   465 |         eb_troot_t *new_rght = eb_dotag(&new->branches, EB_RGHT);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                         ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:466:35: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   466 |         eb_troot_t *new_leaf = eb_dotag(&new->branches, EB_LEAF);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                         ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:483:41: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   483 |                 head->branches.b[EB_RGHT] = eb_dotag(&new->branches, EB_NODE);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                                      ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:488:40: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   488 |                 new->branches.b[EB_LEFT] = eb_dotag(&sub->branches, EB_LEAF);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                                     ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:501:38: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   501 |                 head->branches.b[side] = eb_dotag(&new->branches, EB_NODE);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                                   ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:506:40: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   506 |                 new->branches.b[EB_LEFT] = eb_dotag(&sub->branches, EB_NODE);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                                     ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:767:33: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   767 |         gparent->b[gpside] = eb_dotag(&parent->branches, EB_NODE);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                       ^~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:773:15: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   773 |                                 eb_dotag(&parent->branches, pside);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                          ^~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:776:15: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   776 |                                 eb_dotag(&parent->branches, pside);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                          ^~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m10 warnings generated.
+Step #3 - "compile-afl-address-x86_64": + ar cr libhaproxy.a ./src/acl.o ./src/action.o ./src/activity.o ./src/applet.o ./src/arg.o ./src/auth.o ./src/backend.o ./src/base64.o ./src/buf.o ./src/cache.o ./src/ceb32_tree.o ./src/ceb64_tree.o ./src/ceba_tree.o ./src/cebb_tree.o ./src/cebib_tree.o ./src/cebis_tree.o ./src/cebl_tree.o ./src/cebs_tree.o ./src/cfgcond.o ./src/cfgdiag.o ./src/cfgparse-global.o ./src/cfgparse-listen.o ./src/cfgparse-tcp.o ./src/cfgparse-unix.o ./src/cfgparse.o ./src/channel.o ./src/check.o ./src/chunk.o ./src/cli.o ./src/clock.o ./src/compression.o ./src/connection.o ./src/counters.o ./src/debug.o ./src/dgram.o ./src/dict.o ./src/dns.o ./src/dns_ring.o ./src/dynbuf.o ./src/eb32sctree.o ./src/eb32tree.o ./src/eb64tree.o ./src/ebimtree.o ./src/ebistree.o ./src/ebmbtree.o ./src/ebsttree.o ./src/ebtree.o ./src/errors.o ./src/ev_poll.o ./src/ev_select.o ./src/event_hdl.o ./src/extcheck.o ./src/fcgi-app.o ./src/fcgi.o ./src/fd.o ./src/filters.o ./src/fix.o ./src/flt_bwlim.o ./src/flt_http_comp.o ./src/flt_spoe.o ./src/flt_trace.o ./src/freq_ctr.o ./src/frontend.o ./src/guid.o ./src/h1.o ./src/h1_htx.o ./src/h2.o ./src/haproxy.o ./src/hash.o ./src/hpack-dec.o ./src/hpack-enc.o ./src/hpack-huff.o ./src/hpack-tbl.o ./src/http.o ./src/http_acl.o ./src/http_act.o ./src/http_ana.o ./src/http_client.o ./src/http_conv.o ./src/http_ext.o ./src/http_fetch.o ./src/http_htx.o ./src/http_rules.o ./src/httpclient_cli.o ./src/htx.o ./src/init.o ./src/lb_chash.o ./src/lb_fas.o ./src/lb_fwlc.o ./src/lb_fwrr.o ./src/lb_map.o ./src/lb_ss.o ./src/limits.o ./src/listener.o ./src/log.o ./src/lru.o ./src/mailers.o ./src/map.o ./src/mjson.o ./src/mqtt.o ./src/mux_fcgi.o ./src/mux_h1.o ./src/mux_h2.o ./src/mux_pt.o ./src/mux_spop.o ./src/mworker.o ./src/ncbuf.o ./src/pattern.o ./src/payload.o ./src/peers.o ./src/pipe.o ./src/pool.o ./src/proto_rhttp.o ./src/proto_sockpair.o ./src/proto_tcp.o ./src/proto_udp.o ./src/proto_uxdg.o ./src/proto_uxst.o ./src/protocol.o ./src/proxy.o ./src/queue.o ./src/raw_sock.o ./src/regex.o ./src/resolvers.o ./src/ring.o ./src/sample.o ./src/server.o ./src/server_state.o ./src/session.o ./src/sha1.o ./src/shctx.o ./src/signal.o ./src/sink.o ./src/slz.o ./src/sock.o ./src/sock_inet.o ./src/sock_unix.o ./src/stats-file.o ./src/stats-html.o ./src/stats-json.o ./src/stats-proxy.o ./src/stats.o ./src/stconn.o ./src/stick_table.o ./src/stream.o ./src/systemd.o ./src/task.o ./src/tcp_act.o ./src/tcp_rules.o ./src/tcp_sample.o ./src/tcpcheck.o ./src/thread.o ./src/time.o ./src/tools.o ./src/trace.o ./src/uri_auth.o ./src/uri_normalizer.o ./src/vars.o ./src/version.o ./src/wdt.o ./src/xprt_handshake.o
+Step #3 - "compile-afl-address-x86_64": + for fuzzer in hpack_decode cfg_parser
+Step #3 - "compile-afl-address-x86_64": + cp /src/fuzz_hpack_decode.c .
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -Iinclude -g -DUSE_POLL -DUSE_TPROXY '-DCONFIG_HAPROXY_VERSION=""' '-DCONFIG_HAPROXY_DATE=""' -c fuzz_hpack_decode.c -o fuzz_hpack_decode.o
+Step #3 - "compile-afl-address-x86_64": In file included from fuzz_hpack_decode.c:51:
+Step #3 - "compile-afl-address-x86_64": In file included from include/../src/hpack-dec.c:40:
+Step #3 - "compile-afl-address-x86_64": In file included from include/haproxy/tools.h:41:
+Step #3 - "compile-afl-address-x86_64": In file included from include/import/eb32sctree.h:24:
+Step #3 - "compile-afl-address-x86_64": [1minclude/import/ebtree.h:464:35: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   464 |         eb_troot_t *new_left = eb_dotag(&new->branches, EB_LEFT);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                         ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:465:35: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   465 |         eb_troot_t *new_rght = eb_dotag(&new->branches, EB_RGHT);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                         ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:466:35: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   466 |         eb_troot_t *new_leaf = eb_dotag(&new->branches, EB_LEAF);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                         ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:483:41: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   483 |                 head->branches.b[EB_RGHT] = eb_dotag(&new->branches, EB_NODE);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                                      ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:488:40: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   488 |                 new->branches.b[EB_LEFT] = eb_dotag(&sub->branches, EB_LEAF);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                                     ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:501:38: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   501 |                 head->branches.b[side] = eb_dotag(&new->branches, EB_NODE);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                                   ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:506:40: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   506 |                 new->branches.b[EB_LEFT] = eb_dotag(&sub->branches, EB_NODE);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                                     ^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:767:33: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   767 |         gparent->b[gpside] = eb_dotag(&parent->branches, EB_NODE);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                       ^~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:773:15: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   773 |                                 eb_dotag(&parent->branches, pside);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                          ^~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/import/ebtree.h:776:15: [0m[0;1;35mwarning: [0m[1mtaking address of packed member 'branches' of class or structure 'eb_node' may result in an unaligned pointer value [-Waddress-of-packed-member][0m
+Step #3 - "compile-afl-address-x86_64":   776 |                                 eb_dotag(&parent->branches, pside);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                          ^~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1mfuzz_hpack_decode.c:72:37: [0m[0;1;35mwarning: [0m[1mpassing 'char *' to parameter of type 'const uint8_t *' (aka 'const unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign][0m
+Step #3 - "compile-afl-address-x86_64":    72 |             hpack_decode_frame(dht, new_str, size, list,[0;34msizeof[0m(list)/[0;34msizeof[0m(list[[0;32m0[0m]), &tmp);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                    ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m[1minclude/../src/hpack-dec.c:146:62: [0m[0;1;36mnote: [0mpassing argument to parameter 'raw' here[0m
+Step #3 - "compile-afl-address-x86_64":   146 | [0;34mint[0m hpack_decode_frame([0;34mstruct[0m hpack_dht *dht, [0;34mconst[0m uint8_t *raw, uint32_t len,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                                                             ^
+Step #3 - "compile-afl-address-x86_64": [0m11 warnings generated.
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -g -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ /usr/lib/libFuzzingEngine.a fuzz_hpack_decode.o libhaproxy.a -o /workspace/out/afl-address-x86_64/fuzz_hpack_decode
+Step #3 - "compile-afl-address-x86_64": + for fuzzer in hpack_decode cfg_parser
+Step #3 - "compile-afl-address-x86_64": + cp /src/fuzz_cfg_parser.c .
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -Iinclude -g -DUSE_POLL -DUSE_TPROXY '-DCONFIG_HAPROXY_VERSION=""' '-DCONFIG_HAPROXY_DATE=""' -c fuzz_cfg_parser.c -o fuzz_cfg_parser.o
+Step #3 - "compile-afl-address-x86_64": [1mfuzz_cfg_parser.c:29:18: [0m[0;1;35mwarning: [0m[1minitializing 'char *' with an expression of type 'const char *' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers][0m
+Step #3 - "compile-afl-address-x86_64":    29 |       .content = ([0;34mconst[0m [0;34mchar[0m *)data,[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                 ^~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m1 warning generated.
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -g -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ /usr/lib/libFuzzingEngine.a fuzz_cfg_parser.o libhaproxy.a -o /workspace/out/afl-address-x86_64/fuzz_cfg_parser
+Step #3 - "compile-afl-address-x86_64": + cd /src/VTest2
+Step #3 - "compile-afl-address-x86_64": + make vtest
+Step #3 - "compile-afl-address-x86_64": awk -f src/gensequences src/sequences > src/teken_state.h
+Step #3 - "compile-afl-address-x86_64": trying python3
+Step #3 - "compile-afl-address-x86_64": make \
+Step #3 - "compile-afl-address-x86_64": 	 `for s in src/*.c lib/*.c; do echo ${s%.c}.o;done`
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/VTest2'
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast \
+Step #3 - "compile-afl-address-x86_64": 	-O2 -Wall -Werror \
+Step #3 - "compile-afl-address-x86_64": 	 \
+Step #3 - "compile-afl-address-x86_64": 	-I. -Isrc -Ilib -I/usr/local/include -pthread \
+Step #3 - "compile-afl-address-x86_64": 	-I/home/phk/Varnish/trunk/varnish-cache/include \
+Step #3 - "compile-afl-address-x86_64": 	-o src/teken.o -c src/teken.c
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast \
+Step #3 - "compile-afl-address-x86_64": 	-O2 -Wall -Werror \
+Step #3 - "compile-afl-address-x86_64": 	 \
+Step #3 - "compile-afl-address-x86_64": 	-I. -Isrc -Ilib -I/usr/local/include -pthread \
+Step #3 - "compile-afl-address-x86_64": 	-I/home/phk/Varnish/trunk/varnish-cache/include \
+Step #3 - "compile-afl-address-x86_64": 	-o src/vtc.o -c src/vtc.c
+Step #3 - "compile-afl-address-x86_64": [1msrc/vtc.c:183:15: [0m[0;1;31merror: [0m[1mcall to undeclared function 'fdlopen'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration][0m
+Step #3 - "compile-afl-address-x86_64":   183 |                 [0;34mvoid[0m *dlp = fdlopen(ep->fd, RTLD_NOW);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                            ^
+Step #3 - "compile-afl-address-x86_64": [0m[1msrc/vtc.c:183:9: [0m[0;1;31merror: [0m[1mincompatible integer to pointer conversion initializing 'void *' with an expression of type 'int' [-Wint-conversion][0m
+Step #3 - "compile-afl-address-x86_64":   183 |                 [0;34mvoid[0m *dlp = fdlopen(ep->fd, RTLD_NOW);[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m                      ^     ~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m2 errors generated.
+Step #3 - "compile-afl-address-x86_64": make[1]: *** [Makefile:77: src/vtc.o] Error 1
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/VTest2'
+Step #3 - "compile-afl-address-x86_64": make: *** [Makefile:43: vtest] Error 2
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image haproxy\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 haproxy\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

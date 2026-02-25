@@ -1,0 +1,10 @@
+2026-02-17 08:46:40,300 - EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=1637, Gen=329
+  - TOOL_CALL: download_github_repo({"project_name": "oss-fuzz", "target_dir": "./oss-fuzz", "repo_url": null})
+2026-02-17 08:46:41,367 - EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'download_github_repo': {'status': 'success', 'path': '/root/fix_build_agent/oss-fuzz', 'message': 'oss-fuzz update failed, using local.'}
+2026-02-17 08:46:43,266 - EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=2018, Gen=65
+  - TOOL_CALL: force_clean_git_repo({"repo_path": "./oss-fuzz"})
+2026-02-17 08:46:43,753 - EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'force_clean_git_repo': {'status': 'success', 'message': "Successfully force-cleaned the repository './oss-fuzz'. All local changes and untracked files have been removed."}

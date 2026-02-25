@@ -1,0 +1,640 @@
+starting build "1b771943-02ac-44c8-9158-502cd56e35e4"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea"
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Sending build context to Docker daemon  35.33kB
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Step 1/8 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": b549f31133a9: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": cd18e4a30c2a: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": b58b73ab52e9: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5f76a6ebf1bf: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c410c19de21d: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 3a07cafcfd5f: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": ede70edf103d: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": fb348cfde8ea: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 0b808471114d: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": f8434df993c2: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 1f95da7dd7ed: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c7b891ded878: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d1392738daa4: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 82f0a273a9b6: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 4b0f4899efd5: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5ee0d3c2a1f3: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 650456f64a40: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 62d60654b975: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2bcbcd0e0178: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2a366f1f9403: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": fdff76ca8d6c: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 87a33d77c44e: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": af9cc40b9546: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8c7ef36dc00d: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5b05ba1c4354: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8c0a4d97aee8: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5e51812eca81: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 9cc98e6b642d: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": f8fe7269232f: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 244fc348710a: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d3ac5db83125: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2edaf31238fc: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d024fd452146: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8aab5be69487: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 40ba1b2bfbbb: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": cb4068c83396: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2679f3eb2425: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c321bf99c319: Pulling fs layer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": ede70edf103d: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": fb348cfde8ea: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 0b808471114d: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": f8434df993c2: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 1f95da7dd7ed: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c7b891ded878: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d1392738daa4: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5f76a6ebf1bf: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 82f0a273a9b6: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 4b0f4899efd5: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5ee0d3c2a1f3: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 650456f64a40: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 62d60654b975: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 3a07cafcfd5f: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c410c19de21d: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2bcbcd0e0178: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 244fc348710a: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8c0a4d97aee8: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d3ac5db83125: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2edaf31238fc: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c321bf99c319: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2a366f1f9403: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5e51812eca81: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2679f3eb2425: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5b05ba1c4354: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": f8fe7269232f: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8aab5be69487: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": fdff76ca8d6c: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": af9cc40b9546: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 40ba1b2bfbbb: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 87a33d77c44e: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8c7ef36dc00d: Waiting
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": b58b73ab52e9: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": b58b73ab52e9: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": b549f31133a9: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": b549f31133a9: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c410c19de21d: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c410c19de21d: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5f76a6ebf1bf: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5f76a6ebf1bf: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": ede70edf103d: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": ede70edf103d: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": cd18e4a30c2a: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": cd18e4a30c2a: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": fb348cfde8ea: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": fb348cfde8ea: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": b549f31133a9: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": f8434df993c2: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": f8434df993c2: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 1f95da7dd7ed: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 1f95da7dd7ed: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c7b891ded878: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c7b891ded878: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d1392738daa4: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d1392738daa4: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 82f0a273a9b6: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 82f0a273a9b6: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 0b808471114d: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 0b808471114d: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 4b0f4899efd5: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 4b0f4899efd5: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5ee0d3c2a1f3: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 650456f64a40: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 650456f64a40: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 62d60654b975: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 62d60654b975: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2bcbcd0e0178: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2a366f1f9403: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2a366f1f9403: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": fdff76ca8d6c: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": fdff76ca8d6c: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 87a33d77c44e: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 87a33d77c44e: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": af9cc40b9546: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": af9cc40b9546: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8c7ef36dc00d: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8c7ef36dc00d: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5b05ba1c4354: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5b05ba1c4354: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8c0a4d97aee8: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5e51812eca81: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 9cc98e6b642d: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 9cc98e6b642d: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": f8fe7269232f: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": f8fe7269232f: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 244fc348710a: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 244fc348710a: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d3ac5db83125: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d3ac5db83125: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": cd18e4a30c2a: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 3a07cafcfd5f: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 3a07cafcfd5f: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2edaf31238fc: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2edaf31238fc: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": b58b73ab52e9: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d024fd452146: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 40ba1b2bfbbb: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 40ba1b2bfbbb: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8aab5be69487: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": cb4068c83396: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": cb4068c83396: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c321bf99c319: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c321bf99c319: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2679f3eb2425: Verifying Checksum
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2679f3eb2425: Download complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5f76a6ebf1bf: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c410c19de21d: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 3a07cafcfd5f: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": ede70edf103d: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": fb348cfde8ea: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 0b808471114d: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": f8434df993c2: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 1f95da7dd7ed: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c7b891ded878: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d1392738daa4: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 82f0a273a9b6: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 4b0f4899efd5: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5ee0d3c2a1f3: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 650456f64a40: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 62d60654b975: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2bcbcd0e0178: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2a366f1f9403: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": fdff76ca8d6c: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 87a33d77c44e: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": af9cc40b9546: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8c7ef36dc00d: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5b05ba1c4354: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8c0a4d97aee8: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 5e51812eca81: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 9cc98e6b642d: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": f8fe7269232f: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 244fc348710a: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d3ac5db83125: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2edaf31238fc: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": d024fd452146: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 8aab5be69487: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 40ba1b2bfbbb: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": cb4068c83396: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 2679f3eb2425: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": c321bf99c319: Pull complete
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Digest: sha256:b79d3707eeffb6c75a530689b5ade9038bd005628f44d30c62680f4b810c3900
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> 6c7513e4cb7a
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Step 2/8 : RUN apt-get update && apt-get install -y make libreadline-dev zlib1g-dev bison    flex pkg-config libicu-dev
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> Running in fde00da1a390
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Fetched 383 kB in 1s (386 kB/s)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Reading package lists...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Reading package lists...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Building dependency tree...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Reading state information...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": make set to manually installed.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": The following package was automatically installed and is no longer required:
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   autotools-dev
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Use 'apt autoremove' to remove it.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": The following additional packages will be installed:
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   icu-devtools libfl-dev libfl2 libglib2.0-0 libglib2.0-data libicu66
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   libncurses-dev libxml2 shared-mime-info xdg-user-dirs
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Suggested packages:
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   bison-doc flex-doc icu-doc ncurses-doc readline-doc
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": The following NEW packages will be installed:
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   bison flex icu-devtools libfl-dev libfl2 libglib2.0-0 libglib2.0-data
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   libicu-dev libicu66 libncurses-dev libreadline-dev libxml2 pkg-config
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   shared-mime-info xdg-user-dirs zlib1g-dev
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": 0 upgraded, 16 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Need to get 22.2 MB of archives.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": After this operation, 95.5 MB of additional disk space will be used.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 flex amd64 2.6.4-6.2 [317 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-0 amd64 2.64.6-1~ubuntu20.04.9 [1290 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:3 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-data all 2.64.6-1~ubuntu20.04.9 [5836 B]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:5 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:6 http://archive.ubuntu.com/ubuntu focal/main amd64 shared-mime-info amd64 1.15-1 [430 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:7 http://archive.ubuntu.com/ubuntu focal/main amd64 xdg-user-dirs amd64 0.17-2ubuntu1 [48.3 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 bison amd64 2:3.5.1+dfsg-1 [657 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:9 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 icu-devtools amd64 66.1-2ubuntu2.1 [189 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 libfl2 amd64 2.6.4-6.2 [11.5 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 libfl-dev amd64 2.6.4-6.2 [6316 B]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:12 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu-dev amd64 66.1-2ubuntu2.1 [9451 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:13 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libncurses-dev amd64 6.2-0ubuntu2.1 [340 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:14 http://archive.ubuntu.com/ubuntu focal/main amd64 libreadline-dev amd64 8.0-4 [141 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64 pkg-config amd64 0.29.1-0ubuntu4 [45.5 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Get:16 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 zlib1g-dev amd64 1:1.2.11.dfsg-2ubuntu1.5 [155 kB]
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": [0mFetched 22.2 MB in 3s (6984 kB/s)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package flex.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../00-flex_2.6.4-6.2_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking flex (2.6.4-6.2) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package libglib2.0-0:amd64.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../01-libglib2.0-0_2.64.6-1~ubuntu20.04.9_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package libglib2.0-data.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../02-libglib2.0-data_2.64.6-1~ubuntu20.04.9_all.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package libicu66:amd64.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../03-libicu66_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package libxml2:amd64.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../04-libxml2_2.9.10+dfsg-5ubuntu0.20.04.10_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package shared-mime-info.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../05-shared-mime-info_1.15-1_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking shared-mime-info (1.15-1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package xdg-user-dirs.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../06-xdg-user-dirs_0.17-2ubuntu1_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package bison.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../07-bison_2%3a3.5.1+dfsg-1_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking bison (2:3.5.1+dfsg-1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package icu-devtools.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../08-icu-devtools_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking icu-devtools (66.1-2ubuntu2.1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package libfl2:amd64.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../09-libfl2_2.6.4-6.2_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking libfl2:amd64 (2.6.4-6.2) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package libfl-dev:amd64.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../10-libfl-dev_2.6.4-6.2_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking libfl-dev:amd64 (2.6.4-6.2) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package libicu-dev:amd64.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../11-libicu-dev_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking libicu-dev:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package libncurses-dev:amd64.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../12-libncurses-dev_6.2-0ubuntu2.1_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking libncurses-dev:amd64 (6.2-0ubuntu2.1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package libreadline-dev:amd64.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../13-libreadline-dev_8.0-4_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking libreadline-dev:amd64 (8.0-4) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package pkg-config.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../14-pkg-config_0.29.1-0ubuntu4_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Selecting previously unselected package zlib1g-dev:amd64.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Preparing to unpack .../15-zlib1g-dev_1%3a1.2.11.dfsg-2ubuntu1.5_amd64.deb ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Unpacking zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up flex (2.6.4-6.2) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up libncurses-dev:amd64 (6.2-0ubuntu2.1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": No schema files found: doing nothing.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up libreadline-dev:amd64 (8.0-4) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up icu-devtools (66.1-2ubuntu2.1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up libfl2:amd64 (2.6.4-6.2) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up bison (2:3.5.1+dfsg-1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": update-alternatives: using /usr/bin/bison.yacc to provide /usr/bin/yacc (yacc) in auto mode
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": update-alternatives: warning: skip creation of /usr/share/man/man1/yacc.1.gz because associated file /usr/share/man/man1/bison.yacc.1.gz (of link group yacc) doesn't exist
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up libicu-dev:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up libfl-dev:amd64 (2.6.4-6.2) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Setting up shared-mime-info (1.15-1) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Removing intermediate container fde00da1a390
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> 1420c150bb3d
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Step 3/8 : RUN git clone https://github.com/postgres/postgres
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> Running in 8e3fe361500c
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": [91mCloning into 'postgres'...
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": [0m[91mUpdating files:  95% (6970/7305)[0m[91mUpdating files:  96% (7013/7305)[0m[91mUpdating files:  97% (7086/7305)[0m[91mUpdating files:  98% (7159/7305)[0m[91mUpdating files:  99% (7232/7305)[0m[91mUpdating files: 100% (7305/7305)Updating files: 100% (7305/7305), done.
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": [0mRemoving intermediate container 8e3fe361500c
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> cf54f94caf97
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Step 4/8 : RUN zip postgresql_fuzzer_seed_corpus.zip postgres/src/test/regress/sql/*
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> Running in 567d1999999e
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/advisory_lock.sql (deflated 87%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/aggregates.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/alter_generic.sql (deflated 85%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/alter_operator.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/alter_table.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/amutils.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/arrays.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/async.sql (deflated 61%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/bit.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/bitmapops.sql (deflated 55%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/boolean.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/box.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/brin.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/brin_bloom.sql (deflated 73%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/brin_multi.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/btree_index.sql (deflated 73%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/case.sql (deflated 67%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/char.sql (deflated 63%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/circle.sql (deflated 66%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/cluster.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/collate.icu.utf8.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/collate.linux.utf8.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/collate.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/collate.utf8.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/collate.windows.win1252.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/combocid.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/comments.sql (deflated 55%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/compression.sql (deflated 65%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/compression_lz4.sql (deflated 71%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/constraints.sql (deflated 79%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/conversion.sql (deflated 77%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/copy.sql (deflated 68%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/copy2.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/copydml.sql (deflated 84%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/copyencoding.sql (deflated 68%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/copyselect.sql (deflated 72%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_aggregate.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_am.sql (deflated 77%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_cast.sql (deflated 68%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_function_c.sql (deflated 48%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_function_sql.sql (deflated 77%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_index.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_index_spgist.sql (deflated 91%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_misc.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_operator.sql (deflated 72%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_procedure.sql (deflated 71%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_role.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_schema.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_table.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_table_like.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_type.sql (deflated 69%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/create_view.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/database.sql (deflated 55%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/date.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/dbsize.sql (deflated 77%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/delete.sql (deflated 53%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/dependency.sql (deflated 69%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/domain.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/drop_if_exists.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/drop_operator.sql (deflated 79%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/eager_aggregate.sql (deflated 87%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/enum.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/equivclass.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/errors.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/event_trigger.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/event_trigger_login.sql (deflated 48%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/explain.sql (deflated 70%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/expressions.sql (deflated 71%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/fast_default.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/float4.sql (deflated 72%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/float8.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/foreign_data.sql (deflated 84%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/foreign_key.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/functional_deps.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/generated_stored.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/generated_virtual.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/geometry.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/gin.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/gist.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/groupingsets.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/guc.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/hash_func.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/hash_index.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/hash_part.sql (deflated 72%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/horology.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/identity.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/incremental_sort.sql (deflated 79%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/index_including.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/index_including_gist.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/indexing.sql (deflated 84%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/indirect_toast.sql (deflated 71%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/inet.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/infinite_recurse.sql (deflated 39%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/inherit.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/init_privs.sql (deflated 43%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/insert.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/insert_conflict.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/int2.sql (deflated 77%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/int4.sql (deflated 79%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/int8.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/interval.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/join.sql (deflated 79%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/join_hash.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/json.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/json_encoding.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/jsonb.sql (deflated 85%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/jsonb_jsonpath.sql (deflated 91%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/jsonpath.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/jsonpath_encoding.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/largeobject.sql (deflated 69%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/limit.sql (deflated 79%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/line.sql (deflated 73%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/lock.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/lseg.sql (deflated 60%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/macaddr.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/macaddr8.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/maintain_every.sql (deflated 57%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/matview.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/md5.sql (deflated 66%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/memoize.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/merge.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/misc.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/misc_functions.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/misc_sanity.sql (deflated 59%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/money.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/multirangetypes.sql (deflated 86%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/mvcc.sql (deflated 52%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/name.sql (deflated 79%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/namespace.sql (deflated 69%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/numa.sql (deflated 34%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/numeric.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/numeric_big.sql (deflated 65%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/numerology.sql (deflated 73%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/object_address.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/oid.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/oidjoins.sql (deflated 65%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/opr_sanity.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/partition_aggregate.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/partition_info.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/partition_join.sql (deflated 88%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/partition_prune.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/password.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/path.sql (deflated 69%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/pg_lsn.sql (deflated 71%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/plancache.sql (deflated 70%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/plpgsql.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/point.sql (deflated 72%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/polygon.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/polymorphism.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/portals.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/portals_p2.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/predicate.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/prepare.sql (deflated 67%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/prepared_xacts.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/privileges.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/psql.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/psql_crosstab.sql (deflated 68%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/psql_pipeline.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/publication.sql (deflated 84%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/random.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/rangefuncs.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/rangetypes.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/regex.sql (deflated 71%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/regproc.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/reindex_catalog.sql (deflated 67%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/reloptions.sql (deflated 79%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/replica_identity.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/returning.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/roleattributes.sql (deflated 93%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/rowsecurity.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/rowtypes.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/rules.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/sanity_check.sql (deflated 45%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/security_label.sql (deflated 70%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/select.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/select_distinct.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/select_distinct_on.sql (deflated 69%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/select_having.sql (deflated 67%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/select_implicit.sql (deflated 83%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/select_into.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/select_parallel.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/select_views.sql (deflated 73%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/sequence.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/spgist.sql (deflated 65%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/sqljson.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/sqljson_jsontable.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/sqljson_queryfuncs.sql (deflated 84%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/stats.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/stats_ext.sql (deflated 87%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/stats_import.sql (deflated 87%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/strings.sql (deflated 79%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/subscription.sql (deflated 85%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/subselect.sql (deflated 77%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/sysviews.sql (deflated 60%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/tablesample.sql (deflated 77%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/tablespace.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/temp.sql (deflated 73%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/test_setup.sql (deflated 65%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/text.sql (deflated 70%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/tid.sql (deflated 68%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/tidrangescan.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/tidscan.sql (deflated 73%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/time.sql (deflated 70%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/timestamp.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/timestamptz.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/timetz.sql (deflated 73%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/transactions.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/triggers.sql (deflated 82%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/truncate.sql (deflated 78%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/tsdicts.sql (deflated 84%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/tsearch.sql (deflated 86%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/tsrf.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/tstypes.sql (deflated 85%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/tuplesort.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/txid.sql (deflated 65%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/type_sanity.sql (deflated 76%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/typed_table.sql (deflated 66%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/unicode.sql (deflated 67%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/union.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/updatable_views.sql (deflated 86%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/update.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/uuid.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/vacuum.sql (deflated 77%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/vacuum_parallel.sql (deflated 59%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/varchar.sql (deflated 67%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/window.sql (deflated 86%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/with.sql (deflated 80%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/without_overlaps.sql (deflated 92%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/write_parallel.sql (deflated 74%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/xid.sql (deflated 69%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/xml.sql (deflated 81%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":   adding: postgres/src/test/regress/sql/xmlmap.sql (deflated 75%)
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Removing intermediate container 567d1999999e
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> 5b1f33d11d6b
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Step 5/8 : WORKDIR postgres
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> Running in 05f446c29160
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Removing intermediate container 05f446c29160
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> 772e11abc694
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Step 6/8 : RUN mkdir bld
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> Running in 9064c3f5d9fe
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Removing intermediate container 9064c3f5d9fe
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> 53921d461cd9
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Step 7/8 : COPY fuzzer $SRC/fuzzer
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> f66592b23017
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Step 8/8 : COPY build.sh add_fuzzers.diff main.diff $SRC/
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea":  ---> 994196f4375a
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Successfully built 994196f4375a
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Successfully tagged gcr.io/oss-fuzz/postgresql:latest
+Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/postgresql:latest
+Finished Step #1 - "build-4c26a741-0c51-4341-b6b0-e54342cc3dea"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/postgresql
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileeyzPvO
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/postgres/.git
+Step #2 - "srcmap": + GIT_DIR=/src/postgres
+Step #2 - "srcmap": + cd /src/postgres
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/postgres/postgres
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=3a36543d7d08eef6496fe3511f4cf04cba14f572
+Step #2 - "srcmap": + jq_inplace /tmp/fileeyzPvO '."/src/postgres" = { type: "git", url: "https://github.com/postgres/postgres", rev: "3a36543d7d08eef6496fe3511f4cf04cba14f572" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileDv1YQc
+Step #2 - "srcmap": + cat /tmp/fileeyzPvO
+Step #2 - "srcmap": + jq '."/src/postgres" = { type: "git", url: "https://github.com/postgres/postgres", rev: "3a36543d7d08eef6496fe3511f4cf04cba14f572" }'
+Step #2 - "srcmap": + mv /tmp/fileDv1YQc /tmp/fileeyzPvO
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileeyzPvO
+Step #2 - "srcmap": + rm /tmp/fileeyzPvO
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/postgres": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/postgres/postgres",
+Step #2 - "srcmap":     "rev": "3a36543d7d08eef6496fe3511f4cf04cba14f572"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-honggfuzz-address-x86_64"
+Step #3 - "compile-honggfuzz-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-honggfuzz-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-honggfuzz-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-honggfuzz-address-x86_64": Skipping compilation; using precompiled honggfuzz
+Step #3 - "compile-honggfuzz-address-x86_64":  done.
+Step #3 - "compile-honggfuzz-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-honggfuzz-address-x86_64": CC=clang
+Step #3 - "compile-honggfuzz-address-x86_64": CXX=clang++
+Step #3 - "compile-honggfuzz-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize-coverage=trace-pc-guard,indirect-calls,trace-cmp
+Step #3 - "compile-honggfuzz-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize-coverage=trace-pc-guard,indirect-calls,trace-cmp -stdlib=libc++
+Step #3 - "compile-honggfuzz-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-honggfuzz-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-honggfuzz-address-x86_64": + cp -r /src/fuzzer src/backend/
+Step #3 - "compile-honggfuzz-address-x86_64": + git apply --ignore-space-change --ignore-whitespace ../add_fuzzers.diff
+Step #3 - "compile-honggfuzz-address-x86_64": ../add_fuzzers.diff:38: indent with spaces.
+Step #3 - "compile-honggfuzz-address-x86_64":        if(fuzzer_first_run)
+Step #3 - "compile-honggfuzz-address-x86_64": ../add_fuzzers.diff:39: indent with spaces.
+Step #3 - "compile-honggfuzz-address-x86_64":        {
+Step #3 - "compile-honggfuzz-address-x86_64": ../add_fuzzers.diff:50: indent with spaces.
+Step #3 - "compile-honggfuzz-address-x86_64":         fuzzer_first_run=false;
+Step #3 - "compile-honggfuzz-address-x86_64": ../add_fuzzers.diff:51: indent with spaces.
+Step #3 - "compile-honggfuzz-address-x86_64":             }
+Step #3 - "compile-honggfuzz-address-x86_64": ../add_fuzzers.diff:66: space before tab in indent.
+Step #3 - "compile-honggfuzz-address-x86_64":  	//EmitErrorReport();
+Step #3 - "compile-honggfuzz-address-x86_64": error: patch failed: src/backend/utils/error/elog.c:540
+Step #3 - "compile-honggfuzz-address-x86_64": error: src/backend/utils/error/elog.c: patch does not apply
+Step #3 - "compile-honggfuzz-address-x86_64": ********************************************************************************
+Step #3 - "compile-honggfuzz-address-x86_64": Failed to build.
+Step #3 - "compile-honggfuzz-address-x86_64": To reproduce, run:
+Step #3 - "compile-honggfuzz-address-x86_64": python infra/helper.py build_image postgresql
+Step #3 - "compile-honggfuzz-address-x86_64": python infra/helper.py build_fuzzers --sanitizer address --engine honggfuzz --architecture x86_64 postgresql
+Step #3 - "compile-honggfuzz-address-x86_64": ********************************************************************************
+Finished Step #3 - "compile-honggfuzz-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

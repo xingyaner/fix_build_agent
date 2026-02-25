@@ -1,0 +1,284 @@
+starting build "97f59615-143d-4e70-98bb-3b7664cf0945"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6"
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Sending build context to Docker daemon  12.29kB
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": b549f31133a9: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": d993ff311503: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 5faf80b993b8: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 7946d0b643b7: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": eb738e08bf3b: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 248822a2340b: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": fa316482a80e: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 3393bbb458d0: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": a8fda90a5506: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": afcadef54a23: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 4e97a59f9033: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 4a03bd5b3e5c: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": be0ac42f34b4: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 7aa9bde37b90: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 95ec4b1337ee: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 19b55f7a831c: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": e9c556d304cd: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": f9c1e39d9c40: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 5807a1e31ffb: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 3393bbb458d0: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": afcadef54a23: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 4e97a59f9033: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": be0ac42f34b4: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 4a03bd5b3e5c: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": acc07ec90c58: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": d143eec22c7b: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 34c38be78f62: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": aa952184efec: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": a8fda90a5506: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 95ec4b1337ee: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 19b55f7a831c: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": f9c1e39d9c40: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 5807a1e31ffb: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": acc07ec90c58: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 34c38be78f62: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": e9c556d304cd: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": cb7850020c26: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 9a4eb374175f: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": b453205b01ff: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": fbea61822e28: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 66724beef5c1: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": a204a5883dc9: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": d143eec22c7b: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 9a4eb374175f: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 62abd8198968: Pulling fs layer
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": a204a5883dc9: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": fa316482a80e: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": fbea61822e28: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": cb7850020c26: Waiting
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 248822a2340b: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 248822a2340b: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 5faf80b993b8: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": eb738e08bf3b: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": eb738e08bf3b: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 3393bbb458d0: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 3393bbb458d0: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": a8fda90a5506: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": a8fda90a5506: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": b549f31133a9: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": b549f31133a9: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 7946d0b643b7: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 7946d0b643b7: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 4a03bd5b3e5c: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 4a03bd5b3e5c: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": be0ac42f34b4: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": be0ac42f34b4: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 7aa9bde37b90: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 7aa9bde37b90: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 95ec4b1337ee: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 95ec4b1337ee: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 4e97a59f9033: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 4e97a59f9033: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 19b55f7a831c: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": e9c556d304cd: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": e9c556d304cd: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": f9c1e39d9c40: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": f9c1e39d9c40: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": d993ff311503: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": d993ff311503: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 5807a1e31ffb: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 5807a1e31ffb: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": d143eec22c7b: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": d143eec22c7b: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": acc07ec90c58: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": acc07ec90c58: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": aa952184efec: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": cb7850020c26: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": cb7850020c26: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 9a4eb374175f: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 9a4eb374175f: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 34c38be78f62: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 34c38be78f62: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": b453205b01ff: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": b453205b01ff: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": b549f31133a9: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": fbea61822e28: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": fbea61822e28: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 66724beef5c1: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 62abd8198968: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 62abd8198968: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": a204a5883dc9: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": a204a5883dc9: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": afcadef54a23: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": afcadef54a23: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": fa316482a80e: Verifying Checksum
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": fa316482a80e: Download complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": d993ff311503: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 5faf80b993b8: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 7946d0b643b7: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": eb738e08bf3b: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 248822a2340b: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": fa316482a80e: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 3393bbb458d0: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": a8fda90a5506: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": afcadef54a23: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 4e97a59f9033: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 4a03bd5b3e5c: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": be0ac42f34b4: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 7aa9bde37b90: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 95ec4b1337ee: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 19b55f7a831c: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": e9c556d304cd: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": f9c1e39d9c40: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 5807a1e31ffb: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": acc07ec90c58: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": d143eec22c7b: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 34c38be78f62: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": aa952184efec: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": cb7850020c26: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 9a4eb374175f: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": b453205b01ff: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": fbea61822e28: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 66724beef5c1: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": a204a5883dc9: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 62abd8198968: Pull complete
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Digest: sha256:19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04@sha256:19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":  ---> e39a0777485f
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Step 2/5 : RUN apt-get update && apt-get install -y zlib1g-dev libicu-dev
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":  ---> Running in f742cdd0ea01
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Hit:2 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:4 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [33.1 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:5 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [1308 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:6 http://security.ubuntu.com/ubuntu focal-security/restricted i386 Packages [51.6 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:7 http://security.ubuntu.com/ubuntu focal-security/universe i386 Packages [864 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:8 http://security.ubuntu.com/ubuntu focal-security/multiverse i386 Packages [8166 B]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:9 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [4432 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:10 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [4801 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:11 http://security.ubuntu.com/ubuntu focal-security/main i386 Packages [1084 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:12 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:13 http://archive.ubuntu.com/ubuntu focal-updates/universe i386 Packages [1023 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:14 http://archive.ubuntu.com/ubuntu focal-updates/multiverse i386 Packages [9592 B]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:15 http://archive.ubuntu.com/ubuntu focal-updates/main i386 Packages [1377 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:16 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [4920 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:17 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1599 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:18 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [4998 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:19 http://archive.ubuntu.com/ubuntu focal-updates/restricted i386 Packages [53.5 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:20 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [36.8 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Fetched 27.0 MB in 2s (11.4 MB/s)
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Reading package lists...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Reading package lists...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Building dependency tree...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Reading state information...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": The following additional packages will be installed:
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":   icu-devtools libicu66
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Suggested packages:
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":   icu-doc
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": The following NEW packages will be installed:
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":   icu-devtools libicu-dev libicu66 zlib1g-dev
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": 0 upgraded, 4 newly installed, 0 to remove and 70 not upgraded.
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Need to get 18.3 MB of archives.
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": After this operation, 79.5 MB of additional disk space will be used.
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 icu-devtools amd64 66.1-2ubuntu2.1 [189 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:3 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu-dev amd64 66.1-2ubuntu2.1 [9451 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 zlib1g-dev amd64 1:1.2.11.dfsg-2ubuntu1.5 [155 kB]
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": [0mFetched 18.3 MB in 1s (32.2 MB/s)
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Selecting previously unselected package libicu66:amd64.
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17384 files and directories currently installed.)
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Preparing to unpack .../libicu66_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Selecting previously unselected package icu-devtools.
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Preparing to unpack .../icu-devtools_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Unpacking icu-devtools (66.1-2ubuntu2.1) ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Selecting previously unselected package libicu-dev:amd64.
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Preparing to unpack .../libicu-dev_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Unpacking libicu-dev:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Selecting previously unselected package zlib1g-dev:amd64.
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Preparing to unpack .../zlib1g-dev_1%3a1.2.11.dfsg-2ubuntu1.5_amd64.deb ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Unpacking zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Setting up icu-devtools (66.1-2ubuntu2.1) ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Setting up zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Setting up libicu-dev:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Processing triggers for libc-bin (2.31-0ubuntu9.14) ...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Removing intermediate container f742cdd0ea01
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":  ---> b43f69187844
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Step 3/5 : RUN git clone --depth 1 https://github.com/google/quiche
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":  ---> Running in 0f4986c51dbc
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": [91mCloning into 'quiche'...
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": [0mRemoving intermediate container 0f4986c51dbc
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":  ---> 9b5a6446a22d
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Step 4/5 : COPY build.sh  *.diff $SRC/
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":  ---> ebee260c0b47
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Step 5/5 : WORKDIR $SRC/quiche
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":  ---> Running in 99ffb5bd3fdc
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Removing intermediate container 99ffb5bd3fdc
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6":  ---> 6327f893a342
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Successfully built 6327f893a342
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Successfully tagged gcr.io/oss-fuzz/quiche:latest
+Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/quiche:latest
+Finished Step #1 - "build-69e8379f-e12c-493f-901f-4fce1d8966c6"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/quiche
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/file2ThcZO
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/quiche/.git
+Step #2 - "srcmap": + GIT_DIR=/src/quiche
+Step #2 - "srcmap": + cd /src/quiche
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/google/quiche
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=0309bc70d3de3e8ba340c9121b0a7c71e2da64d3
+Step #2 - "srcmap": + jq_inplace /tmp/file2ThcZO '."/src/quiche" = { type: "git", url: "https://github.com/google/quiche", rev: "0309bc70d3de3e8ba340c9121b0a7c71e2da64d3" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/file5p9IY9
+Step #2 - "srcmap": + cat /tmp/file2ThcZO
+Step #2 - "srcmap": + jq '."/src/quiche" = { type: "git", url: "https://github.com/google/quiche", rev: "0309bc70d3de3e8ba340c9121b0a7c71e2da64d3" }'
+Step #2 - "srcmap": + mv /tmp/file5p9IY9 /tmp/file2ThcZO
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/file2ThcZO
+Step #2 - "srcmap": + rm /tmp/file2ThcZO
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/quiche": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/google/quiche",
+Step #2 - "srcmap":     "rev": "0309bc70d3de3e8ba340c9121b0a7c71e2da64d3"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1 -fno-omit-frame-pointer -gline-tables-only -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1 -fno-omit-frame-pointer -gline-tables-only -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + find / -name 'libicu*.so' -exec rm '{}' ';'
+Step #3 - "compile-libfuzzer-address-x86_64": + find / -name 'libicu*.so.66' -exec rm '{}' ';'
+Step #3 - "compile-libfuzzer-address-x86_64": + find / -name 'libicu*.so.66.1' -exec rm '{}' ';'
+Step #3 - "compile-libfuzzer-address-x86_64": + git apply /src/quiche-patch.diff
+Step #3 - "compile-libfuzzer-address-x86_64": error: WORKSPACE.bazel: No such file or directory
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image quiche\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 quiche\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

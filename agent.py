@@ -33,34 +33,32 @@ from google.api_core.exceptions import DeadlineExceeded as ContextWindowExceeded
 from agent_tools import (
     read_projects_from_yaml,
     update_yaml_report,
-    read_projects_from_excel,
-    force_clean_git_repo,
     archive_fixed_project,
+    download_remote_log,
     download_github_repo,
-    get_project_paths,
+    force_clean_git_repo,
     checkout_oss_fuzz_commit,
-    update_excel_report,
-    prompt_generate_tool,
-    read_file_content,
-    create_or_update_file,
-    apply_patch,
-    run_command,
-    run_fuzz_build_streaming,
-    save_file_tree_shallow,
-    find_and_append_file_details,
-    append_string_to_file,
-    get_git_commits_around_date,
-    save_commit_diff_to_file,
-    update_reflection_journal,
     extract_build_metadata_from_log,
     patch_project_dockerfile,
-    manage_git_state,
-    clear_commit_analysis_state,
-    download_remote_log,
+    get_project_paths,
     checkout_project_commit,
+    read_file_content,
+    get_git_commits_around_date,
+    save_commit_diff_to_file,
+    create_or_update_file,
+    run_command,
     extract_buggy_line_info,
     get_enhanced_history_context,
-    truncate_prompt_file
+    run_fuzz_build_streaming,
+    apply_patch,
+    update_reflection_journal,
+    manage_git_state,
+    clear_commit_analysis_state,
+    prompt_generate_tool,
+    query_expert_knowledge,
+    append_string_to_file,
+    find_and_append_file_details,
+    save_file_tree_shallow
 )
 
 # Helper function: Load instruction text from a file
@@ -226,7 +224,6 @@ prompt_generate_agent = LlmAgent(
         append_string_to_file,
         query_expert_knowledge, 
     ],
-    tools=[prompt_generate_tool, run_command,  save_file_tree_shallow, find_and_append_file_details, read_file_content, create_or_update_file, append_string_to_file],
     output_key="generated_prompt",
 )
 
@@ -322,160 +319,208 @@ def cleanup_environment(project_name: str):
     # --- 删除了删除 process/project/ 的逻辑 ---
     print(f"--- Cleanup complete. Source code in 'process/project/' has been preserved. ---")
 
-
 async def process_single_project(
     project_info: Dict,
     session_service: InMemorySessionService
 ) -> Tuple[bool, Optional[str]]:
     """
-    【大师级全量监控版 - 路径锁定 & 日志同步版】
-    集成了：2小时硬超时、Token统计、修复轮数、恶化评分、决策分类、补丁统计、NoneType防御及手动日志同步。
+    【最终监控重构版 - 全量无省略】
+    集成：11项量化指标、2小时硬超时、HAFix追踪、Token精准监控、NoneType防御及手动日志同步。
     """
     project_name = project_info['project_name']
+    oss_fuzz_sha = project_info['sha']
     software_sha = project_info.get('software_sha', "N/A")
+    original_log_path = project_info.get('original_log_path', "")
+    
+    # --- 1. 初始化统计指标 ---
     project_start_time = time.time()
-    TIMEOUT_LIMIT = 7200  # 2小时（秒）
-
-    # 1. 核心统计字典
+    TIMEOUT_LIMIT = 7200  # 2小时超时限制（秒）
+    
     stats = {
-        "repair_rounds": 0,
-        "rollback_count": 0,
+        "repair_rounds": 0,       # 修复轮数（build运行次数-1）
+        "rollback_count": 0,      # 状态树回退次数
         "total_tokens": {"prompt": 0, "completion": 0, "total": 0},
-        "scores": [],
-        "decision_type": "UNKNOWN",
-        "last_patch": {"files": 0, "lines": 0}
+        "code_gen_tokens": 0,     # 专门统计模型生成代码消耗的Token
+        "scores": [],             # 记录每一轮的恶化评分
+        "decision_type": "UNKNOWN", # 解决方案决策分类
+        "patch_impact": {"files": 0, "lines": 0}, # 补丁修改规模
+        "heuristic_used": False   # 是否触发了启发式根因定位
     }
 
     GLOBAL_LOGGER.set_project_context(project_name)
     runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
 
-    # 2. 构造初始输入 (确保透传路径意图)
+    # 构造初始输入，确保路径意图明确
     safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
-    project_info["project_source_path"] = os.path.join(os.getcwd(), "process", "project", safe_name)
-    initial_input = json.dumps(project_info)
+    expected_source_path = os.path.join(os.getcwd(), "process", "project", safe_name)
+    
+    initial_input = json.dumps({
+        "project_name": project_name,
+        "oss_fuzz_sha": oss_fuzz_sha,
+        "original_log_path": original_log_path,
+        "project_source_path": expected_source_path,
+        "software_repo_url": project_info.get('software_repo_url', ""),
+        "software_sha": software_sha,
+        "engine": project_info.get('engine', ""),
+        "sanitizer": project_info.get('sanitizer', ""),
+        "architecture": project_info.get('architecture', ""),
+        "base_image_digest": project_info.get('base_image_digest', "")
+    })
     initial_message = types.Content(parts=[types.Part(text=initial_input)], role='user')
 
     is_successful = False
     final_basic_information = None
 
-    print(f"\n🚀 REPAIR START: {project_name} | Target SHA: {software_sha}")
+    print(f"\n{'#'*60}")
+    print(f"🚀 STARTING REPAIR: {project_name}")
+    print(f"📍 Target Software SHA: {software_sha}")
+    print(f"📍 Max Duration: 120 minutes")
+    print(f"{'#'*60}\n")
 
     for attempt in range(MAX_RETRIES):
-        # 超时检查
+        # 2. 超时检查
         elapsed_total = time.time() - project_start_time
         if elapsed_total > TIMEOUT_LIMIT:
-            msg = f"--- ❌ [TIMEOUT] Project {project_name} exceeded 2-hour limit. ---"
-            print(msg)
-            if GLOBAL_LOGGER.logger: GLOBAL_LOGGER.logger.info(msg)
+            timeout_msg = f"--- ❌ [TIMEOUT] Project {project_name} reached 2-hour limit. Terminating. ---"
+            print(timeout_msg)
+            if GLOBAL_LOGGER.logger: GLOBAL_LOGGER.logger.info(timeout_msg)
             break
 
         round_start_time = time.time()
         current_round_tokens = {"prompt": 0, "completion": 0}
+        
         current_session_id = f"session_{project_name.replace('-', '_')}_{int(time.time())}_at{attempt}"
         await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=current_session_id)
 
         try:
-            print(f"\n--- 🌀 Attempt {attempt + 1}/{MAX_RETRIES} | Total Elapsed: {elapsed_total/60:.1f}min ---")
+            print(f"\n--- 🌀 Attempt {attempt + 1}/{MAX_RETRIES} | Elapsed: {elapsed_total/60:.1f}min ---")
             
+            # 指数级等待逻辑
+            wait_time = 5 if attempt == 0 else (attempt ** 2) * 20
+            await asyncio.sleep(wait_time)
+
             async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id, new_message=initial_message):
                 
-                # A. Token 统计 (防御性 or 0)
+                # A. Token 统计 (带防御)
                 if event.usage_metadata:
-                    p = getattr(event.usage_metadata, "prompt_token_count", 0) or 0
-                    c = getattr(event.usage_metadata, "candidates_token_count", 0) or 0
-                    stats["total_tokens"]["prompt"] += p
-                    stats["total_tokens"]["completion"] += c
-                    stats["total_tokens"]["total"] += (p + c)
-                    current_round_tokens["prompt"] += p
-                    current_round_tokens["completion"] += c
+                    p_tok = getattr(event.usage_metadata, "prompt_token_count", 0) or 0
+                    c_tok = getattr(event.usage_metadata, "candidates_token_count", 0) or 0
+                    stats["total_tokens"]["prompt"] += p_tok
+                    stats["total_tokens"]["completion"] += c_tok
+                    stats["total_tokens"]["total"] += (p_tok + c_tok)
+                    current_round_tokens["prompt"] += p_tok
+                    current_round_tokens["completion"] += c_tok
+                    
+                    # 统计 Solver Agent 生成代码的消耗
+                    if event.author == 'fuzzing_solver_agent':
+                        stats["code_gen_tokens"] += c_tok
 
-                # B. 决策分类识别 (防御 NoneType)
+                # B. 启发式定位监控
+                if event.author == 'commit_finder_agent' and (func_calls := event.get_function_calls()):
+                    if any(fc.name in ['extract_buggy_line_info', 'get_enhanced_history_context'] for fc in func_calls):
+                        stats["heuristic_used"] = True
+
+                # C. 提取决策分类
                 if event.author == 'fuzzing_solver_agent' and event.content:
                     parts = [p.text for p in event.content.parts if hasattr(p, 'text') and p.text]
                     full_text = "".join(parts)
                     match = re.search(r"\[(RULE-DRIVEN|AUTONOMOUS|HYBRID)\]", full_text)
                     if match: stats["decision_type"] = match.group(1)
 
-                # C. 修复轮数统计
+                # D. 修复轮数统计 (以 build 调用为准)
                 if event.author == 'run_fuzz_and_collect_log_agent' and event.get_function_calls():
                     if any(c.name == 'run_fuzz_build_streaming' for c in event.get_function_calls()):
                         if attempt > 0: stats["repair_rounds"] += 1
 
-                # D. 补丁规模统计
-                if event.author == 'solution_applier_agent' and (resps := event.get_function_responses()):
-                    for r in resps:
-                        if r.name == 'apply_patch' and r.response.get('status') in ['success', 'partial_success']:
-                            stats["last_patch"]["files"] = r.response.get('modified_files_count', 0)
-                            stats["last_patch"]["lines"] = r.response.get('total_lines_changed', 0)
-
-                # E. 评分与回退
-                if event.author == 'reflection_agent' and (resps := event.get_function_responses()):
+                # E. 提取评分、回退与补丁规模
+                if (resps := event.get_function_responses()):
                     for r in resps:
                         if r.name == 'update_reflection_journal':
                             s = r.response.get('deterioration_score', 0)
-                            stats["scores"].append(f"A{attempt+1}:{s}")
+                            stats["scores"].append(f"R{attempt+1}:{s}")
+                        if r.name == 'manage_git_state' and r.response.get('status') == 'success' and 'rollback' in str(r.name):
+                            stats["rollback_count"] += 1
+                        if r.name == 'apply_patch' and r.response.get('status') in ['success', 'partial_success']:
+                            stats["patch_impact"]["files"] = r.response.get('modified_files_count', 0)
+                            stats["patch_impact"]["lines"] = r.response.get('total_lines_changed', 0)
 
-                if event.author == 'rollback_agent' and (resps := event.get_function_responses()):
-                    if any(r.name == 'manage_git_state' and r.response.get('status') == 'success' for r in resps):
-                        stats["rollback_count"] += 1
-
-                # F. 元数据提取与成功判定
+                # F. 获取基础信息与成功判定
                 if event.author == 'initial_setup_agent' and event.actions and event.actions.state_delta:
                     if 'basic_information' in event.actions.state_delta:
                         final_basic_information = event.actions.state_delta['basic_information']
 
-                if (event.actions and event.actions.escalate and event.author == 'decision_agent'):
+                if (event.actions and event.actions.escalate and
+                    event.author == 'decision_agent' and
+                    (resp := event.get_function_responses()) and
+                    resp[0].name == 'exit_loop' and resp[0].response.get('status') == 'SUCCESS'):
                     is_successful = True
 
-            # 单轮总结展示
+            # 单轮耗时展示
             r_duration = time.time() - round_start_time
-            print(f"   [Round {attempt+1} End] Time: {r_duration:.1f}s | Tokens: {current_round_tokens['prompt']+current_round_tokens['completion']}")
+            print(f"   [Round End] Time: {r_duration:.1f}s | Round Tokens: {current_round_tokens['prompt'] + current_round_tokens['completion']}")
             
             if is_successful: break
 
         except Exception as e:
-            print(f"--- [ERROR] {e} ---")
+            print(f"--- [ERROR] Attempt {attempt+1} failed: {e} ---")
             if attempt + 1 >= MAX_RETRIES: break
+            continue
 
     # --- 3. 最终项目总结报告 (满足 11 项需求) ---
     final_duration_min = (time.time() - project_start_time) / 60
-    summary_text = (
+    summary_report = (
         f"\n{'='*60}\n"
         f"🏁 FINAL PROJECT REPAIR REPORT: {project_name}\n"
         f"{'-'*60}\n"
         f"  - [RESULT]         {'✅ SUCCESS' if is_successful else '❌ FAILURE'}\n"
         f"  - [TARGET SHA]     {software_sha}\n"
+        f"  - [HEURISTIC LOC]  {'YES' if stats['heuristic_used'] else 'NO'}\n"
         f"  - [REPAIR ROUNDS]  {stats['repair_rounds']}\n"
         f"  - [ROLLBACKS]      {stats['rollback_count']}\n"
         f"  - [DECISION TYPE]  {stats['decision_type']}\n"
         f"  - [DETERIORATION]  {' -> '.join([str(s) for s in stats['scores'] if s is not None]) if stats['scores'] else 'N/A'}\n"
         f"  - [TOKEN USAGE]\n"
-        f"      Total:      {stats['total_tokens']['total']}\n"
-        f"      Input:      {stats['total_tokens']['prompt']}\n"
-        f"      Generation: {stats['total_tokens']['completion']}\n"
-        f"  - [PATCH SCALE]    {stats['last_patch']['files']} files, {stats['last_patch']['lines']} lines changed\n"
+        f"      Total:          {stats['total_tokens']['total']}\n"
+        f"      Input (Prompt): {stats['total_tokens']['prompt']}\n"
+        f"      Output (Gen):   {stats['total_tokens']['completion']}\n"
+        f"      Code Gen Only:  {stats['code_gen_tokens']}\n"
+        f"  - [PATCH SCALE]    {stats['patch_impact']['files']} files, {stats['patch_impact']['lines']} lines changed\n"
         f"  - [TIME COST]      {final_duration_min:.2f} minutes\n"
         f"{'='*60}\n"
     )
 
-    print(summary_text)
-    if GLOBAL_LOGGER.logger: GLOBAL_LOGGER.logger.info(summary_text)
+    print(summary_report)
+    # 手动同步到文件日志
+    if GLOBAL_LOGGER.logger:
+        GLOBAL_LOGGER.logger.info(summary_report)
+    else:
+        GLOBAL_LOGGER.log_buffer.append(f"INFO - {summary_report}")
 
     if is_successful:
-        with open("fix-success.txt", "a", encoding="utf-8") as f:
-            f.write(f"{project_name}\n")
+        try:
+            with open("fix-success.txt", "a", encoding="utf-8") as f:
+                f.write(f"{project_name}\n")
+        except Exception as e:
+            print(f"Warning: Failed to write to fix-success.txt: {e}")
 
-    # 解析配置路径供主循环归档
+    # --- 4. 解析配置路径供主循环归档使用 ---
     project_config_path = None
     if is_successful and final_basic_information:
-        try:
-            if isinstance(final_basic_information, dict):
-                project_config_path = final_basic_information.get('project_config_path')
-            else:
-                match = re.search(r"```json\s*([\s\S]*?)\s*```", str(final_basic_information))
-                cnt = match.group(1) if match else str(final_basic_information)
-                project_config_path = json.loads(cnt).get('project_config_path')
-        except: pass
+        if isinstance(final_basic_information, dict):
+            project_config_path = final_basic_information.get('project_config_path')
+        elif isinstance(final_basic_information, str):
+            try:
+                # 尝试解析 Markdown JSON 块
+                match = re.search(r"```json\s*([\s\S]*?)\s*```", final_basic_information, re.MULTILINE)
+                if match:
+                    info_dict = json.loads(match.group(1))
+                    project_config_path = info_dict.get('project_config_path')
+                else:
+                    # 尝试直接解析 JSON
+                    info_dict = json.loads(final_basic_information)
+                    project_config_path = info_dict.get('project_config_path')
+            except Exception as e:
+                 print(f"--- [WARNING] Failed to parse config path: {e} ---")
 
     return is_successful, project_config_path
 

@@ -1,0 +1,559 @@
+starting build "421b3525-99ac-442f-9b66-8ffc138c18bf"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb"
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Sending build context to Docker daemon   5.12kB
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder-rust
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": latest: Pulling from oss-fuzz-base/base-builder-rust
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b549f31133a9: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 53857896a680: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 7efe496e0821: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 7aac26f735e9: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ad31cc38ac81: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e51a957b96fa: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 9ea01dd118f9: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": fde71e506517: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": dd6b7bda1f21: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 8b0201982d0b: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1ed93b1f2b37: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e6a65953e7da: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 4c9d846f1514: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ba7815991431: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 828929bb11e1: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e89aa43f3e15: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 2d99de89a447: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": f6d8158e6dac: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b72c91e47fd1: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 132bc51f6483: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 6ea2db2284cb: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 8d8a5e898bb8: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0627aad1ed24: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": a0eb25bba271: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": f5faf7725626: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 213227c10e94: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ffc3882c042b: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 343ba79fda30: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": cb5959086358: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1f3670b2a3cd: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 4c9d846f1514: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": fde71e506517: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ba7815991431: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": dd6b7bda1f21: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 828929bb11e1: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e1a12b281c6e: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b25342de0fc5: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 8b0201982d0b: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e89aa43f3e15: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 105d24739e50: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 3bdc8cef7a9f: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1ed93b1f2b37: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e6a65953e7da: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 03f7548b82a6: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": c5a6aaa2ce6b: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 8d8a5e898bb8: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 5e3bbf1b669c: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0627aad1ed24: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1dfe9bb499fc: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 2d99de89a447: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0a4551d177ee: Pulling fs layer
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": a0eb25bba271: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": f6d8158e6dac: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 132bc51f6483: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": f5faf7725626: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 6ea2db2284cb: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 213227c10e94: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b72c91e47fd1: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 9ea01dd118f9: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 3bdc8cef7a9f: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ffc3882c042b: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 5e3bbf1b669c: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1dfe9bb499fc: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0a4551d177ee: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 03f7548b82a6: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": c5a6aaa2ce6b: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e1a12b281c6e: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 343ba79fda30: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1f3670b2a3cd: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 105d24739e50: Waiting
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 7efe496e0821: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 7efe496e0821: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ad31cc38ac81: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ad31cc38ac81: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 9ea01dd118f9: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 9ea01dd118f9: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": fde71e506517: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b549f31133a9: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b549f31133a9: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 7aac26f735e9: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 7aac26f735e9: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1ed93b1f2b37: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1ed93b1f2b37: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e6a65953e7da: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e6a65953e7da: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 4c9d846f1514: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 4c9d846f1514: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ba7815991431: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ba7815991431: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 828929bb11e1: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 828929bb11e1: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e89aa43f3e15: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 53857896a680: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 53857896a680: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 8b0201982d0b: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 8b0201982d0b: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": f6d8158e6dac: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": f6d8158e6dac: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b72c91e47fd1: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b72c91e47fd1: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 2d99de89a447: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 2d99de89a447: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 132bc51f6483: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 132bc51f6483: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 6ea2db2284cb: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 6ea2db2284cb: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 8d8a5e898bb8: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 8d8a5e898bb8: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0627aad1ed24: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0627aad1ed24: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": f5faf7725626: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": f5faf7725626: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": a0eb25bba271: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b549f31133a9: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 213227c10e94: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ffc3882c042b: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": cb5959086358: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": cb5959086358: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 343ba79fda30: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 343ba79fda30: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e1a12b281c6e: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e1a12b281c6e: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1f3670b2a3cd: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1f3670b2a3cd: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b25342de0fc5: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 105d24739e50: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 105d24739e50: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 3bdc8cef7a9f: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 3bdc8cef7a9f: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": dd6b7bda1f21: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": dd6b7bda1f21: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": c5a6aaa2ce6b: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 03f7548b82a6: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 5e3bbf1b669c: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 5e3bbf1b669c: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1dfe9bb499fc: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1dfe9bb499fc: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e51a957b96fa: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e51a957b96fa: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 53857896a680: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 7efe496e0821: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0a4551d177ee: Verifying Checksum
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0a4551d177ee: Download complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 7aac26f735e9: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ad31cc38ac81: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e51a957b96fa: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 9ea01dd118f9: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": fde71e506517: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": dd6b7bda1f21: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 8b0201982d0b: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1ed93b1f2b37: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e6a65953e7da: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 4c9d846f1514: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ba7815991431: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 828929bb11e1: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e89aa43f3e15: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 2d99de89a447: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": f6d8158e6dac: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b72c91e47fd1: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 132bc51f6483: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 6ea2db2284cb: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 8d8a5e898bb8: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0627aad1ed24: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": a0eb25bba271: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": f5faf7725626: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 213227c10e94: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": ffc3882c042b: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 343ba79fda30: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": cb5959086358: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1f3670b2a3cd: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": e1a12b281c6e: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": b25342de0fc5: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 105d24739e50: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 3bdc8cef7a9f: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 03f7548b82a6: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": c5a6aaa2ce6b: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 5e3bbf1b669c: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 1dfe9bb499fc: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0a4551d177ee: Pull complete
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Digest: sha256:ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-rust:latest
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":  ---> d53dce618414
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Step 2/5 : RUN apt-get update && apt-get install -y make autoconf automake libtool
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":  ---> Running in b19b592f6c4e
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Hit:1 http://security.ubuntu.com/ubuntu focal-security InRelease
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Hit:2 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Fetched 256 kB in 1s (225 kB/s)
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Reading package lists...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Reading package lists...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Building dependency tree...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Reading state information...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": make set to manually installed.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": The following additional packages will be installed:
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":   file libltdl-dev libltdl7 libmagic-mgc libmagic1
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Suggested packages:
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":   autoconf-archive gnu-standards autoconf-doc gettext libtool-doc gfortran
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":   | fortran95-compiler gcj-jdk
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": The following NEW packages will be installed:
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":   autoconf automake file libltdl-dev libltdl7 libmagic-mgc libmagic1 libtool
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": 0 upgraded, 8 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Need to get 1522 kB of archives.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": After this operation, 12.3 MB of additional disk space will be used.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Get:2 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Get:4 http://archive.ubuntu.com/ubuntu focal/main amd64 autoconf all 2.69-11.1 [321 kB]
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Get:5 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Get:6 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Get:7 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": [0mFetched 1522 kB in 1s (1229 kB/s)
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Selecting previously unselected package libmagic-mgc.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Preparing to unpack .../0-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Selecting previously unselected package libmagic1:amd64.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Preparing to unpack .../1-libmagic1_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Selecting previously unselected package file.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Preparing to unpack .../2-file_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Unpacking file (1:5.38-4) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Selecting previously unselected package autoconf.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Preparing to unpack .../3-autoconf_2.69-11.1_all.deb ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Unpacking autoconf (2.69-11.1) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Selecting previously unselected package automake.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Preparing to unpack .../4-automake_1%3a1.16.1-4ubuntu6_all.deb ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Unpacking automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Selecting previously unselected package libltdl7:amd64.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Preparing to unpack .../5-libltdl7_2.4.6-14_amd64.deb ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Unpacking libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Selecting previously unselected package libltdl-dev:amd64.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Preparing to unpack .../6-libltdl-dev_2.4.6-14_amd64.deb ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Unpacking libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Selecting previously unselected package libtool.
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Preparing to unpack .../7-libtool_2.4.6-14_all.deb ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Unpacking libtool (2.4.6-14) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Setting up libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Setting up file (1:5.38-4) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Setting up libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Setting up autoconf (2.69-11.1) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Setting up automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": update-alternatives: using /usr/bin/automake-1.16 to provide /usr/bin/automake (automake) in auto mode
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": update-alternatives: warning: skip creation of /usr/share/man/man1/automake.1.gz because associated file /usr/share/man/man1/automake-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": update-alternatives: warning: skip creation of /usr/share/man/man1/aclocal.1.gz because associated file /usr/share/man/man1/aclocal-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Setting up libtool (2.4.6-14) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Setting up libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Removing intermediate container b19b592f6c4e
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":  ---> 8e664ab57d7d
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Step 3/5 : RUN git clone --depth 1 https://github.com/Frommi/miniz_oxide miniz_oxide
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":  ---> Running in b665dc5d3479
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": [91mCloning into 'miniz_oxide'...
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": [0mRemoving intermediate container b665dc5d3479
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":  ---> 81b4738e12f0
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Step 4/5 : WORKDIR miniz_oxide
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":  ---> Running in 16a3032c9fd9
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Removing intermediate container 16a3032c9fd9
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":  ---> 563477e1b921
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Step 5/5 : COPY build.sh $SRC/
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb":  ---> f79ac0658978
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Successfully built f79ac0658978
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Successfully tagged gcr.io/oss-fuzz/miniz_oxide:latest
+Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/miniz_oxide:latest
+Finished Step #1 - "build-7b3e7d1e-0f79-47e7-b731-2311b9ca3bcb"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/miniz_oxide
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/filer65dqP
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ rust == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/miniz_oxide/.git
+Step #2 - "srcmap": + GIT_DIR=/src/miniz_oxide
+Step #2 - "srcmap": + cd /src/miniz_oxide
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/Frommi/miniz_oxide
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=e70e395c8f94a97b3c056a1b2fdab54163624836
+Step #2 - "srcmap": + jq_inplace /tmp/filer65dqP '."/src/miniz_oxide" = { type: "git", url: "https://github.com/Frommi/miniz_oxide", rev: "e70e395c8f94a97b3c056a1b2fdab54163624836" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileG9L0ib
+Step #2 - "srcmap": + cat /tmp/filer65dqP
+Step #2 - "srcmap": + jq '."/src/miniz_oxide" = { type: "git", url: "https://github.com/Frommi/miniz_oxide", rev: "e70e395c8f94a97b3c056a1b2fdab54163624836" }'
+Step #2 - "srcmap": + mv /tmp/fileG9L0ib /tmp/filer65dqP
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/filer65dqP
+Step #2 - "srcmap": + rm /tmp/filer65dqP
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/miniz_oxide": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/Frommi/miniz_oxide",
+Step #2 - "srcmap":     "rev": "e70e395c8f94a97b3c056a1b2fdab54163624836"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + ./build_orig_miniz.sh
+Step #3 - "compile-libfuzzer-address-x86_64": rm: cannot remove 'bin/libminiz.a': No such file or directory
+Step #3 - "compile-libfuzzer-address-x86_64": [01m[Kminiz/miniz.c:3089:9:[m[K [01;36m[Knote: [m[K#pragma message: Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files.
+Step #3 - "compile-libfuzzer-address-x86_64":  3089 | #pragma [01;36m[Kmessage[m[K("Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files.")
+Step #3 - "compile-libfuzzer-address-x86_64":       |         [01;36m[K^~~~~~~[m[K
+Step #3 - "compile-libfuzzer-address-x86_64": [01m[Kminiz_stub/miniz_zip.c:133:9:[m[K [01;36m[Knote: [m[K#pragma message: Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files.
+Step #3 - "compile-libfuzzer-address-x86_64":   133 | #pragma [01;36m[Kmessage[m[K("Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files.")
+Step #3 - "compile-libfuzzer-address-x86_64":       |         [01;36m[K^~~~~~~[m[K
+Step #3 - "compile-libfuzzer-address-x86_64": + RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers -L./bin/'
+Step #3 - "compile-libfuzzer-address-x86_64": + cargo fuzz build -O
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[33mwarning[0m[1m:[0m patch for `miniz_oxide` uses the features mechanism. default-features and features will not take effect because the patch dependency does not support this mechanism
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m crates.io index
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m     Locking[0m 18 packages to latest compatible versions
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m Downloading[0m crates ...
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m cfg-if v1.0.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m jobserver v0.1.34
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m adler2 v2.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m find-msvc-tools v0.1.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m simd-adler32 v0.3.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m shlex v1.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m crc32fast v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m arbitrary v1.4.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m flate2 v1.1.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m cc v1.2.51
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m libfuzzer-sys v0.4.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m libc v0.2.178
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m libc v0.2.178
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m shlex v1.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m find-msvc-tools v0.1.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m crc32fast v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m simd-adler32 v0.3.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m adler2 v2.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m cfg-if v1.0.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m arbitrary v1.4.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m cc v1.2.51
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m miniz_oxide v0.8.9 (/src/miniz_oxide/miniz_oxide)
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m flate2 v1.1.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m jobserver v0.1.34
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m libfuzzer-sys v0.4.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m miniz_oxide_c_api v0.3.1 (/src/miniz_oxide)
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[33mwarning[0m[1m:[0m miniz_oxide_c_api@0.3.1: miniz/miniz.c:3089:9: warning: Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files. [-W#pragma-messages]
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[33mwarning[0m[1m:[0m miniz_oxide_c_api@0.3.1:  3089 | #pragma message("Using fopen, ftello, fseeko, stat() etc. path for file I/O - this path may not support large files.")
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[33mwarning[0m[1m:[0m miniz_oxide_c_api@0.3.1:       |         ^
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[33mwarning[0m[1m:[0m miniz_oxide_c_api@0.3.1: 1 warning generated.
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m miniz_oxide_c_api-fuzz v0.0.1 (/src/miniz_oxide/fuzz)
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[0m[0m[1m: expected one of `.`, `;`, `?`, `else`, or an operator, found `,`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/inflate_nonwrapping.rs:8:63[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m8[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let _ = DeflateDecoder::new(data).read_to_end(&mut result),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m[0m                                                               [0m[0m[1m[38;5;9m^[0m[0m [0m[0m[1m[38;5;9mexpected one of `.`, `;`, `?`, `else`, or an operator[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:6:1[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m6[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mextern crate libc;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:8:5[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m8[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0muse libc::*;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[38;5;9m^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:28:40[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m28[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let uncompressed_size = s.len() as c_ulong;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                        [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:32:50[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m32[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut rust_compressed_size: c_ulong = N as c_ulong;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                  [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:32:35[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m32[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut rust_compressed_size: c_ulong = N as c_ulong;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                   [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:34:52[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m34[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut rust_decompressed_size: c_ulong = N as c_ulong;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                    [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:34:37[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m34[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut rust_decompressed_size: c_ulong = N as c_ulong;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                     [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:37:47[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m37[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut c_compressed_size: c_ulong = N as c_ulong;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                               [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:37:32[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m37[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut c_compressed_size: c_ulong = N as c_ulong;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:39:49[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m39[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut c_decompressed_size: c_ulong = N as c_ulong;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                 [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:39:34[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m39[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    let mut c_decompressed_size: c_ulong = N as c_ulong;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                  [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:13:24[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m13[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        dest_len: *mut c_ulong,[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                        [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:15:21[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m15[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        source_len: c_ulong,[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                     [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:16:10[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m16[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    ) -> c_int;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m          [0m[0m[1m[38;5;9m^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:19:24[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m19[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        dest_len: *mut c_ulong,[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                        [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:21:21[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m21[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m        source_len: c_ulong,[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                     [0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0658][0m[0m[1m: use of unstable library feature `rustc_private`: this crate is being loaded from the sysroot, an unstable location; did you mean to load this crate from crates.io via `Cargo.toml` instead?[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0mfuzz_targets/fuzz_high.rs:22:10[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m22[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    ) -> c_int;[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m          [0m[0m[1m[38;5;9m^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: see issue #27812 <https://github.com/rust-lang/rust/issues/27812> for more information[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: add `#![feature(rustc_private)]` to the crate attributes to enable[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this compiler was built on 2025-09-04; consider upgrading it if it is out of date[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[31merror[0m[1m:[0m could not compile `miniz_oxide_c_api-fuzz` (bin "inflate_nonwrapping") due to 1 previous error
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[33mwarning[0m[1m:[0m build failed, waiting for other jobs to finish...
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1mFor more information about this error, try `rustc --explain E0658`.[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[31merror[0m[1m:[0m could not compile `miniz_oxide_c_api-fuzz` (bin "fuzz_high") due to 17 previous errors
+Step #3 - "compile-libfuzzer-address-x86_64": Error: failed to build fuzz script: ASAN_OPTIONS="detect_odr_violation=0" RUSTFLAGS=" -Cpasses=sancov-module -Cllvm-args=-sanitizer-coverage-level=4 -Cllvm-args=-sanitizer-coverage-inline-8bit-counters -Cllvm-args=-sanitizer-coverage-pc-table -Cllvm-args=-sanitizer-coverage-trace-compares --cfg fuzzing -Cllvm-args=-simplifycfg-branch-fold-threshold=0 -Zsanitizer=address -Cllvm-args=-sanitizer-coverage-stack-depth -Ccodegen-units=1 --cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers -L./bin/" "cargo" "build" "--manifest-path" "/src/miniz_oxide/fuzz/Cargo.toml" "--target" "x86_64-unknown-linux-gnu" "--release" "--config" "profile.release.debug=\"line-tables-only\"" "--bins"
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image miniz_oxide\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 miniz_oxide\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1
