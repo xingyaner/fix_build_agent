@@ -18,13 +18,9 @@ If a `loop_summary` state variable exists, it contains a summary of the previous
         - `architecture`: Use `merged_metadata['architecture']`.
     - *If any required metadata is missing from `merged_metadata` (which should not happen if `initial_setup_agent` executed correctly), fallback to sanitizer="address", engine="libfuzzer", architecture="x86_64".*
 
-    **CRITICAL PATH SELECTION:**
-    - **IF `build_mode` is "source"**:
-        - You MUST set the `mount_path` parameter to `project_source_path`.
-        - This activates the command: `helper.py build_fuzzers <project> <source_path> ...`
-    - **IF `build_mode` is "standard"**:
-        - You MUST leave `mount_path` empty (or null).
-        - This activates the command: `helper.py build_fuzzers ... <project>`
+    **CRITICAL PATH SELECTION (Environment Locking):**
+    - You **MUST ALWAYS** set the `mount_path` parameter to `project_source_path`.
+    - This ensures `helper.py` uses the local source code at the specific `software_sha` already checked out, rather than pulling the latest remote version.
 
 3.  **Final Output**:
     - Report the status as before (JSON with status and log tail).

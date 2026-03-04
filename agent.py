@@ -124,8 +124,7 @@ GLOBAL_LOGGER = AgentLogger()
 
 # --- Constants and Model Configuration ---
 APP_NAME = "fix_build_agent_app"
-MODEL-CODER = "deepseek/deepseek-coder"
-MODEL-REASONER = "deepseek/deepseek-chat"
+MODEL = "deepseek/deepseek-chat"
 DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
 USER_ID = "default_user"
 MAX_RETRIES = 10
@@ -135,8 +134,8 @@ top_p= 0.9
 # --- Environment Preparation Agent ---
 initial_setup_agent = LlmAgent(
     name="initial_setup_agent",
-    model=LiteLlm(model=MODEL-CODER, api_key=DPSEEK_API_KEY, temperature=0.5, top_p=top_p, seed=LLM_SEED),
-    instruction=load_instruction_from_file("instructions/initial_setup__instruction.txt"),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.5, top_p=top_p, seed=LLM_SEED),
+    instruction=load_instruction_from_file("instructions/initial_setup_instruction.txt"),
     tools=[
         download_github_repo,
         force_clean_git_repo,
@@ -158,7 +157,7 @@ def exit_loop(tool_context: ToolContext):
 
 run_fuzz_and_collect_log_agent = LlmAgent(
     name="run_fuzz_and_collect_log_agent",
-    model=LiteLlm(model=MODEL-CODER, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/run_fuzz_and_collect_log_instruction.txt"),
     tools=[read_file_content, run_command, run_fuzz_build_streaming, create_or_update_file],
     output_key="fuzz_build_log",
@@ -166,7 +165,7 @@ run_fuzz_and_collect_log_agent = LlmAgent(
 
 decision_agent = LlmAgent(
     name="decision_agent",
-    model=LiteLlm(model=MODEL-CODER, api_key=DPSEEK_API_KEY, temperature=0.3, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.3, top_p=top_p, seed=LLM_SEED),
 #    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("instructions/decision_instruction.txt"),
     tools=[read_file_content, exit_loop],
@@ -174,7 +173,7 @@ decision_agent = LlmAgent(
 
 commit_finder_agent = LlmAgent(
     name="commit_finder_agent",
-    model=LiteLlm(model=MODEL-REASONER, api_key=DPSEEK_API_KEY, thinking={"type": "enabled"} ),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, thinking={"type": "enabled"} ),
     instruction=load_instruction_from_file("instructions/commit_finder_instruction.txt"),
     tools=[
         read_projects_from_yaml, 
@@ -192,7 +191,7 @@ commit_finder_agent = LlmAgent(
 
 reflection_agent = LlmAgent(
     name="reflection_agent",
-    model=LiteLlm(model=MODEL-REASONER, api_key=DPSEEK_API_KEY, thinking={"type": "enabled"} ),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, thinking={"type": "enabled"} ),
     instruction=load_instruction_from_file("instructions/reflection_instruction.txt"),
     tools=[read_file_content, update_reflection_journal],
     output_key="last_reflection_result"
@@ -200,14 +199,14 @@ reflection_agent = LlmAgent(
 
 rollback_agent = LlmAgent(
     name="rollback_agent",
-    model=LiteLlm(model=MODEL-CODER, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/rollback_instruction.txt"),
     tools=[manage_git_state, clear_commit_analysis_state],
 )
 
 prompt_generate_agent = LlmAgent(
     name="prompt_generate_agent",
-    model=LiteLlm(model=MODEL-CODER, api_key=DPSEEK_API_KEY, max_output_tokens=16384, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384, temperature=0.6, top_p=top_p, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/prompt_generate_instruction.txt"),
     tools=[
         prompt_generate_tool, 
@@ -224,7 +223,7 @@ prompt_generate_agent = LlmAgent(
 
 fuzzing_solver_agent = LlmAgent(
     name="fuzzing_solver_agent",
-    model=LiteLlm(model=MODEL-CODER, api_key=DPSEEK_API_KEY, max_output_tokens=8129, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=8129, temperature=0.6, top_p=top_p, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/fuzzing_solver_instruction.txt"),
     tools=[read_file_content, create_or_update_file],
     output_key="solution_plan",
@@ -232,7 +231,7 @@ fuzzing_solver_agent = LlmAgent(
 
 solution_applier_agent = LlmAgent(
     name="solution_applier_agent",
-    model=LiteLlm(model=MODEL-CODER, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/solution_applier_instruction.txt"),
     tools=[apply_patch, read_file_content, manage_git_state],
     output_key="patch_application_result",
@@ -240,7 +239,7 @@ solution_applier_agent = LlmAgent(
 
 summary_agent = LlmAgent(
     name="summary_agent",
-    model=LiteLlm(model=MODEL-CODER, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/summary_instruction.txt"),
     tools=[],
     # output_key='.' 会将 Agent 输出的 JSON 对象的每个键值对合并到 state 中，

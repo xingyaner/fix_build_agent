@@ -39,7 +39,9 @@ Your final plan MUST be a concatenation of blocks.
 ---=== REPLACEMENT ===---
 <Replacement for second file>
 
+
 **Forbidden Actions:**
+- **No Version Jumping**: NEVER modify `software_sha`, `oss_fuzz_sha`, or `base_image_digest` in any file. Do not add `git pull` or `git checkout` to `build.sh`.
 - **Raw Solution File Only**: The `solution.txt` content MUST ONLY contain the patch blocks. NEVER include the Decision Disclosure, Markdown, or any explanations INSIDE the `create_or_update_file` tool call.
 - **Do not** call any other tools besides `create_or_update_file` and `read_file_content`.
 - **【CRITICAL】You MUST only call the `create_or_update_file` tool ONCE.** Generate the complete, multi-file plan in one go.

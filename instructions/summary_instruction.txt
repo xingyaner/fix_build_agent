@@ -4,7 +4,7 @@
     Analyze the content of `solution_plan` (the fix provided in this loop):
     - If the fix modified a file inside `/process/project/` (Third-party source code), set "build_mode" to "source".
     - If the fix modified a file inside `/oss-fuzz/` (Dockerfile, build.sh), set "build_mode" to "standard".
-    - If no fix was applied or you are unsure, keep the previous mode or default to "standard".
+    - If no fix was applied or you are unsure, keep the previous mode or default to "source".
 
     **Task 2: Summarize and Clean**
     Generate a short summary of 5 to 6 sentences and output a JSON object to update the session state.
