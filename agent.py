@@ -127,7 +127,7 @@ APP_NAME = "fix_build_agent_app"
 MODEL = "deepseek/deepseek-chat"
 DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
 USER_ID = "default_user"
-MAX_RETRIES = 10
+MAX_RETRIES = 5
 LLM_SEED = 42
 top_p= 0.9
 
@@ -166,7 +166,6 @@ run_fuzz_and_collect_log_agent = LlmAgent(
 decision_agent = LlmAgent(
     name="decision_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.3, top_p=top_p, seed=LLM_SEED),
-#    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("instructions/decision_instruction.txt"),
     tools=[read_file_content, exit_loop],
 )
@@ -310,13 +309,14 @@ def cleanup_environment(project_name: str):
     # --- 删除了删除 process/project/ 的逻辑 ---
     print(f"--- Cleanup complete. Source code in 'process/project/' has been preserved. ---")
 
+
 async def process_single_project(
     project_info: Dict,
     session_service: InMemorySessionService
 ) -> Tuple[bool, Optional[str]]:
     """
     【最终监控重构版 - 全量无省略】
-    集成：11项量化指标、2小时硬超时、HAFix追踪、Token精准监控、NoneType防御及手动日志同步。
+    集成：11项量化指标、2小时硬超时、精准轮数统计、物理回退监控、Token精准监控及强制单次尝试逻辑。
     """
     project_name = project_info['project_name']
     oss_fuzz_sha = project_info['sha']
@@ -329,6 +329,7 @@ async def process_single_project(
     
     stats = {
         "repair_rounds": 0,       # 修复轮数（build运行次数-1）
+        "build_calls": 0,         # 实际构建调用总计数
         "rollback_count": 0,      # 状态树回退次数
         "total_tokens": {"prompt": 0, "completion": 0, "total": 0},
         "code_gen_tokens": 0,     # 专门统计模型生成代码消耗的Token
@@ -402,7 +403,6 @@ async def process_single_project(
                     current_round_tokens["prompt"] += p_tok
                     current_round_tokens["completion"] += c_tok
                     
-                    # 统计 Solver Agent 生成代码的消耗
                     if event.author == 'fuzzing_solver_agent':
                         stats["code_gen_tokens"] += c_tok
 
@@ -418,19 +418,28 @@ async def process_single_project(
                     match = re.search(r"\[(RULE-DRIVEN|AUTONOMOUS|HYBRID)\]", full_text)
                     if match: stats["decision_type"] = match.group(1)
 
-                # D. 修复轮数统计 (以 build 调用为准)
-                if event.author == 'run_fuzz_and_collect_log_agent' and event.get_function_calls():
-                    if any(c.name == 'run_fuzz_build_streaming' for c in event.get_function_calls()):
-                        if attempt > 0: stats["repair_rounds"] += 1
+                # D. 修复轮数统计 (修正：解耦外层 attempt，改用 build_calls 精准计数)
+                if event.author == 'run_fuzz_and_collect_log_agent' and (f_calls := event.get_function_calls()):
+                    if any(c.name == 'run_fuzz_build_streaming' for c in f_calls):
+                        stats["build_calls"] += 1
+                        # 修复轮数 = 总构建次数 - 1 (减去第一次 baseline)
+                        stats["repair_rounds"] = max(0, stats["build_calls"] - 1)
 
                 # E. 提取评分、回退与补丁规模
                 if (resps := event.get_function_responses()):
                     for r in resps:
                         if r.name == 'update_reflection_journal':
                             s = r.response.get('deterioration_score', 0)
-                            stats["scores"].append(f"R{attempt+1}:{s}")
-                        if r.name == 'manage_git_state' and r.response.get('status') == 'success' and 'rollback' in str(r.name):
-                            stats["rollback_count"] += 1
+                            # 格式：A1_R1:5 (代表 Attempt 1, 内层第 1 轮评分 5)
+                            curr_inner = len([x for x in stats["scores"] if x.startswith(f"A{attempt+1}")]) + 1
+                            stats["scores"].append(f"A{attempt+1}_R{curr_inner}:{s}")
+                        
+                        # 仅在 action 为 rollback 时计入回退总数
+                        if r.name == 'manage_git_state' and r.response.get('status') == 'success':
+                            # 检查调用参数是否为 rollback
+                            if hasattr(r, 'args') and r.args.get('action') == 'rollback':
+                                stats["rollback_count"] += 1
+                        
                         if r.name == 'apply_patch' and r.response.get('status') in ['success', 'partial_success']:
                             stats["patch_impact"]["files"] = r.response.get('modified_files_count', 0)
                             stats["patch_impact"]["lines"] = r.response.get('total_lines_changed', 0)
@@ -450,14 +459,21 @@ async def process_single_project(
             r_duration = time.time() - round_start_time
             print(f"   [Round End] Time: {r_duration:.1f}s | Round Tokens: {current_round_tokens['prompt'] + current_round_tokens['completion']}")
             
-            if is_successful: break
+            # 【核心逻辑修正点】：
+            # 无论成功还是由于 LoopAgent 迭代次数用尽导致的停止，都直接 break 外层循环。
+            # 只有发生真正的代码/API异常进入 except 块时，外层 attempt 才会起作用。
+            if is_successful:
+                break
+            else:
+                print(f"--- ⚠️ [GIVE UP] Project {project_name} failed after Agent's internal iterations. Moving to next. ---")
+                break
 
         except Exception as e:
-            print(f"--- [ERROR] Attempt {attempt+1} failed: {e} ---")
+            print(f"--- [ERROR] Attempt {attempt+1} failed with exception: {e} ---")
             if attempt + 1 >= MAX_RETRIES: break
             continue
 
-    # --- 3. 最终项目总结报告 (满足 11 项需求) ---
+    # --- 3. 最终项目总结报告 ---
     final_duration_min = (time.time() - project_start_time) / 60
     summary_report = (
         f"\n{'='*60}\n"
@@ -481,7 +497,6 @@ async def process_single_project(
     )
 
     print(summary_report)
-    # 手动同步到文件日志
     if GLOBAL_LOGGER.logger:
         GLOBAL_LOGGER.logger.info(summary_report)
     else:
@@ -501,19 +516,18 @@ async def process_single_project(
             project_config_path = final_basic_information.get('project_config_path')
         elif isinstance(final_basic_information, str):
             try:
-                # 尝试解析 Markdown JSON 块
                 match = re.search(r"```json\s*([\s\S]*?)\s*```", final_basic_information, re.MULTILINE)
                 if match:
                     info_dict = json.loads(match.group(1))
                     project_config_path = info_dict.get('project_config_path')
                 else:
-                    # 尝试直接解析 JSON
                     info_dict = json.loads(final_basic_information)
                     project_config_path = info_dict.get('project_config_path')
             except Exception as e:
                  print(f"--- [WARNING] Failed to parse config path: {e} ---")
 
     return is_successful, project_config_path
+
 
 async def main():
     """
