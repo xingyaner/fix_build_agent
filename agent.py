@@ -127,7 +127,7 @@ APP_NAME = "fix_build_agent_app"
 MODEL = "deepseek/deepseek-chat"
 DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
 USER_ID = "default_user"
-MAX_RETRIES = 5
+MAX_RETRIES = 3
 LLM_SEED = 42
 top_p= 0.9
 
@@ -269,7 +269,7 @@ loop_sub_agents.extend([
 workflow_loop_agent = LoopAgent(
     name="workflow_loop_agent",
     sub_agents=loop_sub_agents,
-    max_iterations=10
+    max_iterations=15
 )
 
 subject_agent = SequentialAgent(
@@ -283,16 +283,21 @@ root_agent = LoggingWrapperAgent(subject_agent=subject_agent)
 
 def cleanup_environment(project_name: str):
     """
-    【精准清理版】
-    保留第三方源代码库（process/project/），仅清理日志、中间 Prompt 和修复方案。
+    【焦土清理版】
+    除了源代码，必须物理抹除所有中间状态、历史分析结果、反思日志，
+    彻底杜绝跨项目污染。
     """
-    print(f"--- Cleaning up environment (Preserving Source Code) for: {project_name} ---")
+    import shutil
+    import os
+    print(f"--- 🧹 Tool: cleanup_environment for: {project_name} ---")
 
+    # 必须清理的物理路径
     paths_to_remove = [
-        "fuzz_build_log_file",
-#        "generated_prompt_file", # 包含反思日志，必须在项目切换时清理
-#        "solution.txt",
-        "file_tree.txt"
+        "fuzz_build_log_file",       # 编译日志
+        "generated_prompt_file",     # 包含 commit_changed.txt (关键！)
+        "solution.txt",              # 上一次生成的 patch
+        "file_tree.txt",             # 文件树缓存
+        "reflection_journal.json"    # 反思日志 (关键！)
     ]
 
     for path in paths_to_remove:
@@ -302,12 +307,35 @@ def cleanup_environment(project_name: str):
                     shutil.rmtree(path)
                 else:
                     os.remove(path)
-                print(f"  - Removed: {path}")
+                print(f"  - Cleaned: {path}")
             except Exception as e:
-                print(f"  - Warning: Failed to remove {path}: {e}")
+                print(f"  - Warning: Failed to clean {path}: {e}")
 
-    # --- 删除了删除 process/project/ 的逻辑 ---
-    print(f"--- Cleanup complete. Source code in 'process/project/' has been preserved. ---")
+
+def save_full_fixed_content(project_name: str, config_path: str, source_path: str):
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    target_base_dir = os.path.join(os.getcwd(), "process", "fixed", f"{project_name}-{timestamp}")
+    
+    os.makedirs(target_base_dir, exist_ok=True)
+    print(f"--- 💾 Archiving successful fix to: {target_base_dir} ---")
+    
+    repos = [("config", config_path), ("source", source_path)]
+    for label, repo_path in repos:
+        if not repo_path or not os.path.exists(repo_path): continue
+        try:
+            # 这里的 git show 逻辑保持不变
+            result = subprocess.run(["git", "-C", repo_path, "show", "--name-only", "--format=", "HEAD"], capture_output=True, text=True, check=True)
+            files = [f.strip() for f in result.stdout.split('\n') if f.strip()]
+            for f_rel in files:
+                abs_src = os.path.join(repo_path, f_rel)
+                if os.path.exists(abs_src) and os.path.isfile(abs_src):
+                    abs_dest = os.path.join(target_base_dir, f_rel)
+                    os.makedirs(os.path.dirname(abs_dest), exist_ok=True)
+                    shutil.copy2(abs_src, abs_dest)
+                    print(f"  - [{label}] Saved: {f_rel}")
+        except Exception as e:
+            print(f"  - [{label}] Skip saving: {e}")
 
 
 async def process_single_project(
@@ -315,218 +343,219 @@ async def process_single_project(
     session_service: InMemorySessionService
 ) -> Tuple[bool, Optional[str]]:
     """
-    【最终监控重构版 - 全量无省略】
-    集成：11项量化指标、2小时硬超时、精准轮数统计、物理回退监控、Token精准监控及强制单次尝试逻辑。
+    【彻底重置与双级追踪版 - 极致订正】
+    1. 物理重置：大循环切换时物理删除 reflection_journal.json。
+    2. 记忆延续：仅通过 Python 内存保留 full_deterioration_history。
+    3. 成本追踪：区分展示“本轮消耗”与“项目总消耗”。
+    4. 路径防御：剥离 LLM 响应中的自然语言，提取纯净配置路径。
     """
     project_name = project_info['project_name']
     oss_fuzz_sha = project_info['sha']
     software_sha = project_info.get('software_sha', "N/A")
     original_log_path = project_info.get('original_log_path', "")
     
-    # --- 1. 初始化统计指标 ---
+    # --- 1. 初始化项目级持久化指标 (跨 Attempt 不重置) ---
     project_start_time = time.time()
-    TIMEOUT_LIMIT = 7200  # 2小时超时限制（秒）
+    project_total_tokens = {"prompt": 0, "completion": 0, "total": 0}
+    full_deterioration_history = []
     
-    stats = {
-        "repair_rounds": 0,       # 修复轮数（build运行次数-1）
-        "build_calls": 0,         # 实际构建调用总计数
-        "rollback_count": 0,      # 状态树回退次数
-        "total_tokens": {"prompt": 0, "completion": 0, "total": 0},
-        "code_gen_tokens": 0,     # 专门统计模型生成代码消耗的Token
-        "scores": [],             # 记录每一轮的恶化评分
-        "decision_type": "UNKNOWN", # 解决方案决策分类
-        "patch_impact": {"files": 0, "lines": 0}, # 补丁修改规模
-        "heuristic_used": False   # 是否触发了启发式根因定位
-    }
-
-    GLOBAL_LOGGER.set_project_context(project_name)
-    runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
-
-    # 构造初始输入，确保路径意图明确
-    safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
-    expected_source_path = os.path.join(os.getcwd(), "process", "project", safe_name)
-    
-    initial_input = json.dumps({
-        "project_name": project_name,
-        "oss_fuzz_sha": oss_fuzz_sha,
-        "original_log_path": original_log_path,
-        "project_source_path": expected_source_path,
-        "software_repo_url": project_info.get('software_repo_url', ""),
-        "software_sha": software_sha,
-        "engine": project_info.get('engine', ""),
-        "sanitizer": project_info.get('sanitizer', ""),
-        "architecture": project_info.get('architecture', ""),
-        "base_image_digest": project_info.get('base_image_digest', "")
-    })
-    initial_message = types.Content(parts=[types.Part(text=initial_input)], role='user')
-
+    # 动态超时：支持内层20轮深度修复，设为4小时
+    TIMEOUT_LIMIT = 14400  
     is_successful = False
     final_basic_information = None
-
-    print(f"\n{'#'*60}")
-    print(f"🚀 STARTING REPAIR: {project_name}")
-    print(f"📍 Target Software SHA: {software_sha}")
-    print(f"📍 Max Duration: 120 minutes")
-    print(f"{'#'*60}\n")
+    last_run_stats = {}
 
     for attempt in range(MAX_RETRIES):
-        # 2. 超时检查
-        elapsed_total = time.time() - project_start_time
-        if elapsed_total > TIMEOUT_LIMIT:
-            timeout_msg = f"--- ❌ [TIMEOUT] Project {project_name} reached 2-hour limit. Terminating. ---"
-            print(timeout_msg)
-            if GLOBAL_LOGGER.logger: GLOBAL_LOGGER.logger.info(timeout_msg)
-            break
+        # 【关键步骤 A】物理清空环境（删除反思日志、根因报告等，防止 A1 污染 A2）
+        cleanup_environment(project_name)
 
-        round_start_time = time.time()
-        current_round_tokens = {"prompt": 0, "completion": 0}
-        
-        current_session_id = f"session_{project_name.replace('-', '_')}_{int(time.time())}_at{attempt}"
+        # 设置当前大循环 ID (1-based)
+        current_attempt_id = attempt + 1
+
+        # 【关键步骤 B】手动重置本轮 Attempt 的独立计数器
+        stats = {
+            "repair_rounds": 0,       # 本轮实际修复次数
+            "build_calls": 0,         # 本轮构建总调用次数
+            "rollback_count": 0,      # 本轮物理回退次数
+            "total_tokens": {"prompt": 0, "completion": 0, "total": 0}, # 仅本轮消耗
+            "code_gen_tokens": 0,     
+            "scores": full_deterioration_history, # 引用外部列表，确保轨迹跨 Attempt 连续展示
+            "decision_type": "UNKNOWN", 
+            "patch_impact": {"files": 0, "lines": 0}, 
+            "heuristic_used": False,
+            "attempt_id": current_attempt_id
+        }
+        last_run_stats = stats
+
+        # 创建 Session 并注入 attempt_id 到状态机
+        current_session_id = f"session_{project_name}_{int(time.time())}_at{attempt}"
         await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=current_session_id)
+        session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID, session_id=current_session_id)
+        session.state["attempt_id"] = current_attempt_id # 确保 Agent 能通过上下文读取到 ID
+
+        GLOBAL_LOGGER.set_project_context(project_name)
+        runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
+
+        # 构造输入消息
+        safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
+        expected_source_path = os.path.join(os.getcwd(), "process", "project", safe_name)
+        initial_input = json.dumps({
+            "project_name": project_name,
+            "oss_fuzz_sha": oss_fuzz_sha,
+            "original_log_path": original_log_path,
+            "project_source_path": expected_source_path,
+            "software_repo_url": project_info.get('software_repo_url', ""),
+            "software_sha": software_sha,
+            "engine": project_info.get('engine', ""),
+            "sanitizer": project_info.get('sanitizer', ""),
+            "architecture": project_info.get('architecture', ""),
+            "base_image_digest": project_info.get('base_image_digest', ""),
+            "attempt_id": current_attempt_id # 显式传入
+        })
+        initial_message = types.Content(parts=[types.Part(text=initial_input)], role='user')
 
         try:
-            print(f"\n--- 🌀 Attempt {attempt + 1}/{MAX_RETRIES} | Elapsed: {elapsed_total/60:.1f}min ---")
+            print(f"\n--- 🌀 Starting Attempt {current_attempt_id}/{MAX_RETRIES} (Clean State) ---")
             
-            # 指数级等待逻辑
-            wait_time = 5 if attempt == 0 else (attempt ** 2) * 20
-            await asyncio.sleep(wait_time)
-
             async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id, new_message=initial_message):
-                
-                # A. Token 统计 (带防御)
+                # A. Token 统计与累加
                 if event.usage_metadata:
-                    p_tok = getattr(event.usage_metadata, "prompt_token_count", 0) or 0
-                    c_tok = getattr(event.usage_metadata, "candidates_token_count", 0) or 0
-                    stats["total_tokens"]["prompt"] += p_tok
-                    stats["total_tokens"]["completion"] += c_tok
-                    stats["total_tokens"]["total"] += (p_tok + c_tok)
-                    current_round_tokens["prompt"] += p_tok
-                    current_round_tokens["completion"] += c_tok
+                    p = getattr(event.usage_metadata, "prompt_token_count", 0) or 0
+                    c = getattr(event.usage_metadata, "candidates_token_count", 0) or 0
+                    # 累加到本轮 Attempt 指标
+                    stats["total_tokens"]["prompt"] += p
+                    stats["total_tokens"]["completion"] += c
+                    stats["total_tokens"]["total"] += (p + c)
+                    # 累加到项目总成本
+                    project_total_tokens["total"] += (p + c)
                     
                     if event.author == 'fuzzing_solver_agent':
-                        stats["code_gen_tokens"] += c_tok
+                        stats["code_gen_tokens"] += c
 
-                # B. 启发式定位监控
+                # B. 启发式监控
                 if event.author == 'commit_finder_agent' and (func_calls := event.get_function_calls()):
                     if any(fc.name in ['extract_buggy_line_info', 'get_enhanced_history_context'] for fc in func_calls):
                         stats["heuristic_used"] = True
 
-                # C. 提取决策分类
+                # C. 决策类型解析
                 if event.author == 'fuzzing_solver_agent' and event.content:
                     parts = [p.text for p in event.content.parts if hasattr(p, 'text') and p.text]
                     full_text = "".join(parts)
                     match = re.search(r"\[(RULE-DRIVEN|AUTONOMOUS|HYBRID)\]", full_text)
                     if match: stats["decision_type"] = match.group(1)
 
-                # D. 修复轮数统计 (修正：解耦外层 attempt，改用 build_calls 精准计数)
+                # D. 修复轮数统计 (仅计本轮)
                 if event.author == 'run_fuzz_and_collect_log_agent' and (f_calls := event.get_function_calls()):
                     if any(c.name == 'run_fuzz_build_streaming' for c in f_calls):
                         stats["build_calls"] += 1
-                        # 修复轮数 = 总构建次数 - 1 (减去第一次 baseline)
                         stats["repair_rounds"] = max(0, stats["build_calls"] - 1)
 
-                # E. 提取评分、回退与补丁规模
+                # E. 评分与轨迹持久化 (修正版：彻底修复 AttributeError 并保持双级追踪)
                 if (resps := event.get_function_responses()):
                     for r in resps:
+                        # 1. 处理反思日志评分
                         if r.name == 'update_reflection_journal':
                             s = r.response.get('deterioration_score', 0)
-                            # 格式：A1_R1:5 (代表 Attempt 1, 内层第 1 轮评分 5)
-                            curr_inner = len([x for x in stats["scores"] if x.startswith(f"A{attempt+1}")]) + 1
-                            stats["scores"].append(f"A{attempt+1}_R{curr_inner}:{s}")
-                        
-                        # 仅在 action 为 rollback 时计入回退总数
+                            # 使用当前 Attempt 内的构建次数作为内循环 Round ID
+                            inner_round = stats["build_calls"]
+                            full_deterioration_history.append(f"A{current_attempt_id}_R{inner_round}:{s}")
+
+                        # 2. 处理回退统计 (修复点：通过 response 消息内容判定，不访问不存在的 .args)
                         if r.name == 'manage_git_state' and r.response.get('status') == 'success':
-                            # 检查调用参数是否为 rollback
-                            if hasattr(r, 'args') and r.args.get('action') == 'rollback':
+                            # 检查返回消息中是否包含 "Rolled back" 关键字
+                            msg = str(r.response.get('message', ''))
+                            if "Rolled back" in msg or "rollback" in msg.lower():
                                 stats["rollback_count"] += 1
-                        
+
+                        # 3. 处理补丁规模统计
                         if r.name == 'apply_patch' and r.response.get('status') in ['success', 'partial_success']:
                             stats["patch_impact"]["files"] = r.response.get('modified_files_count', 0)
                             stats["patch_impact"]["lines"] = r.response.get('total_lines_changed', 0)
 
-                # F. 获取基础信息与成功判定
-                if event.author == 'initial_setup_agent' and event.actions and event.actions.state_delta:
-                    if 'basic_information' in event.actions.state_delta:
-                        final_basic_information = event.actions.state_delta['basic_information']
 
+                # F. 成功判定
                 if (event.actions and event.actions.escalate and
                     event.author == 'decision_agent' and
                     (resp := event.get_function_responses()) and
                     resp[0].name == 'exit_loop' and resp[0].response.get('status') == 'SUCCESS'):
                     is_successful = True
+                    final_basic_information = session.state.get('basic_information')
 
-            # 单轮耗时展示
-            r_duration = time.time() - round_start_time
-            print(f"   [Round End] Time: {r_duration:.1f}s | Round Tokens: {current_round_tokens['prompt'] + current_round_tokens['completion']}")
-            
-            # 【核心逻辑修正点】：
-            # 无论成功还是由于 LoopAgent 迭代次数用尽导致的停止，都直接 break 外层循环。
-            # 只有发生真正的代码/API异常进入 except 块时，外层 attempt 才会起作用。
+            # --- 轮次结束逻辑 ---
+            if (time.time() - project_start_time) > TIMEOUT_LIMIT:
+                print(f"--- ❌ [TIMEOUT] Project {project_name} reached limit. ---")
+                break
+
             if is_successful:
                 break
             else:
-                print(f"--- ⚠️ [GIVE UP] Project {project_name} failed after Agent's internal iterations. Moving to next. ---")
+                # 核心设计：如果模型逻辑跑完没修好，不再进行下一次 Attempt 重试（API/异常除外）
+                print(f"--- ⚠️ [GIVE UP] Project {project_name} failed internal logic. ---")
                 break
 
         except Exception as e:
-            print(f"--- [ERROR] Attempt {attempt+1} failed with exception: {e} ---")
+            # 只有发生 API 中断、网络错误或 JSONDecodeError 等异常时，才利用 Attempt 进行物理重置重试
+            print(f"--- [ERROR] Attempt {current_attempt_id} failed with exception: {e}. Resetting for next attempt... ---")
             if attempt + 1 >= MAX_RETRIES: break
             continue
 
-    # --- 3. 最终项目总结报告 ---
+    # --- 3. 最终项目总结报告 (显示最后一次有效 Attempt 的数据) ---
     final_duration_min = (time.time() - project_start_time) / 60
+    l_stats = last_run_stats if last_run_stats else stats # 防御性引用
+
     summary_report = (
         f"\n{'='*60}\n"
         f"🏁 FINAL PROJECT REPAIR REPORT: {project_name}\n"
         f"{'-'*60}\n"
-        f"  - [RESULT]         {'✅ SUCCESS' if is_successful else '❌ FAILURE'}\n"
-        f"  - [TARGET SHA]     {software_sha}\n"
-        f"  - [HEURISTIC LOC]  {'YES' if stats['heuristic_used'] else 'NO'}\n"
-        f"  - [REPAIR ROUNDS]  {stats['repair_rounds']}\n"
-        f"  - [ROLLBACKS]      {stats['rollback_count']}\n"
-        f"  - [DECISION TYPE]  {stats['decision_type']}\n"
-        f"  - [DETERIORATION]  {' -> '.join([str(s) for s in stats['scores'] if s is not None]) if stats['scores'] else 'N/A'}\n"
-        f"  - [TOKEN USAGE]\n"
-        f"      Total:          {stats['total_tokens']['total']}\n"
-        f"      Input (Prompt): {stats['total_tokens']['prompt']}\n"
-        f"      Output (Gen):   {stats['total_tokens']['completion']}\n"
-        f"      Code Gen Only:  {stats['code_gen_tokens']}\n"
-        f"  - [PATCH SCALE]    {stats['patch_impact']['files']} files, {stats['patch_impact']['lines']} lines changed\n"
-        f"  - [TIME COST]      {final_duration_min:.2f} minutes\n"
+        f"  - [RESULT]           {'✅ SUCCESS' if is_successful else '❌ FAILURE'}\n"
+        f"  - [TARGET SHA]       {software_sha}\n"
+        f"  - [REPAIR ROUNDS]     {l_stats.get('repair_rounds', 0)} (In Last Attempt)\n"
+        f"  - [ROLLBACKS]         {l_stats.get('rollback_count', 0)} (In Last Attempt)\n"
+        f"  - [DETERIORATION]     {' -> '.join(full_deterioration_history) if full_deterioration_history else 'N/A'}\n"
+        f"  - [LAST ATTEMPT TOKENS]\n"
+        f"      Input (Prompt):   {l_stats['total_tokens']['prompt']}\n"
+        f"      Output (Gen):     {l_stats['total_tokens']['completion']}\n"
+        f"      Code Gen Only:    {l_stats.get('code_gen_tokens', 0)}\n"
+        f"  - [PROJECT TOTAL COST]\n"
+        f"      Total Tokens:     {project_total_tokens['total']}\n"
+        f"      Total Time Cost:  {final_duration_min:.2f} minutes\n"
+        f"  - [PATCH SCALE]       {l_stats['patch_impact']['files']} files, {l_stats['patch_impact']['lines']} lines\n"
         f"{'='*60}\n"
     )
 
     print(summary_report)
-    if GLOBAL_LOGGER.logger:
-        GLOBAL_LOGGER.logger.info(summary_report)
-    else:
-        GLOBAL_LOGGER.log_buffer.append(f"INFO - {summary_report}")
+    if GLOBAL_LOGGER.logger: GLOBAL_LOGGER.logger.info(summary_report)
 
     if is_successful:
         try:
-            with open("fix-success.txt", "a", encoding="utf-8") as f:
-                f.write(f"{project_name}\n")
-        except Exception as e:
-            print(f"Warning: Failed to write to fix-success.txt: {e}")
+            with open("fix-success.txt", "a") as f: f.write(f"{project_name}\n")
+        except: pass
 
-    # --- 4. 解析配置路径供主循环归档使用 ---
-    project_config_path = None
+    # --- 4. 解析配置路径 (修正版：剥离自然语言废话，提取纯路径) ---
+    clean_config_path = None
     if is_successful and final_basic_information:
-        if isinstance(final_basic_information, dict):
-            project_config_path = final_basic_information.get('project_config_path')
-        elif isinstance(final_basic_information, str):
-            try:
-                match = re.search(r"```json\s*([\s\S]*?)\s*```", final_basic_information, re.MULTILINE)
-                if match:
-                    info_dict = json.loads(match.group(1))
-                    project_config_path = info_dict.get('project_config_path')
-                else:
-                    info_dict = json.loads(final_basic_information)
-                    project_config_path = info_dict.get('project_config_path')
-            except Exception as e:
-                 print(f"--- [WARNING] Failed to parse config path: {e} ---")
+        text_content = str(final_basic_information)
+        try:
+            # 策略 1: 寻找 Markdown JSON 块
+            json_block = re.search(r"```json\s*([\s\S]*?)\s*```", text_content)
+            if json_block:
+                data = json.loads(json_block.group(1))
+                clean_config_path = data.get('project_config_path')
+            else:
+                # 策略 2: 直接正则提取 oss-fuzz 物理路径模式 (解决 hiredis 等项目废话太多的问题)
+                # 匹配形如 /.../oss-fuzz/projects/hiredis 的字符串
+                path_match = re.search(r"(/[^ ]+/oss-fuzz/projects/[^/ \"`]+)", text_content)
+                if path_match:
+                    clean_config_path = path_match.group(1).strip().rstrip('\"').rstrip('`').rstrip('.')
+        except: pass
 
-    return is_successful, project_config_path
+    # 路径安全校验：如果剥离出的路径还有非法字符，置为 None 防止下游归档崩溃
+    if clean_config_path and ("\n" in clean_config_path or " " in clean_config_path):
+        clean_config_path = None
+
+    # 【最终返回点】：确保返回剥离干净后的纯路径
+    return is_successful, clean_config_path
+
 
 
 async def main():
@@ -555,24 +584,21 @@ async def main():
 
     print(f"--- Found {len(projects_to_process)} projects to process ---")
 
+
     for project_info in projects_to_process:
         project_name = project_info['project_name']
         row_index = project_info['row_index']
-        # --- START MODIFICATION ---
-        # 提取所有 project_info 中的字段，作为 initial_input 的一部分
-        # 这确保了所有从YAML中读取到的信息（包括下载的本地日志路径和构建元数据）都能传递给 Agent
         initial_input_data = {
             "project_name": project_name,
-            "sha": project_info['sha'], # oss-fuzz_sha
+            "sha": project_info['sha'],
             "original_log_path": project_info['original_log_path'],
             "software_repo_url": project_info['software_repo_url'],
-            "software_sha": project_info['software_sha'], # 目标软件的SHA
+            "software_sha": project_info['software_sha'],
             "engine": project_info['engine'],
             "sanitizer": project_info['sanitizer'],
             "architecture": project_info['architecture'],
             "base_image_digest": project_info['base_image_digest']
         }
-        # --- END MODIFICATION ---
 
         print(f"\n{'='*60}")
         print(f"--- Processing Project: {project_name} (Index: {row_index}) ---")
@@ -583,18 +609,43 @@ async def main():
         cleanup_environment(project_name)
 
         # 执行修复流程
-        # --- START MODIFICATION ---
         is_successful, project_config_path = await process_single_project(initial_input_data, session_service)
-        # --- END MODIFICATION ---
 
-        # 处理修复成功后的逻辑
-        if is_successful and project_config_path:
-            print(f"--- [SUCCESS] Project fixed. Archiving config from: {project_config_path} ---")
-            archive_result = archive_fixed_project(project_name, project_config_path)
-            if archive_result['status'] == 'error':
-                print(f"--- [CRITICAL] Archiving failed: {archive_result['message']} ---")
-        elif is_successful and not project_config_path:
-             print("--- [WARNING] Project fixed, but config path missing. Skipping archive. ---")
+
+# --- 处理修复成功后的逻辑 (最终订正版) ---
+        if is_successful:
+            print(f"\n{'='*20} SUCCESS PROCESSING {'='*20}")
+            print(f"--- [SUCCESS] Project {project_name} fixed. ---")
+
+            # 1. 确定源码物理路径（逻辑与 process_single_project 内部完全对齐）
+            safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
+            project_source_path = os.path.join(os.getcwd(), "process", "project", safe_name)
+
+            # 2. 【执行保存策略】：保存改动文件的完整内容
+            # 存储路径：process/fixed/<project_name>-<timestamp>/
+            # 该函数内部已包含对 config_path 和 source_path 的 Git 变更提取逻辑
+            try:
+                save_full_fixed_content(project_name, project_config_path, project_source_path)
+            except Exception as e:
+                print(f"--- [ERROR] Failed to save fixed full content: {e} ---")
+
+            # 3. 归档 OSS-Fuzz 配置 (Dockerfile, build.sh)
+            if project_config_path:
+                print(f"--- Archiving config from: {project_config_path} ---")
+                # 【修正】：将返回值赋予 archive_result，避免后续检查报 NameError
+                archive_result = archive_fixed_project(project_name, project_config_path)
+
+                if archive_result.get('status') == 'error':
+                    print(f"--- [CRITICAL] Archiving failed: {archive_result.get('message')} ---")
+                else:
+                    print(f"--- [SUCCESS] Config archive completed. ---")
+            else:
+                print(f"--- [WARNING] Project fixed, but config path missing. Skipping archive. ---")
+            
+            print(f"{'='*60}\n")
+        
+        elif not is_successful:
+             print(f"--- [FAILURE] Project {project_name} could not be fixed within allowed attempts. ---")
 
         # 更新 YAML 状态报告
         result_str = "Success" if is_successful else "Failure"
@@ -605,8 +656,8 @@ async def main():
             print(f"--- [CRITICAL] Could not update YAML report: {update_result['message']} ---")
 
         # 【关键步骤 2】: 项目结束后清理
-        # 释放磁盘空间，为下一个项目腾出环境
         cleanup_environment(project_name)
+
 
     print("\n--- All projects in the queue have been processed. Workflow finished. ---")
 

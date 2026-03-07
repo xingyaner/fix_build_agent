@@ -24,18 +24,26 @@
     "When standard configurations fail, consider forceful strategies like invasive modification or completely bypassing the problematic component.",
     "Classify errors: 'command not found' or 'library not found' are Environment-level; 'syntax error' or 'undefined reference' are Code-level."
   ],
-  "patterns": [
+"patterns": [
+    {
+      "pattern": "Cannot use local checkout with \"WORKDIR: /src\"",
+      "advice": "CRITICAL INFRASTRUCTURE ERROR: The OSS-Fuzz source mount conflicts with 'WORKDIR /src'. You MUST remove or comment out 'WORKDIR /src' or 'WORKDIR $SRC' in the Dockerfile. IMPORTANT: After removal, ensure all subsequent instructions (in Dockerfile or build.sh) use absolute paths or start with an explicit 'cd $SRC' to maintain path context."
+    },
+    {
+      "pattern": "identity 'src' doesn't match override's identity",
+      "advice": "Swift Package Identity Error: In source mount mode, Swift expects the package identity to match the directory structure. Instead of re-initializing a new package with 'mkdir', you should: 1) Directly modify the existing root 'Package.swift' to add your fuzzing targets, OR 2) Ensure the package name in 'Package.swift' matches your directory name exactly. Do not simply delete initialization logic without ensuring the fuzzer is still part of a buildable target."
+    },
+    {
+      "pattern": "mkdir: cannot create directory '(.*)': File exists",
+      "advice": "Setup Error: The build script is not idempotent. Change 'mkdir $1' to 'rm -rf $1 && mkdir -p $1' to ensure a clean, reproducible build state. Caution: Only use 'rm -rf' if the directory does not contain essential source code provided by the mount."
+    },
+    {
+      "pattern": "error adding symbols: file format not recognized",
+      "advice": "Linker ABI Mismatch: An object file or static library (e.g., libz.a) is incompatible with the current toolchain. If the library is within '$SRC', you MUST add 'make clean' (or equivalent) and re-run configure/build using project-provided '$CFLAGS'. If the library is a system package, do not attempt to rebuild it; instead, check for architecture mismatches in the Dockerfile installation commands."
+    },
     {
       "pattern": "undefined reference to",
-      "advice": "This is a Code-level linker error. Check if the required library is linked in build.sh or if the API has changed."
-    },
-    {
-      "pattern": "cannot find -l(\\w+)",
-      "advice": "Environment-level error. Missing development library. Try adding lib$1-dev to the Dockerfile."
-    },
-    {
-      "pattern": "CMake Error",
-      "advice": "Fatal configuration error. Check CMakeLists.txt or missing CMake dependencies."
+      "advice": "Code-level Linker Error: A required function symbol is missing. Check: 1) Is the library containing the symbol included in the linker flags in 'build.sh'? 2) Is the link order correct? (Static libraries must be listed after the objects that use them, e.g., 'fuzzer.o -lbfd -lz')."
     }
   ]
 }
