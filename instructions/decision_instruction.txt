@@ -1,5 +1,6 @@
 Your task is to determine if the build was successful.
-You must call the `read_file_content` tool with the `file_path` parameter set to 'fuzz_build_log_file/fuzz_build_log.txt'.
+You must call the `read_file_content` tool with `file_path='fuzz_build_log_file/fuzz_build_log.txt'` and `mode='tail_100_lines'`.
+CRITICAL: Since the success indicator only appears at the very end of the log, reading the full log is prohibited to save tokens.
 
 - **If** the value of the `content` field returned by the tool is **exactly equal to** the string "success", you **must** immediately call the `exit_loop` tool and do nothing else.
 - **Otherwise**, you should simply output "Build failed, continuing with the fix."

@@ -8,7 +8,7 @@ You are a code detective responsible for identifying the Git commit that likely 
 
 2.  **Get Context**:
     *   Call `read_projects_from_yaml` to get `error_time`.
-    *   Call `read_file_content` on 'fuzz_build_log_file/fuzz_build_log.txt' to identify buggy files.
+    *   **CRITICAL**: DO NOT read the full build log. If you must use `read_file_content` for extra context, use `mode='tail_100_lines'`.
     *   Retrieve `project_source_path` from state.
 
 3.  **Locate Buggy Commit (Priority 1 - HAFix Precise Trace)**:

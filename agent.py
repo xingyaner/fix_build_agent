@@ -4,6 +4,7 @@ import time
 import json
 import re
 import sys
+import traceback
 import asyncio
 import subprocess
 import litellm
@@ -58,6 +59,7 @@ from agent_tools import (
     query_expert_knowledge,
     append_string_to_file,
     find_and_append_file_details,
+    prune_session_history,
     save_file_tree_shallow
 )
 
@@ -72,40 +74,102 @@ def load_instruction_from_file(filename: str) -> str:
 
 # Logger
 class AgentLogger:
-    def init(self, log_directory: str = "agent_logs"): self.log_directory=log_directory;self.logger=None;self.file_handler_setup=False;self.log_buffer=[];self.project_name="orchestrator";os.makedirs(self.log_directory,exist_ok=True)
+    def __init__(self, log_directory: str = "agent_logs"):
+        """使用 __init__ 确保在对象创建时，所有基础属性都已存在，防止重定向后的 print 报错"""
+        self.log_directory = log_directory
+        self.logger = None
+        self.file_handler_setup = False
+        self.log_buffer = []
+        self.project_name = "orchestrator"
+        os.makedirs(self.log_directory, exist_ok=True)
+
     def set_project_context(self, project_name: str):
         if self.logger:
-            for handler in self.logger.handlers[:]: handler.close(); self.logger.removeHandler(handler)
-        self.project_name=project_name; self.file_handler_setup=False; self.setup_file_handler()
+            for handler in self.logger.handlers[:]:
+                handler.close()
+                self.logger.removeHandler(handler)
+        self.project_name = project_name
+        self.file_handler_setup = False
+        self.setup_file_handler()
+
     def setup_file_handler(self):
         if self.file_handler_setup: return
-        safe_project_name="".join(c for c in self.project_name if c.isalnum() or c in ('_','-')).rstrip();timestamp=datetime.now().strftime("%Y.%m.%d_%H.%M.%S");log_filename=f"{safe_project_name}_run_{timestamp}.log";log_filepath=os.path.join(self.log_directory,log_filename);self.logger=logging.getLogger(f"AgentLogger_{safe_project_name}_{timestamp}");self.logger.setLevel(logging.INFO);self.logger.propagate=False;file_handler=logging.FileHandler(log_filepath,encoding='utf-8');formatter=logging.Formatter('%(message)s');file_handler.setFormatter(formatter)
-        if not self.logger.handlers: self.logger.addHandler(file_handler)
+        safe_project_name = "".join(c for c in self.project_name if c.isalnum() or c in ('_', '-')).rstrip()
+        timestamp = datetime.now().strftime("%Y.%m.%d_%H.%M.%S")
+        log_filename = f"{safe_project_name}_run_{timestamp}.log"
+        log_filepath = os.path.join(self.log_directory, log_filename)
+
+        self.logger = logging.getLogger(f"AgentLogger_{safe_project_name}_{timestamp}")
+        self.logger.setLevel(logging.INFO)
+        self.logger.propagate = False
+
+        file_handler = logging.FileHandler(log_filepath, encoding='utf-8')
+        formatter = logging.Formatter('%(message)s')
+        file_handler.setFormatter(formatter)
+
+        if not self.logger.handlers:
+            self.logger.addHandler(file_handler)
+
+        # 注意：此处 print 会被 StreamTee 捕获，但由于 file_handler_setup 尚未置为 True，
+        # 它会先进入 log_buffer，保证顺序正确
         print(f"✅ Log file created: {log_filepath}")
-        for log_entry in self.log_buffer: self.logger.info(log_entry)
-        self.log_buffer=[]
-        self.file_handler_setup=True
+
+        for log_entry in self.log_buffer:
+            self.logger.info(log_entry)
+        self.log_buffer = []
+        self.file_handler_setup = True
+
+    def log_raw(self, message: str):
+        msg = message.rstrip()
+        if not msg: return
+        if self.file_handler_setup and self.logger:
+            self.logger.info(msg)
+        else:
+            self.log_buffer.append(msg)
+
     def log_event(self, event: Event):
-        log_message=self._format_message(event)
+        log_message = self._format_message(event)
         if log_message:
             print(log_message)
-            if self.file_handler_setup: self.logger.info(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S,%f')[:-3]} - {log_message}")
-            else: self.log_buffer.append(f"INFO - {log_message}")
+
     def _format_message(self, event: Event) -> str:
-        author=event.author;log_parts=[f"EVENT from author: '{author}'"]
+        author = event.author
+        log_parts = [f"EVENT from author: '{author}'"]
         if event.usage_metadata:
             u = event.usage_metadata
             log_parts.append(f"  - TOKEN_USAGE: Prompt={u.prompt_token_count}, Gen={u.candidates_token_count}")
-        if hasattr(event,'get_function_calls') and (func_calls:=event.get_function_calls()):
-            for call in func_calls: log_parts.append(f"  - TOOL_CALL: {call.name}({json.dumps(call.args,ensure_ascii=False)})")
-        if hasattr(event,'get_function_responses') and (func_resps:=event.get_function_responses()):
+        if hasattr(event, 'get_function_calls') and (func_calls := event.get_function_calls()):
+            for call in func_calls: log_parts.append(
+                f"  - TOOL_CALL: {call.name}({json.dumps(call.args, ensure_ascii=False)})")
+        if hasattr(event, 'get_function_responses') and (func_resps := event.get_function_responses()):
             for resp in func_resps:
-                response_str=str(resp.response); response_str=response_str[:500]+"..." if len(response_str)>500 else response_str
+                response_str = str(resp.response)
+                response_str = response_str[:500] + "..." if len(response_str) > 500 else response_str
                 log_parts.append(f"  - TOOL_RESPONSE for '{resp.name}': {response_str}")
-        if (actions:=event.actions):
+        if (actions := event.actions):
             if actions.state_delta: log_parts.append(f"  - STATE_UPDATE: {actions.state_delta}")
             if actions.escalate: log_parts.append("  - ACTION: Escalate (Agent Finish)")
         return "\n".join(log_parts)
+
+
+# ==========================================
+# 新增：双向流管家 (Tee)
+# ==========================================
+class StreamTee:
+    """同时将输出发送到原始流（屏幕）和 Logger（文件）"""
+
+    def __init__(self, original_stream, agent_logger):
+        self.original_stream = original_stream
+        self.agent_logger = agent_logger
+
+    def write(self, data):
+        self.original_stream.write(data)
+        # 实时写入日志文件
+        if data.strip():
+            self.agent_logger.log_raw(data)
+
+    def flush(self):
+        self.original_stream.flush()
 
 class LoggingWrapperAgent(BaseAgent):
     name: str="LoggingWrapperAgent"
@@ -240,9 +304,7 @@ summary_agent = LlmAgent(
     name="summary_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/summary_instruction.txt"),
-    tools=[],
-    # output_key='.' 会将 Agent 输出的 JSON 对象的每个键值对合并到 state 中，
-    # 从而用占位符文本覆盖掉旧的、庞大的状态变量值。
+    tools=[prune_session_history],
     output_key=".", 
 )
 
@@ -422,15 +484,11 @@ async def process_single_project(
                 if event.usage_metadata:
                     p = getattr(event.usage_metadata, "prompt_token_count", 0) or 0
                     c = getattr(event.usage_metadata, "candidates_token_count", 0) or 0
-                    # 累加到本轮 Attempt 指标
                     stats["total_tokens"]["prompt"] += p
                     stats["total_tokens"]["completion"] += c
                     stats["total_tokens"]["total"] += (p + c)
-                    # 累加到项目总成本
-                    project_total_tokens["total"] += (p + c)
-                    
-                    if event.author == 'fuzzing_solver_agent':
-                        stats["code_gen_tokens"] += c
+                    project_total_tokens["total"] += (p + c) # 即使崩溃，Token 消耗也记录在案
+                    if event.author == 'fuzzing_solver_agent': stats["code_gen_tokens"] += c
 
                 # B. 启发式监控
                 if event.author == 'commit_finder_agent' and (func_calls := event.get_function_calls()):
@@ -472,6 +530,25 @@ async def process_single_project(
                             stats["patch_impact"]["files"] = r.response.get('modified_files_count', 0)
                             stats["patch_impact"]["lines"] = r.response.get('total_lines_changed', 0)
 
+                if event.author == 'initial_setup_agent' and event.actions and event.actions.state_delta:
+                    if 'basic_information' in event.actions.state_delta:
+                        full_info = event.actions.state_delta['basic_information']
+                        try:
+                            # 物理保存包含 dependencies 的全量数据到项目目录
+                            meta_save_path = os.path.join(expected_source_path, "metadata.json")
+                            os.makedirs(os.path.dirname(meta_save_path), exist_ok=True)
+
+                            if isinstance(full_info, str):
+                                clean_json = re.sub(r"```json\s*|\s*```", "", full_info).strip()
+                                data_to_write = json.loads(clean_json)
+                            else:
+                                data_to_write = full_info
+
+                            with open(meta_save_path, "w", encoding='utf-8') as mf:
+                                json.dump(data_to_write, mf, indent=2, ensure_ascii=False)
+                            print(f"--- 💾 Full metadata (including dependencies) archived to: {meta_save_path} ---")
+                        except Exception as meta_e:
+                            print(f"--- ⚠️ Metadata archive failed: {meta_e} ---")
 
                 # F. 成功判定
                 if (event.actions and event.actions.escalate and
@@ -493,10 +570,28 @@ async def process_single_project(
                 print(f"--- ⚠️ [GIVE UP] Project {project_name} failed internal logic. ---")
                 break
 
-        except Exception as e:
-            # 只有发生 API 中断、网络错误或 JSONDecodeError 等异常时，才利用 Attempt 进行物理重置重试
-            print(f"--- [ERROR] Attempt {current_attempt_id} failed with exception: {e}. Resetting for next attempt... ---")
+        except litellm.ContextWindowExceededError as e:
+            # 专门记录 Token 溢出异常
+            error_msg = f"--- 🚨 [CONTEXT LIMIT] Attempt {current_attempt_id} hit 13.1w limit: {str(e)} ---"
+            print(error_msg)
+            if GLOBAL_LOGGER.logger:
+                GLOBAL_LOGGER.logger.error(f"{error_msg}\n{traceback.format_exc()}")
             if attempt + 1 >= MAX_RETRIES: break
+            continue
+
+
+        except Exception as e:
+            # 捕获所有其他物理崩溃（网络、API、代码 Bug）
+            error_stack = traceback.format_exc()
+            error_msg = f"--- ❌ [CRASH] Attempt {current_attempt_id} failed with {type(e).__name__}: {str(e)} ---"
+            print(error_msg)
+
+            # 【关键补丁】：物理记录堆栈到日志文件，防止日志“断片”
+            if GLOBAL_LOGGER.logger:
+                GLOBAL_LOGGER.logger.error(f"{error_msg}\n--- DETAILED STACK ---\n{error_stack}")
+
+            if attempt + 1 >= MAX_RETRIES: break
+            # 策略：遇到未知崩溃，利用大循环的 cleanup_environment 进行物理环境重置并重试
             continue
 
     # --- 3. 最终项目总结报告 (显示最后一次有效 Attempt 的数据) ---
@@ -566,7 +661,6 @@ async def main():
     3. 完善的报告更新与归档机制。
     """
     print("--- Starting automated fix workflow ---")
-    GLOBAL_LOGGER.init()
 
     YAML_FILE = 'projects.yaml'
     session_service = InMemorySessionService()
@@ -604,8 +698,7 @@ async def main():
         print(f"--- Processing Project: {project_name} (Index: {row_index}) ---")
         print(f"{'='*60}")
 
-        # 【关键步骤 1】: 项目启动前清理
-        # 彻底清除上一项目的日志、Prompt、反思记录，但保留 process/project/ 下的源码
+        update_yaml_report(YAML_FILE, row_index, "Failure (Crashed/In_Progress)")
         cleanup_environment(project_name)
 
         # 执行修复流程
@@ -656,7 +749,8 @@ async def main():
             print(f"--- [CRITICAL] Could not update YAML report: {update_result['message']} ---")
 
         # 【关键步骤 2】: 项目结束后清理
-        cleanup_environment(project_name)
+        ##########
+        # cleanup_environment(project_name)
 
 
     print("\n--- All projects in the queue have been processed. Workflow finished. ---")
@@ -665,6 +759,8 @@ async def main():
 
 if __name__ == "__main__":
     print("--- Performing pre-startup checks... ---")
+    sys.stdout = StreamTee(sys.stdout, GLOBAL_LOGGER)
+    sys.stderr = StreamTee(sys.stderr, GLOBAL_LOGGER)
     if not DPSEEK_API_KEY:
         print("\n[ERROR] Startup failed: DPSEEK_API_KEY is not set.")
         print("Please do one of the following:")

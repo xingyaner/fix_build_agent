@@ -29,6 +29,49 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
 
+
+def prune_session_history(tool_context: ToolContext) -> dict:
+    """
+    【物理手术版 v4 - 全量替换】
+    采用白名单策略：彻底抹除所有中间过程的工具调用细节（ls, find, read_file_content）。
+    仅保留：最初输入、来自 summary_agent 的压缩记忆、以及来自 solver 的补丁计划。
+    """
+    try:
+        session = tool_context.session
+        if not session or not session.events:
+            return {"status": "success", "message": "Memory is already clean."}
+
+        original_count = len(session.events)
+        # 白名单：必须保留的事件
+        # 1. 初始消息 (index 0)
+        # 2. 总结代理的消息 (承载核心记忆)
+        # 3. 求解代理的消息 (承载最近的 patch 逻辑)
+        whitelist_authors = ['summary_agent', 'fuzzing_solver_agent']
+
+        new_events = [session.events[0]]  # 物理保留初始指令
+
+        for event in session.events[1:]:
+            # 保留关键代理的逻辑输出
+            if event.author in whitelist_authors:
+                new_events.append(event)
+            # 剔除所有包含工具调用 (Tool Call/Response) 的中间冗余
+            elif hasattr(event, 'get_function_calls') or hasattr(event, 'get_function_responses'):
+                continue
+            else:
+                # 保留其他非工具调用的控制流事件
+                new_events.append(event)
+
+        # 物理覆盖底层的 ADK events 列表
+        session.events.clear()
+        for e in new_events:
+            session.events.append(e)
+
+        msg = f"Surgical Intervention Successful: Pruned {original_count - len(new_events)} tool call events."
+        print(f"--- [MEMORY] {msg} ---")
+        return {"status": "success", "message": msg}
+    except Exception as e:
+        return {"status": "error", "message": f"Memory intervention failed: {str(e)}"}
+
 def extract_buggy_line_info(log_path: str, project_name: str = "") -> List[Dict]:
     """
     【路径感知增强版】
@@ -36,7 +79,8 @@ def extract_buggy_line_info(log_path: str, project_name: str = "") -> List[Dict]
     """
     if not os.path.exists(log_path): return []
     with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
-        content = f.read()
+        lines = f.readlines()
+        content = "".join(lines[-2000:])
     
     # 匹配模式：支持大部分编程语言后缀
     pattern = r"([\w\-\./]+\.(?:c|cpp|h|cc|rs|go|py|sh|java)):(\d+):"
@@ -64,62 +108,67 @@ def extract_buggy_line_info(log_path: str, project_name: str = "") -> List[Dict]
 
 def get_enhanced_history_context(project_source_path: str, file_rel_path: str, line_num: int) -> dict:
     """
-    【精简化 HAFix v2】
-    1. 仅返回受影响的文件清单 (fn_all)。
-    2. 提取函数级变更快照 (fn_pair)，仅保留 +/- 行。
-    3. 彻底去除背景上下文和 Git 元数据噪音。
+    【精简化 HAFix v3 - 全量替换】
+    1. fn_all 摘要化：若修改文件数 > 6，仅保留前 3 和后 3，并提取公共前缀。
+    2. fn_pair 极简采样：正则剥离空行与纯符号行，限制变更展示总量。
     """
     import os
     import subprocess
-    print(f"--- Tool: get_enhanced_history_context (Simplified) for {file_rel_path}:{line_num} ---")
+    import re
+    print(f"--- Tool: get_enhanced_history_context (Dehydrated) for {file_rel_path}:{line_num} ---")
 
     if not os.path.exists(project_source_path):
         return {"status": "error", "message": "Source path not found."}
 
     try:
-        # Step 1: 锁定引发变更的 SHA (通过 git blame)
-        blame_cmd = ["git", "-C", project_source_path, "blame", "-L", f"{line_num},{line_num}", "--porcelain", file_rel_path]
+        # Step 1: 锁定引发变更的 SHA
+        blame_cmd = ["git", "-C", project_source_path, "blame", "-L", f"{line_num},{line_num}", "--porcelain",
+                     file_rel_path]
         blame_res = subprocess.run(blame_cmd, capture_output=True, text=True, check=True)
         buggy_sha = blame_res.stdout.split('\n')[0].split(' ')[0]
 
         if not buggy_sha or len(buggy_sha) < 7:
             return {"status": "error", "message": "Could not identify buggy SHA."}
 
-        # Step 2: 提取受影响的文件清单 (fn_all) - 取代全量 Diff
-        files_cmd = ["git", "-C", project_source_path, "show", "--name-only", "--format=", buggy_sha]
-        files_res = subprocess.run(files_cmd, capture_output=True, text=True, check=True)
-        fn_all = files_res.stdout.strip()
+        # Step 2: 提取并摘要化受影响文件清单 (fn_all)
+        files_res = subprocess.run(["git", "-C", project_source_path, "show", "--name-only", "--format=", buggy_sha],
+                                   capture_output=True, text=True, check=True)
+        all_files = [f.strip() for f in files_res.stdout.split('\n') if f.strip()]
+
+        if len(all_files) > 6:
+            summary_files = all_files[:3] + [f"...(skipped {len(all_files) - 6} files)..."] + all_files[-3:]
+            # 提取公共前缀以辅助理解
+            common_prefix = os.path.commonpath([f for f in all_files if '/' in f]) if len(all_files) > 1 else ""
+            fn_all_str = f"Total {len(all_files)} files modified. Common path: {common_prefix}\n" + "\n".join(
+                summary_files)
+        else:
+            fn_all_str = "\n".join(all_files)
 
         # Step 3: 提取函数级压缩快照 (fn_pair)
-        # 使用 -U0 强制零背景上下文，只看变化行
-        # 我们取报错行前后 5 行的范围进行“脱水”提取
-        start = max(1, line_num - 5)
-        end = line_num + 5
-        pair_cmd = ["git", "-C", project_source_path, "show", "-U0", "--format=", f"{buggy_sha}:{file_rel_path}"]
-        # 注意：这里我们改为只看该 commit 中对该文件的具体改动，且不带背景行
-        pair_res = subprocess.run(["git", "-C", project_source_path, "show", "-U0", "--format=", buggy_sha, "--", file_rel_path], 
-                                  capture_output=True, text=True, check=True)
-        
-        # 过滤掉元数据行（如 index, ---, +++ 等），只保留 + 和 - 开头的行
-        compressed_lines = [l for l in pair_res.stdout.split('\n') if l.startswith('+') or l.startswith('-')]
-        fn_pair = "\n".join(compressed_lines[:20]) # 进一步限制最多 20 行变更
+        # 使用 -U0 强制零背景上下文
+        pair_res = subprocess.run(
+            ["git", "-C", project_source_path, "show", "-U0", "--format=", buggy_sha, "--", file_rel_path],
+            capture_output=True, text=True, check=True)
 
-        # Step 4: 构造精简后的输出
+        # 过滤：保留 +/- 开头，且剥离纯符号行（如单独的 } 或 [）
+        compressed_lines = []
+        for line in pair_res.stdout.split('\n'):
+            if line.startswith('+') or line.startswith('-'):
+                pure_content = line[1:].strip()
+                # 忽略长度小于2或全是标点符号的行
+                if len(pure_content) > 1 and not re.match(r'^[{}()\[\],;.\s]+$', pure_content):
+                    compressed_lines.append(line)
+
+        fn_pair = "\n".join(compressed_lines[:12])  # 最终限制在 12 行最关键的逻辑变更
+
         history_content = (
             f"--- 精简化根因追踪报告 ---\n"
             f"嫌疑提交: {buggy_sha}\n"
-            f"受影响文件清单:\n{fn_all}\n"
-            f"关键逻辑变更 (仅显示变化行):\n{fn_pair}\n"
+            f"受影响文件清单:\n{fn_all_str}\n"
+            f"关键逻辑变更 (仅显示功能行):\n{fn_pair}\n"
             f"--------------------------"
         )
-
-        return {
-            "status": "success",
-            "data": {
-                "sha": buggy_sha,
-                "history_content": history_content
-            }
-        }
+        return {"status": "success", "data": {"sha": buggy_sha, "history_content": history_content}}
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
@@ -288,46 +337,62 @@ def update_reflection_journal(
     }
 
 
-def query_expert_knowledge(log_path: str) -> Dict:
+def query_expert_knowledge(log_path: str) -> dict:
     """
-    【专家知识检索工具】
-    从知识库中提取通用原则，并根据日志匹配特定建议。
+    【专家知识动态注入版 - 全量替换】
+    根据日志关键字动态筛选最相关的 3-5 条准则，避免全量注入导致的 Token 浪费。
     """
-    # 如果关闭专家知识，直接返回空结果，不读取 JSON，不进行正则匹配
-    if not ENABLE_EXPERT_KNOWLEDGE:
-        print("--- Ablation: Expert Knowledge is DISABLED. Returning empty guidance. ---")
-        return {"status": "success", "knowledge": "No specific expert knowledge is available for this run."}
-
-
-    print(f"--- Tool: query_expert_knowledge called for: {log_path} ---")
     KNOWLEDGE_FILE = "expert_knowledge.json"
-    
     if not os.path.exists(KNOWLEDGE_FILE):
-        return {"status": "error", "message": "Expert knowledge base (JSON) not found."}
-    
+        return {"status": "error", "message": "Knowledge base not found."}
+
     try:
         with open(KNOWLEDGE_FILE, 'r', encoding='utf-8') as f:
             kb = json.load(f)
-        
-        # 1. 提取通用原则
-        general_info = "\n".join([f"- {item}" for item in kb.get("general_principles", [])])
-        
-        # 2. 匹配特定模式
-        matched_advice = []
+
+        # 提取日志最后 100 行作为关键词扫描区
+        log_sample = ""
         if os.path.exists(log_path):
-            with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
-                log_content = f.read()
-            for entry in kb.get("patterns", []):
-                if re.search(entry["pattern"], log_content, re.IGNORECASE):
-                    matched_advice.append(f"- [Specific Match]: {entry['advice']}")
-        
-        specific_info = "\n".join(matched_advice) if matched_advice else "No specific pattern matches found."
-        
-        full_knowledge = f"--- General Principles ---\n{general_info}\n\n--- Pattern-based Advice ---\n{specific_info}"
-        return {"status": "success", "knowledge": full_knowledge}
-            
+            with open(log_path, 'r', encoding='utf-8', errors='ignore') as lf:
+                log_sample = "".join(lf.readlines()[-100:]).lower()
+
+        # 定义关键词到准则类别的映射（基于您专家库中的常见术语）
+        category_map = {
+            "linker": ["linker", "undefined reference", "symbol", "lib", ".a", ".so", "link"],
+            "docker": ["docker", "workdir", "apt-get", "copy", "run", "entrypoint"],
+            "swift": ["swift", "package.swift", "spm", "tools-version"],
+            "path": ["no such file", "directory", "cannot stat", "path", "mkdir"]
+        }
+
+        selected_principles = []
+        all_principles = kb.get("general_principles", [])
+
+        # 命中逻辑
+        hit_categories = [cat for cat, kws in category_map.items() if any(kw in log_sample for kw in kws)]
+
+        for p in all_principles:
+            if any(cat in p.lower() for cat in hit_categories):
+                selected_principles.append(p)
+
+        # 配额管理：如果没命中则取前 3 条；如果命中了则取最相关的 6 条
+        if not selected_principles:
+            final_principles = all_principles[:3]
+        else:
+            final_principles = selected_principles[:6]
+
+        # 模式匹配建议（保持原有的高效正则逻辑）
+        matched_advice = []
+        for entry in kb.get("patterns", []):
+            if re.search(entry["pattern"], log_sample, re.IGNORECASE):
+                matched_advice.append(f"- [Specific Match]: {entry['advice']}")
+
+        knowledge_str = "--- Relevant Principles ---\n" + "\n".join([f"- {item}" for item in final_principles])
+        if matched_advice:
+            knowledge_str += "\n\n--- Targeted Advice ---\n" + "\n".join(matched_advice)
+
+        return {"status": "success", "knowledge": knowledge_str}
     except Exception as e:
-        return {"status": "error", "message": f"Failed to query knowledge: {str(e)}"}
+        return {"status": "error", "message": f"Expert knowledge error: {str(e)}"}
 
 def manage_git_state(path: str, action: str, message: str = "", commit_sha: str = "") -> Dict:
     """
@@ -1111,67 +1176,67 @@ def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
         os.chdir(original_path)
 
 # File Operations and Fuzzing Tools
+
 def apply_patch(solution_file_path: str) -> dict:
     """
-    【统计增强版】应用补丁并返回修改规模。
+    【闭环回显版】应用极致精简补丁，并在失败时返回文件真实内容以供对齐。
     """
-    print(f"--- Tool: apply_patch (Robust with Stats) called ---")
+    import os, difflib
+    print(f"--- Tool: apply_patch (with Feedback) called ---")
     try:
         if not os.path.exists(solution_file_path):
-            return {"status": "error", "message": f"Solution file {solution_file_path} not found."}
-
+            return {"status": "error", "message": "Solution file not found."}
         with open(solution_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
-
         patch_blocks = content.split('---=== FILE ===---')[1:]
-        if not patch_blocks:
-            return {"status": "error", "message": "Invalid patch format."}
-
-        applied_count = 0
-        total_lines_changed = 0
+        
+        applied_count, total_lines_changed = 0, 0
         modified_files = set()
         errors = []
 
         for block in patch_blocks:
-            try:
-                parts = block.split('---=== ORIGINAL ===---')
-                file_path = parts[0].strip()
-                content_parts = parts[1].split('---=== REPLACEMENT ===---')
-                original_block = content_parts[0].strip("\n\r")
-                replacement_block = content_parts[1].strip("\n\r")
+            parts = block.split('---=== ORIGINAL ===---')
+            file_path = parts[0].strip()
+            content_parts = parts[1].split('---=== REPLACEMENT ===---')
+            original_block = content_parts[0].strip("\n\r")
+            replacement_block = content_parts[1].strip("\n\r")
 
-                if not os.path.exists(file_path):
-                    errors.append(f"File not found: {file_path}")
-                    continue
+            if not os.path.exists(file_path):
+                errors.append(f"File not found: {file_path}")
+                continue
+            with open(file_path, 'r', encoding='utf-8') as f:
+                file_content = f.read()
 
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    file_content = f.read()
-
-                if original_block in file_content:
-                    new_content = file_content.replace(original_block, replacement_block, 1)
-                    with open(file_path, 'w', encoding='utf-8') as f:
-                        f.write(new_content)
-                    
-                    # 统计修改行数（取替换前后块的行数最大值）
-                    total_lines_changed += max(len(original_block.splitlines()), len(replacement_block.splitlines()))
-                    modified_files.add(file_path)
-                    applied_count += 1
-                else:
-                    # (保持原有的回显逻辑...)
-                    errors.append(f"Match failed for {file_path}...")
-
-            except Exception as e:
-                errors.append(f"Error in block: {str(e)}")
+            if original_block in file_content:
+                new_content = file_content.replace(original_block, replacement_block, 1)
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    f.write(new_content)
+                total_lines_changed += max(len(original_block.splitlines()), len(replacement_block.splitlines()))
+                modified_files.add(file_path)
+                applied_count += 1
+            else:
+                # 匹配失败：寻找最相似的区域并回显给 Agent 
+                lines = file_content.splitlines()
+                # 提取 ORIGINAL 块的第一行作为搜索锚点
+                search_anchor = original_block.splitlines()[0].strip()
+                matches = difflib.get_close_matches(search_anchor, lines, n=1, cutoff=0.3)
+                
+                actual_context = "Unknown context (File may be too different)"
+                if matches:
+                    idx = lines.index(matches[0])
+                    # 取匹配行前后 5 行供 Agent 参考原文格式（包括空格和注释）
+                    actual_context = "\n".join(lines[max(0, idx-5):min(len(lines), idx+10)])
+                
+                errors.append(f"MATCH FAILED for {file_path}.\n### ACTUAL CONTENT AROUND TARGET AREA ###\n{actual_context}\n### PLEASE ENSURE ORIGINAL BLOCK MATCHES EXACTLY ###")
 
         return {
             "status": "success" if not errors else ("partial_success" if applied_count > 0 else "error"),
-            "message": f"Applied {applied_count} patches.",
-            "modified_files_count": len(modified_files), # 返回修改文件数
-            "total_lines_changed": total_lines_changed,   # 返回影响行数
+            "modified_files_count": len(modified_files),
+            "total_lines_changed": total_lines_changed,
             "errors": errors
         }
     except Exception as e:
-        return {"status": "error", "message": f"Critical failure: {str(e)}"}
+        return {"status": "error", "message": str(e)}
 
 def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> dict:
     """
@@ -1322,61 +1387,71 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
         return {"status": "error", "message": error_message}
 
 
-def read_file_content(file_path: str, tail_lines: Optional[int] = None) -> dict:
+def read_file_content(file_path: str, mode: str = "full") -> dict:
     """
-    【上下文优化版】读取文件内容，并自动进行瘦身以减少 token 数量。
-    - 自动剥离常见的许可证头部注释。
-    - 对过长的文件进行智能截断（保留开头和结尾）。
-    - 接受 tail_lines 参数只读取末尾行。
+    【防御性熔断版】支持剥离 License 后查看内容，并对百分比模式设置 500 行硬上限。
+    mode: "full", "tail_50", "tail_30", "tail_100_lines"
     """
-    print(f"--- Tool: read_file_content (Optimized) called for: {file_path} (tail_lines={tail_lines}) ---")
-    
+    import os, re
+    print(f"--- Tool: read_file_content (Mode: {mode}) called for: {file_path} ---")
     if not os.path.isfile(file_path):
-        return {"status": "error", "message": f"Error: Path '{file_path}' is not a valid file."}
-        
+        return {"status": "error", "message": f"File not found: {file_path}"}
     try:
         with open(file_path, "r", encoding="utf-8", errors='ignore') as f:
             lines = f.readlines()
 
-        # 1. 如果指定了 tail_lines，则优先处理
-        if tail_lines and isinstance(tail_lines, int) and tail_lines > 0:
-            content = "".join(lines[-tail_lines:])
-            message = f"Successfully read the last {len(lines[-tail_lines:])} lines from '{file_path}'."
-            return {"status": "success", "message": message, "content": content}
-
-        # 2. 自动剥离常见的许可证/版权头部
-        # 匹配以 #, /*, // 开头的连续行
-        license_header_pattern = re.compile(r"^(#|//|\s*\*).*$", re.MULTILINE)
-        content_str = "".join(lines)
-        
-        # 寻找第一个非注释行
-        first_code_line_index = -1
-        for i, line in enumerate(lines):
-            stripped_line = line.strip()
-            if stripped_line and not license_header_pattern.match(line):
-                first_code_line_index = i
+        # 1. 自动剥离 License 头部
+        license_pattern = re.compile(r"^(#|//|\s*\*|/\*).*$", re.MULTILINE)
+        start_idx = 0
+        for i, line in enumerate(lines[:50]):
+            if line.strip() and not license_pattern.match(line):
+                start_idx = i
                 break
-        
-        if first_code_line_index > 5: # 如果头部注释超过5行，就剥离它
-            lines = lines[first_code_line_index:]
-            print(f"--- Stripped license header ({first_code_line_index} lines) from '{file_path}' ---")
+        if start_idx > 5:
+            lines = lines[start_idx:]
+            print(f"--- Stripped license header ({start_idx} lines) ---")
 
-        # 3. 对过长的文件进行智能截断
-        MAX_LINES = 400 # 设置一个合理的文件最大行数
-        if len(lines) > MAX_LINES:
-            head = lines[:MAX_LINES // 2]
-            tail = lines[-MAX_LINES // 2:]
-            content = "".join(head) + "\n\n... (File content truncated for brevity) ...\n\n" + "".join(tail)
-            message = f"File '{file_path}' was too long, content has been truncated."
-            print(f"--- Truncated long file '{file_path}' to {MAX_LINES} lines ---")
-        else:
-            content = "".join(lines)
-            message = f"Successfully read the optimized content of '{file_path}'."
+        total_lines = len(lines)
 
-        return {"status": "success", "message": message, "content": content}
+        # 2. 根据模式进行切片，并引入 500 行硬熔断策略
+        if mode == "tail_50":
+            target_count = int(total_lines * 0.5)
+            # 硬熔断：如果 50% 超过 500 行，强制降级
+            if target_count > 500:
+                print(
+                    f"--- [SAFETY MELT] tail_50 ({target_count} lines) exceeds limit. Falling back to tail_100_lines. ---")
+                lines = lines[-100:]
+                mode = "tail_100_lines (melted)"
+            else:
+                lines = lines[-target_count:]
+        elif mode == "tail_30":
+            target_count = int(total_lines * 0.3)
+            # 硬熔断：如果 30% 超过 500 行，强制降级
+            if target_count > 500:
+                print(
+                    f"--- [SAFETY MELT] tail_30 ({target_count} lines) exceeds limit. Falling back to tail_100_lines. ---")
+                lines = lines[-100:]
+                mode = "tail_100_lines (melted)"
+            else:
+                lines = lines[-target_count:]
+        elif mode == "tail_100_lines":
+            lines = lines[-100:]
+        elif mode == "full":
+            # 即使是 full 模式，也进行一次最后的长度防御（如 1000 行）
+            if total_lines > 1000:
+                print(f"--- [SAFETY MELT] full mode exceeds 1000 lines. Truncating to tail_500. ---")
+                lines = lines[-500:]
+                mode = "full (truncated to 500)"
 
+        content = "".join(lines)
+        return {
+            "status": "success",
+            "message": f"Read {len(lines)} lines from {file_path} (Mode: {mode})",
+            "content": content
+        }
     except Exception as e:
-        return {"status": "error", "message": f"An error occurred while reading file '{file_path}': {str(e)}"}
+        return {"status": "error", "message": str(e)}
+
 
 def create_or_update_file(file_path: str, content: str) -> dict:
     """
@@ -1455,91 +1530,78 @@ def delete_file(file_path: str) -> dict:
         return {"status": "error", "message": message}
 
 
-def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str, attempt_id: int, expert_knowledge: str = "", enhanced_history: str = "") -> dict:
+def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str, attempt_id: int,
+                         expert_knowledge: str = "", enhanced_history: str = "") -> dict:
     """
-    【极致截断与本轮视野版】
-    1. 严格过滤：仅加载当前 Attempt (大循环) 的反思历史。
-    2. 物理截断：限制单次 Prompt 负载，防止 13.1w 溢出。
-    3. JSON 安全：清洗不可见字符。
+    【源码预算调度版 - 全量替换】
+    1. 物理预算：GLOBAL_CHAR_BUDGET = 280,000 (约 80k Token)。
+    2. 优先级加载：核心报错文件 > 构建脚本 > 其他文件。
+    3. 动态降级：当预算接近耗尽时，自动从 full 模式降级为 tail_30 或 name_only。
     """
-    import os
-    import json
-    from agent_tools import ENABLE_REFLECTION, save_file_tree_shallow, read_file_content, truncate_prompt_file
+    import os, re
+    from agent_tools import read_file_content, save_file_tree_shallow, truncate_prompt_file
 
-    print(f"--- Workflow Tool: prompt_generate_tool started (Filtering Attempt {attempt_id}) ---")
     PROMPT_DIR = "generated_prompt_file"
     PROMPT_FILE_PATH = os.path.join(PROMPT_DIR, "prompt.txt")
-    JOURNAL_FILE = "reflection_journal.json"
     FUZZ_LOG_PATH = "fuzz_build_log_file/fuzz_build_log.txt"
 
-    # --- 物理截断上限 (极致安全预算) ---
-    LIMIT_HISTORY = 25000
-    LIMIT_KNOWLEDGE = 5000
-    LIMIT_PER_FILE = 6000
-    LIMIT_TOTAL_LINES = 1000
+    # --- 80,000 Token 预算对应的字符配额 ---
+    GLOBAL_CHAR_BUDGET = 280000
+    current_used = 0
 
-    if not os.path.isdir(config_folder_path):
-        return {"status": "error", "message": f"Config path error: {config_folder_path}"}
+    # Step 1: 识别 Level 1 优先级文件（通过报错日志和 HAFix 报告提取）
+    context_stream = expert_knowledge + enhanced_history
+    if os.path.exists(FUZZ_LOG_PATH):
+        with open(FUZZ_LOG_PATH, 'r', encoding='utf-8') as lf:
+            context_stream += "".join(lf.readlines()[-50:])
 
-    os.makedirs(PROMPT_DIR, exist_ok=True)
-    project_name = os.path.basename(os.path.abspath(project_main_folder_path))
+    # 提取潜在的文件名路径
+    candidates = re.findall(r"([\w\-\./]+\.(?:c|cpp|h|cc|swift|sh|py|java))", context_stream)
+    l1_filenames = set([os.path.basename(c) for c in candidates])
 
     with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
-        f.write(f"You are a premier expert in software testing. Project: {project_name}. Attempt: {attempt_id}.\n")
+        f.write(f"Testing Expert. Project: {os.path.basename(project_main_folder_path)}. Attempt: {attempt_id}\n")
+        f.write(f"\n【ENHANCED HISTORY】\n{enhanced_history}\n")
+        f.write(f"\n【STRATEGIC KNOWLEDGE】\n{expert_knowledge}\n")
 
-        # 1. 注入 HAFix 历史 (末尾截断)
-        if enhanced_history:
-            f.write("\n--- 【ENHANCED REPOSITORY HISTORY】 ---\n")
-            f.write(enhanced_history[-LIMIT_HISTORY:])
+        all_configs = sorted(os.listdir(config_folder_path))
 
-        # 2. 注入专家建议
-        if expert_knowledge:
-            f.write("\n--- 【EXPERT KNOWLEDGE & STRATEGIC GUIDANCE】 ---\n")
-            f.write(expert_knowledge[:LIMIT_KNOWLEDGE])
+        # --- Level 1: 核心关联文件 (Full) ---
+        for fname in [cfg for cfg in all_configs if cfg in l1_filenames]:
+            res = read_file_content(os.path.join(config_folder_path, fname), mode="full")
+            c = res.get('content', '')
+            f.write(f"\n### {fname} (Priority High) ###\n{c}\n")
+            current_used += len(c)
 
-        # 3. 注入【当前大循环】的结构化教训
-        if ENABLE_REFLECTION and os.path.exists(JOURNAL_FILE):
-            try:
-                with open(JOURNAL_FILE, 'r', encoding='utf-8') as fj:
-                    history = json.load(fj)
-                # 核心过滤逻辑：只展示本次 Attempt 的 Round 历史
-                current_attempt_history = [h for h in history if h.get('attempt_id') == attempt_id]
-                if current_attempt_history:
-                    f.write(f"\n\n--- 【PROGRESS IN THIS ATTEMPT (#{attempt_id})】 ---\n")
-                    for h in current_attempt_history[-5:]: # 查看本轮最近5次迭代
-                        f.write(f"- [Round {h.get('round_id')}] Score: {h.get('deterioration_score')}\n")
-                        f.write(f"  * Fixed so far: {h.get('solved')}\n")
-                        f.write(f"  * Current Roadblock: {h.get('unsolved')}\n")
-                        f.write(f"  * Key Insight: {h.get('reflection')}\n")
-            except: pass
+        # --- Level 2: 核心构建配置 (Dynamic) ---
+        for fname in [cfg for cfg in all_configs if
+                      cfg not in l1_filenames and (cfg.endswith('.sh') or 'Dockerfile' in cfg)]:
+            # 如果配额已消耗超过 60%，降级为 tail_50
+            mode = "full" if current_used < (GLOBAL_CHAR_BUDGET * 0.6) else "tail_50"
+            res = read_file_content(os.path.join(config_folder_path, fname), mode=mode)
+            c = res.get('content', '')
+            f.write(f"\n### {fname} (Mode: {mode}) ###\n{c}\n")
+            current_used += len(c)
 
-        # 4. 附加配置文件 (单文件截断)
-        f.write("\n\n--- Configuration Files ---\n")
-        all_config_files = [os.path.join(config_folder_path, cf) for cf in sorted(os.listdir(config_folder_path)) if os.path.isfile(os.path.join(config_folder_path, cf))]
-        for config_file in all_config_files:
-            try:
-                with open(config_file, "r", encoding="utf-8", errors='ignore') as sf:
-                    content = sf.read()[:LIMIT_PER_FILE]
-                    f.write(f"\n### {os.path.basename(config_file)} ###\n{content}\n")
-            except: pass
+        # --- Level 3: 辅助文件 (Safe Limit) ---
+        for fname in [cfg for cfg in all_configs if
+                      cfg not in l1_filenames and not cfg.endswith('.sh') and 'Dockerfile' not in cfg]:
+            if current_used > GLOBAL_CHAR_BUDGET:
+                f.write(f"\n### {fname} ###\n[Content omitted: Context budget full]\n")
+            else:
+                res = read_file_content(os.path.join(config_folder_path, fname), mode="tail_30")
+                c = res.get('content', '')
+                f.write(f"\n### {fname} (tail_30) ###\n{c}\n")
+                current_used += len(c)
 
-        # 5. 生成文件树与日志 (最后 100 行)
+        # 注入文件树与日志末尾
         save_file_tree_shallow(project_main_folder_path, 1, os.path.join(PROMPT_DIR, "file_tree.txt"))
-        log_res = read_file_content(FUZZ_LOG_PATH, tail_lines=100)
-        if log_res['status'] == 'success':
-            f.write("\n\n--- Fuzz Build Log (Tail) ---\n" + log_res['content'])
+        log_res = read_file_content(FUZZ_LOG_PATH, mode="tail_100_lines")
+        f.write(f"\n\n--- BUILD LOG TAIL ---\n{log_res.get('content', '')}")
 
-    truncate_prompt_file(PROMPT_FILE_PATH, max_lines=LIMIT_TOTAL_LINES)
-
-    try:
-        with open(PROMPT_FILE_PATH, "r", encoding="utf-8") as f:
-            full_prompt = f.read()
-        # 物理清洗不可打印字符，确保 JSONEncode 绝对安全
-        clean_content = "".join(c for c in full_prompt if c.isprintable() or c in '\n\r\t')
-        return {"status": "success", "content": clean_content}
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
-
+    truncate_prompt_file(PROMPT_FILE_PATH, max_lines=2500)
+    with open(PROMPT_FILE_PATH, "r", encoding="utf-8") as rf:
+        return {"status": "success", "content": rf.read()}
 
 
 def run_fuzz_build_streaming(
