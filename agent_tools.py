@@ -396,7 +396,8 @@ def query_expert_knowledge(log_path: str) -> dict:
 
 def manage_git_state(path: str, action: str, message: str = "", commit_sha: str = "") -> Dict:
     """
-    【Git 状态管理器】用于实现状态树的保存与回退。
+    【Git 状态管理器 - 增强版】用于实现状态树的保存与回退。
+    已集成自动身份识别逻辑，解决 "Author identity unknown" 导致的初始化失败问题。
     action: "init", "commit", "rollback"
     """
     print(f"--- Tool: manage_git_state | Action: {action} | Path: {path} ---")
@@ -406,18 +407,29 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
     original_cwd = os.getcwd()
     try:
         os.chdir(path)
-        # 初始化检查：如果不是git仓库则初始化
+        
+        # 1. 确保仓库已初始化
         if not os.path.exists(".git"):
             subprocess.run(["git", "init"], check=True, capture_output=True)
+            
+            # 2. 立即设置本地身份信息（必须在 init 之后，commit 之前）
+            subprocess.run(["git", "config", "user.email", "longfor2025@gmail.com"], check=True)
+            subprocess.run(["git", "config", "user.name", "xingyaner"], check=True)
+            
+            # 3. 建立初始提交
             subprocess.run(["git", "add", "."], check=True)
-            subprocess.run(["git", "commit", "-m", "Initial State"], check=True)
+            subprocess.run(["git", "commit", "-m", "Initial State"], check=True, capture_output=True)
+        else:
+            # 即使仓库已存在，也确保当前 Session 拥有有效的本地身份配置
+            subprocess.run(["git", "config", "user.email", "agent@oss-fuzz-repair.com"], check=True)
+            subprocess.run(["git", "config", "user.name", "OSS-Fuzz Repair Agent"], check=True)
 
         if action == "init":
-            return {"status": "success", "message": f"Git initialized in {path}"}
+            return {"status": "success", "message": f"Git initialized and identity secured in {path}"}
 
         if action == "commit":
             subprocess.run(["git", "add", "."], check=True)
-            # 检查是否有变更
+            # 检查是否有实际变更
             diff_check = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True).stdout
             if not diff_check:
                 return {"status": "success", "message": "No changes to commit."}
@@ -431,7 +443,7 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
             target = commit_sha if commit_sha else "HEAD~1"
             # 检查是否有可回退的提交
             check_log = subprocess.run(["git", "rev-list", "--count", "HEAD"], capture_output=True, text=True)
-            if int(check_log.stdout.strip()) <= 1:
+            if not check_log.stdout.strip() or int(check_log.stdout.strip()) <= 1:
                 return {"status": "error", "message": "Already at the initial state, cannot rollback further."}
             
             subprocess.run(["git", "reset", "--hard", target], check=True)
@@ -439,7 +451,7 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
             return {"status": "success", "message": f"Rolled back to {target}"}
 
     except Exception as e:
-        return {"status": "error", "message": str(e)}
+        return {"status": "error", "message": f"Git operation failed: {str(e)}"}
     finally:
         os.chdir(original_cwd)
 
