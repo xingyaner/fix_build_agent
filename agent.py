@@ -236,7 +236,7 @@ decision_agent = LlmAgent(
 
 commit_finder_agent = LlmAgent(
     name="commit_finder_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, thinking={"type": "enabled"} ),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("instructions/commit_finder_instruction.txt"),
     tools=[
         read_projects_from_yaml, 
@@ -254,7 +254,7 @@ commit_finder_agent = LlmAgent(
 
 reflection_agent = LlmAgent(
     name="reflection_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, thinking={"type": "enabled"} ),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
     instruction=load_instruction_from_file("instructions/reflection_instruction.txt"),
     tools=[read_file_content, update_reflection_journal],
     output_key="last_reflection_result"
@@ -551,16 +551,23 @@ async def process_single_project(
                             meta_save_path = os.path.join(expected_source_path, "metadata.json")
                             os.makedirs(os.path.dirname(meta_save_path), exist_ok=True)
 
+                            data_to_write = None
                             if isinstance(full_info, str):
-                                clean_json = re.sub(r"```json\s*|\s*```", "", full_info).strip()
-                                data_to_write = json.loads(clean_json)
+                                json_match = re.search(r'(\{[\s\S]*\})', full_info)
+                                if json_match:
+                                    clean_json = json_match.group(1)
+                                    data_to_write = json.loads(clean_json)
+                                else:
+                                    raise ValueError("No JSON structure found in response text")
                             else:
                                 data_to_write = full_info
 
-                            with open(meta_save_path, "w", encoding='utf-8') as mf:
-                                json.dump(data_to_write, mf, indent=2, ensure_ascii=False)
-                            print(f"--- 💾 Full metadata (including dependencies) archived to: {meta_save_path} ---")
+                            if data_to_write:
+                                with open(meta_save_path, "w", encoding='utf-8') as mf:
+                                    json.dump(data_to_write, mf, indent=2, ensure_ascii=False)
+                                print(f"--- 💾 Full metadata (including dependencies) archived to: {meta_save_path} ---")
                         except Exception as meta_e:
+                            # 仅打印警告，不中断主流程
                             print(f"--- ⚠️ Metadata archive failed: {meta_e} ---")
 
                 # F. 成功判定

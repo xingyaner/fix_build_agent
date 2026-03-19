@@ -1,6 +1,6 @@
 - project: espeak-ng
   language: c++
-  error_time: 2023-4-3
+  error_time: '2023-4-3'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-55ee4d54-bda3-46a2-9566-7f611c1a041c.txt
@@ -12,9 +12,7 @@
   base_image_digest: c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-15'
+
 - project: swift-nio
   language: swift
   error_time: '2025-10-07'
@@ -29,12 +27,10 @@
   base_image_digest: 1051d1a0a51f82987e4fa36f85dd8cee525df635f8523ac35575086979625e67
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-15'
+
 - project: trafficserver
   language: c++
-  error_time: 2025-2-18
+  error_time: '2025-2-18'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-01341f9e-36a2-484e-a86c-da0b6cf9dff4.txt
@@ -46,26 +42,7 @@
   base_image_digest: c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-15'
-- project: espeak-ng
-  language: c++
-  error_time: 2023-4-3
-  last_success_time: ''
-  oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
-  fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-55ee4d54-bda3-46a2-9566-7f611c1a041c.txt
-  software_repo_url: https://github.com/espeak-ng/espeak-ng
-  software_sha: 12b58fbcb211024d6883b2028206bf94fab4f349
-  engine: afl
-  sanitizer: address
-  architecture: x86_64
-  base_image_digest: c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
-  error_category: RC13
-  fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-15'
+
 - project: binutils
   language: c++
   error_time: '2025-10-03'
@@ -80,9 +57,7 @@
   base_image_digest: 8fc5606cec35d1cab8811d4eb15e44698bbd03e93eaafd3012d6e6231b2ff825
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-15'
+
 - project: glslang
   language: c++
   error_time: '2025-09-26'
@@ -97,9 +72,7 @@
   base_image_digest: 6692645e422f938af87ea2a77d721f67f7de87294fc999952d34ded0c6a286c1
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-15'
+
 - project: augeas
   language: c++
   error_time: '2025-12-16'
@@ -114,9 +87,7 @@
   base_image_digest: 2d948a5c2c9c11c50ff8a59da5916e4eec1c9abf2638cfe683d96e804994aa5b
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-15'
+
 - project: bind9
   language: c
   error_time: '2025-11-28'
@@ -131,9 +102,7 @@
   base_image_digest: f51f7e08f410e2d4453693bb0cae3f6bdc53470e8b6bf33ae10fd98757f4e35c
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-15'
+
 - project: bind9
   language: c
   error_time: '2025-09-24'
@@ -148,9 +117,7 @@
   base_image_digest: 24ece23c6e7e4483fd49b19c31e4084992088b58a902c3c45d74d10541f3aa40
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-15'
+
 - project: croaring
   language: c
   error_time: '2025-10-29'
@@ -165,9 +132,7 @@
   base_image_digest: 71425dd88e177abd8d71f351fe6148e8b6a93695aeb109a8b6fb2c7c002c9e65
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-15'
+
 - project: cryptography
   language: python
   error_time: '2025-10-05'
@@ -182,9 +147,7 @@
   base_image_digest: 76fc4d8513691cfd7031464348a8fe46810c243c04344fe6211363bcdd6d245e
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-15'
+
 - project: ffmpeg
   language: c++
   error_time: '2025-12-29'
@@ -199,9 +162,7 @@
   base_image_digest: d3d8677becbf294a659cb94161133231e290a4794d4bed344d3d6d8274f76cd5
   error_category: RC25
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-16'
+
 - project: ffmpeg
   language: c++
   error_time: '2025-12-05'
@@ -216,9 +177,7 @@
   base_image_digest: bdbe44209365fbbabc2c1a83e7a67cc69cc843caf641ffa1c53f357a284873c0
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-16'
+
 - project: freerdp
   language: c
   error_time: '2025-09-26'
@@ -233,9 +192,7 @@
   base_image_digest: fff6dfd3cd34356d1f99d47aff87c24db5706c229c8bc67726d330bd29881ee8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-16'
+
 - project: fwupd
   language: c
   error_time: '2025-12-05'
@@ -250,9 +207,7 @@
   base_image_digest: bdbe44209365fbbabc2c1a83e7a67cc69cc843caf641ffa1c53f357a284873c0
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: fwupd
   language: c
   error_time: '2025-09-25'
@@ -267,9 +222,7 @@
   base_image_digest: fff6dfd3cd34356d1f99d47aff87c24db5706c229c8bc67726d330bd29881ee8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: gdal
   language: c++
   error_time: '2025-11-11'
@@ -284,9 +237,7 @@
   base_image_digest: 0c229e61349e6e5f4dbcfd433b2b0b5906012d49216675a6402ad1ed270715c4
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-16'
+
 - project: gdal
   language: c++
   error_time: '2025-12-25'
@@ -301,9 +252,7 @@
   base_image_digest: e131f2ae8ecf2609888e5ced0571fdfe1241a345addb397954bff9ac13c6a0fa
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-16'
+
 - project: gdal
   language: c++
   error_time: '2025-09-22'
@@ -318,9 +267,7 @@
   base_image_digest: da1935bce8ffd5308f198945e0902752866aeb835b461aa0e64367b144af0327
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-16'
+
 - project: gdal
   language: c++
   error_time: '2025-09-26'
@@ -335,9 +282,7 @@
   base_image_digest: 6692645e422f938af87ea2a77d721f67f7de87294fc999952d34ded0c6a286c1
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-16'
+
 - project: gpsd
   language: c
   error_time: '2025-11-22'
@@ -352,9 +297,7 @@
   base_image_digest: 5b4a8d18f9a854c128279c66c609f4f9c8dc29da9681ec1ecb98c5c1bb7f98e6
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: haproxy
   language: c++
   error_time: '2025-10-22'
@@ -369,9 +312,7 @@
   base_image_digest: 7c5b9586c5189795eda6f25b32ba708fa0a302bc08f9d68c00f0197dac978104
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: jooq
   language: jvm
   error_time: '2025-10-11'
@@ -386,9 +327,7 @@
   base_image_digest: 3f0869fe5b9309d76fbd35dce84b8ca4f0dede96123f12e80ed093ec188983ce
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: jooq
   language: jvm
   error_time: '2025-10-16'
@@ -403,9 +342,7 @@
   base_image_digest: f0f37a249da32e990c88289f6880bbb298c215c390b0da9aad5b2270ddb69cd6
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: jooq
   language: jvm
   error_time: '2025-10-22'
@@ -420,9 +357,7 @@
   base_image_digest: 4592ec00d5d472f47714ae3cb8be8ab1447715dbc43a4157f6a19166e1b09822
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: jooq
   language: jvm
   error_time: '2025-11-26'
@@ -437,9 +372,7 @@
   base_image_digest: 8b23955caaed68d9b1d248a868633c63e4b12667cbe61f7062cf42e986a95905
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: jq
   language: c
   error_time: '2025-10-05'
@@ -454,9 +387,7 @@
   base_image_digest: 95d5aea07f19d05e50eef7b71717da9c964b72481fff94d0a4efe3fe5284c7f2
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: kea
   language: c++
   error_time: '2025-11-22'
@@ -471,9 +402,7 @@
   base_image_digest: 5b4a8d18f9a854c128279c66c609f4f9c8dc29da9681ec1ecb98c5c1bb7f98e6
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: libidn2
   language: c++
   error_time: '2025-09-29'
@@ -488,9 +417,7 @@
   base_image_digest: afe20f9028006920dd8fea1366f514d917e8c483c3b7f04d923b0cdd5c93af26
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: librdkafka
   language: c++
   error_time: '2025-11-07'
@@ -505,9 +432,7 @@
   base_image_digest: 0c229e61349e6e5f4dbcfd433b2b0b5906012d49216675a6402ad1ed270715c4
   error_category: 'RC9: Dependency issues'
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-16'
+
 - project: libstdcpp
   language: c++
   error_time: '2025-10-08'
@@ -522,9 +447,7 @@
   base_image_digest: 2b7ffc98a5b69b2b7a1c9a661f9831eec1e37669d100c259425d0fd23435e89f
   error_category: 'RC13: Source code compilation errors'
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-16'
+
 - project: libstdcpp
   language: c++
   error_time: '2025-12-14'
@@ -539,9 +462,7 @@
   base_image_digest: 6d7dd44ebec7ae27386a7b8a37ce0e827fe1604c33ef5a3a009a10f0fdf7bc34
   error_category: 'RC13: Source code compilation errors'
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-16'
+
 - project: libtpms
   language: c++
   error_time: '2025-09-24'
@@ -556,9 +477,7 @@
   base_image_digest: 24ece23c6e7e4483fd49b19c31e4084992088b58a902c3c45d74d10541f3aa40
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-16'
+
 - project: libvips
   language: c++
   error_time: '2025-12-03'
@@ -573,9 +492,7 @@
   base_image_digest: a6e85b2d7c098ed87d8c51980d24ae07b262a2becf42fd099d02c90f07e51d98
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-17'
+
 - project: libyal
   language: c
   error_time: '2025-10-31'
@@ -590,9 +507,7 @@
   base_image_digest: 81c0c136cda1ba3f85fd41f65851f7feb942a5fc0aeca4c4f02fb53fa5e835d8
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-17'
+
 - project: mosquitto
   language: c
   error_time: '2025-12-11'
@@ -607,9 +522,7 @@
   base_image_digest: 86a0102fd71cec2bc5bb42657faa089c6ab8303342d14a22ef002ead16863b53
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-17'
+
 - project: neomutt
   language: c++
   error_time: '2026-01-02'
@@ -624,9 +537,7 @@
   base_image_digest: 2d948a5c2c9c11c50ff8a59da5916e4eec1c9abf2638cfe683d96e804994aa5b
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-17'
+
 - project: ntopng
   language: c++
   error_time: '2026-01-03'
@@ -641,9 +552,7 @@
   base_image_digest: 9bdf381e5bceb723e4201b2d2bbf79ed474c73d64b871e6102724de93d8702fc
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-17'
+
 - project: ots
   language: c++
   error_time: '2025-11-11'
@@ -658,9 +567,7 @@
   base_image_digest: 0c229e61349e6e5f4dbcfd433b2b0b5906012d49216675a6402ad1ed270715c4
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-17'
+
 - project: poppler
   language: c++
   error_time: '2025-11-18'
@@ -675,9 +582,7 @@
   base_image_digest: a651f096640e8132687793856658f6e8592e6a44e736e25b188f345778636d85
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-17'
+
 - project: proj4
   language: c++
   error_time: '2025-11-16'
@@ -692,9 +597,7 @@
   base_image_digest: cede7bc2cc2ece182ffb31a0d118e0e3ade537b2ea40803829f19373815bb8f8
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-17'
+
 - project: relic
   language: c++
   error_time: '2025-10-04'
@@ -709,26 +612,7 @@
   base_image_digest: 3f5877c3af4e971e79b6b0530aebaaabc262c3a7a2f858cf0ca33a2f34d5711b
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-17'
-- project: surrealdb
-  language: rust
-  error_time: '2025-10-11'
-  last_success_time: ''
-  oss-fuzz_sha: 3775fff873ca34ab6dcf4dad544f3eba224e7b77
-  fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-95ca8fa5-a07a-42f2-b47a-34eb88d5b0cd.txt
-  software_repo_url: https://github.com/surrealdb/docs.surrealdb.com.git
-  software_sha: 3ca36ddf2e54380a69ed3d61c43884a62724b030
-  engine: libfuzzer
-  sanitizer: address
-  architecture: x86_64
-  base_image_digest: 902cc445e3a2102a1e30b63000e855a3cf4064b763d0d5357433aba07ecdb887
-  error_category: RC13
-  fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-17'
+
 - project: tinysparql
   language: c
   error_time: '2025-11-06'
@@ -743,9 +627,7 @@
   base_image_digest: 0c229e61349e6e5f4dbcfd433b2b0b5906012d49216675a6402ad1ed270715c4
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-17'
+
 - project: wasmer
   language: rust
   error_time: '2025-12-30'
@@ -760,9 +642,7 @@
   base_image_digest: 250e04396d9dc78bdffadf2dc5dcb36fabdf176bbbe02a69d648deffb21edd80
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-17'
+
 - project: xmlsec
   language: c++
   error_time: '2025-10-31'
@@ -777,9 +657,7 @@
   base_image_digest: 81c0c136cda1ba3f85fd41f65851f7feb942a5fc0aeca4c4f02fb53fa5e835d8
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-17'
+
 - project: xpdf
   language: c++
   error_time: '2025-11-15'
@@ -794,9 +672,7 @@
   base_image_digest: eb1da8283405680c0e1792f285f3c7574a58515cccb43e15e8788d565e3690e5
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-17'
+
 - project: dovecot
   language: c
   error_time: '2025-10-10'
@@ -811,9 +687,7 @@
   base_image_digest: b79d3707eeffb6c75a530689b5ade9038bd005628f44d30c62680f4b810c3900
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-17'
+
 - project: glaze
   language: c++
   error_time: '2025-09-16'
@@ -828,9 +702,7 @@
   base_image_digest: 192b038764086fcd174a3afd7341abe6e922701b0d8440524552fd9976e72a30
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-18'
+
 - project: aptos-core
   language: rust
   error_time: '2026-01-30'
@@ -845,9 +717,7 @@
   base_image_digest: 3b59b56cf0480e6109e0a083d0c39321cb8e7c94fa4612f85baa1a9b5c5606eb
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-18'
+
 - project: bazel-rules-fuzzing-test
   language: c++
   error_time: '2025-12-30'
@@ -862,12 +732,10 @@
   base_image_digest: c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-18'
+
 - project: bls-signatures
   language: c++
-  error_time: 2025-2-23
+  error_time: '2025-2-23'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3c137f5e-154f-432b-84a9-6d1d531b219a.txt
@@ -879,12 +747,10 @@
   base_image_digest: ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-18'
+
 - project: dulwich
   language: python
-  error_time: 2025-7-12
+  error_time: '2025-7-12'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-5e4c2e8f-340d-4f1a-a97f-f6d8428fb801.txt
@@ -896,43 +762,7 @@
   base_image_digest: dc874b30131ad1b5cd8358f3413332a2aa50906d6f201d7f38239f92d295a895
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-18'
-- project: bls-signatures
-  language: c++
-  error_time: 2025-2-23
-  last_success_time: ''
-  oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
-  fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3c137f5e-154f-432b-84a9-6d1d531b219a.txt
-  software_repo_url: https://github.com/mratsim/constantine
-  software_sha: 8e117d74f165297a7a459e3cea3911dff8fe105c
-  engine: afl
-  sanitizer: address
-  architecture: x86_64
-  base_image_digest: ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
-  error_category: RC13
-  fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-18'
-- project: dulwich
-  language: python
-  error_time: 2025-7-12
-  last_success_time: ''
-  oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
-  fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-5e4c2e8f-340d-4f1a-a97f-f6d8428fb801.txt
-  software_repo_url: https://github.com/jelmer/dulwich.git
-  software_sha: 44f64531f0fc8b428b0544787dfdbea8919d1b53
-  engine: libfuzzer
-  sanitizer: address
-  architecture: x86_64
-  base_image_digest: dc874b30131ad1b5cd8358f3413332a2aa50906d6f201d7f38239f92d295a895
-  error_category: RC9
-  fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-18'
+
 - project: envoy
   language: c++
   error_time: '2025-12-11'
@@ -947,9 +777,7 @@
   base_image_digest: 56905c98ae0083d14da0e7371184e694560a74750533f321ac0e9145af0e8d2e
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-18'
+
 - project: g-py-crc32c
   language: python
   error_time: '2025-12-11'
@@ -964,9 +792,7 @@
   base_image_digest: 5a22963e0582b5ce74e3dac5c175a321dc0cbe319c2851c370b885588327a055
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-18'
+
 - project: glaze
   language: c++
   error_time: '2026-12-19'
@@ -981,12 +807,10 @@
   base_image_digest: 6878d9fa5979df15166e69f79e340ad4dc686056f5c8bfcd76614ca492b73d9b
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-18'
+
 - project: hiredis
   language: c
-  error_time: 2025-4-10
+  error_time: '2025-4-10'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-ce84f796-6b52-4784-8e5a-c41c52a879b9.txt
@@ -998,9 +822,7 @@
   base_image_digest: c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Success
-  fix_date: '2026-02-18'
+
 - project: libcacard
   language: c
   error_time: '2025-11-22'
@@ -1015,12 +837,10 @@
   base_image_digest: 5b4a8d18f9a854c128279c66c609f4f9c8dc29da9681ec1ecb98c5c1bb7f98e6
   error_category: 'RC9: Dependency issues'
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-18'
+
 - project: libecc
   language: c++
-  error_time: 2025-4-12
+  error_time: '2025-4-12'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-95e1b2ff-c169-450f-a950-211e91318b81.txt
@@ -1032,12 +852,10 @@
   base_image_digest: 19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e
   error_category: 'RC9: Dependency issues'
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-18'
+
 - project: linkerd2-proxy
   language: rust
-  error_time: 2024-11-6
+  error_time: '2024-11-6'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-4a51d346-d82e-44a8-bf6d-9bb1f841f6f1.txt
@@ -1049,12 +867,10 @@
   base_image_digest: ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-18'
+
 - project: lwan
   language: c++
-  error_time: 2025-5-12
+  error_time: '2025-5-12'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-80ff7bd1-d840-4a16-ba27-ad0d86c1b5b5.txt
@@ -1066,12 +882,10 @@
   base_image_digest: 2d948a5c2c9c11c50ff8a59da5916e4eec1c9abf2638cfe683d96e804994aa5b
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: lxc
   language: c
-  error_time: 2025-9-10
+  error_time: '2025-9-10'
   last_success_time: ''
   oss-fuzz_sha: 65e24169d0d6ee8e4cc73dda3f259bbb578e1b33
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-99746d19-9c68-4626-948c-b3fa583e63fa.txt
@@ -1083,9 +897,7 @@
   base_image_digest: c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: mariadb
   language: c++
   error_time: '2025-09-16'
@@ -1100,9 +912,7 @@
   base_image_digest: 192b038764086fcd174a3afd7341abe6e922701b0d8440524552fd9976e72a30
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: miniz_oxide
   language: rust
   error_time: '2025-12-17'
@@ -1117,12 +927,10 @@
   base_image_digest: ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: mongo-go-driver
   language: go
-  error_time: 2025-4-1
+  error_time: '2025-4-1'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-f790e381-dba0-45ad-a0fc-2b04385dff1a.txt
@@ -1134,12 +942,10 @@
   base_image_digest: 9806209b04778365618e577b790c9f6cc32b1c76478d3e3c0d36a27066a9cdd8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: numexpr
   language: python
-  error_time: 2025-6-9
+  error_time: '2025-6-9'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-0efbf59d-34ef-45c1-a033-b8a0724a56e7.txt
@@ -1151,12 +957,10 @@
   base_image_digest: ac324a2bbc1c4af0153b53528ee40b99dddca2c8466d66e7a051c598470b51f5
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: perfetto
   language: c++
-  error_time: 2025-9-9
+  error_time: '2025-9-9'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3c530cd7-abef-4413-9dd1-d7d3d00959a7.txt
@@ -1168,9 +972,7 @@
   base_image_digest: c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: postgresql
   language: c
   error_time: '2025-10-10'
@@ -1185,12 +987,10 @@
   base_image_digest: b79d3707eeffb6c75a530689b5ade9038bd005628f44d30c62680f4b810c3900
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: powsybl-java
   language: jvm
-  error_time: 2025-9-5
+  error_time: '2025-9-5'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3ed509a8-30d1-4f44-9359-ddac880a8d13.txt
@@ -1202,9 +1002,7 @@
   base_image_digest: 0e840cdb4acf06981b9461f04eb825531842b2117bcdab1423961492c293584f
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: quiche
   language: c++
   error_time: '2024-10-30'
@@ -1219,12 +1017,10 @@
   base_image_digest: 19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: scrypt
   language: rust
-  error_time: 2025-2-23
+  error_time: '2025-2-23'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-d6332223-bc30-40c9-bd15-360b3b794bcb.txt
@@ -1236,12 +1032,10 @@
   base_image_digest: 250e04396d9dc78bdffadf2dc5dcb36fabdf176bbbe02a69d648deffb21edd80
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: serde-yaml
   language: rust
-  error_time: 2025-9-9
+  error_time: '2025-9-9'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-31352efd-9ece-4457-bf4e-a7eb63043073.txt
@@ -1253,12 +1047,10 @@
   base_image_digest: ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: spring-integration
   language: jvm
-  error_time: 2023-6-23
+  error_time: '2023-6-23'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-be88c896-89bf-49e2-bc39-859c8143324b.txt
@@ -1270,12 +1062,10 @@
   base_image_digest: a8548b0e00e39be28ab27d2c8c89345b2aa2c4351a23a1c65a97e89692aafb10
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: starnix-netlink
   language: rust
-  error_time: 2025-1-11
+  error_time: '2025-1-11'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-7361411f-4016-4b9c-bfc1-08e91ff71950.txt
@@ -1287,9 +1077,7 @@
   base_image_digest: ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: surrealdb
   language: rust
   error_time: '2025-10-11'
@@ -1304,9 +1092,7 @@
   base_image_digest: 902cc445e3a2102a1e30b63000e855a3cf4064b763d0d5357433aba07ecdb887
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: surrealdb
   language: rust
   error_time: '2025-11-29'
@@ -1321,12 +1107,10 @@
   base_image_digest: 95dafdde789fc614760b8f3be538a7797f44d5a340b9e7aac8afddf9f40802a1
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: tensorflow
   language: c++
-  error_time: 2024-5-6
+  error_time: '2024-5-6'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3b3efa36-a25f-449f-b78e-01c9d6978147.txt
@@ -1338,12 +1122,10 @@
   base_image_digest: 19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: toml_edit
   language: rust
-  error_time: 2025-5-1
+  error_time: '2025-5-1'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-7cecd0af-7959-4a65-a765-93710aa45f1b.txt
@@ -1355,9 +1137,7 @@
   base_image_digest: ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
   error_category: RC9
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: relic
   language: c++
   error_time: '2026-02-08'
@@ -1372,9 +1152,7 @@
   base_image_digest: 2cfc6e3d4fb13bd03739be6a2fefd199814d18fd93e5d24551f4dead3504b7ba
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: e2fsprogs
   language: c
   error_time: '2025-12-24'
@@ -1389,9 +1167,7 @@
   base_image_digest: c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: grpc-swift
   language: swift
   error_time: '2025-10-07'
@@ -1406,9 +1182,7 @@
   base_image_digest: 1051d1a0a51f82987e4fa36f85dd8cee525df635f8523ac35575086979625e67
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: irssi
   language: c++
   error_time: '2025-12-22'
@@ -1423,46 +1197,10 @@
   base_image_digest: 5e40d420b53050255d78548ef630b7d321df96da62e69bb5d1de247651cca9aa
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
-- project: ntopng
-  language: c++
-  error_time: '2026-01-03'
-  last_success_time: ''
-  oss-fuzz_sha: 3f6797671645f6843f2b735162f75e842dbb9f40
-  fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-9a08d366-099c-4d94-92d4-a23e1901e7e2.txt
-  software_repo_url: https://github.com/ntop/nDPI.git
-  software_sha: 6eb2256ce6a6b6ebe1fecc02c5f3083c36b1997e
-  engine: libfuzzer
-  sanitizer: address
-  architecture: x86_64
-  base_image_digest: 9bdf381e5bceb723e4201b2d2bbf79ed474c73d64b871e6102724de93d8702fc
-  error_category: RC9
-  fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
-- project: proj4
-  language: c++
-  error_time: '2025-11-16'
-  last_success_time: ''
-  oss-fuzz_sha: 31df0781d931780746a63a1a6d7de4e9798dda5a
-  fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-6b0d4015-b0f5-4828-85e3-5dcf43bf9972.txt
-  software_repo_url: https://github.com/OSGeo/PROJ
-  software_sha: ea513336471dd00f4572d750c3e7cd2dd47b7e81
-  engine: afl
-  sanitizer: address
-  architecture: x86_64
-  base_image_digest: cede7bc2cc2ece182ffb31a0d118e0e3ade537b2ea40803829f19373815bb8f8
-  error_category: RC9
-  fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'
+
 - project: bazel-rules-fuzzing-test
   language: c++
-  error_time: 2026-2-3
+  error_time: '2026-2-3'
   last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-8b0f371c-c0ba-4acd-b14b-103ac46e7767.txt
@@ -1474,6 +1212,3 @@
   base_image_digest: c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
   error_category: RC13
   fixed_state: 'no'
-  state: 'yes'
-  fix_result: Failure
-  fix_date: '2026-02-19'

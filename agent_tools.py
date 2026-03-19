@@ -795,32 +795,58 @@ def read_projects_from_yaml(file_path: str) -> Dict:
 
 # Core Tools
 def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
-    print(f"--- Tool: force_clean_git_repo (v2) called for: {repo_path} ---")
+    """
+    【权限自愈版 v3】强制清理 Git 仓库。
+    通过 Docker chown 物理夺回被容器锁定的文件权限，确保清理 100% 成功。
+    """
+    import os, subprocess
+    print(f"--- Tool: force_clean_git_repo (Permission Aware) called for: {repo_path} ---")
 
     if not os.path.isdir(os.path.join(repo_path, ".git")):
         return {'status': 'error', 'message': f"Directory '{repo_path}' is not a valid Git repository."}
 
     original_path = os.getcwd()
     try:
-        os.chdir(repo_path)
+        abs_repo_path = os.path.abspath(repo_path)
 
-        # 1. First, switch to the main branch. Using -f or --force can force a switch, but resetting first is safer.
-        # 2. Force reset to HEAD, which will discard all modifications in the working directory. This is the most critical step.
+        # --- [核心补丁：物理夺回权限] ---
+        # 解决 Docker root 产生的 .deps/ 等文件无法被宿主机用户删除的问题
+        try:
+            uid = os.getuid()
+            gid = os.getgid()
+            # 挂载当前目录到临时容器，将所有权改回宿主机当前用户
+            fix_perm_cmd = [
+                "docker", "run", "--rm",
+                "-v", f"{abs_repo_path}:/src",
+                "alpine", "chown", "-R", f"{uid}:{gid}", "/src"
+            ]
+            subprocess.run(fix_perm_cmd, capture_output=True, check=True)
+            print(f"--- Successfully reclaimed ownership of {repo_path} ---")
+        except Exception as perm_err:
+            # 仅作为警告，不中断流程，尝试后续普通清理
+            print(f"--- Warning: Could not fix permissions via Docker: {perm_err} ---")
+
+        os.chdir(abs_repo_path)
+
+        # 1. 物理重置所有受版本控制的更改
         subprocess.run(["git", "reset", "--hard", "HEAD"], capture_output=True, text=True, check=True)
 
-        # 3. Now that the workspace is clean, we can safely switch branches.
-        main_branch = "main" if "main" in subprocess.run(["git", "branch", "--list"], capture_output=True, text=True).stdout else "master"
+        # 2. 安全切换分支（处理 main/master 兼容性）
+        branch_res = subprocess.run(["git", "branch", "--list"], capture_output=True, text=True)
+        main_branch = "main" if "main" in branch_res.stdout else "master"
         subprocess.run(["git", "switch", main_branch], capture_output=True, text=True, check=True)
 
-        # 4. Remove all untracked files and directories (e.g., build artifacts, logs).
+        # 3. 彻底删除不受版本控制的文件和目录（此时由于权限已修复，不应再报错）
         subprocess.run(["git", "clean", "-fdx"], capture_output=True, text=True, check=True)
 
-        message = f"Successfully force-cleaned the repository '{repo_path}'. All local changes and untracked files have been removed."
+        message = f"Successfully force-cleaned the repository '{repo_path}' with ownership correction."
         print(message)
         return {'status': 'success', 'message': message}
 
     except subprocess.CalledProcessError as e:
-        message = f"Failed to force-clean repository '{repo_path}': {e.stderr.strip()}"
+        # 提取详细的错误输出（如 git clean 报错的具体文件）
+        err_msg = e.stderr.strip() if e.stderr else str(e)
+        message = f"Failed to force-clean repository '{repo_path}': {err_msg}"
         print(f"--- ERROR: {message} ---")
         return {'status': 'error', 'message': message}
     except Exception as e:
