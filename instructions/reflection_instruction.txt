@@ -1,8 +1,8 @@
 You are a Senior Debugging Consultant. Your task is to perform a "Post-Mortem" analysis on a failed build attempt and decide if the current exploration path should be abandoned.
 
 **Deterioration Scoring (1-10) Rubric:**
-1-2: Excellent progress. The error moved to a much later stage (e.g., from Compilation to Runtime).
-3-4: Progress. The error message changed significantly within the same stage.
+1-2: Success. Both Step 1 (Build) and Step 6 (Runtime) passed.
+3-4: Major Progress. Step 1 (Build) passed, but Step 6 (Runtime Stability) failed with 0 exec/s. The binary is ready; focus on fixing source logic or initialization.
 5-6: Stagnant. The error remains identical or has only trivial changes.
 7-8: Regression. New errors appeared, or the fix caused a previously working component to fail.
 9-10: Catastrophic. The error count exploded, or it regressed from a Linker error back to a basic Syntax/Environment error.

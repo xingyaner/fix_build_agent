@@ -1531,16 +1531,19 @@ def delete_file(file_path: str) -> dict:
 
 
 def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_folder_path: str, attempt_id: int,
-                         expert_knowledge: str = "", enhanced_history: str = "") -> dict:
+                         expert_knowledge: str = "", enhanced_history: str = "",
+                         validation_report: dict = None) -> dict:
     """
-    【源码预算调度版 - 全量替换】
+    【源码预算调度与深度验证集成版 - 全量替换】
     1. 物理预算：GLOBAL_CHAR_BUDGET = 280,000 (约 80k Token)。
-    2. 优先级加载：核心报错文件 > 构建脚本 > 其他文件。
-    3. 动态降级：当预算接近耗尽时，自动从 full 模式降级为 tail_30 或 name_only。
+    2. 深度验证注入：将 1+6 准则审计结论以脱水精简格式置于 Prompt 头部。
+    3. 优先级加载：核心报错文件 (Level 1) > 构建脚本 (Level 2) > 其他辅助文件 (Level 3)。
+    4. 动态降级：根据剩余配额自动调整读取模式 (full -> tail_50 -> tail_30 -> name_only)。
     """
     import os, re
     from agent_tools import read_file_content, save_file_tree_shallow, truncate_prompt_file
 
+    print(f"--- Workflow Tool: prompt_generate_tool started (Attempt: {attempt_id}) ---")
     PROMPT_DIR = "generated_prompt_file"
     PROMPT_FILE_PATH = os.path.join(PROMPT_DIR, "prompt.txt")
     FUZZ_LOG_PATH = "fuzz_build_log_file/fuzz_build_log.txt"
@@ -1552,15 +1555,43 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     # Step 1: 识别 Level 1 优先级文件（通过报错日志和 HAFix 报告提取）
     context_stream = expert_knowledge + enhanced_history
     if os.path.exists(FUZZ_LOG_PATH):
-        with open(FUZZ_LOG_PATH, 'r', encoding='utf-8') as lf:
-            context_stream += "".join(lf.readlines()[-50:])
+        try:
+            with open(FUZZ_LOG_PATH, 'r', encoding='utf-8', errors='ignore') as lf:
+                context_stream += "".join(lf.readlines()[-50:])
+        except:
+            pass
 
-    # 提取潜在的文件名路径
     candidates = re.findall(r"([\w\-\./]+\.(?:c|cpp|h|cc|swift|sh|py|java))", context_stream)
     l1_filenames = set([os.path.basename(c) for c in candidates])
 
+    if not os.path.isdir(config_folder_path):
+        return {"status": "error", "message": f"Config path error: {config_folder_path}"}
+
+    os.makedirs(PROMPT_DIR, exist_ok=True)
+    project_name = os.path.basename(os.path.abspath(project_main_folder_path))
+
     with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
-        f.write(f"Testing Expert. Project: {os.path.basename(project_main_folder_path)}. Attempt: {attempt_id}\n")
+        f.write(f"Testing Expert. Project: {project_name}. Attempt: {attempt_id}\n")
+
+        # --- [新增：1+6 验证结果精简注入] ---
+        if validation_report:
+            f.write("\n--- 【LAST BUILD VALIDATION (1+6 CRITERIA)】 ---\n")
+            # 硬指标始终展示
+            s1 = validation_report.get('step_1_static_output', 'N/A')
+            s6 = validation_report.get('step_6_runtime_stability', 'N/A')
+            f.write(f"CRITICAL - Step 1 (Binary Existence): {s1}\n")
+            f.write(f"CRITICAL - Step 6 (Runtime Stability): {s6}\n")
+
+            # 辅助指标脱水：仅展示非 pass 项
+            warnings = []
+            for k in ["step_2_sanitizer_injected", "step_3_engine_linked", "step_4_logic_linked",
+                      "step_5_dependencies_ok"]:
+                status = validation_report.get(k, 'N/A')
+                if 'pass' not in str(status).lower():
+                    warnings.append(f"{k}: {status}")
+            if warnings:
+                f.write("QUALITY WARNINGS (Reference): " + "; ".join(warnings) + "\n")
+
         f.write(f"\n【ENHANCED HISTORY】\n{enhanced_history}\n")
         f.write(f"\n【STRATEGIC KNOWLEDGE】\n{expert_knowledge}\n")
 
@@ -1600,123 +1631,188 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
         f.write(f"\n\n--- BUILD LOG TAIL ---\n{log_res.get('content', '')}")
 
     truncate_prompt_file(PROMPT_FILE_PATH, max_lines=2500)
-    with open(PROMPT_FILE_PATH, "r", encoding="utf-8") as rf:
-        return {"status": "success", "content": rf.read()}
+    try:
+        with open(PROMPT_FILE_PATH, "r", encoding="utf-8") as rf:
+            full_content = rf.read()
+        # 清洗不可见字符，确保下游传输安全
+        clean_content = "".join(c for c in full_content if c.isprintable() or c in '\n\r\t')
+        return {"status": "success", "content": clean_content}
+    except Exception as e:
+        return {"status": "error", "message": f"Final prompt read error: {str(e)}"}
 
 
-def run_fuzz_build_streaming(
-    project_name: str,
-    oss_fuzz_path: str,
-    sanitizer: str,
-    engine: str,
-    architecture: str,
-    mount_path: Optional[str] = None  # 新增可选参数
+def _auto_discover_project_symbols(binary_path: str, project_name: str) -> Optional[List[str]]:
+    """启发式查找项目特有符号"""
+    import subprocess
+    try:
+        result = subprocess.run(['nm', '-D', binary_path], capture_output=True, text=True, errors='ignore')
+        if result.returncode != 0:
+            result = subprocess.run(['nm', binary_path], capture_output=True, text=True, errors='ignore')
+
+        lines = result.stdout.splitlines()
+        keywords = [project_name.lower(), "deflate", "inflate", "adler32", "crc32"] if project_name == "zlib" else [
+            project_name.lower()]
+        boilerplate = ('__asan', '__lsan', '__ubsan', '__sanitizer', 'fuzzer::', 'LLVM', 'afl_', '_Z', 'std::')
+
+        candidates = []
+        for line in lines:
+            parts = line.split()
+            if not parts: continue
+            symbol = parts[-1]
+            if any(kw in symbol.lower() for kw in keywords) and not symbol.startswith(boilerplate):
+                candidates.append(symbol)
+        return candidates[:5] if candidates else None
+    except:
+        return None
+
+
+def _cleanup_environment(oss_fuzz_path: str, project_name: str):
+    """环境净化机制：清理残留容器并释放文件句柄"""
+    import subprocess, os, time, errno
+    print(f"[*] Pre-build cleanup for project: {project_name}")
+    try:
+        # 停止相关容器
+        subprocess.run(f"docker ps -q --filter \"ancestor=gcr.io/oss-fuzz/{project_name}\" | xargs -r docker kill",
+                       shell=True, capture_output=True)
+        subprocess.run("docker ps -q --filter \"ancestor=gcr.io/oss-fuzz-base/base-runner\" | xargs -r docker kill",
+                       shell=True, capture_output=True)
+    except:
+        pass
+
+    out_dir = os.path.join(oss_fuzz_path, "build", "out", project_name)
+    if os.path.exists(out_dir):
+        for i in range(3):
+            busy = False
+            try:
+                for f in os.listdir(out_dir):
+                    if not f.endswith(('.so', '.a', '.zip', '.dict', '.options', '.txt')):
+                        f_path = os.path.join(out_dir, f)
+                        if os.path.isfile(f_path):
+                            try:
+                                os.remove(f_path)
+                            except OSError as e:
+                                if e.errno == errno.ETXTBSY: busy = True
+                if not busy: break
+                time.sleep(2)
+            except:
+                pass
+
+
+def run_fuzz_build_and_validate(
+        project_name: str,
+        oss_fuzz_path: str,
+        sanitizer: str,
+        engine: str,
+        architecture: str,
+        mount_path: Optional[str] = None
 ) -> dict:
     """
-    【增强版】执行 Fuzzing 构建命令。
-    如果提供了 mount_path，则使用挂载本地源码的命令格式。
+    【1+6 成功准则版 - 控制台增强】
+    成功标准：
+    1. 物理构建成功并产生目标文件 (Step 1)
+    2. 压力测试中检测到执行速率 (Step 6)
+    其他步骤 (2-5) 仅作为质量参考，不影响判定。
     """
-    print(f"--- Tool: run_fuzz_build_streaming (Enhanced) called for project: {project_name} ---")
-    if mount_path:
-        print(f"--- Build Mode: Source Mount (Path: {mount_path}) ---")
-    else:
-        print(f"--- Build Mode: Standard Configuration ---")
+    import os, sys, subprocess, time, signal
+    print(f"--- Tool: run_fuzz_build_and_validate (1+6 Criteria) called for: {project_name} ---")
+    _cleanup_environment(oss_fuzz_path, project_name)
 
     LOG_DIR = "fuzz_build_log_file"
     LOG_FILE_PATH = os.path.join(LOG_DIR, "fuzz_build_log.txt")
     os.makedirs(LOG_DIR, exist_ok=True)
 
+    report = {
+        "step_1_static_output": "pending", "step_2_sanitizer_injected": "pending",
+        "step_3_engine_linked": "pending", "step_4_logic_linked": "pending",
+        "step_5_dependencies_ok": "pending", "step_6_runtime_stability": "pending"
+    }
+
     try:
-        helper_script_path = os.path.join(oss_fuzz_path, "infra/helper.py")
-        
-        # 构建基础命令
-        command = ["python3.10", helper_script_path, "build_fuzzers"]
-        
-        # 根据策略调整参数顺序
-        # 格式 1 (Config Fix): build_fuzzers --sanitizer ... <project_name>
-        # 格式 2 (Source Fix): build_fuzzers <project_name> <source_path> --sanitizer ...
-        
-        if mount_path:
-            # 源码挂载模式：显式指定项目名和路径
-            command.append(project_name)
-            command.append(mount_path)
-        
-        # 添加通用参数
-        command.extend([
-            "--sanitizer", sanitizer, 
-            "--engine", engine, 
-            "--architecture", architecture
-        ])
+        # Phase 1: Build
+        helper_path = os.path.join(oss_fuzz_path, "infra/helper.py")
+        command = ["python3", helper_path, "build_fuzzers"]
+        if mount_path: command.extend([project_name, mount_path])
+        command.extend(["--sanitizer", sanitizer, "--engine", engine, "--architecture", architecture])
+        if not mount_path: command.append(project_name)
 
-        # 如果不是挂载模式，项目名通常在最后（或者根据 helper.py 的具体实现，放在中间也可以，但为了保险起见，遵循标准 oss-fuzz 用法）
-        # 标准用法通常是: build_fuzzers --args project_name
-        if not mount_path:
-            command.append(project_name)
-
-        print(f"--- Executing command: {' '.join(command)} ---")
-
-        process = subprocess.Popen(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            bufsize=1,
-            cwd=oss_fuzz_path,
-            encoding='utf-8',
-            errors='ignore'
-        )
-
-        full_log_content = []
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1,
+                                   cwd=oss_fuzz_path)
+        full_log = []
         for line in process.stdout:
             print(line, end='', flush=True)
-            full_log_content.append(line)
-        
+            full_log.append(line)
         process.wait()
-        return_code = process.returncode
-        print("\n--- Fuzzing process finished. ---")
+        final_log = "".join(full_log)
 
-        final_log = "".join(full_log_content)
-        
-        failure_keywords = [
-            "error:", "failed:", "timeout", "timed out", "build failed",
-            "no such package", "error loading package", "failed to fetch"
-        ]
-        
-        success_keywords = ["build completed successfully", "successfully built"]
-        
-        is_truly_successful = True
-        
-        if return_code != 0:
-            is_truly_successful = False
-            
-        if any(keyword in final_log.lower() for keyword in failure_keywords):
-            is_truly_successful = False
-            
-        if is_truly_successful:
-            if not any(keyword in final_log.lower() for keyword in success_keywords):
-                if "found 0 targets" in final_log.lower():
-                    is_truly_successful = False
-        
-        # --- 根据判断结果写入文件并返回 ---
-        if is_truly_successful:
-            content_to_write = "success"
-            message = f"Fuzzing build command appears TRULY SUCCESSFUL. Result saved to '{LOG_FILE_PATH}'."
-            status = "success"
-        else:
-            # 如果失败，保存完整的日志
-            content_to_write = final_log
-            message = f"Fuzzing build command FAILED based on log analysis. Detailed log saved to '{LOG_FILE_PATH}'."
-            status = "error"
-            
+        # 第一关判定
+        is_build_ok = (process.returncode == 0)
+        if any(k in final_log.lower() for k in ["error:", "failed:", "build failed"]): is_build_ok = False
+
+        if is_build_ok:
+            print(f"\n--- [Phase 2] Deep Validation (1+6 Focus) ---")
+            out_dir = os.path.join(oss_fuzz_path, "build", "out", project_name)
+            targets = [f for f in os.listdir(out_dir) if
+                       os.path.isfile(os.path.join(out_dir, f)) and os.access(os.path.join(out_dir, f),
+                                                                              os.X_OK) and not f.startswith(
+                           ('afl-', 'llvm-')) and not f.endswith(('.so', '.a', '.zip'))] if os.path.exists(
+                out_dir) else []
+
+            # --- Step 1: 必须有产物 ---
+            if not targets:
+                is_build_ok = False
+                report["step_1_static_output"] = "fail: No targets generated"
+            else:
+                target = targets[0]
+                primary_path = os.path.join(out_dir, target)
+                report["step_1_static_output"] = f"pass: {target}"
+
+                # --- Step 2-5: 仅记录 ---
+                nm_res = subprocess.run(['nm', primary_path], capture_output=True, text=True, errors='ignore')
+                report["step_2_sanitizer_injected"] = "pass" if "__asan" in nm_res.stdout else "warning: missing asan"
+                report["step_3_engine_linked"] = "pass" if (
+                            "LLVMFuzzerRunDriver" in nm_res.stdout or "__afl_" in nm_res.stdout) else "warning: engine symbols"
+                report["step_4_logic_linked"] = "pass" if _auto_discover_project_symbols(primary_path,
+                                                                                         project_name) else "warning: logic symbols"
+                ldd_res = subprocess.run(["python3", helper_path, "shell", project_name, "-c", f"ldd /out/{target}"],
+                                         cwd=oss_fuzz_path, capture_output=True, text=True, errors='ignore')
+                report["step_5_dependencies_ok"] = "pass" if "not found" not in ldd_res.stdout.lower() else "warning: shared lib missing"
+
+                # --- Step 6: 必须能跑起来 ---
+                print(f"[*] Starting 45s critical stability test...")
+                run_cmd = [sys.executable, helper_path, "run_fuzzer", "--engine", engine, "--sanitizer", sanitizer,
+                           project_name, target]
+                if engine == "libfuzzer": run_cmd.extend(["--", "-max_total_time=30"])
+                stability_proc = subprocess.Popen(run_cmd, cwd=oss_fuzz_path, stdout=subprocess.PIPE,
+                                                  stderr=subprocess.STDOUT, text=True, bufsize=1, preexec_fn=os.setsid)
+                has_rate, start_time = False, time.time()
+                try:
+                    while time.time() - start_time < 45:
+                        line = stability_proc.stdout.readline()
+                        if not line and stability_proc.poll() is not None: break
+                        if any(kw in line for kw in ["exec/s:", "corp:", "exec speed"]): has_rate = True
+                finally:
+                    try: os.killpg(os.getpgid(stability_proc.pid), signal.SIGKILL)
+                    except: pass
+                    stability_proc.wait()
+
+                if has_rate:
+                    report["step_6_runtime_stability"] = "pass"
+                else:
+                    report["step_6_runtime_stability"] = "fail: 0 exec/s (Crash/Freeze)"
+                    is_build_ok = False
+
+        print(f"\n" + "="*40 + "\nVAL-STEP  | STATUS\n" + "-"*40)
+        for i in range(1, 7):
+            key = f"step_{i}_" + ["static_output", "sanitizer_injected", "engine_linked", "logic_linked", "dependencies_ok", "runtime_stability"][i-1]
+            val = report.get(key, "N/A")
+            print(f"Step {i:<4} | {val}")
+        print("="*40 + "\n")
+
+        status = "success" if is_build_ok else "error"
         with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
-            f.write(content_to_write)
-            
-        print(message)
-        return {"status": status, "message": message}
+            f.write("success" if is_build_ok else final_log)
 
+        return {"status": status, "message": f"Validation {status.upper()}", "validation_report": report}
     except Exception as e:
-        message = f"An unknown exception occurred: {str(e)}"
-        print(message)
-        with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
-            f.write(message)
-        return {"status": "error", "message": message}
+        with open(LOG_FILE_PATH, "w") as f: f.write(str(e))
+        return {"status": "error", "message": str(e), "validation_report": report}

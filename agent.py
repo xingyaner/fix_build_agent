@@ -50,7 +50,7 @@ from agent_tools import (
     run_command,
     extract_buggy_line_info,
     get_enhanced_history_context,
-    run_fuzz_build_streaming,
+    run_fuzz_build_and_validate,
     apply_patch,
     update_reflection_journal,
     manage_git_state,
@@ -223,7 +223,7 @@ run_fuzz_and_collect_log_agent = LlmAgent(
     name="run_fuzz_and_collect_log_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/run_fuzz_and_collect_log_instruction.txt"),
-    tools=[read_file_content, run_command, run_fuzz_build_streaming, create_or_update_file],
+    tools=[read_file_content, run_command, run_fuzz_build_and_validate, create_or_update_file],
     output_key="fuzz_build_log",
 )
 
@@ -530,6 +530,19 @@ async def process_single_project(
                             stats["patch_impact"]["files"] = r.response.get('modified_files_count', 0)
                             stats["patch_impact"]["lines"] = r.response.get('total_lines_changed', 0)
 
+                if (func_resps := event.get_function_responses()):
+                    for resp in func_resps:
+                        if resp.name == 'run_fuzz_build_and_validate':
+                            val_report = resp.response.get('validation_report')
+                            if val_report:
+                                # 物理更新当前 session 的 state
+                                session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID,
+                                                                            session_id=current_session_id)
+                                session.state["last_validation_report"] = val_report
+                                # 打印物理简报以便在控制台监控
+                                print(
+                                    f"\n[1+6 Audit] Step 1: {val_report.get('step_1_static_output')} | Step 6: {val_report.get('step_6_runtime_stability')}")
+
                 if event.author == 'initial_setup_agent' and event.actions and event.actions.state_delta:
                     if 'basic_information' in event.actions.state_delta:
                         full_info = event.actions.state_delta['basic_information']
@@ -749,8 +762,8 @@ async def main():
             print(f"--- [CRITICAL] Could not update YAML report: {update_result['message']} ---")
 
         # 【关键步骤 2】: 项目结束后清理
-        ##########
-        # cleanup_environment(project_name)
+        
+        cleanup_environment(project_name)
 
 
     print("\n--- All projects in the queue have been processed. Workflow finished. ---")
