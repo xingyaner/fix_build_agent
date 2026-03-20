@@ -112,6 +112,16 @@ def get_enhanced_history_context(project_source_path: str, file_rel_path: str, l
     1. fn_all 摘要化：若修改文件数 > 6，仅保留前 3 和后 3，并提取公共前缀。
     2. fn_pair 极简采样：正则剥离空行与纯符号行，限制变更展示总量。
     """
+    if not ENABLE_HISTORY_ENHANCEMENT:
+        print(f"--- [ABLATION] Precise history enhancement is DISABLED. ---")
+        return {
+            "status": "success",
+            "data": {
+                "sha": "DISABLED",
+                "history_content": "Historical context enhancement is disabled."
+            }
+        }
+
     import os
     import subprocess
     import re
@@ -342,6 +352,12 @@ def query_expert_knowledge(log_path: str) -> dict:
     【专家知识动态注入版 - 全量替换】
     根据日志关键字动态筛选最相关的 3-5 条准则，避免全量注入导致的 Token 浪费。
     """
+    if not ENABLE_EXPERT_KNOWLEDGE:
+        print("--- [ABLATION] Expert Knowledge is DISABLED. Returning placeholder. ---")
+        return {
+            "status": "success",
+            "knowledge": "Expert knowledge system is currently disabled by ablation configuration."
+        }
     KNOWLEDGE_FILE = "expert_knowledge.json"
     if not os.path.exists(KNOWLEDGE_FILE):
         return {"status": "error", "message": "Knowledge base not found."}
@@ -394,67 +410,74 @@ def query_expert_knowledge(log_path: str) -> dict:
     except Exception as e:
         return {"status": "error", "message": f"Expert knowledge error: {str(e)}"}
 
+
 def manage_git_state(path: str, action: str, message: str = "", commit_sha: str = "") -> Dict:
     """
-    【Git 状态管理器 - 增强版】用于实现状态树的保存与回退。
-    已集成自动身份识别逻辑，解决 "Author identity unknown" 导致的初始化失败问题。
-    action: "init", "commit", "rollback"
+    【物理状态管理器 - 权限自愈版】
+    用于实现状态树的保存与回退。集成了 Docker 权限夺回和 Git 身份配置。
     """
+    import os, subprocess
     print(f"--- Tool: manage_git_state | Action: {action} | Path: {path} ---")
     if not os.path.exists(path):
         return {"status": "error", "message": f"Path {path} does not exist."}
 
     original_cwd = os.getcwd()
     try:
-        os.chdir(path)
-        
-        # 1. 确保仓库已初始化
-        if not os.path.exists(".git"):
-            subprocess.run(["git", "init"], check=True, capture_output=True)
-            
-            # 2. 立即设置本地身份信息（必须在 init 之后，commit 之前）
-            subprocess.run(["git", "config", "user.email", "longfor2025@gmail.com"], check=True)
-            subprocess.run(["git", "config", "user.name", "xingyaner"], check=True)
-            
-            # 3. 建立初始提交
-            subprocess.run(["git", "add", "."], check=True)
-            subprocess.run(["git", "commit", "-m", "Initial State"], check=True, capture_output=True)
-        else:
-            # 即使仓库已存在，也确保当前 Session 拥有有效的本地身份配置
+        abs_path = os.path.abspath(path)
+        uid = os.getuid()
+        gid = os.getgid()
+
+        # --- [核心补丁 A：物理夺回权限] ---
+        # 只要涉及到写入或清理，就先通过 Docker chown 确保宿主机用户拥有操作权
+        if action in ["init", "commit", "rollback"]:
+            try:
+                subprocess.run([
+                    "docker", "run", "--rm", "-v", f"{abs_path}:/src",
+                    "alpine", "chown", "-R", f"{uid}:{gid}", "/src"
+                ], capture_output=True, check=True)
+            except Exception as e:
+                print(f"--- Warning: Permission reclamation failed (non-critical): {e} ---")
+
+        os.chdir(abs_path)
+
+        # --- [核心补丁 B：身份自动配置] ---
+        # 确保 commit 操作不会因为身份未知而失败
+        if action in ["init", "commit"]:
+            if not os.path.exists(".git"):
+                subprocess.run(["git", "init"], check=True, capture_output=True)
             subprocess.run(["git", "config", "user.email", "agent@oss-fuzz-repair.com"], check=True)
-            subprocess.run(["git", "config", "user.name", "OSS-Fuzz Repair Agent"], check=True)
+            subprocess.run(["git", "config", "user.name", "Repair Agent"], check=True)
 
         if action == "init":
-            return {"status": "success", "message": f"Git initialized and identity secured in {path}"}
+            subprocess.run(["git", "add", "."], check=True)
+            # 检查是否已经有提交，防止 init 报错
+            has_commit = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True).returncode == 0
+            if not has_commit:
+                subprocess.run(["git", "commit", "-m", "Initial State"], check=True, capture_output=True)
+            return {"status": "success", "message": f"Git initialized and secured in {path}"}
 
         if action == "commit":
             subprocess.run(["git", "add", "."], check=True)
-            # 检查是否有实际变更
             diff_check = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True).stdout
             if not diff_check:
                 return {"status": "success", "message": "No changes to commit."}
-            
+
             subprocess.run(["git", "commit", "-m", message], capture_output=True, text=True, check=True)
             sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
             return {"status": "success", "sha": sha, "message": f"State saved: {message}"}
 
         elif action == "rollback":
-            # 默认回退到上一个 commit (HEAD~1)
             target = commit_sha if commit_sha else "HEAD~1"
-            # 检查是否有可回退的提交
-            check_log = subprocess.run(["git", "rev-list", "--count", "HEAD"], capture_output=True, text=True)
-            if not check_log.stdout.strip() or int(check_log.stdout.strip()) <= 1:
-                return {"status": "error", "message": "Already at the initial state, cannot rollback further."}
-            
-            subprocess.run(["git", "reset", "--hard", target], check=True)
-            subprocess.run(["git", "clean", "-fd"], check=True)
-            return {"status": "success", "message": f"Rolled back to {target}"}
+            # 物理回退三部曲：reset -> clean (x为彻底清理) -> 回显
+            subprocess.run(["git", "reset", "--hard", target], check=True, capture_output=True)
+            # 使用 -fxd 确保彻底删除被 ignore 的 Docker 产物
+            subprocess.run(["git", "clean", "-fxd"], check=True, capture_output=True)
+            return {"status": "success", "message": f"Rolled back and deep cleaned to {target}"}
 
     except Exception as e:
-        return {"status": "error", "message": f"Git operation failed: {str(e)}"}
+        return {"status": "error", "message": f"Git Intervention Failed: {str(e)}"}
     finally:
         os.chdir(original_cwd)
-
 
 def clear_commit_analysis_state() -> Dict[str, str]:
     """
@@ -607,6 +630,10 @@ def get_git_commits_around_date(project_source_path: str, error_date: str, count
     Returns metadata for commits within the range [error_date - 1 day, error_date + 1 day].
     Useful to handle timezone differences or build delays.
     """
+    if not ENABLE_HISTORY_ENHANCEMENT:
+        print(f"--- [ABLATION] Temporal commit search is DISABLED. ---")
+        return {'status': 'success', 'commits': []}
+
     print(f"--- Tool: get_git_commits_around_date called. Path: {project_source_path}, Center Date: {error_date} ---")
 
     if not os.path.isdir(os.path.join(project_source_path, ".git")):
@@ -671,6 +698,11 @@ def save_commit_diff_to_file(project_name: str, project_source_path: str, sha: s
     """
     【带 Token 防御版】提取最近变更，并根据长度执行三级精简。
     """
+
+    if not ENABLE_HISTORY_ENHANCEMENT:
+        print(f"--- [ABLATION] Saving commit diff is DISABLED. ---")
+        return {'status': 'error', 'message': 'History enhancement is disabled by ablation configuration.'}
+
     import os
     import subprocess
     print(f"--- Tool: save_commit_diff_to_file (With Token Guard) for {sha} ---")
@@ -793,69 +825,42 @@ def read_projects_from_yaml(file_path: str) -> Dict:
     except Exception as e:
         return {'status': 'error', 'message': f"Failed to read YAML: {e}"}
 
-# Core Tools
 def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
     """
-    【权限自愈版 v3】强制清理 Git 仓库。
-    通过 Docker chown 物理夺回被容器锁定的文件权限，确保清理 100% 成功。
+    【强制清理 - 权限增强版】
     """
     import os, subprocess
-    print(f"--- Tool: force_clean_git_repo (Permission Aware) called for: {repo_path} ---")
+    print(f"--- Tool: force_clean_git_repo (v3) called for: {repo_path} ---")
 
     if not os.path.isdir(os.path.join(repo_path, ".git")):
-        return {'status': 'error', 'message': f"Directory '{repo_path}' is not a valid Git repository."}
+        return {'status': 'error', 'message': f"'{repo_path}' is not a valid Git repository."}
 
     original_path = os.getcwd()
     try:
         abs_repo_path = os.path.abspath(repo_path)
+        uid, gid = os.getuid(), os.getgid()
 
-        # --- [核心补丁：物理夺回权限] ---
-        # 解决 Docker root 产生的 .deps/ 等文件无法被宿主机用户删除的问题
-        try:
-            uid = os.getuid()
-            gid = os.getgid()
-            # 挂载当前目录到临时容器，将所有权改回宿主机当前用户
-            fix_perm_cmd = [
-                "docker", "run", "--rm",
-                "-v", f"{abs_repo_path}:/src",
-                "alpine", "chown", "-R", f"{uid}:{gid}", "/src"
-            ]
-            subprocess.run(fix_perm_cmd, capture_output=True, check=True)
-            print(f"--- Successfully reclaimed ownership of {repo_path} ---")
-        except Exception as perm_err:
-            # 仅作为警告，不中断流程，尝试后续普通清理
-            print(f"--- Warning: Could not fix permissions via Docker: {perm_err} ---")
+        # 1. 物理夺权
+        subprocess.run([
+            "docker", "run", "--rm", "-v", f"{abs_repo_path}:/src",
+            "alpine", "chown", "-R", f"{uid}:{gid}", "/src"
+        ], capture_output=True, check=False)
 
         os.chdir(abs_repo_path)
-
-        # 1. 物理重置所有受版本控制的更改
+        # 2. 强制重置
         subprocess.run(["git", "reset", "--hard", "HEAD"], capture_output=True, text=True, check=True)
-
-        # 2. 安全切换分支（处理 main/master 兼容性）
+        # 3. 切换分支
         branch_res = subprocess.run(["git", "branch", "--list"], capture_output=True, text=True)
         main_branch = "main" if "main" in branch_res.stdout else "master"
-        subprocess.run(["git", "switch", main_branch], capture_output=True, text=True, check=True)
+        subprocess.run(["git", "switch", "-f", main_branch], capture_output=True, text=True, check=True)
+        # 4. 物理抹除一切
+        subprocess.run(["git", "clean", "-fxd"], capture_output=True, text=True, check=True)
 
-        # 3. 彻底删除不受版本控制的文件和目录（此时由于权限已修复，不应再报错）
-        subprocess.run(["git", "clean", "-fdx"], capture_output=True, text=True, check=True)
-
-        message = f"Successfully force-cleaned the repository '{repo_path}' with ownership correction."
-        print(message)
-        return {'status': 'success', 'message': message}
-
-    except subprocess.CalledProcessError as e:
-        # 提取详细的错误输出（如 git clean 报错的具体文件）
-        err_msg = e.stderr.strip() if e.stderr else str(e)
-        message = f"Failed to force-clean repository '{repo_path}': {err_msg}"
-        print(f"--- ERROR: {message} ---")
-        return {'status': 'error', 'message': message}
+        return {'status': 'success', 'message': f"Successfully reclaimed and cleaned '{repo_path}'."}
     except Exception as e:
-        message = f"An unknown error occurred while cleaning the repository: {e}"
-        print(f"--- ERROR: {message} ---")
-        return {'status': 'error', 'message': message}
+        return {'status': 'error', 'message': f"Deep clean failed: {str(e)}"}
     finally:
         os.chdir(original_path)
-
 
 def get_project_paths(project_name: str) -> Dict[str, str]:
     """
