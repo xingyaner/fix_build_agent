@@ -20,6 +20,242 @@ PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
 
 
+def prune_session_history(tool_context: ToolContext) -> dict:
+    """
+    【物理手术版 v4 - 全量替换】
+    采用白名单策略：彻底抹除所有中间过程的工具调用细节（ls, find, read_file_content）。
+    仅保留：最初输入、来自 summary_agent 的压缩记忆、以及来自 solver 的补丁计划。
+    """
+    try:
+        session = tool_context.session
+        if not session or not session.events:
+            return {"status": "success", "message": "Memory is already clean."}
+
+        original_count = len(session.events)
+        # 白名单：必须保留的事件
+        # 1. 初始消息 (index 0)
+        # 2. 总结代理的消息 (承载核心记忆)
+        # 3. 求解代理的消息 (承载最近的 patch 逻辑)
+        whitelist_authors = ['summary_agent', 'fuzzing_solver_agent']
+
+        new_events = [session.events[0]]  # 物理保留初始指令
+
+        for event in session.events[1:]:
+            # 保留关键代理的逻辑输出
+            if event.author in whitelist_authors:
+                new_events.append(event)
+            # 剔除所有包含工具调用 (Tool Call/Response) 的中间冗余
+            elif hasattr(event, 'get_function_calls') or hasattr(event, 'get_function_responses'):
+                continue
+            else:
+                # 保留其他非工具调用的控制流事件
+                new_events.append(event)
+
+        # 物理覆盖底层的 ADK events 列表
+        session.events.clear()
+        for e in new_events:
+            session.events.append(e)
+
+        msg = f"Surgical Intervention Successful: Pruned {original_count - len(new_events)} tool call events."
+        print(f"--- [MEMORY] {msg} ---")
+        return {"status": "success", "message": msg}
+    except Exception as e:
+        return {"status": "error", "message": f"Memory intervention failed: {str(e)}"}
+
+def extract_buggy_line_info(log_path: str, project_name: str = "") -> List[Dict]:
+    """
+    【路径感知增强版】
+    从日志中提取文件名和行号，并自动处理 Docker 路径前缀（如 /src/project_name/）。
+    """
+    if not os.path.exists(log_path): return []
+    with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+        lines = f.readlines()
+        content = "".join(lines[-2000:])
+    
+    # 匹配模式：支持大部分编程语言后缀
+    pattern = r"([\w\-\./]+\.(?:c|cpp|h|cc|rs|go|py|sh|java)):(\d+):"
+    matches = re.findall(pattern, content)
+    
+    results = []
+    seen = set()
+    # 构造 Docker 内部路径的各种可能性
+    prefixes_to_strip = ["/src/" + project_name + "/", "/src/", "./"]
+    
+    for file_path, line in matches:
+        clean_path = file_path
+        # 路径归一化：将 /src/glslang/parser.c 转换为 parser.c
+        for prefix in prefixes_to_strip:
+            if clean_path.startswith(prefix):
+                clean_path = clean_path[len(prefix):]
+                break
+        
+        if (clean_path, line) not in seen:
+            results.append({"file": clean_path, "line": int(line)})
+            seen.add((clean_path, line))
+            
+    return results[:3]
+
+
+def get_enhanced_history_context(project_source_path: str, file_rel_path: str, line_num: int) -> dict:
+    """
+    【精简化 HAFix v3 - 全量替换】
+    1. fn_all 摘要化：若修改文件数 > 6，仅保留前 3 和后 3，并提取公共前缀。
+    2. fn_pair 极简采样：正则剥离空行与纯符号行，限制变更展示总量。
+    """
+    if not ENABLE_HISTORY_ENHANCEMENT:
+        print(f"--- [ABLATION] Precise history enhancement is DISABLED. ---")
+        return {
+            "status": "success",
+            "data": {
+                "sha": "DISABLED",
+                "history_content": "Historical context enhancement is disabled."
+            }
+        }
+
+    import os
+    import subprocess
+    import re
+    print(f"--- Tool: get_enhanced_history_context (Dehydrated) for {file_rel_path}:{line_num} ---")
+
+    if not os.path.exists(project_source_path):
+        return {"status": "error", "message": "Source path not found."}
+
+    try:
+        # Step 1: 锁定引发变更的 SHA
+        blame_cmd = ["git", "-C", project_source_path, "blame", "-L", f"{line_num},{line_num}", "--porcelain",
+                     file_rel_path]
+        blame_res = subprocess.run(blame_cmd, capture_output=True, text=True, check=True)
+        buggy_sha = blame_res.stdout.split('\n')[0].split(' ')[0]
+
+        if not buggy_sha or len(buggy_sha) < 7:
+            return {"status": "error", "message": "Could not identify buggy SHA."}
+
+        # Step 2: 提取并摘要化受影响文件清单 (fn_all)
+        files_res = subprocess.run(["git", "-C", project_source_path, "show", "--name-only", "--format=", buggy_sha],
+                                   capture_output=True, text=True, check=True)
+        all_files = [f.strip() for f in files_res.stdout.split('\n') if f.strip()]
+
+        if len(all_files) > 6:
+            summary_files = all_files[:3] + [f"...(skipped {len(all_files) - 6} files)..."] + all_files[-3:]
+            # 提取公共前缀以辅助理解
+            common_prefix = os.path.commonpath([f for f in all_files if '/' in f]) if len(all_files) > 1 else ""
+            fn_all_str = f"Total {len(all_files)} files modified. Common path: {common_prefix}\n" + "\n".join(
+                summary_files)
+        else:
+            fn_all_str = "\n".join(all_files)
+
+        # Step 3: 提取函数级压缩快照 (fn_pair)
+        # 使用 -U0 强制零背景上下文
+        pair_res = subprocess.run(
+            ["git", "-C", project_source_path, "show", "-U0", "--format=", buggy_sha, "--", file_rel_path],
+            capture_output=True, text=True, check=True)
+
+        # 过滤：保留 +/- 开头，且剥离纯符号行（如单独的 } 或 [）
+        compressed_lines = []
+        for line in pair_res.stdout.split('\n'):
+            if line.startswith('+') or line.startswith('-'):
+                pure_content = line[1:].strip()
+                # 忽略长度小于2或全是标点符号的行
+                if len(pure_content) > 1 and not re.match(r'^[{}()\[\],;.\s]+$', pure_content):
+                    compressed_lines.append(line)
+
+        fn_pair = "\n".join(compressed_lines[:12])  # 最终限制在 12 行最关键的逻辑变更
+
+        history_content = (
+            f"--- 精简化根因追踪报告 ---\n"
+            f"嫌疑提交: {buggy_sha}\n"
+            f"受影响文件清单:\n{fn_all_str}\n"
+            f"关键逻辑变更 (仅显示功能行):\n{fn_pair}\n"
+            f"--------------------------"
+        )
+        return {"status": "success", "data": {"sha": buggy_sha, "history_content": history_content}}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
+def checkout_project_commit(project_source_path: str, sha: str) -> Dict[str, str]:
+    """
+    在目标软件项目的源代码目录中执行 git checkout 命令。
+    """
+    print(f"--- Tool: checkout_project_commit called for SHA: {sha} in '{project_source_path}' ---")
+
+    if not os.path.isdir(os.path.join(project_source_path, ".git")):
+        return {'status': 'error', 'message': f"The directory '{project_source_path}' is not a git repository."}
+
+    original_path = os.getcwd()
+    try:
+        os.chdir(project_source_path)
+
+        # 确保仓库处于干净状态，避免 checkout 冲突
+        subprocess.run(["git", "reset", "--hard", "HEAD"], capture_output=True, text=True, check=True)
+        subprocess.run(["git", "clean", "-fdx"], capture_output=True, text=True, check=True)
+
+        command = ["git", "checkout", sha]
+        result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8')
+
+        if result.returncode == 0:
+            return {'status': 'success', 'message': f"Successfully checked out SHA {sha} in project source."}
+        else:
+            return {'status': 'error', 'message': f"Git command failed in project source: {result.stderr.strip()}"}
+    except Exception as e:
+        return {'status': 'error', 'message': f"An unexpected error occurred during project source checkout: {e}"}
+    finally:
+        os.chdir(original_path)
+
+
+def download_remote_log(log_url: str, project_name: str, error_time_str: str) -> Dict[str, str]:
+    """
+    下载远程日志文件到本地指定目录，并按 '年_月_日 error.txt' 格式命名。
+    例如：build_error_log/aptos-core/2026_1_30 error.txt
+    """
+    print(f"--- Tool: download_remote_log called for URL: {log_url} ---")
+
+    try:
+        # 1. 解析 error_time_str 为日期格式
+        try:
+            # 尝试处理 YYYY-MM-DD 或 YYYY-M-D
+            error_date = datetime.strptime(error_time_str, '%Y-%m-%d').date()
+        except ValueError:
+            # 备用尝试 YYYY.MM.DD
+            error_date = datetime.strptime(error_time_str, '%Y.%m.%d').date()
+
+        # 2. 构建本地存储路径
+        local_log_dir = os.path.join("build_error_log", project_name)
+        os.makedirs(local_log_dir, exist_ok=True) # 确保项目目录存在
+
+        # 3. 构造本地文件名
+        if sys.platform == "win32":
+            local_log_filename = error_date.strftime("%Y_%#m_%#d") + " error.txt"
+        else:
+            local_log_filename = error_date.strftime("%Y_%-m_%-d") + " error.txt"
+        
+        local_log_filepath = os.path.join(local_log_dir, local_log_filename)
+
+        # 4. 检查文件是否已存在，如果存在则跳过下载
+        if os.path.exists(local_log_filepath):
+            print(f"--- Log file already exists locally: {local_log_filepath}. Skipping download. ---")
+            return {"status": "success", "local_path": os.path.abspath(local_log_filepath), "message": "Log file already exists locally."}
+
+        # 5. 下载日志文件
+        print(f"--- Downloading log from {log_url} to {local_log_filepath} ---")
+        response = requests.get(log_url, stream=True)
+        response.raise_for_status() # 检查HTTP响应状态
+
+        with open(local_log_filepath, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+        print(f"--- Successfully downloaded log to: {local_log_filepath} ---")
+        return {"status": "success", "local_path": os.path.abspath(local_log_filepath), "message": "Successfully downloaded remote log."}
+
+    except requests.exceptions.RequestException as e:
+        return {"status": "error", "message": f"Failed to download log from {log_url}: {e}"}
+    except ValueError as e:
+        return {"status": "error", "message": f"Invalid error_time_str format '{error_time_str}': {e}"}
+    except Exception as e:
+        return {"status": "error", "message": f"An unexpected error occurred during log download: {e}"}
+
+
 def update_reflection_journal(
     project_name: str,
     attempt_id: int,
@@ -88,7 +324,12 @@ def query_expert_knowledge(log_path: str) -> Dict:
     【专家知识检索工具】
     从知识库中提取通用原则，并根据日志匹配特定建议。
     """
-    print(f"--- Tool: query_expert_knowledge called for: {log_path} ---")
+    if not ENABLE_EXPERT_KNOWLEDGE:
+        print("--- [ABLATION] Expert Knowledge is DISABLED. Returning placeholder. ---")
+        return {
+            "status": "success",
+            "knowledge": "Expert knowledge system is currently disabled by ablation configuration."
+        }
     KNOWLEDGE_FILE = "expert_knowledge.json"
     
     if not os.path.exists(KNOWLEDGE_FILE):
@@ -117,6 +358,7 @@ def query_expert_knowledge(log_path: str) -> Dict:
             
     except Exception as e:
         return {"status": "error", "message": f"Failed to query knowledge: {str(e)}"}
+
 
 
 def manage_git_state(path: str, action: str, message: str = "", commit_sha: str = "") -> Dict:
@@ -186,7 +428,6 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
         return {"status": "error", "message": f"Git Intervention Failed: {str(e)}"}
     finally:
         os.chdir(original_cwd)
-
 
 def clear_commit_analysis_state() -> Dict[str, str]:
     """
@@ -325,6 +566,10 @@ def get_git_commits_around_date(project_source_path: str, error_date: str, count
     Returns metadata for commits within the range [error_date - 1 day, error_date + 1 day].
     Useful to handle timezone differences or build delays.
     """
+    if not ENABLE_HISTORY_ENHANCEMENT:
+        print(f"--- [ABLATION] Temporal commit search is DISABLED. ---")
+        return {'status': 'success', 'commits': []}
+
     print(f"--- Tool: get_git_commits_around_date called. Path: {project_source_path}, Center Date: {error_date} ---")
 
     if not os.path.isdir(os.path.join(project_source_path, ".git")):
@@ -389,9 +634,14 @@ def save_commit_diff_to_file(project_name: str, project_source_path: str, sha: s
     """
     Gets the full diff of a specific SHA and saves it to 'generated_prompt_file/commit_changed.txt'.
     """
-    print(f"--- Tool: save_commit_diff_to_file called. SHA: {sha} ---")
-    OUTPUT_FILE = "generated_prompt_file/commit_changed.txt"
-    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+
+    if not ENABLE_HISTORY_ENHANCEMENT:
+        print(f"--- [ABLATION] Saving commit diff is DISABLED. ---")
+        return {'status': 'error', 'message': 'History enhancement is disabled by ablation configuration.'}
+
+    import os
+    import subprocess
+    print(f"--- Tool: save_commit_diff_to_file (With Token Guard) for {sha} ---")
     
     try:
         # 获取详细 Diff
@@ -486,7 +736,6 @@ def read_projects_from_yaml(file_path: str) -> Dict:
         return {'status': 'error', 'message': f"Failed to read YAML: {e}"}
 
 
-# Core Tools
 def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
     """
     【强制清理 - 权限增强版】
@@ -523,7 +772,6 @@ def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
         return {'status': 'error', 'message': f"Deep clean failed: {str(e)}"}
     finally:
         os.chdir(original_path)
-
 
 def get_project_paths(project_name: str) -> Dict[str, str]:
     """
