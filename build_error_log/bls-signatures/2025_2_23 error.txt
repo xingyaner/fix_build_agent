@@ -1,0 +1,648 @@
+starting build "3c137f5e-154f-432b-84a9-6d1d531b219a"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78"
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Sending build context to Docker daemon  11.78kB
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 1/12 : FROM gcr.io/oss-fuzz-base/base-builder-rust
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": latest: Pulling from oss-fuzz-base/base-builder-rust
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b549f31133a9: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 53857896a680: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 7efe496e0821: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 7aac26f735e9: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ad31cc38ac81: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e51a957b96fa: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 9ea01dd118f9: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": fde71e506517: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": dd6b7bda1f21: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 8b0201982d0b: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1ed93b1f2b37: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e6a65953e7da: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 4c9d846f1514: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ba7815991431: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 828929bb11e1: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e89aa43f3e15: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 2d99de89a447: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": f6d8158e6dac: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b72c91e47fd1: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 132bc51f6483: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 6ea2db2284cb: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 8d8a5e898bb8: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0627aad1ed24: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": a0eb25bba271: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 9ea01dd118f9: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": f5faf7725626: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 213227c10e94: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ffc3882c042b: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": fde71e506517: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": dd6b7bda1f21: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 343ba79fda30: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 8b0201982d0b: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1ed93b1f2b37: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": cb5959086358: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e6a65953e7da: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1f3670b2a3cd: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 4c9d846f1514: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e1a12b281c6e: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ba7815991431: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b25342de0fc5: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 105d24739e50: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 828929bb11e1: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 3bdc8cef7a9f: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 03f7548b82a6: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": c5a6aaa2ce6b: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e89aa43f3e15: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 5e3bbf1b669c: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1dfe9bb499fc: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 2d99de89a447: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 6ea2db2284cb: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0a4551d177ee: Pulling fs layer
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 8d8a5e898bb8: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": f6d8158e6dac: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0627aad1ed24: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b72c91e47fd1: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": cb5959086358: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": a0eb25bba271: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 132bc51f6483: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 03f7548b82a6: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": f5faf7725626: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": c5a6aaa2ce6b: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 213227c10e94: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 5e3bbf1b669c: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ffc3882c042b: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 343ba79fda30: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1dfe9bb499fc: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0a4551d177ee: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1f3670b2a3cd: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 105d24739e50: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 3bdc8cef7a9f: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b25342de0fc5: Waiting
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 7efe496e0821: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 7efe496e0821: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ad31cc38ac81: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 9ea01dd118f9: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": fde71e506517: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": fde71e506517: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b549f31133a9: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b549f31133a9: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 7aac26f735e9: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 7aac26f735e9: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1ed93b1f2b37: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1ed93b1f2b37: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e6a65953e7da: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e6a65953e7da: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 4c9d846f1514: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ba7815991431: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e89aa43f3e15: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 828929bb11e1: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 828929bb11e1: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 8b0201982d0b: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 53857896a680: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 53857896a680: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": f6d8158e6dac: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": f6d8158e6dac: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 2d99de89a447: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 2d99de89a447: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b72c91e47fd1: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b72c91e47fd1: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 132bc51f6483: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 132bc51f6483: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 8d8a5e898bb8: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 8d8a5e898bb8: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 6ea2db2284cb: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 6ea2db2284cb: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": a0eb25bba271: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0627aad1ed24: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0627aad1ed24: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": f5faf7725626: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": f5faf7725626: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 213227c10e94: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 343ba79fda30: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 343ba79fda30: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": cb5959086358: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": cb5959086358: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b549f31133a9: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ffc3882c042b: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e1a12b281c6e: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e1a12b281c6e: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1f3670b2a3cd: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1f3670b2a3cd: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b25342de0fc5: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b25342de0fc5: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 105d24739e50: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 105d24739e50: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 3bdc8cef7a9f: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 3bdc8cef7a9f: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 03f7548b82a6: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 03f7548b82a6: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": c5a6aaa2ce6b: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": dd6b7bda1f21: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": dd6b7bda1f21: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 5e3bbf1b669c: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 5e3bbf1b669c: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1dfe9bb499fc: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1dfe9bb499fc: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e51a957b96fa: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 53857896a680: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 7efe496e0821: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0a4551d177ee: Verifying Checksum
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0a4551d177ee: Download complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 7aac26f735e9: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ad31cc38ac81: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e51a957b96fa: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 9ea01dd118f9: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": fde71e506517: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": dd6b7bda1f21: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 8b0201982d0b: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1ed93b1f2b37: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e6a65953e7da: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 4c9d846f1514: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ba7815991431: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 828929bb11e1: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e89aa43f3e15: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 2d99de89a447: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": f6d8158e6dac: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b72c91e47fd1: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 132bc51f6483: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 6ea2db2284cb: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 8d8a5e898bb8: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0627aad1ed24: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": a0eb25bba271: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": f5faf7725626: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 213227c10e94: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": ffc3882c042b: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 343ba79fda30: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": cb5959086358: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1f3670b2a3cd: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": e1a12b281c6e: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": b25342de0fc5: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 105d24739e50: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 3bdc8cef7a9f: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 03f7548b82a6: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": c5a6aaa2ce6b: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 5e3bbf1b669c: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 1dfe9bb499fc: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0a4551d177ee: Pull complete
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Digest: sha256:ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-rust:latest
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> d53dce618414
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 2/12 : RUN apt-get update && apt-get install -y make autoconf automake libtool wget python lzip libgmp-dev
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> Running in 4dbae48689d2
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Hit:1 http://security.ubuntu.com/ubuntu focal-security InRelease
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Hit:2 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Hit:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Fetched 128 kB in 1s (138 kB/s)
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Reading package lists...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Reading package lists...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Building dependency tree...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Reading state information...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": make set to manually installed.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": wget is already the newest version (1.20.3-1ubuntu2.1).
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": The following additional packages will be installed:
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":   file libgmpxx4ldbl libltdl-dev libltdl7 libmagic-mgc libmagic1
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":   libpython2-stdlib libpython2.7-minimal libpython2.7-stdlib mime-support
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":   python2 python2-minimal python2.7 python2.7-minimal
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Suggested packages:
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":   autoconf-archive gnu-standards autoconf-doc gettext gmp-doc libgmp10-doc
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":   libmpfr-dev libtool-doc gfortran | fortran95-compiler gcj-jdk python2-doc
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":   python-tk python2.7-doc binfmt-support
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": The following NEW packages will be installed:
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":   autoconf automake file libgmp-dev libgmpxx4ldbl libltdl-dev libltdl7
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":   libmagic-mgc libmagic1 libpython2-stdlib libpython2.7-minimal
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":   libpython2.7-stdlib libtool lzip mime-support python-is-python2 python2
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":   python2-minimal python2.7 python2.7-minimal
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": 0 upgraded, 20 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Need to get 5779 kB of archives.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": After this operation, 30.8 MB of additional disk space will be used.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:1 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7-minimal amd64 2.7.18-1~20.04.7 [336 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:2 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 python2.7-minimal amd64 2.7.18-1~20.04.7 [1278 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:3 http://archive.ubuntu.com/ubuntu focal/universe amd64 python2-minimal amd64 2.7.17-2ubuntu4 [27.5 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:4 http://archive.ubuntu.com/ubuntu focal/main amd64 mime-support all 3.64ubuntu1 [30.6 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:5 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7-stdlib amd64 2.7.18-1~20.04.7 [1889 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:6 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 python2.7 amd64 2.7.18-1~20.04.7 [248 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:7 http://archive.ubuntu.com/ubuntu focal/universe amd64 libpython2-stdlib amd64 2.7.17-2ubuntu4 [7072 B]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:8 http://archive.ubuntu.com/ubuntu focal/universe amd64 python2 amd64 2.7.17-2ubuntu4 [26.5 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 autoconf all 2.69-11.1 [321 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:13 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libgmpxx4ldbl amd64 2:6.2.0+dfsg-4ubuntu0.1 [9144 B]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:15 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libgmp-dev amd64 2:6.2.0+dfsg-4ubuntu0.1 [320 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:16 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:17 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:18 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:19 http://archive.ubuntu.com/ubuntu focal/universe amd64 lzip amd64 1.21-6build1 [81.6 kB]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Get:20 http://archive.ubuntu.com/ubuntu focal/universe amd64 python-is-python2 all 2.7.17-4 [2496 B]
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [0mFetched 5779 kB in 1s (3964 kB/s)
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package libpython2.7-minimal:amd64.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../0-libpython2.7-minimal_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking libpython2.7-minimal:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package python2.7-minimal.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../1-python2.7-minimal_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking python2.7-minimal (2.7.18-1~20.04.7) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package python2-minimal.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../2-python2-minimal_2.7.17-2ubuntu4_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking python2-minimal (2.7.17-2ubuntu4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package mime-support.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../3-mime-support_3.64ubuntu1_all.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking mime-support (3.64ubuntu1) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package libpython2.7-stdlib:amd64.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../4-libpython2.7-stdlib_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking libpython2.7-stdlib:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package python2.7.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../5-python2.7_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking python2.7 (2.7.18-1~20.04.7) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package libpython2-stdlib:amd64.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../6-libpython2-stdlib_2.7.17-2ubuntu4_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking libpython2-stdlib:amd64 (2.7.17-2ubuntu4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up libpython2.7-minimal:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up python2.7-minimal (2.7.18-1~20.04.7) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up python2-minimal (2.7.17-2ubuntu4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package python2.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 18259 files and directories currently installed.)
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../00-python2_2.7.17-2ubuntu4_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking python2 (2.7.17-2ubuntu4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package libmagic-mgc.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../01-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package libmagic1:amd64.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../02-libmagic1_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package file.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../03-file_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking file (1:5.38-4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package autoconf.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../04-autoconf_2.69-11.1_all.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking autoconf (2.69-11.1) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package automake.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../05-automake_1%3a1.16.1-4ubuntu6_all.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package libgmpxx4ldbl:amd64.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../06-libgmpxx4ldbl_2%3a6.2.0+dfsg-4ubuntu0.1_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking libgmpxx4ldbl:amd64 (2:6.2.0+dfsg-4ubuntu0.1) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package libgmp-dev:amd64.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../07-libgmp-dev_2%3a6.2.0+dfsg-4ubuntu0.1_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking libgmp-dev:amd64 (2:6.2.0+dfsg-4ubuntu0.1) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package libltdl7:amd64.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../08-libltdl7_2.4.6-14_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package libltdl-dev:amd64.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../09-libltdl-dev_2.4.6-14_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package libtool.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../10-libtool_2.4.6-14_all.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking libtool (2.4.6-14) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package lzip.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../11-lzip_1.21-6build1_amd64.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking lzip (1.21-6build1) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Selecting previously unselected package python-is-python2.
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Preparing to unpack .../12-python-is-python2_2.7.17-4_all.deb ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Unpacking python-is-python2 (2.7.17-4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up mime-support (3.64ubuntu1) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up file (1:5.38-4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up libpython2.7-stdlib:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up libgmpxx4ldbl:amd64 (2:6.2.0+dfsg-4ubuntu0.1) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up lzip (1.21-6build1) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up autoconf (2.69-11.1) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": update-alternatives: using /usr/bin/automake-1.16 to provide /usr/bin/automake (automake) in auto mode
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": update-alternatives: warning: skip creation of /usr/share/man/man1/automake.1.gz because associated file /usr/share/man/man1/automake-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": update-alternatives: warning: skip creation of /usr/share/man/man1/aclocal.1.gz because associated file /usr/share/man/man1/aclocal-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up libgmp-dev:amd64 (2:6.2.0+dfsg-4ubuntu0.1) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up python2.7 (2.7.18-1~20.04.7) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up libtool (2.4.6-14) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up libpython2-stdlib:amd64 (2.7.17-2ubuntu4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up python2 (2.7.17-2ubuntu4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Setting up python-is-python2 (2.7.17-4) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Removing intermediate container 4dbae48689d2
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> 1ac83483655a
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 3/12 : RUN git clone --depth 1 https://github.com/MozillaSecurity/cryptofuzz
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> Running in df888f50a4ef
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [91mCloning into 'cryptofuzz'...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [0mRemoving intermediate container df888f50a4ef
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> 4419c2f026cd
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 4/12 : RUN git clone --depth 1 https://github.com/supranational/blst
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> Running in 8580668e9b0d
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [91mCloning into 'blst'...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [0mRemoving intermediate container 8580668e9b0d
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> 66e86afa6ac0
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 5/12 : RUN git clone --depth 1 https://github.com/herumi/mcl.git
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> Running in d7853b87f168
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [91mCloning into 'mcl'...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [0mRemoving intermediate container d7853b87f168
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> 93a11a6d868d
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 6/12 : RUN git clone --depth 1 https://github.com/randombit/botan.git
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> Running in 7fc956ef41a4
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [91mCloning into 'botan'...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [0mRemoving intermediate container 7fc956ef41a4
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> 72b55e72280c
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 7/12 : RUN git clone --depth 1 https://github.com/mratsim/constantine
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> Running in 239a6a6cfa61
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [91mCloning into 'constantine'...
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": [0mRemoving intermediate container 239a6a6cfa61
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> e8ecd1d83fce
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 8/12 : RUN wget -q https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.bz2
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> Running in b0d84972ace5
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Removing intermediate container b0d84972ace5
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> 7ec539f23404
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 9/12 : RUN wget -q https://ftp.gnu.org/gnu/gmp/gmp-6.2.1.tar.lz
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> Running in 33b2d3cf111b
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Removing intermediate container 33b2d3cf111b
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> aed3ddd9624d
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 10/12 : RUN wget -q https://nim-lang.org/download/nim-2.0.8-linux_x64.tar.xz
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> Running in 5655f4191d8b
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Removing intermediate container 5655f4191d8b
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> 8e65303b7e2b
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 11/12 : RUN wget -q https://nim-lang.org/download/nim-2.0.8-linux_x32.tar.xz
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> Running in 6e3d4ddda628
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Removing intermediate container 6e3d4ddda628
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> 0daa437e5494
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Step 12/12 : COPY build.sh $SRC/
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78":  ---> ec494f856f03
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Successfully built ec494f856f03
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Successfully tagged gcr.io/oss-fuzz/bls-signatures:latest
+Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/bls-signatures:latest
+Finished Step #1 - "build-03ebee7a-284f-49e7-9f35-bc57f216db78"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/bls-signatures
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileDyHPHP
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/constantine/.git
+Step #2 - "srcmap": + GIT_DIR=/src/constantine
+Step #2 - "srcmap": + cd /src/constantine
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/mratsim/constantine
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=8e117d74f165297a7a459e3cea3911dff8fe105c
+Step #2 - "srcmap": + jq_inplace /tmp/fileDyHPHP '."/src/constantine" = { type: "git", url: "https://github.com/mratsim/constantine", rev: "8e117d74f165297a7a459e3cea3911dff8fe105c" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileVLFyyd
+Step #2 - "srcmap": + cat /tmp/fileDyHPHP
+Step #2 - "srcmap": + jq '."/src/constantine" = { type: "git", url: "https://github.com/mratsim/constantine", rev: "8e117d74f165297a7a459e3cea3911dff8fe105c" }'
+Step #2 - "srcmap": + mv /tmp/fileVLFyyd /tmp/fileDyHPHP
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/botan/.git
+Step #2 - "srcmap": + GIT_DIR=/src/botan
+Step #2 - "srcmap": + cd /src/botan
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/randombit/botan.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=0edca269452ae1dec3c7a9b146a15152cec9da0f
+Step #2 - "srcmap": + jq_inplace /tmp/fileDyHPHP '."/src/botan" = { type: "git", url: "https://github.com/randombit/botan.git", rev: "0edca269452ae1dec3c7a9b146a15152cec9da0f" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileZFXN0F
+Step #2 - "srcmap": + cat /tmp/fileDyHPHP
+Step #2 - "srcmap": + jq '."/src/botan" = { type: "git", url: "https://github.com/randombit/botan.git", rev: "0edca269452ae1dec3c7a9b146a15152cec9da0f" }'
+Step #2 - "srcmap": + mv /tmp/fileZFXN0F /tmp/fileDyHPHP
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/mcl/.git
+Step #2 - "srcmap": + GIT_DIR=/src/mcl
+Step #2 - "srcmap": + cd /src/mcl
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/herumi/mcl.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=e4c8bbe4af0013e00244c661836f3a3676f21024
+Step #2 - "srcmap": + jq_inplace /tmp/fileDyHPHP '."/src/mcl" = { type: "git", url: "https://github.com/herumi/mcl.git", rev: "e4c8bbe4af0013e00244c661836f3a3676f21024" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filetqW22f
+Step #2 - "srcmap": + cat /tmp/fileDyHPHP
+Step #2 - "srcmap": + jq '."/src/mcl" = { type: "git", url: "https://github.com/herumi/mcl.git", rev: "e4c8bbe4af0013e00244c661836f3a3676f21024" }'
+Step #2 - "srcmap": + mv /tmp/filetqW22f /tmp/fileDyHPHP
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/blst/.git
+Step #2 - "srcmap": + GIT_DIR=/src/blst
+Step #2 - "srcmap": + cd /src/blst
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/supranational/blst
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=806515251de5cfb9761ad12eb2f2f151b1ad0277
+Step #2 - "srcmap": + jq_inplace /tmp/fileDyHPHP '."/src/blst" = { type: "git", url: "https://github.com/supranational/blst", rev: "806515251de5cfb9761ad12eb2f2f151b1ad0277" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filepeyJIK
+Step #2 - "srcmap": + cat /tmp/fileDyHPHP
+Step #2 - "srcmap": + jq '."/src/blst" = { type: "git", url: "https://github.com/supranational/blst", rev: "806515251de5cfb9761ad12eb2f2f151b1ad0277" }'
+Step #2 - "srcmap": + mv /tmp/filepeyJIK /tmp/fileDyHPHP
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/cryptofuzz/.git
+Step #2 - "srcmap": + GIT_DIR=/src/cryptofuzz
+Step #2 - "srcmap": + cd /src/cryptofuzz
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/MozillaSecurity/cryptofuzz
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=ab4252b39b0c2c38900caf6cf14f0d70d712bd26
+Step #2 - "srcmap": + jq_inplace /tmp/fileDyHPHP '."/src/cryptofuzz" = { type: "git", url: "https://github.com/MozillaSecurity/cryptofuzz", rev: "ab4252b39b0c2c38900caf6cf14f0d70d712bd26" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/file31snXk
+Step #2 - "srcmap": + cat /tmp/fileDyHPHP
+Step #2 - "srcmap": + jq '."/src/cryptofuzz" = { type: "git", url: "https://github.com/MozillaSecurity/cryptofuzz", rev: "ab4252b39b0c2c38900caf6cf14f0d70d712bd26" }'
+Step #2 - "srcmap": + mv /tmp/file31snXk /tmp/fileDyHPHP
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileDyHPHP
+Step #2 - "srcmap": + rm /tmp/fileDyHPHP
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/constantine": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/mratsim/constantine",
+Step #2 - "srcmap":     "rev": "8e117d74f165297a7a459e3cea3911dff8fe105c"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/botan": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/randombit/botan.git",
+Step #2 - "srcmap":     "rev": "0edca269452ae1dec3c7a9b146a15152cec9da0f"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/mcl": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/herumi/mcl.git",
+Step #2 - "srcmap":     "rev": "e4c8bbe4af0013e00244c661836f3a3676f21024"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/blst": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/supranational/blst",
+Step #2 - "srcmap":     "rev": "806515251de5cfb9761ad12eb2f2f151b1ad0277"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/cryptofuzz": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/MozillaSecurity/cryptofuzz",
+Step #2 - "srcmap":     "rev": "ab4252b39b0c2c38900caf6cf14f0d70d712bd26"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + export 'CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -DCRYPTOFUZZ_NO_OPENSSL -D_LIBCPP_DEBUG=1'
+Step #3 - "compile-afl-address-x86_64": + CXXFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -DCRYPTOFUZZ_NO_OPENSSL -D_LIBCPP_DEBUG=1'
+Step #3 - "compile-afl-address-x86_64": + [[ address = \m\e\m\o\r\y ]]
+Step #3 - "compile-afl-address-x86_64": + export LIBFUZZER_LINK=/usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + LIBFUZZER_LINK=/usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + export LINK_FLAGS=
+Step #3 - "compile-afl-address-x86_64": + LINK_FLAGS=
+Step #3 - "compile-afl-address-x86_64": + cd /src/
+Step #3 - "compile-afl-address-x86_64": + tar jxf boost_1_84_0.tar.bz2
+Step #3 - "compile-afl-address-x86_64": + cd boost_1_84_0/
+Step #3 - "compile-afl-address-x86_64": + CFLAGS=
+Step #3 - "compile-afl-address-x86_64": + CXXFLAGS=
+Step #3 - "compile-afl-address-x86_64": + ./bootstrap.sh
+Step #3 - "compile-afl-address-x86_64": Building B2 engine..
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ###
+Step #3 - "compile-afl-address-x86_64": ###
+Step #3 - "compile-afl-address-x86_64": ### Using 'gcc' toolset.
+Step #3 - "compile-afl-address-x86_64": ###
+Step #3 - "compile-afl-address-x86_64": ###
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+Step #3 - "compile-afl-address-x86_64": Copyright (C) 2019 Free Software Foundation, Inc.
+Step #3 - "compile-afl-address-x86_64": This is free software; see the source for copying conditions.  There is NO
+Step #3 - "compile-afl-address-x86_64": warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": ###
+Step #3 - "compile-afl-address-x86_64": ###
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": > g++ -x c++ -std=c++11 -O2 -s -DNDEBUG builtins.cpp class.cpp command.cpp compile.cpp constants.cpp cwd.cpp debug.cpp debugger.cpp execcmd.cpp execnt.cpp execunix.cpp filesys.cpp filent.cpp fileunix.cpp frames.cpp function.cpp glob.cpp hash.cpp hcache.cpp hdrmacro.cpp headers.cpp jam_strings.cpp jam.cpp jamgram.cpp lists.cpp make.cpp make1.cpp md5.cpp mem.cpp modules.cpp native.cpp object.cpp option.cpp output.cpp parse.cpp pathnt.cpp pathsys.cpp pathunix.cpp regexp.cpp rules.cpp scan.cpp search.cpp startup.cpp subst.cpp sysinfo.cpp timestamp.cpp variable.cpp w32_getreg.cpp modules/order.cpp modules/path.cpp modules/property-set.cpp modules/regex.cpp modules/sequence.cpp modules/set.cpp -o b2
+Step #3 - "compile-afl-address-x86_64": tools/build/src/engine/b2
+Step #3 - "compile-afl-address-x86_64": Detecting Python version... 3.11
+Step #3 - "compile-afl-address-x86_64": Detecting Python root... /usr/local
+Step #3 - "compile-afl-address-x86_64": Unicode/ICU support for Boost.Regex?... not found.
+Step #3 - "compile-afl-address-x86_64": Generating B2 configuration in project-config.jam for gcc...
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": Bootstrapping is done. To build, run:
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":     ./b2
+Step #3 - "compile-afl-address-x86_64":     
+Step #3 - "compile-afl-address-x86_64": To generate header files, run:
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":     ./b2 headers
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": The configuration generated uses gcc to build by default. If that is
+Step #3 - "compile-afl-address-x86_64": unintended either use the --with-toolset option or adjust configuration, by
+Step #3 - "compile-afl-address-x86_64": editing 'project-config.jam'.
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": Further information:
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":    - Command line help:
+Step #3 - "compile-afl-address-x86_64":      ./b2 --help
+Step #3 - "compile-afl-address-x86_64":      
+Step #3 - "compile-afl-address-x86_64":    - Getting started guide: 
+Step #3 - "compile-afl-address-x86_64":      http://www.boost.org/more/getting_started/unix-variants.html
+Step #3 - "compile-afl-address-x86_64":      
+Step #3 - "compile-afl-address-x86_64":    - B2 documentation:
+Step #3 - "compile-afl-address-x86_64":      http://www.boost.org/build/
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": + CFLAGS=
+Step #3 - "compile-afl-address-x86_64": + CXXFLAGS=
+Step #3 - "compile-afl-address-x86_64": + ./b2 headers
+Step #3 - "compile-afl-address-x86_64": Performing configuration checks
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":     - default address-model    : 64-bit [1]
+Step #3 - "compile-afl-address-x86_64":     - default architecture     : x86 [1]
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": [1] gcc-9
+Step #3 - "compile-afl-address-x86_64": ...found 2 targets...
+Step #3 - "compile-afl-address-x86_64": + cp -R boost/ /usr/include/
+Step #3 - "compile-afl-address-x86_64": + cd /src/cryptofuzz/
+Step #3 - "compile-afl-address-x86_64": + python gen_repository.py
+Step #3 - "compile-afl-address-x86_64": + rm extra_options.h
+Step #3 - "compile-afl-address-x86_64": + echo -n '"'
+Step #3 - "compile-afl-address-x86_64": + echo -n '--force-module=blst '
+Step #3 - "compile-afl-address-x86_64": + echo -n --operations=
+Step #3 - "compile-afl-address-x86_64": + echo -n BignumCalc,
+Step #3 - "compile-afl-address-x86_64": + echo -n BignumCalc_Fp2,
+Step #3 - "compile-afl-address-x86_64": + echo -n BignumCalc_Fp12,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_BatchVerify,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_FinalExp,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_GenerateKeyPair,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_HashToG1,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_HashToG2,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_IsG1OnCurve,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_IsG2OnCurve,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_Pairing,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_PrivateToPublic,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_PrivateToPublic_G2,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_Sign,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_Verify,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_Compress_G1,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_Compress_G2,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_Decompress_G1,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_Decompress_G2,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_G1_Add,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_G1_Mul,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_G1_IsEq,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_G1_Neg,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_G2_Add,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_G2_Mul,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_G2_IsEq,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_G2_Neg,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_Aggregate_G1,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_Aggregate_G2,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_MapToG1,
+Step #3 - "compile-afl-address-x86_64": + echo -n BLS_MapToG2,
+Step #3 - "compile-afl-address-x86_64": + echo -n BignumCalc_Mod_BLS12_381_P,
+Step #3 - "compile-afl-address-x86_64": + echo -n BignumCalc_Mod_BLS12_381_R,
+Step #3 - "compile-afl-address-x86_64": + echo -n KDF_HKDF,
+Step #3 - "compile-afl-address-x86_64": + echo -n 'Misc '
+Step #3 - "compile-afl-address-x86_64": + echo -n '--digests=SHA256 '
+Step #3 - "compile-afl-address-x86_64": + echo -n '--curves=BLS12_381 '
+Step #3 - "compile-afl-address-x86_64": + echo -n '"'
+Step #3 - "compile-afl-address-x86_64": + [[ address != \m\e\m\o\r\y ]]
+Step #3 - "compile-afl-address-x86_64": + cd /src/cryptofuzz/modules/arkworks-algebra/
+Step #3 - "compile-afl-address-x86_64": + [[ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  != *-m32* ]]
+Step #3 - "compile-afl-address-x86_64": + make
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast++ -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++ -DCRYPTOFUZZ_NO_OPENSSL -D_LIBCPP_DEBUG=1 -Wall -Wextra -Werror -std=c++17 -I ../../include -I ../../fuzzing-headers/include -DFUZZING_HEADERS_NO_IMPL -fPIC -c module.cpp -o module.o
+Step #3 - "compile-afl-address-x86_64": In file included from module.cpp:1:
+Step #3 - "compile-afl-address-x86_64": In file included from ./module.h:3:
+Step #3 - "compile-afl-address-x86_64": In file included from ../../include/cryptofuzz/components.h:3:
+Step #3 - "compile-afl-address-x86_64": In file included from ../../include/cryptofuzz/generic.h:8:
+Step #3 - "compile-afl-address-x86_64": [1m../../include/cryptofuzz/../../third_party/json/json.hpp:22514:35: [0m[0;1;31merror: [0m[1midentifier '_json' preceded by whitespace in a literal operator declaration is deprecated [-Werror,-Wdeprecated-literal-operator][0m
+Step #3 - "compile-afl-address-x86_64":  22514 | [0;34minline[0m nlohmann::json [0;34moperator[0m [0;32m""[0m _json([0;34mconst[0m [0;34mchar[0m* s, std::size_t n)[0m
+Step #3 - "compile-afl-address-x86_64":        | [0;1;32m                      ~~~~~~~~~~~~^~~~~
+Step #3 - "compile-afl-address-x86_64": [0m       | [0;32m                      operator""_json
+Step #3 - "compile-afl-address-x86_64": [0m[1m../../include/cryptofuzz/../../third_party/json/json.hpp:22533:49: [0m[0;1;31merror: [0m[1midentifier '_json_pointer' preceded by whitespace in a literal operator declaration is deprecated [-Werror,-Wdeprecated-literal-operator][0m
+Step #3 - "compile-afl-address-x86_64":  22533 | [0;34minline[0m nlohmann::json::json_pointer [0;34moperator[0m [0;32m""[0m _json_pointer([0;34mconst[0m [0;34mchar[0m* s, std::size_t n)[0m
+Step #3 - "compile-afl-address-x86_64":        | [0;1;32m                                    ~~~~~~~~~~~~^~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m       | [0;32m                                    operator""_json_pointer
+Step #3 - "compile-afl-address-x86_64": [0m2 errors generated.
+Step #3 - "compile-afl-address-x86_64": make: *** [Makefile:12: module.o] Error 1
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image bls-signatures\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 bls-signatures\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

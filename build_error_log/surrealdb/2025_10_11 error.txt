@@ -1,0 +1,1535 @@
+starting build "95ca8fa5-a07a-42f2-b47a-34eb88d5b0cd"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2"
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Sending build context to Docker daemon  5.632kB
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Step 1/6 : FROM gcr.io/oss-fuzz-base/base-builder-rust
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": latest: Pulling from oss-fuzz-base/base-builder-rust
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": b549f31133a9: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 1b83977bb765: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f6e3f08d41a7: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 0e0241997a36: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 9dd8d823add9: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 8fc873b4e56d: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 07b9fbe8b285: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 35b34efc0296: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 3768f273f5fd: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 44898147fc6f: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": aa6eefe77c5d: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 8e8c3a0d7c02: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 330d6ea4a68e: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": dff7ae4719b6: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 6a8eaed084ff: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f96efac5442d: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": ed3ccbaece22: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 9dd8d823add9: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 25686e14a363: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 14d53f04865c: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 8fc873b4e56d: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e70fb37f8a62: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 01a8e38a5f10: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": a51b73c4db8b: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f6546ba52b9d: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 07b9fbe8b285: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e129eef23f4b: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 3654d49c5a96: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 35b34efc0296: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 176a196529af: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": daa714f65140: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 3768f273f5fd: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 7a731dec1d3f: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": d6dd0d605fc0: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 44898147fc6f: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": ed3ccbaece22: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": c3a4a80103f2: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e4c881f5d97c: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 25686e14a363: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": aa6eefe77c5d: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f88859d038fa: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 12c6ccd62314: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 8e8c3a0d7c02: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f618645e68ed: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 14d53f04865c: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 330d6ea4a68e: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 9c05a845fbdc: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e70fb37f8a62: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f94a58e0fe39: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e129eef23f4b: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f66056ce830d: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 01a8e38a5f10: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": dff7ae4719b6: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": a51b73c4db8b: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 24dfc89d6d6b: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": b1d90a603a78: Pulling fs layer
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f66056ce830d: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": d6dd0d605fc0: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 6a8eaed084ff: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 0e0241997a36: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f96efac5442d: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 24dfc89d6d6b: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f6546ba52b9d: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 9c05a845fbdc: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": c3a4a80103f2: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 176a196529af: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e4c881f5d97c: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": daa714f65140: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f94a58e0fe39: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": b1d90a603a78: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 12c6ccd62314: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f88859d038fa: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 7a731dec1d3f: Waiting
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f6e3f08d41a7: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f6e3f08d41a7: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": b549f31133a9: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 9dd8d823add9: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 9dd8d823add9: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 0e0241997a36: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 0e0241997a36: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 07b9fbe8b285: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 07b9fbe8b285: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 35b34efc0296: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 1b83977bb765: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 1b83977bb765: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": b549f31133a9: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 44898147fc6f: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 44898147fc6f: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": aa6eefe77c5d: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": aa6eefe77c5d: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 8e8c3a0d7c02: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 8e8c3a0d7c02: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 330d6ea4a68e: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 330d6ea4a68e: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": dff7ae4719b6: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 3768f273f5fd: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 3768f273f5fd: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 6a8eaed084ff: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 6a8eaed084ff: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f96efac5442d: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": ed3ccbaece22: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": ed3ccbaece22: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 25686e14a363: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 25686e14a363: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 14d53f04865c: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e70fb37f8a62: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e70fb37f8a62: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 01a8e38a5f10: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 01a8e38a5f10: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": a51b73c4db8b: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": a51b73c4db8b: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f6546ba52b9d: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f6546ba52b9d: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e129eef23f4b: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 3654d49c5a96: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 3654d49c5a96: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 176a196529af: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": daa714f65140: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": daa714f65140: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 7a731dec1d3f: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 7a731dec1d3f: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": d6dd0d605fc0: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": d6dd0d605fc0: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e4c881f5d97c: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": c3a4a80103f2: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": c3a4a80103f2: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f88859d038fa: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f88859d038fa: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 12c6ccd62314: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f618645e68ed: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 8fc873b4e56d: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 8fc873b4e56d: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 9c05a845fbdc: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 1b83977bb765: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f94a58e0fe39: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f94a58e0fe39: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f6e3f08d41a7: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f66056ce830d: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f66056ce830d: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 24dfc89d6d6b: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 24dfc89d6d6b: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 0e0241997a36: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 9dd8d823add9: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": b1d90a603a78: Verifying Checksum
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": b1d90a603a78: Download complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 8fc873b4e56d: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 07b9fbe8b285: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 35b34efc0296: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 3768f273f5fd: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 44898147fc6f: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": aa6eefe77c5d: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 8e8c3a0d7c02: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 330d6ea4a68e: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": dff7ae4719b6: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 6a8eaed084ff: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f96efac5442d: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": ed3ccbaece22: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 25686e14a363: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 14d53f04865c: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e70fb37f8a62: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 01a8e38a5f10: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": a51b73c4db8b: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f6546ba52b9d: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e129eef23f4b: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 3654d49c5a96: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 176a196529af: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": daa714f65140: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 7a731dec1d3f: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": d6dd0d605fc0: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": c3a4a80103f2: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": e4c881f5d97c: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f88859d038fa: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 12c6ccd62314: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f618645e68ed: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 9c05a845fbdc: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f94a58e0fe39: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": f66056ce830d: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": 24dfc89d6d6b: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": b1d90a603a78: Pull complete
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Digest: sha256:902cc445e3a2102a1e30b63000e855a3cf4064b763d0d5357433aba07ecdb887
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-rust:latest
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2":  ---> f7db35b29200
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Step 2/6 : RUN git clone --depth 1 https://github.com/surrealdb/surrealdb surrealdb
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2":  ---> Running in 46cefa7f2e1d
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": [91mCloning into 'surrealdb'...
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": [0mRemoving intermediate container 46cefa7f2e1d
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2":  ---> 15d8ae457e10
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Step 3/6 : RUN git clone --depth 1 https://github.com/surrealdb/docs.surrealdb.com.git surrealdb_website
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2":  ---> Running in c577a6c1f839
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": [91mCloning into 'surrealdb_website'...
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": [0mRemoving intermediate container c577a6c1f839
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2":  ---> f111a713ab53
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Step 4/6 : WORKDIR surrealdb
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2":  ---> Running in 87539938a834
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Removing intermediate container 87539938a834
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2":  ---> 03d91d6d4742
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Step 5/6 : RUN rustup component add rust-src
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2":  ---> Running in 4b60297d1137
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": [91minfo: component 'rust-src' is up to date
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": [0mRemoving intermediate container 4b60297d1137
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2":  ---> 7b4415be6065
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Step 6/6 : COPY build.sh $SRC/
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2":  ---> abb720d1292b
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Successfully built abb720d1292b
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Successfully tagged gcr.io/oss-fuzz/surrealdb:latest
+Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/surrealdb:latest
+Finished Step #1 - "build-fd818dd0-66f7-464c-9f32-01870ff6aea2"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/surrealdb
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileq5o0AP
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ rust == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/surrealdb_website/.git
+Step #2 - "srcmap": + GIT_DIR=/src/surrealdb_website
+Step #2 - "srcmap": + cd /src/surrealdb_website
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/surrealdb/docs.surrealdb.com.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=3ca36ddf2e54380a69ed3d61c43884a62724b030
+Step #2 - "srcmap": + jq_inplace /tmp/fileq5o0AP '."/src/surrealdb_website" = { type: "git", url: "https://github.com/surrealdb/docs.surrealdb.com.git", rev: "3ca36ddf2e54380a69ed3d61c43884a62724b030" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileLB7i0a
+Step #2 - "srcmap": + cat /tmp/fileq5o0AP
+Step #2 - "srcmap": + jq '."/src/surrealdb_website" = { type: "git", url: "https://github.com/surrealdb/docs.surrealdb.com.git", rev: "3ca36ddf2e54380a69ed3d61c43884a62724b030" }'
+Step #2 - "srcmap": + mv /tmp/fileLB7i0a /tmp/fileq5o0AP
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/surrealdb/.git
+Step #2 - "srcmap": + GIT_DIR=/src/surrealdb
+Step #2 - "srcmap": + cd /src/surrealdb
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/surrealdb/surrealdb
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=72c80c30a712ad0477a69f614308f556017c6b91
+Step #2 - "srcmap": + jq_inplace /tmp/fileq5o0AP '."/src/surrealdb" = { type: "git", url: "https://github.com/surrealdb/surrealdb", rev: "72c80c30a712ad0477a69f614308f556017c6b91" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/file1hLf0I
+Step #2 - "srcmap": + cat /tmp/fileq5o0AP
+Step #2 - "srcmap": + jq '."/src/surrealdb" = { type: "git", url: "https://github.com/surrealdb/surrealdb", rev: "72c80c30a712ad0477a69f614308f556017c6b91" }'
+Step #2 - "srcmap": + mv /tmp/file1hLf0I /tmp/fileq5o0AP
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileq5o0AP
+Step #2 - "srcmap": + rm /tmp/fileq5o0AP
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/surrealdb_website": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/surrealdb/docs.surrealdb.com.git",
+Step #2 - "srcmap":     "rev": "3ca36ddf2e54380a69ed3d61c43884a62724b030"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/surrealdb": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/surrealdb/surrealdb",
+Step #2 - "srcmap":     "rev": "72c80c30a712ad0477a69f614308f556017c6b91"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + cd crates
+Step #3 - "compile-libfuzzer-address-x86_64": + cp fuzz/fuzz_targets/fuzz_executor.dict fuzz/fuzz_targets/fuzz_sql_parser.dict /workspace/out/libfuzzer-address-x86_64/
+Step #3 - "compile-libfuzzer-address-x86_64": + export 'RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --cfg surrealdb_unstable'
+Step #3 - "compile-libfuzzer-address-x86_64": + RUSTFLAGS='--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --cfg surrealdb_unstable'
+Step #3 - "compile-libfuzzer-address-x86_64": + cargo fuzz build -O --debug-assertions --fuzz-dir fuzz
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m crates.io index
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m     Locking[0m 23 packages to latest Rust 1.91.0-nightly compatible versions
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m glob v0.3.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m humantime v2.2.0 -> v2.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m itertools v0.10.5 -> v0.13.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m linfa-linalg v0.1.0 -> v0.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m ndarray v0.15.6 -> v0.16.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m ndarray-stats v0.5.1 -> v0.6.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m portable-atomic v1.11.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m portable-atomic-util v0.2.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m relative-path v1.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m revision v0.11.0 -> v0.13.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m revision-derive v0.11.0 -> v0.13.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m rquickjs v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m rquickjs-core v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m rquickjs-sys v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m rstest v0.25.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m rstest_macros v0.25.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m storekey v0.5.0 -> v0.8.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m storekey-derive v0.8.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[33m Downgrading[0m surrealdb-core v3.0.0 (/src/surrealdb/crates/core) -> v3.0.0-alpha.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m surrealdb-protocol v0.3.1 -> v0.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m surrealdb-types v3.0.0-alpha.10 (/src/surrealdb/crates/types)
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m surrealdb-types-derive v3.0.0-alpha.10 (/src/surrealdb/crates/types-derive)
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[36m      Adding[0m vart v0.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m Downloading[0m crates ...
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ahash v0.8.11
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ammonia v4.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ciborium-io v0.2.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m float_next_after v1.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures-sink v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m block-buffer v0.10.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m fuzzy-matcher v0.3.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m bytes v1.10.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m phf_macros v0.11.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m geographiclib-rs v0.2.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m generic-array v0.14.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m getrandom v0.2.15
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m phf_shared v0.11.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m psl-types v2.0.11
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m paste v1.0.15
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rend v0.4.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tendril v0.4.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rquickjs v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ryu v1.0.20
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tokio-stream v0.1.17
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rquickjs-core v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m writeable v0.5.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ulid v1.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tower v0.5.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m zerofrom v0.1.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m zerovec-derive v0.10.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m zerovec v0.10.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m syn v1.0.109
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m surrealkv v0.9.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m sysinfo v0.33.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m time v0.3.40
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tracing v0.1.41
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tokio-util v0.7.14
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tower v0.4.13
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tonic v0.12.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m zerocopy v0.7.35
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m toml_edit v0.22.24
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m url v2.5.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m typenum v1.18.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m winnow v0.7.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tokio v1.44.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m syn v2.0.100
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m surrealdb-protocol v0.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m zerocopy v0.8.23
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m spade v2.13.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m serde_json v1.0.140
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m zeroize v1.8.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m zerofrom-derive v0.1.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m yoke-derive v0.7.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m yoke v0.7.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m wyz v0.5.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m write16 v1.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m want v0.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m walkdir v2.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m version_check v0.9.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m uuid v1.17.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m utf8_iter v1.0.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m utf16_iter v1.0.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m utf-8 v0.7.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m urlencoding v2.1.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m untrusted v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m unicode-ident v1.0.18
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m unicase v2.8.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ucd-trie v0.1.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m trice v0.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tower-layer v0.3.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m toml_datetime v0.6.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m try-lock v0.2.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tracing-core v0.1.33
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tracing-attributes v0.1.28
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tower-service v0.3.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tokio-macros v2.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tinyvec_macros v0.1.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m thread_local v1.1.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m thiserror-impl v2.0.12
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m thiserror-impl v1.0.69
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m thiserror v2.0.12
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m thiserror v1.0.69
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tempfile v3.19.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tap v1.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m synstructure v0.13.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m sync_wrapper v1.0.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m vart v0.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m subtle v2.6.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m strum v0.26.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m spin v0.9.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m socket2 v0.5.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m smallvec v1.14.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m slab v0.4.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m siphasher v1.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m simple_asn1 v0.6.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m sha1 v0.10.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m seahash v4.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rust-stemmers v1.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m object_store v0.12.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m linux-raw-sys v0.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m time-macros v0.2.21
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m strum_macros v0.26.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m strsim v0.11.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m string_cache_codegen v0.5.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m string_cache v0.8.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m storekey-derive v0.8.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m storekey v0.8.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m static_assertions_next v1.1.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m stable_deref_trait v1.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m socket2 v0.6.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m snap v1.1.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m simdutf8 v0.1.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m shlex v1.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m semver v1.0.26
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rust_decimal v1.37.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rquickjs-sys v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m pest v2.7.15
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ndarray v0.16.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m icu_properties_data v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tinyvec v1.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m tinystr v0.7.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m sha2 v0.10.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m serde_derive v1.0.219
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rstest_macros v0.25.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rkyv v0.7.45
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m libfuzzer-sys v0.4.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m http v1.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m time-core v0.1.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m robust v1.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ring v0.17.14
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m regex-automata v0.4.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m indexmap v2.8.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m icu_collections v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m hyper v1.6.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m h2 v0.4.11
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m roaring v0.10.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m regex-syntax v0.8.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m regex v1.11.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m serde v1.0.219
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m scrypt v0.11.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m scopeguard v1.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m same-file v1.0.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m salsa20 v0.10.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rustix v1.0.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rstest v0.25.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rayon v1.10.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m libm v0.2.11
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rustversion v1.0.20
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rustc_version v0.4.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rstar v0.12.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rmp-serde v1.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m revision-derive v0.13.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rand_chacha v0.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rand v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rand v0.8.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m radix_trie v0.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m quote v1.0.40
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m quick_cache v0.6.12
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m num-bigint v0.4.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m libc v0.2.174
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m itertools v0.14.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m itertools v0.11.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m heapless v0.8.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m hashbrown v0.15.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m hashbrown v0.14.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rmp v0.8.14
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rkyv_derive v0.7.45
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m revision-derive v0.10.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m revision v0.13.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m revision v0.10.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m relative-path v1.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m reblessive v0.4.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rayon-core v1.12.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rawpointer v0.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rand_core v0.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rand_core v0.6.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m rand_chacha v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ppv-lite86 v0.2.21
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m parking_lot_core v0.9.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m memchr v2.7.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m litemap v0.7.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m lexicmp v0.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m inout v0.1.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m idna_adapter v1.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m icu_provider v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m icu_properties v1.5.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m icu_locid_transform v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m icu_locid v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m hyper-util v0.1.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m hashbrown v0.12.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m hash32 v0.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m half v2.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m serde_urlencoded v0.7.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m radium v0.7.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ptr_meta_derive v0.1.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ptr_meta v0.1.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m prost-types v0.13.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m prost-derive v0.13.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m prost v0.13.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m proc-macro2 v1.0.94
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m powerfmt v0.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m path-clean v1.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m num-traits v0.2.19
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m noisy_float v0.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m nibble_vec v0.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m mio v1.0.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m mime v0.3.17
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m md-5 v0.10.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m matrixmultiply v0.3.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m maplit v1.0.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m mac v0.1.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m lru v0.12.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m log v0.4.26
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m jobserver v0.1.32
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m itoa v1.0.15
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ipnet v2.11.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m idna v1.0.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ident_case v1.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m icu_provider_macros v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m icu_normalizer_data v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m icu_normalizer v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m iana-time-zone v0.1.61
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m humantime v2.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m httparse v1.10.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m html5ever v0.27.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m hex v0.4.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m heck v0.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m glob v0.3.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m getrandom v0.3.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m encoding_rs v0.8.35
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m earcutr v0.4.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m proc-macro-crate v3.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m precomputed-hash v0.1.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m pin-utils v0.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m pin-project-lite v0.2.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m pin-project-internal v1.1.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m pin-project v1.1.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m phf_generator v0.11.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m phf_codegen v0.11.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m phf v0.11.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m percent-encoding v2.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m pem v3.0.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m pbkdf2 v0.12.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m password-hash v0.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m parking v2.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m once_cell v1.21.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m num_cpus v1.16.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m num-integer v0.1.46
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m num-conv v0.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m num-complex v0.4.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m new_debug_unreachable v1.0.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ndarray-stats v0.6.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m nanoid v0.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m matchit v0.7.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m lock_api v0.4.12
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m linfa-linalg v0.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m jsonwebtoken v9.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m httpdate v1.0.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m http-body v1.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m fst v0.4.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m bnum v0.12.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m base64 v0.21.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m markup5ever v0.12.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m itertools v0.13.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m indexmap v1.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m icu_locid_transform_data v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m hyper-timeout v0.5.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m geo v0.28.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures-util v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures-task v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m fastnum v0.3.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m darling_core v0.20.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m crossbeam-utils v0.8.21
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m crossbeam-epoch v0.9.18
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m chrono v0.4.40
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m bytemuck v1.22.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m borsh v1.5.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m blake3 v1.7.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m base64 v0.22.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m axum v0.7.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m async-graphql v7.0.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m parking_lot v0.12.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m http-body-util v0.1.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures-macro v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures-lite v2.6.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures-io v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ext-sort v0.1.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m either v1.15.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m double-ended-peekable v0.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m dmp v0.2.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m displaydoc v0.2.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m digest v0.10.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m derive_arbitrary v1.4.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m deranged v0.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m dashmap v6.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m darling_macro v0.20.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m crypto-common v0.1.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m crossbeam-deque v0.8.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m crc32fast v1.4.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m cpufeatures v0.2.17
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m constant_time_eq v0.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m concurrent-queue v2.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m byteorder v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m bytecheck_derive v0.6.12
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m bytecheck v0.6.12
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m borsh-derive v1.5.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m bcrypt v0.15.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m async-stream-impl v0.3.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m async-stream v0.3.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m async-graphql-value v7.0.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m arrayref v0.3.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m argon2 v0.5.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m multer v3.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m lazy_static v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m hmac v0.12.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures-core v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m funty v2.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m fastrand v2.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m cipher v0.4.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m bitvec v1.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m base64ct v1.7.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m axum-core v0.4.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m geo-types v0.7.15
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures-executor v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures-channel v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futf v0.1.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m form_urlencoded v1.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m foldhash v0.1.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m fnv v1.0.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m flatbuffers v25.2.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m event-listener-strategy v0.5.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m event-listener v5.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m errno v0.3.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m equivalent v1.0.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m endian-type v0.1.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ciborium-ll v0.2.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ciborium v0.2.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m cfg-if v1.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m cc v1.2.17
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m blowfish v0.9.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m blake2 v0.10.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m bitflags v2.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m bincode v1.3.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m atomic-waker v1.1.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m async-trait v0.1.88
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m async-graphql-parser v7.0.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m async-graphql-derive v7.0.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m async-channel v2.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m cfg_aliases v0.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m autocfg v1.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m arbitrary v1.4.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m approx v0.5.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m futures-timer v3.0.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m async-task v4.7.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m async-executor v1.13.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m arrayvec v0.7.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m aho-corasick v1.1.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m addr v0.15.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m deunicode v1.6.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m anyhow v1.0.98
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m darling v0.20.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ahash v0.7.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m affinitypool v0.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m Inflector v0.11.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m allocator-api2 v0.2.21
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m proc-macro2 v1.0.94
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m unicode-ident v1.0.18
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m libc v0.2.174
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m autocfg v1.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m serde v1.0.219
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m cfg-if v1.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m libm v0.2.11
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m pin-project-lite v0.2.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m version_check v0.9.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures-core v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m memchr v2.7.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m smallvec v1.14.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m itoa v1.0.15
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m stable_deref_trait v1.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m once_cell v1.21.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures-sink v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m allocator-api2 v0.2.21
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m foldhash v0.1.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m typenum v1.18.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m equivalent v1.0.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m pin-utils v0.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures-io v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m shlex v1.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures-task v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m fnv v1.0.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m crossbeam-utils v0.8.21
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m zerocopy v0.8.23
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m byteorder v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m thiserror v2.0.12
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m getrandom v0.3.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m serde_json v1.0.140
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m either v1.15.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m semver v1.0.26
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rustversion v1.0.20
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rand_core v0.6.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures-channel v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m parking_lot_core v0.9.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m subtle v2.6.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m unicase v2.8.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m siphasher v1.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m percent-encoding v2.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tracing-core v0.1.33
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rand v0.8.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m writeable v0.5.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m anyhow v1.0.98
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m litemap v0.7.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m scopeguard v1.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m phf_shared v0.11.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m hashbrown v0.15.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m httparse v1.10.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tower-service v0.3.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m regex-syntax v0.8.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m log v0.4.26
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ryu v1.0.20
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m generic-array v0.14.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m icu_locid_transform_data v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m thiserror v1.0.69
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m heapless v0.8.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m hash32 v0.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m try-lock v0.2.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m toml_datetime v0.6.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m num-traits v0.2.19
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m slab v0.4.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m lock_api v0.4.12
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m mime v0.3.17
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m icu_properties_data v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tower-layer v0.3.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m aho-corasick v1.1.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rustc_version v0.4.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m atomic-waker v1.1.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m base64 v0.22.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m winnow v0.7.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m itertools v0.14.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m indexmap v1.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m want v0.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m phf_generator v0.11.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m httpdate v1.0.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m bitflags v2.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m quote v1.0.40
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m write16 v1.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m utf8_iter v1.0.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m icu_normalizer_data v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m sync_wrapper v1.0.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m utf16_iter v1.0.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m new_debug_unreachable v1.0.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m iana-time-zone v0.1.61
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m concurrent-queue v2.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m crossbeam-epoch v0.9.18
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m phf_codegen v0.11.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m syn v2.0.100
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m string_cache_codegen v0.5.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m matrixmultiply v0.3.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m form_urlencoded v1.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m itertools v0.11.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m hashbrown v0.12.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m strsim v0.11.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m getrandom v0.2.15
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m jobserver v0.1.32
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m socket2 v0.5.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m mio v1.0.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m socket2 v0.6.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m cc v1.2.17
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ident_case v1.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m arrayvec v0.7.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m parking_lot v0.12.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m mac v0.1.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m cpufeatures v0.2.17
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rust_decimal v1.37.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m paste v1.0.15
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m robust v1.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rayon-core v1.12.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m approx v0.5.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m num-integer v0.1.46
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rstar v0.12.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futf v0.1.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m markup5ever v0.12.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rand_core v0.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m crossbeam-deque v0.8.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rstest_macros v0.25.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m flatbuffers v25.2.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m crypto-common v0.1.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m block-buffer v0.10.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m inout v0.1.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m geographiclib-rs v0.2.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m digest v0.10.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m cipher v0.4.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ahash v0.8.11
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m float_next_after v1.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m precomputed-hash v0.1.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rawpointer v0.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m powerfmt v0.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m spade v2.13.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m num-conv v0.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ucd-trie v0.1.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m heck v0.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m time-core v0.1.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rustix v1.0.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m parking v2.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m base64ct v1.7.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m utf-8 v0.7.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m matchit v0.7.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m regex-automata v0.4.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m event-listener v5.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m time-macros v0.2.21
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tendril v0.4.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m deranged v0.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ppv-lite86 v0.2.21
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m num-complex v0.4.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m multer v3.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures-timer v3.0.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m password-hash v0.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m zerocopy v0.7.35
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m linux-raw-sys v0.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m glob v0.3.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m fastrand v2.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m relative-path v1.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rand_chacha v0.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rand_chacha v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m lazy_static v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m earcutr v0.4.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ndarray v0.16.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rayon v1.10.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rmp v0.8.14
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m event-listener-strategy v0.5.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m hmac v0.12.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rand v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m sha2 v0.10.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m num-bigint v0.4.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m fastnum v0.3.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m half v2.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m encoding_rs v0.8.35
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m bytemuck v1.22.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m snap v1.1.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m same-file v1.0.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m untrusted v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m spin v0.9.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ciborium-io v0.2.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m fst v0.4.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m pbkdf2 v0.12.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ciborium-ll v0.2.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m walkdir v2.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m quick_cache v0.6.12
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m async-channel v2.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m salsa20 v0.10.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m blowfish v0.9.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m blake2 v0.10.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m noisy_float v0.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m num_cpus v1.16.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m lru v0.12.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rquickjs-sys v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ring v0.17.14
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m blake3 v1.7.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m libfuzzer-sys v0.4.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m pem v3.0.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m itertools v0.13.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m nibble_vec v0.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m thread_local v1.1.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures-lite v2.6.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m crc32fast v1.4.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m nanoid v0.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m bnum v0.12.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m urlencoding v2.1.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m endian-type v0.1.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m time v0.3.40
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m trice v0.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m double-ended-peekable v0.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m static_assertions_next v1.1.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m zeroize v1.8.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m vart v0.9.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m psl-types v2.0.11
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m maplit v1.0.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m hashbrown v0.14.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m async-task v4.7.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m arrayref v0.3.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m humantime v2.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m deunicode v1.6.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m surrealdb-core v3.0.0-alpha.10 (/src/surrealdb/crates/core)
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m hex v0.4.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m constant_time_eq v0.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m bcrypt v0.15.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m addr v0.15.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m dmp v0.2.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m fuzzy-matcher v0.3.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m regex v1.11.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m async-executor v1.13.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m lexicmp v0.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m argon2 v0.5.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m Inflector v0.11.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m synstructure v0.13.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m darling_core v0.20.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tempfile v3.19.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m dashmap v6.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m scrypt v0.11.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m sha1 v0.10.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m md-5 v0.10.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m path-clean v1.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m base64 v0.21.7
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ipnet v2.11.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m reblessive v0.4.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m sysinfo v0.33.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m serde_derive v1.0.219
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures-macro v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m zerofrom-derive v0.1.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m derive_arbitrary v1.4.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m yoke-derive v0.7.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m zerovec-derive v0.10.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tokio-macros v2.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m displaydoc v0.2.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m thiserror-impl v2.0.12
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tracing-attributes v0.1.28
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m icu_provider_macros v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m async-trait v0.1.88
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m thiserror-impl v1.0.69
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m prost-derive v0.13.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m async-stream-impl v0.3.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m pin-project-internal v1.1.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m phf_macros v0.11.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m strum_macros v0.26.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m html5ever v0.27.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m revision-derive v0.10.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m storekey-derive v0.8.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures-util v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m arbitrary v1.4.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m surrealdb-types-derive v3.0.0-alpha.10 (/src/surrealdb/crates/types-derive)
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m async-stream v0.3.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m revision-derive v0.13.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m darling_macro v0.20.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m phf v0.11.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m zerofrom v0.1.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m yoke v0.7.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tracing v0.1.41
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m pest v2.7.15
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m simple_asn1 v0.6.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m linfa-linalg v0.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m pin-project v1.1.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m zerovec v0.10.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m revision v0.10.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m darling v0.20.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m strum v0.26.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tinystr v0.7.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m icu_collections v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m icu_locid v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures-executor v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tower v0.5.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m icu_provider v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m futures v0.3.31
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m icu_locid_transform v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m icu_properties v1.5.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m indexmap v2.8.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m bytes v1.10.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m chrono v0.4.40
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m geo-types v0.7.15
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m uuid v1.17.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m string_cache v0.8.8
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ulid v1.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m serde_urlencoded v0.7.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m roaring v0.10.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rmp-serde v1.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rust-stemmers v1.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ciborium v0.2.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m radix_trie v0.2.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m toml_edit v0.22.24
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ext-sort v0.1.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m storekey v0.8.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m bincode v1.3.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m geo v0.28.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m http v1.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tokio v1.44.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m prost v0.13.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m async-graphql-value v7.0.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m jsonwebtoken v9.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ndarray-stats v0.6.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m prost-types v0.13.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m async-graphql-parser v7.0.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m surrealkv v0.9.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m http-body v1.0.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m http-body-util v0.1.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m icu_normalizer v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m axum-core v0.4.5
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m proc-macro-crate v3.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m idna_adapter v1.2.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m idna v1.0.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m url v2.5.4
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ammonia v4.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m async-graphql-derive v7.0.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m revision v0.13.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m axum v0.7.9
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tokio-util v0.7.14
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tokio-stream v0.1.17
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m affinitypool v0.3.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m object_store v0.12.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m h2 v0.4.11
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tower v0.4.13
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rstest v0.25.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m hyper v1.6.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m hyper-util v0.1.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m async-graphql v7.0.16
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m hyper-timeout v0.5.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m tonic v0.12.3
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m surrealdb-protocol v0.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rquickjs-core v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m rquickjs v0.9.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m surrealdb-types v3.0.0-alpha.10 (/src/surrealdb/crates/types)
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Duration: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/kind.rs:399:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m399[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Duration`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Duration: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/kind.rs:405:11[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m405[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Duration(PublicDuration),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m              [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Duration`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Duration: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:17:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m17[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Duration`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Datetime: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:17:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m17[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Datetime`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Uuid: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:17:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m17[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Uuid`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Regex: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:17:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m17[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Regex`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Geometry: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:17:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m17[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Geometry`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::File: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:17:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m17[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::File`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Bytes: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:17:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m17[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Bytes`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Duration: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:28:11[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m28[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Duration(PublicDuration),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m              [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Duration`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Datetime: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:32:11[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m32[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Datetime(PublicDatetime),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m              [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Datetime`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Uuid: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:33:7[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m33[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Uuid(PublicUuid),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m          [0m[0m[1m[38;5;9m^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Uuid`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Regex: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:34:8[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m34[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Regex(PublicRegex),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m           [0m[0m[1m[38;5;9m^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Regex`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Geometry: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:39:11[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m39[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Geometry(PublicGeometry),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m              [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Geometry`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::File: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:40:7[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m40[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    File(PublicFile),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m          [0m[0m[1m[38;5;9m^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::File`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Bytes: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/literal.rs:41:8[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m41[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Bytes(PublicBytes),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m           [0m[0m[1m[38;5;9m^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Bytes`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Uuid: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/record_id/key.rs:38:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m38[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Uuid`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Uuid: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/record_id/key.rs:42:7[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m42[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Uuid(PublicUuid),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m          [0m[0m[1m[38;5;9m^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Uuid`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m             `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m           and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Number: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/index.rs:114:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m114[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Number`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Number: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/index.rs:124:10[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m124[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub ml: PublicNumber,[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m             [0m[0m[1m[38;5;9m^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Number`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Number: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/index.rs:160:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m160[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Number`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Number: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/index.rs:169:12[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m169[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Minkowski(PublicNumber),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[38;5;9m^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Number`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Duration: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/statements/access.rs:130:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m130[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Duration`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Duration: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/statements/access.rs:137:13[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m137[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub grace: PublicDuration,[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Duration`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m              `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Datetime: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/statements/show.rs:6:42[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m6[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Datetime`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m          and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the derive macro `arbitrary::Arbitrary` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0277][0m[0m[1m: the trait bound `surrealdb_types::Datetime: Arbitrary<'_>` is not satisfied[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/statements/show.rs:8:12[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m8[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    Timestamp(PublicDatetime),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m[0m               [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mthe trait `Arbitrary<'_>` is not implemented for `surrealdb_types::Datetime`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the following other types implement trait `Arbitrary<'a>`:[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `&'a [u8]` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `&'a str` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `()` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `(B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, A)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, B)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `(D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, C)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `(E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, D)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m            `(F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, E)` implements `Arbitrary<'a>`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m          and 347 others[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0308][0m[0m[1m: mismatched types[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/arbitrary.rs:35:12[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m35[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            expiry: time::Duration::new(u64::arbitrary(u)?, u32::arbitrary(u)?),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                     [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mexpected `surrealdb_types::Duration`, found `trice::Duration`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `trice::Duration` and `surrealdb_types::Duration` have similar names, but are actually distinct types[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;10mnote[0m[0m: `trice::Duration` is defined in crate `core`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/rust/rustup/toolchains/nightly-2025-09-05-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/time.rs:81:1[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub struct Duration {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;10m^^^^^^^^^^^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;10mnote[0m[0m: `surrealdb_types::Duration` is defined in crate `surrealdb_types`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/types/src/value/duration.rs:27:1[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m27[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub struct Duration(pub(crate) std::time::Duration);[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;10m^^^^^^^^^^^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: call `Into::into` on this expression to convert `trice::Duration` into `surrealdb_types::Duration`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m35[0m[0m [0m[0m[1m[38;5;12m| [0m[0m            expiry: time::Duration::new(u64::arbitrary(u)?, u32::arbitrary(u)?)[0m[0m[38;5;10m.into()[0m[0m,[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                                                [0m[0m[38;5;10m+++++++[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[E0308][0m[0m[1m: mismatched types[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/sql/arbitrary.rs:45:14[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m45[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            duration: Duration(time::Duration::new(0, 0)),[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                       [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m[0m [0m[0m[1m[38;5;9mexpected `surrealdb_types::Duration`, found `val::duration::Duration`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `val::duration::Duration` and `surrealdb_types::Duration` have similar names, but are actually distinct types[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;10mnote[0m[0m: `val::duration::Duration` is defined in the current crate[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/core/src/val/duration.rs:24:1[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m24[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m#[revisioned(revision = 1)][0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;10m^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;10mnote[0m[0m: `surrealdb_types::Duration` is defined in crate `surrealdb_types`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/surrealdb/crates/types/src/value/duration.rs:27:1[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m27[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub struct Duration(pub(crate) std::time::Duration);[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;10m^^^^^^^^^^^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: this error originates in the attribute macro `revisioned` (in Nightly builds, run with -Z macro-backtrace for more info)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: call `Into::into` on this expression to convert `val::duration::Duration` into `surrealdb_types::Duration`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m45[0m[0m [0m[0m[1m[38;5;12m| [0m[0m            duration: Duration(time::Duration::new(0, 0))[0m[0m[38;5;10m.into()[0m[0m,[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                          [0m[0m[38;5;10m+++++++[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1mSome errors have detailed explanations: E0277, E0308.[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1mFor more information about an error, try `rustc --explain E0277`.[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[31merror[0m[1m:[0m could not compile `surrealdb-core` (lib) due to 28 previous errors
+Step #3 - "compile-libfuzzer-address-x86_64": Error: failed to build fuzz script: ASAN_OPTIONS="detect_odr_violation=0" RUSTFLAGS=" -Cpasses=sancov-module -Cllvm-args=-sanitizer-coverage-level=4 -Cllvm-args=-sanitizer-coverage-inline-8bit-counters -Cllvm-args=-sanitizer-coverage-pc-table -Cllvm-args=-sanitizer-coverage-trace-compares --cfg fuzzing -Cllvm-args=-simplifycfg-branch-fold-threshold=0 -Zsanitizer=address -Cllvm-args=-sanitizer-coverage-stack-depth -Cdebug-assertions -Ccodegen-units=1 --cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers --cfg surrealdb_unstable" "cargo" "build" "--manifest-path" "fuzz/Cargo.toml" "--target" "x86_64-unknown-linux-gnu" "--release" "--config" "profile.release.debug=\"line-tables-only\"" "--bins"
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************
+Step #3 - "compile-libfuzzer-address-x86_64": Failed to build.
+Step #3 - "compile-libfuzzer-address-x86_64": To reproduce, run:
+Step #3 - "compile-libfuzzer-address-x86_64": python infra/helper.py build_image surrealdb
+Step #3 - "compile-libfuzzer-address-x86_64": python infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 surrealdb
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

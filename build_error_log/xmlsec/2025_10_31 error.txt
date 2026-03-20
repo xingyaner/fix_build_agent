@@ -1,0 +1,1420 @@
+starting build "fba5869c-402d-4e5f-ae6d-6bb54c1bba59"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6"
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Sending build context to Docker daemon  8.704kB
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Step 1/7 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b549f31133a9: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": ef16d7151892: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 069461c9b089: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": fbbbca44a5d3: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 41dee589a111: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": d4311356cbff: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 4befe0a85dc5: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 30aeddc82e74: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 96d5d351349d: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": c2b2660e9733: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 8774ab3ba5ca: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 64dd77629661: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": d7142bb0a15a: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 325f4c76e3d1: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 31bf17507295: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 6fff6b276b73: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b812d69f05d9: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 4a56373d2d87: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 366aa8bb1386: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 65a7c31d3948: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 5f7f4ede8ee1: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 0fb6c799db27: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 809742977675: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": a933dff5bb30: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": ff73cfc9286e: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 59d8ffeb065c: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 0e014d9ae1f8: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 2baae68a2cad: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": e957ae03fc0e: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": a041c9809ff3: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 3ec11c69c7c8: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 64dd77629661: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": e087cf1b5c02: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": f119dd7d4ee0: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 595d04f04121: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": d7142bb0a15a: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 226ece5d533a: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 8af517899a52: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 325f4c76e3d1: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 2730993de8dd: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b896210c4d84: Pulling fs layer
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 31bf17507295: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 6fff6b276b73: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 4a56373d2d87: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 366aa8bb1386: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 65a7c31d3948: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b812d69f05d9: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 5f7f4ede8ee1: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 96d5d351349d: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 0fb6c799db27: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 4befe0a85dc5: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 809742977675: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": c2b2660e9733: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": e087cf1b5c02: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": a933dff5bb30: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": f119dd7d4ee0: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 595d04f04121: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 8774ab3ba5ca: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": ff73cfc9286e: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b896210c4d84: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 59d8ffeb065c: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 226ece5d533a: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 30aeddc82e74: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 0e014d9ae1f8: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 8af517899a52: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 41dee589a111: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": a041c9809ff3: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 2730993de8dd: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 2baae68a2cad: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": d4311356cbff: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": fbbbca44a5d3: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 3ec11c69c7c8: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": e957ae03fc0e: Waiting
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 069461c9b089: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 069461c9b089: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b549f31133a9: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b549f31133a9: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": fbbbca44a5d3: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": fbbbca44a5d3: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 41dee589a111: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 41dee589a111: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 4befe0a85dc5: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 4befe0a85dc5: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 30aeddc82e74: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 30aeddc82e74: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": ef16d7151892: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": ef16d7151892: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b549f31133a9: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": c2b2660e9733: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": c2b2660e9733: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 8774ab3ba5ca: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 8774ab3ba5ca: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 64dd77629661: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 64dd77629661: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": d7142bb0a15a: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": d7142bb0a15a: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 96d5d351349d: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 96d5d351349d: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 325f4c76e3d1: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 325f4c76e3d1: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 31bf17507295: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 31bf17507295: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 6fff6b276b73: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 6fff6b276b73: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b812d69f05d9: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b812d69f05d9: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 4a56373d2d87: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 4a56373d2d87: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 366aa8bb1386: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 366aa8bb1386: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 65a7c31d3948: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 65a7c31d3948: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 5f7f4ede8ee1: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 5f7f4ede8ee1: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 0fb6c799db27: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 809742977675: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 809742977675: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": a933dff5bb30: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": ff73cfc9286e: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": ff73cfc9286e: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 59d8ffeb065c: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 0e014d9ae1f8: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": ef16d7151892: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 2baae68a2cad: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 2baae68a2cad: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 069461c9b089: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": e957ae03fc0e: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": e957ae03fc0e: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": d4311356cbff: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": d4311356cbff: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": a041c9809ff3: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": a041c9809ff3: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 3ec11c69c7c8: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 3ec11c69c7c8: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": e087cf1b5c02: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": e087cf1b5c02: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 595d04f04121: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 595d04f04121: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 226ece5d533a: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 226ece5d533a: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 8af517899a52: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 8af517899a52: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 2730993de8dd: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 2730993de8dd: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b896210c4d84: Verifying Checksum
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b896210c4d84: Download complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": fbbbca44a5d3: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 41dee589a111: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": d4311356cbff: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 4befe0a85dc5: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 30aeddc82e74: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 96d5d351349d: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": c2b2660e9733: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 8774ab3ba5ca: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 64dd77629661: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": d7142bb0a15a: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 325f4c76e3d1: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 31bf17507295: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 6fff6b276b73: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b812d69f05d9: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 4a56373d2d87: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 366aa8bb1386: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 65a7c31d3948: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 5f7f4ede8ee1: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 0fb6c799db27: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 809742977675: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": a933dff5bb30: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": ff73cfc9286e: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 59d8ffeb065c: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 0e014d9ae1f8: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 2baae68a2cad: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": e957ae03fc0e: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": a041c9809ff3: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 3ec11c69c7c8: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": e087cf1b5c02: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": f119dd7d4ee0: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 595d04f04121: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 226ece5d533a: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 8af517899a52: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 2730993de8dd: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": b896210c4d84: Pull complete
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Digest: sha256:81c0c136cda1ba3f85fd41f65851f7feb942a5fc0aeca4c4f02fb53fa5e835d8
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> b5972aa75d1a
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Step 2/7 : RUN apt-get update && apt-get install -y make autoconf automake libtool pkg-config     libssl-dev wget liblzma-dev python-dev python3-dev
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> Running in b317d34b33dc
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Hit:2 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Fetched 383 kB in 1s (754 kB/s)
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Reading package lists...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Reading package lists...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Building dependency tree...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Reading state information...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": make set to manually installed.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": libssl-dev is already the newest version (1.1.1f-1ubuntu2.24).
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": wget is already the newest version (1.20.3-1ubuntu2.1).
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": The following additional packages will be installed:
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   file libexpat1-dev libglib2.0-0 libglib2.0-data libicu66 libltdl-dev
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   libltdl7 libmagic-mgc libmagic1 libmpdec2 libpython2-dev libpython2-stdlib
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   libpython2.7 libpython2.7-dev libpython2.7-minimal libpython2.7-stdlib
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   libpython3-dev libpython3-stdlib libpython3.8 libpython3.8-dev
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   libpython3.8-minimal libpython3.8-stdlib libxml2 mime-support
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   python-is-python2 python2 python2-dev python2-minimal python2.7
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   python2.7-dev python2.7-minimal python3 python3-distutils python3-lib2to3
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   python3-minimal python3.8 python3.8-dev python3.8-minimal shared-mime-info
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   xdg-user-dirs zlib1g-dev
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Suggested packages:
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   autoconf-archive gnu-standards autoconf-doc gettext libtool-doc liblzma-doc
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   gfortran | fortran95-compiler gcj-jdk python2-doc python-tk python2.7-doc
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   binfmt-support python3-doc python3-tk python3-venv python3.8-venv
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   python3.8-doc
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": The following NEW packages will be installed:
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   autoconf automake file libexpat1-dev libglib2.0-0 libglib2.0-data libicu66
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   libltdl-dev libltdl7 liblzma-dev libmagic-mgc libmagic1 libmpdec2
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   libpython2-dev libpython2-stdlib libpython2.7 libpython2.7-dev
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   libpython2.7-minimal libpython2.7-stdlib libpython3-dev libpython3-stdlib
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   libpython3.8 libpython3.8-dev libpython3.8-minimal libpython3.8-stdlib
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   libtool libxml2 mime-support pkg-config python-dev-is-python2
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   python-is-python2 python2 python2-dev python2-minimal python2.7
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   python2.7-dev python2.7-minimal python3 python3-dev python3-distutils
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   python3-lib2to3 python3-minimal python3.8 python3.8-dev python3.8-minimal
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   shared-mime-info xdg-user-dirs zlib1g-dev
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 0 upgraded, 48 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Need to get 31.7 MB of archives.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": After this operation, 140 MB of additional disk space will be used.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpython3.8-minimal amd64 3.8.10-0ubuntu1~20.04.18 [721 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3.8-minimal amd64 3.8.10-0ubuntu1~20.04.18 [1900 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 python3-minimal amd64 3.8.2-0ubuntu2 [23.6 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:4 http://archive.ubuntu.com/ubuntu focal/main amd64 mime-support all 3.64ubuntu1 [30.6 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:5 http://archive.ubuntu.com/ubuntu focal/main amd64 libmpdec2 amd64 2.4.2-3 [81.1 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpython3.8-stdlib amd64 3.8.10-0ubuntu1~20.04.18 [1676 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3.8 amd64 3.8.10-0ubuntu1~20.04.18 [387 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 libpython3-stdlib amd64 3.8.2-0ubuntu2 [7068 B]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 python3 amd64 3.8.2-0ubuntu2 [47.6 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:10 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7-minimal amd64 2.7.18-1~20.04.7 [336 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:11 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 python2.7-minimal amd64 2.7.18-1~20.04.7 [1278 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:12 http://archive.ubuntu.com/ubuntu focal/universe amd64 python2-minimal amd64 2.7.17-2ubuntu4 [27.5 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:13 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7-stdlib amd64 2.7.18-1~20.04.7 [1889 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:14 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 python2.7 amd64 2.7.18-1~20.04.7 [248 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:15 http://archive.ubuntu.com/ubuntu focal/universe amd64 libpython2-stdlib amd64 2.7.17-2ubuntu4 [7072 B]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:16 http://archive.ubuntu.com/ubuntu focal/universe amd64 python2 amd64 2.7.17-2ubuntu4 [26.5 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:17 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:18 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:19 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:20 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-0 amd64 2.64.6-1~ubuntu20.04.9 [1290 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:21 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-data all 2.64.6-1~ubuntu20.04.9 [5836 B]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:22 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:23 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:24 http://archive.ubuntu.com/ubuntu focal/main amd64 shared-mime-info amd64 1.15-1 [430 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:25 http://archive.ubuntu.com/ubuntu focal/main amd64 xdg-user-dirs amd64 0.17-2ubuntu1 [48.3 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:26 http://archive.ubuntu.com/ubuntu focal/main amd64 autoconf all 2.69-11.1 [321 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:27 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:28 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libexpat1-dev amd64 2.2.9-1ubuntu0.8 [117 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:29 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:30 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:31 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7 amd64 2.7.18-1~20.04.7 [1038 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:32 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libpython2.7-dev amd64 2.7.18-1~20.04.7 [2468 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:33 http://archive.ubuntu.com/ubuntu focal/universe amd64 libpython2-dev amd64 2.7.17-2ubuntu4 [7140 B]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:34 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpython3.8 amd64 3.8.10-0ubuntu1~20.04.18 [1625 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:35 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpython3.8-dev amd64 3.8.10-0ubuntu1~20.04.18 [3950 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:36 http://archive.ubuntu.com/ubuntu focal/main amd64 libpython3-dev amd64 3.8.2-0ubuntu2 [7236 B]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:37 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:38 http://archive.ubuntu.com/ubuntu focal/main amd64 pkg-config amd64 0.29.1-0ubuntu4 [45.5 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:39 http://archive.ubuntu.com/ubuntu focal/universe amd64 python-is-python2 all 2.7.17-4 [2496 B]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:40 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 python2.7-dev amd64 2.7.18-1~20.04.7 [294 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:41 http://archive.ubuntu.com/ubuntu focal/universe amd64 python2-dev amd64 2.7.17-2ubuntu4 [1268 B]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:42 http://archive.ubuntu.com/ubuntu focal/universe amd64 python-dev-is-python2 all 2.7.17-4 [1396 B]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:43 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 zlib1g-dev amd64 1:1.2.11.dfsg-2ubuntu1.5 [155 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:44 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3.8-dev amd64 3.8.10-0ubuntu1~20.04.18 [514 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:45 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3-lib2to3 all 3.8.10-0ubuntu1~20.04 [76.3 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:46 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3-distutils all 3.8.10-0ubuntu1~20.04 [141 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:47 http://archive.ubuntu.com/ubuntu focal/main amd64 python3-dev amd64 3.8.2-0ubuntu2 [1212 B]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:48 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 liblzma-dev amd64 5.2.4-1ubuntu1.1 [147 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [0mFetched 31.7 MB in 1s (42.6 MB/s)
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython3.8-minimal:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../libpython3.8-minimal_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython3.8-minimal:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python3.8-minimal.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../python3.8-minimal_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python3.8-minimal (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython3.8-minimal:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python3.8-minimal (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python3-minimal.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17766 files and directories currently installed.)
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../0-python3-minimal_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python3-minimal (3.8.2-0ubuntu2) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package mime-support.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../1-mime-support_3.64ubuntu1_all.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking mime-support (3.64ubuntu1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libmpdec2:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../2-libmpdec2_2.4.2-3_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libmpdec2:amd64 (2.4.2-3) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython3.8-stdlib:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../3-libpython3.8-stdlib_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython3.8-stdlib:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python3.8.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../4-python3.8_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python3.8 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython3-stdlib:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../5-libpython3-stdlib_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython3-stdlib:amd64 (3.8.2-0ubuntu2) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python3-minimal (3.8.2-0ubuntu2) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python3.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 18168 files and directories currently installed.)
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../0-python3_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python3 (3.8.2-0ubuntu2) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython2.7-minimal:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../1-libpython2.7-minimal_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython2.7-minimal:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python2.7-minimal.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../2-python2.7-minimal_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python2.7-minimal (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python2-minimal.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../3-python2-minimal_2.7.17-2ubuntu4_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python2-minimal (2.7.17-2ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython2.7-stdlib:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../4-libpython2.7-stdlib_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython2.7-stdlib:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python2.7.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../5-python2.7_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python2.7 (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython2-stdlib:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../6-libpython2-stdlib_2.7.17-2ubuntu4_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython2-stdlib:amd64 (2.7.17-2ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython2.7-minimal:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python2.7-minimal (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python2-minimal (2.7.17-2ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python2.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 18951 files and directories currently installed.)
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../00-python2_2.7.17-2ubuntu4_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python2 (2.7.17-2ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libmagic-mgc.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../01-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libmagic1:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../02-libmagic1_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package file.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../03-file_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking file (1:5.38-4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libglib2.0-0:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../04-libglib2.0-0_2.64.6-1~ubuntu20.04.9_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libglib2.0-data.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../05-libglib2.0-data_2.64.6-1~ubuntu20.04.9_all.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libicu66:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../06-libicu66_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libxml2:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../07-libxml2_2.9.10+dfsg-5ubuntu0.20.04.10_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package shared-mime-info.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../08-shared-mime-info_1.15-1_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking shared-mime-info (1.15-1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package xdg-user-dirs.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../09-xdg-user-dirs_0.17-2ubuntu1_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package autoconf.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../10-autoconf_2.69-11.1_all.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking autoconf (2.69-11.1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package automake.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../11-automake_1%3a1.16.1-4ubuntu6_all.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libexpat1-dev:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../12-libexpat1-dev_2.2.9-1ubuntu0.8_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libexpat1-dev:amd64 (2.2.9-1ubuntu0.8) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libltdl7:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../13-libltdl7_2.4.6-14_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libltdl-dev:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../14-libltdl-dev_2.4.6-14_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython2.7:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../15-libpython2.7_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython2.7:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython2.7-dev:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../16-libpython2.7-dev_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython2.7-dev:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython2-dev:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../17-libpython2-dev_2.7.17-2ubuntu4_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython2-dev:amd64 (2.7.17-2ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython3.8:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../18-libpython3.8_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython3.8:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython3.8-dev:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../19-libpython3.8-dev_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython3.8-dev:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libpython3-dev:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../20-libpython3-dev_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libpython3-dev:amd64 (3.8.2-0ubuntu2) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package libtool.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../21-libtool_2.4.6-14_all.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking libtool (2.4.6-14) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package pkg-config.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../22-pkg-config_0.29.1-0ubuntu4_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python-is-python2.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../23-python-is-python2_2.7.17-4_all.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python-is-python2 (2.7.17-4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python2.7-dev.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../24-python2.7-dev_2.7.18-1~20.04.7_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python2.7-dev (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python2-dev.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../25-python2-dev_2.7.17-2ubuntu4_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python2-dev (2.7.17-2ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python-dev-is-python2.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../26-python-dev-is-python2_2.7.17-4_all.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python-dev-is-python2 (2.7.17-4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package zlib1g-dev:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../27-zlib1g-dev_1%3a1.2.11.dfsg-2ubuntu1.5_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python3.8-dev.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../28-python3.8-dev_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python3.8-dev (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python3-lib2to3.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../29-python3-lib2to3_3.8.10-0ubuntu1~20.04_all.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python3-lib2to3 (3.8.10-0ubuntu1~20.04) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python3-distutils.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../30-python3-distutils_3.8.10-0ubuntu1~20.04_all.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python3-distutils (3.8.10-0ubuntu1~20.04) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package python3-dev.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../31-python3-dev_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking python3-dev (3.8.2-0ubuntu2) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Selecting previously unselected package liblzma-dev:amd64.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../32-liblzma-dev_5.2.4-1ubuntu1.1_amd64.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking liblzma-dev:amd64 (5.2.4-1ubuntu1.1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up mime-support (3.64ubuntu1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": No schema files found: doing nothing.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up file (1:5.38-4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython2.7-stdlib:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libexpat1-dev:amd64 (2.2.9-1ubuntu0.8) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up autoconf (2.69-11.1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up liblzma-dev:amd64 (5.2.4-1ubuntu1.1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libmpdec2:amd64 (2.4.2-3) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython3.8-stdlib:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python3.8 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython3-stdlib:amd64 (3.8.2-0ubuntu2) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": update-alternatives: using /usr/bin/automake-1.16 to provide /usr/bin/automake (automake) in auto mode
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": update-alternatives: warning: skip creation of /usr/share/man/man1/automake.1.gz because associated file /usr/share/man/man1/automake-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": update-alternatives: warning: skip creation of /usr/share/man/man1/aclocal.1.gz because associated file /usr/share/man/man1/aclocal-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython2.7:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython2.7-dev:amd64 (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python2.7 (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libtool (2.4.6-14) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython2-stdlib:amd64 (2.7.17-2ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python3 (3.8.2-0ubuntu2) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python2 (2.7.17-2ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython3.8:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up shared-mime-info (1.15-1) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython2-dev:amd64 (2.7.17-2ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python3-lib2to3 (3.8.10-0ubuntu1~20.04) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python-is-python2 (2.7.17-4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python2.7-dev (2.7.18-1~20.04.7) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python3-distutils (3.8.10-0ubuntu1~20.04) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python2-dev (2.7.17-2ubuntu4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython3.8-dev:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python-dev-is-python2 (2.7.17-4) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python3.8-dev (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up libpython3-dev:amd64 (3.8.2-0ubuntu2) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up python3-dev (3.8.2-0ubuntu2) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Removing intermediate container b317d34b33dc
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> 9bac8ee433d5
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Step 3/7 : RUN curl -LO http://mirrors.kernel.org/ubuntu/pool/main/a/automake-1.16/automake_1.16.5-1.3_all.deb &&     apt install ./automake_1.16.5-1.3_all.deb
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> Running in caf6802b973e
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [91m  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":                                  Dload  Upload   Total   Spent    Left  Speed
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   0     0    0     0    0     0      0      0 --:--:-- --:--:-- [0m[91m--:--:--     0[0m[91m100   162  100   162    0     0   1306      0 --:--:-- --:--:-- --:--:--  1306
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [0m[91m100  544k  100  544k    0     0  2179k      0 --:--:-- --:--:-- --:--:-- 2179k
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [0m[91m
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [0mReading package lists...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Building dependency tree...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Reading state information...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Suggested packages:
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   autoconf-doc gnu-standards
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": The following packages will be upgraded:
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":   automake
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": 1 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Need to get 0 B/558 kB of archives.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": After this operation, 36.9 kB of additional disk space will be used.
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Get:1 /src/automake_1.16.5-1.3_all.deb automake all 1:1.16.5-1.3 [558 kB]
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [0m(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 20355 files and directories currently installed.)
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Preparing to unpack .../automake_1.16.5-1.3_all.deb ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Unpacking automake (1:1.16.5-1.3) over (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Setting up automake (1:1.16.5-1.3) ...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Removing intermediate container caf6802b973e
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> 0e1d684f253e
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Step 4/7 : RUN git clone --depth 1 https://github.com/lsh123/xmlsec
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> Running in 8c5f457f7423
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [91mCloning into 'xmlsec'...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [0mRemoving intermediate container 8c5f457f7423
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> 42a0e2275210
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Step 5/7 : RUN git clone --depth 1 https://gitlab.gnome.org/GNOME/libxml2.git
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> Running in e4bdfb6c417f
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [91mCloning into 'libxml2'...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [0mRemoving intermediate container e4bdfb6c417f
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> 786e51dcace2
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Step 6/7 : RUN git clone --depth 1 https://gitlab.gnome.org/GNOME/libxslt.git
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> Running in a8e9b86ac327
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [91mCloning into 'libxslt'...
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": [0mRemoving intermediate container a8e9b86ac327
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> 7eed04a30e77
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Step 7/7 : COPY build.sh *.diff $SRC/
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6":  ---> 103fa896500e
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Successfully built 103fa896500e
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Successfully tagged gcr.io/oss-fuzz/xmlsec:latest
+Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/xmlsec:latest
+Finished Step #1 - "build-472f8d3f-634c-4e8b-b4b2-c8742647cfa6"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/xmlsec
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/filey4oClM
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/libxslt/.git
+Step #2 - "srcmap": + GIT_DIR=/src/libxslt
+Step #2 - "srcmap": + cd /src/libxslt
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://gitlab.gnome.org/GNOME/libxslt.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=1ea9faaf53dde9e5ebd5695412575a81c55726a3
+Step #2 - "srcmap": + jq_inplace /tmp/filey4oClM '."/src/libxslt" = { type: "git", url: "https://gitlab.gnome.org/GNOME/libxslt.git", rev: "1ea9faaf53dde9e5ebd5695412575a81c55726a3" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filemHxdu9
+Step #2 - "srcmap": + cat /tmp/filey4oClM
+Step #2 - "srcmap": + jq '."/src/libxslt" = { type: "git", url: "https://gitlab.gnome.org/GNOME/libxslt.git", rev: "1ea9faaf53dde9e5ebd5695412575a81c55726a3" }'
+Step #2 - "srcmap": + mv /tmp/filemHxdu9 /tmp/filey4oClM
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/libxml2/.git
+Step #2 - "srcmap": + GIT_DIR=/src/libxml2
+Step #2 - "srcmap": + cd /src/libxml2
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://gitlab.gnome.org/GNOME/libxml2.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=22f9d730898d2dfcc03a484e65e1f8fc3675225f
+Step #2 - "srcmap": + jq_inplace /tmp/filey4oClM '."/src/libxml2" = { type: "git", url: "https://gitlab.gnome.org/GNOME/libxml2.git", rev: "22f9d730898d2dfcc03a484e65e1f8fc3675225f" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileRT1NnK
+Step #2 - "srcmap": + cat /tmp/filey4oClM
+Step #2 - "srcmap": + jq '."/src/libxml2" = { type: "git", url: "https://gitlab.gnome.org/GNOME/libxml2.git", rev: "22f9d730898d2dfcc03a484e65e1f8fc3675225f" }'
+Step #2 - "srcmap": + mv /tmp/fileRT1NnK /tmp/filey4oClM
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/xmlsec/.git
+Step #2 - "srcmap": + GIT_DIR=/src/xmlsec
+Step #2 - "srcmap": + cd /src/xmlsec
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/lsh123/xmlsec
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=1eb21e26a6ab3ee73e38900305ba546863890200
+Step #2 - "srcmap": + jq_inplace /tmp/filey4oClM '."/src/xmlsec" = { type: "git", url: "https://github.com/lsh123/xmlsec", rev: "1eb21e26a6ab3ee73e38900305ba546863890200" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filedElk3g
+Step #2 - "srcmap": + cat /tmp/filey4oClM
+Step #2 - "srcmap": + jq '."/src/xmlsec" = { type: "git", url: "https://github.com/lsh123/xmlsec", rev: "1eb21e26a6ab3ee73e38900305ba546863890200" }'
+Step #2 - "srcmap": + mv /tmp/filedElk3g /tmp/filey4oClM
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/filey4oClM
+Step #2 - "srcmap": + rm /tmp/filey4oClM
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/libxslt": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://gitlab.gnome.org/GNOME/libxslt.git",
+Step #2 - "srcmap":     "rev": "1ea9faaf53dde9e5ebd5695412575a81c55726a3"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/libxml2": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://gitlab.gnome.org/GNOME/libxml2.git",
+Step #2 - "srcmap":     "rev": "22f9d730898d2dfcc03a484e65e1f8fc3675225f"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/xmlsec": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/lsh123/xmlsec",
+Step #2 - "srcmap":     "rev": "1eb21e26a6ab3ee73e38900305ba546863890200"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + export XMLSEC_DEPS_PATH=/src/xmlsec_deps
+Step #3 - "compile-afl-address-x86_64": + XMLSEC_DEPS_PATH=/src/xmlsec_deps
+Step #3 - "compile-afl-address-x86_64": + mkdir -p /src/xmlsec_deps
+Step #3 - "compile-afl-address-x86_64": + cd /src/libxml2
+Step #3 - "compile-afl-address-x86_64": + ./autogen.sh --without-legacy --without-python --without-zlib --without-lzma --enable-static --prefix=/src/xmlsec_deps
+Step #3 - "compile-afl-address-x86_64": libtoolize: putting auxiliary files in AC_CONFIG_AUX_DIR, '.'.
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file './ltmain.sh'
+Step #3 - "compile-afl-address-x86_64": libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'm4'.
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/libtool.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltoptions.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltsugar.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltversion.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/lt~obsolete.m4'
+Step #3 - "compile-afl-address-x86_64": configure.ac:52: installing './compile'
+Step #3 - "compile-afl-address-x86_64": configure.ac:11: installing './config.guess'
+Step #3 - "compile-afl-address-x86_64": configure.ac:11: installing './config.sub'
+Step #3 - "compile-afl-address-x86_64": configure.ac:47: installing './install-sh'
+Step #3 - "compile-afl-address-x86_64": configure.ac:47: installing './missing'
+Step #3 - "compile-afl-address-x86_64": Makefile.am: installing './depcomp'
+Step #3 - "compile-afl-address-x86_64": python/Makefile.am:30: installing './py-compile'
+Step #3 - "compile-afl-address-x86_64": configure: WARNING: unrecognized options: --without-lzma
+Step #3 - "compile-afl-address-x86_64": checking build system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking host system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": extra=
+Step #3 - "compile-afl-address-x86_64": checking for a BSD-compatible install... /usr/bin/install -c
+Step #3 - "compile-afl-address-x86_64": checking whether build environment is sane... yes
+Step #3 - "compile-afl-address-x86_64": checking for a thread-safe mkdir -p... /usr/bin/mkdir -p
+Step #3 - "compile-afl-address-x86_64": checking for gawk... no
+Step #3 - "compile-afl-address-x86_64": checking for mawk... mawk
+Step #3 - "compile-afl-address-x86_64": checking whether make sets $(MAKE)... yes
+Step #3 - "compile-afl-address-x86_64": checking whether make supports nested variables... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to enable maintainer-specific portions of Makefiles... yes
+Step #3 - "compile-afl-address-x86_64": checking whether make supports nested variables... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for gcc... /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": checking whether the C compiler works... yes
+Step #3 - "compile-afl-address-x86_64": checking for C compiler default output file name... a.out
+Step #3 - "compile-afl-address-x86_64": checking for suffix of executables... 
+Step #3 - "compile-afl-address-x86_64": checking whether we are cross compiling... no
+Step #3 - "compile-afl-address-x86_64": checking for suffix of object files... o
+Step #3 - "compile-afl-address-x86_64": checking whether we are using the GNU C compiler... yes
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast accepts -g... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to accept ISO C89... none needed
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast understands -c and -o together... yes
+Step #3 - "compile-afl-address-x86_64": checking whether make supports the include directive... yes (GNU style)
+Step #3 - "compile-afl-address-x86_64": checking dependency style of /src/aflplusplus/afl-clang-fast... gcc3
+Step #3 - "compile-afl-address-x86_64": checking whether ln -s works... yes
+Step #3 - "compile-afl-address-x86_64": checking for pkg-config... /usr/bin/pkg-config
+Step #3 - "compile-afl-address-x86_64": checking pkg-config is at least version 0.9.0... yes
+Step #3 - "compile-afl-address-x86_64": checking how to print strings... printf
+Step #3 - "compile-afl-address-x86_64": checking for a sed that does not truncate output... /usr/bin/sed
+Step #3 - "compile-afl-address-x86_64": checking for grep that handles long lines and -e... /usr/bin/grep
+Step #3 - "compile-afl-address-x86_64": checking for egrep... /usr/bin/grep -E
+Step #3 - "compile-afl-address-x86_64": checking for fgrep... /usr/bin/grep -F
+Step #3 - "compile-afl-address-x86_64": checking for ld used by /src/aflplusplus/afl-clang-fast... /usr/bin/ld
+Step #3 - "compile-afl-address-x86_64": checking if the linker (/usr/bin/ld) is GNU ld... yes
+Step #3 - "compile-afl-address-x86_64": checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+Step #3 - "compile-afl-address-x86_64": checking the name lister (/usr/bin/nm -B) interface... BSD nm
+Step #3 - "compile-afl-address-x86_64": checking the maximum length of command line arguments... 1572864
+Step #3 - "compile-afl-address-x86_64": checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+Step #3 - "compile-afl-address-x86_64": checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+Step #3 - "compile-afl-address-x86_64": checking for /usr/bin/ld option to reload object files... -r
+Step #3 - "compile-afl-address-x86_64": checking for objdump... objdump
+Step #3 - "compile-afl-address-x86_64": checking how to recognize dependent libraries... pass_all
+Step #3 - "compile-afl-address-x86_64": checking for dlltool... no
+Step #3 - "compile-afl-address-x86_64": checking how to associate runtime and link libraries... printf %s\n
+Step #3 - "compile-afl-address-x86_64": checking for ar... ar
+Step #3 - "compile-afl-address-x86_64": checking for archiver @FILE support... @
+Step #3 - "compile-afl-address-x86_64": checking for strip... strip
+Step #3 - "compile-afl-address-x86_64": checking for ranlib... ranlib
+Step #3 - "compile-afl-address-x86_64": checking command to parse /usr/bin/nm -B output from /src/aflplusplus/afl-clang-fast object... ok
+Step #3 - "compile-afl-address-x86_64": checking for sysroot... no
+Step #3 - "compile-afl-address-x86_64": checking for a working dd... /usr/bin/dd
+Step #3 - "compile-afl-address-x86_64": checking how to truncate binary pipes... /usr/bin/dd bs=4096 count=1
+Step #3 - "compile-afl-address-x86_64": checking for mt... no
+Step #3 - "compile-afl-address-x86_64": checking if : is a manifest tool... no
+Step #3 - "compile-afl-address-x86_64": checking how to run the C preprocessor... /src/aflplusplus/afl-clang-fast -E
+Step #3 - "compile-afl-address-x86_64": checking for ANSI C header files... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/types.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/stat.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdlib.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for string.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for memory.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for strings.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for inttypes.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdint.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for unistd.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for dlfcn.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for objdir... .libs
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -fno-rtti -fno-exceptions... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to produce PIC... -fPIC -DPIC
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast PIC flag -fPIC -DPIC works... yes
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast static flag -static works... no
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -c -o file.o... yes
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -c -o file.o... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking whether the /src/aflplusplus/afl-clang-fast linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether -lc should be explicitly linked in... no
+Step #3 - "compile-afl-address-x86_64": checking dynamic linker characteristics... GNU/Linux ld.so
+Step #3 - "compile-afl-address-x86_64": checking how to hardcode library paths into programs... immediate
+Step #3 - "compile-afl-address-x86_64": checking whether stripping libraries is possible... yes
+Step #3 - "compile-afl-address-x86_64": checking if libtool supports shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build static libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking for cos in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for __attribute__((destructor))... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdint.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking whether getentropy is declared... yes
+Step #3 - "compile-afl-address-x86_64": checking whether glob is declared... yes
+Step #3 - "compile-afl-address-x86_64": checking whether mmap is declared... yes
+Step #3 - "compile-afl-address-x86_64": checking for library containing dlopen... none required
+Step #3 - "compile-afl-address-x86_64": checking pthread.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking pthread.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for pthread.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for library containing pthread_create... none required
+Step #3 - "compile-afl-address-x86_64": checking for libiconv... none required
+Step #3 - "compile-afl-address-x86_64": checking that generated files are newer than configure... done
+Step #3 - "compile-afl-address-x86_64": configure: creating ./config.status
+Step #3 - "compile-afl-address-x86_64": config.status: creating Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating include/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating include/libxml/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating include/private/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating doc/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating example/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating fuzz/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating python/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating python/tests/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating include/libxml/xmlversion.h
+Step #3 - "compile-afl-address-x86_64": config.status: creating libxml-2.0.pc
+Step #3 - "compile-afl-address-x86_64": config.status: creating libxml2-config.cmake
+Step #3 - "compile-afl-address-x86_64": config.status: creating python/setup.py
+Step #3 - "compile-afl-address-x86_64": config.status: creating xml2-config
+Step #3 - "compile-afl-address-x86_64": config.status: creating config.h
+Step #3 - "compile-afl-address-x86_64": config.status: executing depfiles commands
+Step #3 - "compile-afl-address-x86_64": config.status: executing libtool commands
+Step #3 - "compile-afl-address-x86_64": configure: WARNING: unrecognized options: --without-lzma
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": Now type 'make' to compile libxml2.
+Step #3 - "compile-afl-address-x86_64": ++ nproc
+Step #3 - "compile-afl-address-x86_64": + make -j32 all
+Step #3 - "compile-afl-address-x86_64": make  all-recursive
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxml2'
+Step #3 - "compile-afl-address-x86_64": Making all in include
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxml2/include'
+Step #3 - "compile-afl-address-x86_64": Making all in libxml
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxml2/include/libxml'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxml2/include/libxml'
+Step #3 - "compile-afl-address-x86_64": Making all in private
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxml2/include/private'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxml2/include/private'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxml2/include'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxml2/include'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxml2/include'
+Step #3 - "compile-afl-address-x86_64": Making all in .
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxml2'
+Step #3 - "compile-afl-address-x86_64":   CC       xmllint-xmllint.o
+Step #3 - "compile-afl-address-x86_64":   CC       xmllint-shell.o
+Step #3 - "compile-afl-address-x86_64":   CC       xmllint-lintmain.o
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-buf.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-chvalid.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-dict.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-entities.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-encoding.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-error.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-globals.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-hash.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-list.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-parser.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-parserInternals.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-SAX2.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-threads.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-tree.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-valid.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-uri.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xmlIO.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xmlmemory.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xmlstring.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-c14n.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-catalog.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-debugXML.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-HTMLparser.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-HTMLtree.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xmlmodule.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-pattern.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xmlsave.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xmlreader.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xmlregexp.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-relaxng.lo
+Step #3 - "compile-afl-address-x86_64": [1;93m[!] [1;97mWARNING: [0mdlopen() detected. To have coverage for a library that your target dlopen()'s this must either happen before __AFL_INIT() or you must use AFL_PRELOAD to preload all dlopen()'ed libraries!
+Step #3 - "compile-afl-address-x86_64": [0m
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xmlschemas.lo
+Step #3 - "compile-afl-address-x86_64": [1mHTMLparser.c:324:1: [0m[0;1;35mwarning: [0m[1munused function 'htmlFindEncoding' [-Wunused-function][0m
+Step #3 - "compile-afl-address-x86_64":   324 | htmlFindEncoding(xmlParserCtxtPtr ctxt) {[0m
+Step #3 - "compile-afl-address-x86_64":       | [0;1;32m^~~~~~~~~~~~~~~~
+Step #3 - "compile-afl-address-x86_64": [0m  CC       libxml2_la-xmlschemastypes.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xmlwriter.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xinclude.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xpath.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xlink.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libxml2_la-xpointer.lo
+Step #3 - "compile-afl-address-x86_64":   CC       xmlcatalog-xmlcatalog.o
+Step #3 - "compile-afl-address-x86_64": 1 warning generated.
+Step #3 - "compile-afl-address-x86_64":   CCLD     libxml2.la
+Step #3 - "compile-afl-address-x86_64":   CCLD     xmlcatalog
+Step #3 - "compile-afl-address-x86_64":   CCLD     xmllint
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxml2'
+Step #3 - "compile-afl-address-x86_64": Making all in example
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxml2/example'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxml2/example'
+Step #3 - "compile-afl-address-x86_64": Making all in fuzz
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxml2/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxml2/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxml2'
+Step #3 - "compile-afl-address-x86_64": + make install
+Step #3 - "compile-afl-address-x86_64": Making install in include
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxml2/include'
+Step #3 - "compile-afl-address-x86_64": Making install in libxml
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxml2/include/libxml'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxml2/include/libxml'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/include/libxml2/libxml'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 xmlversion.h '/src/xmlsec_deps/include/libxml2/libxml'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/include/libxml2/libxml'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 SAX.h entities.h encoding.h parser.h parserInternals.h xmlerror.h HTMLparser.h HTMLtree.h debugXML.h tree.h list.h hash.h xpath.h xpathInternals.h xpointer.h xinclude.h xmlIO.h xmlmemory.h nanohttp.h nanoftp.h uri.h valid.h xlink.h catalog.h threads.h globals.h c14n.h xmlautomata.h xmlregexp.h xmlmodule.h xmlschemas.h schemasInternals.h xmlschemastypes.h xmlstring.h xmlunicode.h xmlreader.h relaxng.h dict.h SAX2.h xmlexports.h '/src/xmlsec_deps/include/libxml2/libxml'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 xmlwriter.h chvalid.h pattern.h xmlsave.h schematron.h '/src/xmlsec_deps/include/libxml2/libxml'
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxml2/include/libxml'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxml2/include/libxml'
+Step #3 - "compile-afl-address-x86_64": Making install in private
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxml2/include/private'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxml2/include/private'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxml2/include/private'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxml2/include/private'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxml2/include'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxml2/include'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxml2/include'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxml2/include'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxml2/include'
+Step #3 - "compile-afl-address-x86_64": Making install in .
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxml2'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxml2'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/lib'
+Step #3 - "compile-afl-address-x86_64":  /bin/bash ./libtool   --mode=install /usr/bin/install -c   libxml2.la '/src/xmlsec_deps/lib'
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/libxml2.so.16.2.0 /src/xmlsec_deps/lib/libxml2.so.16.2.0
+Step #3 - "compile-afl-address-x86_64": libtool: install: (cd /src/xmlsec_deps/lib && { ln -s -f libxml2.so.16.2.0 libxml2.so.16 || { rm -f libxml2.so.16 && ln -s libxml2.so.16.2.0 libxml2.so.16; }; })
+Step #3 - "compile-afl-address-x86_64": libtool: install: (cd /src/xmlsec_deps/lib && { ln -s -f libxml2.so.16.2.0 libxml2.so || { rm -f libxml2.so && ln -s libxml2.so.16.2.0 libxml2.so; }; })
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/libxml2.lai /src/xmlsec_deps/lib/libxml2.la
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/libxml2.a /src/xmlsec_deps/lib/libxml2.a
+Step #3 - "compile-afl-address-x86_64": libtool: install: chmod 644 /src/xmlsec_deps/lib/libxml2.a
+Step #3 - "compile-afl-address-x86_64": libtool: install: ranlib /src/xmlsec_deps/lib/libxml2.a
+Step #3 - "compile-afl-address-x86_64": libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out:/sbin" ldconfig -n /src/xmlsec_deps/lib
+Step #3 - "compile-afl-address-x86_64": ----------------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": Libraries have been installed in:
+Step #3 - "compile-afl-address-x86_64":    /src/xmlsec_deps/lib
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": If you ever happen to want to link against installed libraries
+Step #3 - "compile-afl-address-x86_64": in a given directory, LIBDIR, you must either use libtool, and
+Step #3 - "compile-afl-address-x86_64": specify the full pathname of the library, or use the '-LLIBDIR'
+Step #3 - "compile-afl-address-x86_64": flag during linking and do at least one of the following:
+Step #3 - "compile-afl-address-x86_64":    - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+Step #3 - "compile-afl-address-x86_64":      during execution
+Step #3 - "compile-afl-address-x86_64":    - add LIBDIR to the 'LD_RUN_PATH' environment variable
+Step #3 - "compile-afl-address-x86_64":      during linking
+Step #3 - "compile-afl-address-x86_64":    - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+Step #3 - "compile-afl-address-x86_64":    - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": See any operating system documentation about shared libraries for
+Step #3 - "compile-afl-address-x86_64": more information, such as the ld(1) and ld.so(8) manual pages.
+Step #3 - "compile-afl-address-x86_64": ----------------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/bin'
+Step #3 - "compile-afl-address-x86_64":   /bin/bash ./libtool   --mode=install /usr/bin/install -c xmllint xmlcatalog '/src/xmlsec_deps/bin'
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/xmllint /src/xmlsec_deps/bin/xmllint
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/xmlcatalog /src/xmlsec_deps/bin/xmlcatalog
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/bin'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c xml2-config '/src/xmlsec_deps/bin'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/lib/cmake/libxml2'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 libxml2-config.cmake '/src/xmlsec_deps/lib/cmake/libxml2'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/lib/pkgconfig'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 libxml-2.0.pc '/src/xmlsec_deps/lib/pkgconfig'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxml2'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxml2'
+Step #3 - "compile-afl-address-x86_64": Making install in example
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxml2/example'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxml2/example'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxml2/example'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxml2/example'
+Step #3 - "compile-afl-address-x86_64": Making install in fuzz
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxml2/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxml2/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxml2/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxml2/fuzz'
+Step #3 - "compile-afl-address-x86_64": + cd /src/libxslt
+Step #3 - "compile-afl-address-x86_64": + cd ../libxslt
+Step #3 - "compile-afl-address-x86_64": + ./autogen.sh --with-libxml-src=../libxml2 --without-python --without-debug --without-debugger --without-profiler --enable-static --prefix=/src/xmlsec_deps
+Step #3 - "compile-afl-address-x86_64": libtoolize: putting auxiliary files in '.'.
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file './ltmain.sh'
+Step #3 - "compile-afl-address-x86_64": libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'm4'.
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/libtool.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltoptions.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltsugar.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltversion.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/lt~obsolete.m4'
+Step #3 - "compile-afl-address-x86_64": configure.ac:13: installing './compile'
+Step #3 - "compile-afl-address-x86_64": configure.ac:12: installing './config.guess'
+Step #3 - "compile-afl-address-x86_64": configure.ac:12: installing './config.sub'
+Step #3 - "compile-afl-address-x86_64": configure.ac:70: installing './install-sh'
+Step #3 - "compile-afl-address-x86_64": configure.ac:70: installing './missing'
+Step #3 - "compile-afl-address-x86_64": libexslt/Makefile.am: installing './depcomp'
+Step #3 - "compile-afl-address-x86_64": python/Makefile.am:40: installing './py-compile'
+Step #3 - "compile-afl-address-x86_64": Running configure  --with-libxml-src=../libxml2 --without-python --without-debug --without-debugger --without-profiler --enable-static --prefix=/src/xmlsec_deps ...
+Step #3 - "compile-afl-address-x86_64": checking build system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking host system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking for gcc... /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": checking whether the C compiler works... yes
+Step #3 - "compile-afl-address-x86_64": checking for C compiler default output file name... a.out
+Step #3 - "compile-afl-address-x86_64": checking for suffix of executables... 
+Step #3 - "compile-afl-address-x86_64": checking whether we are cross compiling... no
+Step #3 - "compile-afl-address-x86_64": checking for suffix of object files... o
+Step #3 - "compile-afl-address-x86_64": checking whether we are using the GNU C compiler... yes
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast accepts -g... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to accept ISO C89... none needed
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast understands -c and -o together... yes
+Step #3 - "compile-afl-address-x86_64": checking how to run the C preprocessor... /src/aflplusplus/afl-clang-fast -E
+Step #3 - "compile-afl-address-x86_64": checking for grep that handles long lines and -e... /usr/bin/grep
+Step #3 - "compile-afl-address-x86_64": checking for egrep... /usr/bin/grep -E
+Step #3 - "compile-afl-address-x86_64": checking for ANSI C header files... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/types.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/stat.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdlib.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for string.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for memory.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for strings.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for inttypes.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdint.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for unistd.h... yes
+Step #3 - "compile-afl-address-x86_64": checking minix/config.h usability... no
+Step #3 - "compile-afl-address-x86_64": checking minix/config.h presence... no
+Step #3 - "compile-afl-address-x86_64": checking for minix/config.h... no
+Step #3 - "compile-afl-address-x86_64": checking whether it is safe to define __EXTENSIONS__... yes
+Step #3 - "compile-afl-address-x86_64": fatal: No names found, cannot describe anything.
+Step #3 - "compile-afl-address-x86_64": extra=
+Step #3 - "compile-afl-address-x86_64": checking for a BSD-compatible install... /usr/bin/install -c
+Step #3 - "compile-afl-address-x86_64": checking whether build environment is sane... yes
+Step #3 - "compile-afl-address-x86_64": checking for a thread-safe mkdir -p... /usr/bin/mkdir -p
+Step #3 - "compile-afl-address-x86_64": checking for gawk... no
+Step #3 - "compile-afl-address-x86_64": checking for mawk... mawk
+Step #3 - "compile-afl-address-x86_64": checking whether make sets $(MAKE)... yes
+Step #3 - "compile-afl-address-x86_64": checking whether make supports the include directive... yes (GNU style)
+Step #3 - "compile-afl-address-x86_64": checking whether make supports nested variables... yes
+Step #3 - "compile-afl-address-x86_64": checking dependency style of /src/aflplusplus/afl-clang-fast... gcc3
+Step #3 - "compile-afl-address-x86_64": checking whether to enable maintainer-specific portions of Makefiles... yes
+Step #3 - "compile-afl-address-x86_64": checking whether make supports nested variables... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for gcc... (cached) /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": checking whether we are using the GNU C compiler... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast accepts -g... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to accept ISO C89... (cached) none needed
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast understands -c and -o together... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking how to run the C preprocessor... /src/aflplusplus/afl-clang-fast -E
+Step #3 - "compile-afl-address-x86_64": checking for xmllint... /usr/bin/xmllint
+Step #3 - "compile-afl-address-x86_64": checking for xsltproc... /usr/bin/xsltproc
+Step #3 - "compile-afl-address-x86_64": checking for pkg-config... /usr/bin/pkg-config
+Step #3 - "compile-afl-address-x86_64": checking pkg-config is at least version 0.9.0... yes
+Step #3 - "compile-afl-address-x86_64": checking how to print strings... printf
+Step #3 - "compile-afl-address-x86_64": checking for a sed that does not truncate output... /usr/bin/sed
+Step #3 - "compile-afl-address-x86_64": checking for fgrep... /usr/bin/grep -F
+Step #3 - "compile-afl-address-x86_64": checking for ld used by /src/aflplusplus/afl-clang-fast... /usr/bin/ld
+Step #3 - "compile-afl-address-x86_64": checking if the linker (/usr/bin/ld) is GNU ld... yes
+Step #3 - "compile-afl-address-x86_64": checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+Step #3 - "compile-afl-address-x86_64": checking the name lister (/usr/bin/nm -B) interface... BSD nm
+Step #3 - "compile-afl-address-x86_64": checking whether ln -s works... yes
+Step #3 - "compile-afl-address-x86_64": checking the maximum length of command line arguments... 1572864
+Step #3 - "compile-afl-address-x86_64": checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+Step #3 - "compile-afl-address-x86_64": checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+Step #3 - "compile-afl-address-x86_64": checking for /usr/bin/ld option to reload object files... -r
+Step #3 - "compile-afl-address-x86_64": checking for objdump... objdump
+Step #3 - "compile-afl-address-x86_64": checking how to recognize dependent libraries... pass_all
+Step #3 - "compile-afl-address-x86_64": checking for dlltool... no
+Step #3 - "compile-afl-address-x86_64": checking how to associate runtime and link libraries... printf %s\n
+Step #3 - "compile-afl-address-x86_64": checking for ar... ar
+Step #3 - "compile-afl-address-x86_64": checking for archiver @FILE support... @
+Step #3 - "compile-afl-address-x86_64": checking for strip... strip
+Step #3 - "compile-afl-address-x86_64": checking for ranlib... ranlib
+Step #3 - "compile-afl-address-x86_64": checking command to parse /usr/bin/nm -B output from /src/aflplusplus/afl-clang-fast object... ok
+Step #3 - "compile-afl-address-x86_64": checking for sysroot... no
+Step #3 - "compile-afl-address-x86_64": checking for a working dd... /usr/bin/dd
+Step #3 - "compile-afl-address-x86_64": checking how to truncate binary pipes... /usr/bin/dd bs=4096 count=1
+Step #3 - "compile-afl-address-x86_64": checking for mt... no
+Step #3 - "compile-afl-address-x86_64": checking if : is a manifest tool... no
+Step #3 - "compile-afl-address-x86_64": checking for dlfcn.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for objdir... .libs
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -fno-rtti -fno-exceptions... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to produce PIC... -fPIC -DPIC
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast PIC flag -fPIC -DPIC works... yes
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast static flag -static works... no
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -c -o file.o... yes
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -c -o file.o... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking whether the /src/aflplusplus/afl-clang-fast linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether -lc should be explicitly linked in... no
+Step #3 - "compile-afl-address-x86_64": checking dynamic linker characteristics... GNU/Linux ld.so
+Step #3 - "compile-afl-address-x86_64": checking how to hardcode library paths into programs... immediate
+Step #3 - "compile-afl-address-x86_64": checking whether stripping libraries is possible... yes
+Step #3 - "compile-afl-address-x86_64": checking if libtool supports shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build static libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking for cos in -lm... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/types.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking sys/time.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking sys/time.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/time.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for unistd.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking how to pass version script to the linker (/usr/bin/ld -m elf_x86_64)... checking whether the linker accepts -Wl,--undefined-version... no
+Step #3 - "compile-afl-address-x86_64":  -Wl,--version-script=
+Step #3 - "compile-afl-address-x86_64": checking pthread.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking pthread.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for pthread.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for pthread_join in -lpthread... yes
+Step #3 - "compile-afl-address-x86_64": checking locale.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking locale.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for locale.h... yes
+Step #3 - "compile-afl-address-x86_64": checking xlocale.h usability... no
+Step #3 - "compile-afl-address-x86_64": checking xlocale.h presence... no
+Step #3 - "compile-afl-address-x86_64": checking for xlocale.h... no
+Step #3 - "compile-afl-address-x86_64": checking for strxfrm_l... yes
+Step #3 - "compile-afl-address-x86_64": checking sys/timeb.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking sys/timeb.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/timeb.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/stat.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking sys/select.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking sys/select.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/select.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stat... yes
+Step #3 - "compile-afl-address-x86_64": checking for _stat... no
+Step #3 - "compile-afl-address-x86_64": checking for gettimeofday... yes
+Step #3 - "compile-afl-address-x86_64": checking for localtime_r... yes
+Step #3 - "compile-afl-address-x86_64": checking for gmtime_r... yes
+Step #3 - "compile-afl-address-x86_64": checking for ftime... yes
+Step #3 - "compile-afl-address-x86_64": checking for snprintf... yes
+Step #3 - "compile-afl-address-x86_64": checking for vsnprintf... yes
+Step #3 - "compile-afl-address-x86_64": checking for clock_gettime... yes
+Step #3 - "compile-afl-address-x86_64": checking for perl... perl
+Step #3 - "compile-afl-address-x86_64": Disabling profiler
+Step #3 - "compile-afl-address-x86_64": checking for xml2-config... no
+Step #3 - "compile-afl-address-x86_64": checking whether shared libraries will be built (required for plugins)... yes
+Step #3 - "compile-afl-address-x86_64": checking that generated files are newer than configure... done
+Step #3 - "compile-afl-address-x86_64": configure: creating ./config.status
+Step #3 - "compile-afl-address-x86_64": config.status: creating Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating libxslt.pc
+Step #3 - "compile-afl-address-x86_64": config.status: creating libexslt.pc
+Step #3 - "compile-afl-address-x86_64": config.status: creating libxslt-config.cmake
+Step #3 - "compile-afl-address-x86_64": config.status: creating libxslt/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating libxslt/xsltconfig.h
+Step #3 - "compile-afl-address-x86_64": config.status: creating libexslt/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating libexslt/exsltconfig.h
+Step #3 - "compile-afl-address-x86_64": config.status: creating xsltproc/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating python/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating python/setup.py
+Step #3 - "compile-afl-address-x86_64": config.status: creating python/tests/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating tests/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating tests/xmlspec/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating tests/multiple/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating tests/xinclude/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating tests/XSLTMark/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating tests/docbook/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating tests/fuzz/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating doc/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating doc/devhelp/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating doc/EXSLT/devhelp/Makefile
+Step #3 - "compile-afl-address-x86_64": config.status: creating xslt-config
+Step #3 - "compile-afl-address-x86_64": config.status: creating config.h
+Step #3 - "compile-afl-address-x86_64": config.status: executing depfiles commands
+Step #3 - "compile-afl-address-x86_64": config.status: executing libtool commands
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": Now type 'make' to compile libxslt.
+Step #3 - "compile-afl-address-x86_64": ++ nproc
+Step #3 - "compile-afl-address-x86_64": + make -j32
+Step #3 - "compile-afl-address-x86_64": make  all-recursive
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxslt'
+Step #3 - "compile-afl-address-x86_64": Making all in libxslt
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/libxslt'
+Step #3 - "compile-afl-address-x86_64":   CC       attrvt.lo
+Step #3 - "compile-afl-address-x86_64":   CC       xslt.lo
+Step #3 - "compile-afl-address-x86_64":   CC       xsltlocale.lo
+Step #3 - "compile-afl-address-x86_64":   CC       xsltutils.lo
+Step #3 - "compile-afl-address-x86_64":   CC       pattern.lo
+Step #3 - "compile-afl-address-x86_64":   CC       templates.lo
+Step #3 - "compile-afl-address-x86_64":   CC       variables.lo
+Step #3 - "compile-afl-address-x86_64":   CC       keys.lo
+Step #3 - "compile-afl-address-x86_64":   CC       numbers.lo
+Step #3 - "compile-afl-address-x86_64":   CC       extensions.lo
+Step #3 - "compile-afl-address-x86_64":   CC       extra.lo
+Step #3 - "compile-afl-address-x86_64":   CC       namespaces.lo
+Step #3 - "compile-afl-address-x86_64":   CC       functions.lo
+Step #3 - "compile-afl-address-x86_64":   CC       imports.lo
+Step #3 - "compile-afl-address-x86_64":   CC       attributes.lo
+Step #3 - "compile-afl-address-x86_64":   CC       documents.lo
+Step #3 - "compile-afl-address-x86_64":   CC       preproc.lo
+Step #3 - "compile-afl-address-x86_64":   CC       transform.lo
+Step #3 - "compile-afl-address-x86_64":   CC       security.lo
+Step #3 - "compile-afl-address-x86_64":   CCLD     libxslt.la
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/libxslt'
+Step #3 - "compile-afl-address-x86_64": Making all in libexslt
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/libexslt'
+Step #3 - "compile-afl-address-x86_64":   CC       libexslt_la-exslt.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libexslt_la-common.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libexslt_la-crypto.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libexslt_la-math.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libexslt_la-sets.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libexslt_la-functions.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libexslt_la-strings.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libexslt_la-date.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libexslt_la-saxon.lo
+Step #3 - "compile-afl-address-x86_64":   CC       libexslt_la-dynamic.lo
+Step #3 - "compile-afl-address-x86_64":   CCLD     libexslt.la
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/libexslt'
+Step #3 - "compile-afl-address-x86_64": Making all in xsltproc
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/xsltproc'
+Step #3 - "compile-afl-address-x86_64":   CC       xsltproc.o
+Step #3 - "compile-afl-address-x86_64":   CCLD     xsltproc
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/xsltproc'
+Step #3 - "compile-afl-address-x86_64": Making all in doc
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/doc'
+Step #3 - "compile-afl-address-x86_64": Making all in devhelp
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/doc/devhelp'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/doc/devhelp'
+Step #3 - "compile-afl-address-x86_64": Making all in EXSLT/devhelp
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/doc/EXSLT/devhelp'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/doc/EXSLT/devhelp'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/doc'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/doc'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/doc'
+Step #3 - "compile-afl-address-x86_64": Making all in tests
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/tests'
+Step #3 - "compile-afl-address-x86_64": Making all in xmlspec
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/xmlspec'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/xmlspec'
+Step #3 - "compile-afl-address-x86_64": Making all in multiple
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/multiple'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/multiple'
+Step #3 - "compile-afl-address-x86_64": Making all in xinclude
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/xinclude'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/xinclude'
+Step #3 - "compile-afl-address-x86_64": Making all in XSLTMark
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/XSLTMark'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/XSLTMark'
+Step #3 - "compile-afl-address-x86_64": Making all in docbook
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/docbook'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/docbook'
+Step #3 - "compile-afl-address-x86_64": Making all in fuzz
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'all-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/tests'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt'
+Step #3 - "compile-afl-address-x86_64": sed -e 's?\@XSLT_LIBDIR\@?-L/src/xmlsec_deps/lib?g' \
+Step #3 - "compile-afl-address-x86_64":     -e 's?\@XSLT_INCLUDEDIR\@?-I/src/xmlsec_deps/include?g' \
+Step #3 - "compile-afl-address-x86_64":     -e 's?\@VERSION\@?1.1.44?g' \
+Step #3 - "compile-afl-address-x86_64":     -e 's?\@XSLT_LIBS\@?-lxslt -L/src/libxml2 -L/src/xmlsec_deps/lib -lxml2 -lm ?g' \
+Step #3 - "compile-afl-address-x86_64":     -e 's?\@XSLT_PRIVATE_LIBS\@?-lm?g' \
+Step #3 - "compile-afl-address-x86_64":        < ./xsltConf.sh.in > xsltConf.tmp \
+Step #3 - "compile-afl-address-x86_64": && mv xsltConf.tmp xsltConf.sh
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxslt'
+Step #3 - "compile-afl-address-x86_64": + make install
+Step #3 - "compile-afl-address-x86_64": Making install in libxslt
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxslt/libxslt'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/lib'
+Step #3 - "compile-afl-address-x86_64":  /bin/bash ../libtool   --mode=install /usr/bin/install -c   libxslt.la '/src/xmlsec_deps/lib'
+Step #3 - "compile-afl-address-x86_64": libtool: [31mwarning(B[m: [1mrelinking 'libxslt.la'(B[m
+Step #3 - "compile-afl-address-x86_64": libtool: install: (cd /src/libxslt/libxslt; /bin/bash "/src/libxslt/libtool"  --silent --tag CC --mode=relink /src/aflplusplus/afl-clang-fast -Wall -Wextra -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wredundant-decls -I/src/libxml2/include -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -no-undefined -Wl,--version-script=./libxslt.syms -version-info 2:44:1 -o libxslt.la -rpath /src/xmlsec_deps/lib attrvt.lo xslt.lo xsltlocale.lo xsltutils.lo pattern.lo templates.lo variables.lo keys.lo numbers.lo extensions.lo extra.lo functions.lo namespaces.lo imports.lo attributes.lo documents.lo preproc.lo transform.lo security.lo -L/src/libxml2 -L/src/xmlsec_deps/lib -lxml2 -lm -lm )
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/libxslt.so.1.1.44T /src/xmlsec_deps/lib/libxslt.so.1.1.44
+Step #3 - "compile-afl-address-x86_64": libtool: install: (cd /src/xmlsec_deps/lib && { ln -s -f libxslt.so.1.1.44 libxslt.so.1 || { rm -f libxslt.so.1 && ln -s libxslt.so.1.1.44 libxslt.so.1; }; })
+Step #3 - "compile-afl-address-x86_64": libtool: install: (cd /src/xmlsec_deps/lib && { ln -s -f libxslt.so.1.1.44 libxslt.so || { rm -f libxslt.so && ln -s libxslt.so.1.1.44 libxslt.so; }; })
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/libxslt.lai /src/xmlsec_deps/lib/libxslt.la
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/libxslt.a /src/xmlsec_deps/lib/libxslt.a
+Step #3 - "compile-afl-address-x86_64": libtool: install: chmod 644 /src/xmlsec_deps/lib/libxslt.a
+Step #3 - "compile-afl-address-x86_64": libtool: install: ranlib /src/xmlsec_deps/lib/libxslt.a
+Step #3 - "compile-afl-address-x86_64": libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out:/sbin" ldconfig -n /src/xmlsec_deps/lib
+Step #3 - "compile-afl-address-x86_64": ----------------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": Libraries have been installed in:
+Step #3 - "compile-afl-address-x86_64":    /src/xmlsec_deps/lib
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": If you ever happen to want to link against installed libraries
+Step #3 - "compile-afl-address-x86_64": in a given directory, LIBDIR, you must either use libtool, and
+Step #3 - "compile-afl-address-x86_64": specify the full pathname of the library, or use the '-LLIBDIR'
+Step #3 - "compile-afl-address-x86_64": flag during linking and do at least one of the following:
+Step #3 - "compile-afl-address-x86_64":    - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+Step #3 - "compile-afl-address-x86_64":      during execution
+Step #3 - "compile-afl-address-x86_64":    - add LIBDIR to the 'LD_RUN_PATH' environment variable
+Step #3 - "compile-afl-address-x86_64":      during linking
+Step #3 - "compile-afl-address-x86_64":    - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+Step #3 - "compile-afl-address-x86_64":    - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": See any operating system documentation about shared libraries for
+Step #3 - "compile-afl-address-x86_64": more information, such as the ld(1) and ld.so(8) manual pages.
+Step #3 - "compile-afl-address-x86_64": ----------------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": make  install-exec-hook
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/libxslt'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-hook'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/share/man/man3'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 libxslt.3 '/src/xmlsec_deps/share/man/man3'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/include/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 xsltconfig.h '/src/xmlsec_deps/include/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/include/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 xslt.h xsltutils.h pattern.h templates.h variables.h keys.h numbersInternals.h extensions.h extra.h functions.h namespaces.h imports.h attributes.h documents.h preproc.h transform.h security.h xsltInternals.h xsltexports.h xsltlocale.h '/src/xmlsec_deps/include/libxslt'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/libxslt'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxslt/libxslt'
+Step #3 - "compile-afl-address-x86_64": Making install in libexslt
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxslt/libexslt'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/libexslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/lib'
+Step #3 - "compile-afl-address-x86_64":  /bin/bash ../libtool   --mode=install /usr/bin/install -c   libexslt.la '/src/xmlsec_deps/lib'
+Step #3 - "compile-afl-address-x86_64": libtool: [31mwarning(B[m: [1mrelinking 'libexslt.la'(B[m
+Step #3 - "compile-afl-address-x86_64": libtool: install: (cd /src/libxslt/libexslt; /bin/bash "/src/libxslt/libtool"  --silent --tag CC --mode=relink /src/aflplusplus/afl-clang-fast -Wall -Wextra -Wshadow -Wpointer-arith -Wcast-align -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Winline -Wredundant-decls -I/src/libxml2/include -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -no-undefined -version-info 8:25:8 -o libexslt.la -rpath /src/xmlsec_deps/lib libexslt_la-exslt.lo libexslt_la-common.lo libexslt_la-crypto.lo libexslt_la-math.lo libexslt_la-sets.lo libexslt_la-functions.lo libexslt_la-strings.lo libexslt_la-date.lo libexslt_la-saxon.lo libexslt_la-dynamic.lo ../libxslt/libxslt.la -L/src/libxml2 -L/src/xmlsec_deps/lib -lxml2 -lm -lm )
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/libexslt.so.0.8.25T /src/xmlsec_deps/lib/libexslt.so.0.8.25
+Step #3 - "compile-afl-address-x86_64": libtool: install: (cd /src/xmlsec_deps/lib && { ln -s -f libexslt.so.0.8.25 libexslt.so.0 || { rm -f libexslt.so.0 && ln -s libexslt.so.0.8.25 libexslt.so.0; }; })
+Step #3 - "compile-afl-address-x86_64": libtool: install: (cd /src/xmlsec_deps/lib && { ln -s -f libexslt.so.0.8.25 libexslt.so || { rm -f libexslt.so && ln -s libexslt.so.0.8.25 libexslt.so; }; })
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/libexslt.lai /src/xmlsec_deps/lib/libexslt.la
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/libexslt.a /src/xmlsec_deps/lib/libexslt.a
+Step #3 - "compile-afl-address-x86_64": libtool: install: chmod 644 /src/xmlsec_deps/lib/libexslt.a
+Step #3 - "compile-afl-address-x86_64": libtool: install: ranlib /src/xmlsec_deps/lib/libexslt.a
+Step #3 - "compile-afl-address-x86_64": libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out:/sbin" ldconfig -n /src/xmlsec_deps/lib
+Step #3 - "compile-afl-address-x86_64": ----------------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": Libraries have been installed in:
+Step #3 - "compile-afl-address-x86_64":    /src/xmlsec_deps/lib
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": If you ever happen to want to link against installed libraries
+Step #3 - "compile-afl-address-x86_64": in a given directory, LIBDIR, you must either use libtool, and
+Step #3 - "compile-afl-address-x86_64": specify the full pathname of the library, or use the '-LLIBDIR'
+Step #3 - "compile-afl-address-x86_64": flag during linking and do at least one of the following:
+Step #3 - "compile-afl-address-x86_64":    - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+Step #3 - "compile-afl-address-x86_64":      during execution
+Step #3 - "compile-afl-address-x86_64":    - add LIBDIR to the 'LD_RUN_PATH' environment variable
+Step #3 - "compile-afl-address-x86_64":      during linking
+Step #3 - "compile-afl-address-x86_64":    - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+Step #3 - "compile-afl-address-x86_64":    - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": See any operating system documentation about shared libraries for
+Step #3 - "compile-afl-address-x86_64": more information, such as the ld(1) and ld.so(8) manual pages.
+Step #3 - "compile-afl-address-x86_64": ----------------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/include/libexslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 exslt.h exsltexports.h '/src/xmlsec_deps/include/libexslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/share/man/man3'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 libexslt.3 '/src/xmlsec_deps/share/man/man3'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/include/libexslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 exsltconfig.h '/src/xmlsec_deps/include/libexslt'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/libexslt'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxslt/libexslt'
+Step #3 - "compile-afl-address-x86_64": Making install in xsltproc
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxslt/xsltproc'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/xsltproc'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/bin'
+Step #3 - "compile-afl-address-x86_64":   /bin/bash ../libtool   --mode=install /usr/bin/install -c xsltproc '/src/xmlsec_deps/bin'
+Step #3 - "compile-afl-address-x86_64": libtool: install: /usr/bin/install -c .libs/xsltproc /src/xmlsec_deps/bin/xsltproc
+Step #3 - "compile-afl-address-x86_64": make[2]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/xsltproc'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxslt/xsltproc'
+Step #3 - "compile-afl-address-x86_64": Making install in doc
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxslt/doc'
+Step #3 - "compile-afl-address-x86_64": Making install in devhelp
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/doc/devhelp'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/doc/devhelp'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/share/gtk-doc/html/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 libxslt.devhelp2 general.html index.html libxslt-attributes.html libxslt-documents.html libxslt-extensions.html libxslt-extra.html libxslt-functions.html libxslt-imports.html libxslt-keys.html libxslt-namespaces.html libxslt-numbersInternals.html libxslt-pattern.html libxslt-preproc.html libxslt-security.html libxslt-templates.html libxslt-transform.html libxslt-variables.html libxslt-xsltexports.html libxslt-xslt.html libxslt-xsltInternals.html libxslt-xsltlocale.html libxslt-xsltutils.html home.png left.png right.png up.png style.css '/src/xmlsec_deps/share/gtk-doc/html/libxslt'
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/doc/devhelp'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/doc/devhelp'
+Step #3 - "compile-afl-address-x86_64": Making install in EXSLT/devhelp
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/doc/EXSLT/devhelp'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/doc/EXSLT/devhelp'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/share/gtk-doc/html/libexslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 libexslt.devhelp2 general.html index.html libexslt-exsltexports.html libexslt-exslt.html home.png left.png right.png up.png style.css '/src/xmlsec_deps/share/gtk-doc/html/libexslt'
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/doc/EXSLT/devhelp'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/doc/EXSLT/devhelp'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/doc'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/doc'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/share/man/man1'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 xsltproc.1 '/src/xmlsec_deps/share/man/man1'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/share/doc/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/share/doc/libxslt/tutorial2'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644  tutorial2/libxslt_pipes.c tutorial2/libxslt_pipes.html '/src/xmlsec_deps/share/doc/libxslt/tutorial2'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/share/doc/libxslt/tutorial'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644  tutorial/libxslt_tutorial.c tutorial/libxslttutorial.html '/src/xmlsec_deps/share/doc/libxslt/tutorial'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644  xsltproc.html '/src/xmlsec_deps/share/doc/libxslt/.'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/share/doc/libxslt/tutorial/images/callouts'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644  tutorial/images/callouts/1.png tutorial/images/callouts/10.png tutorial/images/callouts/2.png tutorial/images/callouts/3.png tutorial/images/callouts/4.png tutorial/images/callouts/5.png tutorial/images/callouts/6.png tutorial/images/callouts/7.png tutorial/images/callouts/8.png tutorial/images/callouts/9.png '/src/xmlsec_deps/share/doc/libxslt/tutorial/images/callouts'
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/doc'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/doc'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxslt/doc'
+Step #3 - "compile-afl-address-x86_64": Making install in tests
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxslt/tests'
+Step #3 - "compile-afl-address-x86_64": Making install in xmlspec
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/tests/xmlspec'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/xmlspec'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/xmlspec'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/tests/xmlspec'
+Step #3 - "compile-afl-address-x86_64": Making install in multiple
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/tests/multiple'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/multiple'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/multiple'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/tests/multiple'
+Step #3 - "compile-afl-address-x86_64": Making install in xinclude
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/tests/xinclude'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/xinclude'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/xinclude'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/tests/xinclude'
+Step #3 - "compile-afl-address-x86_64": Making install in XSLTMark
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/tests/XSLTMark'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/XSLTMark'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/XSLTMark'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/tests/XSLTMark'
+Step #3 - "compile-afl-address-x86_64": Making install in docbook
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/tests/docbook'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/docbook'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/docbook'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/tests/docbook'
+Step #3 - "compile-afl-address-x86_64": Making install in fuzz
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/tests/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/tests/fuzz'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt/tests'
+Step #3 - "compile-afl-address-x86_64": make[3]: Entering directory '/src/libxslt/tests'
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-exec-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Nothing to be done for 'install-data-am'.
+Step #3 - "compile-afl-address-x86_64": make[3]: Leaving directory '/src/libxslt/tests'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt/tests'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxslt/tests'
+Step #3 - "compile-afl-address-x86_64": make[1]: Entering directory '/src/libxslt'
+Step #3 - "compile-afl-address-x86_64": make[2]: Entering directory '/src/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/bin'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c xslt-config '/src/xmlsec_deps/bin'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/lib'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 xsltConf.sh '/src/xmlsec_deps/lib'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/lib/cmake/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 libxslt-config.cmake '/src/xmlsec_deps/lib/cmake/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/lib/cmake/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 FindGcrypt.cmake '/src/xmlsec_deps/lib/cmake/libxslt'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/mkdir -p '/src/xmlsec_deps/lib/pkgconfig'
+Step #3 - "compile-afl-address-x86_64":  /usr/bin/install -c -m 644 libxslt.pc libexslt.pc '/src/xmlsec_deps/lib/pkgconfig'
+Step #3 - "compile-afl-address-x86_64": make[2]: Leaving directory '/src/libxslt'
+Step #3 - "compile-afl-address-x86_64": make[1]: Leaving directory '/src/libxslt'
+Step #3 - "compile-afl-address-x86_64": + cd /src/xmlsec
+Step #3 - "compile-afl-address-x86_64": + git apply --ignore-space-change --ignore-whitespace /src/patch.diff
+Step #3 - "compile-afl-address-x86_64": error: patch failed: src/openssl/kt_rsa.c:694
+Step #3 - "compile-afl-address-x86_64": error: src/openssl/kt_rsa.c: patch does not apply
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image xmlsec\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 xmlsec\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

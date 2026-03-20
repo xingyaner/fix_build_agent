@@ -1,0 +1,413 @@
+starting build "1cbc2276-23e1-4568-a7e9-5814ce96e849"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11"
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Sending build context to Docker daemon  6.656kB
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Step 1/4 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b549f31133a9: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 944b8566997b: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 4d688ad667a5: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 57f72c2d020e: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 4076ccf55139: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 1bc0164a0426: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b85f0afbcf12: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d9c251a3ab36: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 3bc31943f8a8: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c77a5a77e5a1: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 365b87405756: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d266a90fe46f: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 190d627f4464: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 5a60f3ffbed8: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": ee37bb0f0a7f: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 879a566a49a1: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": efe60022b4dd: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": e0d112bc2df1: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 276f86d2be24: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d9a1170c894e: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b403167640c0: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 411a418282ea: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 6a0dd37c0fcb: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 7c2f5ab46e45: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 8792abca0529: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 86f5fdd671b4: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 822598678fb4: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 24e13197c0ed: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c5e6fb36221a: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c99ea86a2a3d: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 249f7942b94c: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 1142f37503b1: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 63b0613fbd07: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 58fd82056afc: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 77bcfaeed63a: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": a6b64fc9b3c2: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 78b4337ab07a: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c14d2fb561c0: Pulling fs layer
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d9c251a3ab36: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 3bc31943f8a8: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d9a1170c894e: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c77a5a77e5a1: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b403167640c0: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 365b87405756: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d266a90fe46f: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 411a418282ea: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 190d627f4464: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 6a0dd37c0fcb: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 5a60f3ffbed8: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 7c2f5ab46e45: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": ee37bb0f0a7f: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 8792abca0529: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 879a566a49a1: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 86f5fdd671b4: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b85f0afbcf12: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": efe60022b4dd: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 822598678fb4: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": e0d112bc2df1: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 24e13197c0ed: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 77bcfaeed63a: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c5e6fb36221a: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": a6b64fc9b3c2: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 78b4337ab07a: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 276f86d2be24: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c14d2fb561c0: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c99ea86a2a3d: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 249f7942b94c: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 1142f37503b1: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 58fd82056afc: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 63b0613fbd07: Waiting
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 4076ccf55139: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 4076ccf55139: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 4d688ad667a5: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 4d688ad667a5: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b85f0afbcf12: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d9c251a3ab36: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b549f31133a9: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b549f31133a9: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 57f72c2d020e: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 57f72c2d020e: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 365b87405756: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 365b87405756: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d266a90fe46f: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d266a90fe46f: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 190d627f4464: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 190d627f4464: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 5a60f3ffbed8: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 944b8566997b: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 944b8566997b: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": ee37bb0f0a7f: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": ee37bb0f0a7f: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 879a566a49a1: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 879a566a49a1: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c77a5a77e5a1: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c77a5a77e5a1: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 276f86d2be24: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 276f86d2be24: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": e0d112bc2df1: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": efe60022b4dd: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": efe60022b4dd: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d9a1170c894e: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d9a1170c894e: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 411a418282ea: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 411a418282ea: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b403167640c0: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b403167640c0: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 6a0dd37c0fcb: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 6a0dd37c0fcb: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 7c2f5ab46e45: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 7c2f5ab46e45: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 8792abca0529: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 8792abca0529: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 86f5fdd671b4: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b549f31133a9: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 822598678fb4: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 822598678fb4: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 24e13197c0ed: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 24e13197c0ed: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c5e6fb36221a: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c5e6fb36221a: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 249f7942b94c: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 1142f37503b1: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 1142f37503b1: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c99ea86a2a3d: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c99ea86a2a3d: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 63b0613fbd07: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 3bc31943f8a8: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 3bc31943f8a8: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 58fd82056afc: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 58fd82056afc: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": a6b64fc9b3c2: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 77bcfaeed63a: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c14d2fb561c0: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c14d2fb561c0: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 78b4337ab07a: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 78b4337ab07a: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 1bc0164a0426: Verifying Checksum
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 1bc0164a0426: Download complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 944b8566997b: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 4d688ad667a5: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 57f72c2d020e: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 4076ccf55139: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 1bc0164a0426: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b85f0afbcf12: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d9c251a3ab36: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 3bc31943f8a8: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c77a5a77e5a1: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 365b87405756: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d266a90fe46f: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 190d627f4464: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 5a60f3ffbed8: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": ee37bb0f0a7f: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 879a566a49a1: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": efe60022b4dd: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": e0d112bc2df1: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 276f86d2be24: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": d9a1170c894e: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": b403167640c0: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 411a418282ea: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 6a0dd37c0fcb: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 7c2f5ab46e45: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 8792abca0529: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 86f5fdd671b4: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 822598678fb4: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 24e13197c0ed: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c5e6fb36221a: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c99ea86a2a3d: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 249f7942b94c: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 1142f37503b1: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 63b0613fbd07: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 58fd82056afc: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 77bcfaeed63a: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": a6b64fc9b3c2: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": 78b4337ab07a: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": c14d2fb561c0: Pull complete
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Digest: sha256:6878d9fa5979df15166e69f79e340ad4dc686056f5c8bfcd76614ca492b73d9b
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11":  ---> 44557984a617
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Step 2/4 : RUN git clone --depth 1 https://github.com/stephenberry/glaze
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11":  ---> Running in 7735531723e8
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": [91mCloning into 'glaze'...
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": [0mRemoving intermediate container 7735531723e8
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11":  ---> 8fbd808a6995
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Step 3/4 : WORKDIR glaze
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11":  ---> Running in 2fd529091422
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Removing intermediate container 2fd529091422
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11":  ---> d02ee2d26b24
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Step 4/4 : COPY build.sh run_tests.sh $SRC/
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11":  ---> ac2500708b1a
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Successfully built ac2500708b1a
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Successfully tagged gcr.io/oss-fuzz/glaze:latest
+Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/glaze:latest
+Finished Step #1 - "build-28179224-eabf-432c-84b2-2fb56c5eed11"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/glaze
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileuXPXzM
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/glaze/.git
+Step #2 - "srcmap": + GIT_DIR=/src/glaze
+Step #2 - "srcmap": + cd /src/glaze
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/stephenberry/glaze
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=a67f6f03d25b2869b8a878a5fc6e7f8c20ed73e9
+Step #2 - "srcmap": + jq_inplace /tmp/fileuXPXzM '."/src/glaze" = { type: "git", url: "https://github.com/stephenberry/glaze", rev: "a67f6f03d25b2869b8a878a5fc6e7f8c20ed73e9" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileXmyaQc
+Step #2 - "srcmap": + cat /tmp/fileuXPXzM
+Step #2 - "srcmap": + jq '."/src/glaze" = { type: "git", url: "https://github.com/stephenberry/glaze", rev: "a67f6f03d25b2869b8a878a5fc6e7f8c20ed73e9" }'
+Step #2 - "srcmap": + mv /tmp/fileXmyaQc /tmp/fileuXPXzM
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileuXPXzM
+Step #2 - "srcmap": + rm /tmp/fileuXPXzM
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/glaze": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/stephenberry/glaze",
+Step #2 - "srcmap":     "rev": "a67f6f03d25b2869b8a878a5fc6e7f8c20ed73e9"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + fuzzing/ossfuzz.sh
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ --version
+Step #3 - "compile-afl-address-x86_64": clang version 22.0.0git (https://github.com/llvm/llvm-project.git cb2f0d0a5f14c183e7182aba0f0e54a518de9e3f)
+Step #3 - "compile-afl-address-x86_64": Target: x86_64-unknown-linux-gnu
+Step #3 - "compile-afl-address-x86_64": Thread model: posix
+Step #3 - "compile-afl-address-x86_64": InstalledDir: /usr/local/bin
+Step #3 - "compile-afl-address-x86_64": + + ls fuzzing/binary_reflection.cpp fuzzing/cbor_reflection.cpp fuzzing/cbor_roundtrip_floating.cpp fuzzing/cbor_roundtrip_int.cpp fuzzing/cbor_roundtrip_string.cpp fuzzing/csv_parsing.cpp fuzzing/json_exhaustive_roundtrip_float.cpp fuzzing/json_exhaustive_roundtrip_int.cpp fuzzing/json_generic.cpp fuzzing/json_jmespath.cpp fuzzing/json_minify.cpp fuzzing/json_prettify.cppgrep fuzzing/json_reflection.cpp -v fuzzing/json_roundtrip_floating.cpp -E fuzzing/json_roundtrip_int.cpp (exhaustive|main\.cpp) fuzzing/json_roundtrip_string.cpp
+Step #3 - "compile-afl-address-x86_64":  fuzzing/json_with_comments.cpp fuzzing/main.cpp fuzzing/msgpack_reflection.cpp fuzzing/msgpack_roundtrip_floating.cpp fuzzing/msgpack_roundtrip_int.cpp fuzzing/msgpack_roundtrip_string.cpp
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/binary_reflection.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=binary_reflection
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/binary_reflection.cpp -o /workspace/out/afl-address-x86_64/binary_reflection /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/cbor_reflection.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=cbor_reflection
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/cbor_reflection.cpp -o /workspace/out/afl-address-x86_64/cbor_reflection /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/cbor_roundtrip_floating.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=cbor_roundtrip_floating
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/cbor_roundtrip_floating.cpp -o /workspace/out/afl-address-x86_64/cbor_roundtrip_floating /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/cbor_roundtrip_int.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=cbor_roundtrip_int
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/cbor_roundtrip_int.cpp -o /workspace/out/afl-address-x86_64/cbor_roundtrip_int /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/cbor_roundtrip_string.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=cbor_roundtrip_string
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/cbor_roundtrip_string.cpp -o /workspace/out/afl-address-x86_64/cbor_roundtrip_string /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/csv_parsing.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=csv_parsing
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/csv_parsing.cpp -o /workspace/out/afl-address-x86_64/csv_parsing /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/json_generic.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=json_generic
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/json_generic.cpp -o /workspace/out/afl-address-x86_64/json_generic /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/json_jmespath.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=json_jmespath
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/json_jmespath.cpp -o /workspace/out/afl-address-x86_64/json_jmespath /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/json_minify.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=json_minify
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/json_minify.cpp -o /workspace/out/afl-address-x86_64/json_minify /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/json_prettify.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=json_prettify
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/json_prettify.cpp -o /workspace/out/afl-address-x86_64/json_prettify /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/json_reflection.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=json_reflection
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/json_reflection.cpp -o /workspace/out/afl-address-x86_64/json_reflection /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/json_roundtrip_floating.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=json_roundtrip_floating
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/json_roundtrip_floating.cpp -o /workspace/out/afl-address-x86_64/json_roundtrip_floating /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/json_roundtrip_int.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=json_roundtrip_int
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/json_roundtrip_int.cpp -o /workspace/out/afl-address-x86_64/json_roundtrip_int /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/json_roundtrip_string.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=json_roundtrip_string
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/json_roundtrip_string.cpp -o /workspace/out/afl-address-x86_64/json_roundtrip_string /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/json_with_comments.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=json_with_comments
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/json_with_comments.cpp -o /workspace/out/afl-address-x86_64/json_with_comments /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/msgpack_reflection.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=msgpack_reflection
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/msgpack_reflection.cpp -o /workspace/out/afl-address-x86_64/msgpack_reflection /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/msgpack_roundtrip_floating.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=msgpack_roundtrip_floating
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/msgpack_roundtrip_floating.cpp -o /workspace/out/afl-address-x86_64/msgpack_roundtrip_floating /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/msgpack_roundtrip_int.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=msgpack_roundtrip_int
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/msgpack_roundtrip_int.cpp -o /workspace/out/afl-address-x86_64/msgpack_roundtrip_int /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": + basename fuzzing/msgpack_roundtrip_string.cpp .cpp
+Step #3 - "compile-afl-address-x86_64": + NAME=msgpack_roundtrip_string
+Step #3 - "compile-afl-address-x86_64": + /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++23 -g -Iinclude fuzzing/msgpack_roundtrip_string.cpp -o /workspace/out/afl-address-x86_64/msgpack_roundtrip_string /usr/lib/libFuzzingEngine.a
+Step #3 - "compile-afl-address-x86_64": PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace, preprocessed source, and associated run script.
+Step #3 - "compile-afl-address-x86_64": Stack dump:
+Step #3 - "compile-afl-address-x86_64": 0.	Program arguments: /usr/local/bin/clang-22 -cc1 -triple x86_64-unknown-linux-gnu -O1 -emit-obj -dumpdir /workspace/out/afl-address-x86_64/msgpack_roundtrip_string- -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name msgpack_roundtrip_string.cpp -mrelocation-model pic -pic-level 2 -fhalf-no-semantic-interposition -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debug-info-kind=constructor -dwarf-version=5 -debugger-tuning=gdb -fdebug-compilation-dir=/src/glaze -fcoverage-compilation-dir=/src/glaze -resource-dir /usr/local/lib/clang/22 -D FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -I include -U _FORTIFY_SOURCE -D __AFL_COMPILER=1 -D FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION=1 -D "__AFL_COVERAGE()=int __afl_selective_coverage __attribute__ ((weak)) = 1;extern \"C\" void __afl_coverage_discard();extern \"C\" void __afl_coverage_skip();extern \"C\" void __afl_coverage_on();extern \"C\" void __afl_coverage_off();" -D "__AFL_COVERAGE_START_OFF()=int __afl_selective_coverage_start_off = 1;" -D __AFL_COVERAGE_ON()=__afl_coverage_on() -D __AFL_COVERAGE_OFF()=__afl_coverage_off() -D __AFL_COVERAGE_DISCARD()=__afl_coverage_discard() -D __AFL_COVERAGE_SKIP()=__afl_coverage_skip() -D __AFL_HAVE_MANUAL_CONTROL=1 -D "__AFL_FUZZ_INIT()=int __afl_sharedmem_fuzzing = 1;extern __attribute__((visibility(\"default\"))) unsigned int *__afl_fuzz_len;extern __attribute__((visibility(\"default\"))) unsigned char *__afl_fuzz_ptr;unsigned char __afl_fuzz_alt[1048576];unsigned char *__afl_fuzz_alt_ptr = __afl_fuzz_alt;" -D "__AFL_FUZZ_TESTCASE_BUF=(__afl_fuzz_ptr ? __afl_fuzz_ptr : __afl_fuzz_alt_ptr)" -D "__AFL_FUZZ_TESTCASE_LEN=(__afl_fuzz_ptr ? *__afl_fuzz_len : (*__afl_fuzz_len = read(0, __afl_fuzz_alt_ptr, 1048576)) == 0xffffffff ? 0 : *__afl_fuzz_len)" -D "__AFL_LOOP(_A)=({ static volatile const char *_B __attribute__((used,unused));  _B = (const char*)\"##SIG_AFL_PERSISTENT##\"; extern __attribute__((visibility(\"default\"))) int __afl_connected;__attribute__((visibility(\"default\"))) int _L(unsigned int) __asm__(\"__afl_persistent_loop\"); _L(__afl_connected ? _A : 1); })" -D "__AFL_INIT()=do { static volatile const char *_A __attribute__((used,unused));  _A = (const char*)\"##SIG_AFL_DEFER_FORKSRV##\"; __attribute__((visibility(\"default\"))) void _I(void) __asm__(\"__afl_manual_init\"); _I(); } while (0)" -internal-isystem /usr/local/bin/../include/x86_64-unknown-linux-gnu/c++/v1 -internal-isystem /usr/local/bin/../include/c++/v1 -internal-isystem /usr/local/lib/clang/22/include -internal-isystem /usr/local/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/9/../../../../x86_64-linux-gnu/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -Wno-unused-command-line-argument -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -std=c++23 -fdeprecated-macro -ferror-limit 19 -funroll-loops -fgnuc-version=4.2.1 -fno-implicit-modules -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -fcolor-diagnostics -fpass-plugin=/src/aflplusplus/SanitizerCoveragePCGUARD.so -fsanitize=address -fsanitize-system-ignorelist=/usr/local/lib/clang/22/share/asan_ignorelist.txt -fno-sanitize-memory-param-retval -fsanitize-address-use-after-scope -fsanitize-address-globals-dead-stripping -fno-assume-sane-operator-new -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o /tmp/msgpack_roundtrip_string-ff3f58.o -x c++ fuzzing/msgpack_roundtrip_string.cpp
+Step #3 - "compile-afl-address-x86_64": 1.	<eof> parser at end of file
+Step #3 - "compile-afl-address-x86_64": 2.	include/glaze/msgpack/write.hpp:1155:28: instantiating function definition 'glz::write_msgpack<S &, std::string &>'
+Step #3 - "compile-afl-address-x86_64": 3.	include/glaze/core/write.hpp:77:28: instantiating function definition 'glz::write<opts{30, true, false, true, true, false, false, false, false, 0}, S &, std::string>'
+Step #3 - "compile-afl-address-x86_64": 4.	include/glaze/core/write.hpp:17:28: instantiating function definition 'glz::write<opts{30, true, false, true, true, false, false, false, false, 0}, S &, std::string, glz::context &>'
+Step #3 - "compile-afl-address-x86_64": 5.	include/glaze/msgpack/write.hpp:683:37: instantiating function definition 'glz::to<30, S>::op<opts{30, true, false, true, true, false, false, false, false, 0}, S &, glz::context &, std::string &, unsigned long &>'
+Step #3 - "compile-afl-address-x86_64": 6.	include/glaze/msgpack/write.hpp:996:37: instantiating function definition 'glz::to<30, glz::tuple<std::string &>>::op<opts{30, true, false, true, true, false, false, false, false, 0}, glz::tuple<std::string &>, glz::context &, std::string &, unsigned long &>'
+Step #3 - "compile-afl-address-x86_64": 7.	include/glaze/msgpack/write.hpp:377:37: instantiating function definition 'glz::serialize<30>::op<opts{30, true, false, true, true, false, false, false, false, 0}, std::string &, glz::context &, std::string &, unsigned long &>'
+Step #3 - "compile-afl-address-x86_64":  #0 0x000055fb20ae80b8 llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) (/usr/local/bin/clang-22+0x1aef0b8)
+Step #3 - "compile-afl-address-x86_64":  #1 0x000055fb20ae5b85 llvm::sys::RunSignalHandlers() (/usr/local/bin/clang-22+0x1aecb85)
+Step #3 - "compile-afl-address-x86_64":  #2 0x000055fb20ae8dc6 SignalHandler(int, siginfo_t*, void*) Signals.cpp:0:0
+Step #3 - "compile-afl-address-x86_64":  #3 0x00007f3efb8c7420 __restore_rt (/lib/x86_64-linux-gnu/libpthread.so.0+0x14420)
+Step #3 - "compile-afl-address-x86_64":  #4 0x000055fb22d2a9b1 clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformNestedNameSpecifierLoc(clang::NestedNameSpecifierLoc, clang::QualType, clang::NamedDecl*) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64":  #5 0x000055fb22d418c0 clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformDependentTemplateSpecializationType(clang::TypeLocBuilder&, clang::DependentTemplateSpecializationTypeLoc, clang::QualType, clang::NamedDecl*, bool) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64":  #6 0x000055fb22d2adac clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformNestedNameSpecifierLoc(clang::NestedNameSpecifierLoc, clang::QualType, clang::NamedDecl*) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64":  #7 0x000055fb22d42802 clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformDependentNameType(clang::TypeLocBuilder&, clang::DependentNameTypeLoc, bool, clang::QualType, clang::NamedDecl*) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64":  #8 0x000055fb22d21370 clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformType(clang::TypeLocBuilder&, clang::TypeLoc) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64":  #9 0x000055fb22d20d65 clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformType(clang::TypeSourceInfo*) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #10 0x000055fb22d486bc clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformSubstTemplateTypeParmType(clang::TypeLocBuilder&, clang::SubstTemplateTypeParmTypeLoc) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #11 0x000055fb22d20d65 clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformType(clang::TypeSourceInfo*) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #12 0x000055fb22d486bc clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformSubstTemplateTypeParmType(clang::TypeLocBuilder&, clang::SubstTemplateTypeParmTypeLoc) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #13 0x000055fb22d20d65 clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformType(clang::TypeSourceInfo*) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #14 0x000055fb22d283d9 (anonymous namespace)::TemplateInstantiator::TransformTemplateArgument(clang::TemplateArgumentLoc const&, clang::TemplateArgumentLoc&, bool) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #15 0x000055fb22d28ba2 bool clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformTemplateArguments<clang::TemplateArgumentLoc const*>(clang::TemplateArgumentLoc const*, clang::TemplateArgumentLoc const*, clang::TemplateArgumentListInfo&, bool) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #16 0x000055fb22d232ed clang::Sema::SubstTemplateArguments(llvm::ArrayRef<clang::TemplateArgumentLoc>, clang::MultiLevelTemplateArgumentList const&, clang::TemplateArgumentListInfo&) (/usr/local/bin/clang-22+0x3d2a2ed)
+Step #3 - "compile-afl-address-x86_64": #17 0x000055fb227da086 substituteParameterMappings(clang::Sema&, clang::NormalizedConstraint&, clang::ConceptDecl*, clang::MultiLevelTemplateArgumentList const&, clang::ASTTemplateArgumentListInfo const*) SemaConcept.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #18 0x000055fb227d97e4 substituteParameterMappings(clang::Sema&, clang::NormalizedConstraint&, clang::ConceptDecl*, clang::MultiLevelTemplateArgumentList const&, clang::ASTTemplateArgumentListInfo const*) SemaConcept.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #19 0x000055fb227d4acd clang::NormalizedConstraint::fromConstraintExpr(clang::Sema&, clang::NamedDecl const*, clang::Expr const*) (/usr/local/bin/clang-22+0x37dbacd)
+Step #3 - "compile-afl-address-x86_64": #20 0x000055fb227d48dd clang::NormalizedConstraint::fromConstraintExpr(clang::Sema&, clang::NamedDecl const*, clang::Expr const*) (/usr/local/bin/clang-22+0x37db8dd)
+Step #3 - "compile-afl-address-x86_64": #21 0x000055fb227d42ea clang::NormalizedConstraint::fromAssociatedConstraints(clang::Sema&, clang::NamedDecl const*, llvm::ArrayRef<clang::AssociatedConstraint>) (/usr/local/bin/clang-22+0x37db2ea)
+Step #3 - "compile-afl-address-x86_64": #22 0x000055fb227d4229 clang::Sema::getNormalizedAssociatedConstraints(clang::NamedDecl const*, llvm::ArrayRef<clang::AssociatedConstraint>) (/usr/local/bin/clang-22+0x37db229)
+Step #3 - "compile-afl-address-x86_64": #23 0x000055fb227d49f5 clang::NormalizedConstraint::fromConstraintExpr(clang::Sema&, clang::NamedDecl const*, clang::Expr const*) (/usr/local/bin/clang-22+0x37db9f5)
+Step #3 - "compile-afl-address-x86_64": #24 0x000055fb227d42ea clang::NormalizedConstraint::fromAssociatedConstraints(clang::Sema&, clang::NamedDecl const*, llvm::ArrayRef<clang::AssociatedConstraint>) (/usr/local/bin/clang-22+0x37db2ea)
+Step #3 - "compile-afl-address-x86_64": #25 0x000055fb227d4229 clang::Sema::getNormalizedAssociatedConstraints(clang::NamedDecl const*, llvm::ArrayRef<clang::AssociatedConstraint>) (/usr/local/bin/clang-22+0x37db229)
+Step #3 - "compile-afl-address-x86_64": #26 0x000055fb227d5936 clang::Sema::IsAtLeastAsConstrained(clang::NamedDecl const*, llvm::MutableArrayRef<clang::AssociatedConstraint>, clang::NamedDecl const*, llvm::MutableArrayRef<clang::AssociatedConstraint>, bool&) (/usr/local/bin/clang-22+0x37dc936)
+Step #3 - "compile-afl-address-x86_64": #27 0x000055fb22cb8a22 clang::Sema::getMoreSpecializedPartialSpecialization(clang::ClassTemplatePartialSpecializationDecl*, clang::ClassTemplatePartialSpecializationDecl*, clang::SourceLocation) (/usr/local/bin/clang-22+0x3cbfa22)
+Step #3 - "compile-afl-address-x86_64": #28 0x000055fb22d26d90 clang::Sema::InstantiateClassTemplateSpecialization(clang::SourceLocation, clang::ClassTemplateSpecializationDecl*, clang::TemplateSpecializationKind, bool, bool) (/usr/local/bin/clang-22+0x3d2dd90)
+Step #3 - "compile-afl-address-x86_64": #29 0x000055fb22dc909e void llvm::function_ref<void ()>::callback_fn<clang::Sema::RequireCompleteTypeImpl(clang::SourceLocation, clang::QualType, clang::Sema::CompleteTypeKind, clang::Sema::TypeDiagnoser*)::$_0>(long) SemaType.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #30 0x000055fb2373347f clang::StackExhaustionHandler::runWithSufficientStackSpace(clang::SourceLocation, llvm::function_ref<void ()>) (/usr/local/bin/clang-22+0x473a47f)
+Step #3 - "compile-afl-address-x86_64": #31 0x000055fb22db84fa clang::Sema::RequireCompleteTypeImpl(clang::SourceLocation, clang::QualType, clang::Sema::CompleteTypeKind, clang::Sema::TypeDiagnoser*) (/usr/local/bin/clang-22+0x3dbf4fa)
+Step #3 - "compile-afl-address-x86_64": #32 0x000055fb22db7dbf clang::Sema::RequireCompleteType(clang::SourceLocation, clang::QualType, clang::Sema::CompleteTypeKind, clang::Sema::TypeDiagnoser&) (/usr/local/bin/clang-22+0x3dbedbf)
+Step #3 - "compile-afl-address-x86_64": #33 0x000055fb22730f63 clang::Sema::RequireCompleteDeclContext(clang::CXXScopeSpec&, clang::DeclContext*) (/usr/local/bin/clang-22+0x3737f63)
+Step #3 - "compile-afl-address-x86_64": #34 0x000055fb22c2cd0b clang::Sema::LookupTemplateName(clang::LookupResult&, clang::Scope*, clang::CXXScopeSpec&, clang::QualType, bool, clang::Sema::RequiredTemplateKind, clang::Sema::AssumedTemplateKind*, bool) (/usr/local/bin/clang-22+0x3c33d0b)
+Step #3 - "compile-afl-address-x86_64": #35 0x000055fb22c421cf clang::Sema::BuildQualifiedTemplateIdExpr(clang::CXXScopeSpec&, clang::SourceLocation, clang::DeclarationNameInfo const&, clang::TemplateArgumentListInfo const*, bool) (/usr/local/bin/clang-22+0x3c491cf)
+Step #3 - "compile-afl-address-x86_64": #36 0x000055fb22d38c0d clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformDependentScopeDeclRefExpr(clang::DependentScopeDeclRefExpr*, bool, clang::TypeSourceInfo**) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #37 0x000055fb22d3469d clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformCallExpr(clang::CallExpr*) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #38 0x000055fb22d27b54 clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformStmt(clang::Stmt*, clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::StmtDiscardKind) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #39 0x000055fb22d396bb clang::TreeTransform<(anonymous namespace)::TemplateInstantiator>::TransformCompoundStmt(clang::CompoundStmt*, bool) SemaTemplateInstantiate.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #40 0x000055fb22d27aea clang::Sema::SubstStmt(clang::Stmt*, clang::MultiLevelTemplateArgumentList const&) (/usr/local/bin/clang-22+0x3d2eaea)
+Step #3 - "compile-afl-address-x86_64": #41 0x000055fb22d73b60 clang::Sema::InstantiateFunctionDefinition(clang::SourceLocation, clang::FunctionDecl*, bool, bool, bool) (/usr/local/bin/clang-22+0x3d7ab60)
+Step #3 - "compile-afl-address-x86_64": #42 0x000055fb22d76a4c clang::Sema::PerformPendingInstantiations(bool, bool) (/usr/local/bin/clang-22+0x3d7da4c)
+Step #3 - "compile-afl-address-x86_64": #43 0x000055fb22d73c93 clang::Sema::InstantiateFunctionDefinition(clang::SourceLocation, clang::FunctionDecl*, bool, bool, bool) (/usr/local/bin/clang-22+0x3d7ac93)
+Step #3 - "compile-afl-address-x86_64": #44 0x000055fb22d76a4c clang::Sema::PerformPendingInstantiations(bool, bool) (/usr/local/bin/clang-22+0x3d7da4c)
+Step #3 - "compile-afl-address-x86_64": #45 0x000055fb22d73c93 clang::Sema::InstantiateFunctionDefinition(clang::SourceLocation, clang::FunctionDecl*, bool, bool, bool) (/usr/local/bin/clang-22+0x3d7ac93)
+Step #3 - "compile-afl-address-x86_64": #46 0x000055fb22d76a4c clang::Sema::PerformPendingInstantiations(bool, bool) (/usr/local/bin/clang-22+0x3d7da4c)
+Step #3 - "compile-afl-address-x86_64": #47 0x000055fb22d73c93 clang::Sema::InstantiateFunctionDefinition(clang::SourceLocation, clang::FunctionDecl*, bool, bool, bool) (/usr/local/bin/clang-22+0x3d7ac93)
+Step #3 - "compile-afl-address-x86_64": #48 0x000055fb22d76a4c clang::Sema::PerformPendingInstantiations(bool, bool) (/usr/local/bin/clang-22+0x3d7da4c)
+Step #3 - "compile-afl-address-x86_64": #49 0x000055fb22d73c93 clang::Sema::InstantiateFunctionDefinition(clang::SourceLocation, clang::FunctionDecl*, bool, bool, bool) (/usr/local/bin/clang-22+0x3d7ac93)
+Step #3 - "compile-afl-address-x86_64": #50 0x000055fb22d76a4c clang::Sema::PerformPendingInstantiations(bool, bool) (/usr/local/bin/clang-22+0x3d7da4c)
+Step #3 - "compile-afl-address-x86_64": #51 0x000055fb22d73c93 clang::Sema::InstantiateFunctionDefinition(clang::SourceLocation, clang::FunctionDecl*, bool, bool, bool) (/usr/local/bin/clang-22+0x3d7ac93)
+Step #3 - "compile-afl-address-x86_64": #52 0x000055fb22d76a4c clang::Sema::PerformPendingInstantiations(bool, bool) (/usr/local/bin/clang-22+0x3d7da4c)
+Step #3 - "compile-afl-address-x86_64": #53 0x000055fb22705a96 clang::Sema::ActOnEndOfTranslationUnitFragment(clang::TUFragmentKind) (/usr/local/bin/clang-22+0x370ca96)
+Step #3 - "compile-afl-address-x86_64": #54 0x000055fb22705e98 clang::Sema::ActOnEndOfTranslationUnit() (/usr/local/bin/clang-22+0x370ce98)
+Step #3 - "compile-afl-address-x86_64": #55 0x000055fb225cee94 clang::Parser::ParseTopLevelDecl(clang::OpaquePtr<clang::DeclGroupRef>&, clang::Sema::ModuleImportState&) (/usr/local/bin/clang-22+0x35d5e94)
+Step #3 - "compile-afl-address-x86_64": #56 0x000055fb225caa8e clang::ParseAST(clang::Sema&, bool, bool) (/usr/local/bin/clang-22+0x35d1a8e)
+Step #3 - "compile-afl-address-x86_64": #57 0x000055fb213e266d clang::FrontendAction::Execute() (/usr/local/bin/clang-22+0x23e966d)
+Step #3 - "compile-afl-address-x86_64": #58 0x000055fb21358f34 clang::CompilerInstance::ExecuteAction(clang::FrontendAction&) (/usr/local/bin/clang-22+0x235ff34)
+Step #3 - "compile-afl-address-x86_64": #59 0x000055fb214a808a clang::ExecuteCompilerInvocation(clang::CompilerInstance*) (/usr/local/bin/clang-22+0x24af08a)
+Step #3 - "compile-afl-address-x86_64": #60 0x000055fb1fbe0539 cc1_main(llvm::ArrayRef<char const*>, char const*, void*) (/usr/local/bin/clang-22+0xbe7539)
+Step #3 - "compile-afl-address-x86_64": #61 0x000055fb1fbdd241 ExecuteCC1Tool(llvm::SmallVectorImpl<char const*>&, llvm::ToolContext const&) driver.cpp:0:0
+Step #3 - "compile-afl-address-x86_64": #62 0x000055fb1fbdc4f5 clang_main(int, char**, llvm::ToolContext const&) (/usr/local/bin/clang-22+0xbe34f5)
+Step #3 - "compile-afl-address-x86_64": #63 0x000055fb1fbea847 main (/usr/local/bin/clang-22+0xbf1847)
+Step #3 - "compile-afl-address-x86_64": #64 0x00007f3efb36b083 __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x24083)
+Step #3 - "compile-afl-address-x86_64": #65 0x000055fb1fbdafee _start (/usr/local/bin/clang-22+0xbe1fee)
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1munable to execute command: Segmentation fault (core dumped)[0m
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;31merror: [0m[1mclang frontend command failed due to signal (use -v to see invocation)[0m
+Step #3 - "compile-afl-address-x86_64": clang version 22.0.0git (https://github.com/llvm/llvm-project.git cb2f0d0a5f14c183e7182aba0f0e54a518de9e3f)
+Step #3 - "compile-afl-address-x86_64": Target: x86_64-unknown-linux-gnu
+Step #3 - "compile-afl-address-x86_64": Thread model: posix
+Step #3 - "compile-afl-address-x86_64": InstalledDir: /usr/local/bin
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;35mwarning: [0m[1mtreating 'c' input as 'c++' when in C++ mode, this behavior is deprecated [-Wdeprecated][0m
+Step #3 - "compile-afl-address-x86_64": clang++: [0;1;36mnote: [0mdiagnostic msg: Error generating preprocessed source(s).[0m
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image glaze\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 glaze\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

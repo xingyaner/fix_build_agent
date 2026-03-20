@@ -1,0 +1,713 @@
+starting build "6b0d4015-b0f5-4828-85e3-5dcf43bf9972"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6"
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Sending build context to Docker daemon  4.096kB
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Step 1/7 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b549f31133a9: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": fbd651eef87f: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 1213aebcf1ee: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": a060310a2694: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 497216b932c9: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": dbba7edc028b: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b265efe846ed: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 161940763a8b: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": cf5e5e872386: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 07e64dc83e3d: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0736b6e9e3d3: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 2aa8d7237534: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 77f0438adcd7: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b4f29f80fb52: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 8a13b0c532a1: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 816028f45e91: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": af4a22e37681: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e254a28c4707: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b93f7310e490: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 537b4d73e924: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": fb7466f42249: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": caa5e91e8207: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 8e5a6791c7a9: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 2a27d4021cc9: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 44a0027834cd: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 02ef4a0d7537: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 639adac7267e: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e2c5062b3d7c: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 1664575004c3: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0c12bc59d07a: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 33a9985c1ce6: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": eed49b03c9d2: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 296802ba35d9: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 56d297e5ca51: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 4202398c47b7: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 05ac082b9935: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e5eb489f668b: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 3c031922279e: Pulling fs layer
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b4f29f80fb52: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 296802ba35d9: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 56d297e5ca51: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 8a13b0c532a1: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 4202398c47b7: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 816028f45e91: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 05ac082b9935: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e5eb489f668b: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": af4a22e37681: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": eed49b03c9d2: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 3c031922279e: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e254a28c4707: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 02ef4a0d7537: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 44a0027834cd: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 639adac7267e: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b93f7310e490: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e2c5062b3d7c: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 1664575004c3: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 537b4d73e924: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0c12bc59d07a: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": fb7466f42249: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 33a9985c1ce6: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 8e5a6791c7a9: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 2a27d4021cc9: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": cf5e5e872386: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0736b6e9e3d3: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": caa5e91e8207: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 2aa8d7237534: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 77f0438adcd7: Waiting
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 497216b932c9: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 1213aebcf1ee: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 1213aebcf1ee: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b265efe846ed: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b265efe846ed: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 161940763a8b: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 161940763a8b: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b549f31133a9: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b549f31133a9: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": a060310a2694: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": a060310a2694: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0736b6e9e3d3: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0736b6e9e3d3: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 2aa8d7237534: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 2aa8d7237534: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 77f0438adcd7: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 77f0438adcd7: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b4f29f80fb52: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b4f29f80fb52: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 8a13b0c532a1: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 8a13b0c532a1: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 816028f45e91: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 07e64dc83e3d: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 07e64dc83e3d: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": fbd651eef87f: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": fbd651eef87f: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": af4a22e37681: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": af4a22e37681: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e254a28c4707: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e254a28c4707: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b93f7310e490: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b93f7310e490: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 537b4d73e924: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 537b4d73e924: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": fb7466f42249: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": fb7466f42249: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": caa5e91e8207: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": caa5e91e8207: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 8e5a6791c7a9: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 8e5a6791c7a9: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 44a0027834cd: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 44a0027834cd: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 02ef4a0d7537: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 639adac7267e: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 639adac7267e: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b549f31133a9: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 1664575004c3: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 1664575004c3: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e2c5062b3d7c: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e2c5062b3d7c: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0c12bc59d07a: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0c12bc59d07a: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": eed49b03c9d2: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": eed49b03c9d2: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 296802ba35d9: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 296802ba35d9: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 33a9985c1ce6: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 33a9985c1ce6: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 56d297e5ca51: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 4202398c47b7: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 05ac082b9935: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 05ac082b9935: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": cf5e5e872386: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": cf5e5e872386: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e5eb489f668b: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e5eb489f668b: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 3c031922279e: Verifying Checksum
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 3c031922279e: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": dbba7edc028b: Download complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": fbd651eef87f: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 1213aebcf1ee: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": a060310a2694: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 497216b932c9: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": dbba7edc028b: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b265efe846ed: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 161940763a8b: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": cf5e5e872386: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 07e64dc83e3d: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0736b6e9e3d3: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 2aa8d7237534: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 77f0438adcd7: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b4f29f80fb52: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 8a13b0c532a1: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 816028f45e91: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": af4a22e37681: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e254a28c4707: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": b93f7310e490: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 537b4d73e924: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": fb7466f42249: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": caa5e91e8207: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 8e5a6791c7a9: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 2a27d4021cc9: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 44a0027834cd: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 02ef4a0d7537: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 639adac7267e: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e2c5062b3d7c: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 1664575004c3: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0c12bc59d07a: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 33a9985c1ce6: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": eed49b03c9d2: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 296802ba35d9: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 56d297e5ca51: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 4202398c47b7: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 05ac082b9935: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": e5eb489f668b: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 3c031922279e: Pull complete
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Digest: sha256:cede7bc2cc2ece182ffb31a0d118e0e3ade537b2ea40803829f19373815bb8f8
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> e9b8095f6233
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Step 2/7 : RUN apt-get update &&     apt-get install -y make autoconf automake libtool g++ sqlite3 pkg-config wget
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> Running in 3fa88ac47cc0
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Hit:2 http://security.ubuntu.com/ubuntu focal-security InRelease
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Hit:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Fetched 128 kB in 1s (193 kB/s)
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Reading package lists...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Reading package lists...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Building dependency tree...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Reading state information...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": g++ is already the newest version (4:9.3.0-1ubuntu2).
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": g++ set to manually installed.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": make set to manually installed.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": wget is already the newest version (1.20.3-1ubuntu2.1).
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": The following additional packages will be installed:
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":   file libglib2.0-0 libglib2.0-data libicu66 libltdl-dev libltdl7 libmagic-mgc
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":   libmagic1 libxml2 shared-mime-info xdg-user-dirs
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Suggested packages:
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":   autoconf-archive gnu-standards autoconf-doc gettext libtool-doc gfortran
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":   | fortran95-compiler gcj-jdk sqlite3-doc
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": The following NEW packages will be installed:
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":   autoconf automake file libglib2.0-0 libglib2.0-data libicu66 libltdl-dev
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":   libltdl7 libmagic-mgc libmagic1 libtool libxml2 pkg-config shared-mime-info
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":   sqlite3 xdg-user-dirs
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": 0 upgraded, 16 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Need to get 13.4 MB of archives.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": After this operation, 58.3 MB of additional disk space will be used.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:2 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-0 amd64 2.64.6-1~ubuntu20.04.9 [1290 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:5 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-data all 2.64.6-1~ubuntu20.04.9 [5836 B]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 shared-mime-info amd64 1.15-1 [430 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 xdg-user-dirs amd64 0.17-2ubuntu1 [48.3 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 autoconf all 2.69-11.1 [321 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:13 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:14 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64 pkg-config amd64 0.29.1-0ubuntu4 [45.5 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Get:16 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 sqlite3 amd64 3.31.1-4ubuntu0.7 [860 kB]
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": [0mFetched 13.4 MB in 0s (27.8 MB/s)
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package libmagic-mgc.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../00-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package libmagic1:amd64.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../01-libmagic1_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package file.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../02-file_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking file (1:5.38-4) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package libglib2.0-0:amd64.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../03-libglib2.0-0_2.64.6-1~ubuntu20.04.9_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package libglib2.0-data.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../04-libglib2.0-data_2.64.6-1~ubuntu20.04.9_all.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package libicu66:amd64.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../05-libicu66_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package libxml2:amd64.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../06-libxml2_2.9.10+dfsg-5ubuntu0.20.04.10_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package shared-mime-info.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../07-shared-mime-info_1.15-1_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking shared-mime-info (1.15-1) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package xdg-user-dirs.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../08-xdg-user-dirs_0.17-2ubuntu1_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package autoconf.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../09-autoconf_2.69-11.1_all.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking autoconf (2.69-11.1) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package automake.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../10-automake_1%3a1.16.1-4ubuntu6_all.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package libltdl7:amd64.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../11-libltdl7_2.4.6-14_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package libltdl-dev:amd64.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../12-libltdl-dev_2.4.6-14_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package libtool.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../13-libtool_2.4.6-14_all.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking libtool (2.4.6-14) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package pkg-config.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../14-pkg-config_0.29.1-0ubuntu4_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Selecting previously unselected package sqlite3.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Preparing to unpack .../15-sqlite3_3.31.1-4ubuntu0.7_amd64.deb ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Unpacking sqlite3 (3.31.1-4ubuntu0.7) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": No schema files found: doing nothing.
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up file (1:5.38-4) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up autoconf (2.69-11.1) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up sqlite3 (3.31.1-4ubuntu0.7) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": update-alternatives: using /usr/bin/automake-1.16 to provide /usr/bin/automake (automake) in auto mode
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": update-alternatives: warning: skip creation of /usr/share/man/man1/automake.1.gz because associated file /usr/share/man/man1/automake-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": update-alternatives: warning: skip creation of /usr/share/man/man1/aclocal.1.gz because associated file /usr/share/man/man1/aclocal-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up libtool (2.4.6-14) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Setting up shared-mime-info (1.15-1) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Removing intermediate container 3fa88ac47cc0
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> b1a97f96bea9
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Step 3/7 : RUN git clone --depth 1 https://github.com/OSGeo/PROJ PROJ
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> Running in 561c0e6452fa
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": [91mCloning into 'PROJ'...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": [0mRemoving intermediate container 561c0e6452fa
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> 7402b0bace6d
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Step 4/7 : RUN git clone --depth 1 https://github.com/curl/curl.git PROJ/curl
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> Running in 0b2fd7270be6
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": [91mCloning into 'PROJ/curl'...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": [0mRemoving intermediate container 0b2fd7270be6
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> 0600f6fecc1a
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Step 5/7 : RUN git clone --depth 1 https://gitlab.com/libtiff/libtiff.git PROJ/libtiff
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> Running in 019f88da8a29
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": [91mCloning into 'PROJ/libtiff'...
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": [0mRemoving intermediate container 019f88da8a29
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> 3b1dbe712c06
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Step 6/7 : WORKDIR PROJ
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> Running in feeff24370dc
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Removing intermediate container feeff24370dc
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> 8d54a0c45b73
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Step 7/7 : RUN cp test/fuzzers/build.sh $SRC/
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> Running in 6faae845fa92
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Removing intermediate container 6faae845fa92
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6":  ---> 9327daaa4688
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Successfully built 9327daaa4688
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Successfully tagged gcr.io/oss-fuzz/proj4:latest
+Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/proj4:latest
+Finished Step #1 - "build-0fb310b1-cbdc-47c2-97a8-3abaa33ba4c6"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/proj4
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileGIN0nM
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/PROJ/.git
+Step #2 - "srcmap": + GIT_DIR=/src/PROJ
+Step #2 - "srcmap": + cd /src/PROJ
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/OSGeo/PROJ
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=ea513336471dd00f4572d750c3e7cd2dd47b7e81
+Step #2 - "srcmap": + jq_inplace /tmp/fileGIN0nM '."/src/PROJ" = { type: "git", url: "https://github.com/OSGeo/PROJ", rev: "ea513336471dd00f4572d750c3e7cd2dd47b7e81" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/file6ZjUAc
+Step #2 - "srcmap": + cat /tmp/fileGIN0nM
+Step #2 - "srcmap": + jq '."/src/PROJ" = { type: "git", url: "https://github.com/OSGeo/PROJ", rev: "ea513336471dd00f4572d750c3e7cd2dd47b7e81" }'
+Step #2 - "srcmap": + mv /tmp/file6ZjUAc /tmp/fileGIN0nM
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/PROJ/libtiff/.git
+Step #2 - "srcmap": + GIT_DIR=/src/PROJ/libtiff
+Step #2 - "srcmap": + cd /src/PROJ/libtiff
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://gitlab.com/libtiff/libtiff.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=9923b128f448270d34a88357ba9b10e108a3eafb
+Step #2 - "srcmap": + jq_inplace /tmp/fileGIN0nM '."/src/PROJ/libtiff" = { type: "git", url: "https://gitlab.com/libtiff/libtiff.git", rev: "9923b128f448270d34a88357ba9b10e108a3eafb" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filezOzkxG
+Step #2 - "srcmap": + cat /tmp/fileGIN0nM
+Step #2 - "srcmap": + jq '."/src/PROJ/libtiff" = { type: "git", url: "https://gitlab.com/libtiff/libtiff.git", rev: "9923b128f448270d34a88357ba9b10e108a3eafb" }'
+Step #2 - "srcmap": + mv /tmp/filezOzkxG /tmp/fileGIN0nM
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/PROJ/curl/.git
+Step #2 - "srcmap": + GIT_DIR=/src/PROJ/curl
+Step #2 - "srcmap": + cd /src/PROJ/curl
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/curl/curl.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=517a12922e8a02caf94b70877bf65328a842b87f
+Step #2 - "srcmap": + jq_inplace /tmp/fileGIN0nM '."/src/PROJ/curl" = { type: "git", url: "https://github.com/curl/curl.git", rev: "517a12922e8a02caf94b70877bf65328a842b87f" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/file9uWU1d
+Step #2 - "srcmap": + cat /tmp/fileGIN0nM
+Step #2 - "srcmap": + jq '."/src/PROJ/curl" = { type: "git", url: "https://github.com/curl/curl.git", rev: "517a12922e8a02caf94b70877bf65328a842b87f" }'
+Step #2 - "srcmap": + mv /tmp/file9uWU1d /tmp/fileGIN0nM
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileGIN0nM
+Step #2 - "srcmap": + rm /tmp/fileGIN0nM
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/PROJ": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/OSGeo/PROJ",
+Step #2 - "srcmap":     "rev": "ea513336471dd00f4572d750c3e7cd2dd47b7e81"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/PROJ/libtiff": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://gitlab.com/libtiff/libtiff.git",
+Step #2 - "srcmap":     "rev": "9923b128f448270d34a88357ba9b10e108a3eafb"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/PROJ/curl": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/curl/curl.git",
+Step #2 - "srcmap":     "rev": "517a12922e8a02caf94b70877bf65328a842b87f"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + set -e
+Step #3 - "compile-afl-address-x86_64": + '[' /src == '' ']'
+Step #3 - "compile-afl-address-x86_64": + '[' /workspace/out/afl-address-x86_64 == '' ']'
+Step #3 - "compile-afl-address-x86_64": + '[' /src/aflplusplus/afl-clang-fast++ == '' ']'
+Step #3 - "compile-afl-address-x86_64": + '[' /usr/lib/libFuzzingEngine.a = '' ']'
+Step #3 - "compile-afl-address-x86_64": + I386_PACKAGES='zlib1g-dev:i386 libssl-dev:i386 libsqlite3-dev:i386'
+Step #3 - "compile-afl-address-x86_64": + X64_PACKAGES='zlib1g-dev libssl-dev libsqlite3-dev'
+Step #3 - "compile-afl-address-x86_64": + '[' x86_64 = i386 ']'
+Step #3 - "compile-afl-address-x86_64": + apt-get install -y zlib1g-dev libssl-dev libsqlite3-dev
+Step #3 - "compile-afl-address-x86_64": Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 2%Reading package lists... 2%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 4%Reading package lists... 28%Reading package lists... 28%Reading package lists... 41%Reading package lists... 41%Reading package lists... 41%Reading package lists... 41%Reading package lists... 42%Reading package lists... 42%Reading package lists... 51%Reading package lists... 52%Reading package lists... 52%Reading package lists... 55%Reading package lists... 55%Reading package lists... 66%Reading package lists... 66%Reading package lists... 66%Reading package lists... 66%Reading package lists... 69%Reading package lists... 69%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 72%Reading package lists... 82%Reading package lists... 82%Reading package lists... 84%Reading package lists... 84%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 94%Reading package lists... 97%Reading package lists... 97%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
+Step #3 - "compile-afl-address-x86_64": Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... 94%Building dependency tree       
+Step #3 - "compile-afl-address-x86_64": Reading state information... 0%Reading state information... 0%Reading state information... Done
+Step #3 - "compile-afl-address-x86_64": libssl-dev is already the newest version (1.1.1f-1ubuntu2.24).
+Step #3 - "compile-afl-address-x86_64": Suggested packages:
+Step #3 - "compile-afl-address-x86_64":   sqlite3-doc
+Step #3 - "compile-afl-address-x86_64": The following NEW packages will be installed:
+Step #3 - "compile-afl-address-x86_64":   libsqlite3-dev zlib1g-dev
+Step #3 - "compile-afl-address-x86_64": 0 upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
+Step #3 - "compile-afl-address-x86_64": Need to get 852 kB of archives.
+Step #3 - "compile-afl-address-x86_64": After this operation, 2980 kB of additional disk space will be used.
+Step #3 - "compile-afl-address-x86_64": 0% [Working]            Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libsqlite3-dev amd64 3.31.1-4ubuntu0.7 [697 kB]
+Step #3 - "compile-afl-address-x86_64": 1% [1 libsqlite3-dev 12.7 kB/697 kB 2%]                                       75% [Working]             Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 zlib1g-dev amd64 1:1.2.11.dfsg-2ubuntu1.5 [155 kB]
+Step #3 - "compile-afl-address-x86_64": 77% [2 zlib1g-dev 15.6 kB/155 kB 10%]                                     100% [Working]              Fetched 852 kB in 0s (2772 kB/s)
+Step #3 - "compile-afl-address-x86_64": debconf: delaying package configuration, since apt-utils is not installed
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package libsqlite3-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 18170 files and directories currently installed.)
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../libsqlite3-dev_3.31.1-4ubuntu0.7_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking libsqlite3-dev:amd64 (3.31.1-4ubuntu0.7) ...
+Step #3 - "compile-afl-address-x86_64": Selecting previously unselected package zlib1g-dev:amd64.
+Step #3 - "compile-afl-address-x86_64": Preparing to unpack .../zlib1g-dev_1%3a1.2.11.dfsg-2ubuntu1.5_amd64.deb ...
+Step #3 - "compile-afl-address-x86_64": Unpacking zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #3 - "compile-afl-address-x86_64": Setting up libsqlite3-dev:amd64 (3.31.1-4ubuntu0.7) ...
+Step #3 - "compile-afl-address-x86_64": Setting up zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #3 - "compile-afl-address-x86_64": + PROJ_CMAKE_EXTRA_ARGS=
+Step #3 - "compile-afl-address-x86_64": + cd curl
+Step #3 - "compile-afl-address-x86_64": + autoreconf -i
+Step #3 - "compile-afl-address-x86_64": libtoolize: putting auxiliary files in '.'.
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file './ltmain.sh'
+Step #3 - "compile-afl-address-x86_64": libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'm4'.
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/libtool.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltoptions.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltsugar.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/ltversion.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: copying file 'm4/lt~obsolete.m4'
+Step #3 - "compile-afl-address-x86_64": libtoolize: Remember to add 'LT_INIT' to configure.ac.
+Step #3 - "compile-afl-address-x86_64": configure.ac:127: installing './compile'
+Step #3 - "compile-afl-address-x86_64": configure.ac:454: installing './config.guess'
+Step #3 - "compile-afl-address-x86_64": configure.ac:454: installing './config.sub'
+Step #3 - "compile-afl-address-x86_64": configure.ac:127: installing './install-sh'
+Step #3 - "compile-afl-address-x86_64": configure.ac:130: installing './missing'
+Step #3 - "compile-afl-address-x86_64": docs/examples/Makefile.am: installing './depcomp'
+Step #3 - "compile-afl-address-x86_64": + ./configure --disable-shared --with-openssl --without-libpsl --prefix=/src/install
+Step #3 - "compile-afl-address-x86_64": checking whether to enable maintainer-specific portions of Makefiles... no
+Step #3 - "compile-afl-address-x86_64": checking whether make supports nested variables... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to enable debug build options... no
+Step #3 - "compile-afl-address-x86_64": checking whether to enable compiler optimizer... (assumed) yes
+Step #3 - "compile-afl-address-x86_64": checking whether to enable strict compiler warnings... no
+Step #3 - "compile-afl-address-x86_64": checking whether to enable compiler warnings as errors... no
+Step #3 - "compile-afl-address-x86_64": checking whether to enable curl debug memory tracking... no
+Step #3 - "compile-afl-address-x86_64": checking whether to enable hiding of library internal symbols... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to enable c-ares for DNS lookups... no
+Step #3 - "compile-afl-address-x86_64": checking whether to disable dependency on -lrt... (assumed no)
+Step #3 - "compile-afl-address-x86_64": checking whether to enable HTTPSRR support... no
+Step #3 - "compile-afl-address-x86_64": checking whether to enable ECH support... no
+Step #3 - "compile-afl-address-x86_64": checking whether to enable SSL session export support... no
+Step #3 - "compile-afl-address-x86_64": checking for path separator... :
+Step #3 - "compile-afl-address-x86_64": checking for sed... /usr/bin/sed
+Step #3 - "compile-afl-address-x86_64": checking for grep... /usr/bin/grep
+Step #3 - "compile-afl-address-x86_64": checking that grep -E works... yes
+Step #3 - "compile-afl-address-x86_64": checking for ar... /usr/bin/ar
+Step #3 - "compile-afl-address-x86_64": configure: using CFLAGS: -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": configure: CFLAGS note: CFLAGS should only be used to specify C compiler flags, not macro definitions. Use CPPFLAGS for: -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+Step #3 - "compile-afl-address-x86_64": configure: WARNING: Continuing even with errors mentioned immediately above this line.
+Step #3 - "compile-afl-address-x86_64": checking for a BSD-compatible install... /usr/bin/install -c
+Step #3 - "compile-afl-address-x86_64": checking for gcc... /src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": checking whether the C compiler works... yes
+Step #3 - "compile-afl-address-x86_64": checking for C compiler default output file name... a.out
+Step #3 - "compile-afl-address-x86_64": checking for suffix of executables... 
+Step #3 - "compile-afl-address-x86_64": checking whether we are cross compiling... no
+Step #3 - "compile-afl-address-x86_64": checking for suffix of object files... o
+Step #3 - "compile-afl-address-x86_64": checking whether we are using the GNU C compiler... yes
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast accepts -g... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to accept ISO C89... none needed
+Step #3 - "compile-afl-address-x86_64": checking whether /src/aflplusplus/afl-clang-fast understands -c and -o together... yes
+Step #3 - "compile-afl-address-x86_64": checking how to run the C preprocessor... /src/aflplusplus/afl-clang-fast -E
+Step #3 - "compile-afl-address-x86_64": checking for grep that handles long lines and -e... (cached) /usr/bin/grep
+Step #3 - "compile-afl-address-x86_64": checking for egrep... /usr/bin/grep -E
+Step #3 - "compile-afl-address-x86_64": checking for ANSI C header files... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/types.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/stat.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdlib.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for string.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for memory.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for strings.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for inttypes.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdint.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for unistd.h... yes
+Step #3 - "compile-afl-address-x86_64": checking stdatomic.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking stdatomic.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for stdatomic.h... yes
+Step #3 - "compile-afl-address-x86_64": checking if _Atomic is available... yes
+Step #3 - "compile-afl-address-x86_64": checking whether build environment is sane... yes
+Step #3 - "compile-afl-address-x86_64": checking for a thread-safe mkdir -p... /usr/bin/mkdir -p
+Step #3 - "compile-afl-address-x86_64": checking for gawk... no
+Step #3 - "compile-afl-address-x86_64": checking for mawk... mawk
+Step #3 - "compile-afl-address-x86_64": checking whether make sets $(MAKE)... yes
+Step #3 - "compile-afl-address-x86_64": checking whether make supports the include directive... yes (GNU style)
+Step #3 - "compile-afl-address-x86_64": checking dependency style of /src/aflplusplus/afl-clang-fast... gcc3
+Step #3 - "compile-afl-address-x86_64": checking curl version... 8.18.0-DEV
+Step #3 - "compile-afl-address-x86_64": checking for perl... /usr/bin/perl
+Step #3 - "compile-afl-address-x86_64": checking for httpd... no
+Step #3 - "compile-afl-address-x86_64": checking for apache2... no
+Step #3 - "compile-afl-address-x86_64": checking for apxs... no
+Step #3 - "compile-afl-address-x86_64": configure: httpd/apache2 not in PATH, http tests disabled
+Step #3 - "compile-afl-address-x86_64": configure: apxs not in PATH, http tests disabled
+Step #3 - "compile-afl-address-x86_64": checking for danted... no
+Step #3 - "compile-afl-address-x86_64": checking for danted... no
+Step #3 - "compile-afl-address-x86_64": checking for nghttpx... no
+Step #3 - "compile-afl-address-x86_64": checking for caddy... no
+Step #3 - "compile-afl-address-x86_64": checking build system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking host system type... x86_64-pc-linux-gnu
+Step #3 - "compile-afl-address-x86_64": checking if OS is AIX (to define _ALL_SOURCE)... no
+Step #3 - "compile-afl-address-x86_64": checking if _THREAD_SAFE is already defined... no
+Step #3 - "compile-afl-address-x86_64": checking if _THREAD_SAFE is actually needed... no
+Step #3 - "compile-afl-address-x86_64": checking if _THREAD_SAFE is onwards defined... no
+Step #3 - "compile-afl-address-x86_64": checking if _REENTRANT is already defined... no
+Step #3 - "compile-afl-address-x86_64": checking if _REENTRANT is actually needed... no
+Step #3 - "compile-afl-address-x86_64": checking if _REENTRANT is onwards defined... no
+Step #3 - "compile-afl-address-x86_64": checking for special C compiler options needed for large files... no
+Step #3 - "compile-afl-address-x86_64": checking for _FILE_OFFSET_BITS value needed for large files... no
+Step #3 - "compile-afl-address-x86_64": checking how to print strings... printf
+Step #3 - "compile-afl-address-x86_64": checking for a sed that does not truncate output... (cached) /usr/bin/sed
+Step #3 - "compile-afl-address-x86_64": checking for fgrep... /usr/bin/grep -F
+Step #3 - "compile-afl-address-x86_64": checking for ld used by /src/aflplusplus/afl-clang-fast... /usr/bin/ld
+Step #3 - "compile-afl-address-x86_64": checking if the linker (/usr/bin/ld) is GNU ld... yes
+Step #3 - "compile-afl-address-x86_64": checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+Step #3 - "compile-afl-address-x86_64": checking the name lister (/usr/bin/nm -B) interface... BSD nm
+Step #3 - "compile-afl-address-x86_64": checking whether ln -s works... yes
+Step #3 - "compile-afl-address-x86_64": checking the maximum length of command line arguments... 1572864
+Step #3 - "compile-afl-address-x86_64": checking how to convert x86_64-pc-linux-gnu file names to x86_64-pc-linux-gnu format... func_convert_file_noop
+Step #3 - "compile-afl-address-x86_64": checking how to convert x86_64-pc-linux-gnu file names to toolchain format... func_convert_file_noop
+Step #3 - "compile-afl-address-x86_64": checking for /usr/bin/ld option to reload object files... -r
+Step #3 - "compile-afl-address-x86_64": checking for objdump... objdump
+Step #3 - "compile-afl-address-x86_64": checking how to recognize dependent libraries... pass_all
+Step #3 - "compile-afl-address-x86_64": checking for dlltool... no
+Step #3 - "compile-afl-address-x86_64": checking how to associate runtime and link libraries... printf %s\n
+Step #3 - "compile-afl-address-x86_64": checking for archiver @FILE support... @
+Step #3 - "compile-afl-address-x86_64": checking for strip... strip
+Step #3 - "compile-afl-address-x86_64": checking for ranlib... ranlib
+Step #3 - "compile-afl-address-x86_64": checking command to parse /usr/bin/nm -B output from /src/aflplusplus/afl-clang-fast object... ok
+Step #3 - "compile-afl-address-x86_64": checking for sysroot... no
+Step #3 - "compile-afl-address-x86_64": checking for a working dd... /usr/bin/dd
+Step #3 - "compile-afl-address-x86_64": checking how to truncate binary pipes... /usr/bin/dd bs=4096 count=1
+Step #3 - "compile-afl-address-x86_64": checking for mt... no
+Step #3 - "compile-afl-address-x86_64": checking if : is a manifest tool... no
+Step #3 - "compile-afl-address-x86_64": checking for dlfcn.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for objdir... .libs
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -fno-rtti -fno-exceptions... yes
+Step #3 - "compile-afl-address-x86_64": checking for /src/aflplusplus/afl-clang-fast option to produce PIC... -fPIC -DPIC
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast PIC flag -fPIC -DPIC works... yes
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast static flag -static works... no
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -c -o file.o... yes
+Step #3 - "compile-afl-address-x86_64": checking if /src/aflplusplus/afl-clang-fast supports -c -o file.o... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking whether the /src/aflplusplus/afl-clang-fast linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking dynamic linker characteristics... GNU/Linux ld.so
+Step #3 - "compile-afl-address-x86_64": checking how to hardcode library paths into programs... immediate
+Step #3 - "compile-afl-address-x86_64": checking whether stripping libraries is possible... yes
+Step #3 - "compile-afl-address-x86_64": checking if libtool supports shared libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build shared libraries... no
+Step #3 - "compile-afl-address-x86_64": checking whether to build static libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build shared libraries with -version-info... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build shared libraries with -no-undefined... no
+Step #3 - "compile-afl-address-x86_64": checking whether to build shared libraries with -mimpure-text... no
+Step #3 - "compile-afl-address-x86_64": checking whether to build shared libraries with PIC... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build static libraries with PIC... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build shared libraries only... no
+Step #3 - "compile-afl-address-x86_64": checking whether to build static libraries only... yes
+Step #3 - "compile-afl-address-x86_64": checking for windres... no
+Step #3 - "compile-afl-address-x86_64": checking if cpp -P is needed... no
+Step #3 - "compile-afl-address-x86_64": checking if compiler is DEC/Compaq/HP C... no
+Step #3 - "compile-afl-address-x86_64": checking if compiler is HP-UX C... no
+Step #3 - "compile-afl-address-x86_64": checking if compiler is IBM C... no
+Step #3 - "compile-afl-address-x86_64": checking if compiler is Intel C... no
+Step #3 - "compile-afl-address-x86_64": checking if compiler is clang... yes
+Step #3 - "compile-afl-address-x86_64": checking if compiler is xlclang... no
+Step #3 - "compile-afl-address-x86_64": checking if compiler is Apple clang... no
+Step #3 - "compile-afl-address-x86_64": checking compiler version... clang '2200' (raw: 'clang version 22.0.0git (https://github.com/llvm/llvm-project.git cb2f0d0a5f14c183e7182aba0f0e54a518de9e3f)' / '22.0')
+Step #3 - "compile-afl-address-x86_64": checking if compiler is GNU C... no
+Step #3 - "compile-afl-address-x86_64": checking if compiler is SunPro C... no
+Step #3 - "compile-afl-address-x86_64": checking if compiler is Tiny C... no
+Step #3 - "compile-afl-address-x86_64": checking for code coverage support... no
+Step #3 - "compile-afl-address-x86_64": checking whether build target is a native Windows one... no
+Step #3 - "compile-afl-address-x86_64": checking if compiler accepts some basic options... yes
+Step #3 - "compile-afl-address-x86_64": configure: compiler options added: -Qunused-arguments -Werror-implicit-function-declaration 
+Step #3 - "compile-afl-address-x86_64": checking if compiler optimizer assumed setting might be used... no
+Step #3 - "compile-afl-address-x86_64": checking if compiler halts on compilation errors... yes
+Step #3 - "compile-afl-address-x86_64": checking if compiler halts on negative sized arrays... yes
+Step #3 - "compile-afl-address-x86_64": checking if compiler halts on function prototype mismatch... yes
+Step #3 - "compile-afl-address-x86_64": checking if compiler supports hiding library internal symbols... yes
+Step #3 - "compile-afl-address-x86_64": checking whether build target supports Win32 crypto API... no
+Step #3 - "compile-afl-address-x86_64": checking whether to build libcurl and curl in "unity" mode... no
+Step #3 - "compile-afl-address-x86_64": checking whether to support http... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support ftp... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support file... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support IPFS... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support ldap... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support ldaps... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support rtsp... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support proxies... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support dict... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support telnet... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support tftp... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support pop3... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support imap... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support smb... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support smtp... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support gopher... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to support mqtt... no
+Step #3 - "compile-afl-address-x86_64": checking whether to provide built-in manual... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to build documentation... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to enable generation of C code... yes
+Step #3 - "compile-afl-address-x86_64": checking whether to use libgcc... no
+Step #3 - "compile-afl-address-x86_64": checking if X/Open network library is required... no
+Step #3 - "compile-afl-address-x86_64": checking for gethostbyname... yes
+Step #3 - "compile-afl-address-x86_64": checking whether build target is a native Windows one... (cached) no
+Step #3 - "compile-afl-address-x86_64": checking for proto/bsdsocket.h... no
+Step #3 - "compile-afl-address-x86_64": checking for connect in libraries... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/types.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for monotonic clock_gettime... yes
+Step #3 - "compile-afl-address-x86_64": checking for clock_gettime in libraries... no additional lib required
+Step #3 - "compile-afl-address-x86_64": checking if monotonic clock_gettime works... yes
+Step #3 - "compile-afl-address-x86_64": checking for sys/types.h... (cached) yes
+Step #3 - "compile-afl-address-x86_64": checking for raw monotonic clock_gettime... yes
+Step #3 - "compile-afl-address-x86_64": checking for pkg-config... /usr/bin/pkg-config
+Step #3 - "compile-afl-address-x86_64": checking for zlib options with pkg-config... found
+Step #3 - "compile-afl-address-x86_64": checking zlib.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking zlib.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for zlib.h... yes
+Step #3 - "compile-afl-address-x86_64": configure: found both libz and libz.h header
+Step #3 - "compile-afl-address-x86_64": checking for BrotliDecoderDecompress in -lbrotlidec... no
+Step #3 - "compile-afl-address-x86_64": checking brotli/decode.h usability... no
+Step #3 - "compile-afl-address-x86_64": checking brotli/decode.h presence... no
+Step #3 - "compile-afl-address-x86_64": checking for brotli/decode.h... no
+Step #3 - "compile-afl-address-x86_64": checking for ZSTD_createDStream in -lzstd... no
+Step #3 - "compile-afl-address-x86_64": checking zstd.h usability... no
+Step #3 - "compile-afl-address-x86_64": checking zstd.h presence... no
+Step #3 - "compile-afl-address-x86_64": checking for zstd.h... no
+Step #3 - "compile-afl-address-x86_64": checking whether to enable IPv6... yes
+Step #3 - "compile-afl-address-x86_64": checking if struct sockaddr_in6 has sin6_scope_id member... yes
+Step #3 - "compile-afl-address-x86_64": checking if argv can be written to... yes
+Step #3 - "compile-afl-address-x86_64": checking if GSS-API support is requested... no
+Step #3 - "compile-afl-address-x86_64": checking whether to enable Windows native SSL/TLS... no
+Step #3 - "compile-afl-address-x86_64": checking whether to enable Amiga native SSL/TLS (AmiSSL v5)... no
+Step #3 - "compile-afl-address-x86_64": checking for pkg-config... (cached) /usr/bin/pkg-config
+Step #3 - "compile-afl-address-x86_64": checking for openssl options with pkg-config... found
+Step #3 - "compile-afl-address-x86_64": configure: pkg-config: SSL_LIBS: "-lssl -lcrypto"
+Step #3 - "compile-afl-address-x86_64": configure: pkg-config: SSL_LDFLAGS: ""
+Step #3 - "compile-afl-address-x86_64": configure: pkg-config: SSL_CPPFLAGS: ""
+Step #3 - "compile-afl-address-x86_64": checking for HMAC_Update in -lcrypto... yes
+Step #3 - "compile-afl-address-x86_64": checking for SSL_connect in -lssl... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/x509.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/x509.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for openssl/x509.h... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/rsa.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/rsa.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for openssl/rsa.h... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/crypto.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/crypto.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for openssl/crypto.h... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/pem.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/pem.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for openssl/pem.h... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/ssl.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/ssl.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for openssl/ssl.h... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/err.h usability... yes
+Step #3 - "compile-afl-address-x86_64": checking openssl/err.h presence... yes
+Step #3 - "compile-afl-address-x86_64": checking for openssl/err.h... yes
+Step #3 - "compile-afl-address-x86_64": checking for BoringSSL... no
+Step #3 - "compile-afl-address-x86_64": checking for AWS-LC... no
+Step #3 - "compile-afl-address-x86_64": checking for LibreSSL... no
+Step #3 - "compile-afl-address-x86_64": checking for OpenSSL >= v3... configure: error: OpenSSL 3.0.0 or upper required.
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image proj4\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 proj4\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

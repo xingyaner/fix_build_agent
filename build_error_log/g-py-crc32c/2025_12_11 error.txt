@@ -1,0 +1,617 @@
+starting build "f541f911-cd7f-46c7-8ed2-6b1dde971f6c"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: 
+Step #0:                    ***** NOTICE *****
+Step #0: 
+Step #0: Official `cloud-sdk` images, including multiple tagged versions across multiple
+Step #0: platforms, can be found at
+Step #0: https://github.com/GoogleCloudPlatform/cloud-sdk-docker and may be more suitable
+Step #0: for some use cases when interacting with Cloud Source Repositories.
+Step #0: 
+Step #0: For additional information, please visit
+Step #0: https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/git
+Step #0: 
+Step #0:                 ***** END OF NOTICE *****
+Step #0: 
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8"
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Sending build context to Docker daemon  7.168kB
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Step 1/4 : FROM gcr.io/oss-fuzz-base/base-builder-python
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": latest: Pulling from oss-fuzz-base/base-builder-python
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": b549f31133a9: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 008b78875541: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 928200867a41: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 27b7a26b85d4: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": a5e1771809e3: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 70f394e24d88: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 97282320daea: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 084e0bb7df2e: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 5c5100cceda4: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 821b83b191f6: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d81097e72e7d: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 803044b7ee78: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 691ebee164a5: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 60571253bd26: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": f00f7198f32e: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 7053b8449387: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": aafc0234d757: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": cec7ed9d0583: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 6eefca9e564c: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c928f0812557: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 518b6ac13880: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 518cb7ba5e44: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 285afb20e2bf: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": a757778216ab: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 6391c2b1d795: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 842cf51c9a6b: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 2fe8e3b03c01: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 49d5be5f779c: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": fb0270479a6d: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c1e518b6d49d: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d6363374623a: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c54e66c7917f: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 17a7c59b458e: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 8d71bc11c21d: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": ef81f2346731: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": f6feba9aabba: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 35e8dab17623: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d91eb602c335: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 42bdb5a1556e: Pulling fs layer
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 842cf51c9a6b: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 2fe8e3b03c01: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 49d5be5f779c: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 60571253bd26: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": fb0270479a6d: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": f00f7198f32e: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c1e518b6d49d: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d6363374623a: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c54e66c7917f: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 17a7c59b458e: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 518cb7ba5e44: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 8d71bc11c21d: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": ef81f2346731: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 285afb20e2bf: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": f6feba9aabba: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": a757778216ab: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 35e8dab17623: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 518b6ac13880: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d91eb602c335: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 42bdb5a1556e: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 6eefca9e564c: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 6391c2b1d795: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 5c5100cceda4: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 7053b8449387: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 821b83b191f6: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": aafc0234d757: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d81097e72e7d: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 803044b7ee78: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 97282320daea: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 691ebee164a5: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 084e0bb7df2e: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c928f0812557: Waiting
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": a5e1771809e3: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": a5e1771809e3: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 928200867a41: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 928200867a41: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 97282320daea: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 97282320daea: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 084e0bb7df2e: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 084e0bb7df2e: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": b549f31133a9: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": b549f31133a9: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 27b7a26b85d4: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 27b7a26b85d4: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d81097e72e7d: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d81097e72e7d: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 803044b7ee78: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 803044b7ee78: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 691ebee164a5: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 691ebee164a5: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 60571253bd26: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 60571253bd26: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 7053b8449387: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 7053b8449387: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": f00f7198f32e: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": f00f7198f32e: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 821b83b191f6: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 821b83b191f6: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 008b78875541: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 008b78875541: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": cec7ed9d0583: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": cec7ed9d0583: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": aafc0234d757: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": aafc0234d757: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 6eefca9e564c: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 6eefca9e564c: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c928f0812557: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c928f0812557: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 518b6ac13880: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 518b6ac13880: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 518cb7ba5e44: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 518cb7ba5e44: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": a757778216ab: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": a757778216ab: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 285afb20e2bf: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 285afb20e2bf: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 6391c2b1d795: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 6391c2b1d795: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 842cf51c9a6b: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 842cf51c9a6b: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": b549f31133a9: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 2fe8e3b03c01: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 49d5be5f779c: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 49d5be5f779c: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": fb0270479a6d: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": fb0270479a6d: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d6363374623a: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d6363374623a: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c54e66c7917f: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c54e66c7917f: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c1e518b6d49d: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c1e518b6d49d: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 17a7c59b458e: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 17a7c59b458e: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 8d71bc11c21d: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 8d71bc11c21d: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": f6feba9aabba: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": ef81f2346731: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": ef81f2346731: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 5c5100cceda4: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 5c5100cceda4: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 35e8dab17623: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 35e8dab17623: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d91eb602c335: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d91eb602c335: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 42bdb5a1556e: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 42bdb5a1556e: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 70f394e24d88: Verifying Checksum
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 70f394e24d88: Download complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 008b78875541: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 928200867a41: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 27b7a26b85d4: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": a5e1771809e3: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 70f394e24d88: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 97282320daea: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 084e0bb7df2e: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 5c5100cceda4: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 821b83b191f6: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d81097e72e7d: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 803044b7ee78: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 691ebee164a5: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 60571253bd26: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": f00f7198f32e: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 7053b8449387: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": aafc0234d757: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": cec7ed9d0583: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 6eefca9e564c: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c928f0812557: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 518b6ac13880: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 518cb7ba5e44: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 285afb20e2bf: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": a757778216ab: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 6391c2b1d795: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 842cf51c9a6b: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 2fe8e3b03c01: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 49d5be5f779c: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": fb0270479a6d: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c1e518b6d49d: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d6363374623a: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": c54e66c7917f: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 17a7c59b458e: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 8d71bc11c21d: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": ef81f2346731: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": f6feba9aabba: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 35e8dab17623: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": d91eb602c335: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": 42bdb5a1556e: Pull complete
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Digest: sha256:5a22963e0582b5ce74e3dac5c175a321dc0cbe319c2851c370b885588327a055
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-python:latest
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8":  ---> 7795d0926f79
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Step 2/4 : RUN git clone https://github.com/googleapis/python-crc32c
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8":  ---> Running in eb0fd79d4579
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": [91mCloning into 'python-crc32c'...
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": [0mRemoving intermediate container eb0fd79d4579
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8":  ---> 351d587a21b0
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Step 3/4 : COPY build.sh *.py $SRC/
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8":  ---> 3e39490f69bb
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Step 4/4 : WORKDIR python-crc32c
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8":  ---> Running in 61e4393ba502
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Removing intermediate container 61e4393ba502
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8":  ---> 08a415e2a265
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Successfully built 08a415e2a265
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Successfully tagged gcr.io/oss-fuzz/g-py-crc32c:latest
+Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/g-py-crc32c:latest
+Finished Step #1 - "build-4d370382-1539-4f9e-8c6c-715cd2b18ff8"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/g-py-crc32c
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/filevhMyHL
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ python == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/python-crc32c/.git
+Step #2 - "srcmap": + GIT_DIR=/src/python-crc32c
+Step #2 - "srcmap": + cd /src/python-crc32c
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/googleapis/python-crc32c
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=42e5268c7e6077a71e54b342ada4ed2843dbc01e
+Step #2 - "srcmap": + jq_inplace /tmp/filevhMyHL '."/src/python-crc32c" = { type: "git", url: "https://github.com/googleapis/python-crc32c", rev: "42e5268c7e6077a71e54b342ada4ed2843dbc01e" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileuPd0ea
+Step #2 - "srcmap": + cat /tmp/filevhMyHL
+Step #2 - "srcmap": + jq '."/src/python-crc32c" = { type: "git", url: "https://github.com/googleapis/python-crc32c", rev: "42e5268c7e6077a71e54b342ada4ed2843dbc01e" }'
+Step #2 - "srcmap": + mv /tmp/fileuPd0ea /tmp/filevhMyHL
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/filevhMyHL
+Step #2 - "srcmap": + rm /tmp/filevhMyHL
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/python-crc32c": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/googleapis/python-crc32c",
+Step #2 - "srcmap":     "rev": "42e5268c7e6077a71e54b342ada4ed2843dbc01e"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fno-sanitize=function,leak,vptr,
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -fno-sanitize=function,leak,vptr
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + git submodule update --init --recursive
+Step #3 - "compile-libfuzzer-address-x86_64": Submodule 'crc32c' (https://github.com/google/crc32c) registered for path 'google_crc32c'
+Step #3 - "compile-libfuzzer-address-x86_64": Cloning into '/src/python-crc32c/google_crc32c'...
+Step #3 - "compile-libfuzzer-address-x86_64": Submodule path 'google_crc32c': checked out '02e65f4fd3065d27b2e29324800ca6d04df16126'
+Step #3 - "compile-libfuzzer-address-x86_64": Submodule 'third_party/benchmark' (https://github.com/google/benchmark.git) registered for path 'google_crc32c/third_party/benchmark'
+Step #3 - "compile-libfuzzer-address-x86_64": Submodule 'third_party/glog' (https://github.com/google/glog.git) registered for path 'google_crc32c/third_party/glog'
+Step #3 - "compile-libfuzzer-address-x86_64": Submodule 'third_party/googletest' (https://github.com/google/googletest.git) registered for path 'google_crc32c/third_party/googletest'
+Step #3 - "compile-libfuzzer-address-x86_64": Cloning into '/src/python-crc32c/google_crc32c/third_party/benchmark'...
+Step #3 - "compile-libfuzzer-address-x86_64": Cloning into '/src/python-crc32c/google_crc32c/third_party/glog'...
+Step #3 - "compile-libfuzzer-address-x86_64": Cloning into '/src/python-crc32c/google_crc32c/third_party/googletest'...
+Step #3 - "compile-libfuzzer-address-x86_64": Submodule path 'google_crc32c/third_party/benchmark': checked out 'e991355c02b93fe17713efe04cbc2e278e00fdbd'
+Step #3 - "compile-libfuzzer-address-x86_64": Submodule path 'google_crc32c/third_party/glog': checked out '56523194b3ce1212414c93d55f31832e94677f55'
+Step #3 - "compile-libfuzzer-address-x86_64": Submodule path 'google_crc32c/third_party/googletest': checked out '3b49be074d5c1340eeb447e6a8e78427051e675a'
+Step #3 - "compile-libfuzzer-address-x86_64": + mkdir usr
+Step #3 - "compile-libfuzzer-address-x86_64": ++ pwd
+Step #3 - "compile-libfuzzer-address-x86_64": + export CRC32C_INSTALL_PREFIX=/src/python-crc32c/usr
+Step #3 - "compile-libfuzzer-address-x86_64": + CRC32C_INSTALL_PREFIX=/src/python-crc32c/usr
+Step #3 - "compile-libfuzzer-address-x86_64": + mkdir google_crc32c/build
+Step #3 - "compile-libfuzzer-address-x86_64": + cd google_crc32c/build
+Step #3 - "compile-libfuzzer-address-x86_64": + cmake -DCMAKE_BUILD_TYPE=Release -DCRC32C_BUILD_TESTS=no -DCRC32C_BUILD_BENCHMARKS=no -DBUILD_SHARED_LIBS=yes -DCMAKE_INSTALL_PREFIX:PATH=/src/python-crc32c/usr ../
+Step #3 - "compile-libfuzzer-address-x86_64": [0mCMake Deprecation Warning at CMakeLists.txt:5 (cmake_minimum_required):
+Step #3 - "compile-libfuzzer-address-x86_64":   Compatibility with CMake < 3.5 will be removed from a future version of
+Step #3 - "compile-libfuzzer-address-x86_64":   CMake.
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64":   Update the VERSION argument <min> value or use a ...<max> suffix to tell
+Step #3 - "compile-libfuzzer-address-x86_64":   CMake that the project does not need compatibility with older versions.
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m
+Step #3 - "compile-libfuzzer-address-x86_64": -- The C compiler identification is Clang 22.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": -- The CXX compiler identification is Clang 22.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting C compiler ABI info
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting C compiler ABI info - done
+Step #3 - "compile-libfuzzer-address-x86_64": -- Check for working C compiler: /usr/local/bin/clang - skipped
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting C compile features
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting C compile features - done
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting CXX compiler ABI info
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting CXX compiler ABI info - done
+Step #3 - "compile-libfuzzer-address-x86_64": -- Check for working CXX compiler: /usr/local/bin/clang++ - skipped
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting CXX compile features
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting CXX compile features - done
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test CRC32C_HAVE_NO_DEPRECATED
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test CRC32C_HAVE_NO_DEPRECATED - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test CRC32C_HAVE_NO_SIGN_COMPARE
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test CRC32C_HAVE_NO_SIGN_COMPARE - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test CRC32C_HAVE_NO_UNUSED_PARAMETER
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test CRC32C_HAVE_NO_UNUSED_PARAMETER - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test CRC32C_HAVE_NO_MISSING_FIELD_INITIALIZERS
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test CRC32C_HAVE_NO_MISSING_FIELD_INITIALIZERS - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_BUILTIN_PREFETCH
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_BUILTIN_PREFETCH - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_MM_PREFETCH
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_MM_PREFETCH - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_SSE42
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_SSE42 - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_ARM64_CRC32C
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_ARM64_CRC32C - Failed
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_STRONG_GETAUXVAL
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_STRONG_GETAUXVAL - Failed
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_WEAK_GETAUXVAL
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_WEAK_GETAUXVAL - Success
+Step #3 - "compile-libfuzzer-address-x86_64": [0mCMake Deprecation Warning at third_party/glog/CMakeLists.txt:1 (cmake_minimum_required):
+Step #3 - "compile-libfuzzer-address-x86_64":   Compatibility with CMake < 3.5 will be removed from a future version of
+Step #3 - "compile-libfuzzer-address-x86_64":   CMake.
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64":   Update the VERSION argument <min> value or use a ...<max> suffix to tell
+Step #3 - "compile-libfuzzer-address-x86_64":   CMake that the project does not need compatibility with older versions.
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0mCMake Deprecation Warning at third_party/glog/cmake/GetCacheVariables.cmake:2 (cmake_policy):
+Step #3 - "compile-libfuzzer-address-x86_64":   Compatibility with CMake < 3.5 will be removed from a future version of
+Step #3 - "compile-libfuzzer-address-x86_64":   CMake.
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64":   Update the VERSION argument <min> value or use a ...<max> suffix to tell
+Step #3 - "compile-libfuzzer-address-x86_64":   CMake that the project does not need compatibility with older versions.
+Step #3 - "compile-libfuzzer-address-x86_64": Call Stack (most recent call first):
+Step #3 - "compile-libfuzzer-address-x86_64":   third_party/glog/CMakeLists.txt:66 (include)
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m
+Step #3 - "compile-libfuzzer-address-x86_64": -- Could NOT find GTest (missing: GTEST_LIBRARY GTEST_INCLUDE_DIR GTEST_MAIN_LIBRARY) 
+Step #3 - "compile-libfuzzer-address-x86_64": [33mCMake Warning at third_party/glog/CMakeLists.txt:79 (find_package):
+Step #3 - "compile-libfuzzer-address-x86_64":   By not providing "Findgflags.cmake" in CMAKE_MODULE_PATH this project has
+Step #3 - "compile-libfuzzer-address-x86_64":   asked CMake to find a package configuration file provided by "gflags", but
+Step #3 - "compile-libfuzzer-address-x86_64":   CMake did not find one.
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64":   Could not find a package configuration file provided by "gflags" (requested
+Step #3 - "compile-libfuzzer-address-x86_64":   version 2.2.0) with any of the following names:
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64":     gflagsConfig.cmake
+Step #3 - "compile-libfuzzer-address-x86_64":     gflags-config.cmake
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64":   Add the installation prefix of "gflags" to CMAKE_PREFIX_PATH or set
+Step #3 - "compile-libfuzzer-address-x86_64":   "gflags_DIR" to a directory containing one of the above files.  If "gflags"
+Step #3 - "compile-libfuzzer-address-x86_64":   provides a separate development package or SDK, be sure it has been
+Step #3 - "compile-libfuzzer-address-x86_64":   installed.
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Found Threads: TRUE
+Step #3 - "compile-libfuzzer-address-x86_64": -- Could NOT find Unwind (missing: Unwind_INCLUDE_DIR Unwind_LIBRARY Unwind_PLATFORM_LIBRARY) 
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include dlfcn.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include dlfcn.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include execinfo.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include execinfo.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include glob.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include glob.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include inttypes.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include inttypes.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include memory.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include memory.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include pwd.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include pwd.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include stdint.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include stdint.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include strings.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include strings.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/stat.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/stat.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/syscall.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/syscall.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/time.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/time.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/types.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/types.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/utsname.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/utsname.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/wait.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include sys/wait.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include syscall.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include syscall.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include syslog.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include syslog.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include ucontext.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include ucontext.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include unistd.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include unistd.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include ext/hash_map
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include ext/hash_map - not found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include ext/hash_set
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include ext/hash_set - not found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include ext/slist
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include ext/slist - not found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include tr1/unordered_map
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include tr1/unordered_map - not found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include tr1/unordered_set
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include tr1/unordered_set - not found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include unordered_map
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include unordered_map - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include unordered_set
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include unordered_set - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include stddef.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for C++ include stddef.h - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Check size of unsigned __int16
+Step #3 - "compile-libfuzzer-address-x86_64": -- Check size of unsigned __int16 - failed
+Step #3 - "compile-libfuzzer-address-x86_64": -- Check size of u_int16_t
+Step #3 - "compile-libfuzzer-address-x86_64": -- Check size of u_int16_t - done
+Step #3 - "compile-libfuzzer-address-x86_64": -- Check size of uint16_t
+Step #3 - "compile-libfuzzer-address-x86_64": -- Check size of uint16_t - done
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for dladdr
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for dladdr - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for fcntl
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for fcntl - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for pread
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for pread - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for pwrite
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for pwrite - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for sigaction
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for sigaction - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for sigaltstack
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for sigaltstack - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_NO_DEPRECATED
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_NO_DEPRECATED - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_NO_UNNAMED_TYPE_TEMPLATE_ARGS
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_NO_UNNAMED_TYPE_TEMPLATE_ARGS - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for pthread_threadid_np
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for pthread_threadid_np - not found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for snprintf
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for snprintf - found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for UnDecorateSymbolName in dbghelp
+Step #3 - "compile-libfuzzer-address-x86_64": -- Looking for UnDecorateSymbolName in dbghelp - not found
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___ATTRIBUTE__
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___ATTRIBUTE__ - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___ATTRIBUTE__VISIBILITY_DEFAULT
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___ATTRIBUTE__VISIBILITY_DEFAULT - Failed
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___ATTRIBUTE__VISIBILITY_HIDDEN
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___ATTRIBUTE__VISIBILITY_HIDDEN - Failed
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___BUILTIN_EXPECT
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___BUILTIN_EXPECT - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___SYNC_VAL_COMPARE_AND_SWAP
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___SYNC_VAL_COMPARE_AND_SWAP - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_RWLOCK
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_RWLOCK - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___DECLSPEC
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE___DECLSPEC - Failed
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test STL_NO_NAMESPACE
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test STL_NO_NAMESPACE - Failed
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test STL_STD_NAMESPACE
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test STL_STD_NAMESPACE - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_USING_OPERATOR
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_USING_OPERATOR - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_NAMESPACES
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_NAMESPACES - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_GCC_TLS
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_GCC_TLS - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_MSVC_TLS
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_MSVC_TLS - Failed
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_CXX11_TLS
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_CXX11_TLS - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_ALIGNED_STORAGE
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_ALIGNED_STORAGE - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_CXX11_ATOMIC
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_CXX11_ATOMIC - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_CXX11_CONSTEXPR
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_CXX11_CONSTEXPR - Failed
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_CXX11_CHRONO
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_CXX11_CHRONO - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_CXX11_NULLPTR_T
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_CXX11_NULLPTR_T - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_LOCALTIME_R
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test HAVE_LOCALTIME_R - Failed
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test COMPILER_HAS_DEPRECATED_ATTR
+Step #3 - "compile-libfuzzer-address-x86_64": -- Performing Test COMPILER_HAS_DEPRECATED_ATTR - Success
+Step #3 - "compile-libfuzzer-address-x86_64": -- Configuring done (19.1s)
+Step #3 - "compile-libfuzzer-address-x86_64": -- Generating done (0.0s)
+Step #3 - "compile-libfuzzer-address-x86_64": -- Build files have been written to: /src/python-crc32c/google_crc32c/build
+Step #3 - "compile-libfuzzer-address-x86_64": + make all install
+Step #3 - "compile-libfuzzer-address-x86_64": [ 20%] [32mBuilding CXX object CMakeFiles/crc32c_arm64.dir/src/crc32c_arm64.cc.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 20%] Built target crc32c_arm64
+Step #3 - "compile-libfuzzer-address-x86_64": [ 40%] [32mBuilding CXX object CMakeFiles/crc32c_sse42.dir/src/crc32c_sse42.cc.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 40%] Built target crc32c_sse42
+Step #3 - "compile-libfuzzer-address-x86_64": [ 60%] [32mBuilding CXX object CMakeFiles/crc32c.dir/src/crc32c_portable.cc.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 80%] [32mBuilding CXX object CMakeFiles/crc32c.dir/src/crc32c.cc.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [100%] [32m[1mLinking CXX shared library libcrc32c.so[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [100%] Built target crc32c
+Step #3 - "compile-libfuzzer-address-x86_64": [36mInstall the project...[0m
+Step #3 - "compile-libfuzzer-address-x86_64": -- Install configuration: "Release"
+Step #3 - "compile-libfuzzer-address-x86_64": -- Installing: /src/python-crc32c/usr/lib/libcrc32c.so.1.1.0
+Step #3 - "compile-libfuzzer-address-x86_64": -- Installing: /src/python-crc32c/usr/lib/libcrc32c.so.1
+Step #3 - "compile-libfuzzer-address-x86_64": -- Installing: /src/python-crc32c/usr/lib/libcrc32c.so
+Step #3 - "compile-libfuzzer-address-x86_64": -- Installing: /src/python-crc32c/usr/include/crc32c/crc32c.h
+Step #3 - "compile-libfuzzer-address-x86_64": -- Installing: /src/python-crc32c/usr/lib/cmake/Crc32c/Crc32cTargets.cmake
+Step #3 - "compile-libfuzzer-address-x86_64": -- Installing: /src/python-crc32c/usr/lib/cmake/Crc32c/Crc32cTargets-release.cmake
+Step #3 - "compile-libfuzzer-address-x86_64": -- Installing: /src/python-crc32c/usr/lib/cmake/Crc32c/Crc32cConfig.cmake
+Step #3 - "compile-libfuzzer-address-x86_64": -- Installing: /src/python-crc32c/usr/lib/cmake/Crc32c/Crc32cConfigVersion.cmake
+Step #3 - "compile-libfuzzer-address-x86_64": + cd ../../
+Step #3 - "compile-libfuzzer-address-x86_64": ++ pwd
+Step #3 - "compile-libfuzzer-address-x86_64": ++ pwd
+Step #3 - "compile-libfuzzer-address-x86_64": ++ pwd
+Step #3 - "compile-libfuzzer-address-x86_64": + python3 setup.py build_ext --include-dirs=/src/python-crc32c/usr/include --library-dirs=/src/python-crc32c/usr/lib --rpath=/src/python-crc32c/usr/lib
+Step #3 - "compile-libfuzzer-address-x86_64": #### using local install of 'crc32c': '/src/python-crc32c/usr'
+Step #3 - "compile-libfuzzer-address-x86_64": ##### sources: ['src/google_crc32c/_crc32c.c']
+Step #3 - "compile-libfuzzer-address-x86_64": ##### module kwargs: {'include_dirs': ['/src/python-crc32c/usr/include'], 'library_dirs': ['/src/python-crc32c/usr/lib', '/src/python-crc32c/usr/lib64'], 'runtime_library_dirs': ['/src/python-crc32c/usr/lib', '/src/python-crc32c/usr/lib64']}
+Step #3 - "compile-libfuzzer-address-x86_64": configuration error: `project.license` must be valid exactly by one definition (2 matches found):
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64":     - keys:
+Step #3 - "compile-libfuzzer-address-x86_64":         'file': {type: string}
+Step #3 - "compile-libfuzzer-address-x86_64":       required: ['file']
+Step #3 - "compile-libfuzzer-address-x86_64":     - keys:
+Step #3 - "compile-libfuzzer-address-x86_64":         'text': {type: string}
+Step #3 - "compile-libfuzzer-address-x86_64":       required: ['text']
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": DESCRIPTION:
+Step #3 - "compile-libfuzzer-address-x86_64":     `Project license <https://peps.python.org/pep-0621/#license>`_.
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": GIVEN VALUE:
+Step #3 - "compile-libfuzzer-address-x86_64":     "Apache-2.0"
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": OFFENDING RULE: 'oneOf'
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": DEFINITION:
+Step #3 - "compile-libfuzzer-address-x86_64":     {
+Step #3 - "compile-libfuzzer-address-x86_64":         "oneOf": [
+Step #3 - "compile-libfuzzer-address-x86_64":             {
+Step #3 - "compile-libfuzzer-address-x86_64":                 "properties": {
+Step #3 - "compile-libfuzzer-address-x86_64":                     "file": {
+Step #3 - "compile-libfuzzer-address-x86_64":                         "type": "string",
+Step #3 - "compile-libfuzzer-address-x86_64":                         "$$description": [
+Step #3 - "compile-libfuzzer-address-x86_64":                             "Relative path to the file (UTF-8) which contains the license for the",
+Step #3 - "compile-libfuzzer-address-x86_64":                             "project."
+Step #3 - "compile-libfuzzer-address-x86_64":                         ]
+Step #3 - "compile-libfuzzer-address-x86_64":                     }
+Step #3 - "compile-libfuzzer-address-x86_64":                 },
+Step #3 - "compile-libfuzzer-address-x86_64":                 "required": [
+Step #3 - "compile-libfuzzer-address-x86_64":                     "file"
+Step #3 - "compile-libfuzzer-address-x86_64":                 ]
+Step #3 - "compile-libfuzzer-address-x86_64":             },
+Step #3 - "compile-libfuzzer-address-x86_64":             {
+Step #3 - "compile-libfuzzer-address-x86_64":                 "properties": {
+Step #3 - "compile-libfuzzer-address-x86_64":                     "text": {
+Step #3 - "compile-libfuzzer-address-x86_64":                         "type": "string",
+Step #3 - "compile-libfuzzer-address-x86_64":                         "$$description": [
+Step #3 - "compile-libfuzzer-address-x86_64":                             "The license of the project whose meaning is that of the",
+Step #3 - "compile-libfuzzer-address-x86_64":                             "`License field from the core metadata",
+Step #3 - "compile-libfuzzer-address-x86_64":                             "<https://packaging.python.org/specifications/core-metadata/#license>`_."
+Step #3 - "compile-libfuzzer-address-x86_64":                         ]
+Step #3 - "compile-libfuzzer-address-x86_64":                     }
+Step #3 - "compile-libfuzzer-address-x86_64":                 },
+Step #3 - "compile-libfuzzer-address-x86_64":                 "required": [
+Step #3 - "compile-libfuzzer-address-x86_64":                     "text"
+Step #3 - "compile-libfuzzer-address-x86_64":                 ]
+Step #3 - "compile-libfuzzer-address-x86_64":             }
+Step #3 - "compile-libfuzzer-address-x86_64":         ]
+Step #3 - "compile-libfuzzer-address-x86_64":     }
+Step #3 - "compile-libfuzzer-address-x86_64": Traceback (most recent call last):
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/src/python-crc32c/setup.py", line 117, in <module>
+Step #3 - "compile-libfuzzer-address-x86_64":     build_c_extension()
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/src/python-crc32c/setup.py", line 104, in build_c_extension
+Step #3 - "compile-libfuzzer-address-x86_64":     setuptools.setup(
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/__init__.py", line 108, in setup
+Step #3 - "compile-libfuzzer-address-x86_64":     return distutils.core.setup(**attrs)
+Step #3 - "compile-libfuzzer-address-x86_64":            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/_distutils/core.py", line 158, in setup
+Step #3 - "compile-libfuzzer-address-x86_64":     dist.parse_config_files()
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/dist.py", line 603, in parse_config_files
+Step #3 - "compile-libfuzzer-address-x86_64":     pyprojecttoml.apply_configuration(self, filename, ignore_option_errors)
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/config/pyprojecttoml.py", line 70, in apply_configuration
+Step #3 - "compile-libfuzzer-address-x86_64":     config = read_configuration(filepath, True, ignore_option_errors, dist)
+Step #3 - "compile-libfuzzer-address-x86_64":              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/config/pyprojecttoml.py", line 135, in read_configuration
+Step #3 - "compile-libfuzzer-address-x86_64":     validate(subset, filepath)
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/config/pyprojecttoml.py", line 59, in validate
+Step #3 - "compile-libfuzzer-address-x86_64":     raise ValueError(f"{error}\n{summary}") from None
+Step #3 - "compile-libfuzzer-address-x86_64": ValueError: invalid pyproject.toml config: `project.license`.
+Step #3 - "compile-libfuzzer-address-x86_64": configuration error: `project.license` must be valid exactly by one definition (2 matches found):
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64":     - keys:
+Step #3 - "compile-libfuzzer-address-x86_64":         'file': {type: string}
+Step #3 - "compile-libfuzzer-address-x86_64":       required: ['file']
+Step #3 - "compile-libfuzzer-address-x86_64":     - keys:
+Step #3 - "compile-libfuzzer-address-x86_64":         'text': {type: string}
+Step #3 - "compile-libfuzzer-address-x86_64":       required: ['text']
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image g-py-crc32c\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 g-py-crc32c\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

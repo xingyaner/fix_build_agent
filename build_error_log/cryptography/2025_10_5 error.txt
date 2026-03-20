@@ -1,0 +1,761 @@
+starting build "8ce33fda-6155-43b4-b4da-0ce92b3fbb4f"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd"
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Sending build context to Docker daemon  16.38kB
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 1/11 : FROM gcr.io/oss-fuzz-base/base-builder-python
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": latest: Pulling from oss-fuzz-base/base-builder-python
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b549f31133a9: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": f9108208bba7: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 6ea475a41b2d: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e5fef3e2af01: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7c2b2fa04aa8: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 85618da4b503: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e5fef3e2af01: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": cb7b2a5fe163: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7f6a5b0379d6: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0914b70046dd: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e7da350ff694: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 85618da4b503: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7f6a5b0379d6: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0de45df73449: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b7bad838c7ff: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e6b2068c9ed0: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4faaa04adad0: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0914b70046dd: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": cb7b2a5fe163: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e7da350ff694: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b7bad838c7ff: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0de45df73449: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e61d56928c49: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4faaa04adad0: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e6b2068c9ed0: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 41a899398fa6: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e61d56928c49: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4d9b6833d43f: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4d9b6833d43f: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 5fc76afe3d8e: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 5fc76afe3d8e: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7c2b2fa04aa8: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 24ebf1a2133e: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 91fc6ff39424: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 866e76707922: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 06f4c909ad06: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 75bd79b21fde: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": a5d339d9c9f1: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4a854cbf553b: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 1a9d1b67aa69: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 75bd79b21fde: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4a854cbf553b: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 91fc6ff39424: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": a5d339d9c9f1: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 06f4c909ad06: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 1a9d1b67aa69: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 93f7318fbad4: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": c8022838a4c8: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 93f7318fbad4: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": c8022838a4c8: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b08567086eb7: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 36a53ee643c4: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b08567086eb7: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 51a1fa50b1b7: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": fd28c05f8f09: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0c59ed322e35: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": d5fd17987c78: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7c5ef2b07b5b: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 09544f1545db: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 3f139e052803: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 687280b5a649: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 8b15f37203cd: Pulling fs layer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": fd28c05f8f09: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0c59ed322e35: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 51a1fa50b1b7: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": d5fd17987c78: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 687280b5a649: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7c5ef2b07b5b: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 3f139e052803: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 8b15f37203cd: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 09544f1545db: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 866e76707922: Waiting
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 6ea475a41b2d: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e5fef3e2af01: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e5fef3e2af01: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7c2b2fa04aa8: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b549f31133a9: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b549f31133a9: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": f9108208bba7: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": f9108208bba7: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": cb7b2a5fe163: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": cb7b2a5fe163: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7f6a5b0379d6: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e7da350ff694: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e7da350ff694: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b549f31133a9: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0de45df73449: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0de45df73449: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b7bad838c7ff: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b7bad838c7ff: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e6b2068c9ed0: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e6b2068c9ed0: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4faaa04adad0: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4faaa04adad0: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0914b70046dd: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0914b70046dd: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 41a899398fa6: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e61d56928c49: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e61d56928c49: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4d9b6833d43f: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4d9b6833d43f: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 5fc76afe3d8e: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 5fc76afe3d8e: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 24ebf1a2133e: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 24ebf1a2133e: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 91fc6ff39424: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 91fc6ff39424: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 866e76707922: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 866e76707922: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 06f4c909ad06: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 06f4c909ad06: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": a5d339d9c9f1: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": a5d339d9c9f1: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 75bd79b21fde: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 75bd79b21fde: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4a854cbf553b: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4a854cbf553b: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 1a9d1b67aa69: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 93f7318fbad4: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": c8022838a4c8: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": c8022838a4c8: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b08567086eb7: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b08567086eb7: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 36a53ee643c4: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 36a53ee643c4: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 51a1fa50b1b7: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 51a1fa50b1b7: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 85618da4b503: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 85618da4b503: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": fd28c05f8f09: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": fd28c05f8f09: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0c59ed322e35: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": f9108208bba7: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": d5fd17987c78: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 09544f1545db: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7c5ef2b07b5b: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 6ea475a41b2d: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 3f139e052803: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 3f139e052803: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 687280b5a649: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 687280b5a649: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 8b15f37203cd: Verifying Checksum
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 8b15f37203cd: Download complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e5fef3e2af01: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7c2b2fa04aa8: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 85618da4b503: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": cb7b2a5fe163: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7f6a5b0379d6: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0914b70046dd: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e7da350ff694: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0de45df73449: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b7bad838c7ff: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e6b2068c9ed0: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4faaa04adad0: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": e61d56928c49: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 41a899398fa6: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4d9b6833d43f: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 5fc76afe3d8e: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 24ebf1a2133e: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 91fc6ff39424: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 866e76707922: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 06f4c909ad06: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 75bd79b21fde: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": a5d339d9c9f1: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 4a854cbf553b: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 1a9d1b67aa69: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 93f7318fbad4: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": c8022838a4c8: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": b08567086eb7: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 36a53ee643c4: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 51a1fa50b1b7: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": fd28c05f8f09: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0c59ed322e35: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": d5fd17987c78: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 7c5ef2b07b5b: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 09544f1545db: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 3f139e052803: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 687280b5a649: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 8b15f37203cd: Pull complete
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Digest: sha256:76fc4d8513691cfd7031464348a8fe46810c243c04344fe6211363bcdd6d245e
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-python:latest
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> 7fe85e0a7587
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 2/11 : RUN git clone https://github.com/pyca/cryptography
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> Running in 5672e8364178
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [91mCloning into 'cryptography'...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0mRemoving intermediate container 5672e8364178
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> 11f1078c9a31
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 3/11 : RUN apt-get update
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> Running in 6f8b365537f7
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Fetched 383 kB in 1s (386 kB/s)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Reading package lists...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Removing intermediate container 6f8b365537f7
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> 1e0d808d5e18
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 4/11 : RUN apt-get install build-essential libssl-dev libffi-dev pkg-config python3-dev cargo -y
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> Running in 09d419728d44
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Reading package lists...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Building dependency tree...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Reading state information...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": build-essential is already the newest version (12.8ubuntu1.1).
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": libssl-dev is already the newest version (1.1.1f-1ubuntu2.24).
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": The following packages were automatically installed and are no longer required:
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   autotools-dev libsigsegv2 m4
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Use 'apt autoremove' to remove them.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": The following additional packages will be installed:
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   file libexpat1-dev libglib2.0-0 libglib2.0-data libicu66 libmagic-mgc
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   libmagic1 libmpdec2 libpython3-dev libpython3-stdlib libpython3.8
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   libpython3.8-dev libpython3.8-minimal libpython3.8-stdlib libssh2-1
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   libstd-rust-1.75 libstd-rust-dev libxml2 mime-support python3
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   python3-distutils python3-lib2to3 python3-minimal python3.8 python3.8-dev
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   python3.8-minimal rustc shared-mime-info xdg-user-dirs zlib1g-dev
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Suggested packages:
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   cargo-doc python3-doc python3-tk python3-venv python3.8-venv python3.8-doc
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   binfmt-support llvm-17 lld-17 clang-17
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": The following NEW packages will be installed:
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   cargo file libexpat1-dev libffi-dev libglib2.0-0 libglib2.0-data libicu66
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   libmagic-mgc libmagic1 libmpdec2 libpython3-dev libpython3-stdlib
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   libpython3.8 libpython3.8-dev libpython3.8-minimal libpython3.8-stdlib
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   libssh2-1 libstd-rust-1.75 libstd-rust-dev libxml2 mime-support pkg-config
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   python3 python3-dev python3-distutils python3-lib2to3 python3-minimal
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   python3.8 python3.8-dev python3.8-minimal rustc shared-mime-info
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   xdg-user-dirs zlib1g-dev
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 0 upgraded, 34 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Need to get 111 MB of archives.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": After this operation, 491 MB of additional disk space will be used.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpython3.8-minimal amd64 3.8.10-0ubuntu1~20.04.18 [721 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3.8-minimal amd64 3.8.10-0ubuntu1~20.04.18 [1900 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 python3-minimal amd64 3.8.2-0ubuntu2 [23.6 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:4 http://archive.ubuntu.com/ubuntu focal/main amd64 mime-support all 3.64ubuntu1 [30.6 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:5 http://archive.ubuntu.com/ubuntu focal/main amd64 libmpdec2 amd64 2.4.2-3 [81.1 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpython3.8-stdlib amd64 3.8.10-0ubuntu1~20.04.18 [1676 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3.8 amd64 3.8.10-0ubuntu1~20.04.18 [387 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:8 http://archive.ubuntu.com/ubuntu focal/main amd64 libpython3-stdlib amd64 3.8.2-0ubuntu2 [7068 B]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 python3 amd64 3.8.2-0ubuntu2 [47.6 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:13 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-0 amd64 2.64.6-1~ubuntu20.04.9 [1290 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-data all 2.64.6-1~ubuntu20.04.9 [5836 B]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:15 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:16 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:17 http://archive.ubuntu.com/ubuntu focal/main amd64 shared-mime-info amd64 1.15-1 [430 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:18 http://archive.ubuntu.com/ubuntu focal/main amd64 xdg-user-dirs amd64 0.17-2ubuntu1 [48.3 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:19 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libexpat1-dev amd64 2.2.9-1ubuntu0.8 [117 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:20 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpython3.8 amd64 3.8.10-0ubuntu1~20.04.18 [1625 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:21 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libpython3.8-dev amd64 3.8.10-0ubuntu1~20.04.18 [3950 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:22 http://archive.ubuntu.com/ubuntu focal/main amd64 libpython3-dev amd64 3.8.2-0ubuntu2 [7236 B]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:23 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libssh2-1 amd64 1.8.0-2.1ubuntu0.1 [75.5 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:24 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libstd-rust-1.75 amd64 1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04 [42.5 MB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:25 http://archive.ubuntu.com/ubuntu focal/main amd64 pkg-config amd64 0.29.1-0ubuntu4 [45.5 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:26 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 zlib1g-dev amd64 1:1.2.11.dfsg-2ubuntu1.5 [155 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:27 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3.8-dev amd64 3.8.10-0ubuntu1~20.04.18 [514 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:28 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3-lib2to3 all 3.8.10-0ubuntu1~20.04 [76.3 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:29 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 python3-distutils all 3.8.10-0ubuntu1~20.04 [141 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:30 http://archive.ubuntu.com/ubuntu focal/main amd64 python3-dev amd64 3.8.2-0ubuntu2 [1212 B]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:31 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 libstd-rust-dev amd64 1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04 [36.8 MB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:32 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 rustc amd64 1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04 [3175 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:33 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 cargo amd64 1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04 [6110 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Get:34 http://archive.ubuntu.com/ubuntu focal/main amd64 libffi-dev amd64 3.3-4 [57.0 kB]
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0mFetched 111 MB in 2s (71.1 MB/s)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libpython3.8-minimal:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../libpython3.8-minimal_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libpython3.8-minimal:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package python3.8-minimal.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../python3.8-minimal_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking python3.8-minimal (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libpython3.8-minimal:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up python3.8-minimal (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package python3-minimal.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17766 files and directories currently installed.)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../0-python3-minimal_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking python3-minimal (3.8.2-0ubuntu2) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package mime-support.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../1-mime-support_3.64ubuntu1_all.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking mime-support (3.64ubuntu1) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libmpdec2:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../2-libmpdec2_2.4.2-3_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libmpdec2:amd64 (2.4.2-3) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libpython3.8-stdlib:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../3-libpython3.8-stdlib_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libpython3.8-stdlib:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package python3.8.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../4-python3.8_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking python3.8 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libpython3-stdlib:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../5-libpython3-stdlib_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libpython3-stdlib:amd64 (3.8.2-0ubuntu2) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up python3-minimal (3.8.2-0ubuntu2) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package python3.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 18168 files and directories currently installed.)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../00-python3_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking python3 (3.8.2-0ubuntu2) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libmagic-mgc.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../01-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libmagic1:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../02-libmagic1_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package file.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../03-file_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking file (1:5.38-4) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libglib2.0-0:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../04-libglib2.0-0_2.64.6-1~ubuntu20.04.9_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libglib2.0-data.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../05-libglib2.0-data_2.64.6-1~ubuntu20.04.9_all.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libicu66:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../06-libicu66_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libxml2:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../07-libxml2_2.9.10+dfsg-5ubuntu0.20.04.10_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package shared-mime-info.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../08-shared-mime-info_1.15-1_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking shared-mime-info (1.15-1) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package xdg-user-dirs.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../09-xdg-user-dirs_0.17-2ubuntu1_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libexpat1-dev:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../10-libexpat1-dev_2.2.9-1ubuntu0.8_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libexpat1-dev:amd64 (2.2.9-1ubuntu0.8) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libpython3.8:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../11-libpython3.8_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libpython3.8:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libpython3.8-dev:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../12-libpython3.8-dev_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libpython3.8-dev:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libpython3-dev:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../13-libpython3-dev_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libpython3-dev:amd64 (3.8.2-0ubuntu2) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libssh2-1:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../14-libssh2-1_1.8.0-2.1ubuntu0.1_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libssh2-1:amd64 (1.8.0-2.1ubuntu0.1) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libstd-rust-1.75:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../15-libstd-rust-1.75_1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libstd-rust-1.75:amd64 (1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package pkg-config.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../16-pkg-config_0.29.1-0ubuntu4_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package zlib1g-dev:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../17-zlib1g-dev_1%3a1.2.11.dfsg-2ubuntu1.5_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package python3.8-dev.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../18-python3.8-dev_3.8.10-0ubuntu1~20.04.18_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking python3.8-dev (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package python3-lib2to3.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../19-python3-lib2to3_3.8.10-0ubuntu1~20.04_all.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking python3-lib2to3 (3.8.10-0ubuntu1~20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package python3-distutils.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../20-python3-distutils_3.8.10-0ubuntu1~20.04_all.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking python3-distutils (3.8.10-0ubuntu1~20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package python3-dev.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../21-python3-dev_3.8.2-0ubuntu2_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking python3-dev (3.8.2-0ubuntu2) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libstd-rust-dev:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../22-libstd-rust-dev_1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libstd-rust-dev:amd64 (1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package rustc.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../23-rustc_1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking rustc (1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package cargo.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../24-cargo_1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking cargo (1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Selecting previously unselected package libffi-dev:amd64.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Preparing to unpack .../25-libffi-dev_3.3-4_amd64.deb ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Unpacking libffi-dev:amd64 (3.3-4) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up mime-support (3.64ubuntu1) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": No schema files found: doing nothing.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libstd-rust-1.75:amd64 (1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up file (1:5.38-4) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libffi-dev:amd64 (3.3-4) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libstd-rust-dev:amd64 (1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libexpat1-dev:amd64 (2.2.9-1ubuntu0.8) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up zlib1g-dev:amd64 (1:1.2.11.dfsg-2ubuntu1.5) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up rustc (1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libssh2-1:amd64 (1.8.0-2.1ubuntu0.1) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libmpdec2:amd64 (2.4.2-3) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libpython3.8-stdlib:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up python3.8 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libpython3-stdlib:amd64 (3.8.2-0ubuntu2) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up python3 (3.8.2-0ubuntu2) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up cargo (1.75.0+dfsg0ubuntu1~bpo0-0ubuntu0.20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libpython3.8:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up shared-mime-info (1.15-1) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up python3-lib2to3 (3.8.10-0ubuntu1~20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up python3-distutils (3.8.10-0ubuntu1~20.04) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libpython3.8-dev:amd64 (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up python3.8-dev (3.8.10-0ubuntu1~20.04.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up libpython3-dev:amd64 (3.8.2-0ubuntu2) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Setting up python3-dev (3.8.2-0ubuntu2) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Removing intermediate container 09d419728d44
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> 696d45d8b09c
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 5/11 : RUN pip3 install --upgrade pip
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> Running in 22e1f1ca4cb2
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Requirement already satisfied: pip in /usr/local/lib/python3.11/site-packages (25.2)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0mRemoving intermediate container 22e1f1ca4cb2
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> 04aaf21879e3
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 6/11 : RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> Running in 37e89d83d93f
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [91minfo: downloading installer
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91mwarn: It looks like you have an existing installation of Rust at:
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": warn: /usr/local/bin
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": warn: It is recommended that rustup be the primary Rust installation.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": warn: Otherwise you may have confusion unless you are careful with your PATH.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": warn: If you are sure that you want both rustup and your already installed Rust
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": warn: then please reply `y' or `yes' or set RUSTUP_INIT_SKIP_PATH_CHECK to yes
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": warn: or pass `-y' to ignore all ignorable checks.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": error: cannot install while Rust is installed
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": warn: continuing (because the -y flag is set and the error is ignorable)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: profile set to 'default'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": info: default host triple is x86_64-unknown-linux-gnu
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: syncing channel updates for 'stable-x86_64-unknown-linux-gnu'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: latest update on 2025-09-18, rust version 1.90.0 (1159e78c4 2025-09-14)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": info: downloading component 'cargo'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: downloading component 'clippy'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: downloading component 'rust-docs'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: downloading component 'rust-std'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: downloading component 'rustc'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: downloading component 'rustfmt'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'cargo'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'clippy'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'rust-docs'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'rust-std'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'rustc'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'rustfmt'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: default toolchain set to 'stable-x86_64-unknown-linux-gnu'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   stable-x86_64-unknown-linux-gnu installed - rustc 1.90.0 (1159e78c4 2025-09-14)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Rust is installed now. Great!
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": To get started you may need to restart your current shell.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": This would reload your PATH environment variable to include
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Cargo's bin directory ($HOME/.cargo/bin).
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": To configure your current shell, you need to source
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": the corresponding env file under $HOME/.cargo.
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": This is usually done by running one of the following (note the leading DOT):
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": . "$HOME/.cargo/env"            # For sh/bash/zsh/ash/dash/pdksh
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": source "$HOME/.cargo/env.fish"  # For fish
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": source $"($nu.home-path)/.cargo/env.nu"  # For nushell
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Removing intermediate container 37e89d83d93f
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> 6decdfe2cfb9
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 7/11 : ENV PATH="/root/.cargo/bin:${PATH}"
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> Running in 8b45224994db
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Removing intermediate container 8b45224994db
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> 21fbd2848787
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 8/11 : RUN rustup install nightly
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> Running in 29ca51a7e4ec
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [91minfo: syncing channel updates for 'nightly-x86_64-unknown-linux-gnu'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: latest update on 2025-10-05, rust version 1.92.0-nightly (2cb4e7dce 2025-10-04)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": info: downloading component 'cargo'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: downloading component 'clippy'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: downloading component 'rust-docs'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: downloading component 'rust-std'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: downloading component 'rustc'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: downloading component 'rustfmt'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'cargo'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'clippy'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'rust-docs'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'rust-std'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'rustc'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: installing component 'rustfmt'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   nightly-x86_64-unknown-linux-gnu installed - rustc 1.92.0-nightly (2cb4e7dce 2025-10-04)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [91minfo: checking for self-update
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0mRemoving intermediate container 29ca51a7e4ec
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> aedea88a8273
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 9/11 : RUN rustup default nightly
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> Running in ea3d51632585
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [91minfo: using existing install for 'nightly-x86_64-unknown-linux-gnu'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m[91minfo: default toolchain set to 'nightly-x86_64-unknown-linux-gnu'
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": [0m
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":   nightly-x86_64-unknown-linux-gnu unchanged - rustc 1.92.0-nightly (2cb4e7dce 2025-10-04)
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": 
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Removing intermediate container ea3d51632585
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> d3bdd2a31739
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 10/11 : WORKDIR cryptography
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> Running in e3e345f0c733
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Removing intermediate container e3e345f0c733
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> a4ab1e8e48e2
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Step 11/11 : COPY build.sh fuzz_*.py $SRC/
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd":  ---> 5683bb60b5ba
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Successfully built 5683bb60b5ba
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Successfully tagged gcr.io/oss-fuzz/cryptography:latest
+Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/cryptography:latest
+Finished Step #1 - "build-64f305d8-8b4d-4225-b6ff-8bdcdb5013fd"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/cryptography
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileRtlY7O
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ python == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/cryptography/.git
+Step #2 - "srcmap": + GIT_DIR=/src/cryptography
+Step #2 - "srcmap": + cd /src/cryptography
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/pyca/cryptography
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=47ee67d0902e7f7a551072610973418531a12a3a
+Step #2 - "srcmap": + jq_inplace /tmp/fileRtlY7O '."/src/cryptography" = { type: "git", url: "https://github.com/pyca/cryptography", rev: "47ee67d0902e7f7a551072610973418531a12a3a" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filemjT60c
+Step #2 - "srcmap": + cat /tmp/fileRtlY7O
+Step #2 - "srcmap": + jq '."/src/cryptography" = { type: "git", url: "https://github.com/pyca/cryptography", rev: "47ee67d0902e7f7a551072610973418531a12a3a" }'
+Step #2 - "srcmap": + mv /tmp/filemjT60c /tmp/fileRtlY7O
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileRtlY7O
+Step #2 - "srcmap": + rm /tmp/fileRtlY7O
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/cryptography": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/pyca/cryptography",
+Step #2 - "srcmap":     "rev": "47ee67d0902e7f7a551072610973418531a12a3a"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fno-sanitize=function,leak,vptr,
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -fno-sanitize=function,leak,vptr
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + python3 -m pip cache purge
+Step #3 - "compile-libfuzzer-address-x86_64": Files removed: 8 (1.4 MB)
+Step #3 - "compile-libfuzzer-address-x86_64": + unset RUSTFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": + unset CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": + unset CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": + python3 -m pip install .
+Step #3 - "compile-libfuzzer-address-x86_64": Processing /src/cryptography
+Step #3 - "compile-libfuzzer-address-x86_64":   Installing build dependencies ... [?25l- \ | / - \ done
+Step #3 - "compile-libfuzzer-address-x86_64": [?25h  Getting requirements to build wheel ... [?25ldone
+Step #3 - "compile-libfuzzer-address-x86_64": [?25h  Preparing metadata (pyproject.toml) ... [?25l- \ | / - done
+Step #3 - "compile-libfuzzer-address-x86_64": [?25hCollecting cffi>=2.0.0 (from cryptography==47.0.0.dev1)
+Step #3 - "compile-libfuzzer-address-x86_64":   Using cached cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.6 kB)
+Step #3 - "compile-libfuzzer-address-x86_64": Collecting pycparser (from cffi>=2.0.0->cryptography==47.0.0.dev1)
+Step #3 - "compile-libfuzzer-address-x86_64":   Using cached pycparser-2.23-py3-none-any.whl.metadata (993 bytes)
+Step #3 - "compile-libfuzzer-address-x86_64": Using cached cffi-2.0.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (215 kB)
+Step #3 - "compile-libfuzzer-address-x86_64": Using cached pycparser-2.23-py3-none-any.whl (118 kB)
+Step #3 - "compile-libfuzzer-address-x86_64": Building wheels for collected packages: cryptography
+Step #3 - "compile-libfuzzer-address-x86_64":   Building wheel for cryptography (pyproject.toml) ... [?25l- \ | / - \ | / - error
+Step #3 - "compile-libfuzzer-address-x86_64":   [1;31merror[0m: [1msubprocess-exited-with-error[0m
+Step #3 - "compile-libfuzzer-address-x86_64":   
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m×[0m [32mBuilding wheel for cryptography [0m[1;32m([0m[32mpyproject.toml[0m[1;32m)[0m did not run successfully.
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m│[0m exit code: [1;36m1[0m
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m╰─>[0m [31m[154 lines of output][0m
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m Running `maturin pep517 build-wheel -i /usr/local/bin/python3 --compatibility off`
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 🍹 Building a mixed python/rust project
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m ⚠️  Warning: You're building a library without activating pyo3's `extension-module` feature. See https://pyo3.rs/v0.26.0/building-and-distribution.html#the-extension-module-feature
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 🔗 Found pyo3 bindings with abi3 support
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 🐍 Found CPython 3.11 at /usr/local/bin/python3
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 📡 Using build options locked from pyproject.toml
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling target-lexicon v0.13.3
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling proc-macro2 v1.0.101
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling quote v1.0.41
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling unicode-ident v1.0.19
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling find-msvc-tools v0.1.3
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling shlex v1.3.0
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling pkg-config v0.3.32
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling vcpkg v0.2.15
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling libc v0.2.176
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling once_cell v1.21.3
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling foreign-types-shared v0.1.1
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling openssl v0.10.73
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling autocfg v1.5.0
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling heck v0.5.0
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling bitflags v2.9.4
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling cfg-if v1.0.3
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling itoa v1.0.15
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling unindent v0.2.4
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling indoc v2.0.6
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling cryptography-key-parsing v0.1.0 (/src/cryptography/src/rust/cryptography-key-parsing)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling cryptography-openssl v0.1.0 (/src/cryptography/src/rust/cryptography-openssl)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling base64 v0.22.1
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling self_cell v1.2.0
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling foreign-types v0.3.2
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling cc v1.2.40
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling memoffset v0.9.1
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling pem v3.0.5
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling pyo3-build-config v0.26.0
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling syn v2.0.106
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling openssl-sys v0.9.109
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling cryptography-cffi v0.1.0 (/src/cryptography/src/rust/cryptography-cffi)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling pyo3-ffi v0.26.0
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling pyo3-macros-backend v0.26.0
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling pyo3 v0.26.0
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m    Compiling cryptography-rust v0.1.0 (/src/cryptography/src/rust)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m warning: cryptography-cffi@0.1.0: /src/cryptography/target/release/build/cryptography-cffi-e099d6a04e0c5bcb/out/_openssl.c:626:10: error: "pyca/cryptography MUST be linked with OpenSSL 3.0.0 or later"
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m warning: cryptography-cffi@0.1.0:   626 |         #error "pyca/cryptography MUST be linked with OpenSSL 3.0.0 or later"
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m warning: cryptography-cffi@0.1.0:       |          ^
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m warning: cryptography-cffi@0.1.0: 1 error generated.
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m error: failed to run custom build command for `cryptography-cffi v0.1.0 (/src/cryptography/src/rust/cryptography-cffi)`
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m Caused by:
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   process didn't exit successfully: `/src/cryptography/target/release/build/cryptography-cffi-802025ed07e96f32/build-script-build` (exit status: 1)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   --- stdout
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=PYO3_PYTHON
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-changed=../../_cffi_src/
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-changed=../../cryptography/__about__.py
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rustc-cfg=python_implementation="CPython"
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   OUT_DIR = Some(/src/cryptography/target/release/build/cryptography-cffi-e099d6a04e0c5bcb/out)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   OPT_LEVEL = Some(3)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   TARGET = Some(x86_64-unknown-linux-gnu)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CARGO_ENCODED_RUSTFLAGS = Some()
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST = Some(x86_64-unknown-linux-gnu)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CC_x86_64-unknown-linux-gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CC_x86_64-unknown-linux-gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CC_x86_64_unknown_linux_gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CC_x86_64_unknown_linux_gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=HOST_CC
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST_CC = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CC
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CC = Some(clang)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CC_KNOWN_WRAPPER_CUSTOM
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CC_KNOWN_WRAPPER_CUSTOM = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   RUSTC_WRAPPER = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CRATE_CC_NO_DEFAULTS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   DEBUG = Some(false)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=HOST_CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST_CFLAGS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS_x86_64_unknown_linux_gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS_x86_64-unknown-linux-gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   OUT_DIR = Some(/src/cryptography/target/release/build/cryptography-cffi-e099d6a04e0c5bcb/out)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CRATE_CC_NO_DEFAULTS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   TARGET = Some(x86_64-unknown-linux-gnu)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST = Some(x86_64-unknown-linux-gnu)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=HOST_CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST_CFLAGS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS_x86_64_unknown_linux_gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS_x86_64-unknown-linux-gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   OUT_DIR = Some(/src/cryptography/target/release/build/cryptography-cffi-e099d6a04e0c5bcb/out)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CRATE_CC_NO_DEFAULTS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   TARGET = Some(x86_64-unknown-linux-gnu)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST = Some(x86_64-unknown-linux-gnu)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=HOST_CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST_CFLAGS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS_x86_64_unknown_linux_gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS_x86_64-unknown-linux-gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   OUT_DIR = Some(/src/cryptography/target/release/build/cryptography-cffi-e099d6a04e0c5bcb/out)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CRATE_CC_NO_DEFAULTS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   TARGET = Some(x86_64-unknown-linux-gnu)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST = Some(x86_64-unknown-linux-gnu)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=HOST_CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST_CFLAGS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS_x86_64_unknown_linux_gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS_x86_64-unknown-linux-gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   OUT_DIR = Some(/src/cryptography/target/release/build/cryptography-cffi-e099d6a04e0c5bcb/out)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CRATE_CC_NO_DEFAULTS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   TARGET = Some(x86_64-unknown-linux-gnu)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST = Some(x86_64-unknown-linux-gnu)
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=HOST_CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   HOST_CFLAGS = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS_x86_64_unknown_linux_gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   CFLAGS_x86_64-unknown-linux-gnu = None
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:warning=/src/cryptography/target/release/build/cryptography-cffi-e099d6a04e0c5bcb/out/_openssl.c:626:10: error: "pyca/cryptography MUST be linked with OpenSSL 3.0.0 or later"
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:warning=  626 |         #error "pyca/cryptography MUST be linked with OpenSSL 3.0.0 or later"
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:warning=      |          ^
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   cargo:warning=1 error generated.
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   --- stderr
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   error occurred in cc-rs: command did not execute successfully (status code exit status: 1): LC_ALL="C" "clang" "-O3" "-ffunction-sections" "-fdata-sections" "-fPIC" "-m64" "--target=x86_64-unknown-linux-gnu" "-I" "/usr/include" "-I" "/usr/local/include/python3.11" "-Wall" "-Wextra" "-Wconversion" "-Wno-error=sign-conversion" "-Wno-unused-parameter" "-fmacro-prefix-map=/src/cryptography/target/release/build/cryptography-cffi-e099d6a04e0c5bcb/out=." "-DPy_LIMITED_API=0x030800f0" "-o" "/src/cryptography/target/release/build/cryptography-cffi-e099d6a04e0c5bcb/out/34d944e638dc0a07-_openssl.o" "-c" "/src/cryptography/target/release/build/cryptography-cffi-e099d6a04e0c5bcb/out/_openssl.c"
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m warning: build failed, waiting for other jobs to finish...
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m 💥 maturin failed
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   Caused by: Failed to build a native library through cargo
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m   Caused by: Cargo build finished with "exit status: 101": `env -u CARGO PYO3_BUILD_EXTENSION_MODULE="1" PYO3_ENVIRONMENT_SIGNATURE="cpython-3.11-64bit" PYO3_PYTHON="/usr/local/bin/python3" PYTHON_SYS_EXECUTABLE="/usr/local/bin/python3" "cargo" "rustc" "--message-format" "json-render-diagnostics" "--locked" "--manifest-path" "/src/cryptography/src/rust/Cargo.toml" "--release" "--lib"`
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m Error: command ['maturin', 'pep517', 'build-wheel', '-i', '/usr/local/bin/python3', '--compatibility', 'off'] returned non-zero exit status 1
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m   [0m [31m[end of output][0m
+Step #3 - "compile-libfuzzer-address-x86_64":   
+Step #3 - "compile-libfuzzer-address-x86_64":   [1;35mnote[0m: This error originates from a subprocess, and is likely not a problem with pip.
+Step #3 - "compile-libfuzzer-address-x86_64": [31m  ERROR: Failed building wheel for cryptography[0m[31m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[?25hFailed to build cryptography
+Step #3 - "compile-libfuzzer-address-x86_64": [1;31merror[0m: [1mfailed-wheel-build-for-install[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [31m×[0m Failed to build installable wheels for some pyproject.toml based projects
+Step #3 - "compile-libfuzzer-address-x86_64": [31m╰─>[0m cryptography
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************
+Step #3 - "compile-libfuzzer-address-x86_64": Failed to build.
+Step #3 - "compile-libfuzzer-address-x86_64": To reproduce, run:
+Step #3 - "compile-libfuzzer-address-x86_64": python infra/helper.py build_image cryptography
+Step #3 - "compile-libfuzzer-address-x86_64": python infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 cryptography
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

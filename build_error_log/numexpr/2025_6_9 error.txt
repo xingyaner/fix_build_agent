@@ -1,0 +1,300 @@
+starting build "0efbf59d-34ef-45c1-a033-b8a0724a56e7"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f"
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Sending build context to Docker daemon   7.68kB
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder-python
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": latest: Pulling from oss-fuzz-base/base-builder-python
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b549f31133a9: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 53857896a680: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 7efe496e0821: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 7aac26f735e9: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ad31cc38ac81: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e51a957b96fa: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 9ea01dd118f9: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": fde71e506517: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": dd6b7bda1f21: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 8b0201982d0b: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1ed93b1f2b37: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e6a65953e7da: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 4c9d846f1514: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ba7815991431: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 828929bb11e1: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e89aa43f3e15: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 2d99de89a447: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": f6d8158e6dac: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b72c91e47fd1: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 132bc51f6483: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 6ea2db2284cb: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 8d8a5e898bb8: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 8b0201982d0b: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 0627aad1ed24: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1ed93b1f2b37: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": a0eb25bba271: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": f5faf7725626: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 828929bb11e1: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 213227c10e94: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e6a65953e7da: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ffc3882c042b: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e89aa43f3e15: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 4c9d846f1514: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 343ba79fda30: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 2d99de89a447: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ba7815991431: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 9ea01dd118f9: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": f6d8158e6dac: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": cb5959086358: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": fde71e506517: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1f3670b2a3cd: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": dd6b7bda1f21: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e1a12b281c6e: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 6ea2db2284cb: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b25342de0fc5: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": a0eb25bba271: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 105d24739e50: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 3bdc8cef7a9f: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 0627aad1ed24: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": f5faf7725626: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 03f7548b82a6: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b72c91e47fd1: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 213227c10e94: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": c5a6aaa2ce6b: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 5e3bbf1b669c: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1dfe9bb499fc: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": cb5959086358: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ffc3882c042b: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e1a12b281c6e: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 823d453a1f2a: Pulling fs layer
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1f3670b2a3cd: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 343ba79fda30: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 105d24739e50: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b25342de0fc5: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 5e3bbf1b669c: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 823d453a1f2a: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 132bc51f6483: Waiting
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ad31cc38ac81: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ad31cc38ac81: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 7efe496e0821: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 9ea01dd118f9: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": fde71e506517: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": fde71e506517: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b549f31133a9: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b549f31133a9: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 7aac26f735e9: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 7aac26f735e9: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e6a65953e7da: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e6a65953e7da: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1ed93b1f2b37: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1ed93b1f2b37: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ba7815991431: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ba7815991431: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 4c9d846f1514: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e89aa43f3e15: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e89aa43f3e15: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 828929bb11e1: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 828929bb11e1: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 8b0201982d0b: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 8b0201982d0b: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 53857896a680: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 53857896a680: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": f6d8158e6dac: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": f6d8158e6dac: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b72c91e47fd1: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 6ea2db2284cb: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 6ea2db2284cb: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 132bc51f6483: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 132bc51f6483: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 2d99de89a447: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 2d99de89a447: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 8d8a5e898bb8: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 8d8a5e898bb8: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": a0eb25bba271: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": a0eb25bba271: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": f5faf7725626: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": f5faf7725626: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 0627aad1ed24: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 0627aad1ed24: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 213227c10e94: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ffc3882c042b: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 343ba79fda30: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 343ba79fda30: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": cb5959086358: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": cb5959086358: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b549f31133a9: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e1a12b281c6e: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e1a12b281c6e: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b25342de0fc5: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1f3670b2a3cd: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1f3670b2a3cd: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 105d24739e50: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 105d24739e50: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 3bdc8cef7a9f: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": c5a6aaa2ce6b: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": c5a6aaa2ce6b: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 03f7548b82a6: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": dd6b7bda1f21: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": dd6b7bda1f21: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 5e3bbf1b669c: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 5e3bbf1b669c: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1dfe9bb499fc: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1dfe9bb499fc: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 823d453a1f2a: Verifying Checksum
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 823d453a1f2a: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e51a957b96fa: Download complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 53857896a680: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 7efe496e0821: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 7aac26f735e9: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ad31cc38ac81: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e51a957b96fa: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 9ea01dd118f9: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": fde71e506517: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": dd6b7bda1f21: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 8b0201982d0b: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1ed93b1f2b37: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e6a65953e7da: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 4c9d846f1514: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ba7815991431: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 828929bb11e1: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e89aa43f3e15: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 2d99de89a447: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": f6d8158e6dac: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b72c91e47fd1: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 132bc51f6483: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 6ea2db2284cb: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 8d8a5e898bb8: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 0627aad1ed24: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": a0eb25bba271: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": f5faf7725626: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 213227c10e94: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": ffc3882c042b: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 343ba79fda30: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": cb5959086358: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1f3670b2a3cd: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": e1a12b281c6e: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": b25342de0fc5: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 105d24739e50: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 3bdc8cef7a9f: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 03f7548b82a6: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": c5a6aaa2ce6b: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 5e3bbf1b669c: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 1dfe9bb499fc: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": 823d453a1f2a: Pull complete
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Digest: sha256:ac324a2bbc1c4af0153b53528ee40b99dddca2c8466d66e7a051c598470b51f5
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-python:latest
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f":  ---> 420c14f27456
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Step 2/5 : RUN pip3 install --upgrade pip && pip3 install cython
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f":  ---> Running in fe4c552628ff
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Requirement already satisfied: pip in /usr/local/lib/python3.11/site-packages (25.3)
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": [91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": [0mCollecting cython
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f":   Downloading cython-3.2.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.5 kB)
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Downloading cython-3.2.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f":    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 60.0 MB/s  0:00:00
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Installing collected packages: cython
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Successfully installed cython-3.2.3
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": [91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": [0mRemoving intermediate container fe4c552628ff
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f":  ---> 38f542549799
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Step 3/5 : RUN git clone https://github.com/pydata/numexpr numexpr
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f":  ---> Running in e55c53d5d21b
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": [91mCloning into 'numexpr'...
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": [0mRemoving intermediate container e55c53d5d21b
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f":  ---> 1cc92e34e653
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Step 4/5 : COPY *.sh *py $SRC/
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f":  ---> f8764ac1f508
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Step 5/5 : WORKDIR $SRC/numexpr
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f":  ---> Running in 141850749cf1
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Removing intermediate container 141850749cf1
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f":  ---> 94116ff67105
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Successfully built 94116ff67105
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Successfully tagged gcr.io/oss-fuzz/numexpr:latest
+Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/numexpr:latest
+Finished Step #1 - "build-89e901cf-6b21-4e53-8258-3c9f243f637f"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/numexpr
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileOJjaQP
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ python == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/numexpr/.git
+Step #2 - "srcmap": + GIT_DIR=/src/numexpr
+Step #2 - "srcmap": + cd /src/numexpr
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/pydata/numexpr
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=1e3241d9883eeabc08b15d2d5b0f28a2804381fc
+Step #2 - "srcmap": + jq_inplace /tmp/fileOJjaQP '."/src/numexpr" = { type: "git", url: "https://github.com/pydata/numexpr", rev: "1e3241d9883eeabc08b15d2d5b0f28a2804381fc" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/file4f9sjc
+Step #2 - "srcmap": + cat /tmp/fileOJjaQP
+Step #2 - "srcmap": + jq '."/src/numexpr" = { type: "git", url: "https://github.com/pydata/numexpr", rev: "1e3241d9883eeabc08b15d2d5b0f28a2804381fc" }'
+Step #2 - "srcmap": + mv /tmp/file4f9sjc /tmp/fileOJjaQP
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileOJjaQP
+Step #2 - "srcmap": + rm /tmp/fileOJjaQP
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/numexpr": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/pydata/numexpr",
+Step #2 - "srcmap":     "rev": "1e3241d9883eeabc08b15d2d5b0f28a2804381fc"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fno-sanitize=function,leak,vptr,
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -fno-sanitize=function,leak,vptr
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + sed -i 's/license = "MIT"/license = {text = "MIT"}/' /src/numexpr/pyproject.toml
+Step #3 - "compile-libfuzzer-address-x86_64": + python3 -m pip install -r /src/numexpr/requirements.txt
+Step #3 - "compile-libfuzzer-address-x86_64": Collecting numpy>=1.26.0 (from -r /src/numexpr/requirements.txt (line 1))
+Step #3 - "compile-libfuzzer-address-x86_64":   Downloading numpy-2.4.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+Step #3 - "compile-libfuzzer-address-x86_64": Downloading numpy-2.4.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.6 MB)
+Step #3 - "compile-libfuzzer-address-x86_64": [?25l   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m0.0/16.6 MB[0m [31m?[0m eta [36m-:--:--[0m[2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m16.6/16.6 MB[0m [31m121.9 MB/s[0m  [33m0:00:00[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [?25hInstalling collected packages: numpy
+Step #3 - "compile-libfuzzer-address-x86_64": Successfully installed numpy-2.4.0
+Step #3 - "compile-libfuzzer-address-x86_64": [33mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.[0m[33m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m+ python3 /src/numexpr/setup.py build install
+Step #3 - "compile-libfuzzer-address-x86_64": Traceback (most recent call last):
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/src/numexpr/setup.py", line 121, in <module>
+Step #3 - "compile-libfuzzer-address-x86_64":     setup_package()
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/src/numexpr/setup.py", line 117, in setup_package
+Step #3 - "compile-libfuzzer-address-x86_64":     setup(**metadata)
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/__init__.py", line 108, in setup
+Step #3 - "compile-libfuzzer-address-x86_64":     return distutils.core.setup(**attrs)
+Step #3 - "compile-libfuzzer-address-x86_64":            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/_distutils/core.py", line 158, in setup
+Step #3 - "compile-libfuzzer-address-x86_64":     dist.parse_config_files()
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/dist.py", line 603, in parse_config_files
+Step #3 - "compile-libfuzzer-address-x86_64":     pyprojecttoml.apply_configuration(self, filename, ignore_option_errors)
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/config/pyprojecttoml.py", line 70, in apply_configuration
+Step #3 - "compile-libfuzzer-address-x86_64":     config = read_configuration(filepath, True, ignore_option_errors, dist)
+Step #3 - "compile-libfuzzer-address-x86_64":              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/config/pyprojecttoml.py", line 135, in read_configuration
+Step #3 - "compile-libfuzzer-address-x86_64":     validate(subset, filepath)
+Step #3 - "compile-libfuzzer-address-x86_64":   File "/usr/local/lib/python3.11/site-packages/setuptools/config/pyprojecttoml.py", line 59, in validate
+Step #3 - "compile-libfuzzer-address-x86_64":     raise ValueError(f"{error}\n{summary}") from None
+Step #3 - "compile-libfuzzer-address-x86_64": ValueError: invalid pyproject.toml config: `project`.
+Step #3 - "compile-libfuzzer-address-x86_64": configuration error: `project` must not contain {'license-files'} properties
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image numexpr\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 numexpr\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

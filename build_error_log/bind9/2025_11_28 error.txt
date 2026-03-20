@@ -1,0 +1,493 @@
+starting build "8ed4ca2b-07c5-4a40-bef8-720e715babfb"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d"
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Sending build context to Docker daemon  9.728kB
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Step 1/7 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": b549f31133a9: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 9e29808451d6: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": efff5adc0731: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0b136bd1f35a: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": bed5fb6fe31a: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 62441e236c8f: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 227613d075d9: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f1d56b7b19fb: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5f04f5005a0b: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f44f3ecad5cf: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 6e04c0c247e4: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": cfbdd84a21c7: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": d0564efa1891: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5a9bb256111c: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 21faeb142a60: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5dc702a1de94: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 554b5e02d8ee: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 04c005cf2888: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": ad61229b73fd: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": e8b997103d92: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 6e765b833a6d: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 316754e5de93: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": d1bb78b659a8: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f51e3f2c6e79: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": a13f2881f6ce: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5e87e6b27cbe: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 35af1a4e8796: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": e072be8ce8cd: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0d06854e83db: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5c68f398e3a1: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0594dea031fe: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 779ac449ed22: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 26e1e85473a5: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": ecbcff792cff: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f33c728bb63d: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5ab20efff8c5: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 7679062f89f2: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 227613d075d9: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 39d4a8db0fae: Pulling fs layer
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f1d56b7b19fb: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5f04f5005a0b: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5c68f398e3a1: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0594dea031fe: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f44f3ecad5cf: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 6e04c0c247e4: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": cfbdd84a21c7: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": d0564efa1891: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": e8b997103d92: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5a9bb256111c: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 6e765b833a6d: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 21faeb142a60: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 779ac449ed22: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 316754e5de93: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5dc702a1de94: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 26e1e85473a5: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": d1bb78b659a8: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": ecbcff792cff: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 554b5e02d8ee: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f33c728bb63d: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f51e3f2c6e79: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 04c005cf2888: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": a13f2881f6ce: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": ad61229b73fd: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5e87e6b27cbe: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 35af1a4e8796: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": e072be8ce8cd: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5ab20efff8c5: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0d06854e83db: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 7679062f89f2: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 39d4a8db0fae: Waiting
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": efff5adc0731: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": efff5adc0731: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": bed5fb6fe31a: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": bed5fb6fe31a: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 227613d075d9: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f1d56b7b19fb: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f1d56b7b19fb: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": b549f31133a9: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": b549f31133a9: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0b136bd1f35a: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0b136bd1f35a: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 6e04c0c247e4: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 6e04c0c247e4: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": cfbdd84a21c7: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": cfbdd84a21c7: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": d0564efa1891: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": d0564efa1891: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5a9bb256111c: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5a9bb256111c: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 9e29808451d6: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 9e29808451d6: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5dc702a1de94: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5dc702a1de94: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f44f3ecad5cf: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f44f3ecad5cf: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 21faeb142a60: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 21faeb142a60: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": ad61229b73fd: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": ad61229b73fd: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": e8b997103d92: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": e8b997103d92: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 04c005cf2888: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 04c005cf2888: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 554b5e02d8ee: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 554b5e02d8ee: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 6e765b833a6d: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 6e765b833a6d: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 316754e5de93: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 316754e5de93: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": d1bb78b659a8: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": d1bb78b659a8: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": b549f31133a9: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f51e3f2c6e79: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": a13f2881f6ce: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": a13f2881f6ce: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5e87e6b27cbe: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5e87e6b27cbe: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 35af1a4e8796: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": e072be8ce8cd: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": e072be8ce8cd: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0d06854e83db: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0d06854e83db: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0594dea031fe: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0594dea031fe: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5f04f5005a0b: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5f04f5005a0b: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 779ac449ed22: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 779ac449ed22: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5c68f398e3a1: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5c68f398e3a1: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 26e1e85473a5: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 26e1e85473a5: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": ecbcff792cff: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": ecbcff792cff: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f33c728bb63d: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5ab20efff8c5: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 39d4a8db0fae: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 39d4a8db0fae: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 7679062f89f2: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 7679062f89f2: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 62441e236c8f: Verifying Checksum
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 62441e236c8f: Download complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 9e29808451d6: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": efff5adc0731: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0b136bd1f35a: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": bed5fb6fe31a: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 62441e236c8f: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 227613d075d9: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f1d56b7b19fb: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5f04f5005a0b: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f44f3ecad5cf: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 6e04c0c247e4: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": cfbdd84a21c7: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": d0564efa1891: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5a9bb256111c: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 21faeb142a60: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5dc702a1de94: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 554b5e02d8ee: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 04c005cf2888: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": ad61229b73fd: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": e8b997103d92: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 6e765b833a6d: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 316754e5de93: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": d1bb78b659a8: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f51e3f2c6e79: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": a13f2881f6ce: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5e87e6b27cbe: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 35af1a4e8796: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": e072be8ce8cd: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0d06854e83db: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5c68f398e3a1: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0594dea031fe: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 779ac449ed22: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 26e1e85473a5: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": ecbcff792cff: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": f33c728bb63d: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 5ab20efff8c5: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 7679062f89f2: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 39d4a8db0fae: Pull complete
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Digest: sha256:f51f7e08f410e2d4453693bb0cae3f6bdc53470e8b6bf33ae10fd98757f4e35c
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> 7e10f2aeb82b
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Step 2/7 : ENV DEBIAN_FRONTEND noninteractive
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> Running in b3af18620106
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Removing intermediate container b3af18620106
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> 2d45ef31b1c7
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Step 3/7 : RUN apt-get -y update && apt-get -y dist-upgrade
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> Running in 221c49a44da6
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:2 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Hit:3 http://security.ubuntu.com/ubuntu focal-security InRelease
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Hit:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Fetched 128 kB in 1s (224 kB/s)
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Reading package lists...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Reading package lists...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Building dependency tree...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Reading state information...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Calculating upgrade...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": The following packages were automatically installed and are no longer required:
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   autotools-dev libsigsegv2 m4
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Use 'apt autoremove' to remove them.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Removing intermediate container 221c49a44da6
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> 110a64d1ba5b
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Step 4/7 : RUN apt-get -y install			autoconf			automake			autotools-dev			bison				build-essential			libcap-dev			libnghttp2-dev			libssl-dev			libtool				libtool-bin			liburcu-dev			libuv1-dev			pkg-config			zip     libcmocka-dev &&     python3 -m pip install  -U meson ninja
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> Running in d8729e821602
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Reading package lists...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Building dependency tree...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Reading state information...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": autotools-dev is already the newest version (20180224.1).
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": autotools-dev set to manually installed.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": zip is already the newest version (3.0-11build1).
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": build-essential is already the newest version (12.8ubuntu1.1).
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": libssl-dev is already the newest version (1.1.1f-1ubuntu2.24).
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": The following additional packages will be installed:
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   cmocka-doc file javascript-common libcap2 libcmocka0 libglib2.0-0
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   libglib2.0-data libicu66 libjs-jquery libltdl-dev libltdl7 libmagic-mgc
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   libmagic1 liburcu6 libuv1 libxml2 shared-mime-info xdg-user-dirs
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Suggested packages:
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   autoconf-archive gnu-standards autoconf-doc gettext bison-doc apache2
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   | lighttpd | httpd libtool-doc libnghttp2-doc gfortran | fortran95-compiler
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   gcj-jdk
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": The following NEW packages will be installed:
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   autoconf automake bison cmocka-doc file javascript-common libcap-dev libcap2
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   libcmocka-dev libcmocka0 libglib2.0-0 libglib2.0-data libicu66 libjs-jquery
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   libltdl-dev libltdl7 libmagic-mgc libmagic1 libnghttp2-dev libtool
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   libtool-bin liburcu-dev liburcu6 libuv1 libuv1-dev libxml2 pkg-config
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   shared-mime-info xdg-user-dirs
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 0 upgraded, 29 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Need to get 14.2 MB of archives.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": After this operation, 62.6 MB of additional disk space will be used.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:2 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libcap2 amd64 1:2.32-1ubuntu0.2 [15.7 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:5 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-0 amd64 2.64.6-1~ubuntu20.04.9 [1290 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libglib2.0-data all 2.64.6-1~ubuntu20.04.9 [5836 B]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libicu66 amd64 66.1-2ubuntu2.1 [8515 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:8 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libxml2 amd64 2.9.10+dfsg-5ubuntu0.20.04.10 [640 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 shared-mime-info amd64 1.15-1 [430 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 xdg-user-dirs amd64 0.17-2ubuntu1 [48.3 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:11 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libuv1 amd64 1.34.2-1ubuntu1.5 [80.9 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:12 http://archive.ubuntu.com/ubuntu focal/main amd64 autoconf all 2.69-11.1 [321 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:13 http://archive.ubuntu.com/ubuntu focal/main amd64 automake all 1:1.16.1-4ubuntu6 [522 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:14 http://archive.ubuntu.com/ubuntu focal/main amd64 bison amd64 2:3.5.1+dfsg-1 [657 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:15 http://archive.ubuntu.com/ubuntu focal/main amd64 javascript-common all 11 [6066 B]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:16 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libcap-dev amd64 1:2.32-1ubuntu0.2 [33.2 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:17 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libjs-jquery all 3.3.1~dfsg-3ubuntu0.1 [329 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:18 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl7 amd64 2.4.6-14 [38.5 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:19 http://archive.ubuntu.com/ubuntu focal/main amd64 libltdl-dev amd64 2.4.6-14 [162 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:20 http://archive.ubuntu.com/ubuntu focal/main amd64 pkg-config amd64 0.29.1-0ubuntu4 [45.5 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:21 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libnghttp2-dev amd64 1.40.0-1ubuntu0.3 [98.2 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:22 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool all 2.4.6-14 [161 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:23 http://archive.ubuntu.com/ubuntu focal/main amd64 libtool-bin amd64 2.4.6-14 [80.1 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:24 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libuv1-dev amd64 1.34.2-1ubuntu1.5 [103 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:25 http://archive.ubuntu.com/ubuntu focal/universe amd64 cmocka-doc all 1.1.5-2 [84.2 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:26 http://archive.ubuntu.com/ubuntu focal/universe amd64 libcmocka0 amd64 1.1.5-2 [21.1 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:27 http://archive.ubuntu.com/ubuntu focal/universe amd64 libcmocka-dev amd64 1.1.5-2 [15.9 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:28 http://archive.ubuntu.com/ubuntu focal/main amd64 liburcu6 amd64 0.11.1-2 [54.2 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Get:29 http://archive.ubuntu.com/ubuntu focal/main amd64 liburcu-dev amd64 0.11.1-2 [102 kB]
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": [0mFetched 14.2 MB in 2s (7387 kB/s)
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libmagic-mgc.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17483 files and directories currently installed.)
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../00-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libmagic1:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../01-libmagic1_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package file.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../02-file_1%3a5.38-4_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking file (1:5.38-4) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libcap2:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../03-libcap2_1%3a2.32-1ubuntu0.2_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libcap2:amd64 (1:2.32-1ubuntu0.2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libglib2.0-0:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../04-libglib2.0-0_2.64.6-1~ubuntu20.04.9_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libglib2.0-data.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../05-libglib2.0-data_2.64.6-1~ubuntu20.04.9_all.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libicu66:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../06-libicu66_66.1-2ubuntu2.1_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libxml2:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../07-libxml2_2.9.10+dfsg-5ubuntu0.20.04.10_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package shared-mime-info.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../08-shared-mime-info_1.15-1_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking shared-mime-info (1.15-1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package xdg-user-dirs.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../09-xdg-user-dirs_0.17-2ubuntu1_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libuv1:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../10-libuv1_1.34.2-1ubuntu1.5_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libuv1:amd64 (1.34.2-1ubuntu1.5) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package autoconf.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../11-autoconf_2.69-11.1_all.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking autoconf (2.69-11.1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package automake.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../12-automake_1%3a1.16.1-4ubuntu6_all.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package bison.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../13-bison_2%3a3.5.1+dfsg-1_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking bison (2:3.5.1+dfsg-1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package javascript-common.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../14-javascript-common_11_all.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking javascript-common (11) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libcap-dev:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../15-libcap-dev_1%3a2.32-1ubuntu0.2_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libcap-dev:amd64 (1:2.32-1ubuntu0.2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libjs-jquery.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../16-libjs-jquery_3.3.1~dfsg-3ubuntu0.1_all.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libjs-jquery (3.3.1~dfsg-3ubuntu0.1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libltdl7:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../17-libltdl7_2.4.6-14_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libltdl-dev:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../18-libltdl-dev_2.4.6-14_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package pkg-config.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../19-pkg-config_0.29.1-0ubuntu4_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libnghttp2-dev.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../20-libnghttp2-dev_1.40.0-1ubuntu0.3_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libnghttp2-dev (1.40.0-1ubuntu0.3) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libtool.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../21-libtool_2.4.6-14_all.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libtool (2.4.6-14) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libtool-bin.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../22-libtool-bin_2.4.6-14_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libtool-bin (2.4.6-14) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libuv1-dev:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../23-libuv1-dev_1.34.2-1ubuntu1.5_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libuv1-dev:amd64 (1.34.2-1ubuntu1.5) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package cmocka-doc.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../24-cmocka-doc_1.1.5-2_all.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking cmocka-doc (1.1.5-2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libcmocka0:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../25-libcmocka0_1.1.5-2_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libcmocka0:amd64 (1.1.5-2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package libcmocka-dev:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../26-libcmocka-dev_1.1.5-2_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking libcmocka-dev:amd64 (1.1.5-2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package liburcu6:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../27-liburcu6_0.11.1-2_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking liburcu6:amd64 (0.11.1-2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Selecting previously unselected package liburcu-dev:amd64.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Preparing to unpack .../28-liburcu-dev_0.11.1-2_amd64.deb ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Unpacking liburcu-dev:amd64 (0.11.1-2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up javascript-common (11) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up xdg-user-dirs (0.17-2ubuntu1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libmagic-mgc (1:5.38-4) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libglib2.0-0:amd64 (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": No schema files found: doing nothing.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libicu66:amd64 (66.1-2ubuntu2.1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libmagic1:amd64 (1:5.38-4) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up file (1:5.38-4) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libcap2:amd64 (1:2.32-1ubuntu0.2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libcmocka0:amd64 (1.1.5-2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libglib2.0-data (2.64.6-1~ubuntu20.04.9) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libuv1:amd64 (1.34.2-1ubuntu1.5) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up pkg-config (0.29.1-0ubuntu4) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libcmocka-dev:amd64 (1.1.5-2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libltdl7:amd64 (2.4.6-14) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up autoconf (2.69-11.1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up liburcu6:amd64 (0.11.1-2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up bison (2:3.5.1+dfsg-1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": update-alternatives: using /usr/bin/bison.yacc to provide /usr/bin/yacc (yacc) in auto mode
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": update-alternatives: warning: skip creation of /usr/share/man/man1/yacc.1.gz because associated file /usr/share/man/man1/bison.yacc.1.gz (of link group yacc) doesn't exist
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libjs-jquery (3.3.1~dfsg-3ubuntu0.1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libcap-dev:amd64 (1:2.32-1ubuntu0.2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libxml2:amd64 (2.9.10+dfsg-5ubuntu0.20.04.10) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up automake (1:1.16.1-4ubuntu6) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": update-alternatives: using /usr/bin/automake-1.16 to provide /usr/bin/automake (automake) in auto mode
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": update-alternatives: warning: skip creation of /usr/share/man/man1/automake.1.gz because associated file /usr/share/man/man1/automake-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": update-alternatives: warning: skip creation of /usr/share/man/man1/aclocal.1.gz because associated file /usr/share/man/man1/aclocal-1.16.1.gz (of link group automake) doesn't exist
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up liburcu-dev:amd64 (0.11.1-2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libuv1-dev:amd64 (1.34.2-1ubuntu1.5) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libnghttp2-dev (1.40.0-1ubuntu0.3) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libtool (2.4.6-14) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libltdl-dev:amd64 (2.4.6-14) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up shared-mime-info (1.15-1) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up cmocka-doc (1.1.5-2) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Setting up libtool-bin (2.4.6-14) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Collecting meson
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   Downloading meson-1.9.1-py3-none-any.whl.metadata (1.8 kB)
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Collecting ninja
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":   Downloading ninja-1.13.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.1 kB)
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Downloading meson-1.9.1-py3-none-any.whl (1.0 MB)
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 27.3 MB/s  0:00:00
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Downloading ninja-1.13.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (180 kB)
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Installing collected packages: ninja, meson
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": 
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Successfully installed meson-1.9.1 ninja-1.13.0
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": [91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": [0mRemoving intermediate container d8729e821602
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> cf4665051896
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Step 5/7 : RUN git clone --depth 1 https://gitlab.isc.org/isc-projects/bind9.git
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> Running in b25b0e36f646
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": [91mCloning into 'bind9'...
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": [0mRemoving intermediate container b25b0e36f646
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> d9fc0cb35934
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Step 6/7 : WORKDIR bind9
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> Running in 1b37e90528ee
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Removing intermediate container 1b37e90528ee
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> 3d6da8f946d3
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Step 7/7 : COPY *.sh *.diff $SRC/
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d":  ---> ff7468b6cffa
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Successfully built ff7468b6cffa
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Successfully tagged gcr.io/oss-fuzz/bind9:latest
+Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/bind9:latest
+Finished Step #1 - "build-5439bdda-f26c-4bf0-b983-0d18d7c2033d"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/bind9
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileQvjjcP
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/bind9/.git
+Step #2 - "srcmap": + GIT_DIR=/src/bind9
+Step #2 - "srcmap": + cd /src/bind9
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://gitlab.isc.org/isc-projects/bind9.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=d441e14cbf7f56619b3381e170cc2db24be5b48d
+Step #2 - "srcmap": + jq_inplace /tmp/fileQvjjcP '."/src/bind9" = { type: "git", url: "https://gitlab.isc.org/isc-projects/bind9.git", rev: "d441e14cbf7f56619b3381e170cc2db24be5b48d" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filefFCfeb
+Step #2 - "srcmap": + cat /tmp/fileQvjjcP
+Step #2 - "srcmap": + jq '."/src/bind9" = { type: "git", url: "https://gitlab.isc.org/isc-projects/bind9.git", rev: "d441e14cbf7f56619b3381e170cc2db24be5b48d" }'
+Step #2 - "srcmap": + mv /tmp/filefFCfeb /tmp/fileQvjjcP
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileQvjjcP
+Step #2 - "srcmap": + rm /tmp/fileQvjjcP
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/bind9": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://gitlab.isc.org/isc-projects/bind9.git",
+Step #2 - "srcmap":     "rev": "d441e14cbf7f56619b3381e170cc2db24be5b48d"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + export 'CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC -Wl,--allow-multiple-definition'
+Step #3 - "compile-libfuzzer-address-x86_64": + CFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC -Wl,--allow-multiple-definition'
+Step #3 - "compile-libfuzzer-address-x86_64": + export 'CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -fPIC -Wl,--allow-multiple-definition'
+Step #3 - "compile-libfuzzer-address-x86_64": + CXXFLAGS='-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -fPIC -Wl,--allow-multiple-definition'
+Step #3 - "compile-libfuzzer-address-x86_64": + git apply --ignore-space-change --ignore-whitespace /src/patch.diff
+Step #3 - "compile-libfuzzer-address-x86_64": + meson setup build -Dfuzzing=enabled -Dcmocka=enabled '-Dc_link_args=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC -Wl,--allow-multiple-definition' '-Dcpp_link_args=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -fPIC -Wl,--allow-multiple-definition' '-Dc_args=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fPIC -Wl,--allow-multiple-definition' '-Dcpp_args=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -fPIC -Wl,--allow-multiple-definition' -Ddefault_library=static -Dprefer_static=true -Db_lto=false -Dnamed-lto=off
+Step #3 - "compile-libfuzzer-address-x86_64": [1mThe Meson build system[0m
+Step #3 - "compile-libfuzzer-address-x86_64": Version: 1.9.1
+Step #3 - "compile-libfuzzer-address-x86_64": Source dir: [1m/src/bind9[0m
+Step #3 - "compile-libfuzzer-address-x86_64": Build dir: [1m/src/bind9/build[0m
+Step #3 - "compile-libfuzzer-address-x86_64": Build type: [1mnative build[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": meson.build:12:0: [1;31mERROR:[0m Value "off" (of type "string") for option "named-lto" is not one of the choices. Possible choices are (as string): "disabled", "auto", "thin", "full".
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": A full log can be found at [1m/src/bind9/build/meson-logs/meson-log.txt[0m
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image bind9\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 bind9\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

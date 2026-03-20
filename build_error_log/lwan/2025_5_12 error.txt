@@ -1,0 +1,874 @@
+starting build "80ff7bd1-d840-4a16-ba27-ad0d86c1b5b5"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c"
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Sending build context to Docker daemon  5.632kB
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Step 1/6 : FROM gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": ubuntu-24-04: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 76249c7cd503: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 4c4acc87d1ae: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 3c7429d50014: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": bec2b53a91bd: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 5f31fde7958b: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 7df6ded3d3a5: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 794bd4a9fc93: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 794bd4a9fc93: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": d0fd3ef75775: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 5a10927fdee9: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": b22eb47f7319: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": d0fd3ef75775: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": c8c60a2fd5c4: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": fb7c9e495b05: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 4e6892c7cc2d: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": c8c60a2fd5c4: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 6ead501f88e8: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 5a10927fdee9: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 4e6892c7cc2d: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 6f7975c28eb7: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": b22eb47f7319: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": fb7c9e495b05: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": c9fbcfc74df0: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 1082315071be: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": c9fbcfc74df0: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 6f7975c28eb7: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 6ead501f88e8: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 49f091fef41e: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 362901735898: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": e4e6593bcd78: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9926750f9d2b: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59520f382ddf: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 7472006dcce2: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 8e31134aba0a: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 1082315071be: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 2d2d2c4a69e1: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59520f382ddf: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9f99516037a0: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59d9d379bb6f: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": cd8915cda8cb: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": e4e6593bcd78: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 99a33f1d7ffc: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 06150306d210: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": b0de8135a2c0: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 1280dfc31d4b: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 49f091fef41e: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": a597c92f9fcf: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9926750f9d2b: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9949bf7f2883: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9f99516037a0: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": ca3769a0bdb7: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": faa68359d443: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 362901735898: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59481218cff4: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": a502477e123b: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": cf19d536ff68: Pulling fs layer
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 7472006dcce2: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9949bf7f2883: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": a502477e123b: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": ca3769a0bdb7: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 99a33f1d7ffc: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59d9d379bb6f: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": a597c92f9fcf: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 8e31134aba0a: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": b0de8135a2c0: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 1280dfc31d4b: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": faa68359d443: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": cd8915cda8cb: Waiting
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 7df6ded3d3a5: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 5f31fde7958b: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 3c7429d50014: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 3c7429d50014: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": d0fd3ef75775: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": d0fd3ef75775: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 5a10927fdee9: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 5a10927fdee9: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 76249c7cd503: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 76249c7cd503: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": bec2b53a91bd: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": bec2b53a91bd: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": fb7c9e495b05: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": fb7c9e495b05: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 4e6892c7cc2d: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 4e6892c7cc2d: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 6f7975c28eb7: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 6f7975c28eb7: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 6ead501f88e8: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 6ead501f88e8: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 1082315071be: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": c9fbcfc74df0: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": c9fbcfc74df0: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": c8c60a2fd5c4: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": c8c60a2fd5c4: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 362901735898: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 362901735898: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 49f091fef41e: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": e4e6593bcd78: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 4c4acc87d1ae: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 4c4acc87d1ae: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59520f382ddf: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59520f382ddf: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9926750f9d2b: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9926750f9d2b: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 7472006dcce2: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 7472006dcce2: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 2d2d2c4a69e1: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 2d2d2c4a69e1: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9f99516037a0: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9f99516037a0: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 8e31134aba0a: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 8e31134aba0a: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59d9d379bb6f: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": cd8915cda8cb: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 99a33f1d7ffc: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 99a33f1d7ffc: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 1280dfc31d4b: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 1280dfc31d4b: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": b0de8135a2c0: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": b0de8135a2c0: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 76249c7cd503: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 06150306d210: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 06150306d210: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": ca3769a0bdb7: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": ca3769a0bdb7: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": faa68359d443: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59481218cff4: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": a597c92f9fcf: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": a597c92f9fcf: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": a502477e123b: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": a502477e123b: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": cf19d536ff68: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": cf19d536ff68: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": b22eb47f7319: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": b22eb47f7319: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9949bf7f2883: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9949bf7f2883: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 794bd4a9fc93: Verifying Checksum
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 794bd4a9fc93: Download complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 4c4acc87d1ae: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 3c7429d50014: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": bec2b53a91bd: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 5f31fde7958b: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 7df6ded3d3a5: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 794bd4a9fc93: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": d0fd3ef75775: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 5a10927fdee9: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": b22eb47f7319: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": c8c60a2fd5c4: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": fb7c9e495b05: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 4e6892c7cc2d: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 6ead501f88e8: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 6f7975c28eb7: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": c9fbcfc74df0: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 1082315071be: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 49f091fef41e: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 362901735898: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": e4e6593bcd78: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9926750f9d2b: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59520f382ddf: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 7472006dcce2: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 8e31134aba0a: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 2d2d2c4a69e1: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9f99516037a0: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59d9d379bb6f: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": cd8915cda8cb: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 99a33f1d7ffc: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 06150306d210: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": b0de8135a2c0: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 1280dfc31d4b: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": a597c92f9fcf: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 9949bf7f2883: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": ca3769a0bdb7: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": faa68359d443: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 59481218cff4: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": a502477e123b: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": cf19d536ff68: Pull complete
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Digest: sha256:2d948a5c2c9c11c50ff8a59da5916e4eec1c9abf2638cfe683d96e804994aa5b
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:ubuntu-24-04
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":  ---> 8e698fd3f3d2
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Step 2/6 : RUN apt-get update
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":  ---> Running in b2182fe50003
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:1 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Hit:2 http://archive.ubuntu.com/ubuntu noble InRelease
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:3 http://security.ubuntu.com/ubuntu noble-security/universe i386 Packages [704 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:4 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:5 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1752 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:6 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1183 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:7 http://security.ubuntu.com/ubuntu noble-security/main i386 Packages [450 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:8 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [2898 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:9 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:10 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [2130 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:11 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [3059 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:12 http://archive.ubuntu.com/ubuntu noble-updates/restricted i386 Packages [28.6 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:13 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1950 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:14 http://archive.ubuntu.com/ubuntu noble-updates/main i386 Packages [711 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:15 http://archive.ubuntu.com/ubuntu noble-updates/universe i386 Packages [1250 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:16 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [35.9 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:17 http://archive.ubuntu.com/ubuntu noble-backports/main i386 Packages [40.3 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:18 http://archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [34.6 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:19 http://archive.ubuntu.com/ubuntu noble-backports/universe i386 Packages [18.8 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:20 http://archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [49.5 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Fetched 16.7 MB in 2s (7281 kB/s)
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Reading package lists...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Removing intermediate container b2182fe50003
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":  ---> cd0e797578be
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Step 3/6 : RUN apt-get install -y build-essential cmake git ninja-build zlib1g-dev
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":  ---> Running in c699b883155f
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Reading package lists...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Building dependency tree...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Reading state information...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": build-essential is already the newest version (12.10ubuntu1).
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": git is already the newest version (1:2.43.0-1ubuntu7.3).
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": The following packages were automatically installed and are no longer required:
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":   autotools-dev m4
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Use 'apt autoremove' to remove them.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": The following additional packages will be installed:
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":   cmake-data libarchive13t64 libicu74 libjsoncpp25 librhash0 libuv1t64 libxml2
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Suggested packages:
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":   cmake-doc cmake-format elpa-cmake-mode lrzip python3
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": The following NEW packages will be installed:
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":   cmake cmake-data libarchive13t64 libicu74 libjsoncpp25 librhash0 libuv1t64
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":   libxml2 ninja-build zlib1g-dev
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": 0 upgraded, 10 newly installed, 0 to remove and 20 not upgraded.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Need to get 26.7 MB of archives.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": After this operation, 90.9 MB of additional disk space will be used.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libicu74 amd64 74.2-1ubuntu3.1 [10.9 MB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:2 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libxml2 amd64 2.9.14+dfsg-1.3ubuntu3.6 [763 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:3 http://archive.ubuntu.com/ubuntu noble/main amd64 libuv1t64 amd64 1.48.0-1.1build1 [97.3 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:4 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libarchive13t64 amd64 3.7.2-2ubuntu0.5 [382 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:5 http://archive.ubuntu.com/ubuntu noble/main amd64 libjsoncpp25 amd64 1.9.5-6build1 [82.8 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:6 http://archive.ubuntu.com/ubuntu noble/main amd64 librhash0 amd64 1.4.3-3build1 [129 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:7 http://archive.ubuntu.com/ubuntu noble/main amd64 cmake-data all 3.28.3-1build7 [2155 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:8 http://archive.ubuntu.com/ubuntu noble/main amd64 cmake amd64 3.28.3-1build7 [11.2 MB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:9 http://archive.ubuntu.com/ubuntu noble/universe amd64 ninja-build amd64 1.11.1-2 [129 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Get:10 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 zlib1g-dev amd64 1:1.3.dfsg-3.1ubuntu2.1 [894 kB]
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": [0mFetched 26.7 MB in 1s (41.8 MB/s)
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Selecting previously unselected package libicu74:amd64.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17633 files and directories currently installed.)
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Preparing to unpack .../0-libicu74_74.2-1ubuntu3.1_amd64.deb ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Unpacking libicu74:amd64 (74.2-1ubuntu3.1) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Selecting previously unselected package libxml2:amd64.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Preparing to unpack .../1-libxml2_2.9.14+dfsg-1.3ubuntu3.6_amd64.deb ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Unpacking libxml2:amd64 (2.9.14+dfsg-1.3ubuntu3.6) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Selecting previously unselected package libuv1t64:amd64.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Preparing to unpack .../2-libuv1t64_1.48.0-1.1build1_amd64.deb ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Unpacking libuv1t64:amd64 (1.48.0-1.1build1) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Selecting previously unselected package libarchive13t64:amd64.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Preparing to unpack .../3-libarchive13t64_3.7.2-2ubuntu0.5_amd64.deb ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Unpacking libarchive13t64:amd64 (3.7.2-2ubuntu0.5) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Selecting previously unselected package libjsoncpp25:amd64.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Preparing to unpack .../4-libjsoncpp25_1.9.5-6build1_amd64.deb ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Unpacking libjsoncpp25:amd64 (1.9.5-6build1) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Selecting previously unselected package librhash0:amd64.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Preparing to unpack .../5-librhash0_1.4.3-3build1_amd64.deb ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Unpacking librhash0:amd64 (1.4.3-3build1) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Selecting previously unselected package cmake-data.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Preparing to unpack .../6-cmake-data_3.28.3-1build7_all.deb ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Unpacking cmake-data (3.28.3-1build7) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Selecting previously unselected package cmake.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Preparing to unpack .../7-cmake_3.28.3-1build7_amd64.deb ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Unpacking cmake (3.28.3-1build7) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Selecting previously unselected package ninja-build.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Preparing to unpack .../8-ninja-build_1.11.1-2_amd64.deb ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Unpacking ninja-build (1.11.1-2) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Selecting previously unselected package zlib1g-dev:amd64.
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Preparing to unpack .../9-zlib1g-dev_1%3a1.3.dfsg-3.1ubuntu2.1_amd64.deb ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Unpacking zlib1g-dev:amd64 (1:1.3.dfsg-3.1ubuntu2.1) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Setting up libuv1t64:amd64 (1.48.0-1.1build1) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Setting up ninja-build (1.11.1-2) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Setting up libjsoncpp25:amd64 (1.9.5-6build1) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Setting up libicu74:amd64 (74.2-1ubuntu3.1) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Setting up zlib1g-dev:amd64 (1:1.3.dfsg-3.1ubuntu2.1) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Setting up librhash0:amd64 (1.4.3-3build1) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Setting up cmake-data (3.28.3-1build7) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Setting up libxml2:amd64 (2.9.14+dfsg-1.3ubuntu3.6) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Setting up libarchive13t64:amd64 (3.7.2-2ubuntu0.5) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Setting up cmake (3.28.3-1build7) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Removing intermediate container c699b883155f
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":  ---> 52e8d56ac318
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Step 4/6 : RUN git clone --depth 1 https://github.com/lpereira/lwan.git
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":  ---> Running in d38b250457b4
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": [91mCloning into 'lwan'...
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": [0mRemoving intermediate container d38b250457b4
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":  ---> 4c203ac45b32
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Step 5/6 : WORKDIR lwan
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":  ---> Running in 5723c38fd0e2
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Removing intermediate container 5723c38fd0e2
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":  ---> b267c1fd360b
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Step 6/6 : COPY build.sh $SRC/
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c":  ---> c4d3030db055
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Successfully built c4d3030db055
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Successfully tagged gcr.io/oss-fuzz/lwan:latest
+Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/lwan:latest
+Finished Step #1 - "build-41c116ac-62b7-4368-89fc-df97de0f8e0c"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/lwan
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": WARNING: tempfile is deprecated; consider using mktemp instead.
+Step #2 - "srcmap": + SRCMAP=/tmp/fileMJNzCO
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/lwan/.git
+Step #2 - "srcmap": + GIT_DIR=/src/lwan
+Step #2 - "srcmap": + cd /src/lwan
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/lpereira/lwan.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=e7ac7f13afd1e060bfef61d2ec5d2a60f356b0eb
+Step #2 - "srcmap": + jq_inplace /tmp/fileMJNzCO '."/src/lwan" = { type: "git", url: "https://github.com/lpereira/lwan.git", rev: "e7ac7f13afd1e060bfef61d2ec5d2a60f356b0eb" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": WARNING: tempfile is deprecated; consider using mktemp instead.
+Step #2 - "srcmap": + F=/tmp/fileTt7tkG
+Step #2 - "srcmap": + cat /tmp/fileMJNzCO
+Step #2 - "srcmap": + jq '."/src/lwan" = { type: "git", url: "https://github.com/lpereira/lwan.git", rev: "e7ac7f13afd1e060bfef61d2ec5d2a60f356b0eb" }'
+Step #2 - "srcmap": + mv /tmp/fileTt7tkG /tmp/fileMJNzCO
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileMJNzCO
+Step #2 - "srcmap": + rm /tmp/fileMJNzCO
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/lwan": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/lpereira/lwan.git",
+Step #2 - "srcmap":     "rev": "e7ac7f13afd1e060bfef61d2ec5d2a60f356b0eb"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-afl-address-x86_64"
+Step #3 - "compile-afl-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-afl-address-x86_64": Copying precompiled AFL++
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": AFL++ target compilation setup:
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_UNKNOWN_ENVS=1
+Step #3 - "compile-afl-address-x86_64": AFL_QUIET=1
+Step #3 - "compile-afl-address-x86_64": AFL_IGNORE_PROBLEMS=1
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64":  done.
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": CC=/src/aflplusplus/afl-clang-fast
+Step #3 - "compile-afl-address-x86_64": CXX=/src/aflplusplus/afl-clang-fast++
+Step #3 - "compile-afl-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+Step #3 - "compile-afl-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+Step #3 - "compile-afl-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-afl-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-afl-address-x86_64": + mkdir -p /work/lwan
+Step #3 - "compile-afl-address-x86_64": + cd /work/lwan
+Step #3 - "compile-afl-address-x86_64": + cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/src/aflplusplus/afl-clang-fast '-DCMAKE_C_FLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope ' /src/lwan/
+Step #3 - "compile-afl-address-x86_64": -- The C compiler identification is Clang 22.0.0
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compiler ABI info
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compiler ABI info - done
+Step #3 - "compile-afl-address-x86_64": -- Check for working C compiler: /src/aflplusplus/afl-clang-fast - skipped
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compile features
+Step #3 - "compile-afl-address-x86_64": -- Detecting C compile features - done
+Step #3 - "compile-afl-address-x86_64": -- Running CMake for lwan (Scalable, high performance, experimental web server)
+Step #3 - "compile-afl-address-x86_64": -- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+Step #3 - "compile-afl-address-x86_64": -- Found Git: /usr/bin/git (found version "2.43.0")
+Step #3 - "compile-afl-address-x86_64": fatal: No names found, cannot describe anything.
+Step #3 - "compile-afl-address-x86_64": [33mCMake Warning at src/cmake/GitVersionDetect.cmake:56 (message):
+Step #3 - "compile-afl-address-x86_64":   Failed to determine GITVERSIONDETECT_VERSION from Git tags.  Using default
+Step #3 - "compile-afl-address-x86_64":   version "0.0.0-0-unknown".
+Step #3 - "compile-afl-address-x86_64": Call Stack (most recent call first):
+Step #3 - "compile-afl-address-x86_64":   CMakeLists.txt:20 (include)
+Step #3 - "compile-afl-address-x86_64": 
+Step #3 - "compile-afl-address-x86_64": [0m
+Step #3 - "compile-afl-address-x86_64": -- Lwan version 0.0.0-0-unknown
+Step #3 - "compile-afl-address-x86_64": -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+Step #3 - "compile-afl-address-x86_64": -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+Step #3 - "compile-afl-address-x86_64": -- Found Threads: TRUE
+Step #3 - "compile-afl-address-x86_64": -- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.3")
+Step #3 - "compile-afl-address-x86_64": -- Using zlib for deflate compression
+Step #3 - "compile-afl-address-x86_64": -- Disabling Lua support
+Step #3 - "compile-afl-address-x86_64": -- Looking for linux/capability.h
+Step #3 - "compile-afl-address-x86_64": -- Looking for linux/capability.h - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for sys/auxv.h
+Step #3 - "compile-afl-address-x86_64": -- Looking for sys/auxv.h - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for sys/epoll.h
+Step #3 - "compile-afl-address-x86_64": -- Looking for sys/epoll.h - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for 3 include files sys/time.h, ..., sys/event.h
+Step #3 - "compile-afl-address-x86_64": -- Looking for 3 include files sys/time.h, ..., sys/event.h - not found
+Step #3 - "compile-afl-address-x86_64": -- Looking for alloca.h
+Step #3 - "compile-afl-address-x86_64": -- Looking for alloca.h - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for getauxval
+Step #3 - "compile-afl-address-x86_64": -- Looking for getauxval - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for get_current_dir_name
+Step #3 - "compile-afl-address-x86_64": -- Looking for get_current_dir_name - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for reallocarray
+Step #3 - "compile-afl-address-x86_64": -- Looking for reallocarray - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for eventfd
+Step #3 - "compile-afl-address-x86_64": -- Looking for eventfd - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for mincore
+Step #3 - "compile-afl-address-x86_64": -- Looking for mincore - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for mempcpy
+Step #3 - "compile-afl-address-x86_64": -- Looking for mempcpy - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for memrchr
+Step #3 - "compile-afl-address-x86_64": -- Looking for memrchr - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for pipe2
+Step #3 - "compile-afl-address-x86_64": -- Looking for pipe2 - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for accept4
+Step #3 - "compile-afl-address-x86_64": -- Looking for accept4 - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for readahead
+Step #3 - "compile-afl-address-x86_64": -- Looking for readahead - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for mkostemp
+Step #3 - "compile-afl-address-x86_64": -- Looking for mkostemp - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for clock_gettime
+Step #3 - "compile-afl-address-x86_64": -- Looking for clock_gettime - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_barrier_init
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_barrier_init - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_set_name_np
+Step #3 - "compile-afl-address-x86_64": -- Looking for pthread_set_name_np - not found
+Step #3 - "compile-afl-address-x86_64": -- Looking for posix_fadvise
+Step #3 - "compile-afl-address-x86_64": -- Looking for posix_fadvise - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for getentropy
+Step #3 - "compile-afl-address-x86_64": -- Looking for getentropy - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for fwrite_unlocked
+Step #3 - "compile-afl-address-x86_64": -- Looking for fwrite_unlocked - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for gettid
+Step #3 - "compile-afl-address-x86_64": -- Looking for gettid - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for secure_getenv
+Step #3 - "compile-afl-address-x86_64": -- Looking for secure_getenv - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for statfs
+Step #3 - "compile-afl-address-x86_64": -- Looking for statfs - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for syslog
+Step #3 - "compile-afl-address-x86_64": -- Looking for syslog - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for stpcpy
+Step #3 - "compile-afl-address-x86_64": -- Looking for stpcpy - found
+Step #3 - "compile-afl-address-x86_64": -- Looking for dladdr
+Step #3 - "compile-afl-address-x86_64": -- Looking for dladdr - found
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_STD_GNU11
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_STD_GNU11 - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_ACCESS_ATTRIBUTE
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_ACCESS_ATTRIBUTE - Failed
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_BUILTIN_CPU_INIT
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_BUILTIN_CPU_INIT - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_BUILTIN_EXPECT_PROBABILITY
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_BUILTIN_EXPECT_PROBABILITY - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_BUILTIN_FPCLASSIFY
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_BUILTIN_FPCLASSIFY - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_BUILTIN_MUL_OVERFLOW
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_BUILTIN_MUL_OVERFLOW - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_BUILTIN_ADD_OVERFLOW
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_BUILTIN_ADD_OVERFLOW - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_STATIC_ASSERT
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_STATIC_ASSERT - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_SO_ATTACH_REUSEPORT_CBPF
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_SO_ATTACH_REUSEPORT_CBPF - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_SO_INCOMING_CPU
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_SO_INCOMING_CPU - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_STATFS_F_TYPE
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_STATFS_F_TYPE - Success
+Step #3 - "compile-afl-address-x86_64": -- Valgrind headers not found -- disabling valgrind support
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_MTUNE_NATIVE
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_MTUNE_NATIVE - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_MARCH_NATIVE
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_MARCH_NATIVE - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_STACK_PROTECTOR_EXPLICIT
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_STACK_PROTECTOR_EXPLICIT - Failed
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_IMMEDIATE_BINDING
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_IMMEDIATE_BINDING - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_READ_ONLY_GOT
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_READ_ONLY_GOT - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_NO_PLT
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_NO_PLT - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_NOEXEC_STACK
+Step #3 - "compile-afl-address-x86_64": -- Performing Test LWAN_HAVE_NOEXEC_STACK - Success
+Step #3 - "compile-afl-address-x86_64": -- Building without a sanitizer
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Waggressive-loop-optimizations
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Waggressive-loop-optimizations - Failed
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Warith-conversion
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Warith-conversion - Failed
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Warray-bounds
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Warray-bounds - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wdouble-promotion
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wdouble-promotion - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wduplicated-branches
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wduplicated-branches - Failed
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wduplicated-cond
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wduplicated-cond - Failed
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wformat-overflow
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wformat-overflow - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wlogical-not-parentheses
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wlogical-not-parentheses - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wlogical-op
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wlogical-op - Failed
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wno-override-init
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wno-override-init - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wno-unknown-warning-option
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wno-unknown-warning-option - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wno-unused-parameter
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wno-unused-parameter - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wrestrict
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wrestrict - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wstringop-overflow
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wstringop-overflow - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wstringop-overread
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wstringop-overread - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wunsequenced
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wunsequenced - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wvla
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wvla - Success
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wno-free-nonheap-object
+Step #3 - "compile-afl-address-x86_64": -- Performing Test supports -Wno-free-nonheap-object - Success
+Step #3 - "compile-afl-address-x86_64": -- Found Python3: /usr/local/bin/python3.11 (found version "3.11.13") found components: Interpreter
+Step #3 - "compile-afl-address-x86_64": -- Using built-in context switching routines for x86_64 processors
+Step #3 - "compile-afl-address-x86_64": -- Using zlib (/usr/lib/x86_64-linux-gnu/libz.so) for mimegen
+Step #3 - "compile-afl-address-x86_64": -- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+Step #3 - "compile-afl-address-x86_64": -- Freegeoip sample application not being built: SQLite not found
+Step #3 - "compile-afl-address-x86_64": -- Looking for fmemopen
+Step #3 - "compile-afl-address-x86_64": -- Looking for fmemopen - found
+Step #3 - "compile-afl-address-x86_64": -- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+Step #3 - "compile-afl-address-x86_64": -- Not building benchmark suite: database libraries not found.
+Step #3 - "compile-afl-address-x86_64": -- Configuring done (13.6s)
+Step #3 - "compile-afl-address-x86_64": -- Generating done (0.0s)
+Step #3 - "compile-afl-address-x86_64": -- Build files have been written to: /work/lwan
+Step #3 - "compile-afl-address-x86_64": + ninja -v liblwan.a
+Step #3 - "compile-afl-address-x86_64": [1/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/statuslookupgen.dir/statuslookupgen.c.o -MF src/bin/tools/CMakeFiles/statuslookupgen.dir/statuslookupgen.c.o.d -o src/bin/tools/CMakeFiles/statuslookupgen.dir/statuslookupgen.c.o -c /src/lwan/src/bin/tools/statuslookupgen.c
+Step #3 - "compile-afl-address-x86_64": [2/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/bin2hex.dir/bin2hex.c.o -MF src/bin/tools/CMakeFiles/bin2hex.dir/bin2hex.c.o.d -o src/bin/tools/CMakeFiles/bin2hex.dir/bin2hex.c.o -c /src/lwan/src/bin/tools/bin2hex.c
+Step #3 - "compile-afl-address-x86_64": [3/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/lwan-status.c.o -MF src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/lwan-status.c.o.d -o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/lwan-status.c.o -c /src/lwan/src/lib/lwan-status.c
+Step #3 - "compile-afl-address-x86_64": [4/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/missing.c.o -MF src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/missing.c.o.d -o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/missing.c.o -c /src/lwan/src/lib/missing.c
+Step #3 - "compile-afl-address-x86_64": [5/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/mimegen.dir/mimegen.c.o -MF src/bin/tools/CMakeFiles/mimegen.dir/mimegen.c.o.d -o src/bin/tools/CMakeFiles/mimegen.dir/mimegen.c.o -c /src/lwan/src/bin/tools/mimegen.c
+Step #3 - "compile-afl-address-x86_64": [6/56] : && /src/aflplusplus/afl-clang-fast -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g -Wl,-z,now -Wl,-z,relro -Wl,-z,noexecstack src/bin/tools/CMakeFiles/statuslookupgen.dir/statuslookupgen.c.o -o src/bin/tools/statuslookupgen   && :
+Step #3 - "compile-afl-address-x86_64": [7/56] : && /src/aflplusplus/afl-clang-fast -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g -Wl,-z,now -Wl,-z,relro -Wl,-z,noexecstack src/bin/tools/CMakeFiles/bin2hex.dir/bin2hex.c.o -o src/bin/tools/bin2hex   && :
+Step #3 - "compile-afl-address-x86_64": [8/56] cd /work/lwan/src/lib && /work/lwan/src/bin/tools/bin2hex /src/lwan/wwwroot/icons/back.gif back_gif /src/lwan/wwwroot/icons/file.gif file_gif /src/lwan/wwwroot/icons/folder.gif folder_gif /src/lwan/src/lib/servefile-template.html servefile_template > /work/lwan/servefile-data.h
+Step #3 - "compile-afl-address-x86_64": [9/56] cd /work/lwan/src/lib && /work/lwan/src/bin/tools/bin2hex /src/lwan/src/lib/response-template.html response_template > /work/lwan/response-data.h
+Step #3 - "compile-afl-address-x86_64": [10/56] cd /work/lwan/src/lib && /work/lwan/src/bin/tools/statuslookupgen > /work/lwan/lookup-http-status.h
+Step #3 - "compile-afl-address-x86_64": [11/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/hash.c.o -MF src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/hash.c.o.d -o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/hash.c.o -c /src/lwan/src/lib/hash.c
+Step #3 - "compile-afl-address-x86_64": [12/56] : && /src/aflplusplus/afl-clang-fast -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g -Wl,-z,now -Wl,-z,relro -Wl,-z,noexecstack src/bin/tools/CMakeFiles/mimegen.dir/mimegen.c.o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/hash.c.o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/missing.c.o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/lwan-status.c.o -o src/bin/tools/mimegen  /usr/lib/x86_64-linux-gnu/libz.so && :
+Step #3 - "compile-afl-address-x86_64": [13/56] cd /work/lwan/src/lib && /work/lwan/src/bin/tools/mimegen /src/lwan/src/bin/tools/mime.types > /work/lwan/mime-types.h
+Step #3 - "compile-afl-address-x86_64": [14/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/missing-epoll.c.o -MF src/lib/CMakeFiles/lwan-static.dir/missing-epoll.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/missing-epoll.c.o -c /src/lwan/src/lib/missing-epoll.c
+Step #3 - "compile-afl-address-x86_64": [15/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-mod-response.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-mod-response.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-response.c.o -c /src/lwan/src/lib/lwan-mod-response.c
+Step #3 - "compile-afl-address-x86_64": [16/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-mod-redirect.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-mod-redirect.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-redirect.c.o -c /src/lwan/src/lib/lwan-mod-redirect.c
+Step #3 - "compile-afl-address-x86_64": [17/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-array.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-array.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-array.c.o -c /src/lwan/src/lib/lwan-array.c
+Step #3 - "compile-afl-address-x86_64": [18/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-http-authorize.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-http-authorize.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-http-authorize.c.o -c /src/lwan/src/lib/lwan-http-authorize.c
+Step #3 - "compile-afl-address-x86_64": [19/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/missing-pthread.c.o -MF src/lib/CMakeFiles/lwan-static.dir/missing-pthread.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/missing-pthread.c.o -c /src/lwan/src/lib/missing-pthread.c
+Step #3 - "compile-afl-address-x86_64": [20/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-readahead.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-readahead.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-readahead.c.o -c /src/lwan/src/lib/lwan-readahead.c
+Step #3 - "compile-afl-address-x86_64": [21/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o -c /src/lwan/src/lib/lwan-request.c
+Step #3 - "compile-afl-address-x86_64": [31mFAILED: [0msrc/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o 
+Step #3 - "compile-afl-address-x86_64": /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o -c /src/lwan/src/lib/lwan-request.c
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                    ^~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                     ^~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:70: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                                      ^~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:277:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   277 |         ['3'] = 3 << 4,    ['4'] = 4 << 4,  ['5'] = 5 << 4,  ['6'] = 6 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                 ^~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:277:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   277 |         ['3'] = 3 << 4,    ['4'] = 4 << 4,  ['5'] = 5 << 4,  ['6'] = 6 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                    ^~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:277:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   277 |         ['3'] = 3 << 4,    ['4'] = 4 << 4,  ['5'] = 5 << 4,  ['6'] = 6 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                     ^~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:277:70: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   277 |         ['3'] = 3 << 4,    ['4'] = 4 << 4,  ['5'] = 5 << 4,  ['6'] = 6 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                                      ^~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:278:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   278 |         ['7'] = 7 << 4,    ['8'] = 8 << 4,  ['9'] = 9 << 4,  ['a'] = 10 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                 ^~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:278:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   278 |         ['7'] = 7 << 4,    ['8'] = 8 << 4,  ['9'] = 9 << 4,  ['a'] = 10 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                    ^~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:278:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   278 |         ['7'] = 7 << 4,    ['8'] = 8 << 4,  ['9'] = 9 << 4,  ['a'] = 10 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                     ^~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:278:70: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   278 |         ['7'] = 7 << 4,    ['8'] = 8 << 4,  ['9'] = 9 << 4,  ['a'] = 10 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                                      ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:279:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   279 |         ['b'] = 11 << 4,   ['c'] = 12 << 4, ['d'] = 13 << 4, ['e'] = 14 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                 ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:279:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   279 |         ['b'] = 11 << 4,   ['c'] = 12 << 4, ['d'] = 13 << 4, ['e'] = 14 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                    ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:279:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   279 |         ['b'] = 11 << 4,   ['c'] = 12 << 4, ['d'] = 13 << 4, ['e'] = 14 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                     ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:279:70: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   279 |         ['b'] = 11 << 4,   ['c'] = 12 << 4, ['d'] = 13 << 4, ['e'] = 14 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                                      ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:280:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   280 |         ['f'] = 15 << 4,   ['A'] = 10 << 4, ['B'] = 11 << 4, ['C'] = 12 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                 ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:280:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   280 |         ['f'] = 15 << 4,   ['A'] = 10 << 4, ['B'] = 11 << 4, ['C'] = 12 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                    ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:280:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   280 |         ['f'] = 15 << 4,   ['A'] = 10 << 4, ['B'] = 11 << 4, ['C'] = 12 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                     ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:280:70: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   280 |         ['f'] = 15 << 4,   ['A'] = 10 << 4, ['B'] = 11 << 4, ['C'] = 12 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                                      ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:281:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   281 |         ['D'] = 13 << 4,   ['E'] = 14 << 4, ['F'] = 15 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                 ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:281:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   281 |         ['D'] = 13 << 4,   ['E'] = 14 << 4, ['F'] = 15 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                    ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:281:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   281 |         ['D'] = 13 << 4,   ['E'] = 14 << 4, ['F'] = 15 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                                                     ^~~~~~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                                   ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                                               ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:59: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                                                           ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:71: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                                                                       ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:285:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   285 |         ['4'] = 4,        ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,
+Step #3 - "compile-afl-address-x86_64":       |                 ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:285:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   285 |         ['4'] = 4,        ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,
+Step #3 - "compile-afl-address-x86_64":       |                                   ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:285:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   285 |         ['4'] = 4,        ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,
+Step #3 - "compile-afl-address-x86_64":       |                                               ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:285:59: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   285 |         ['4'] = 4,        ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,
+Step #3 - "compile-afl-address-x86_64":       |                                                           ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:285:71: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   285 |         ['4'] = 4,        ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,
+Step #3 - "compile-afl-address-x86_64":       |                                                                       ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:286:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   286 |         ['9'] = 9,        ['a'] = 10, ['b'] = 11, ['c'] = 12, ['d'] = 13,
+Step #3 - "compile-afl-address-x86_64":       |                 ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:286:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   286 |         ['9'] = 9,        ['a'] = 10, ['b'] = 11, ['c'] = 12, ['d'] = 13,
+Step #3 - "compile-afl-address-x86_64":       |                                   ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:286:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   286 |         ['9'] = 9,        ['a'] = 10, ['b'] = 11, ['c'] = 12, ['d'] = 13,
+Step #3 - "compile-afl-address-x86_64":       |                                               ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:286:59: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   286 |         ['9'] = 9,        ['a'] = 10, ['b'] = 11, ['c'] = 12, ['d'] = 13,
+Step #3 - "compile-afl-address-x86_64":       |                                                           ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:286:71: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   286 |         ['9'] = 9,        ['a'] = 10, ['b'] = 11, ['c'] = 12, ['d'] = 13,
+Step #3 - "compile-afl-address-x86_64":       |                                                                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:287:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   287 |         ['e'] = 14,       ['f'] = 15, ['A'] = 10, ['B'] = 11, ['C'] = 12,
+Step #3 - "compile-afl-address-x86_64":       |                 ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:287:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   287 |         ['e'] = 14,       ['f'] = 15, ['A'] = 10, ['B'] = 11, ['C'] = 12,
+Step #3 - "compile-afl-address-x86_64":       |                                   ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:287:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   287 |         ['e'] = 14,       ['f'] = 15, ['A'] = 10, ['B'] = 11, ['C'] = 12,
+Step #3 - "compile-afl-address-x86_64":       |                                               ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:287:59: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   287 |         ['e'] = 14,       ['f'] = 15, ['A'] = 10, ['B'] = 11, ['C'] = 12,
+Step #3 - "compile-afl-address-x86_64":       |                                                           ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:287:71: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   287 |         ['e'] = 14,       ['f'] = 15, ['A'] = 10, ['B'] = 11, ['C'] = 12,
+Step #3 - "compile-afl-address-x86_64":       |                                                                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:288:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   288 |         ['D'] = 13,       ['E'] = 14, ['F'] = 15,
+Step #3 - "compile-afl-address-x86_64":       |                 ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:288:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   288 |         ['D'] = 13,       ['E'] = 14, ['F'] = 15,
+Step #3 - "compile-afl-address-x86_64":       |                                   ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:288:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+Step #3 - "compile-afl-address-x86_64":   288 |         ['D'] = 13,       ['E'] = 14, ['F'] = 15,
+Step #3 - "compile-afl-address-x86_64":       |                                               ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+Step #3 - "compile-afl-address-x86_64":   284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+Step #3 - "compile-afl-address-x86_64":       |                       ^~
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:1931:33: error: variable has incomplete type 'struct coro_switcher'
+Step #3 - "compile-afl-address-x86_64":  1931 |     static struct coro_switcher switcher;
+Step #3 - "compile-afl-address-x86_64":       |                                 ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-request.c:1931:19: note: forward declaration of 'struct coro_switcher'
+Step #3 - "compile-afl-address-x86_64":  1931 |     static struct coro_switcher switcher;
+Step #3 - "compile-afl-address-x86_64":       |                   ^
+Step #3 - "compile-afl-address-x86_64": 44 warnings and 1 error generated.
+Step #3 - "compile-afl-address-x86_64": [22/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-arena.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-arena.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-arena.c.o -c /src/lwan/src/lib/lwan-arena.c
+Step #3 - "compile-afl-address-x86_64": [23/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-job.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-job.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-job.c.o -c /src/lwan/src/lib/lwan-job.c
+Step #3 - "compile-afl-address-x86_64": [24/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-time.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-time.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-time.c.o -c /src/lwan/src/lib/lwan-time.c
+Step #3 - "compile-afl-address-x86_64": [25/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-status.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-status.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-status.c.o -c /src/lwan/src/lib/lwan-status.c
+Step #3 - "compile-afl-address-x86_64": [26/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-trie.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-trie.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-trie.c.o -c /src/lwan/src/lib/lwan-trie.c
+Step #3 - "compile-afl-address-x86_64": [27/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/missing.c.o -MF src/lib/CMakeFiles/lwan-static.dir/missing.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/missing.c.o -c /src/lwan/src/lib/missing.c
+Step #3 - "compile-afl-address-x86_64": [28/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/list.c.o -MF src/lib/CMakeFiles/lwan-static.dir/list.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/list.c.o -c /src/lwan/src/lib/list.c
+Step #3 - "compile-afl-address-x86_64": [29/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-straitjacket.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-straitjacket.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-straitjacket.c.o -c /src/lwan/src/lib/lwan-straitjacket.c
+Step #3 - "compile-afl-address-x86_64": [30/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-tq.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-tq.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-tq.c.o -c /src/lwan/src/lib/lwan-tq.c
+Step #3 - "compile-afl-address-x86_64": [31/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/base64.c.o -MF src/lib/CMakeFiles/lwan-static.dir/base64.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/base64.c.o -c /src/lwan/src/lib/base64.c
+Step #3 - "compile-afl-address-x86_64": [32/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-pubsub.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-pubsub.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-pubsub.c.o -c /src/lwan/src/lib/lwan-pubsub.c
+Step #3 - "compile-afl-address-x86_64": [33/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-socket.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-socket.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-socket.c.o -c /src/lwan/src/lib/lwan-socket.c
+Step #3 - "compile-afl-address-x86_64": [34/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-io-wrappers.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-io-wrappers.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-io-wrappers.c.o -c /src/lwan/src/lib/lwan-io-wrappers.c
+Step #3 - "compile-afl-address-x86_64": [35/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/int-to-str.c.o -MF src/lib/CMakeFiles/lwan-static.dir/int-to-str.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/int-to-str.c.o -c /src/lwan/src/lib/int-to-str.c
+Step #3 - "compile-afl-address-x86_64": [36/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-cache.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-cache.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-cache.c.o -c /src/lwan/src/lib/lwan-cache.c
+Step #3 - "compile-afl-address-x86_64": [37/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-strbuf.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-strbuf.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-strbuf.c.o -c /src/lwan/src/lib/lwan-strbuf.c
+Step #3 - "compile-afl-address-x86_64": [38/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-h2-huffman.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-h2-huffman.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-h2-huffman.c.o -c /src/lwan/src/lib/lwan-h2-huffman.c
+Step #3 - "compile-afl-address-x86_64": [39/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/realpathat.c.o -MF src/lib/CMakeFiles/lwan-static.dir/realpathat.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/realpathat.c.o -c /src/lwan/src/lib/realpathat.c
+Step #3 - "compile-afl-address-x86_64": [40/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-coro.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-coro.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-coro.c.o -c /src/lwan/src/lib/lwan-coro.c
+Step #3 - "compile-afl-address-x86_64": [41/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/sd-daemon.c.o -MF src/lib/CMakeFiles/lwan-static.dir/sd-daemon.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/sd-daemon.c.o -c /src/lwan/src/lib/sd-daemon.c
+Step #3 - "compile-afl-address-x86_64": [42/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-tables.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-tables.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-tables.c.o -c /src/lwan/src/lib/lwan-tables.c
+Step #3 - "compile-afl-address-x86_64": [43/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-response.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-response.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-response.c.o -c /src/lwan/src/lib/lwan-response.c
+Step #3 - "compile-afl-address-x86_64": [44/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/sha1.c.o -MF src/lib/CMakeFiles/lwan-static.dir/sha1.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/sha1.c.o -c /src/lwan/src/lib/sha1.c
+Step #3 - "compile-afl-address-x86_64": [45/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/hash.c.o -MF src/lib/CMakeFiles/lwan-static.dir/hash.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/hash.c.o -c /src/lwan/src/lib/hash.c
+Step #3 - "compile-afl-address-x86_64": [46/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-mod-serve-files.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-mod-serve-files.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-serve-files.c.o -c /src/lwan/src/lib/lwan-mod-serve-files.c
+Step #3 - "compile-afl-address-x86_64": [47/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan.c.o -c /src/lwan/src/lib/lwan.c
+Step #3 - "compile-afl-address-x86_64": [48/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-mod-fastcgi.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-mod-fastcgi.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-fastcgi.c.o -c /src/lwan/src/lib/lwan-mod-fastcgi.c
+Step #3 - "compile-afl-address-x86_64": [49/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-mod-rewrite.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-mod-rewrite.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-rewrite.c.o -c /src/lwan/src/lib/lwan-mod-rewrite.c
+Step #3 - "compile-afl-address-x86_64": [50/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/patterns.c.o -MF src/lib/CMakeFiles/lwan-static.dir/patterns.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/patterns.c.o -c /src/lwan/src/lib/patterns.c
+Step #3 - "compile-afl-address-x86_64": [51/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-websocket.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-websocket.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-websocket.c.o -c /src/lwan/src/lib/lwan-websocket.c
+Step #3 - "compile-afl-address-x86_64": [52/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-config.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-config.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-config.c.o -c /src/lwan/src/lib/lwan-config.c
+Step #3 - "compile-afl-address-x86_64": [53/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-thread.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-thread.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-thread.c.o -c /src/lwan/src/lib/lwan-thread.c
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-thread.c:1036:50: warning: unused parameter 'switcher' [-Wunused-parameter]
+Step #3 - "compile-afl-address-x86_64":  1036 |                                    coro_context *switcher,
+Step #3 - "compile-afl-address-x86_64":       |                                                  ^
+Step #3 - "compile-afl-address-x86_64": /src/lwan/src/lib/lwan-thread.c:1037:58: warning: unused parameter 'tq' [-Wunused-parameter]
+Step #3 - "compile-afl-address-x86_64":  1037 |                                    struct timeout_queue *tq)
+Step #3 - "compile-afl-address-x86_64":       |                                                          ^
+Step #3 - "compile-afl-address-x86_64": 2 warnings generated.
+Step #3 - "compile-afl-address-x86_64": [54/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-template.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-template.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-template.c.o -c /src/lwan/src/lib/lwan-template.c
+Step #3 - "compile-afl-address-x86_64": ninja: build stopped: subcommand failed.
+Step #3 - "compile-afl-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image lwan\npython infra/helper.py build_fuzzers --sanitizer address --engine afl --architecture x86_64 lwan\n********************************************************************************
+Finished Step #3 - "compile-afl-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

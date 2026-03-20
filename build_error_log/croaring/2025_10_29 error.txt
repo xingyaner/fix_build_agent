@@ -1,0 +1,333 @@
+starting build "189de54d-cb21-45e9-8c8f-37c767da42a3"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0"
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Sending build context to Docker daemon  3.584kB
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": latest: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": b549f31133a9: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": d006dd6c334d: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 81314fe0454c: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cd0651df5692: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 802c5008c187: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cb902bcc4216: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 4c2a6d71b473: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fa3e2631aef5: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 108195edb3b1: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 8499e42e09e5: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": ef5ea414c65f: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cd0651df5692: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 4f7546d0e7c6: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 802c5008c187: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cb902bcc4216: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 108195edb3b1: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 8499e42e09e5: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 46b05e540e1f: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 43137d3ddf5a: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": ef5ea414c65f: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 4c2a6d71b473: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 77b1d5c8a948: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fa3e2631aef5: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fc82162e1292: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 8daf84acb822: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 77b1d5c8a948: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 35b942432bc9: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fc82162e1292: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 01dfb3cd71e9: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 1dd32e7b55dc: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 35b942432bc9: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 01dfb3cd71e9: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 73b183f6f6a6: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 058405440e72: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cf22229a1aba: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": df33cd6352b4: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 224655306e79: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 7e83d827a719: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 88b8198e5270: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 65833fae418c: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": dc23046ca4d4: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": e1e8efc516a5: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": bd631006694c: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": b75e9b31c473: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": d594996e85e2: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 2d459c24f8b3: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fd4906d1f374: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 78a9c4da52f9: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": c0cdc5e3d941: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 57007eb0b4a9: Pulling fs layer
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 88b8198e5270: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": bd631006694c: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": df33cd6352b4: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cf22229a1aba: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 7e83d827a719: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 57007eb0b4a9: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": d594996e85e2: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": c0cdc5e3d941: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": dc23046ca4d4: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": e1e8efc516a5: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fd4906d1f374: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 058405440e72: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 65833fae418c: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 2d459c24f8b3: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": b75e9b31c473: Waiting
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 81314fe0454c: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 81314fe0454c: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": b549f31133a9: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": b549f31133a9: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 802c5008c187: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cd0651df5692: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cd0651df5692: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 4c2a6d71b473: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 4c2a6d71b473: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": d006dd6c334d: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": d006dd6c334d: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fa3e2631aef5: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": b549f31133a9: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 8499e42e09e5: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 8499e42e09e5: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": ef5ea414c65f: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": ef5ea414c65f: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 4f7546d0e7c6: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 4f7546d0e7c6: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 46b05e540e1f: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 46b05e540e1f: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 108195edb3b1: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 108195edb3b1: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 43137d3ddf5a: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 43137d3ddf5a: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 77b1d5c8a948: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 77b1d5c8a948: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fc82162e1292: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fc82162e1292: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 8daf84acb822: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 8daf84acb822: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 35b942432bc9: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 35b942432bc9: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 01dfb3cd71e9: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 1dd32e7b55dc: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 1dd32e7b55dc: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 73b183f6f6a6: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 73b183f6f6a6: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 058405440e72: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 058405440e72: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cf22229a1aba: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cf22229a1aba: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 224655306e79: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 224655306e79: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 7e83d827a719: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 88b8198e5270: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 65833fae418c: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 65833fae418c: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": dc23046ca4d4: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": dc23046ca4d4: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cb902bcc4216: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cb902bcc4216: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": bd631006694c: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": bd631006694c: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": d006dd6c334d: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": e1e8efc516a5: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": e1e8efc516a5: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 81314fe0454c: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": b75e9b31c473: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": d594996e85e2: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": d594996e85e2: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 2d459c24f8b3: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fd4906d1f374: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 78a9c4da52f9: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": c0cdc5e3d941: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": c0cdc5e3d941: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 57007eb0b4a9: Verifying Checksum
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 57007eb0b4a9: Download complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cd0651df5692: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 802c5008c187: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cb902bcc4216: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 4c2a6d71b473: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fa3e2631aef5: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 108195edb3b1: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 8499e42e09e5: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": ef5ea414c65f: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 4f7546d0e7c6: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 46b05e540e1f: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 43137d3ddf5a: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 77b1d5c8a948: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fc82162e1292: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 8daf84acb822: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 35b942432bc9: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 01dfb3cd71e9: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 1dd32e7b55dc: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 73b183f6f6a6: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 058405440e72: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": cf22229a1aba: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": df33cd6352b4: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 224655306e79: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 7e83d827a719: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 88b8198e5270: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 65833fae418c: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": dc23046ca4d4: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": e1e8efc516a5: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": bd631006694c: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": b75e9b31c473: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": d594996e85e2: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 2d459c24f8b3: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": fd4906d1f374: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 78a9c4da52f9: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": c0cdc5e3d941: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 57007eb0b4a9: Pull complete
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Digest: sha256:71425dd88e177abd8d71f351fe6148e8b6a93695aeb109a8b6fb2c7c002c9e65
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder:latest
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0":  ---> f1fdb3f6db62
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Step 2/5 : RUN apt-get update && apt-get install -y make
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0":  ---> Running in 3618f847419e
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Hit:2 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Fetched 383 kB in 1s (384 kB/s)
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Reading package lists...
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Reading package lists...
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Building dependency tree...
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Reading state information...
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": make is already the newest version (4.2.1-1.2).
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": make set to manually installed.
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": The following packages were automatically installed and are no longer required:
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0":   autotools-dev libsigsegv2 m4
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Use 'apt autoremove' to remove them.
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Removing intermediate container 3618f847419e
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0":  ---> 9a9132e189f5
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Step 3/5 : RUN git clone --depth 1 https://github.com/RoaringBitmap/CRoaring croaring
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0":  ---> Running in 0d306bcf09ca
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": [91mCloning into 'croaring'...
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": [0m[91mUpdating files:  68% (1360/1989)[0m[91mUpdating files:  69% (1373/1989)[0m[91mUpdating files:  70% (1393/1989)[0m[91mUpdating files:  71% (1413/1989)[0m[91mUpdating files:  72% (1433/1989)[0m[91mUpdating files:  73% (1452/1989)[0m[91mUpdating files:  74% (1472/1989)[0m[91mUpdating files:  75% (1492/1989)[0m[91mUpdating files:  76% (1512/1989)[0m[91mUpdating files:  77% (1532/1989)[0m[91mUpdating files:  78% (1552/1989)[0m[91mUpdating files:  79% (1572/1989)[0m[91mUpdating files:  80% (1592/1989)[0m[91mUpdating files:  81% (1612/1989)[0m[91mUpdating files:  82% (1631/1989)[0m[91mUpdating files:  83% (1651/1989)[0m[91mUpdating files:  84% (1671/1989)[0m[91mUpdating files:  85% (1691/1989)[0m[91mUpdating files:  86% (1711/1989)[0m[91mUpdating files:  87% (1731/1989)[0m[91mUpdating files:  88% (1751/1989)[0m[91mUpdating files:  89% (1771/1989)[0m[91mUpdating files:  90% (1791/1989)[0m[91mUpdating files:  91% (1810/1989)[0m[91mUpdating files:  92% (1830/1989)[0m[91mUpdating files:  93% (1850/1989)[0m[91mUpdating files:  94% (1870/1989)[0m[91mUpdating files:  95% (1890/1989)[0m[91mUpdating files:  96% (1910/1989)[0m[91mUpdating files:  97% (1930/1989)[0m[91mUpdating files:  98% (1950/1989)[0m[91mUpdating files:  99% (1970/1989)[0m[91mUpdating files: 100% (1989/1989)[0m[91mUpdating files: 100% (1989/1989), done.
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": [0mRemoving intermediate container 0d306bcf09ca
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0":  ---> b1727d824c86
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Step 4/5 : RUN mv croaring/fuzz/* $SRC/
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0":  ---> Running in f478581a4137
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Removing intermediate container f478581a4137
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0":  ---> e04727503864
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Step 5/5 : WORKDIR $SRC/croaring
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0":  ---> Running in d2eae0d89e84
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Removing intermediate container d2eae0d89e84
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0":  ---> 0de3e9b6b385
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Successfully built 0de3e9b6b385
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Successfully tagged gcr.io/oss-fuzz/croaring:latest
+Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/croaring:latest
+Finished Step #1 - "build-43f2c01c-a32a-44ca-bd90-ee284dfe41d0"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/croaring
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/file3PklyM
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/croaring/.git
+Step #2 - "srcmap": + GIT_DIR=/src/croaring
+Step #2 - "srcmap": + cd /src/croaring
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/RoaringBitmap/CRoaring
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=8711167f6c06f663ef2163875f2704bd44355cb5
+Step #2 - "srcmap": + jq_inplace /tmp/file3PklyM '."/src/croaring" = { type: "git", url: "https://github.com/RoaringBitmap/CRoaring", rev: "8711167f6c06f663ef2163875f2704bd44355cb5" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileii29ia
+Step #2 - "srcmap": + cat /tmp/file3PklyM
+Step #2 - "srcmap": + jq '."/src/croaring" = { type: "git", url: "https://github.com/RoaringBitmap/CRoaring", rev: "8711167f6c06f663ef2163875f2704bd44355cb5" }'
+Step #2 - "srcmap": + mv /tmp/fileii29ia /tmp/file3PklyM
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/file3PklyM
+Step #2 - "srcmap": + rm /tmp/file3PklyM
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/croaring": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/RoaringBitmap/CRoaring",
+Step #2 - "srcmap":     "rev": "8711167f6c06f663ef2163875f2704bd44355cb5"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + mkdir build-dir
+Step #3 - "compile-libfuzzer-address-x86_64": + cd build-dir
+Step #3 - "compile-libfuzzer-address-x86_64": + cmake -DENABLE_ROARING_TESTS=OFF ..
+Step #3 - "compile-libfuzzer-address-x86_64": -- The CXX compiler identification is Clang 22.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": -- The C compiler identification is Clang 22.0.0
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting CXX compiler ABI info
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting CXX compiler ABI info - done
+Step #3 - "compile-libfuzzer-address-x86_64": -- Check for working CXX compiler: /usr/local/bin/clang++ - skipped
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting CXX compile features
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting CXX compile features - done
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting C compiler ABI info
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting C compiler ABI info - done
+Step #3 - "compile-libfuzzer-address-x86_64": -- Check for working C compiler: /usr/local/bin/clang - skipped
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting C compile features
+Step #3 - "compile-libfuzzer-address-x86_64": -- Detecting C compile features - done
+Step #3 - "compile-libfuzzer-address-x86_64": -- No build type selected, default to Release
+Step #3 - "compile-libfuzzer-address-x86_64": -- Tests are disabled, you can enabled them by setting ENABLE_ROARING_TESTS to ON
+Step #3 - "compile-libfuzzer-address-x86_64": -- BENCHMARK_DATA_DIR: /src/croaring/benchmarks/realdata/
+Step #3 - "compile-libfuzzer-address-x86_64": -- TEST_DATA_DIR: /src/croaring/tests/testdata/
+Step #3 - "compile-libfuzzer-address-x86_64": -- Building a static library.
+Step #3 - "compile-libfuzzer-address-x86_64": -- ROARING_LIB_TYPE: STATIC
+Step #3 - "compile-libfuzzer-address-x86_64": -- Library output directory (does not apply to Visual Studio): /src/croaring/build-dir
+Step #3 - "compile-libfuzzer-address-x86_64": -- Amalgamation tests disabled
+Step #3 - "compile-libfuzzer-address-x86_64": -- You may enable microbenchmarks by setting ENABLE_ROARING_MICROBENCHMARKS to ON 
+Step #3 - "compile-libfuzzer-address-x86_64": -- Configuring done (1.6s)
+Step #3 - "compile-libfuzzer-address-x86_64": -- Generating done (0.0s)
+Step #3 - "compile-libfuzzer-address-x86_64": -- Build files have been written to: /src/croaring/build-dir
+Step #3 - "compile-libfuzzer-address-x86_64": ++ nproc
+Step #3 - "compile-libfuzzer-address-x86_64": + make -j32
+Step #3 - "compile-libfuzzer-address-x86_64": [  4%] [32mBuilding C object src/CMakeFiles/roaring.dir/isadetection.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [  8%] [32mBuilding C object src/CMakeFiles/roaring.dir/array_util.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 13%] [32mBuilding C object src/CMakeFiles/roaring.dir/bitset_util.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 17%] [32mBuilding C object src/CMakeFiles/roaring.dir/art/art.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 21%] [32mBuilding C object src/CMakeFiles/roaring.dir/bitset.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 26%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/array.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 30%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/bitset.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 34%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/containers.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 39%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/mixed_intersection.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 43%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/mixed_union.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 52%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/convert.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 52%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/mixed_equal.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 56%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/mixed_subset.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 60%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/mixed_negation.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 65%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/mixed_xor.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 69%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/mixed_andnot.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 73%] [32mBuilding C object src/CMakeFiles/roaring.dir/containers/run.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 78%] [32mBuilding C object src/CMakeFiles/roaring.dir/memory.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 82%] [32mBuilding C object src/CMakeFiles/roaring.dir/roaring.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 91%] [32mBuilding C object src/CMakeFiles/roaring.dir/roaring64.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 91%] [32mBuilding C object src/CMakeFiles/roaring.dir/roaring_priority_queue.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [ 95%] [32mBuilding C object src/CMakeFiles/roaring.dir/roaring_array.c.o[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [1m/src/croaring/src/containers/run.c:937:19: [0m[0;1;35mwarning: [0m[1munused function '_avx512_run_container_cardinality' [-Wunused-function][0m
+Step #3 - "compile-libfuzzer-address-x86_64":   937 | [0;34mstatic[0m [0;34minline[0m [0;34mint[0m _avx512_run_container_cardinality([0m
+Step #3 - "compile-libfuzzer-address-x86_64":       | [0;1;32m                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step #3 - "compile-libfuzzer-address-x86_64": [0m1 warning generated.
+Step #3 - "compile-libfuzzer-address-x86_64": [100%] [32m[1mLinking C static library libroaring.a[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [100%] Built target roaring
+Step #3 - "compile-libfuzzer-address-x86_64": + clang -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -I/src/croaring/include -c /src/croaring_fuzzer.c -o fuzzer.o
+Step #3 - "compile-libfuzzer-address-x86_64": + clang++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -fsanitize=fuzzer fuzzer.o -o /workspace/out/libfuzzer-address-x86_64/croaring_fuzzer /src/croaring/build-dir/src/libroaring.a
+Step #3 - "compile-libfuzzer-address-x86_64": /usr/bin/ld: /src/croaring/build-dir/src/libroaring.a: error adding symbols: file format not recognized
+Step #3 - "compile-libfuzzer-address-x86_64": clang++: [0;1;31merror: [0m[1mlinker command failed with exit code 1 (use -v to see invocation)[0m
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image croaring\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 croaring\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

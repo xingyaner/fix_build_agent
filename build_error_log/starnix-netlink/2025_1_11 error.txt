@@ -1,0 +1,304 @@
+starting build "7361411f-4016-4b9c-bfc1-08e91ff71950"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: 
+Step #0:                    ***** NOTICE *****
+Step #0: 
+Step #0: Official `cloud-sdk` images, including multiple tagged versions across multiple
+Step #0: platforms, can be found at
+Step #0: https://github.com/GoogleCloudPlatform/cloud-sdk-docker and may be more suitable
+Step #0: for some use cases when interacting with Cloud Source Repositories.
+Step #0: 
+Step #0: For additional information, please visit
+Step #0: https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/git
+Step #0: 
+Step #0:                 ***** END OF NOTICE *****
+Step #0: 
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada"
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Sending build context to Docker daemon  24.06kB
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 1/11 : FROM gcr.io/oss-fuzz-base/base-builder-rust
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": latest: Pulling from oss-fuzz-base/base-builder-rust
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b549f31133a9: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 53857896a680: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 7efe496e0821: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 7aac26f735e9: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ad31cc38ac81: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e51a957b96fa: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 9ea01dd118f9: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": fde71e506517: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": dd6b7bda1f21: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 8b0201982d0b: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1ed93b1f2b37: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e6a65953e7da: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 4c9d846f1514: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ba7815991431: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 828929bb11e1: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e89aa43f3e15: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 2d99de89a447: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": f6d8158e6dac: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b72c91e47fd1: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 132bc51f6483: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 6ea2db2284cb: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 8d8a5e898bb8: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 0627aad1ed24: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": a0eb25bba271: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": f5faf7725626: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 213227c10e94: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ffc3882c042b: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 343ba79fda30: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": cb5959086358: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1f3670b2a3cd: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e1a12b281c6e: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b25342de0fc5: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 105d24739e50: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 3bdc8cef7a9f: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 03f7548b82a6: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": c5a6aaa2ce6b: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 5e3bbf1b669c: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": fde71e506517: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1dfe9bb499fc: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 0a4551d177ee: Pulling fs layer
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 132bc51f6483: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 6ea2db2284cb: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 8d8a5e898bb8: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 0627aad1ed24: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": a0eb25bba271: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": f5faf7725626: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 213227c10e94: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ffc3882c042b: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 343ba79fda30: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": cb5959086358: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1f3670b2a3cd: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 9ea01dd118f9: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e1a12b281c6e: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b25342de0fc5: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 105d24739e50: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 3bdc8cef7a9f: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 03f7548b82a6: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 828929bb11e1: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 8b0201982d0b: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e89aa43f3e15: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1ed93b1f2b37: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 4c9d846f1514: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e6a65953e7da: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": c5a6aaa2ce6b: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 2d99de89a447: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 5e3bbf1b669c: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 0a4551d177ee: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1dfe9bb499fc: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": dd6b7bda1f21: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": f6d8158e6dac: Waiting
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 7efe496e0821: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ad31cc38ac81: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 9ea01dd118f9: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 9ea01dd118f9: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": fde71e506517: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": fde71e506517: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b549f31133a9: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b549f31133a9: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1ed93b1f2b37: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1ed93b1f2b37: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 7aac26f735e9: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 7aac26f735e9: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e6a65953e7da: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e6a65953e7da: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 4c9d846f1514: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 4c9d846f1514: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ba7815991431: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ba7815991431: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e89aa43f3e15: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e89aa43f3e15: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 8b0201982d0b: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 8b0201982d0b: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 828929bb11e1: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 828929bb11e1: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": f6d8158e6dac: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": f6d8158e6dac: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 2d99de89a447: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 2d99de89a447: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b72c91e47fd1: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b72c91e47fd1: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 8d8a5e898bb8: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 8d8a5e898bb8: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 6ea2db2284cb: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 6ea2db2284cb: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 132bc51f6483: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 132bc51f6483: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": a0eb25bba271: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": a0eb25bba271: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": f5faf7725626: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": f5faf7725626: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 213227c10e94: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b549f31133a9: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ffc3882c042b: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 343ba79fda30: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 343ba79fda30: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": cb5959086358: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": cb5959086358: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1f3670b2a3cd: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1f3670b2a3cd: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e1a12b281c6e: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e1a12b281c6e: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": dd6b7bda1f21: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": dd6b7bda1f21: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 0627aad1ed24: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 0627aad1ed24: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 105d24739e50: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 105d24739e50: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b25342de0fc5: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b25342de0fc5: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 3bdc8cef7a9f: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 3bdc8cef7a9f: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 03f7548b82a6: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 03f7548b82a6: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": c5a6aaa2ce6b: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 5e3bbf1b669c: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 5e3bbf1b669c: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1dfe9bb499fc: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1dfe9bb499fc: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e51a957b96fa: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e51a957b96fa: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 53857896a680: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 53857896a680: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 0a4551d177ee: Verifying Checksum
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 0a4551d177ee: Download complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 53857896a680: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 7efe496e0821: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 7aac26f735e9: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ad31cc38ac81: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e51a957b96fa: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 9ea01dd118f9: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": fde71e506517: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": dd6b7bda1f21: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 8b0201982d0b: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1ed93b1f2b37: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e6a65953e7da: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 4c9d846f1514: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ba7815991431: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 828929bb11e1: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e89aa43f3e15: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 2d99de89a447: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": f6d8158e6dac: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b72c91e47fd1: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 132bc51f6483: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 6ea2db2284cb: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 8d8a5e898bb8: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 0627aad1ed24: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": a0eb25bba271: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": f5faf7725626: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 213227c10e94: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": ffc3882c042b: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 343ba79fda30: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": cb5959086358: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1f3670b2a3cd: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": e1a12b281c6e: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": b25342de0fc5: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 105d24739e50: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 3bdc8cef7a9f: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 03f7548b82a6: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": c5a6aaa2ce6b: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 5e3bbf1b669c: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 1dfe9bb499fc: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": 0a4551d177ee: Pull complete
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Digest: sha256:ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-rust:latest
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> d53dce618414
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 2/11 : RUN git clone https://fuchsia.googlesource.com/fuchsia
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> Running in 3c3368d5b284
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": [91mCloning into 'fuchsia'...
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": [0m[91mUpdating files:   6% (5915/89997)[0m[91mUpdating files:   7% (6300/89997)[0m[91mUpdating files:   8% (7200/89997)[0m[91mUpdating files:   9% (8100/89997)[0m[91mUpdating files:  10% (9000/89997)[0m[91mUpdating files:  11% (9900/89997)[0m[91mUpdating files:  12% (10800/89997)[0m[91mUpdating files:  13% (11700/89997)[0m[91mUpdating files:  14% (12600/89997)[0m[91mUpdating files:  14% (13139/89997)[0m[91mUpdating files:  15% (13500/89997)[0m[91mUpdating files:  16% (14400/89997)[0m[91mUpdating files:  17% (15300/89997)[0m[91mUpdating files:  18% (16200/89997)[0m[91mUpdating files:  19% (17100/89997)[0m[91mUpdating files:  20% (18000/89997)[0m[91mUpdating files:  21% (18900/89997)[0m[91mUpdating files:  22% (19800/89997)[0m[91mUpdating files:  23% (20700/89997)[0m[91mUpdating files:  24% (21600/89997)[0m[91mUpdating files:  25% (22500/89997)[0m[91mUpdating files:  25% (22535/89997)[0m[91mUpdating files:  26% (23400/89997)[0m[91mUpdating files:  27% (24300/89997)[0m[91mUpdating files:  28% (25200/89997)[0m[91mUpdating files:  29% (26100/89997)[0m[91mUpdating files:  30% (27000/89997)[0m[91mUpdating files:  31% (27900/89997)[0m[91mUpdating files:  32% (28800/89997)[0m[91mUpdating files:  33% (29700/89997)[0m[91mUpdating files:  34% (30599/89997)[0m[91mUpdating files:  35% (31499/89997)[0m[91mUpdating files:  36% (32399/89997)[0m[91mUpdating files:  36% (32739/89997)[0m[91mUpdating files:  37% (33299/89997)[0m[91mUpdating files:  38% (34199/89997)[0m[91mUpdating files:  39% (35099/89997)[0m[91mUpdating files:  40% (35999/89997)[0m[91mUpdating files:  41% (36899/89997)[0m[91mUpdating files:  42% (37799/89997)[0m[91mUpdating files:  43% (38699/89997)[0m[91mUpdating files:  43% (39580/89997)[0m[91mUpdating files:  44% (39599/89997)[0m[91mUpdating files:  45% (40499/89997)[0m[91mUpdating files:  46% (41399/89997)[0m[91mUpdating files:  47% (42299/89997)[0m[91mUpdating files:  48% (43199/89997)[0m[91mUpdating files:  49% (44099/89997)[0m[91mUpdating files:  50% (44999/89997)[0m[91mUpdating files:  51% (45899/89997)[0m[91mUpdating files:  52% (46799/89997)[0m[91mUpdating files:  53% (47699/89997)[0m[91mUpdating files:  54% (48599/89997)[0m[91mUpdating files:  55% (49499/89997)[0m[91mUpdating files:  55% (50129/89997)[0m[91mUpdating files:  56% (50399/89997)[0m[91mUpdating files:  57% (51299/89997)[0m[91mUpdating files:  58% (52199/89997)[0m[91mUpdating files:  59% (53099/89997)[0m[91mUpdating files:  60% (53999/89997)[0m[91mUpdating files:  61% (54899/89997)[0m[91mUpdating files:  62% (55799/89997)[0m[91mUpdating files:  63% (56699/89997)[0m[91mUpdating files:  64% (57599/89997)[0m[91mUpdating files:  65% (58499/89997)[0m[91mUpdating files:  66% (59399/89997)[0m[91mUpdating files:  67% (60298/89997)[0m[91mUpdating files:  67% (60664/89997)[0m[91mUpdating files:  68% (61198/89997)[0m[91mUpdating files:  69% (62098/89997)[0m[91mUpdating files:  70% (62998/89997)[0m[91mUpdating files:  71% (63898/89997)[0m[91mUpdating files:  72% (64798/89997)[0m[91mUpdating files:  73% (65698/89997)[0m[91mUpdating files:  74% (66598/89997)[0m[91mUpdating files:  75% (67498/89997)[0m[91mUpdating files:  76% (68398/89997)[0m[91mUpdating files:  77% (69298/89997)[0m[91mUpdating files:  77% (69584/89997)[0m[91mUpdating files:  78% (70198/89997)[0m[91mUpdating files:  79% (71098/89997)[0m[91mUpdating files:  80% (71998/89997)[0m[91mUpdating files:  81% (72898/89997)[0m[91mUpdating files:  82% (73798/89997)[0m[91mUpdating files:  83% (74698/89997)[0m[91mUpdating files:  84% (75598/89997)[0m[91mUpdating files:  85% (76498/89997)[0m[91mUpdating files:  86% (77398/89997)[0m[91mUpdating files:  87% (78298/89997)[0m[91mUpdating files:  88% (79198/89997)[0m[91mUpdating files:  88% (79753/89997)[0m[91mUpdating files:  89% (80098/89997)[0m[91mUpdating files:  90% (80998/89997)[0m[91mUpdating files:  91% (81898/89997)[0m[91mUpdating files:  92% (82798/89997)[0m[91mUpdating files:  93% (83698/89997)[0m[91mUpdating files:  94% (84598/89997)[0m[91mUpdating files:  95% (85498/89997)[0m[91mUpdating files:  96% (86398/89997)[0m[91mUpdating files:  97% (87298/89997)[0m[91mUpdating files:  98% (88198/89997)[0m[91mUpdating files:  99% (89098/89997)[0m[91mUpdating files:  99% (89556/89997)[0m[91mUpdating files: 100% (89997/89997)Updating files: 100% (89997/89997), done.
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": [0mRemoving intermediate container 3c3368d5b284
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> 423599d534db
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 3/11 : WORKDIR $SRC/fuchsia/src/starnix/lib/third_party/rust_netlink
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> Running in abfe5992a0b6
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Removing intermediate container abfe5992a0b6
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> 94d022eb9e2d
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 4/11 : COPY build.sh $SRC/
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> a75774cd7ee9
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 5/11 : COPY fuzz $SRC/fuchsia/src/starnix/lib/third_party/rust_netlink/fuzz
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> 2b2f4714e2c4
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 6/11 : COPY cargo.toml/parent $SRC/fuchsia/src/starnix/lib/third_party/rust_netlink/Cargo.toml
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> 8f227ed0cc6b
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 7/11 : COPY cargo.toml/core $SRC/fuchsia/src/starnix/lib/third_party/rust_netlink/netlink_packet_core/Cargo.toml
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> b3692a2cbf36
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 8/11 : COPY cargo.toml/generic $SRC/fuchsia/src/starnix/lib/third_party/rust_netlink/netlink_packet_generic/Cargo.toml
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> b66eabfb139e
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 9/11 : COPY cargo.toml/route $SRC/fuchsia/src/starnix/lib/third_party/rust_netlink/netlink_packet_route/Cargo.toml
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> 97d7d5a363e0
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 10/11 : COPY cargo.toml/sock_diag $SRC/fuchsia/src/starnix/lib/third_party/rust_netlink/netlink_packet_sock_diag/Cargo.toml
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> 887495ad4d5a
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Step 11/11 : COPY cargo.toml/utils $SRC/fuchsia/src/starnix/lib/third_party/rust_netlink/netlink_packet_utils/Cargo.toml
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada":  ---> 94cd0fe9ba13
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Successfully built 94cd0fe9ba13
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Successfully tagged gcr.io/oss-fuzz/starnix-netlink:latest
+Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/starnix-netlink:latest
+Finished Step #1 - "build-faff3fb3-41c7-435d-8e93-3d0508038ada"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/starnix-netlink
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileqrNNFN
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ rust == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/fuchsia/.git
+Step #2 - "srcmap": + GIT_DIR=/src/fuchsia
+Step #2 - "srcmap": + cd /src/fuchsia
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://fuchsia.googlesource.com/fuchsia
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=823eef85bd31d27a140495ac541056bef977cdff
+Step #2 - "srcmap": + jq_inplace /tmp/fileqrNNFN '."/src/fuchsia" = { type: "git", url: "https://fuchsia.googlesource.com/fuchsia", rev: "823eef85bd31d27a140495ac541056bef977cdff" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileFYLX68
+Step #2 - "srcmap": + cat /tmp/fileqrNNFN
+Step #2 - "srcmap": + jq '."/src/fuchsia" = { type: "git", url: "https://fuchsia.googlesource.com/fuchsia", rev: "823eef85bd31d27a140495ac541056bef977cdff" }'
+Step #2 - "srcmap": + mv /tmp/fileFYLX68 /tmp/fileqrNNFN
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileqrNNFN
+Step #2 - "srcmap": + rm /tmp/fileqrNNFN
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/fuchsia": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://fuchsia.googlesource.com/fuchsia",
+Step #2 - "srcmap":     "rev": "823eef85bd31d27a140495ac541056bef977cdff"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + cargo vendor -- /src/fuchsia/third_party/rust_crates/vendor/
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[31merror[0m[1m:[0m failed to load manifest for workspace member `/src/fuchsia/src/starnix/lib/third_party/rust_netlink/netlink_packet_core`
+Step #3 - "compile-libfuzzer-address-x86_64": referenced by workspace at `/src/fuchsia/src/starnix/lib/third_party/rust_netlink/Cargo.toml`
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": Caused by:
+Step #3 - "compile-libfuzzer-address-x86_64":   failed to load manifest for dependency `anyhow`
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": Caused by:
+Step #3 - "compile-libfuzzer-address-x86_64":   failed to read `/src/fuchsia/third_party/rust_crates/vendor/anyhow-1.0.86/Cargo.toml`
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": Caused by:
+Step #3 - "compile-libfuzzer-address-x86_64":   No such file or directory (os error 2)
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image starnix-netlink\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 starnix-netlink\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

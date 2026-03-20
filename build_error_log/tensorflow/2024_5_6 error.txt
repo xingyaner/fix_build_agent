@@ -1,0 +1,384 @@
+starting build "3b3efa36-a25f-449f-b78e-01c9d6978147"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74"
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Sending build context to Docker daemon   16.9kB
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 1/11 : FROM gcr.io/oss-fuzz-base/base-builder@sha256:19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": gcr.io/oss-fuzz-base/base-builder@sha256:19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e: Pulling from oss-fuzz-base/base-builder
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": b549f31133a9: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": d993ff311503: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 5faf80b993b8: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 7946d0b643b7: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": eb738e08bf3b: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 248822a2340b: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": fa316482a80e: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 3393bbb458d0: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": a8fda90a5506: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": afcadef54a23: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 4e97a59f9033: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 4a03bd5b3e5c: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": be0ac42f34b4: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 7aa9bde37b90: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 95ec4b1337ee: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 19b55f7a831c: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": e9c556d304cd: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": f9c1e39d9c40: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 5807a1e31ffb: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": acc07ec90c58: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": d143eec22c7b: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 34c38be78f62: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": aa952184efec: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": cb7850020c26: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 9a4eb374175f: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": b453205b01ff: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": fbea61822e28: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 66724beef5c1: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": a204a5883dc9: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 62abd8198968: Pulling fs layer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 3393bbb458d0: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": a8fda90a5506: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": afcadef54a23: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 4e97a59f9033: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 4a03bd5b3e5c: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": be0ac42f34b4: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 7aa9bde37b90: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 95ec4b1337ee: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 19b55f7a831c: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": e9c556d304cd: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": f9c1e39d9c40: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 5807a1e31ffb: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": acc07ec90c58: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": d143eec22c7b: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 34c38be78f62: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": aa952184efec: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": cb7850020c26: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 9a4eb374175f: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": b453205b01ff: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": fbea61822e28: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 66724beef5c1: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": a204a5883dc9: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 62abd8198968: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": fa316482a80e: Waiting
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 5faf80b993b8: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 5faf80b993b8: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 248822a2340b: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 248822a2340b: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": eb738e08bf3b: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": eb738e08bf3b: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 3393bbb458d0: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 3393bbb458d0: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": a8fda90a5506: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": a8fda90a5506: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": b549f31133a9: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": b549f31133a9: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 7946d0b643b7: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 7946d0b643b7: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 4a03bd5b3e5c: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 4a03bd5b3e5c: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": be0ac42f34b4: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": be0ac42f34b4: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 7aa9bde37b90: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 7aa9bde37b90: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 95ec4b1337ee: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 95ec4b1337ee: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 4e97a59f9033: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 4e97a59f9033: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": e9c556d304cd: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": e9c556d304cd: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 19b55f7a831c: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 19b55f7a831c: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": d993ff311503: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": d993ff311503: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": f9c1e39d9c40: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": f9c1e39d9c40: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": acc07ec90c58: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": acc07ec90c58: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 5807a1e31ffb: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": d143eec22c7b: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": d143eec22c7b: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 34c38be78f62: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 34c38be78f62: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": aa952184efec: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": aa952184efec: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": cb7850020c26: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": cb7850020c26: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 9a4eb374175f: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 9a4eb374175f: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": b453205b01ff: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": b453205b01ff: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": fbea61822e28: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": a204a5883dc9: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": a204a5883dc9: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 66724beef5c1: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 66724beef5c1: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": b549f31133a9: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 62abd8198968: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": afcadef54a23: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": afcadef54a23: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": fa316482a80e: Verifying Checksum
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": fa316482a80e: Download complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": d993ff311503: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 5faf80b993b8: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 7946d0b643b7: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": eb738e08bf3b: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 248822a2340b: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": fa316482a80e: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 3393bbb458d0: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": a8fda90a5506: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": afcadef54a23: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 4e97a59f9033: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 4a03bd5b3e5c: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": be0ac42f34b4: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 7aa9bde37b90: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 95ec4b1337ee: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 19b55f7a831c: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": e9c556d304cd: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": f9c1e39d9c40: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 5807a1e31ffb: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": acc07ec90c58: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": d143eec22c7b: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 34c38be78f62: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": aa952184efec: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": cb7850020c26: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 9a4eb374175f: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": b453205b01ff: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": fbea61822e28: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 66724beef5c1: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": a204a5883dc9: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 62abd8198968: Pull complete
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Digest: sha256:19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder@sha256:19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> e39a0777485f
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 2/11 : RUN apt-get update && apt-get install -y --no-install-recommends         curl         rsync         &&     apt-get clean &&     rm -rf /var/lib/apt/lists/*
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> Running in c5413c1db329
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:5 http://security.ubuntu.com/ubuntu focal-security/universe i386 Packages [864 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:6 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [36.8 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:7 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1599 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:8 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [4998 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:9 http://security.ubuntu.com/ubuntu focal-security/multiverse i386 Packages [8166 B]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:10 http://security.ubuntu.com/ubuntu focal-security/main i386 Packages [1084 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:11 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [4432 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:12 http://archive.ubuntu.com/ubuntu focal-updates/main i386 Packages [1377 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:13 http://archive.ubuntu.com/ubuntu focal-updates/restricted i386 Packages [53.5 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [4920 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:15 http://security.ubuntu.com/ubuntu focal-security/restricted i386 Packages [51.6 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:16 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [1308 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:17 http://archive.ubuntu.com/ubuntu focal-updates/multiverse i386 Packages [9592 B]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:18 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [33.1 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:19 http://archive.ubuntu.com/ubuntu focal-updates/universe i386 Packages [1023 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:20 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [4801 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Fetched 27.0 MB in 3s (8023 kB/s)
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Reading package lists...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Reading package lists...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Building dependency tree...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Reading state information...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": The following additional packages will be installed:
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   libcurl4
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Suggested packages:
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   openssh-server
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": The following packages will be upgraded:
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   curl libcurl4 rsync
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 3 upgraded, 0 newly installed, 0 to remove and 67 not upgraded.
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Need to get 719 kB of archives.
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": After this operation, 3072 B of additional disk space will be used.
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 rsync amd64 3.1.3-8ubuntu0.9 [323 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:2 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 curl amd64 7.68.0-1ubuntu2.25 [162 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Get:3 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libcurl4 amd64 7.68.0-1ubuntu2.25 [235 kB]
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0mFetched 719 kB in 1s (727 kB/s)
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17384 files and directories currently installed.)
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Preparing to unpack .../rsync_3.1.3-8ubuntu0.9_amd64.deb ...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Unpacking rsync (3.1.3-8ubuntu0.9) over (3.1.3-8ubuntu0.7) ...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Preparing to unpack .../curl_7.68.0-1ubuntu2.25_amd64.deb ...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Unpacking curl (7.68.0-1ubuntu2.25) over (7.68.0-1ubuntu2.21) ...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Preparing to unpack .../libcurl4_7.68.0-1ubuntu2.25_amd64.deb ...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Unpacking libcurl4:amd64 (7.68.0-1ubuntu2.25) over (7.68.0-1ubuntu2.21) ...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Setting up libcurl4:amd64 (7.68.0-1ubuntu2.25) ...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Setting up curl (7.68.0-1ubuntu2.25) ...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Setting up rsync (3.1.3-8ubuntu0.9) ...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": invoke-rc.d: could not determine current runlevel
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": invoke-rc.d: policy-rc.d denied execution of restart.
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Processing triggers for libc-bin (2.31-0ubuntu9.14) ...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Removing intermediate container c5413c1db329
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> 59c4bb7234cc
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 3/11 : RUN python3 -m pip install numpy
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> Running in 16e4e996d928
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Collecting numpy
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Downloading https://files.pythonhosted.org/packages/a4/9b/027bec52c633f6556dba6b722d9a0befb40498b9ceddd29cbe67a45a127c/numpy-1.24.4.tar.gz (10.9MB)
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Installing build dependencies: started
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Installing build dependencies: finished with status 'done'
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Getting requirements to build wheel: started
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Getting requirements to build wheel: finished with status 'done'
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":     Preparing wheel metadata: started
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":     Preparing wheel metadata: finished with status 'done'
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Building wheels for collected packages: numpy
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Building wheel for numpy (PEP 517): started
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Building wheel for numpy (PEP 517): still running...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Building wheel for numpy (PEP 517): still running...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Building wheel for numpy (PEP 517): finished with status 'done'
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Created wheel for numpy: filename=numpy-1.24.4-cp38-cp38-linux_x86_64.whl size=9719870 sha256=aaedf60b86ebbbb0724137e499882affd103b3e841035898838f47b41bb93ba7
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   Stored in directory: /root/.cache/pip/wheels/9f/b7/f4/38166ec6c7757984ef41e3f6594015395049bff59851c060ae
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Successfully built numpy
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Installing collected packages: numpy
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Successfully installed numpy-1.24.4
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [91mWARNING: You are using pip version 19.2.3, however version 25.0.1 is available.
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": You should consider upgrading via the 'pip install --upgrade pip' command.
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0mRemoving intermediate container 16e4e996d928
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> 030cdb7f62f0
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 4/11 : RUN ln -s /usr/local/bin/python3 /usr/local/bin/python
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> Running in cf358086593d
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Removing intermediate container cf358086593d
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> 14a142a60859
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 5/11 : RUN curl -Lo /usr/bin/bazel         https://github.com/bazelbuild/bazelisk/releases/download/v1.1.0/bazelisk-linux-amd64         &&     chmod +x /usr/bin/bazel
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> Running in d0ce06daa5ca
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [91m  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":                                  Dload  Upload   Total   Spe[0m[91mnt    Left  Speed
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   0     0[0m[91m    0     0[0m[91m  [0m[91m  0  [0m[91m   0      [0m[91m0      0 --:--:-- -[0m[91m-:--[0m[91m:-- [0m[91m--:--:-[0m[91m- [0m[91m   [0m[91m 0[0m[91m  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m100 6036k  100 6036k    0     0  21.0M      0 --:--:-- --:[0m[91m--:-- --:--:-- 21.0M
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0mRemoving intermediate container d0ce06daa5ca
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> 40d8b083a3a0
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 6/11 : ENV JAVA_HOME /usr/lib/jvm/java-15-openjdk-amd64
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> Running in 757617d028f9
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Removing intermediate container 757617d028f9
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> 197197b1470f
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 7/11 : RUN install_java.sh || true
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> Running in b36c6b98b0a7
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [91m+ cd /tmp
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": + curl --silent -L -O https://download.java.net/java/GA/jdk15.0.2/0d1cfde4252546c6931946de8db48ee2/7/GPL/openjdk-15.0.2_linux-x64_bin.tar.gz
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m+ mkdir -p /usr/lib/jvm/java-15-openjdk-amd64
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m+ tar -xz --strip-components=1 -f openjdk-15.0.2_linux-x64_bin.tar.gz --directory /usr/lib/jvm/java-15-openjdk-amd64
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m+ rm -f openjdk-15.0.2_linux-x64_bin.tar.gz
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m+ rm -rf /usr/lib/jvm/java-15-openjdk-amd64/jmods /usr/lib/jvm/java-15-openjdk-amd64/lib/src.zip
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m+ cd /src/
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": + git clone https://github.com/CodeIntelligenceTesting/jazzer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91mCloning into 'jazzer'...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m+ cd jazzer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": + git checkout 96205feebc7135075ffa48aae3f22e38cae5dc45
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91mNote: switching to '96205feebc7135075ffa48aae3f22e38cae5dc45'.
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": You are in 'detached HEAD' state. You can look around, make experimental
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": changes and commit them, and you can discard any commits you make in this
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": state without impacting any branches by switching back to a branch.
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": If you want to create a new branch to retain commits you create, you may
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": do so (now or later) by using -c with the switch command. Example:
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   git switch -c <new-branch-name>
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Or undo this operation with:
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":   git switch -
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Turn off this advice by setting config variable advice.detachedHead to false
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": 
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": HEAD is now at 96205fee build: update toolchains_llvm dependency
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m+ cat
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m+ bazel build //src/main/java/com/code_intelligence/jazzer:jazzer_standalone_deploy.jar //deploy:jazzer-api //launcher:jazzer
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m2025/12/30 06:34:25 Using unreleased version at commit 1f12a4d8f82efa3eac5e1a708833e8ed53e54327
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m2025/12/30 06:34:25 Downloading https://storage.googleapis.com/bazel-builds/artifacts/ubuntu1404/1f12a4d8f82efa3eac5e1a708833e8ed53e54327/bazel...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91m2025/12/30 06:34:26 could not download Bazel: HTTP GET https://storage.googleapis.com/bazel-builds/artifacts/ubuntu1404/1f12a4d8f82efa3eac5e1a708833e8ed53e54327/bazel failed with error 404
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0mRemoving intermediate container b36c6b98b0a7
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> c48809ca09dd
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 8/11 : RUN git clone --depth 1 https://github.com/tensorflow/tensorflow tensorflow
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> Running in 5217bb11449a
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [91mCloning into 'tensorflow'...
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0m[91mUpdating files:  32% (11362/35395)[0m[91mUpdating files:  33% (11681/35395)[0m[91mUpdating files:  34% (12035/35395)[0m[91mUpdating files:  35% (12389/35395)[0m[91mUpdating files:  36% (12743/35395)[0m[91mUpdating files:  37% (13097/35395)[0m[91mUpdating files:  38% (13451/35395)[0m[91mUpdating files:  39% (13805/35395)[0m[91mUpdating files:  40% (14158/35395)[0m[91mUpdating files:  41% (14512/35395)[0m[91mUpdating files:  42% (14866/35395)[0m[91mUpdating files:  43% (15220/35395)[0m[91mUpdating files:  44% (15574/35395)[0m[91mUpdating files:  45% (15928/35395)[0m[91mUpdating files:  46% (16282/35395)[0m[91mUpdating files:  47% (16636/35395)[0m[91mUpdating files:  48% (16990/35395)[0m[91mUpdating files:  49% (17344/35395)[0m[91mUpdating files:  50% (17698/35395)[0m[91mUpdating files:  51% (18052/35395)[0m[91mUpdating files:  52% (18406/35395)[0m[91mUpdating files:  53% (18760/35395)[0m[91mUpdating files:  54% (19114/35395)[0m[91mUpdating files:  55% (19468/35395)[0m[91mUpdating files:  56% (19822/35395)[0m[91mUpdating files:  57% (20176/35395)[0m[91mUpdating files:  58% (20530/35395)[0m[91mUpdating files:  59% (20884/35395)[0m[91mUpdating files:  60% (21237/35395)[0m[91mUpdating files:  61% (21591/35395)[0m[91mUpdating files:  62% (21945/35395)[0m[91mUpdating files:  63% (22299/35395)[0m[91mUpdating files:  63% (22405/35395)[0m[91mUpdating files:  64% (22653/35395)[0m[91mUpdating files:  65% (23007/35395)[0m[91mUpdating files:  66% (23361/35395)[0m[91mUpdating files:  67% (23715/35395)[0m[91mUpdating files:  68% (24069/35395)[0m[91mUpdating files:  69% (24423/35395)[0m[91mUpdating files:  70% (24777/35395)[0m[91mUpdating files:  71% (25131/35395)[0m[91mUpdating files:  72% (25485/35395)[0m[91mUpdating files:  73% (25839/35395)[0m[91mUpdating files:  74% (26193/35395)[0m[91mUpdating files:  75% (26547/35395)[0m[91mUpdating files:  76% (26901/35395)[0m[91mUpdating files:  77% (27255/35395)[0m[91mUpdating files:  78% (27609/35395)[0m[91mUpdating files:  79% (27963/35395)[0m[91mUpdating files:  80% (28316/35395)[0m[91mUpdating files:  81% (28670/35395)[0m[91mUpdating files:  82% (29024/35395)[0m[91mUpdating files:  83% (29378/35395)[0m[91mUpdating files:  84% (29732/35395)[0m[91mUpdating files:  85% (30086/35395)[0m[91mUpdating files:  86% (30440/35395)[0m[91mUpdating files:  87% (30794/35395)[0m[91mUpdating files:  88% (31148/35395)[0m[91mUpdating files:  89% (31502/35395)[0m[91mUpdating files:  89% (31595/35395)[0m[91mUpdating files:  90% (31856/35395)[0m[91mUpdating files:  91% (32210/35395)[0m[91mUpdating files:  92% (32564/35395)[0m[91mUpdating files:  93% (32918/35395)[0m[91mUpdating files:  94% (33272/35395)[0m[91mUpdating files:  95% (33626/35395)[0m[91mUpdating files:  96% (33980/35395)[0m[91mUpdating files:  97% (34334/35395)[0m[91mUpdating files:  98% (34688/35395)[0m[91mUpdating files:  99% (35042/35395)[0m[91mUpdating files: 100% (35395/35395)Updating files: 100% (35395/35395), done.
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": [0mRemoving intermediate container 5217bb11449a
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> 7788a79d4c73
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 9/11 : WORKDIR $SRC/tensorflow
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> Running in b4c1e8eed9b7
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Removing intermediate container b4c1e8eed9b7
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> a53b5bcaa117
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 10/11 : COPY build.sh $SRC/
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> 48efb516e7ab
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Step 11/11 : COPY *.patch $SRC/
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74":  ---> 511afa06e902
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Successfully built 511afa06e902
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Successfully tagged gcr.io/oss-fuzz/tensorflow:latest
+Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/tensorflow:latest
+Finished Step #1 - "build-e0582ba0-627a-488e-b0c6-924784ab7a74"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/tensorflow
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/fileyGZ35L
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ c++ == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/tensorflow/.git
+Step #2 - "srcmap": + GIT_DIR=/src/tensorflow
+Step #2 - "srcmap": + cd /src/tensorflow
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/tensorflow/tensorflow
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=f6d3be7d28fab797f10f90548feb9a025160a10c
+Step #2 - "srcmap": + jq_inplace /tmp/fileyGZ35L '."/src/tensorflow" = { type: "git", url: "https://github.com/tensorflow/tensorflow", rev: "f6d3be7d28fab797f10f90548feb9a025160a10c" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileN5p4r9
+Step #2 - "srcmap": + cat /tmp/fileyGZ35L
+Step #2 - "srcmap": + jq '."/src/tensorflow" = { type: "git", url: "https://github.com/tensorflow/tensorflow", rev: "f6d3be7d28fab797f10f90548feb9a025160a10c" }'
+Step #2 - "srcmap": + mv /tmp/fileN5p4r9 /tmp/fileyGZ35L
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/jazzer/.git
+Step #2 - "srcmap": + GIT_DIR=/src/jazzer
+Step #2 - "srcmap": + cd /src/jazzer
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/CodeIntelligenceTesting/jazzer
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=96205feebc7135075ffa48aae3f22e38cae5dc45
+Step #2 - "srcmap": + jq_inplace /tmp/fileyGZ35L '."/src/jazzer" = { type: "git", url: "https://github.com/CodeIntelligenceTesting/jazzer", rev: "96205feebc7135075ffa48aae3f22e38cae5dc45" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileeqo58G
+Step #2 - "srcmap": + cat /tmp/fileyGZ35L
+Step #2 - "srcmap": + jq '."/src/jazzer" = { type: "git", url: "https://github.com/CodeIntelligenceTesting/jazzer", rev: "96205feebc7135075ffa48aae3f22e38cae5dc45" }'
+Step #2 - "srcmap": + mv /tmp/fileeqo58G /tmp/fileyGZ35L
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileyGZ35L
+Step #2 - "srcmap": + rm /tmp/fileyGZ35L
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/tensorflow": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/tensorflow/tensorflow",
+Step #2 - "srcmap":     "rev": "f6d3be7d28fab797f10f90548feb9a025160a10c"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/jazzer": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/CodeIntelligenceTesting/jazzer",
+Step #2 - "srcmap":     "rev": "96205feebc7135075ffa48aae3f22e38cae5dc45"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1 -fno-omit-frame-pointer -gline-tables-only -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1 -fno-omit-frame-pointer -gline-tables-only -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + git apply --ignore-space-change --ignore-whitespace /src/fuzz_patch.patch
+Step #3 - "compile-libfuzzer-address-x86_64": error: patch failed: tensorflow/security/fuzzing/cc/BUILD:55
+Step #3 - "compile-libfuzzer-address-x86_64": error: tensorflow/security/fuzzing/cc/BUILD: patch does not apply
+Step #3 - "compile-libfuzzer-address-x86_64": error: patch failed: tensorflow/security/fuzzing/tf_fuzzing.bzl:1
+Step #3 - "compile-libfuzzer-address-x86_64": error: tensorflow/security/fuzzing/tf_fuzzing.bzl: patch does not apply
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image tensorflow\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 tensorflow\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

@@ -1,0 +1,544 @@
+starting build "31352efd-9ece-4457-bf4e-a7eb63043073"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf"
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Sending build context to Docker daemon   5.12kB
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Step 1/4 : FROM gcr.io/oss-fuzz-base/base-builder-rust
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": latest: Pulling from oss-fuzz-base/base-builder-rust
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b549f31133a9: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 53857896a680: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 7efe496e0821: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 7aac26f735e9: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ad31cc38ac81: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e51a957b96fa: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 9ea01dd118f9: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": fde71e506517: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": dd6b7bda1f21: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 8b0201982d0b: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1ed93b1f2b37: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e6a65953e7da: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 4c9d846f1514: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ba7815991431: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 828929bb11e1: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e89aa43f3e15: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 2d99de89a447: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": f6d8158e6dac: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b72c91e47fd1: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 132bc51f6483: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 6ea2db2284cb: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 8d8a5e898bb8: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 0627aad1ed24: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": a0eb25bba271: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": f5faf7725626: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 213227c10e94: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ffc3882c042b: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 343ba79fda30: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": cb5959086358: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1f3670b2a3cd: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e1a12b281c6e: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b25342de0fc5: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 105d24739e50: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 3bdc8cef7a9f: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 03f7548b82a6: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": c5a6aaa2ce6b: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 5e3bbf1b669c: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1dfe9bb499fc: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 0a4551d177ee: Pulling fs layer
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e6a65953e7da: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 2d99de89a447: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1ed93b1f2b37: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 9ea01dd118f9: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": a0eb25bba271: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ffc3882c042b: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 8b0201982d0b: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": f5faf7725626: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": cb5959086358: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 343ba79fda30: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": f6d8158e6dac: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 03f7548b82a6: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": c5a6aaa2ce6b: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 5e3bbf1b669c: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e1a12b281c6e: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 6ea2db2284cb: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 8d8a5e898bb8: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b72c91e47fd1: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ba7815991431: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1dfe9bb499fc: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 0a4551d177ee: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 3bdc8cef7a9f: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1f3670b2a3cd: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 4c9d846f1514: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 105d24739e50: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 213227c10e94: Waiting
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 7efe496e0821: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 7efe496e0821: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ad31cc38ac81: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ad31cc38ac81: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 9ea01dd118f9: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 9ea01dd118f9: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": fde71e506517: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": fde71e506517: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b549f31133a9: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b549f31133a9: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1ed93b1f2b37: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1ed93b1f2b37: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 7aac26f735e9: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 7aac26f735e9: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e6a65953e7da: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e6a65953e7da: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 4c9d846f1514: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 4c9d846f1514: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ba7815991431: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ba7815991431: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 828929bb11e1: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 8b0201982d0b: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 8b0201982d0b: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e89aa43f3e15: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 53857896a680: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 53857896a680: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 2d99de89a447: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 2d99de89a447: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b72c91e47fd1: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 132bc51f6483: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 132bc51f6483: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": f6d8158e6dac: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": f6d8158e6dac: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 6ea2db2284cb: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 6ea2db2284cb: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 8d8a5e898bb8: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 8d8a5e898bb8: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 0627aad1ed24: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 0627aad1ed24: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": f5faf7725626: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": f5faf7725626: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": a0eb25bba271: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 213227c10e94: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ffc3882c042b: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": cb5959086358: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": cb5959086358: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b549f31133a9: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 343ba79fda30: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 343ba79fda30: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e1a12b281c6e: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e1a12b281c6e: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1f3670b2a3cd: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1f3670b2a3cd: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b25342de0fc5: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 105d24739e50: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 3bdc8cef7a9f: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 3bdc8cef7a9f: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 03f7548b82a6: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": c5a6aaa2ce6b: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": c5a6aaa2ce6b: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": dd6b7bda1f21: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": dd6b7bda1f21: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 5e3bbf1b669c: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 5e3bbf1b669c: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1dfe9bb499fc: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1dfe9bb499fc: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e51a957b96fa: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e51a957b96fa: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 0a4551d177ee: Verifying Checksum
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 0a4551d177ee: Download complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 53857896a680: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 7efe496e0821: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 7aac26f735e9: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ad31cc38ac81: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e51a957b96fa: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 9ea01dd118f9: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": fde71e506517: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": dd6b7bda1f21: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 8b0201982d0b: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1ed93b1f2b37: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e6a65953e7da: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 4c9d846f1514: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ba7815991431: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 828929bb11e1: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e89aa43f3e15: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 2d99de89a447: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": f6d8158e6dac: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b72c91e47fd1: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 132bc51f6483: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 6ea2db2284cb: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 8d8a5e898bb8: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 0627aad1ed24: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": a0eb25bba271: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": f5faf7725626: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 213227c10e94: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": ffc3882c042b: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 343ba79fda30: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": cb5959086358: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1f3670b2a3cd: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": e1a12b281c6e: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": b25342de0fc5: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 105d24739e50: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 3bdc8cef7a9f: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 03f7548b82a6: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": c5a6aaa2ce6b: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 5e3bbf1b669c: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 1dfe9bb499fc: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": 0a4551d177ee: Pull complete
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Digest: sha256:ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-rust:latest
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf":  ---> d53dce618414
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Step 2/4 : RUN git clone --depth 1 https://github.com/dtolnay/serde-yaml serde-yaml
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf":  ---> Running in fcf96b8ccd11
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": [91mCloning into 'serde-yaml'...
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": [0mRemoving intermediate container fcf96b8ccd11
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf":  ---> 0710cf4c6aa8
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Step 3/4 : WORKDIR $SRC
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf":  ---> Running in 82a1c50ded94
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Removing intermediate container 82a1c50ded94
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf":  ---> 61f20bbab92a
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Step 4/4 : COPY build.sh $SRC/
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf":  ---> 7fda87e91387
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Successfully built 7fda87e91387
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Successfully tagged gcr.io/oss-fuzz/serde-yaml:latest
+Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/serde-yaml:latest
+Finished Step #1 - "build-48057086-f30a-455f-af51-0d296219abbf"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/serde-yaml
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/filewdRUZM
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ rust == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/serde-yaml/.git
+Step #2 - "srcmap": + GIT_DIR=/src/serde-yaml
+Step #2 - "srcmap": + cd /src/serde-yaml
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/dtolnay/serde-yaml
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=2009506d33767dfc88e979d6bc0d53d09f941c94
+Step #2 - "srcmap": + jq_inplace /tmp/filewdRUZM '."/src/serde-yaml" = { type: "git", url: "https://github.com/dtolnay/serde-yaml", rev: "2009506d33767dfc88e979d6bc0d53d09f941c94" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileTPPb99
+Step #2 - "srcmap": + cat /tmp/filewdRUZM
+Step #2 - "srcmap": + jq '."/src/serde-yaml" = { type: "git", url: "https://github.com/dtolnay/serde-yaml", rev: "2009506d33767dfc88e979d6bc0d53d09f941c94" }'
+Step #2 - "srcmap": + mv /tmp/fileTPPb99 /tmp/filewdRUZM
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/filewdRUZM
+Step #2 - "srcmap": + rm /tmp/filewdRUZM
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/serde-yaml": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/dtolnay/serde-yaml",
+Step #2 - "srcmap":     "rev": "2009506d33767dfc88e979d6bc0d53d09f941c94"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + cd /src/serde-yaml
+Step #3 - "compile-libfuzzer-address-x86_64": + cargo fuzz build -O
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m    Updating[0m crates.io index
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m     Locking[0m 26 packages to latest compatible versions
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m Downloading[0m crates ...
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m arbitrary v1.4.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m itoa v1.0.17
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m equivalent v1.0.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m find-msvc-tools v0.1.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m jobserver v0.1.34
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m shlex v1.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m serde_core v1.0.228
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m unsafe-libyaml v0.2.11
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m serde v1.0.228
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m hashbrown v0.16.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m libfuzzer-sys v0.4.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m cc v1.2.51
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m ryu v1.0.22
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m indexmap v2.12.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m  Downloaded[0m libc v0.2.178
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m libc v0.2.178
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m find-msvc-tools v0.1.6
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m serde_core v1.0.228
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m shlex v1.3.0
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m serde v1.0.228
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m equivalent v1.0.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m hashbrown v0.16.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m itoa v1.0.17
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m ryu v1.0.22
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m unsafe-libyaml v0.2.11
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m arbitrary v1.4.2
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m indexmap v2.12.1
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m jobserver v0.1.34
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m cc v1.2.51
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m libfuzzer-sys v0.4.10
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[32m   Compiling[0m serde_yaml v0.9.34+deprecated (/src/serde-yaml)
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[0m[0m[1m: implicit autoref creates a reference to the dereference of a raw pointer[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/libyaml/error.rs:21:28[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m21[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            kind: unsafe { (*parser).error },[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                            [0m[0m[1m[38;5;9m^^[0m[0m[1m[38;5;12m------[0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                              [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                              [0m[0m[1m[38;5;12mthis raw pointer has type `*const yaml_parser_t`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: creating a reference requires the pointer target to be valid and imposes aliasing requirements[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: references are created through calls to explicit `Deref(Mut)::deref(_mut)` implementations[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[deny(dangerous_implicit_autorefs)]` on by default[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: try using a raw pointer method instead; or if this reference is intentional, make it explicit[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m21[0m[0m [0m[0m[1m[38;5;12m| [0m[0m            kind: unsafe { [0m[0m[38;5;10m(&[0m[0m(*parser)[0m[0m[38;5;10m)[0m[0m.error },[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                            [0m[0m[38;5;10m++[0m[0m         [0m[0m[38;5;10m+[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[0m[0m[1m: implicit autoref creates a reference to the dereference of a raw pointer[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/libyaml/error.rs:22:50[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m22[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            problem: match NonNull::new(unsafe { (*parser).problem as *mut _ }) {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                  [0m[0m[1m[38;5;9m^^[0m[0m[1m[38;5;12m------[0m[0m[1m[38;5;9m^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                    [0m[0m[1m[38;5;12mthis raw pointer has type `*const yaml_parser_t`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: creating a reference requires the pointer target to be valid and imposes aliasing requirements[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: references are created through calls to explicit `Deref(Mut)::deref(_mut)` implementations[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: try using a raw pointer method instead; or if this reference is intentional, make it explicit[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m22[0m[0m [0m[0m[1m[38;5;12m| [0m[0m            problem: match NonNull::new(unsafe { [0m[0m[38;5;10m(&[0m[0m(*parser)[0m[0m[38;5;10m)[0m[0m.problem as *mut _ }) {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                  [0m[0m[38;5;10m++[0m[0m         [0m[0m[38;5;10m+[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[0m[0m[1m: implicit autoref creates a reference to the dereference of a raw pointer[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/libyaml/error.rs:26:38[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m26[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            problem_offset: unsafe { (*parser).problem_offset },[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                      [0m[0m[1m[38;5;9m^^[0m[0m[1m[38;5;12m------[0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                        [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                        [0m[0m[1m[38;5;12mthis raw pointer has type `*const yaml_parser_t`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: creating a reference requires the pointer target to be valid and imposes aliasing requirements[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: references are created through calls to explicit `Deref(Mut)::deref(_mut)` implementations[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: try using a raw pointer method instead; or if this reference is intentional, make it explicit[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m26[0m[0m [0m[0m[1m[38;5;12m| [0m[0m            problem_offset: unsafe { [0m[0m[38;5;10m(&[0m[0m(*parser)[0m[0m[38;5;10m)[0m[0m.problem_offset },[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                      [0m[0m[38;5;10m++[0m[0m         [0m[0m[38;5;10m+[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[0m[0m[1m: implicit autoref creates a reference to the dereference of a raw pointer[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/libyaml/error.rs:28:31[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m28[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m                sys: unsafe { (*parser).problem_mark },[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                               [0m[0m[1m[38;5;9m^^[0m[0m[1m[38;5;12m------[0m[0m[1m[38;5;9m^^^^^^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                 [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                 [0m[0m[1m[38;5;12mthis raw pointer has type `*const yaml_parser_t`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: creating a reference requires the pointer target to be valid and imposes aliasing requirements[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: references are created through calls to explicit `Deref(Mut)::deref(_mut)` implementations[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: try using a raw pointer method instead; or if this reference is intentional, make it explicit[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m28[0m[0m [0m[0m[1m[38;5;12m| [0m[0m                sys: unsafe { [0m[0m[38;5;10m(&[0m[0m(*parser)[0m[0m[38;5;10m)[0m[0m.problem_mark },[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                               [0m[0m[38;5;10m++[0m[0m         [0m[0m[38;5;10m+[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[0m[0m[1m: implicit autoref creates a reference to the dereference of a raw pointer[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/libyaml/error.rs:30:50[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m30[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            context: match NonNull::new(unsafe { (*parser).context as *mut _ }) {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                  [0m[0m[1m[38;5;9m^^[0m[0m[1m[38;5;12m------[0m[0m[1m[38;5;9m^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                    [0m[0m[1m[38;5;12mthis raw pointer has type `*const yaml_parser_t`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: creating a reference requires the pointer target to be valid and imposes aliasing requirements[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: references are created through calls to explicit `Deref(Mut)::deref(_mut)` implementations[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: try using a raw pointer method instead; or if this reference is intentional, make it explicit[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m30[0m[0m [0m[0m[1m[38;5;12m| [0m[0m            context: match NonNull::new(unsafe { [0m[0m[38;5;10m(&[0m[0m(*parser)[0m[0m[38;5;10m)[0m[0m.context as *mut _ }) {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                  [0m[0m[38;5;10m++[0m[0m         [0m[0m[38;5;10m+[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[0m[0m[1m: implicit autoref creates a reference to the dereference of a raw pointer[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/libyaml/error.rs:35:31[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m35[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m                sys: unsafe { (*parser).context_mark },[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                               [0m[0m[1m[38;5;9m^^[0m[0m[1m[38;5;12m------[0m[0m[1m[38;5;9m^^^^^^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                 [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                 [0m[0m[1m[38;5;12mthis raw pointer has type `*const yaml_parser_t`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: creating a reference requires the pointer target to be valid and imposes aliasing requirements[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: references are created through calls to explicit `Deref(Mut)::deref(_mut)` implementations[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: try using a raw pointer method instead; or if this reference is intentional, make it explicit[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m35[0m[0m [0m[0m[1m[38;5;12m| [0m[0m                sys: unsafe { [0m[0m[38;5;10m(&[0m[0m(*parser)[0m[0m[38;5;10m)[0m[0m.context_mark },[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                               [0m[0m[38;5;10m++[0m[0m         [0m[0m[38;5;10m+[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[0m[0m[1m: implicit autoref creates a reference to the dereference of a raw pointer[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/libyaml/error.rs:42:28[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m42[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            kind: unsafe { (*emitter).error },[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                            [0m[0m[1m[38;5;9m^^[0m[0m[1m[38;5;12m-------[0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                              [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                              [0m[0m[1m[38;5;12mthis raw pointer has type `*const yaml_emitter_t`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: creating a reference requires the pointer target to be valid and imposes aliasing requirements[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: references are created through calls to explicit `Deref(Mut)::deref(_mut)` implementations[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: try using a raw pointer method instead; or if this reference is intentional, make it explicit[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m42[0m[0m [0m[0m[1m[38;5;12m| [0m[0m            kind: unsafe { [0m[0m[38;5;10m(&[0m[0m(*emitter)[0m[0m[38;5;10m)[0m[0m.error },[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                            [0m[0m[38;5;10m++[0m[0m          [0m[0m[38;5;10m+[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[0m[0m[1m: implicit autoref creates a reference to the dereference of a raw pointer[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/libyaml/error.rs:43:50[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m43[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            problem: match NonNull::new(unsafe { (*emitter).problem as *mut _ }) {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                  [0m[0m[1m[38;5;9m^^[0m[0m[1m[38;5;12m-------[0m[0m[1m[38;5;9m^^^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                    [0m[0m[1m[38;5;12mthis raw pointer has type `*const yaml_emitter_t`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: creating a reference requires the pointer target to be valid and imposes aliasing requirements[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: references are created through calls to explicit `Deref(Mut)::deref(_mut)` implementations[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: try using a raw pointer method instead; or if this reference is intentional, make it explicit[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m43[0m[0m [0m[0m[1m[38;5;12m| [0m[0m            problem: match NonNull::new(unsafe { [0m[0m[38;5;10m(&[0m[0m(*emitter)[0m[0m[38;5;10m)[0m[0m.problem as *mut _ }) {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                                  [0m[0m[38;5;10m++[0m[0m          [0m[0m[38;5;10m+[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;9merror[0m[0m[1m: implicit autoref creates a reference to the dereference of a raw pointer[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/libyaml/parser.rs:87:16[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m87[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m            if (*parser).error != sys::YAML_NO_ERROR {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                [0m[0m[1m[38;5;9m^^[0m[0m[1m[38;5;12m------[0m[0m[1m[38;5;9m^^^^^^^[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[38;5;12mthis raw pointer has type `*mut yaml_parser_t`[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: creating a reference requires the pointer target to be valid and imposes aliasing requirements[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: references are created through calls to explicit `Deref(Mut)::deref(_mut)` implementations[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: try using a raw pointer method instead; or if this reference is intentional, make it explicit[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m87[0m[0m [0m[0m[1m[38;5;12m| [0m[0m            if [0m[0m[38;5;10m(&[0m[0m(*parser)[0m[0m[38;5;10m)[0m[0m.error != sys::YAML_NO_ERROR {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                [0m[0m[38;5;10m++[0m[0m         [0m[0m[38;5;10m+[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[33mwarning[0m[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m  [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/mapping.rs:81:18[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn entry(&mut self, k: Value) -> Entry {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[33m^^^^^^^^^[0m[0m               [0m[0m[1m[33m^^^^^[0m[0m [0m[0m[1m[33mthe same lifetime is hidden here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[33m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                  [0m[0m[1m[33mthe lifetime is elided here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(mismatched_lifetime_syntaxes)]` on by default[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: use `'_` for type paths[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m| [0m[0m    pub fn entry(&mut self, k: Value) -> Entry[0m[0m[38;5;10m<'_>[0m[0m {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m|[0m[0m                                               [0m[0m[38;5;10m++++[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[33mwarning[0m[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/mapping.rs:188:17[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m188[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn iter(&self) -> Iter {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33m^^^^^[0m[0m     [0m[0m[1m[33m^^^^[0m[0m [0m[0m[1m[33mthe same lifetime is hidden here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33mthe lifetime is elided here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: use `'_` for type paths[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m188[0m[0m [0m[0m[1m[38;5;12m| [0m[0m    pub fn iter(&self) -> Iter[0m[0m[38;5;10m<'_>[0m[0m {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                               [0m[0m[38;5;10m++++[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[33mwarning[0m[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/mapping.rs:197:21[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m197[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn iter_mut(&mut self) -> IterMut {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                     [0m[0m[1m[33m^^^^^^^^^[0m[0m     [0m[0m[1m[33m^^^^^^^[0m[0m [0m[0m[1m[33mthe same lifetime is hidden here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                     [0m[0m[1m[33m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                     [0m[0m[1m[33mthe lifetime is elided here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: use `'_` for type paths[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m197[0m[0m [0m[0m[1m[38;5;12m| [0m[0m    pub fn iter_mut(&mut self) -> IterMut[0m[0m[38;5;10m<'_>[0m[0m {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                          [0m[0m[38;5;10m++++[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[33mwarning[0m[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/mapping.rs:204:17[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m204[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn keys(&self) -> Keys {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33m^^^^^[0m[0m     [0m[0m[1m[33m^^^^[0m[0m [0m[0m[1m[33mthe same lifetime is hidden here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                 [0m[0m[1m[33mthe lifetime is elided here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: use `'_` for type paths[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m204[0m[0m [0m[0m[1m[38;5;12m| [0m[0m    pub fn keys(&self) -> Keys[0m[0m[38;5;10m<'_>[0m[0m {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                               [0m[0m[38;5;10m++++[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[33mwarning[0m[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/mapping.rs:218:19[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m218[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn values(&self) -> Values {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                   [0m[0m[1m[33m^^^^^[0m[0m     [0m[0m[1m[33m^^^^^^[0m[0m [0m[0m[1m[33mthe same lifetime is hidden here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                   [0m[0m[1m[33m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                   [0m[0m[1m[33mthe lifetime is elided here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: use `'_` for type paths[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m218[0m[0m [0m[0m[1m[38;5;12m| [0m[0m    pub fn values(&self) -> Values[0m[0m[38;5;10m<'_>[0m[0m {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                   [0m[0m[38;5;10m++++[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[33mwarning[0m[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/mapping.rs:225:23[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m225[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub fn values_mut(&mut self) -> ValuesMut {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                       [0m[0m[1m[33m^^^^^^^^^[0m[0m     [0m[0m[1m[33m^^^^^^^^^[0m[0m [0m[0m[1m[33mthe same lifetime is hidden here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                       [0m[0m[1m[33m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                       [0m[0m[1m[33mthe lifetime is elided here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: use `'_` for type paths[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m225[0m[0m [0m[0m[1m[38;5;12m| [0m[0m    pub fn values_mut(&mut self) -> ValuesMut[0m[0m[38;5;10m<'_>[0m[0m {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                              [0m[0m[38;5;10m++++[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[33mwarning[0m[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m   [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/number.rs:555:34[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m555[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mpub(crate) fn unexpected(number: &Number) -> Unexpected {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                  [0m[0m[1m[33m^^^^^^^[0m[0m     [0m[0m[1m[33m^^^^^^^^^^[0m[0m [0m[0m[1m[33mthe same lifetime is hidden here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                  [0m[0m[1m[33m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                  [0m[0m[1m[33mthe lifetime is elided here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: use `'_` for type paths[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m555[0m[0m [0m[0m[1m[38;5;12m| [0m[0mpub(crate) fn unexpected(number: &Number) -> Unexpected[0m[0m[38;5;10m<'_>[0m[0m {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m|[0m[0m                                                        [0m[0m[38;5;10m++++[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[33mwarning[0m[0m[1m: hiding a lifetime that's elided elsewhere is confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m    [0m[0m[1m[38;5;12m--> [0m[0m/src/serde-yaml/src/value/de.rs:1231:30[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m     [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m1231[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    pub(crate) fn unexpected(&self) -> Unexpected {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m     [0m[0m[1m[38;5;12m|[0m[0m                              [0m[0m[1m[33m^^^^^[0m[0m     [0m[0m[1m[33m^^^^^^^^^^[0m[0m [0m[0m[1m[33mthe same lifetime is hidden here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m     [0m[0m[1m[38;5;12m|[0m[0m                              [0m[0m[1m[33m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m     [0m[0m[1m[38;5;12m|[0m[0m                              [0m[0m[1m[33mthe lifetime is elided here[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m     [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m     [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: the same lifetime is referred to in inconsistent ways, making the signature confusing[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;14mhelp[0m[0m: use `'_` for type paths[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m     [0m[0m[1m[38;5;12m|[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m[1m[38;5;12m1231[0m[0m [0m[0m[1m[38;5;12m| [0m[0m    pub(crate) fn unexpected(&self) -> Unexpected[0m[0m[38;5;10m<'_>[0m[0m {[0m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m     [0m[0m[1m[38;5;12m|[0m[0m                                                  [0m[0m[38;5;10m++++[0m
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[33mwarning[0m[1m:[0m `serde_yaml` (lib) generated 8 warnings
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[31merror[0m[1m:[0m could not compile `serde_yaml` (lib) due to 9 previous errors; 8 warnings emitted
+Step #3 - "compile-libfuzzer-address-x86_64": [1m[33mwarning[0m[1m:[0m build failed, waiting for other jobs to finish...
+Step #3 - "compile-libfuzzer-address-x86_64": Error: failed to build fuzz script: ASAN_OPTIONS="detect_odr_violation=0" RUSTFLAGS=" -Cpasses=sancov-module -Cllvm-args=-sanitizer-coverage-level=4 -Cllvm-args=-sanitizer-coverage-inline-8bit-counters -Cllvm-args=-sanitizer-coverage-pc-table -Cllvm-args=-sanitizer-coverage-trace-compares --cfg fuzzing -Cllvm-args=-simplifycfg-branch-fold-threshold=0 -Zsanitizer=address -Cllvm-args=-sanitizer-coverage-stack-depth -Ccodegen-units=1 --cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers" "cargo" "build" "--manifest-path" "/src/serde-yaml/fuzz/Cargo.toml" "--target" "x86_64-unknown-linux-gnu" "--release" "--config" "profile.release.debug=\"line-tables-only\"" "--bins"
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image serde-yaml\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 serde-yaml\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

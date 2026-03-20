@@ -1,0 +1,408 @@
+starting build "41bfc0a5-c0fe-48b4-a682-c0f48e48154d"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f"
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Sending build context to Docker daemon  8.704kB
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Step 1/6 : FROM gcr.io/oss-fuzz-base/base-builder-swift
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": latest: Pulling from oss-fuzz-base/base-builder-swift
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b549f31133a9: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 6553f985cfd4: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 44e79d7c2dc1: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": f63914cb140e: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": a91b58245427: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 393fa490a241: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b47ba3cf3945: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 8155e270cdc5: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 4999203d7d00: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 46164349c4bf: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 05100634a677: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 3aa54c45b702: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 47cea538b224: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b8b0f9d901fc: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": bd6717f98619: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 236f5160dc6e: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 7431426b9c66: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": fc9270ed81c1: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2d3cac9bf1c8: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": e89edac75486: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 9ae5fef9f0fc: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": a91b58245427: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 393fa490a241: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": df91e5b6436b: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 351c09bfb637: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 4999203d7d00: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 74037a9ea3ab: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b47ba3cf3945: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": ffe3672fef4b: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 962d03c66114: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": e40806778824: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 8155e270cdc5: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": bd6717f98619: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b8b0f9d901fc: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 236f5160dc6e: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b540a3940ec2: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": f63914cb140e: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 30cfe214bc12: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 7431426b9c66: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": fc9270ed81c1: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 74037a9ea3ab: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2d3cac9bf1c8: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": e89edac75486: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 962d03c66114: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": ffe3672fef4b: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 3aa54c45b702: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 05100634a677: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 46164349c4bf: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2ab6ac8df3e5: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 07eed8ec62b5: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 4b473004e9bc: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 9ae5fef9f0fc: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 753a7cace8e8: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": ad14eecce9b1: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 7679b97e069c: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 28b81c09ccb2: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 07eed8ec62b5: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2ed54e8673f9: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 5e3c518962bd: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": caa029e25f4e: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2e0e0c374b39: Pulling fs layer
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": ad14eecce9b1: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": caa029e25f4e: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2ed54e8673f9: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 5e3c518962bd: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 4b473004e9bc: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": e40806778824: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 47cea538b224: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 351c09bfb637: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 7679b97e069c: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 28b81c09ccb2: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2ab6ac8df3e5: Waiting
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 44e79d7c2dc1: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 44e79d7c2dc1: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b549f31133a9: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b549f31133a9: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": a91b58245427: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": a91b58245427: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": f63914cb140e: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": f63914cb140e: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b47ba3cf3945: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 8155e270cdc5: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 8155e270cdc5: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 6553f985cfd4: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 6553f985cfd4: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b549f31133a9: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 46164349c4bf: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 46164349c4bf: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 05100634a677: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 05100634a677: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 3aa54c45b702: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 3aa54c45b702: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 47cea538b224: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 47cea538b224: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b8b0f9d901fc: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b8b0f9d901fc: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 4999203d7d00: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 4999203d7d00: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": bd6717f98619: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": bd6717f98619: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 236f5160dc6e: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 236f5160dc6e: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 7431426b9c66: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 7431426b9c66: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": fc9270ed81c1: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": fc9270ed81c1: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2d3cac9bf1c8: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": e89edac75486: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": e89edac75486: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 9ae5fef9f0fc: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 9ae5fef9f0fc: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": df91e5b6436b: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": df91e5b6436b: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 351c09bfb637: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 351c09bfb637: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 74037a9ea3ab: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 74037a9ea3ab: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 962d03c66114: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 962d03c66114: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": ffe3672fef4b: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": ffe3672fef4b: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": e40806778824: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b540a3940ec2: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b540a3940ec2: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 30cfe214bc12: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 30cfe214bc12: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2ab6ac8df3e5: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2ab6ac8df3e5: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 07eed8ec62b5: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 393fa490a241: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 393fa490a241: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 4b473004e9bc: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 4b473004e9bc: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 753a7cace8e8: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 753a7cace8e8: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 6553f985cfd4: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 28b81c09ccb2: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 28b81c09ccb2: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 7679b97e069c: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 44e79d7c2dc1: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": ad14eecce9b1: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": ad14eecce9b1: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2ed54e8673f9: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2ed54e8673f9: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 5e3c518962bd: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 5e3c518962bd: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2e0e0c374b39: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2e0e0c374b39: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": f63914cb140e: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": a91b58245427: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": caa029e25f4e: Verifying Checksum
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": caa029e25f4e: Download complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 393fa490a241: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b47ba3cf3945: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 8155e270cdc5: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 4999203d7d00: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 46164349c4bf: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 05100634a677: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 3aa54c45b702: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 47cea538b224: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b8b0f9d901fc: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": bd6717f98619: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 236f5160dc6e: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 7431426b9c66: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": fc9270ed81c1: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2d3cac9bf1c8: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": e89edac75486: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 9ae5fef9f0fc: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": df91e5b6436b: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 351c09bfb637: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 74037a9ea3ab: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": ffe3672fef4b: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 962d03c66114: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": e40806778824: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": b540a3940ec2: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 30cfe214bc12: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2ab6ac8df3e5: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 07eed8ec62b5: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 4b473004e9bc: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 753a7cace8e8: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": ad14eecce9b1: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 7679b97e069c: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 28b81c09ccb2: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2ed54e8673f9: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 5e3c518962bd: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": caa029e25f4e: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": 2e0e0c374b39: Pull complete
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Digest: sha256:1051d1a0a51f82987e4fa36f85dd8cee525df635f8523ac35575086979625e67
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-swift:latest
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f":  ---> 33c9ded16c05
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Step 2/6 : RUN git clone --depth 1 https://github.com/google/fuzzing
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f":  ---> Running in f467df897bf6
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": [91mCloning into 'fuzzing'...
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": [0mRemoving intermediate container f467df897bf6
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f":  ---> feecbc400ad5
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Step 3/6 : RUN git clone --depth 1 https://github.com/apple/swift-nio.git
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f":  ---> Running in 88c0cfa30a18
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": [91mCloning into 'swift-nio'...
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": [0mRemoving intermediate container 88c0cfa30a18
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f":  ---> a76df8eff45b
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Step 4/6 : COPY build.sh $SRC
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f":  ---> 47f340f2c98c
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Step 5/6 : COPY *.swift $SRC/
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f":  ---> 0671e7575395
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Step 6/6 : WORKDIR $SRC/swift-nio
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f":  ---> Running in 74d886294d10
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Removing intermediate container 74d886294d10
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f":  ---> a3f8481270cf
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Successfully built a3f8481270cf
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Successfully tagged gcr.io/oss-fuzz/swift-nio:latest
+Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/swift-nio:latest
+Finished Step #1 - "build-45d0e1c5-76c0-44a5-8ed9-ad21ba6db38f"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/swift-nio
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + SRCMAP=/tmp/file2UUdpN
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ swift == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/swift-nio/.git
+Step #2 - "srcmap": + GIT_DIR=/src/swift-nio
+Step #2 - "srcmap": + cd /src/swift-nio
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/apple/swift-nio.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=97c3f28ad0dc2dc4782483c57c4a71050d7afd75
+Step #2 - "srcmap": + jq_inplace /tmp/file2UUdpN '."/src/swift-nio" = { type: "git", url: "https://github.com/apple/swift-nio.git", rev: "97c3f28ad0dc2dc4782483c57c4a71050d7afd75" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/filerRThqd
+Step #2 - "srcmap": + cat /tmp/file2UUdpN
+Step #2 - "srcmap": + jq '."/src/swift-nio" = { type: "git", url: "https://github.com/apple/swift-nio.git", rev: "97c3f28ad0dc2dc4782483c57c4a71050d7afd75" }'
+Step #2 - "srcmap": + mv /tmp/filerRThqd /tmp/file2UUdpN
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/fuzzing/.git
+Step #2 - "srcmap": + GIT_DIR=/src/fuzzing
+Step #2 - "srcmap": + cd /src/fuzzing
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/google/fuzzing
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=734e55f3cfed1adbb51bf6cb5c65b4c1197b7089
+Step #2 - "srcmap": + jq_inplace /tmp/file2UUdpN '."/src/fuzzing" = { type: "git", url: "https://github.com/google/fuzzing", rev: "734e55f3cfed1adbb51bf6cb5c65b4c1197b7089" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": + F=/tmp/fileUuqsdH
+Step #2 - "srcmap": + cat /tmp/file2UUdpN
+Step #2 - "srcmap": + jq '."/src/fuzzing" = { type: "git", url: "https://github.com/google/fuzzing", rev: "734e55f3cfed1adbb51bf6cb5c65b4c1197b7089" }'
+Step #2 - "srcmap": + mv /tmp/fileUuqsdH /tmp/file2UUdpN
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/file2UUdpN
+Step #2 - "srcmap": + rm /tmp/file2UUdpN
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/swift-nio": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/apple/swift-nio.git",
+Step #2 - "srcmap":     "rev": "97c3f28ad0dc2dc4782483c57c4a71050d7afd75"
+Step #2 - "srcmap":   },
+Step #2 - "srcmap":   "/src/fuzzing": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/google/fuzzing",
+Step #2 - "srcmap":     "rev": "734e55f3cfed1adbb51bf6cb5c65b4c1197b7089"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + mkdir swift-nio-fuzz
+Step #3 - "compile-libfuzzer-address-x86_64": + cd swift-nio-fuzz
+Step #3 - "compile-libfuzzer-address-x86_64": + swift package init --type=executable
+Step #3 - "compile-libfuzzer-address-x86_64": Creating executable package: swift-nio-fuzz
+Step #3 - "compile-libfuzzer-address-x86_64": Creating Package.swift
+Step #3 - "compile-libfuzzer-address-x86_64": Creating .gitignore
+Step #3 - "compile-libfuzzer-address-x86_64": Creating Sources/
+Step #3 - "compile-libfuzzer-address-x86_64": Creating Sources/main.swift
+Step #3 - "compile-libfuzzer-address-x86_64": + rm -Rf Sources/swift-nio-fuzz
+Step #3 - "compile-libfuzzer-address-x86_64": + mkdir Sources/swift-nio-http1-fuzz
+Step #3 - "compile-libfuzzer-address-x86_64": + cp /src/fuzz_http1.swift Sources/swift-nio-http1-fuzz/main.swift
+Step #3 - "compile-libfuzzer-address-x86_64": + cp /src/Package.swift Package.swift
+Step #3 - "compile-libfuzzer-address-x86_64": + . precompile_swift
+Step #3 - "compile-libfuzzer-address-x86_64": ++ cp /usr/local/bin/llvm-symbolizer-swift /workspace/out/libfuzzer-address-x86_64/llvm-symbolizer
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ '[' address = coverage ']'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcxx=-fsanitize=address'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcxx=-fsanitize=address'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcxx=-fsanitize=address -Xcxx=-fsanitize-address-use-after-scope'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcxx=-fsanitize=address -Xcxx=-fsanitize-address-use-after-scope'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcxx=-fsanitize=address -Xcxx=-fsanitize-address-use-after-scope -Xcxx=-fsanitize=fuzzer-no-link'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcxx=-fsanitize=address -Xcxx=-fsanitize-address-use-after-scope -Xcxx=-fsanitize=fuzzer-no-link'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ for f in $CXXFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export 'SWIFTFLAGS=-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcxx=-fsanitize=address -Xcxx=-fsanitize-address-use-after-scope -Xcxx=-fsanitize=fuzzer-no-link -Xcxx=-stdlib=libc++'
+Step #3 - "compile-libfuzzer-address-x86_64": ++ SWIFTFLAGS='-Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcxx=-fsanitize=address -Xcxx=-fsanitize-address-use-after-scope -Xcxx=-fsanitize=fuzzer-no-link -Xcxx=-stdlib=libc++'
+Step #3 - "compile-libfuzzer-address-x86_64": + swift build -c debug -Xswiftc -parse-as-library -Xswiftc -static-stdlib --static-swift-stdlib -Xswiftc -sanitize=fuzzer,address --sanitize=address -Xcc=-O1 -Xcc=-fno-omit-frame-pointer -Xcc=-gline-tables-only -Xcc=-Wno-error=incompatible-function-pointer-types -Xcc=-Wno-error=int-conversion -Xcc=-Wno-error=deprecated-declarations -Xcc=-Wno-error=implicit-function-declaration -Xcc=-Wno-error=implicit-int -Xcc=-Wno-error=unknown-warning-option -Xcc=-Wno-error=vla-cxx-extension -Xcc=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcc=-fsanitize=address -Xcc=-fsanitize-address-use-after-scope -Xcc=-fsanitize=fuzzer-no-link -Xcxx=-O1 -Xcxx=-fno-omit-frame-pointer -Xcxx=-gline-tables-only -Xcxx=-Wno-error=incompatible-function-pointer-types -Xcxx=-Wno-error=int-conversion -Xcxx=-Wno-error=deprecated-declarations -Xcxx=-Wno-error=implicit-function-declaration -Xcxx=-Wno-error=implicit-int -Xcxx=-Wno-error=unknown-warning-option -Xcxx=-Wno-error=vla-cxx-extension -Xcxx=-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -Xcxx=-fsanitize=address -Xcxx=-fsanitize-address-use-after-scope -Xcxx=-fsanitize=fuzzer-no-link -Xcxx=-stdlib=libc++
+Step #3 - "compile-libfuzzer-address-x86_64": [2K[31m[1merror: [0mpackage 'swift-nio' is using Swift tools version 6.0.0 but the installed version is 5.10.1
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************
+Step #3 - "compile-libfuzzer-address-x86_64": Failed to build.
+Step #3 - "compile-libfuzzer-address-x86_64": To reproduce, run:
+Step #3 - "compile-libfuzzer-address-x86_64": python infra/helper.py build_image swift-nio
+Step #3 - "compile-libfuzzer-address-x86_64": python infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 swift-nio
+Step #3 - "compile-libfuzzer-address-x86_64": ********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1

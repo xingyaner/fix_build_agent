@@ -1,0 +1,488 @@
+starting build "5e4c2e8f-340d-4f1a-a97f-f6d8428fb801"
+
+FETCHSOURCE
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/git
+Step #0: Cloning into 'oss-fuzz'...
+Finished Step #0
+Starting Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84"
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Sending build context to Docker daemon   5.12kB
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Step 1/5 : FROM gcr.io/oss-fuzz-base/base-builder-python:ubuntu-24-04
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": ubuntu-24-04: Pulling from oss-fuzz-base/base-builder-python
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 76249c7cd503: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 4c4acc87d1ae: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 3c7429d50014: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": bec2b53a91bd: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 5f31fde7958b: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 7df6ded3d3a5: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 794bd4a9fc93: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": d0fd3ef75775: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 5a10927fdee9: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": b22eb47f7319: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": c8c60a2fd5c4: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": fb7c9e495b05: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 4e6892c7cc2d: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 6ead501f88e8: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 794bd4a9fc93: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": d0fd3ef75775: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 5a10927fdee9: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": b22eb47f7319: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 6f7975c28eb7: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": c8c60a2fd5c4: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": c9fbcfc74df0: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 1082315071be: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 49f091fef41e: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 362901735898: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": e4e6593bcd78: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9926750f9d2b: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59520f382ddf: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 6f7975c28eb7: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": c9fbcfc74df0: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59520f382ddf: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 6ead501f88e8: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 1082315071be: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 362901735898: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9926750f9d2b: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 7472006dcce2: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 8e31134aba0a: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 2d2d2c4a69e1: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9f99516037a0: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59d9d379bb6f: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": cd8915cda8cb: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 99a33f1d7ffc: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 06150306d210: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": b0de8135a2c0: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 1280dfc31d4b: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": a597c92f9fcf: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 2d2d2c4a69e1: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9f99516037a0: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 7472006dcce2: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 8e31134aba0a: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 99a33f1d7ffc: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59d9d379bb6f: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": cd8915cda8cb: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 06150306d210: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 1280dfc31d4b: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": b0de8135a2c0: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9949bf7f2883: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": ca3769a0bdb7: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": faa68359d443: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59481218cff4: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": a502477e123b: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9949bf7f2883: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": cf19d536ff68: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": faa68359d443: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 0e317b9c5fef: Pulling fs layer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": ca3769a0bdb7: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": cf19d536ff68: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 0e317b9c5fef: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59481218cff4: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": a502477e123b: Waiting
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 7df6ded3d3a5: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 7df6ded3d3a5: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 3c7429d50014: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 5f31fde7958b: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 5f31fde7958b: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": d0fd3ef75775: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": d0fd3ef75775: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 5a10927fdee9: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": bec2b53a91bd: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": bec2b53a91bd: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 76249c7cd503: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 76249c7cd503: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 4e6892c7cc2d: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 4e6892c7cc2d: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": fb7c9e495b05: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": fb7c9e495b05: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 6f7975c28eb7: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 6f7975c28eb7: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 6ead501f88e8: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 6ead501f88e8: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 1082315071be: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 1082315071be: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": c9fbcfc74df0: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": c9fbcfc74df0: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": c8c60a2fd5c4: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": c8c60a2fd5c4: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 4c4acc87d1ae: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 4c4acc87d1ae: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 362901735898: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 362901735898: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": e4e6593bcd78: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": e4e6593bcd78: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9926750f9d2b: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9926750f9d2b: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59520f382ddf: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59520f382ddf: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 49f091fef41e: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 7472006dcce2: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 7472006dcce2: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 2d2d2c4a69e1: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9f99516037a0: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9f99516037a0: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 8e31134aba0a: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 8e31134aba0a: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59d9d379bb6f: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59d9d379bb6f: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": cd8915cda8cb: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 99a33f1d7ffc: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 99a33f1d7ffc: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 06150306d210: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 06150306d210: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 76249c7cd503: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 1280dfc31d4b: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 1280dfc31d4b: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": b0de8135a2c0: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": b0de8135a2c0: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": ca3769a0bdb7: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": ca3769a0bdb7: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": faa68359d443: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": faa68359d443: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59481218cff4: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": a597c92f9fcf: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": a597c92f9fcf: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9949bf7f2883: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9949bf7f2883: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": a502477e123b: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": b22eb47f7319: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": b22eb47f7319: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": cf19d536ff68: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": cf19d536ff68: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 0e317b9c5fef: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 0e317b9c5fef: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 794bd4a9fc93: Verifying Checksum
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 794bd4a9fc93: Download complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 4c4acc87d1ae: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 3c7429d50014: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": bec2b53a91bd: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 5f31fde7958b: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 7df6ded3d3a5: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 794bd4a9fc93: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": d0fd3ef75775: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 5a10927fdee9: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": b22eb47f7319: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": c8c60a2fd5c4: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": fb7c9e495b05: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 4e6892c7cc2d: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 6ead501f88e8: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 6f7975c28eb7: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": c9fbcfc74df0: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 1082315071be: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 49f091fef41e: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 362901735898: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": e4e6593bcd78: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9926750f9d2b: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59520f382ddf: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 7472006dcce2: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 8e31134aba0a: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 2d2d2c4a69e1: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9f99516037a0: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59d9d379bb6f: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": cd8915cda8cb: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 99a33f1d7ffc: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 06150306d210: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": b0de8135a2c0: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 1280dfc31d4b: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": a597c92f9fcf: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 9949bf7f2883: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": ca3769a0bdb7: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": faa68359d443: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 59481218cff4: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": a502477e123b: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": cf19d536ff68: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 0e317b9c5fef: Pull complete
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Digest: sha256:dc874b30131ad1b5cd8358f3413332a2aa50906d6f201d7f38239f92d295a895
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Status: Downloaded newer image for gcr.io/oss-fuzz-base/base-builder-python:ubuntu-24-04
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":  ---> 2a9372870c14
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Step 2/5 : RUN git clone https://github.com/jelmer/dulwich.git dulwich
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":  ---> Running in fd72e3436f34
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [91mCloning into 'dulwich'...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0mRemoving intermediate container fd72e3436f34
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":  ---> 0ab9944a1773
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Step 3/5 : RUN $SRC/dulwich/fuzzing/oss-fuzz-scripts/container-environment-bootstrap.sh
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":  ---> Running in 122ebfd7e4a7
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [2025-12-30 06:38:14] Copying .dict files from /src/dulwich/fuzzing/dictionaries to /src/
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": '/src/dulwich/fuzzing/dictionaries/fuzz_bundle.dict' -> '/src/fuzz_bundle.dict'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": '/src/dulwich/fuzzing/dictionaries/fuzz_configfile.dict' -> '/src/fuzz_configfile.dict'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": '/src/dulwich/fuzzing/dictionaries/fuzz_object_store.dict' -> '/src/fuzz_object_store.dict'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": '/src/dulwich/fuzzing/dictionaries/fuzz_repo.dict' -> '/src/fuzz_repo.dict'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [2025-12-30 06:38:14] Appending /work/__base.dict to /src/fuzz_repo.dict
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [2025-12-30 06:38:14] Appending /work/__base.dict to /src/fuzz_bundle.dict
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [2025-12-30 06:38:14] Appending /work/__base.dict to /src/fuzz_configfile.dict
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [2025-12-30 06:38:14] Appending /work/__base.dict to /src/fuzz_object_store.dict
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Hit:1 http://archive.ubuntu.com/ubuntu noble InRelease
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:2 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:3 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:4 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:5 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [3059 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:6 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1950 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:7 http://archive.ubuntu.com/ubuntu noble-updates/main i386 Packages [711 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:8 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [2130 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:9 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [35.9 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:10 http://archive.ubuntu.com/ubuntu noble-updates/universe i386 Packages [1250 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:11 http://archive.ubuntu.com/ubuntu noble-updates/restricted i386 Packages [28.6 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:12 http://archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [34.6 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:13 http://archive.ubuntu.com/ubuntu noble-backports/universe i386 Packages [18.8 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:14 http://archive.ubuntu.com/ubuntu noble-backports/main i386 Packages [40.3 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:15 http://archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [49.5 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:16 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1183 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:17 http://security.ubuntu.com/ubuntu noble-security/main i386 Packages [450 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:18 http://security.ubuntu.com/ubuntu noble-security/universe i386 Packages [704 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:19 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [2898 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:20 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1752 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Fetched 16.7 MB in 2s (10000 kB/s)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Reading package lists...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Reading package lists...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Building dependency tree...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Reading state information...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": The following packages were automatically installed and are no longer required:
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":   autotools-dev m4
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Use 'apt autoremove' to remove them.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": The following additional packages will be installed:
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":   libassuan-dev libgpgme11t64
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": The following NEW packages will be installed:
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":   libassuan-dev libgpg-error-dev libgpgme-dev libgpgme11t64
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 0 upgraded, 4 newly installed, 0 to remove and 20 not upgraded.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Need to get 704 kB of archives.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": After this operation, 2263 kB of additional disk space will be used.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libgpg-error-dev amd64 1.47-3build2.1 [128 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:2 http://archive.ubuntu.com/ubuntu noble/main amd64 libassuan-dev amd64 2.5.6-1build1 [95.0 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:3 http://archive.ubuntu.com/ubuntu noble/main amd64 libgpgme11t64 amd64 1.18.0-4.1ubuntu4 [136 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Get:4 http://archive.ubuntu.com/ubuntu noble/main amd64 libgpgme-dev amd64 1.18.0-4.1ubuntu4 [345 kB]
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [91mdebconf: delaying package configuration, since apt-utils is not installed
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0mFetched 704 kB in 0s (2349 kB/s)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Selecting previously unselected package libgpg-error-dev.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17633 files and directories currently installed.)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Preparing to unpack .../libgpg-error-dev_1.47-3build2.1_amd64.deb ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Unpacking libgpg-error-dev (1.47-3build2.1) ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Selecting previously unselected package libassuan-dev.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Preparing to unpack .../libassuan-dev_2.5.6-1build1_amd64.deb ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Unpacking libassuan-dev (2.5.6-1build1) ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Selecting previously unselected package libgpgme11t64:amd64.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Preparing to unpack .../libgpgme11t64_1.18.0-4.1ubuntu4_amd64.deb ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Unpacking libgpgme11t64:amd64 (1.18.0-4.1ubuntu4) ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Selecting previously unselected package libgpgme-dev.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Preparing to unpack .../libgpgme-dev_1.18.0-4.1ubuntu4_amd64.deb ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Unpacking libgpgme-dev (1.18.0-4.1ubuntu4) ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Setting up libgpg-error-dev (1.47-3build2.1) ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Setting up libassuan-dev (2.5.6-1build1) ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Setting up libgpgme11t64:amd64 (1.18.0-4.1ubuntu4) ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Setting up libgpgme-dev (1.18.0-4.1ubuntu4) ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [91minfo: downloading installer
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0m[91minfo: profile set to 'minimal'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": info: default host triple is x86_64-unknown-linux-gnu
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0m[91minfo: syncing channel updates for 'nightly-x86_64-unknown-linux-gnu'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0m[91minfo: latest update on 2025-12-30, rust version 1.94.0-nightly (56f24e00c 2025-12-29)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": info: downloading component 'cargo'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0m[91minfo: downloading component 'rust-std'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0m[91minfo: downloading component 'rustc'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0m[91minfo: installing component 'cargo'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0m[91minfo: installing component 'rust-std'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0m[91minfo: installing component 'rustc'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0m[91minfo: default toolchain set to 'nightly-x86_64-unknown-linux-gnu'
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0m
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":   nightly-x86_64-unknown-linux-gnu installed - rustc 1.94.0-nightly (56f24e00c 2025-12-29)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Rust is installed now. Great!
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": To get started you may need to restart your current shell.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": This would reload your PATH environment variable to include
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Cargo's bin directory ($HOME/.cargo/bin).
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": To configure your current shell, you need to source
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": the corresponding env file under $HOME/.cargo.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": This is usually done by running one of the following (note the leading DOT):
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": . "$HOME/.cargo/env"            # For sh/bash/zsh/ash/dash/pdksh
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": source "$HOME/.cargo/env.fish"  # For fish
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": source $"($nu.home-path)/.cargo/env.nu"  # For nushell
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Requirement already satisfied: pip in /usr/local/lib/python3.11/site-packages (25.3)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0mRequirement already satisfied: atheris>=2.3.0 in /usr/local/lib/python3.11/site-packages (3.0.0)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Collecting setuptools~=73.0
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":   Downloading setuptools-73.0.1-py3-none-any.whl.metadata (6.6 kB)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Requirement already satisfied: pyinstaller>=6.10 in /usr/local/lib/python3.11/site-packages (6.10.0)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Collecting pyinstaller>=6.10
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":   Downloading pyinstaller-6.17.0-py3-none-manylinux2014_x86_64.whl.metadata (8.5 kB)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Collecting setuptools-rust
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":   Downloading setuptools_rust-1.12.0-py3-none-any.whl.metadata (9.6 kB)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Requirement already satisfied: altgraph in /usr/local/lib/python3.11/site-packages (from pyinstaller>=6.10) (0.17.5)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Requirement already satisfied: packaging>=22.0 in /usr/local/lib/python3.11/site-packages (from pyinstaller>=6.10) (25.0)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Requirement already satisfied: pyinstaller-hooks-contrib>=2025.9 in /usr/local/lib/python3.11/site-packages (from pyinstaller>=6.10) (2025.10)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Collecting semantic_version<3,>=2.8.2 (from setuptools-rust)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":   Downloading semantic_version-2.10.0-py2.py3-none-any.whl.metadata (9.7 kB)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Downloading setuptools-73.0.1-py3-none-any.whl (2.3 MB)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 42.5 MB/s  0:00:00
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Downloading pyinstaller-6.17.0-py3-none-manylinux2014_x86_64.whl (737 kB)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 737.8/737.8 kB 50.7 MB/s  0:00:00
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Downloading setuptools_rust-1.12.0-py3-none-any.whl (28 kB)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Downloading semantic_version-2.10.0-py2.py3-none-any.whl (15 kB)
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Installing collected packages: setuptools, semantic_version, setuptools-rust, pyinstaller
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":   Attempting uninstall: setuptools
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":     Found existing installation: setuptools 72.1.0
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":     Uninstalling setuptools-72.1.0:
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":       Successfully uninstalled setuptools-72.1.0
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":   Attempting uninstall: pyinstaller
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":     Found existing installation: pyinstaller 6.10.0
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":     Uninstalling pyinstaller-6.10.0:
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":       Successfully uninstalled pyinstaller-6.10.0
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": 
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Successfully installed pyinstaller-6.17.0 semantic_version-2.10.0 setuptools-73.0.1 setuptools-rust-1.12.0
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": [0mRemoving intermediate container 122ebfd7e4a7
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":  ---> 4d925ee86626
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Step 4/5 : COPY *.sh $SRC/
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":  ---> b8e9fbce2816
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Step 5/5 : WORKDIR $SRC/dulwich
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":  ---> Running in 384c168ba08d
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Removing intermediate container 384c168ba08d
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84":  ---> a0332678a3d7
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Successfully built a0332678a3d7
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Successfully tagged gcr.io/oss-fuzz/dulwich:latest
+Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84": Successfully tagged us-central1-docker.pkg.dev/oss-fuzz/unsafe/dulwich:latest
+Finished Step #1 - "build-56948431-01d4-4f51-8537-54e330b9ab84"
+Starting Step #2 - "srcmap"
+Step #2 - "srcmap": Already have image: gcr.io/oss-fuzz/dulwich
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": WARNING: tempfile is deprecated; consider using mktemp instead.
+Step #2 - "srcmap": + SRCMAP=/tmp/fileJZkD1N
+Step #2 - "srcmap": + echo '{}'
+Step #2 - "srcmap": + PATHS_TO_SCAN=/src
+Step #2 - "srcmap": + [[ python == \g\o ]]
+Step #2 - "srcmap": ++ find /src -name .git -type d
+Step #2 - "srcmap": + for DOT_GIT_DIR in $(find $PATHS_TO_SCAN -name ".git" -type d)
+Step #2 - "srcmap": ++ dirname /src/dulwich/.git
+Step #2 - "srcmap": + GIT_DIR=/src/dulwich
+Step #2 - "srcmap": + cd /src/dulwich
+Step #2 - "srcmap": ++ git config --get remote.origin.url
+Step #2 - "srcmap": + GIT_URL=https://github.com/jelmer/dulwich.git
+Step #2 - "srcmap": ++ git rev-parse HEAD
+Step #2 - "srcmap": + GIT_REV=44f64531f0fc8b428b0544787dfdbea8919d1b53
+Step #2 - "srcmap": + jq_inplace /tmp/fileJZkD1N '."/src/dulwich" = { type: "git", url: "https://github.com/jelmer/dulwich.git", rev: "44f64531f0fc8b428b0544787dfdbea8919d1b53" }'
+Step #2 - "srcmap": ++ tempfile
+Step #2 - "srcmap": WARNING: tempfile is deprecated; consider using mktemp instead.
+Step #2 - "srcmap": + F=/tmp/file2STWX3
+Step #2 - "srcmap": + cat /tmp/fileJZkD1N
+Step #2 - "srcmap": + jq '."/src/dulwich" = { type: "git", url: "https://github.com/jelmer/dulwich.git", rev: "44f64531f0fc8b428b0544787dfdbea8919d1b53" }'
+Step #2 - "srcmap": + mv /tmp/file2STWX3 /tmp/fileJZkD1N
+Step #2 - "srcmap": ++ find /src -name .svn -type d
+Step #2 - "srcmap": ++ find /src -name .hg -type d
+Step #2 - "srcmap": + '[' '' '!=' '' ']'
+Step #2 - "srcmap": + cat /tmp/fileJZkD1N
+Step #2 - "srcmap": + rm /tmp/fileJZkD1N
+Step #2 - "srcmap": {
+Step #2 - "srcmap":   "/src/dulwich": {
+Step #2 - "srcmap":     "type": "git",
+Step #2 - "srcmap":     "url": "https://github.com/jelmer/dulwich.git",
+Step #2 - "srcmap":     "rev": "44f64531f0fc8b428b0544787dfdbea8919d1b53"
+Step #2 - "srcmap":   }
+Step #2 - "srcmap": }
+Finished Step #2 - "srcmap"
+Starting Step #3 - "compile-libfuzzer-address-x86_64"
+Step #3 - "compile-libfuzzer-address-x86_64": Already have image (with digest): gcr.io/cloud-builders/docker
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": vm.mmap_rnd_bits = 28
+Step #3 - "compile-libfuzzer-address-x86_64": Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": CC=clang
+Step #3 - "compile-libfuzzer-address-x86_64": CXX=clang++
+Step #3 - "compile-libfuzzer-address-x86_64": CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -fno-sanitize=function,leak,vptr,
+Step #3 - "compile-libfuzzer-address-x86_64": CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++ -fno-sanitize=function,leak,vptr
+Step #3 - "compile-libfuzzer-address-x86_64": RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+Step #3 - "compile-libfuzzer-address-x86_64": ---------------------------------------------------------------
+Step #3 - "compile-libfuzzer-address-x86_64": + . /src/dulwich/fuzzing/oss-fuzz-scripts/build.sh
+Step #3 - "compile-libfuzzer-address-x86_64": ++ set -euo pipefail
+Step #3 - "compile-libfuzzer-address-x86_64": ++ unset RUSTFLAGS
+Step #3 - "compile-libfuzzer-address-x86_64": ++ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out:/root/.cargo/bin
+Step #3 - "compile-libfuzzer-address-x86_64": ++ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/out:/root/.cargo/bin
+Step #3 - "compile-libfuzzer-address-x86_64": ++ python3 -m pip install -v '.[fastimport,paramiko,https,pgp]'
+Step #3 - "compile-libfuzzer-address-x86_64": Using pip 25.3 from /usr/local/lib/python3.11/site-packages/pip (python 3.11)
+Step #3 - "compile-libfuzzer-address-x86_64": Processing /src/dulwich
+Step #3 - "compile-libfuzzer-address-x86_64":   Running command installing build dependencies
+Step #3 - "compile-libfuzzer-address-x86_64":   Using pip 25.3 from /usr/local/lib/python3.11/site-packages/pip (python 3.11)
+Step #3 - "compile-libfuzzer-address-x86_64":   Collecting setuptools>=77.0.0
+Step #3 - "compile-libfuzzer-address-x86_64":     Obtaining dependency information for setuptools>=77.0.0 from https://files.pythonhosted.org/packages/a3/dc/17031897dae0efacfea57dfd3a82fdd2a2aeb58e0ff71b77b87e44edc772/setuptools-80.9.0-py3-none-any.whl.metadata
+Step #3 - "compile-libfuzzer-address-x86_64":     Using cached setuptools-80.9.0-py3-none-any.whl.metadata (6.6 kB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Using cached setuptools-80.9.0-py3-none-any.whl (1.2 MB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Installing collected packages: setuptools
+Step #3 - "compile-libfuzzer-address-x86_64":   Successfully installed setuptools-80.9.0
+Step #3 - "compile-libfuzzer-address-x86_64":   WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Step #3 - "compile-libfuzzer-address-x86_64":   Installing build dependencies ... [?25l[?25hdone
+Step #3 - "compile-libfuzzer-address-x86_64":   Running command Getting requirements to build wheel
+Step #3 - "compile-libfuzzer-address-x86_64":   Getting requirements to build wheel ... [?25l[?25hdone
+Step #3 - "compile-libfuzzer-address-x86_64":   Running command installing backend dependencies
+Step #3 - "compile-libfuzzer-address-x86_64":   Using pip 25.3 from /usr/local/lib/python3.11/site-packages/pip (python 3.11)
+Step #3 - "compile-libfuzzer-address-x86_64":   Collecting setuptools_rust
+Step #3 - "compile-libfuzzer-address-x86_64":     Obtaining dependency information for setuptools_rust from https://files.pythonhosted.org/packages/f9/7b/d05b1778f2d4e354d103e3421c6267d923032fefcc5ca5b7df0cb21cefd0/setuptools_rust-1.12.0-py3-none-any.whl.metadata
+Step #3 - "compile-libfuzzer-address-x86_64":     Using cached setuptools_rust-1.12.0-py3-none-any.whl.metadata (9.6 kB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Collecting setuptools>=62.4 (from setuptools_rust)
+Step #3 - "compile-libfuzzer-address-x86_64":     Obtaining dependency information for setuptools>=62.4 from https://files.pythonhosted.org/packages/a3/dc/17031897dae0efacfea57dfd3a82fdd2a2aeb58e0ff71b77b87e44edc772/setuptools-80.9.0-py3-none-any.whl.metadata
+Step #3 - "compile-libfuzzer-address-x86_64":     Using cached setuptools-80.9.0-py3-none-any.whl.metadata (6.6 kB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Collecting semantic_version<3,>=2.8.2 (from setuptools_rust)
+Step #3 - "compile-libfuzzer-address-x86_64":     Obtaining dependency information for semantic_version<3,>=2.8.2 from https://files.pythonhosted.org/packages/6a/23/8146aad7d88f4fcb3a6218f41a60f6c2d4e3a72de72da1825dc7c8f7877c/semantic_version-2.10.0-py2.py3-none-any.whl.metadata
+Step #3 - "compile-libfuzzer-address-x86_64":     Using cached semantic_version-2.10.0-py2.py3-none-any.whl.metadata (9.7 kB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Using cached setuptools_rust-1.12.0-py3-none-any.whl (28 kB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Using cached semantic_version-2.10.0-py2.py3-none-any.whl (15 kB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Using cached setuptools-80.9.0-py3-none-any.whl (1.2 MB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Installing collected packages: setuptools, semantic_version, setuptools_rust
+Step #3 - "compile-libfuzzer-address-x86_64": 
+Step #3 - "compile-libfuzzer-address-x86_64":   Successfully installed semantic_version-2.10.0 setuptools-80.9.0 setuptools_rust-1.12.0
+Step #3 - "compile-libfuzzer-address-x86_64":   WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Step #3 - "compile-libfuzzer-address-x86_64":   Installing backend dependencies ... [?25l[?25hdone
+Step #3 - "compile-libfuzzer-address-x86_64":   Running command Preparing metadata (pyproject.toml)
+Step #3 - "compile-libfuzzer-address-x86_64":   running dist_info
+Step #3 - "compile-libfuzzer-address-x86_64":   creating /tmp/pip-modern-metadata-_ibapd6c/dulwich.egg-info
+Step #3 - "compile-libfuzzer-address-x86_64":   writing /tmp/pip-modern-metadata-_ibapd6c/dulwich.egg-info/PKG-INFO
+Step #3 - "compile-libfuzzer-address-x86_64":   writing dependency_links to /tmp/pip-modern-metadata-_ibapd6c/dulwich.egg-info/dependency_links.txt
+Step #3 - "compile-libfuzzer-address-x86_64":   writing entry points to /tmp/pip-modern-metadata-_ibapd6c/dulwich.egg-info/entry_points.txt
+Step #3 - "compile-libfuzzer-address-x86_64":   writing requirements to /tmp/pip-modern-metadata-_ibapd6c/dulwich.egg-info/requires.txt
+Step #3 - "compile-libfuzzer-address-x86_64":   writing top-level names to /tmp/pip-modern-metadata-_ibapd6c/dulwich.egg-info/top_level.txt
+Step #3 - "compile-libfuzzer-address-x86_64":   writing manifest file '/tmp/pip-modern-metadata-_ibapd6c/dulwich.egg-info/SOURCES.txt'
+Step #3 - "compile-libfuzzer-address-x86_64":   reading manifest file '/tmp/pip-modern-metadata-_ibapd6c/dulwich.egg-info/SOURCES.txt'
+Step #3 - "compile-libfuzzer-address-x86_64":   reading manifest template 'MANIFEST.in'
+Step #3 - "compile-libfuzzer-address-x86_64":   adding license file 'COPYING'
+Step #3 - "compile-libfuzzer-address-x86_64":   writing manifest file '/tmp/pip-modern-metadata-_ibapd6c/dulwich.egg-info/SOURCES.txt'
+Step #3 - "compile-libfuzzer-address-x86_64":   creating '/tmp/pip-modern-metadata-_ibapd6c/dulwich-0.25.0.dist-info'
+Step #3 - "compile-libfuzzer-address-x86_64":   Preparing metadata (pyproject.toml) ... [?25l[?25hdone
+Step #3 - "compile-libfuzzer-address-x86_64": Collecting urllib3>=2.2.2 (from dulwich==0.25.0)
+Step #3 - "compile-libfuzzer-address-x86_64":   Obtaining dependency information for urllib3>=2.2.2 from https://files.pythonhosted.org/packages/6d/b9/4095b668ea3678bf6a0af005527f39de12fb026516fb3df17495a733b7f8/urllib3-2.6.2-py3-none-any.whl.metadata
+Step #3 - "compile-libfuzzer-address-x86_64":   Downloading urllib3-2.6.2-py3-none-any.whl.metadata (6.6 kB)
+Step #3 - "compile-libfuzzer-address-x86_64": Collecting typing_extensions>=4.6.0 (from dulwich==0.25.0)
+Step #3 - "compile-libfuzzer-address-x86_64":   Obtaining dependency information for typing_extensions>=4.6.0 from https://files.pythonhosted.org/packages/18/67/36e9267722cc04a6b9f15c7f3441c2363321a3ea07da7ae0c0707beb2a9c/typing_extensions-4.15.0-py3-none-any.whl.metadata
+Step #3 - "compile-libfuzzer-address-x86_64":   Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Step #3 - "compile-libfuzzer-address-x86_64": Collecting fastimport (from dulwich==0.25.0)
+Step #3 - "compile-libfuzzer-address-x86_64":   Obtaining dependency information for fastimport from https://files.pythonhosted.org/packages/6a/e3/354dd0c7c16f1d9eab89bff22e40ac6e3030f08aeedc66497b49ca48a925/fastimport-0.9.16-py2.py3-none-any.whl.metadata
+Step #3 - "compile-libfuzzer-address-x86_64":   Downloading fastimport-0.9.16-py2.py3-none-any.whl.metadata (2.7 kB)
+Step #3 - "compile-libfuzzer-address-x86_64": Collecting gpg (from dulwich==0.25.0)
+Step #3 - "compile-libfuzzer-address-x86_64":   Downloading gpg-1.10.0.tar.gz (39 kB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Running command installing build dependencies for gpg
+Step #3 - "compile-libfuzzer-address-x86_64":   Using pip 25.3 from /usr/local/lib/python3.11/site-packages/pip (python 3.11)
+Step #3 - "compile-libfuzzer-address-x86_64":   Collecting setuptools>=40.8.0
+Step #3 - "compile-libfuzzer-address-x86_64":     Obtaining dependency information for setuptools>=40.8.0 from https://files.pythonhosted.org/packages/a3/dc/17031897dae0efacfea57dfd3a82fdd2a2aeb58e0ff71b77b87e44edc772/setuptools-80.9.0-py3-none-any.whl.metadata
+Step #3 - "compile-libfuzzer-address-x86_64":     Using cached setuptools-80.9.0-py3-none-any.whl.metadata (6.6 kB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Using cached setuptools-80.9.0-py3-none-any.whl (1.2 MB)
+Step #3 - "compile-libfuzzer-address-x86_64":   Installing collected packages: setuptools
+Step #3 - "compile-libfuzzer-address-x86_64":   Successfully installed setuptools-80.9.0
+Step #3 - "compile-libfuzzer-address-x86_64":   WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+Step #3 - "compile-libfuzzer-address-x86_64":   Installing build dependencies ... [?25l[?25hdone
+Step #3 - "compile-libfuzzer-address-x86_64":   Running command Getting requirements to build wheel
+Step #3 - "compile-libfuzzer-address-x86_64":   Could not find gpgme-config.  Please install the libgpgme development package.
+Step #3 - "compile-libfuzzer-address-x86_64":   [1;31merror[0m: [1msubprocess-exited-with-error[0m
+Step #3 - "compile-libfuzzer-address-x86_64":   
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m×[0m [32mGetting requirements to build wheel[0m did not run successfully.
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m│[0m exit code: [1;36m1[0m
+Step #3 - "compile-libfuzzer-address-x86_64":   [31m╰─>[0m No available output.
+Step #3 - "compile-libfuzzer-address-x86_64":   
+Step #3 - "compile-libfuzzer-address-x86_64":   [1;35mnote[0m: This error originates from a subprocess, and is likely not a problem with pip.
+Step #3 - "compile-libfuzzer-address-x86_64":   [1;35mfull command[0m: [34m/usr/local/bin/python3 /usr/local/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py get_requires_for_build_wheel /tmp/tmp34i86f1c[0m
+Step #3 - "compile-libfuzzer-address-x86_64":   [1;35mcwd[0m: /tmp/pip-install-3tfyhbt3/gpg_ee109b8c264f4c9993c19c4e8ed31079
+Step #3 - "compile-libfuzzer-address-x86_64":   Getting requirements to build wheel ... [?25l[?25herror
+Step #3 - "compile-libfuzzer-address-x86_64": [31mERROR: Failed to build 'gpg' when getting requirements to build wheel[0m[31m
+Step #3 - "compile-libfuzzer-address-x86_64": [0m********************************************************************************\nFailed to build.\nTo reproduce, run:\npython infra/helper.py build_image dulwich\npython infra/helper.py build_fuzzers --sanitizer address --engine libfuzzer --architecture x86_64 dulwich\n********************************************************************************
+Finished Step #3 - "compile-libfuzzer-address-x86_64"
+ERROR
+ERROR: build step 3 "gcr.io/cloud-builders/docker" failed: step exited with non-zero status: 1
