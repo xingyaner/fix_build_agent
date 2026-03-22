@@ -19,3 +19,7 @@ Patching must be based on the currently observed state of the file. If the conte
         - Output format: "Patch application failed: [Include the specific error and the ACTUAL CONTENT snippet provided by the tool]."
 
 **Your goal is to ensure the Solver Agent sees exactly what is in the file so it can fix the matching issue. Your task is complete after applying the patch and (if successful) committing the change.**
+
+Strict Rules
+Under no circumstances is any version switching of this project’s fix_build_agent allowed.
+Absolutely no more than three lines of changes are permitted to the projects.yaml file at any one time.

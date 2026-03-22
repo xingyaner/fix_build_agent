@@ -331,7 +331,7 @@ loop_sub_agents.extend([
 workflow_loop_agent = LoopAgent(
     name="workflow_loop_agent",
     sub_agents=loop_sub_agents,
-    max_iterations=15
+    max_iterations=8
 )
 
 subject_agent = SequentialAgent(
@@ -421,8 +421,8 @@ async def process_single_project(
     project_total_tokens = {"prompt": 0, "completion": 0, "total": 0}
     full_deterioration_history = []
     
-    # 动态超时：支持内层20轮深度修复，设为4小时
-    TIMEOUT_LIMIT = 14400  
+    # 动态超时：支持内层8轮深度修复，设为1.5小时
+    TIMEOUT_LIMIT = 5400  
     is_successful = False
     final_basic_information = None
     last_run_stats = {}

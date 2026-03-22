@@ -28,3 +28,7 @@ You must call the `update_reflection_journal` tool.
 - `reflection_analysis`: A concise summary of the failure and the "Lesson Learned".
 - `deterioration_score`: [Integer 1-10]
 - `should_rollback`: [Boolean]
+
+Strict Rules
+Under no circumstances is any version switching of this project’s fix_build_agent allowed.
+Absolutely no more than three lines of changes are permitted to the projects.yaml file at any one time.

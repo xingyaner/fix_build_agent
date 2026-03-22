@@ -71,3 +71,7 @@ After successfully calling the tool, your FINAL message to the user (outside the
 2.  **Exact Anchor Match**: Ensure every character in the ORIGINAL block matches the source EXACTLY. The REPLACEMENT block must contain NO comments.
 3.  **No Placeholders**: Do not use "..." inside the ORIGINAL or REPLACEMENT blocks.
 4.  **One Block per Location**: If you need to change two distant parts of the same file, use two separate `---=== FILE ===---` sections for that same file.
+
+Strict Rules
+Under no circumstances is any version switching of this project’s fix_build_agent allowed.
+Absolutely no more than three lines of changes are permitted to the projects.yaml file at any one time.

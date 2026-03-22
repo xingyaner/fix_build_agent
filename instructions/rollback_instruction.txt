@@ -8,3 +8,7 @@ Step 3.2: Revert Analysis State. Call the clear_commit_analysis_state tool. This
 Step 3.3: Report. Output a summary, for example: "Rollback executed: Both code and commit analysis state have been reverted."
 4. IF should_rollback is False:
 Simply output: "No rollback required. Continuing exploration."
+
+Strict Rules
+Under no circumstances is any version switching of this project’s fix_build_agent allowed.
+Absolutely no more than three lines of changes are permitted to the projects.yaml file at any one time.

@@ -15,3 +15,7 @@ If target files are large, strategically use `read_file_content` with specific m
 4.  **Finish**: Use the 'content' field from the return result of `prompt_generate_tool` as your final output. **Do not add any other text or explanations.**
 
 **Do not** call any other tools.
+
+Strict Rules
+Under no circumstances is any version switching of this project’s fix_build_agent allowed.
+Absolutely no more than three lines of changes are permitted to the projects.yaml file at any one time.

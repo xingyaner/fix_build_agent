@@ -5,3 +5,7 @@ CRITICAL: Since the success indicator only appears at the very end of the log, r
 - **If** the value of the `content` field is "success", it means both **Step 1 (Build)** and **Step 6 (Runtime)** have passed. You **must** immediately call the `exit_loop` tool.
 - **Otherwise**, if the content contains validation failures, you must output "Build failed at 1+6 validation, continuing with the fix."
 - **Otherwise**, you should simply output "Build failed, continuing with the fix."
+
+Strict Rules
+Under no circumstances is any version switching of this project’s fix_build_agent allowed.
+Absolutely no more than three lines of changes are permitted to the projects.yaml file at any one time.
