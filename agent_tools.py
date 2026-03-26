@@ -7,34 +7,26 @@ import subprocess
 import json
 import yaml
 import openpyxl
-import subprocess
 from collections import deque
 from datetime import datetime, timedelta
 from typing import Dict, List, Tuple, Optional, Set
 from google.adk.tools.tool_context import ToolContext
 
-
-# =================================================================
-# --- 消融实验全局开关 (Ablation Global Config) ---
-# =================================================================
-# 在运行不同版本的实验时，仅需在此处修改布尔值
-ENABLE_HISTORY_ENHANCEMENT = True  # 是否开启启发式历史增强根因定位
-ENABLE_REFLECTION = True        # 是否开启反思学习逻辑
-ENABLE_ROLLBACK = True          # 是否开启状态树回退逻辑
-ENABLE_EXPERT_KNOWLEDGE = True   # 是否开启专家知识注入
-# =================================================================
+ENABLE_HISTORY_ENHANCEMENT = True
+ENABLE_REFLECTION = True
+ENABLE_ROLLBACK = True
+ENABLE_EXPERT_KNOWLEDGE = True
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-# Build relative path to the process directory
+
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
 
 
 def prune_session_history(tool_context: ToolContext) -> dict:
     """
-    【物理手术版 v4 - 全量替换】
-    采用白名单策略：彻底抹除所有中间过程的工具调用细节（ls, find, read_file_content）。
-    仅保留：最初输入、来自 summary_agent 的压缩记忆、以及来自 solver 的补丁计划。
+    Adopt a whitelist strategy to erase all intermediate tool call details (ls, find, read_file_content).
+    Retain only the initial input, compressed memory from summary_agent, and patch plans from the solver.
     """
     try:
         session = tool_context.session
@@ -42,31 +34,23 @@ def prune_session_history(tool_context: ToolContext) -> dict:
             return {"status": "success", "message": "Memory is already clean."}
 
         original_count = len(session.events)
-        # 白名单：必须保留的事件
-        # 1. 初始消息 (index 0)
-        # 2. 总结代理的消息 (承载核心记忆)
-        # 3. 求解代理的消息 (承载最近的 patch 逻辑)
         whitelist_authors = ['summary_agent', 'fuzzing_solver_agent']
 
-        new_events = [session.events[0]]  # 物理保留初始指令
+        new_events = [session.events[0]]
 
         for event in session.events[1:]:
-            # 保留关键代理的逻辑输出
             if event.author in whitelist_authors:
                 new_events.append(event)
-            # 剔除所有包含工具调用 (Tool Call/Response) 的中间冗余
             elif hasattr(event, 'get_function_calls') or hasattr(event, 'get_function_responses'):
                 continue
             else:
-                # 保留其他非工具调用的控制流事件
                 new_events.append(event)
 
-        # 物理覆盖底层的 ADK events 列表
         session.events.clear()
         for e in new_events:
             session.events.append(e)
 
-        msg = f"Surgical Intervention Successful: Pruned {original_count - len(new_events)} tool call events."
+        msg = f"Pruned {original_count - len(new_events)} tool call events."
         print(f"--- [MEMORY] {msg} ---")
         return {"status": "success", "message": msg}
     except Exception as e:
@@ -74,26 +58,22 @@ def prune_session_history(tool_context: ToolContext) -> dict:
 
 def extract_buggy_line_info(log_path: str, project_name: str = "") -> List[Dict]:
     """
-    【路径感知增强版】
-    从日志中提取文件名和行号，并自动处理 Docker 路径前缀（如 /src/project_name/）。
+    Extract filenames and line numbers from logs and automatically process Docker path prefixes.
     """
     if not os.path.exists(log_path): return []
     with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
         lines = f.readlines()
         content = "".join(lines[-2000:])
     
-    # 匹配模式：支持大部分编程语言后缀
     pattern = r"([\w\-\./]+\.(?:c|cpp|h|cc|rs|go|py|sh|java)):(\d+):"
     matches = re.findall(pattern, content)
     
     results = []
     seen = set()
-    # 构造 Docker 内部路径的各种可能性
     prefixes_to_strip = ["/src/" + project_name + "/", "/src/", "./"]
     
     for file_path, line in matches:
         clean_path = file_path
-        # 路径归一化：将 /src/glslang/parser.c 转换为 parser.c
         for prefix in prefixes_to_strip:
             if clean_path.startswith(prefix):
                 clean_path = clean_path[len(prefix):]
@@ -108,9 +88,8 @@ def extract_buggy_line_info(log_path: str, project_name: str = "") -> List[Dict]
 
 def get_enhanced_history_context(project_source_path: str, file_rel_path: str, line_num: int) -> dict:
     """
-    【精简化 HAFix v3 - 全量替换】
-    1. fn_all 摘要化：若修改文件数 > 6，仅保留前 3 和后 3，并提取公共前缀。
-    2. fn_pair 极简采样：正则剥离空行与纯符号行，限制变更展示总量。
+    1. Summarize all modified files if they exceed 6. 
+    2. Perform minimal sampling of changes by stripping empty lines and symbol-only lines to limit display size.
     """
     if not ENABLE_HISTORY_ENHANCEMENT:
         print(f"--- [ABLATION] Precise history enhancement is DISABLED. ---")
@@ -131,7 +110,6 @@ def get_enhanced_history_context(project_source_path: str, file_rel_path: str, l
         return {"status": "error", "message": "Source path not found."}
 
     try:
-        # Step 1: 锁定引发变更的 SHA
         blame_cmd = ["git", "-C", project_source_path, "blame", "-L", f"{line_num},{line_num}", "--porcelain",
                      file_rel_path]
         blame_res = subprocess.run(blame_cmd, capture_output=True, text=True, check=True)
@@ -140,42 +118,36 @@ def get_enhanced_history_context(project_source_path: str, file_rel_path: str, l
         if not buggy_sha or len(buggy_sha) < 7:
             return {"status": "error", "message": "Could not identify buggy SHA."}
 
-        # Step 2: 提取并摘要化受影响文件清单 (fn_all)
         files_res = subprocess.run(["git", "-C", project_source_path, "show", "--name-only", "--format=", buggy_sha],
                                    capture_output=True, text=True, check=True)
         all_files = [f.strip() for f in files_res.stdout.split('\n') if f.strip()]
 
         if len(all_files) > 6:
             summary_files = all_files[:3] + [f"...(skipped {len(all_files) - 6} files)..."] + all_files[-3:]
-            # 提取公共前缀以辅助理解
             common_prefix = os.path.commonpath([f for f in all_files if '/' in f]) if len(all_files) > 1 else ""
             fn_all_str = f"Total {len(all_files)} files modified. Common path: {common_prefix}\n" + "\n".join(
                 summary_files)
         else:
             fn_all_str = "\n".join(all_files)
 
-        # Step 3: 提取函数级压缩快照 (fn_pair)
-        # 使用 -U0 强制零背景上下文
         pair_res = subprocess.run(
             ["git", "-C", project_source_path, "show", "-U0", "--format=", buggy_sha, "--", file_rel_path],
             capture_output=True, text=True, check=True)
 
-        # 过滤：保留 +/- 开头，且剥离纯符号行（如单独的 } 或 [）
         compressed_lines = []
         for line in pair_res.stdout.split('\n'):
             if line.startswith('+') or line.startswith('-'):
                 pure_content = line[1:].strip()
-                # 忽略长度小于2或全是标点符号的行
                 if len(pure_content) > 1 and not re.match(r'^[{}()\[\],;.\s]+$', pure_content):
                     compressed_lines.append(line)
 
-        fn_pair = "\n".join(compressed_lines[:12])  # 最终限制在 12 行最关键的逻辑变更
+        fn_pair = "\n".join(compressed_lines[:12])
 
         history_content = (
-            f"--- 精简化根因追踪报告 ---\n"
-            f"嫌疑提交: {buggy_sha}\n"
-            f"受影响文件清单:\n{fn_all_str}\n"
-            f"关键逻辑变更 (仅显示功能行):\n{fn_pair}\n"
+            f"--- Simplified Root Cause Report ---\n"
+            f"Suspected Commit: {buggy_sha}\n"
+            f"Affected Files:\n{fn_all_str}\n"
+            f"Key Logic Changes (Functional lines only):\n{fn_pair}\n"
             f"--------------------------"
         )
         return {"status": "success", "data": {"sha": buggy_sha, "history_content": history_content}}
@@ -185,7 +157,7 @@ def get_enhanced_history_context(project_source_path: str, file_rel_path: str, l
 
 def checkout_project_commit(project_source_path: str, sha: str) -> Dict[str, str]:
     """
-    在目标软件项目的源代码目录中执行 git checkout 命令。
+    Execute git checkout command in the project source directory.
     """
     print(f"--- Tool: checkout_project_commit called for SHA: {sha} in '{project_source_path}' ---")
 
@@ -196,7 +168,6 @@ def checkout_project_commit(project_source_path: str, sha: str) -> Dict[str, str
     try:
         os.chdir(project_source_path)
 
-        # 确保仓库处于干净状态，避免 checkout 冲突
         subprocess.run(["git", "reset", "--hard", "HEAD"], capture_output=True, text=True, check=True)
         subprocess.run(["git", "clean", "-fdx"], capture_output=True, text=True, check=True)
 
@@ -215,25 +186,19 @@ def checkout_project_commit(project_source_path: str, sha: str) -> Dict[str, str
 
 def download_remote_log(log_url: str, project_name: str, error_time_str: str) -> Dict[str, str]:
     """
-    下载远程日志文件到本地指定目录，并按 '年_月_日 error.txt' 格式命名。
-    例如：build_error_log/aptos-core/2026_1_30 error.txt
+    Download remote log file and save it locally using 'YYYY_M_D error.txt' format.
     """
     print(f"--- Tool: download_remote_log called for URL: {log_url} ---")
 
     try:
-        # 1. 解析 error_time_str 为日期格式
         try:
-            # 尝试处理 YYYY-MM-DD 或 YYYY-M-D
             error_date = datetime.strptime(error_time_str, '%Y-%m-%d').date()
         except ValueError:
-            # 备用尝试 YYYY.MM.DD
             error_date = datetime.strptime(error_time_str, '%Y.%m.%d').date()
 
-        # 2. 构建本地存储路径
         local_log_dir = os.path.join("build_error_log", project_name)
-        os.makedirs(local_log_dir, exist_ok=True) # 确保项目目录存在
+        os.makedirs(local_log_dir, exist_ok=True)
 
-        # 3. 构造本地文件名
         if sys.platform == "win32":
             local_log_filename = error_date.strftime("%Y_%#m_%#d") + " error.txt"
         else:
@@ -241,15 +206,13 @@ def download_remote_log(log_url: str, project_name: str, error_time_str: str) ->
         
         local_log_filepath = os.path.join(local_log_dir, local_log_filename)
 
-        # 4. 检查文件是否已存在，如果存在则跳过下载
         if os.path.exists(local_log_filepath):
             print(f"--- Log file already exists locally: {local_log_filepath}. Skipping download. ---")
             return {"status": "success", "local_path": os.path.abspath(local_log_filepath), "message": "Log file already exists locally."}
 
-        # 5. 下载日志文件
         print(f"--- Downloading log from {log_url} to {local_log_filepath} ---")
         response = requests.get(log_url, stream=True)
-        response.raise_for_status() # 检查HTTP响应状态
+        response.raise_for_status()
 
         with open(local_log_filepath, 'wb') as f:
             for chunk in response.iter_content(chunk_size=8192):
@@ -280,10 +243,7 @@ def update_reflection_journal(
     should_rollback: bool = False
 ) -> Dict:
     """
-    【反思工具 v5 - 结构化版】
-    1. 显式记录大循环(Attempt)与内循环(Round)ID。
-    2. 存储“已解决”与“待解决”问题的精简描述。
-    3. 仅提取当前大循环(Attempt)的教训返回给 State。
+    Explicitly record Attempt and Round IDs, store concise problem descriptions, and extract recent lessons for the state.
     """
     import os
     import json
@@ -295,7 +255,6 @@ def update_reflection_journal(
     print(f"--- Tool: update_reflection_journal (v5) for A{attempt_id}_R{round_id} ---")
     JOURNAL_FILE = "reflection_journal.json"
 
-    # 1. 构造当前条目
     new_entry = {
         "attempt_id": attempt_id,
         "round_id": round_id,
@@ -308,7 +267,6 @@ def update_reflection_journal(
         "should_rollback": should_rollback
     }
 
-    # 2. 读取并追加记录
     history = []
     if os.path.exists(JOURNAL_FILE):
         try:
@@ -320,7 +278,6 @@ def update_reflection_journal(
     with open(JOURNAL_FILE, 'w', encoding='utf-8') as f:
         json.dump(history, f, indent=2, ensure_ascii=False)
 
-    # 3. 判定触发机制：仅检查【本轮大循环】内的连续恶化
     current_attempt_history = [h for h in history if h['attempt_id'] == attempt_id]
     consecutive_high_score = False
     if len(current_attempt_history) >= 2:
@@ -328,9 +285,7 @@ def update_reflection_journal(
            current_attempt_history[-2].get("deterioration_score", 0) > 7:
             consecutive_high_score = True
 
-    # 4. 生成用于 State 的摘要（仅限本次大循环内容）
     lessons = []
-    # 获取本次大循环最近的 3 条记录
     for h in current_attempt_history[-3:]:
         lessons.append(
             f"A{h['attempt_id']}_R{h['round_id']} (Score:{h['deterioration_score']}):\n"
@@ -349,11 +304,10 @@ def update_reflection_journal(
 
 def query_expert_knowledge(log_path: str) -> dict:
     """
-    【专家知识动态注入版 - 全量替换】
-    根据日志关键字动态筛选最相关的 3-5 条准则，避免全量注入导致的 Token 浪费。
+    Dynamically select relevant principles from the knowledge base based on log keywords to optimize token usage.
     """
     if not ENABLE_EXPERT_KNOWLEDGE:
-        print("--- [ABLATION] Expert Knowledge is DISABLED. Returning placeholder. ---")
+        print("--- [ABLATION] Expert Knowledge is DISABLED. ---")
         return {
             "status": "success",
             "knowledge": "Expert knowledge system is currently disabled by ablation configuration."
@@ -366,13 +320,11 @@ def query_expert_knowledge(log_path: str) -> dict:
         with open(KNOWLEDGE_FILE, 'r', encoding='utf-8') as f:
             kb = json.load(f)
 
-        # 提取日志最后 100 行作为关键词扫描区
         log_sample = ""
         if os.path.exists(log_path):
             with open(log_path, 'r', encoding='utf-8', errors='ignore') as lf:
                 log_sample = "".join(lf.readlines()[-100:]).lower()
 
-        # 定义关键词到准则类别的映射（基于您专家库中的常见术语）
         category_map = {
             "linker": ["linker", "undefined reference", "symbol", "lib", ".a", ".so", "link"],
             "docker": ["docker", "workdir", "apt-get", "copy", "run", "entrypoint"],
@@ -383,20 +335,17 @@ def query_expert_knowledge(log_path: str) -> dict:
         selected_principles = []
         all_principles = kb.get("general_principles", [])
 
-        # 命中逻辑
         hit_categories = [cat for cat, kws in category_map.items() if any(kw in log_sample for kw in kws)]
 
         for p in all_principles:
             if any(cat in p.lower() for cat in hit_categories):
                 selected_principles.append(p)
 
-        # 配额管理：如果没命中则取前 3 条；如果命中了则取最相关的 6 条
         if not selected_principles:
             final_principles = all_principles[:3]
         else:
             final_principles = selected_principles[:6]
 
-        # 模式匹配建议（保持原有的高效正则逻辑）
         matched_advice = []
         for entry in kb.get("patterns", []):
             if re.search(entry["pattern"], log_sample, re.IGNORECASE):
@@ -413,8 +362,7 @@ def query_expert_knowledge(log_path: str) -> dict:
 
 def manage_git_state(path: str, action: str, message: str = "", commit_sha: str = "") -> Dict:
     """
-    【物理状态管理器 - 权限自愈版】
-    用于实现状态树的保存与回退。集成了 Docker 权限夺回和 Git 身份配置。
+    Manage the saving and rolling back of state trees. This version includes automatic permission handling and Git identity configuration.
     """
     import os, subprocess
     print(f"--- Tool: manage_git_state | Action: {action} | Path: {path} ---")
@@ -427,8 +375,6 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
         uid = os.getuid()
         gid = os.getgid()
 
-        # --- [核心补丁 A：物理夺回权限] ---
-        # 只要涉及到写入或清理，就先通过 Docker chown 确保宿主机用户拥有操作权
         if action in ["init", "commit", "rollback"]:
             try:
                 subprocess.run([
@@ -436,12 +382,10 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
                     "alpine", "chown", "-R", f"{uid}:{gid}", "/src"
                 ], capture_output=True, check=True)
             except Exception as e:
-                print(f"--- Warning: Permission reclamation failed (non-critical): {e} ---")
+                print(f"--- Warning: Permission reclamation failed: {e} ---")
 
         os.chdir(abs_path)
 
-        # --- [核心补丁 B：身份自动配置] ---
-        # 确保 commit 操作不会因为身份未知而失败
         if action in ["init", "commit"]:
             if not os.path.exists(".git"):
                 subprocess.run(["git", "init"], check=True, capture_output=True)
@@ -450,7 +394,6 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
 
         if action == "init":
             subprocess.run(["git", "add", "."], check=True)
-            # 检查是否已经有提交，防止 init 报错
             has_commit = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True).returncode == 0
             if not has_commit:
                 subprocess.run(["git", "commit", "-m", "Initial State"], check=True, capture_output=True)
@@ -468,9 +411,7 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
 
         elif action == "rollback":
             target = commit_sha if commit_sha else "HEAD~1"
-            # 物理回退三部曲：reset -> clean (x为彻底清理) -> 回显
             subprocess.run(["git", "reset", "--hard", target], check=True, capture_output=True)
-            # 使用 -fxd 确保彻底删除被 ignore 的 Docker 产物
             subprocess.run(["git", "clean", "-fxd"], check=True, capture_output=True)
             return {"status": "success", "message": f"Rolled back and deep cleaned to {target}"}
 
@@ -481,23 +422,22 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
 
 def clear_commit_analysis_state() -> Dict[str, str]:
     """
-    删除Commit分析的哨兵文件，以允许 commit_finder_agent 在下一个循环中重新运行。
-    这个函数应该在发生回滚时被调用。
+    Remove the commit analysis sentinel file to allow commit_finder_agent to re-run in the next loop.
     """
     commit_analysis_file = "generated_prompt_file/commit_changed.txt"
     if os.path.exists(commit_analysis_file):
         try:
             os.remove(commit_analysis_file)
-            return {"status": "success", "message": f"已清除旧的Commit分析状态。'{commit_analysis_file}' 文件已被移除。"}
+            return {"status": "success", "message": f"Cleared old commit analysis state. '{commit_analysis_file}' has been removed."}
         except Exception as e:
-            return {"status": "error", "message": f"移除 '{commit_analysis_file}' 失败: {e}"}
+            return {"status": "error", "message": f"Failed to remove '{commit_analysis_file}': {e}"}
     else:
-        return {"status": "success", "message": "没有需要清除的Commit分析状态。"}
+        return {"status": "success", "message": "No commit analysis state to clear."}
 
 
 def extract_build_metadata_from_log(log_path: str) -> Dict:
     """
-    【增强版】从原始报错日志中提取构建所需的关键元数据。
+    Extract critical build metadata from the original error log.
     """
     print(f"--- Tool: extract_build_metadata from {log_path} ---")
     try:
@@ -518,12 +458,10 @@ def extract_build_metadata_from_log(log_path: str) -> Dict:
             'dependencies': []
         }
 
-        # 1. 提取 Base Image Digest
         digest_match = re.search(r'Digest: sha256:([a-f0-9]{64})', content)
         if digest_match:
             metadata['base_image_digest'] = digest_match.group(1)
 
-        # 2. 提取构建配置 (Step #3)
         for line in lines:
             if 'Starting Step #3 - "compile-' in line:
                 m = re.search(r'compile-([a-z0-9]+)-([a-z0-9]+)-([a-z0-9_]+)', line)
@@ -531,7 +469,6 @@ def extract_build_metadata_from_log(log_path: str) -> Dict:
                     metadata['engine'], metadata['sanitizer'], metadata['architecture'] = m.groups()
                 break
 
-        # 3. 提取 Git 信息 (Step #2)
         git_pattern = re.compile(r'url: "([^"]+)", rev: "([^"]+)"')
         found_gits = []
         for line in lines:
@@ -552,8 +489,7 @@ def extract_build_metadata_from_log(log_path: str) -> Dict:
 
 def patch_project_dockerfile(project_name: str, oss_fuzz_path: str, base_image_digest: str) -> Dict:
     """
-    【专业修复版】锁定基础镜像 Digest，并移除 git clone 中的 --depth 1 以支持 SHA 切换。
-    解决了旧版本正则无法处理带数字/连字符标签（如 :24-04）导致镜像格式损坏的问题。
+    Lock the base image digest and remove depth limits from git clones to support SHA switching.
     """
     print(f"--- Tool: patch_project_dockerfile for {project_name} ---")
     dockerfile_path = os.path.join(oss_fuzz_path, "projects", project_name, "Dockerfile")
@@ -564,19 +500,11 @@ def patch_project_dockerfile(project_name: str, oss_fuzz_path: str, base_image_d
         with open(dockerfile_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        # 1. 替换基础镜像 Digest
         if base_image_digest:
-            # 正则逻辑：
-            # (FROM\s+gcr.io/oss-fuzz-base/base-builder[^\s:@]*) -> 捕获镜像名及变体（如 base-builder-python）
-            # [^\s]* -> 匹配并消耗掉后面紧跟的所有非空字符（即旧的 :tag 或 @sha256:...）
             pattern = r'(FROM\s+gcr.io/oss-fuzz-base/base-builder[^\s:@]*)'
             replacement = r'\1' + f'@sha256:{base_image_digest}'
-            
-            # 使用 re.IGNORECASE 增强鲁棒性，并确保替换掉整行镜像声明
             content = re.sub(pattern + r'[^\s]*', replacement, content, flags=re.IGNORECASE)
 
-        # 2. 移除 Dockerfile 里的 --depth 1 或 --depth=1，确保 git checkout 能找到历史 Commit
-        # 使用正则处理可能的空格变体
         content = re.sub(r'--depth[=\s]+1', '', content)
 
         with open(dockerfile_path, 'w', encoding='utf-8') as f:
@@ -592,7 +520,7 @@ def patch_project_dockerfile(project_name: str, oss_fuzz_path: str, base_image_d
 
 def update_yaml_report(file_path: str, row_index: int, result: str) -> Dict[str, str]:
     """
-    [New] Updates the 'state' to 'yes' and adds 'fix_result' and 'fix_date' to the YAML file.
+    Update the project status in the YAML report.
     """
     print(f"--- Tool: update_yaml_report called for file '{file_path}', index {row_index} ---")
     try:
@@ -605,14 +533,10 @@ def update_yaml_report(file_path: str, row_index: int, result: str) -> Dict[str,
         if row_index < 0 or row_index >= len(data):
             return {'status': 'error', 'message': "Invalid row index provided."}
 
-        # 更新状态
         data[row_index]['state'] = 'yes'
-        # 记录修复结果 (Success/Failure)
         data[row_index]['fix_result'] = result
-        # 记录修复时间
         data[row_index]['fix_date'] = datetime.now().strftime('%Y-%m-%d')
 
-        # 写回文件
         with open(file_path, 'w', encoding='utf-8') as f:
             yaml.dump(data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
 
@@ -627,8 +551,7 @@ def update_yaml_report(file_path: str, row_index: int, result: str) -> Dict[str,
 
 def get_git_commits_around_date(project_source_path: str, error_date: str, count: int = 10) -> Dict:
     """
-    Returns metadata for commits within the range [error_date - 1 day, error_date + 1 day].
-    Useful to handle timezone differences or build delays.
+    Retrieve commits within a time window around the specified error date.
     """
     if not ENABLE_HISTORY_ENHANCEMENT:
         print(f"--- [ABLATION] Temporal commit search is DISABLED. ---")
@@ -640,23 +563,16 @@ def get_git_commits_around_date(project_source_path: str, error_date: str, count
         return {'status': 'error', 'message': "Not a git repository."}
 
     try:
-        # 1. 解析传入的日期
-        # 尝试处理 YYYY-MM-DD 或 YYYY-M-D
         try:
             target_dt = datetime.strptime(error_date, '%Y-%m-%d')
         except ValueError:
-            # 备用尝试 YYYY.MM.DD
             target_dt = datetime.strptime(error_date, '%Y.%m.%d')
 
-        # 2. 计算时间窗口 (前后各推1天)
-        # 例如: error_date=11-03. start=11-02, end=11-04.
         start_date = (target_dt - timedelta(days=1)).strftime('%Y-%m-%d')
         end_date = (target_dt + timedelta(days=1)).strftime('%Y-%m-%d')
         
         print(f"--- Searching commits between {start_date} and {end_date} (inclusive) ---")
 
-        # 3. 构建 Git 命令
-        # --since 和 --until 是包含边界的 (inclusive)
         cmd = [
             "git", "log", 
             f"--since={start_date} 00:00:00", 
@@ -676,7 +592,6 @@ def get_git_commits_around_date(project_source_path: str, error_date: str, count
             if len(parts) < 3: continue
             sha, date, msg = parts
 
-            # 获取该 commit 修改的文件列表
             cmd_files = ["git", "show", "--name-only", "--format=", sha]
             res_files = subprocess.run(cmd_files, cwd=project_source_path, capture_output=True, text=True, check=False)
             files = [f.strip() for f in res_files.stdout.split('\n') if f.strip()]
@@ -696,7 +611,7 @@ def get_git_commits_around_date(project_source_path: str, error_date: str, count
 
 def save_commit_diff_to_file(project_name: str, project_source_path: str, sha: str, error_time: str):
     """
-    【带 Token 防御版】提取最近变更，并根据长度执行三级精简。
+    Extract recent changes and simplify based on content length to stay within token limits.
     """
 
     if not ENABLE_HISTORY_ENHANCEMENT:
@@ -707,26 +622,22 @@ def save_commit_diff_to_file(project_name: str, project_source_path: str, sha: s
     import subprocess
     print(f"--- Tool: save_commit_diff_to_file (With Token Guard) for {sha} ---")
     
-    TOKEN_GUARD_CHARS = 12000 # 约 3000 tokens
+    TOKEN_GUARD_CHARS = 12000
     OUTPUT_PATH = "generated_prompt_file/commit_changed.txt"
     os.makedirs("generated_prompt_file", exist_ok=True)
 
     try:
-        # 获取原始 Diff
         raw_diff_res = subprocess.run(["git", "-C", project_source_path, "show", sha], 
                                       capture_output=True, text=True, check=True)
         content = raw_diff_res.stdout
 
-        # 执行精简提取逻辑
         if len(content) > TOKEN_GUARD_CHARS:
             print(f"  - Content length ({len(content)}) exceeds guard. Simplifying...")
             
-            # 一级精简：移除背景行 (只保留 @, +, - 开头的行)
             lines = content.split('\n')
             simplified = [l for l in lines if l.startswith(('+', '-', '@', 'commit', 'Author', 'Date'))]
             content = "\n".join(simplified)
             
-            # 二级精简：如果还长，仅保留文件名和变更摘要
             if len(content) > TOKEN_GUARD_CHARS:
                 summary_res = subprocess.run(["git", "-C", project_source_path, "show", "--stat", sha], 
                                              capture_output=True, text=True, check=True)
@@ -742,8 +653,7 @@ def save_commit_diff_to_file(project_name: str, project_source_path: str, sha: s
 
 def read_projects_from_yaml(file_path: str) -> Dict:
     """
-    【修复版】读取项目信息。
-    增加了对 'state' 字段的检查，并兼容处理 YAML 中的布尔值。
+    Read project information, including state field checks and boolean compatibility.
     """
     print(f"--- Tool: read_projects_from_yaml called for: {file_path} ---")
     if not os.path.exists(file_path):
@@ -758,12 +668,9 @@ def read_projects_from_yaml(file_path: str) -> Dict:
             return {'status': 'error', 'message': "YAML file must contain a list of projects."}
 
         for index, entry in enumerate(data):
-            # --- 核心修复逻辑：增强状态判定 ---
-            # 兼容处理字符串 'no'/'yes' 和 布尔值 False/True
             fixed_state = str(entry.get('fixed_state', 'no')).lower()
             state = str(entry.get('state', 'no')).lower()
 
-            # 只有当 fixed_state 和 state 均为 'no' 时，才认为该项目需要处理
             if fixed_state == 'no' and state == 'no':
                 project_name = entry.get('project')
                 sha = entry.get('oss-fuzz_sha')
@@ -774,13 +681,11 @@ def read_projects_from_yaml(file_path: str) -> Dict:
                     log_dir = os.path.join("build_error_log", project_name)
                     original_log_path = ""
 
-                    # 1. 优先处理远程日志
                     if fuzzing_build_error_log_url.startswith("http"):
                         download_result = download_remote_log(fuzzing_build_error_log_url, project_name, error_time_str)
                         if download_result['status'] == 'success':
                             original_log_path = download_result['local_path']
                     
-                    # 2. 远程失败或无URL，则本地查找
                     if not original_log_path and os.path.isdir(log_dir):
                         try:
                             y, m, d = map(int, error_time_str.replace('.', '-').split('-'))
@@ -799,7 +704,6 @@ def read_projects_from_yaml(file_path: str) -> Dict:
                                 original_log_path = os.path.abspath(os.path.join(log_dir, candidates[0][1]))
                         except Exception: pass
 
-                    # 3. 构造项目信息
                     if original_log_path:
                         project_info = {
                             "project_name": project_name,
@@ -827,7 +731,7 @@ def read_projects_from_yaml(file_path: str) -> Dict:
 
 def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
     """
-    【强制清理 - 权限增强版】
+    Perform a deep clean of the specified Git repository with automated permission management.
     """
     import os, subprocess
     print(f"--- Tool: force_clean_git_repo (v3) called for: {repo_path} ---")
@@ -840,20 +744,16 @@ def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
         abs_repo_path = os.path.abspath(repo_path)
         uid, gid = os.getuid(), os.getgid()
 
-        # 1. 物理夺权
         subprocess.run([
             "docker", "run", "--rm", "-v", f"{abs_repo_path}:/src",
             "alpine", "chown", "-R", f"{uid}:{gid}", "/src"
         ], capture_output=True, check=False)
 
         os.chdir(abs_repo_path)
-        # 2. 强制重置
         subprocess.run(["git", "reset", "--hard", "HEAD"], capture_output=True, text=True, check=True)
-        # 3. 切换分支
         branch_res = subprocess.run(["git", "branch", "--list"], capture_output=True, text=True)
         main_branch = "main" if "main" in branch_res.stdout else "master"
         subprocess.run(["git", "switch", "-f", main_branch], capture_output=True, text=True, check=True)
-        # 4. 物理抹除一切
         subprocess.run(["git", "clean", "-fxd"], capture_output=True, text=True, check=True)
 
         return {'status': 'success', 'message': f"Successfully reclaimed and cleaned '{repo_path}'."}
@@ -867,7 +767,6 @@ def get_project_paths(project_name: str) -> Dict[str, str]:
     Generates and returns the standard project_config_path and project_source_path based on the project name.
     """
     print(f"--- Tool: get_project_paths called for: {project_name} ---")
-    # Ensure paths are always relative to the parent directory of the current script file (i.e., the project root)
     base_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
     safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
@@ -879,7 +778,7 @@ def get_project_paths(project_name: str) -> Dict[str, str]:
         "project_name": project_name,
         "project_config_path": config_path,
         "project_source_path": source_path,
-        "max_depth": 1 # Default to getting 1 level of the file tree
+        "max_depth": 1
     }
     print(f"--- Generated paths: {paths} ---")
     return paths
@@ -904,7 +803,7 @@ def save_processed_project(project_name: str) -> Dict[str, str]:
 
 def update_excel_report(file_path: str, row_index: int, attempted: str, result: str) -> Dict[str, str]:
     """
-    [Revised] Updates the "Whether Fix Was Attempted", "Fix Result", and "Fix Date" columns for a specified row in an .xlsx file.
+    Updates the "Whether Fix Was Attempted", "Fix Result", and "Fix Date" columns for a specified row in an .xlsx file.
     """
     print(f"--- Tool: update_excel_report called for file '{file_path}', row {row_index} ---")
     try:
@@ -912,12 +811,10 @@ def update_excel_report(file_path: str, row_index: int, attempted: str, result: 
         sheet = workbook.active
         headers = [cell.value for cell in sheet[1]]
 
-        # Dynamically get column indices
-        attempted_col_idx = headers.index("是否尝试修复") + 1  # "Whether Fix Was Attempted"
-        result_col_idx = headers.index("修复结果") + 1       # "Fix Result"
-        date_col_idx = headers.index("修复日期") + 1         # "Fix Date"
+        attempted_col_idx = headers.index("是否尝试修复") + 1
+        result_col_idx = headers.index("修复结果") + 1
+        date_col_idx = headers.index("修复日期") + 1
 
-        # [Core write-back logic]
         sheet.cell(row=row_index, column=attempted_col_idx, value=attempted)
         sheet.cell(row=row_index, column=result_col_idx, value=result)
         sheet.cell(row=row_index, column=date_col_idx, value=datetime.now().strftime('%Y-%m-%d'))
@@ -934,8 +831,8 @@ def update_excel_report(file_path: str, row_index: int, attempted: str, result: 
 
 def read_projects_from_excel(file_path: str) -> Dict:
     """
-    [Revised] Reads project information from the specified .xlsx file.
-    Only reads rows where "报错是否一致" ("Error Consistency") is "是" ("Yes") and "是否尝试修复" ("Whether Fix Was Attempted") is not "是" ("Yes").
+    Reads project information from the specified .xlsx file.
+    Only reads rows where "Error Consistency" is "Yes" and "Whether Fix Was Attempted" is not "Yes".
     """
     print(f"--- Tool: read_projects_from_excel called for: {file_path} ---")
     if not os.path.exists(file_path):
@@ -947,24 +844,21 @@ def read_projects_from_excel(file_path: str) -> Dict:
         sheet = workbook.active
         headers = [cell.value for cell in sheet[1]]
 
-        # Verify that all required headers are present
         required_headers = ["项目名称", "复现oss-fuzz SHA", "报错是否一致", "是否尝试修复"]
         if not all(h in headers for h in required_headers):
              return {'status': 'error', 'message': f"Excel file is missing one of the required columns: {required_headers}"}
 
-        # Get column indices for later use
-        name_idx = headers.index("项目名称")          # "Project Name"
-        sha_idx = headers.index("复现oss-fuzz SHA")   # "Reproducible oss-fuzz SHA"
-        consistent_idx = headers.index("报错是否一致")   # "Error Consistency"
-        attempted_idx = headers.index("是否尝试修复")  # "Whether Fix Was Attempted"
+        name_idx = headers.index("项目名称")
+        sha_idx = headers.index("复现oss-fuzz SHA")
+        consistent_idx = headers.index("报错是否一致")
+        attempted_idx = headers.index("是否尝试修复")
 
         for row_index, row in enumerate(sheet.iter_rows(min_row=2, values_only=True), start=2):
-            # [Core filtering logic]
-            if row[consistent_idx] == "是" and row[attempted_idx] != "是": # "Yes"
+            if row[consistent_idx] == "是" and row[attempted_idx] != "是":
                 project_info = {
                     "project_name": row[name_idx],
                     "sha": str(row[sha_idx]),
-                    "row_index": row_index  # Record the row number for easy write-back
+                    "row_index": row_index
                 }
                 projects_to_run.append(project_info)
 
@@ -1055,10 +949,8 @@ def archive_fixed_project(project_name: str, project_config_path: str) -> Dict[s
 
 def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[str] = None) -> Dict[str, str]:
     """
-    【路径安全+全量克隆版】下载仓库工具
-    1. 强制路径锁定：第三方库仅允许存放在 process/project/ 下。
-    2. 全量克隆：移除 --depth=1，确保 checkout sha 100% 成功。
-    3. 缓冲区优化：解决大仓库 RPC 错误。
+    Download a repository with path enforcement and full cloning.
+    Redirects non-oss-fuzz projects to process/project/ and performs a full clone to ensure SHA switching compatibility.
     """
     import json
     import time
@@ -1066,13 +958,10 @@ def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[
     import os
     import shutil
 
-    # --- 核心逻辑：路径强制重定向 ---
     current_work_dir = os.getcwd()
     if project_name == "oss-fuzz":
-        # oss-fuzz 保持原样（通常在 ./oss-fuzz）
         final_target_dir = os.path.abspath(target_dir)
     else:
-        # 强制所有其他项目进入 process/project/ 目录
         safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
         final_target_dir = os.path.abspath(os.path.join(current_work_dir, "process", "project", safe_name))
         
@@ -1081,7 +970,6 @@ def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[
 
     print(f"--- Tool: download_github_repo called for '{project_name}' ---")
 
-    # --- 1. 预检查逻辑：确保 Git 仓库完整性 ---
     if os.path.isdir(final_target_dir) and os.path.exists(os.path.join(final_target_dir, ".git")):
         if project_name == "oss-fuzz":
             print(f"--- oss-fuzz exists, pulling latest... ---")
@@ -1094,12 +982,10 @@ def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[
             print(f"--- Repo '{project_name}' exists and is a valid git repo. Skipping download. ---")
             return {'status': 'success', 'path': final_target_dir, 'message': 'Repository already exists.'}
 
-    # 清理非 Git 目录残余
     if os.path.isdir(final_target_dir):
         shutil.rmtree(final_target_dir)
     os.makedirs(os.path.dirname(final_target_dir), exist_ok=True)
 
-    # --- 2. 确定 Repo URL ---
     final_repo_url = repo_url if repo_url and repo_url.strip() else None
     if not final_repo_url:
         if project_name == "oss-fuzz":
@@ -1116,17 +1002,14 @@ def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[
             except Exception as e:
                 return {'status': 'error', 'message': f"Search failed: {e}"}
 
-    # --- 3. 配置 Git 缓冲区（解决 TLS/RPC 错误） ---
     subprocess.run(["git", "config", "--global", "http.postBuffer", "524288000"])
     subprocess.run(["git", "config", "--global", "http.lowSpeedLimit", "0"])
     subprocess.run(["git", "config", "--global", "http.lowSpeedTime", "999999"])
 
-    # --- 4. 增强重试克隆逻辑 (注意：此处已移除 --depth=1) ---
     max_retries = 3
     for attempt in range(max_retries):
         print(f"--- Download attempt {attempt + 1}/{max_retries} ---")
         try:
-            # 执行全量克隆以支持 SHA 切换
             clone_cmd = ["git", "clone", final_repo_url, final_target_dir]
             result = subprocess.run(clone_cmd, capture_output=True, text=True)
             if result.returncode == 0:
@@ -1139,7 +1022,6 @@ def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[
 
     return {'status': 'error', 'message': f"Failed to download {project_name} after {max_retries} attempts."}
 
-# Version Reverting Tool
 def find_sha_for_timestamp(commits_file_path: str, error_date: str) -> Dict[str, str]:
     """
     Finds the most suitable commit SHA for a given date from a commits file.
@@ -1191,7 +1073,7 @@ def find_sha_for_timestamp(commits_file_path: str, error_date: str) -> Dict[str,
 
 def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
     """
-    [Revised] Executes a git checkout command in the fixed oss-fuzz directory.
+    Executes a git checkout command in the fixed oss-fuzz directory.
     """
     base_path = os.path.abspath(os.path.join(os.path.dirname(__file__)))
     oss_fuzz_path = os.path.join(base_path, "oss-fuzz")
@@ -1218,11 +1100,9 @@ def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
     finally:
         os.chdir(original_path)
 
-# File Operations and Fuzzing Tools
-
 def apply_patch(solution_file_path: str) -> dict:
     """
-    【闭环回显版】应用极致精简补丁，并在失败时返回文件真实内容以供对齐。
+    Apply code patches and return detailed feedback. In case of failure, return the actual file content around the target area to help the agent align its replacement logic.
     """
     import os, difflib
     print(f"--- Tool: apply_patch (with Feedback) called ---")
@@ -1258,16 +1138,13 @@ def apply_patch(solution_file_path: str) -> dict:
                 modified_files.add(file_path)
                 applied_count += 1
             else:
-                # 匹配失败：寻找最相似的区域并回显给 Agent 
                 lines = file_content.splitlines()
-                # 提取 ORIGINAL 块的第一行作为搜索锚点
                 search_anchor = original_block.splitlines()[0].strip()
                 matches = difflib.get_close_matches(search_anchor, lines, n=1, cutoff=0.3)
                 
                 actual_context = "Unknown context (File may be too different)"
                 if matches:
                     idx = lines.index(matches[0])
-                    # 取匹配行前后 5 行供 Agent 参考原文格式（包括空格和注释）
                     actual_context = "\n".join(lines[max(0, idx-5):min(len(lines), idx+10)])
                 
                 errors.append(f"MATCH FAILED for {file_path}.\n### ACTUAL CONTENT AROUND TARGET AREA ###\n{actual_context}\n### PLEASE ENSURE ORIGINAL BLOCK MATCHES EXACTLY ###")
@@ -1432,8 +1309,8 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
 
 def read_file_content(file_path: str, mode: str = "full") -> dict:
     """
-    【防御性熔断版】支持剥离 License 后查看内容，并对百分比模式设置 500 行硬上限。
-    mode: "full", "tail_50", "tail_30", "tail_100_lines"
+    Read file content with automatic license header stripping and dynamic truncation to stay within context limits.
+    Supports modes: "full", "tail_50", "tail_30", "tail_100_lines", and includes a safety cap at 500 lines for percentage modes.
     """
     import os, re
     print(f"--- Tool: read_file_content (Mode: {mode}) called for: {file_path} ---")
@@ -1443,7 +1320,6 @@ def read_file_content(file_path: str, mode: str = "full") -> dict:
         with open(file_path, "r", encoding="utf-8", errors='ignore') as f:
             lines = f.readlines()
 
-        # 1. 自动剥离 License 头部
         license_pattern = re.compile(r"^(#|//|\s*\*|/\*).*$", re.MULTILINE)
         start_idx = 0
         for i, line in enumerate(lines[:50]):
@@ -1456,23 +1332,18 @@ def read_file_content(file_path: str, mode: str = "full") -> dict:
 
         total_lines = len(lines)
 
-        # 2. 根据模式进行切片，并引入 500 行硬熔断策略
         if mode == "tail_50":
             target_count = int(total_lines * 0.5)
-            # 硬熔断：如果 50% 超过 500 行，强制降级
             if target_count > 500:
-                print(
-                    f"--- [SAFETY MELT] tail_50 ({target_count} lines) exceeds limit. Falling back to tail_100_lines. ---")
+                print(f"--- [SAFETY MELT] tail_50 ({target_count} lines) exceeds limit. Falling back to tail_100_lines. ---")
                 lines = lines[-100:]
                 mode = "tail_100_lines (melted)"
             else:
                 lines = lines[-target_count:]
         elif mode == "tail_30":
             target_count = int(total_lines * 0.3)
-            # 硬熔断：如果 30% 超过 500 行，强制降级
             if target_count > 500:
-                print(
-                    f"--- [SAFETY MELT] tail_30 ({target_count} lines) exceeds limit. Falling back to tail_100_lines. ---")
+                print(f"--- [SAFETY MELT] tail_30 ({target_count} lines) exceeds limit. Falling back to tail_100_lines. ---")
                 lines = lines[-100:]
                 mode = "tail_100_lines (melted)"
             else:
@@ -1480,7 +1351,6 @@ def read_file_content(file_path: str, mode: str = "full") -> dict:
         elif mode == "tail_100_lines":
             lines = lines[-100:]
         elif mode == "full":
-            # 即使是 full 模式，也进行一次最后的长度防御（如 1000 行）
             if total_lines > 1000:
                 print(f"--- [SAFETY MELT] full mode exceeds 1000 lines. Truncating to tail_500. ---")
                 lines = lines[-500:]
@@ -1577,11 +1447,8 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
                          expert_knowledge: str = "", enhanced_history: str = "",
                          validation_report: dict = None) -> dict:
     """
-    【源码预算调度与深度验证集成版 - 全量替换】
-    1. 物理预算：GLOBAL_CHAR_BUDGET = 280,000 (约 80k Token)。
-    2. 深度验证注入：将 1+6 准则审计结论以脱水精简格式置于 Prompt 头部。
-    3. 优先级加载：核心报错文件 (Level 1) > 构建脚本 (Level 2) > 其他辅助文件 (Level 3)。
-    4. 动态降级：根据剩余配额自动调整读取模式 (full -> tail_50 -> tail_30 -> name_only)。
+    Aggregates source code, configuration files, expert knowledge, and build validation results into a single prompt file. 
+    Implements a prioritized loading strategy and dynamic content degradation to stay within a global context budget of approximately 80k tokens.
     """
     import os, re
     from agent_tools import read_file_content, save_file_tree_shallow, truncate_prompt_file
@@ -1591,11 +1458,9 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     PROMPT_FILE_PATH = os.path.join(PROMPT_DIR, "prompt.txt")
     FUZZ_LOG_PATH = "fuzz_build_log_file/fuzz_build_log.txt"
 
-    # --- 80,000 Token 预算对应的字符配额 ---
     GLOBAL_CHAR_BUDGET = 280000
     current_used = 0
 
-    # Step 1: 识别 Level 1 优先级文件（通过报错日志和 HAFix 报告提取）
     context_stream = expert_knowledge + enhanced_history
     if os.path.exists(FUZZ_LOG_PATH):
         try:
@@ -1616,16 +1481,13 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
         f.write(f"Testing Expert. Project: {project_name}. Attempt: {attempt_id}\n")
 
-        # --- [新增：1+6 验证结果精简注入] ---
         if validation_report:
             f.write("\n--- 【LAST BUILD VALIDATION (1+6 CRITERIA)】 ---\n")
-            # 硬指标始终展示
             s1 = validation_report.get('step_1_static_output', 'N/A')
             s6 = validation_report.get('step_6_runtime_stability', 'N/A')
             f.write(f"CRITICAL - Step 1 (Binary Existence): {s1}\n")
             f.write(f"CRITICAL - Step 6 (Runtime Stability): {s6}\n")
 
-            # 辅助指标脱水：仅展示非 pass 项
             warnings = []
             for k in ["step_2_sanitizer_injected", "step_3_engine_linked", "step_4_logic_linked",
                       "step_5_dependencies_ok"]:
@@ -1640,24 +1502,20 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
 
         all_configs = sorted(os.listdir(config_folder_path))
 
-        # --- Level 1: 核心关联文件 (Full) ---
         for fname in [cfg for cfg in all_configs if cfg in l1_filenames]:
             res = read_file_content(os.path.join(config_folder_path, fname), mode="full")
             c = res.get('content', '')
             f.write(f"\n### {fname} (Priority High) ###\n{c}\n")
             current_used += len(c)
 
-        # --- Level 2: 核心构建配置 (Dynamic) ---
         for fname in [cfg for cfg in all_configs if
                       cfg not in l1_filenames and (cfg.endswith('.sh') or 'Dockerfile' in cfg)]:
-            # 如果配额已消耗超过 60%，降级为 tail_50
             mode = "full" if current_used < (GLOBAL_CHAR_BUDGET * 0.6) else "tail_50"
             res = read_file_content(os.path.join(config_folder_path, fname), mode=mode)
             c = res.get('content', '')
             f.write(f"\n### {fname} (Mode: {mode}) ###\n{c}\n")
             current_used += len(c)
 
-        # --- Level 3: 辅助文件 (Safe Limit) ---
         for fname in [cfg for cfg in all_configs if
                       cfg not in l1_filenames and not cfg.endswith('.sh') and 'Dockerfile' not in cfg]:
             if current_used > GLOBAL_CHAR_BUDGET:
@@ -1668,7 +1526,6 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
                 f.write(f"\n### {fname} (tail_30) ###\n{c}\n")
                 current_used += len(c)
 
-        # 注入文件树与日志末尾
         save_file_tree_shallow(project_main_folder_path, 1, os.path.join(PROMPT_DIR, "file_tree.txt"))
         log_res = read_file_content(FUZZ_LOG_PATH, mode="tail_100_lines")
         f.write(f"\n\n--- BUILD LOG TAIL ---\n{log_res.get('content', '')}")
@@ -1677,7 +1534,6 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     try:
         with open(PROMPT_FILE_PATH, "r", encoding="utf-8") as rf:
             full_content = rf.read()
-        # 清洗不可见字符，确保下游传输安全
         clean_content = "".join(c for c in full_content if c.isprintable() or c in '\n\r\t')
         return {"status": "success", "content": clean_content}
     except Exception as e:
@@ -1685,7 +1541,7 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
 
 
 def _auto_discover_project_symbols(binary_path: str, project_name: str) -> Optional[List[str]]:
-    """启发式查找项目特有符号"""
+    """Heuristically identify project-specific symbols using nm."""
     import subprocess
     try:
         result = subprocess.run(['nm', '-D', binary_path], capture_output=True, text=True, errors='ignore')
@@ -1710,11 +1566,10 @@ def _auto_discover_project_symbols(binary_path: str, project_name: str) -> Optio
 
 
 def _cleanup_environment(oss_fuzz_path: str, project_name: str):
-    """环境净化机制：清理残留容器并释放文件句柄"""
+    """Clean up residual containers and release file handles prior to build."""
     import subprocess, os, time, errno
     print(f"[*] Pre-build cleanup for project: {project_name}")
     try:
-        # 停止相关容器
         subprocess.run(f"docker ps -q --filter \"ancestor=gcr.io/oss-fuzz/{project_name}\" | xargs -r docker kill",
                        shell=True, capture_output=True)
         subprocess.run("docker ps -q --filter \"ancestor=gcr.io/oss-fuzz-base/base-runner\" | xargs -r docker kill",
@@ -1750,11 +1605,7 @@ def run_fuzz_build_and_validate(
         mount_path: Optional[str] = None
 ) -> dict:
     """
-    【1+6 成功准则版 - 控制台增强】
-    成功标准：
-    1. 物理构建成功并产生目标文件 (Step 1)
-    2. 压力测试中检测到执行速率 (Step 6)
-    其他步骤 (2-5) 仅作为质量参考，不影响判定。
+    Build and validate fuzzers based on two primary success criteria: 1. Successful build producing target files. 2. Detected execution rate during stress testing. Other steps serve as quality references.
     """
     import os, sys, subprocess, time, signal
     print(f"--- Tool: run_fuzz_build_and_validate (1+6 Criteria) called for: {project_name} ---")
@@ -1771,7 +1622,6 @@ def run_fuzz_build_and_validate(
     }
 
     try:
-        # Phase 1: Build
         helper_path = os.path.join(oss_fuzz_path, "infra/helper.py")
         command = ["python3", helper_path, "build_fuzzers"]
         if mount_path: command.extend([project_name, mount_path])
@@ -1787,7 +1637,6 @@ def run_fuzz_build_and_validate(
         process.wait()
         final_log = "".join(full_log)
 
-        # 第一关判定
         is_build_ok = (process.returncode == 0)
         if any(k in final_log.lower() for k in ["error:", "failed:", "build failed"]): is_build_ok = False
 
@@ -1800,7 +1649,6 @@ def run_fuzz_build_and_validate(
                            ('afl-', 'llvm-')) and not f.endswith(('.so', '.a', '.zip'))] if os.path.exists(
                 out_dir) else []
 
-            # --- Step 1: 必须有产物 ---
             if not targets:
                 is_build_ok = False
                 report["step_1_static_output"] = "fail: No targets generated"
@@ -1809,7 +1657,6 @@ def run_fuzz_build_and_validate(
                 primary_path = os.path.join(out_dir, target)
                 report["step_1_static_output"] = f"pass: {target}"
 
-                # --- Step 2-5: 仅记录 ---
                 nm_res = subprocess.run(['nm', primary_path], capture_output=True, text=True, errors='ignore')
                 report["step_2_sanitizer_injected"] = "pass" if "__asan" in nm_res.stdout else "warning: missing asan"
                 report["step_3_engine_linked"] = "pass" if (
@@ -1820,7 +1667,6 @@ def run_fuzz_build_and_validate(
                                          cwd=oss_fuzz_path, capture_output=True, text=True, errors='ignore')
                 report["step_5_dependencies_ok"] = "pass" if "not found" not in ldd_res.stdout.lower() else "warning: shared lib missing"
 
-                # --- Step 6: 必须能跑起来 ---
                 print(f"[*] Starting 45s critical stability test...")
                 run_cmd = [sys.executable, helper_path, "run_fuzzer", "--engine", engine, "--sanitizer", sanitizer,
                            project_name, target]
