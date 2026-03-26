@@ -795,7 +795,7 @@
 
 - project: glaze
   language: c++
-  error_time: '2026-12-19'
+  error_time: '202-12-19'
   last_success_time: ''
   oss-fuzz_sha: 4c908a6e1075d20c9d0e59e7fff5fe8be4dfd914
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-1cbc2276-23e1-4568-a7e9-5814ce96e849.txt
