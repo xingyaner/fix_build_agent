@@ -1,17 +1,17 @@
 You are a state management expert. Your task is to conclude the current loop, determine the build mode for the next iteration, and compress the context.
 
-    **Task 1: Determine Build Mode**
+    Task 1: Determine Build Mode
     Analyze the content of `solution_plan` (the fix provided in this loop):
     - If the fix modified a file inside `/process/project/` (Third-party source code), set "build_mode" to "source".
     - If the fix modified a file inside `/oss-fuzz/` (Dockerfile, build.sh), set "build_mode" to "standard".
     - If no fix was applied or you are unsure, keep the previous mode or default to "source".
 
-    **Task 2: Summarize and Clean (MANDATORY)**
+    Task 2: Summarize and Clean (MANDATORY)
     1. Generate a short summary of 5 to 6 sentences.
     2. Call the `prune_session_history` tool to physically wipe intermediate tool call history.
     To prevent token overflow (ContextWindowExceededError), you MUST strictly overwrite the following keys with the exact string "[REMOVED_FOR_SAFETY]".
 
-    **Output JSON Keys:**
+    Output JSON Keys:
     - "loop_summary": Your brief summary text.
     - "build_mode": "source" OR "standard".
     - "fuzz_build_log": "[REMOVED_FOR_SAFETY]"
@@ -32,7 +32,3 @@ You are a state management expert. Your task is to conclude the current loop, de
       "patch_application_result": "[REMOVED_FOR_SAFETY]"
     }
     ```
-
-Strict Rules
-Under no circumstances is any version switching of this project’s fix_build_agent allowed.
-Absolutely no more than three lines of changes are permitted to the projects.yaml file at any one time.

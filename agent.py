@@ -182,7 +182,7 @@ top_p= 0.9
 
 initial_setup_agent = LlmAgent(
     name="initial_setup_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.5, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/initial_setup_instruction.txt"),
     tools=[
         download_github_repo,
@@ -204,7 +204,7 @@ def exit_loop(tool_context: ToolContext):
 
 run_fuzz_and_collect_log_agent = LlmAgent(
     name="run_fuzz_and_collect_log_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/run_fuzz_and_collect_log_instruction.txt"),
     tools=[read_file_content, run_command, run_fuzz_build_and_validate, create_or_update_file],
     output_key="fuzz_build_log",
@@ -212,14 +212,14 @@ run_fuzz_and_collect_log_agent = LlmAgent(
 
 decision_agent = LlmAgent(
     name="decision_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.3, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/decision_instruction.txt"),
     tools=[read_file_content, exit_loop],
 )
 
 commit_finder_agent = LlmAgent(
     name="commit_finder_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.4, top_p=0.6, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/commit_finder_instruction.txt"),
     tools=[
         read_projects_from_yaml, 
@@ -237,7 +237,7 @@ commit_finder_agent = LlmAgent(
 
 reflection_agent = LlmAgent(
     name="reflection_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.4, top_p=0.6, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/reflection_instruction.txt"),
     tools=[read_file_content, update_reflection_journal],
     output_key="last_reflection_result"
@@ -245,14 +245,14 @@ reflection_agent = LlmAgent(
 
 rollback_agent = LlmAgent(
     name="rollback_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/rollback_instruction.txt"),
     tools=[manage_git_state, clear_commit_analysis_state],
 )
 
 prompt_generate_agent = LlmAgent(
     name="prompt_generate_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384, temperature=0.2, top_p=0.3, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/prompt_generate_instruction.txt"),
     tools=[
         prompt_generate_tool, 
@@ -269,7 +269,7 @@ prompt_generate_agent = LlmAgent(
 
 fuzzing_solver_agent = LlmAgent(
     name="fuzzing_solver_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=8129, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=8129, temperature=0.7, top_p=0.8, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/fuzzing_solver_instruction.txt"),
     tools=[read_file_content, create_or_update_file],
     output_key="solution_plan",
@@ -277,7 +277,7 @@ fuzzing_solver_agent = LlmAgent(
 
 solution_applier_agent = LlmAgent(
     name="solution_applier_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/solution_applier_instruction.txt"),
     tools=[apply_patch, read_file_content, manage_git_state],
     output_key="patch_application_result",
@@ -285,7 +285,7 @@ solution_applier_agent = LlmAgent(
 
 summary_agent = LlmAgent(
     name="summary_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.6, top_p=top_p, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/summary_instruction.txt"),
     tools=[prune_session_history],
     output_key=".", 
@@ -439,16 +439,23 @@ async def process_single_project(
 
         try:
             print(f"\n--- 🌀 Starting Attempt {current_attempt_id}/{MAX_RETRIES} (Clean State) ---")
-            
-            async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id, new_message=initial_message):
+
+            async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id,
+                                                new_message=initial_message):
                 if event.usage_metadata:
                     p = getattr(event.usage_metadata, "prompt_token_count", 0) or 0
                     c = getattr(event.usage_metadata, "candidates_token_count", 0) or 0
+
                     stats["total_tokens"]["prompt"] += p
                     stats["total_tokens"]["completion"] += c
                     stats["total_tokens"]["total"] += (p + c)
-                    project_total_tokens["total"] += (p + c) # 即使崩溃，Token 消耗也记录在案
-                    if event.author == 'fuzzing_solver_agent': stats["code_gen_tokens"] += c
+
+                    project_total_tokens["total"] += (p + c)
+                    project_total_tokens["prompt"] = project_total_tokens.get("prompt", 0) + p
+                    project_total_tokens["completion"] = project_total_tokens.get("completion", 0) + c
+
+                    if event.author == 'fuzzing_solver_agent':
+                        stats["code_gen_tokens"] += c
 
                 if event.author == 'commit_finder_agent' and (func_calls := event.get_function_calls()):
                     if any(fc.name in ['extract_buggy_line_info', 'get_enhanced_history_context'] for fc in func_calls):
@@ -460,29 +467,12 @@ async def process_single_project(
                     match = re.search(r"\[(RULE-DRIVEN|AUTONOMOUS|HYBRID)\]", full_text)
                     if match: stats["decision_type"] = match.group(1)
 
-                if event.author == 'run_fuzz_and_collect_log_agent' and (f_calls := event.get_function_calls()):
-                    if any(c.name == 'run_fuzz_build_streaming' for c in f_calls):
-                        stats["build_calls"] += 1
-                        stats["repair_rounds"] = max(0, stats["build_calls"] - 1)
-
-                if (resps := event.get_function_responses()):
-                    for r in resps:
-                        if r.name == 'update_reflection_journal':
-                            s = r.response.get('deterioration_score', 0)
-                            inner_round = stats["build_calls"]
-                            full_deterioration_history.append(f"A{current_attempt_id}_R{inner_round}:{s}")
-
-                        if r.name == 'manage_git_state' and r.response.get('status') == 'success':
-                            msg = str(r.response.get('message', ''))
-                            if "Rolled back" in msg or "rollback" in msg.lower():
-                                stats["rollback_count"] += 1
-
-                        if r.name == 'apply_patch' and r.response.get('status') in ['success', 'partial_success']:
-                            stats["patch_impact"]["files"] = r.response.get('modified_files_count', 0)
-                            stats["patch_impact"]["lines"] = r.response.get('total_lines_changed', 0)
-
                 if (func_resps := event.get_function_responses()):
                     for resp in func_resps:
+                        if resp.name in ['run_fuzz_build_streaming', 'run_fuzz_build_and_validate']:
+                            stats["build_calls"] += 1
+                            stats["repair_rounds"] = max(0, stats["build_calls"] - 1)
+
                         if resp.name == 'run_fuzz_build_and_validate':
                             val_report = resp.response.get('validation_report')
                             if val_report:
@@ -492,13 +482,25 @@ async def process_single_project(
                                 print(
                                     f"\n[1+6 Audit] Step 1: {val_report.get('step_1_static_output')} | Step 6: {val_report.get('step_6_runtime_stability')}")
 
+                        if resp.name == 'update_reflection_journal':
+                            s = resp.response.get('deterioration_score', 0)
+                            full_deterioration_history.append(f"A{current_attempt_id}_R{stats['build_calls']}:{s}")
+
+                        if resp.name == 'manage_git_state' and resp.response.get('status') == 'success':
+                            msg = str(resp.response.get('message', ''))
+                            if "Rolled back" in msg or "rollback" in msg.lower():
+                                stats["rollback_count"] += 1
+
+                        if resp.name == 'apply_patch' and resp.response.get('status') in ['success', 'partial_success']:
+                            stats["patch_impact"]["files"] = resp.response.get('modified_files_count', 0)
+                            stats["patch_impact"]["lines"] = resp.response.get('total_lines_changed', 0)
+
                 if event.author == 'initial_setup_agent' and event.actions and event.actions.state_delta:
                     if 'basic_information' in event.actions.state_delta:
                         full_info = event.actions.state_delta['basic_information']
                         try:
                             meta_save_path = os.path.join(expected_source_path, "metadata.json")
                             os.makedirs(os.path.dirname(meta_save_path), exist_ok=True)
-
                             data_to_write = None
                             if isinstance(full_info, str):
                                 json_match = re.search(r'(\{[\s\S]*\})', full_info)
@@ -509,7 +511,6 @@ async def process_single_project(
                                     raise ValueError("No JSON structure found in response text")
                             else:
                                 data_to_write = full_info
-
                             if data_to_write:
                                 with open(meta_save_path, "w", encoding='utf-8') as mf:
                                     json.dump(data_to_write, mf, indent=2, ensure_ascii=False)
@@ -518,9 +519,9 @@ async def process_single_project(
                             print(f"--- ⚠️ Metadata archive failed: {meta_e} ---")
 
                 if (event.actions and event.actions.escalate and
-                    event.author == 'decision_agent' and
-                    (resp := event.get_function_responses()) and
-                    resp[0].name == 'exit_loop' and resp[0].response.get('status') == 'SUCCESS'):
+                        event.author == 'decision_agent' and
+                        (resp := event.get_function_responses()) and
+                        resp[0].name == 'exit_loop' and resp[0].response.get('status') == 'SUCCESS'):
                     is_successful = True
                     final_basic_information = session.state.get('basic_information')
 
@@ -542,25 +543,23 @@ async def process_single_project(
             if attempt + 1 >= MAX_RETRIES: break
             continue
 
-
         except Exception as e:
             error_stack = traceback.format_exc()
             error_msg = f"--- ❌ [CRASH] Attempt {current_attempt_id} failed with {type(e).__name__}: {str(e)} ---"
             print(error_msg)
-
             if GLOBAL_LOGGER.logger:
                 GLOBAL_LOGGER.logger.error(f"{error_msg}\n--- DETAILED STACK ---\n{error_stack}")
-
             if attempt + 1 >= MAX_RETRIES: break
             continue
 
+
     final_duration_min = (time.time() - project_start_time) / 60
-    l_stats = last_run_stats if last_run_stats else stats 
+    l_stats = last_run_stats if last_run_stats else stats
 
     summary_report = (
-        f"\n{'='*60}\n"
+        f"\n{'=' * 60}\n"
         f"🏁 FINAL PROJECT REPAIR REPORT: {project_name}\n"
-        f"{'-'*60}\n"
+        f"{'-' * 60}\n"
         f"  - [RESULT]           {'✅ SUCCESS' if is_successful else '❌ FAILURE'}\n"
         f"  - [TARGET SHA]       {software_sha}\n"
         f"  - [REPAIR ROUNDS]     {l_stats.get('repair_rounds', 0)} (In Last Attempt)\n"
@@ -572,9 +571,11 @@ async def process_single_project(
         f"      Code Gen Only:    {l_stats.get('code_gen_tokens', 0)}\n"
         f"  - [PROJECT TOTAL COST]\n"
         f"      Total Tokens:     {project_total_tokens['total']}\n"
-        f"      Total Time Cost:  {final_duration_min:.2f} minutes\n"
+        f"      Input (Prompt):   {project_total_tokens.get('prompt', 0)}\n"
+        f"      Output (Gen):     {project_total_tokens.get('completion', 0)}\n"
+        f"      Total Time:       {final_duration_min:.2f} minutes\n"
         f"  - [PATCH SCALE]       {l_stats['patch_impact']['files']} files, {l_stats['patch_impact']['lines']} lines\n"
-        f"{'='*60}\n"
+        f"{'=' * 60}\n"
     )
 
     print(summary_report)

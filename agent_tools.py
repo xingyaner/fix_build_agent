@@ -362,16 +362,24 @@ def query_expert_knowledge(log_path: str) -> dict:
 
 def manage_git_state(path: str, action: str, message: str = "", commit_sha: str = "") -> Dict:
     """
-    Manage the saving and rolling back of state trees. This version includes automatic permission handling and Git identity configuration.
+    Manages the Git state tree with logical fencing and physical auditing.
+    It dynamically calculates rollback quotas by identifying "[AGENT_FIX]" markers,
+    ensuring the environment never reverts beyond the experimental baseline.
     """
     import os, subprocess
     print(f"--- Tool: manage_git_state | Action: {action} | Path: {path} ---")
+
     if not os.path.exists(path):
         return {"status": "error", "message": f"Path {path} does not exist."}
 
+    abs_path = os.path.abspath(path)
+    framework_root = os.path.dirname(os.path.abspath(__file__))
+    if abs_path == framework_root:
+        return {"status": "error",
+                "message": "CRITICAL: Security Violation. Operations on Agent Framework root are blocked."}
+
     original_cwd = os.getcwd()
     try:
-        abs_path = os.path.abspath(path)
         uid = os.getuid()
         gid = os.getgid()
 
@@ -396,8 +404,9 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
             subprocess.run(["git", "add", "."], check=True)
             has_commit = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True).returncode == 0
             if not has_commit:
-                subprocess.run(["git", "commit", "-m", "Initial State"], check=True, capture_output=True)
-            return {"status": "success", "message": f"Git initialized and secured in {path}"}
+                subprocess.run(["git", "commit", "-m", "[BASELINE] Initial experiment state"], check=True,
+                               capture_output=True)
+            return {"status": "success", "message": f"Git initialized at Baseline in {path}"}
 
         if action == "commit":
             subprocess.run(["git", "add", "."], check=True)
@@ -405,20 +414,33 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
             if not diff_check:
                 return {"status": "success", "message": "No changes to commit."}
 
-            subprocess.run(["git", "commit", "-m", message], capture_output=True, text=True, check=True)
+            full_message = f"[AGENT_FIX] {message}"
+            subprocess.run(["git", "commit", "-m", full_message], capture_output=True, text=True, check=True)
             sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
-            return {"status": "success", "sha": sha, "message": f"State saved: {message}"}
+            return {"status": "success", "sha": sha, "message": f"State saved: {full_message}"}
 
         elif action == "rollback":
+            count_cmd = ["git", "log", "--grep=\\[AGENT_FIX\\]", "--oneline"]
+            res = subprocess.run(count_cmd, capture_output=True, text=True)
+            quota = len([l for l in res.stdout.split('\n') if l.strip()])
+
+            if quota <= 0:
+                print(f"--- [BLOCK] Rollback denied: Current path {abs_path} is already at Baseline. ---")
+                return {
+                    "status": "error",
+                    "message": "Already at the Initial Baseline of this experiment. No further rollback possible."
+                }
+
             target = commit_sha if commit_sha else "HEAD~1"
             subprocess.run(["git", "reset", "--hard", target], check=True, capture_output=True)
             subprocess.run(["git", "clean", "-fxd"], check=True, capture_output=True)
-            return {"status": "success", "message": f"Rolled back and deep cleaned to {target}"}
+            return {"status": "success", "message": f"Rolled back 1 step. Remaining Agent Fixes: {quota - 1}"}
 
     except Exception as e:
         return {"status": "error", "message": f"Git Intervention Failed: {str(e)}"}
     finally:
         os.chdir(original_cwd)
+
 
 def clear_commit_analysis_state() -> Dict[str, str]:
     """
