@@ -1,7 +1,6 @@
 - project: espeak-ng
   language: c++
   error_time: '2023-4-3'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-55ee4d54-bda3-46a2-9566-7f611c1a041c.txt
   software_repo_url: https://github.com/espeak-ng/espeak-ng
@@ -16,7 +15,6 @@
 - project: swift-nio
   language: swift
   error_time: '2025-10-07'
-  last_success_time: ''
   oss-fuzz_sha: d331f3ca153e4ec9b7253b1e0ad03d122c6441b4
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-41bfc0a5-c0fe-48b4-a682-c0f48e48154d.txt
   software_repo_url: https://github.com/apple/swift-nio.git
@@ -31,7 +29,6 @@
 - project: trafficserver
   language: c++
   error_time: '2025-2-18'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-01341f9e-36a2-484e-a86c-da0b6cf9dff4.txt
   software_repo_url: https://github.com/apache/trafficserver.git
@@ -46,7 +43,6 @@
 - project: binutils
   language: c++
   error_time: '2025-10-03'
-  last_success_time: ''
   oss-fuzz_sha: 6eb955c65e34bf021dba6cba02795457061758da
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-19308e5e-fd39-4bf9-b953-d503cc1bb252.txt
   software_repo_url: git://sourceware.org/git/binutils-gdb.git
@@ -61,7 +57,6 @@
 - project: glslang
   language: c++
   error_time: '2025-09-26'
-  last_success_time: ''
   oss-fuzz_sha: d175027c3507ae9a8a0a624aa00f731945047fd4
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-90c470ea-8fc7-4ffb-a92d-26c990ae639b.txt
   software_repo_url: https://github.com/khronosgroup/glslang
@@ -76,7 +71,6 @@
 - project: augeas
   language: c++
   error_time: '2025-12-16'
-  last_success_time: ''
   oss-fuzz_sha: 5f06b0e0faae6221fda38ec3d3b2d701499fff3a
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-843d2bd5-42fb-4fcb-bcbc-9ddc36275d60.txt
   software_repo_url: https://github.com/hercules-team/augeas
@@ -91,7 +85,6 @@
 - project: bind9
   language: c
   error_time: '2025-11-28'
-  last_success_time: ''
   oss-fuzz_sha: efba8534530bb3d25992da845e74006f96e46873
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-8ed4ca2b-07c5-4a40-bef8-720e715babfb.txt
   software_repo_url: https://gitlab.isc.org/isc-projects/bind9.git
@@ -106,7 +99,6 @@
 - project: bind9
   language: c
   error_time: '2025-09-24'
-  last_success_time: ''
   oss-fuzz_sha: 04679298d01046bd7f56fa7e9459532161f973c2
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-00c4424f-d7a0-43a5-8066-f60acca10472.txt
   software_repo_url: https://gitlab.isc.org/isc-projects/bind9.git
@@ -121,7 +113,6 @@
 - project: croaring
   language: c
   error_time: '2025-10-29'
-  last_success_time: ''
   oss-fuzz_sha: 85471aec5b8fba9232bbf77daca0a8895378bcf6
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-189de54d-cb21-45e9-8c8f-37c767da42a3.txt
   software_repo_url: https://github.com/RoaringBitmap/CRoaring
@@ -136,7 +127,6 @@
 - project: cryptography
   language: python
   error_time: '2025-10-05'
-  last_success_time: ''
   oss-fuzz_sha: ff1963472dda380ee8fa71ff311fd8276a410027
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-8ce33fda-6155-43b4-b4da-0ce92b3fbb4f.txt
   software_repo_url: https://github.com/pyca/cryptography
@@ -151,7 +141,6 @@
 - project: ffmpeg
   language: c++
   error_time: '2025-12-29'
-  last_success_time: ''
   oss-fuzz_sha: 8dfdeaaa5b1a4c796e61bec6386153d46f3a21c2
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-0a8b1119-f383-4ae2-8bd5-1328a871ae29.txt
   software_repo_url: https://gitlab.gnome.org/GNOME/libxml2.git
@@ -166,7 +155,6 @@
 - project: ffmpeg
   language: c++
   error_time: '2025-12-05'
-  last_success_time: ''
   oss-fuzz_sha: ee2ba6094402cac75e7b30fa407b679a0a717cf3
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-a5ccd55e-8bce-429a-a6eb-ba534f91692c.txt
   software_repo_url: https://gitlab.gnome.org/GNOME/libxml2.git
@@ -181,7 +169,6 @@
 - project: freerdp
   language: c
   error_time: '2025-09-26'
-  last_success_time: ''
   oss-fuzz_sha: d175027c3507ae9a8a0a624aa00f731945047fd4
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-6f4d5536-2503-4583-afbd-f32fe08c4759.txt
   software_repo_url: https://github.com/FreeRDP/FreeRDP.git
@@ -196,7 +183,6 @@
 - project: fwupd
   language: c
   error_time: '2025-12-05'
-  last_success_time: ''
   oss-fuzz_sha: ee2ba6094402cac75e7b30fa407b679a0a717cf3
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-e052a72d-2ac3-4f51-80b3-943906c015fe.txt
   software_repo_url: https://github.com/fwupd/fwupd.git
@@ -211,7 +197,6 @@
 - project: fwupd
   language: c
   error_time: '2025-09-25'
-  last_success_time: ''
   oss-fuzz_sha: 58a3ba8b2c0e10090f2f440f7fd15ae514b0fa68
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-020dc534-a5aa-46f7-b066-808f49b8c2cc.txt
   software_repo_url: https://github.com/fwupd/fwupd.git
@@ -226,7 +211,6 @@
 - project: gdal
   language: c++
   error_time: '2025-11-11'
-  last_success_time: ''
   oss-fuzz_sha: b8e757906e1402fc7549c6c0125f99bd28d7b838
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-fe863633-a4bb-449c-8f9c-585dcb2b9f3a.txt
   software_repo_url: https://github.com/OSGeo/gdal
@@ -241,7 +225,6 @@
 - project: gdal
   language: c++
   error_time: '2025-12-25'
-  last_success_time: ''
   oss-fuzz_sha: a09cb739e2aa7722ecbc681411975d76d270be44
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-b376287f-697a-423e-885a-94f983b7dad7.txt
   software_repo_url: https://github.com/OSGeo/gdal
@@ -256,7 +239,6 @@
 - project: gdal
   language: c++
   error_time: '2025-09-22'
-  last_success_time: ''
   oss-fuzz_sha: 3e6a7fd7bcd631647ab9beed1fe0897498e6af39
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-e0c17106-07ce-4e0f-acca-5ae4ed91a5f0.txt
   software_repo_url: https://github.com/OSGeo/gdal
@@ -271,7 +253,6 @@
 - project: gdal
   language: c++
   error_time: '2025-09-26'
-  last_success_time: ''
   oss-fuzz_sha: d175027c3507ae9a8a0a624aa00f731945047fd4
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3aa2a1ad-3de0-481c-9259-7c8dc0ba925b.txt
   software_repo_url: https://github.com/OSGeo/gdal
@@ -286,7 +267,6 @@
 - project: gpsd
   language: c
   error_time: '2025-11-22'
-  last_success_time: ''
   oss-fuzz_sha: 261e9e8784d317c6697a57e49d0bd914295a32b6
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-0d260ab9-7eb9-4eff-ab77-9b268f126d22.txt
   software_repo_url: https://gitlab.com/gpsd/gpsd
@@ -301,7 +281,6 @@
 - project: haproxy
   language: c++
   error_time: '2025-10-22'
-  last_success_time: ''
   oss-fuzz_sha: 98ed46e3f74485e5b734293fd715351c6b71cb71
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-26e3881c-33e4-44ce-a381-e1bd4afbab2d.txt
   software_repo_url: https://github.com/vtest/VTest2
@@ -316,7 +295,6 @@
 - project: jooq
   language: jvm
   error_time: '2025-10-11'
-  last_success_time: ''
   oss-fuzz_sha: 3775fff873ca34ab6dcf4dad544f3eba224e7b77
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-05f9613d-0d9e-4140-8276-39a0b48470e6.txt
   software_repo_url: https://github.com/jOOQ/jOOQ.git
@@ -331,7 +309,6 @@
 - project: jooq
   language: jvm
   error_time: '2025-10-16'
-  last_success_time: ''
   oss-fuzz_sha: 2488cf3749d8a4c207463c7ae3fef91364c17b77
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-fe57b998-ddfb-4f80-9f4c-5ddf9e1da992.txt
   software_repo_url: https://github.com/jOOQ/jOOQ.git
@@ -346,7 +323,6 @@
 - project: jooq
   language: jvm
   error_time: '2025-10-22'
-  last_success_time: ''
   oss-fuzz_sha: 98ed46e3f74485e5b734293fd715351c6b71cb71
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-659b52e4-2471-4aff-93c4-e21dbde017c3.txt
   software_repo_url: https://github.com/jOOQ/jOOQ.git
@@ -361,7 +337,6 @@
 - project: jooq
   language: jvm
   error_time: '2025-11-26'
-  last_success_time: ''
   oss-fuzz_sha: 8c75bf08fabff214da2e110309c7be332b3803eb
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-bd32c0ee-34ca-42c7-8128-2eeff7e23b67.txt
   software_repo_url: https://github.com/jOOQ/jOOQ.git
@@ -376,7 +351,6 @@
 - project: jq
   language: c
   error_time: '2025-10-05'
-  last_success_time: ''
   oss-fuzz_sha: ff1963472dda380ee8fa71ff311fd8276a410027
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-cf0ca5dc-4e34-478e-8bfd-2b979bafa762.txt
   software_repo_url: https://github.com/jqlang/jq
@@ -391,7 +365,6 @@
 - project: kea
   language: c++
   error_time: '2025-11-22'
-  last_success_time: ''
   oss-fuzz_sha: 261e9e8784d317c6697a57e49d0bd914295a32b6
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-91c310f6-58f3-4b69-8d5a-fb533caf13c2.txt
   software_repo_url: https://github.com/AdaLogics/ada-fuzzers
@@ -406,7 +379,6 @@
 - project: libidn2
   language: c++
   error_time: '2025-09-29'
-  last_success_time: ''
   oss-fuzz_sha: 8e62388f6d0853ac7066154229d0d3d3a675541c
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-968f9324-2fa3-4002-be53-763c46402f51.txt
   software_repo_url: https://gitlab.com/libidn/libidn2.git
@@ -421,7 +393,6 @@
 - project: librdkafka
   language: c++
   error_time: '2025-11-07'
-  last_success_time: ''
   oss-fuzz_sha: e2e0de976046449b23332a0b888017e075b55b31
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-71a4b4f8-7c46-48de-8632-eda01bfeff4f.txt
   software_repo_url: https://github.com/edenhill/librdkafka
@@ -436,7 +407,6 @@
 - project: libstdcpp
   language: c++
   error_time: '2025-10-08'
-  last_success_time: ''
   oss-fuzz_sha: 12dbbede4b4a141c2cd62b504b80aa34f710e0b5
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-1ca382bc-d587-4b36-9f5c-ef4157e392ef.txt
   software_repo_url: git://gcc.gnu.org/git/gcc.git
@@ -451,7 +421,6 @@
 - project: libstdcpp
   language: c++
   error_time: '2025-12-14'
-  last_success_time: ''
   oss-fuzz_sha: ba88b4d52f227379ebf24a37087c0f6bbcc22554
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-016c08e1-68e5-499b-8399-b633230c6a4b.txt
   software_repo_url: git://gcc.gnu.org/git/gcc.git
@@ -466,7 +435,6 @@
 - project: libtpms
   language: c++
   error_time: '2025-09-24'
-  last_success_time: ''
   oss-fuzz_sha: 04679298d01046bd7f56fa7e9459532161f973c2
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-2e7339e5-244f-47df-bcbd-9e20028899ff.txt
   software_repo_url: https://github.com/stefanberger/libtpms
@@ -481,7 +449,6 @@
 - project: libvips
   language: c++
   error_time: '2025-12-03'
-  last_success_time: ''
   oss-fuzz_sha: c8c1b257db4da92299bdf9fd058fff1bb008b2ad
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-e8e310ea-fadf-48e2-9b51-406f00234cee.txt
   software_repo_url: https://github.com/google/libultrahdr.git
@@ -496,7 +463,6 @@
 - project: libyal
   language: c
   error_time: '2025-10-31'
-  last_success_time: ''
   oss-fuzz_sha: cb360c2c6a7aaad794b8e09498f336a62c9a09a4
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-43466985-1b1e-4fec-90fc-44eb3d4f9fb5.txt
   software_repo_url: https://github.com/libyal/libpff.git
@@ -511,7 +477,6 @@
 - project: mosquitto
   language: c
   error_time: '2025-12-11'
-  last_success_time: ''
   oss-fuzz_sha: 099b4909f37e7f712f6f444c4ba266a5bcfc321f
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3449e0f7-812e-4bc8-85f6-e89034125bd5.txt
   software_repo_url: https://github.com/google/libprotobuf-mutator
@@ -526,7 +491,6 @@
 - project: neomutt
   language: c++
   error_time: '2026-01-02'
-  last_success_time: ''
   oss-fuzz_sha: ec42a71c7e3a6e0e11c1e985f671b13d9860db12
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-37c06df6-a70f-456a-a5c8-ee111887d030.txt
   software_repo_url: https://github.com/neomutt/corpus-address
@@ -541,7 +505,6 @@
 - project: ntopng
   language: c++
   error_time: '2026-01-03'
-  last_success_time: ''
   oss-fuzz_sha: 3f6797671645f6843f2b735162f75e842dbb9f40
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-9a08d366-099c-4d94-92d4-a23e1901e7e2.txt
   software_repo_url: https://github.com/ntop/nDPI.git
@@ -556,7 +519,6 @@
 - project: ots
   language: c++
   error_time: '2025-11-11'
-  last_success_time: ''
   oss-fuzz_sha: b8e757906e1402fc7549c6c0125f99bd28d7b838
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-8dc24024-9177-4d3a-9d60-09a22bc8d1c0.txt
   software_repo_url: https://github.com/khaledhosny/ots.git
@@ -571,7 +533,6 @@
 - project: poppler
   language: c++
   error_time: '2025-11-18'
-  last_success_time: ''
   oss-fuzz_sha: 31df0781d931780746a63a1a6d7de4e9798dda5a
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-835e1be1-3fdb-46e8-ae2d-c280f6533f72.txt
   software_repo_url: https://gitlab.freedesktop.org/poppler/poppler.git
@@ -586,7 +547,6 @@
 - project: proj4
   language: c++
   error_time: '2025-11-16'
-  last_success_time: ''
   oss-fuzz_sha: 31df0781d931780746a63a1a6d7de4e9798dda5a
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-6b0d4015-b0f5-4828-85e3-5dcf43bf9972.txt
   software_repo_url: https://github.com/OSGeo/PROJ
@@ -601,7 +561,6 @@
 - project: relic
   language: c++
   error_time: '2025-10-04'
-  last_success_time: ''
   oss-fuzz_sha: 03a0de7836ba20186ca29602d45beee3fcd1ffee
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-bd803879-b42a-4f66-a647-28ad64e59844.txt
   software_repo_url: https://github.com/MozillaSecurity/cryptofuzz
@@ -616,7 +575,6 @@
 - project: tinysparql
   language: c
   error_time: '2025-11-06'
-  last_success_time: ''
   oss-fuzz_sha: 9afe5cd870cdf47ebdcb36e4daaa7d2bc445231a
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-085433ac-cba5-49b0-b1b8-3bfe4c9094d6.txt
   software_repo_url: https://gitlab.gnome.org/GNOME/tinysparql.git
@@ -631,7 +589,6 @@
 - project: wasmer
   language: rust
   error_time: '2025-12-30'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-55acc1aa-fa61-46ea-9bf3-82aef00ad756.txt
   software_repo_url: https://github.com/wasmerio/wasmer
@@ -646,7 +603,6 @@
 - project: xmlsec
   language: c++
   error_time: '2025-10-31'
-  last_success_time: ''
   oss-fuzz_sha: cb360c2c6a7aaad794b8e09498f336a62c9a09a4
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-fba5869c-402d-4e5f-ae6d-6bb54c1bba59.txt
   software_repo_url: https://gitlab.gnome.org/GNOME/libxslt.git
@@ -661,7 +617,6 @@
 - project: xpdf
   language: c++
   error_time: '2025-11-15'
-  last_success_time: ''
   oss-fuzz_sha: 5ff938ce8c58d810c7bf2c050aa22aadc190331c
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-6de2d866-ca6e-4a28-be2e-715f78853bcd.txt
   software_repo_url: https://gitlab.freedesktop.org/freetype/freetype
@@ -676,7 +631,6 @@
 - project: dovecot
   language: c
   error_time: '2025-10-10'
-  last_success_time: ''
   oss-fuzz_sha: 4b541c7c4d0671a59a9bee4999e6fc4c36483bc1
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-5b243c47-37e7-437e-aed0-140173bba788.txt
   software_repo_url: https://github.com/dovecot/core
@@ -691,7 +645,6 @@
 - project: glaze
   language: c++
   error_time: '2025-09-16'
-  last_success_time: ''
   oss-fuzz_sha: 9ca5b10546881cf67145b6b8e707b7d79c7b4950
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-26e2e2a3-d98f-4f65-afe2-e539c8f4482d.txt
   software_repo_url: https://github.com/stephenberry/glaze
@@ -706,7 +659,6 @@
 - project: aptos-core
   language: rust
   error_time: '2026-01-30'
-  last_success_time: ''
   oss-fuzz_sha: 4c908a6e1075d20c9d0e59e7fff5fe8be4dfd914
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-4aabd324-564d-41ea-9b29-27f5445300ad.txt
   software_repo_url: https://github.com/aptos-labs/aptos-core.git
@@ -721,7 +673,6 @@
 - project: bazel-rules-fuzzing-test
   language: c++
   error_time: '2025-12-30'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-8b0f371c-c0ba-4acd-b14b-103ac46e7767.txt
   software_repo_url: https://github.com/bazelbuild/rules_fuzzing.git
@@ -736,7 +687,6 @@
 - project: bls-signatures
   language: c++
   error_time: '2025-2-23'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3c137f5e-154f-432b-84a9-6d1d531b219a.txt
   software_repo_url: https://github.com/mratsim/constantine
@@ -751,7 +701,6 @@
 - project: dulwich
   language: python
   error_time: '2025-7-12'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-5e4c2e8f-340d-4f1a-a97f-f6d8428fb801.txt
   software_repo_url: https://github.com/jelmer/dulwich.git
@@ -766,7 +715,6 @@
 - project: envoy
   language: c++
   error_time: '2025-12-11'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-21062cee-08b4-458b-a48e-fb857b8fb501.txt
   software_repo_url: https://github.com/envoyproxy/envoy.git
@@ -781,7 +729,6 @@
 - project: g-py-crc32c
   language: python
   error_time: '2025-12-11'
-  last_success_time: ''
   oss-fuzz_sha: 099b4909f37e7f712f6f444c4ba266a5bcfc321f
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-f541f911-cd7f-46c7-8ed2-6b1dde971f6c.txt
   software_repo_url: https://github.com/googleapis/python-crc32c
@@ -796,7 +743,6 @@
 - project: glaze
   language: c++
   error_time: '20255555-12-19'
-  last_success_time: ''
   oss-fuzz_sha: 4c908a6e1075d20c9d0e59e7fff5fe8be4dfd914
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-1cbc2276-23e1-4568-a7e9-5814ce96e849.txt
   software_repo_url: https://github.com/stephenberry/glaze
@@ -811,7 +757,6 @@
 - project: hiredis
   language: c
   error_time: '2025-4-10'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-ce84f796-6b52-4784-8e5a-c41c52a879b9.txt
   software_repo_url: https://github.com/redis/hiredis
@@ -826,7 +771,6 @@
 - project: libcacard
   language: c
   error_time: '2025-11-22'
-  last_success_time: ''
   oss-fuzz_sha: 261e9e8784d317c6697a57e49d0bd914295a32b6
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-0197cebb-7adf-44bd-92ef-10fd339c32f8.txt
   software_repo_url: https://github.com/nss-dev/nss.git
@@ -841,7 +785,6 @@
 - project: libecc
   language: c++
   error_time: '2025-4-12'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-95e1b2ff-c169-450f-a950-211e91318b81.txt
   software_repo_url: https://github.com/MozillaSecurity/cryptofuzz
@@ -856,7 +799,6 @@
 - project: linkerd2-proxy
   language: rust
   error_time: '2024-11-6'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-4a51d346-d82e-44a8-bf6d-9bb1f841f6f1.txt
   software_repo_url: https://github.com/linkerd/linkerd2-proxy
@@ -871,7 +813,6 @@
 - project: lwan
   language: c++
   error_time: '2025-5-12'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-80ff7bd1-d840-4a16-ba27-ad0d86c1b5b5.txt
   software_repo_url: https://github.com/lpereira/lwan.git
@@ -886,7 +827,6 @@
 - project: lxc
   language: c
   error_time: '2025-9-10'
-  last_success_time: ''
   oss-fuzz_sha: 65e24169d0d6ee8e4cc73dda3f259bbb578e1b33
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-99746d19-9c68-4626-948c-b3fa583e63fa.txt
   software_repo_url: https://github.com/lxc/lxc
@@ -901,7 +841,6 @@
 - project: mariadb
   language: c++
   error_time: '2025-09-16'
-  last_success_time: ''
   oss-fuzz_sha: 9ca5b10546881cf67145b6b8e707b7d79c7b4950
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-13cf229b-203d-41e7-b96f-91308112fe98.txt
   software_repo_url: https://github.com/MariaDB/server
@@ -916,7 +855,6 @@
 - project: miniz_oxide
   language: rust
   error_time: '2025-12-17'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-421b3525-99ac-442f-9b66-8ffc138c18bf.txt
   software_repo_url: https://github.com/Frommi/miniz_oxide
@@ -931,7 +869,6 @@
 - project: mongo-go-driver
   language: go
   error_time: '2025-4-1'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-f790e381-dba0-45ad-a0fc-2b04385dff1a.txt
   software_repo_url: https://github.com/mongodb/mongo-go-driver
@@ -946,7 +883,6 @@
 - project: numexpr
   language: python
   error_time: '2025-6-9'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-0efbf59d-34ef-45c1-a033-b8a0724a56e7.txt
   software_repo_url: https://github.com/pydata/numexpr
@@ -961,7 +897,6 @@
 - project: perfetto
   language: c++
   error_time: '2025-9-9'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3c530cd7-abef-4413-9dd1-d7d3d00959a7.txt
   software_repo_url: https://android.googlesource.com/platform/external/perfetto/
@@ -976,7 +911,6 @@
 - project: postgresql
   language: c
   error_time: '2025-10-10'
-  last_success_time: ''
   oss-fuzz_sha: 4b541c7c4d0671a59a9bee4999e6fc4c36483bc1
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-1b771943-02ac-44c8-9158-502cd56e35e4.txt
   software_repo_url: https://github.com/postgres/postgres
@@ -991,7 +925,6 @@
 - project: powsybl-java
   language: jvm
   error_time: '2025-9-5'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3ed509a8-30d1-4f44-9359-ddac880a8d13.txt
   software_repo_url: https://github.com/arthurscchan/powsybl-seed-corpus
@@ -1006,7 +939,6 @@
 - project: quiche
   language: c++
   error_time: '2024-10-30'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-97f59615-143d-4e70-98bb-3b7664cf0945.txt
   software_repo_url: https://github.com/google/quiche
@@ -1021,7 +953,6 @@
 - project: scrypt
   language: rust
   error_time: '2025-2-23'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-d6332223-bc30-40c9-bd15-360b3b794bcb.txt
   software_repo_url: https://github.com/RustCrypto/password-hashes
@@ -1036,7 +967,6 @@
 - project: serde-yaml
   language: rust
   error_time: '2025-9-9'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-31352efd-9ece-4457-bf4e-a7eb63043073.txt
   software_repo_url: https://github.com/dtolnay/serde-yaml
@@ -1051,7 +981,6 @@
 - project: spring-integration
   language: jvm
   error_time: '2023-6-23'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-be88c896-89bf-49e2-bc39-859c8143324b.txt
   software_repo_url: https://github.com/spring-projects/spring-integration
@@ -1066,7 +995,6 @@
 - project: starnix-netlink
   language: rust
   error_time: '2025-1-11'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-7361411f-4016-4b9c-bfc1-08e91ff71950.txt
   software_repo_url: https://fuchsia.googlesource.com/fuchsia
@@ -1081,7 +1009,6 @@
 - project: surrealdb
   language: rust
   error_time: '2025-10-11'
-  last_success_time: ''
   oss-fuzz_sha: 3775fff873ca34ab6dcf4dad544f3eba224e7b77
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-95ca8fa5-a07a-42f2-b47a-34eb88d5b0cd.txt
   software_repo_url: https://github.com/surrealdb/docs.surrealdb.com.git
@@ -1096,7 +1023,6 @@
 - project: surrealdb
   language: rust
   error_time: '2025-11-29'
-  last_success_time: ''
   oss-fuzz_sha: c74d76768368951823cffca3bbd15eaa82093178
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-fbfc6be1-2f52-43bf-9db2-f7b6e99bb4af.txt
   software_repo_url: https://github.com/surrealdb/docs.surrealdb.com.git
@@ -1111,7 +1037,6 @@
 - project: tensorflow
   language: c++
   error_time: '2024-5-6'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3b3efa36-a25f-449f-b78e-01c9d6978147.txt
   software_repo_url: https://github.com/tensorflow/tensorflow
@@ -1126,7 +1051,6 @@
 - project: toml_edit
   language: rust
   error_time: '2025-5-1'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-7cecd0af-7959-4a65-a765-93710aa45f1b.txt
   software_repo_url: https://github.com/ordian/toml_edit
@@ -1141,7 +1065,6 @@
 - project: relic
   language: c++
   error_time: '2026-02-08'
-  last_success_time: '2026-02-07'
   oss-fuzz_sha: 4c908a6e1075d20c9d0e59e7fff5fe8be4dfd914
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-a1e827c2-8de9-496a-82cd-6061692e8f13.txt
   software_repo_url: https://github.com/MozillaSecurity/cryptofuzz
@@ -1156,7 +1079,6 @@
 - project: e2fsprogs
   language: c
   error_time: '2025-12-24'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-2f51f9bd-5786-42db-895c-b1fff426c183.txt
   software_repo_url: https://github.com/tytso/e2fsprogs
@@ -1171,7 +1093,6 @@
 - project: grpc-swift
   language: swift
   error_time: '2025-10-07'
-  last_success_time: ''
   oss-fuzz_sha: d331f3ca153e4ec9b7253b1e0ad03d122c6441b4
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-22e36d1d-1f97-42a5-a169-65cd01e01d9a.txt
   software_repo_url: https://github.com/grpc/grpc-swift
@@ -1186,7 +1107,6 @@
 - project: irssi
   language: c++
   error_time: '2025-12-22'
-  last_success_time: ''
   oss-fuzz_sha: e7eff02862392128564477081c40d09e4b48cf33
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-16c2c6fa-c7fe-43e7-8040-3b9401919f83.txt
   software_repo_url: https://github.com/irssi/irssi
@@ -1201,7 +1121,6 @@
 - project: bazel-rules-fuzzing-test
   language: c++
   error_time: '2026-2-3'
-  last_success_time: ''
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-8b0f371c-c0ba-4acd-b14b-103ac46e7767.txt
   software_repo_url: https://github.com/bazelbuild/rules_fuzzing.git
