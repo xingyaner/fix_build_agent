@@ -445,9 +445,9 @@ async def process_single_project(
 
             async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id,
                                                 new_message=initial_message):
-                event_uid = getattr(event, 'id', hash(str(event.created_at) + str(event.author) + str(getattr(event, 'content', ''))))
+                event_uid = getattr(event, 'id', hash(repr(event)))
                 if event_uid in processed_event_ids:
-                    continue 
+                    continue
                 processed_event_ids.add(event_uid)
 
                 if event.usage_metadata:
