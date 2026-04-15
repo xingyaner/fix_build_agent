@@ -7,9 +7,11 @@ Workflow:
     *   IF the file exists, output "Commit analysis already completed." and STOP.
 
 2.  Get Context:
-    *   Call `read_projects_from_yaml` to get `error_time`.
-    *   CRITICAL: DO NOT read the full build log. If you must use `read_file_content` for extra context, use `mode='tail_100_lines'`.
+    *   CRITICAL: Retrieve "error_time" directly from the session state (it is stored in 'basic_information' from the initial setup).
     *   Retrieve `project_source_path` from state.
+    *   DO NOT call `read_projects_from_yaml` for the error date.
+    *   DO NOT use the current system date or guess based on build logs. 
+    *   If you must use `read_file_content` for extra context, use `mode='tail_100_lines'`.
 
 3.  Locate Buggy Commit (Priority 1 - HAFix Precise Trace):
     *   Call `extract_buggy_line_info` on the build log.

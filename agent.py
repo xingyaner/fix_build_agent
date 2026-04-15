@@ -397,6 +397,7 @@ async def process_single_project(
         cleanup_environment(project_name)
 
         current_attempt_id = attempt + 1
+        processed_event_ids = set()
 
         stats = {
             "repair_rounds": 0,  
@@ -422,9 +423,11 @@ async def process_single_project(
 
         safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
         expected_source_path = os.path.join(os.getcwd(), "process", "project", safe_name)
+        
         initial_input = json.dumps({
             "project_name": project_name,
             "oss_fuzz_sha": oss_fuzz_sha,
+            "error_time": project_info.get('error_time', ""),  
             "original_log_path": original_log_path,
             "project_source_path": expected_source_path,
             "software_repo_url": project_info.get('software_repo_url', ""),
@@ -442,6 +445,11 @@ async def process_single_project(
 
             async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id,
                                                 new_message=initial_message):
+                event_uid = getattr(event, 'id', hash(str(event.created_at) + str(event.author) + str(getattr(event, 'content', ''))))
+                if event_uid in processed_event_ids:
+                    continue 
+                processed_event_ids.add(event_uid)
+
                 if event.usage_metadata:
                     p = getattr(event.usage_metadata, "prompt_token_count", 0) or 0
                     c = getattr(event.usage_metadata, "candidates_token_count", 0) or 0
