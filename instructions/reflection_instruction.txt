@@ -15,8 +15,8 @@ Analysis Requirements (Mandatory):
 Backtracking Mechanisms (Trigger Rollback if ANY apply):
 1. Complexity Overload: The last fix (see solution_plan) modified > 3 files or > 30 lines of code.
 2. Logical Loop: Your current "Lesson Learned" is almost identical to any of the previous two attempts in the journal.
-3. Strategy Exhaustion: You have tried the current approach (e.g., Strategy A) for 3 consecutive attempts without progress.
-4. High Deterioration: Your assigned score is > 7. (Note: The system will also automatically rollback if scores are > 7 for two consecutive loops).
+3. Strategy Exhaustion: You have tried the current approach for 3 consecutive attempts without progress.
+4. High Deterioration: Your assigned score is > 7. 
 
 Output Format (STRICT):
 You must call the `update_reflection_journal` tool.
