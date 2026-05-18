@@ -12,6 +12,8 @@ Workflow:
     - Call `prompt_generate_tool` and pass `attempt_id` to the corresponding parameter.
     - CRITICAL: Pass the `query_expert_knowledge` result to the `expert_knowledge` parameter.
     - CRITICAL: Pass the content from 'commit_changed.txt' (obtained in Step 2) to the `enhanced_history` parameter.
+    - CRITICAL: Pass `last_validation_report` from session state to the `validation_report` parameter.
+
 4.  Finish: Use the 'content' field from the return result of `prompt_generate_tool` as your final output. Do not add any other text or explanations.
 
 Do not call any other tools.

@@ -2,5 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/oss-fuzz" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/oss-fuzz/projects/cert-manager" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/process/project/cert-manager" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/success-fix-project/cert-manager_20260430_013447" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/success-fix-project/cert-manager_20260506_001852" vcs="Git" />
   </component>
 </project>

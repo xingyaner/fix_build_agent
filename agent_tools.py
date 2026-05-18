@@ -25,8 +25,8 @@ PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processe
 
 def prune_session_history(tool_context: ToolContext) -> dict:
     """
-    Adopt a whitelist strategy to erase all intermediate tool call details (ls, find, read_file_content).
-    Retain only the initial input, compressed memory from summary_agent, and patch plans from the solver.
+    Adopt a whitelist strategy to erase intermediate tool call details.
+    Retains summary_agent, fuzzing_solver_agent events, and critical diagnostic tool outputs.
     """
     try:
         session = tool_context.session
@@ -35,15 +35,26 @@ def prune_session_history(tool_context: ToolContext) -> dict:
 
         original_count = len(session.events)
         whitelist_authors = ['summary_agent', 'fuzzing_solver_agent']
+        protected_tools = {'run_container_diagnostic'}
 
         new_events = [session.events[0]]
 
         for event in session.events[1:]:
+            # 1. 保留白名单 Agent 的全部事件（含其工具调用与响应）
             if event.author in whitelist_authors:
                 new_events.append(event)
-            elif hasattr(event, 'get_function_calls') or hasattr(event, 'get_function_responses'):
-                continue
-            else:
+            # 2. 显式保留关键诊断工具的响应，防止环境取证证据丢失
+            elif hasattr(event, 'get_function_responses'):
+                keep_event = False
+                for resp in event.get_function_responses():
+                    if resp.name in protected_tools:
+                        keep_event = True
+                        break
+                if keep_event:
+                    new_events.append(event)
+                # 其他非白名单工具响应默认丢弃
+            elif not hasattr(event, 'get_function_calls'):
+                # 保留非工具调用的普通文本/状态事件
                 new_events.append(event)
 
         session.events.clear()
@@ -56,103 +67,194 @@ def prune_session_history(tool_context: ToolContext) -> dict:
     except Exception as e:
         return {"status": "error", "message": f"Memory intervention failed: {str(e)}"}
 
-def extract_buggy_line_info(log_path: str, project_name: str = "") -> List[Dict]:
+
+def extract_buggy_line_info(log_path: str, project_name: str = "", project_source_path: str = "",
+                            error_date: str = "") -> dict:
     """
-    Extract filenames and line numbers from logs and automatically process Docker path prefixes.
+    [HAFix Phase 1 & 2] Dynamic Clue Mining + Self-Healing Identification.
+    Replaces the original logic to support multi-mode extraction and path scoring.
+
+    Args:
+        log_path: Path to the build log.
+        project_name: Name of the project.
+        project_source_path: (New) Root path of the source code for path validation.
+        error_date: (New) Date string for fallback time-window search.
     """
-    if not os.path.exists(log_path): return []
-    with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
-        lines = f.readlines()
-        content = "".join(lines[-2000:])
-    
-    pattern = r"([\w\-\./]+\.(?:c|cpp|h|cc|rs|go|py|sh|java)):(\d+):"
+    import os, re, subprocess
+    if not os.path.exists(log_path): return {"status": "error", "message": "Log file not found."}
+
+    # --- Helper: Read tail lines with noise filtering ---
+    def read_log_tail(path, count):
+        try:
+            with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+                lines = f.readlines()
+            # Filter out Agent diagnostic noise and common non-error logs
+            noise = ["--- Tool:", "RESULT:", "[⚠️", "usage: helper.py", "Step #"]
+            return [l for l in lines[-count:] if not any(kw in l for kw in noise)]
+        except:
+            return []
+
+    # --- Phase 1: Clue Mining ---
+    # 1. Scan 500 lines
+    content = "".join(read_log_tail(log_path, 500))
+    # Regex supports C/C++/Go/Rust/Config files: (path/file.ext:line:)
+    pattern = r"([\w\-\./_]+\.(?:c|cpp|h|cc|cxx|rs|go|py|sh|java|swift|cmake|txt)):(\d+):?"
     matches = re.findall(pattern, content)
-    
-    results = []
-    seen = set()
-    prefixes_to_strip = ["/src/" + project_name + "/", "/src/", "./"]
-    
-    for file_path, line in matches:
-        clean_path = file_path
-        for prefix in prefixes_to_strip:
-            if clean_path.startswith(prefix):
-                clean_path = clean_path[len(prefix):]
-                break
-        
-        if (clean_path, line) not in seen:
-            results.append({"file": clean_path, "line": int(line)})
-            seen.add((clean_path, line))
-            
-    return results[:3]
+
+    # 2. Fallback to 1000 lines if empty
+    if not matches:
+        content = "".join(read_log_tail(log_path, 1000))
+        matches = re.findall(pattern, content)
+
+    # 3. Keyword Fallback for Phase 2 Path B
+    if not matches:
+        keywords = [kw for kw in ["GOMODCACHE", "WORKDIR", "overlay", "lib.*not found", "undefined reference"] if
+                    re.search(kw, content, re.I)]
+        return {"status": "success", "clue_type": "keyword", "data": {"keywords": keywords, "error_date": error_date}}
+
+    # --- Phase 2: Path Self-Healing & Scoring ---
+    # Pre-load recent changes for scoring (+5 points)
+    recent_changes = set()
+    if project_source_path and os.path.isdir(os.path.join(project_source_path, ".git")):
+        try:
+            res = subprocess.run(["git", "-C", project_source_path, "log", "-n", "50", "--name-only", "--format="],
+                                 capture_output=True, text=True, timeout=10)
+            recent_changes = {f.strip() for f in res.stdout.split('\n') if f.strip()}
+        except:
+            pass
+
+    scored_candidates = []
+    for raw_file, raw_line in matches:
+        score, final_path = 0, raw_file
+
+        # Check direct existence (Score 100)
+        if project_source_path and os.path.exists(os.path.join(project_source_path, raw_file)):
+            score = 100
+        else:
+            # Attempt to find file via search (Self-Healing)
+            basename = os.path.basename(raw_file)
+            if project_source_path:
+                try:
+                    find_cmd = ["find", project_source_path, "-name", basename, "-type", "f"]
+                    find_res = subprocess.run(find_cmd, capture_output=True, text=True, timeout=5).stdout.strip().split(
+                        '\n')
+                    best_s, best_c = -999, None
+                    for cand in [c for c in find_res if c]:
+                        rel = os.path.relpath(cand, project_source_path)
+                        s = 0
+                        if os.path.dirname(raw_file) in rel: s += 10  # +10: Parent dir match
+                        if rel in recent_changes: s += 5  # +5: Recently modified
+                        s -= abs(rel.count('/') - raw_file.count('/'))  # -1: Depth penalty
+                        if s > best_s: best_s, best_c = s, rel
+                    if best_c: score, final_path = 60 + best_s, best_c
+                except:
+                    pass
+
+        scored_candidates.append({"file": final_path, "line": int(raw_line), "score": score})
+
+    scored_candidates.sort(key=lambda x: x['score'], reverse=True)
+    best = scored_candidates[0] if scored_candidates else None
+
+    # Execute Blame (if score >= 60)
+    if best and best['score'] >= 60 and project_source_path:
+        try:
+            blame_cmd = ["git", "-C", project_source_path, "blame", "-L", f"{best['line']},{best['line']}",
+                         "--porcelain", best['file']]
+            res = subprocess.run(blame_cmd, capture_output=True, text=True, check=True, timeout=10)
+            sha = res.stdout.split('\n')[0].split(' ')[0]
+            if len(sha) >= 7:
+                return {"status": "success", "clue_type": "blame",
+                        "data": {"sha": sha, "file": best['file'], "line": best['line']}}
+        except:
+            pass
+
+    # Fallback to Time-Window Suspects
+    return {"status": "success", "clue_type": "time_window",
+            "data": {"file": best['file'] if best else None, "error_date": error_date}}
 
 
-def get_enhanced_history_context(project_source_path: str, file_rel_path: str, line_num: int) -> dict:
+def get_enhanced_history_context(project_source_path: str, clue_data: dict = None, file_rel_path: str = "",
+                                 line_num: int = 0, sha: str = "") -> dict:
     """
-    1. Summarize all modified files if they exceed 6. 
-    2. Perform minimal sampling of changes by stripping empty lines and symbol-only lines to limit display size.
+    [HAFix Phase 3] Chain-of-Evidence Synthesis.
+    Replaces the original logic to support multi-mode evidence gathering.
+
+    Args:
+        project_source_path: Root path of the source code.
+        clue_data: (New) Structured output from Phase 1 (extract_buggy_line_info).
+        file_rel_path: (Legacy/Deprecated) Used if clue_data is missing.
+        line_num: (Legacy/Deprecated) Used if clue_data is missing.
+        sha: (Legacy/Deprecated) Used if clue_data is missing.
     """
-    if not ENABLE_HISTORY_ENHANCEMENT:
-        print(f"--- [ABLATION] Precise history enhancement is DISABLED. ---")
-        return {
-            "status": "success",
-            "data": {
-                "sha": "DISABLED",
-                "history_content": "Historical context enhancement is disabled."
-            }
-        }
+    import os, subprocess
+    from datetime import datetime, timedelta
 
-    import os
-    import subprocess
-    import re
-    print(f"--- Tool: get_enhanced_history_context (Dehydrated) for {file_rel_path}:{line_num} ---")
+    if not os.path.isdir(os.path.join(project_source_path, ".git")):
+        return {"status": "error", "message": "Not a git repository."}
 
-    if not os.path.exists(project_source_path):
-        return {"status": "error", "message": "Source path not found."}
+    # --- Auto-convert Legacy Call to Phase 1 Data if clue_data is missing ---
+    if not clue_data:
+        if sha:
+            clue_data = {"clue_type": "blame", "data": {"sha": sha, "file": file_rel_path}}
+        elif file_rel_path and line_num:
+            clue_data = {"clue_type": "time_window", "data": {"file": file_rel_path}}  # Fallback handling
+
+    if not clue_data:
+        return {"status": "error", "message": "No clue data provided."}
+
+    clue_type = clue_data.get("clue_type")
+    payload = clue_data.get("data", {})
+    evidence = {"clue_type": clue_type, "suspect_sha": payload.get("sha", "N/A"), "core_files": [],
+                "auxiliary_timeline": [], "diffs": []}
 
     try:
-        blame_cmd = ["git", "-C", project_source_path, "blame", "-L", f"{line_num},{line_num}", "--porcelain",
-                     file_rel_path]
-        blame_res = subprocess.run(blame_cmd, capture_output=True, text=True, check=True)
-        buggy_sha = blame_res.stdout.split('\n')[0].split(' ')[0]
-
-        if not buggy_sha or len(buggy_sha) < 7:
-            return {"status": "error", "message": "Could not identify buggy SHA."}
-
-        files_res = subprocess.run(["git", "-C", project_source_path, "show", "--name-only", "--format=", buggy_sha],
-                                   capture_output=True, text=True, check=True)
-        all_files = [f.strip() for f in files_res.stdout.split('\n') if f.strip()]
-
-        if len(all_files) > 6:
-            summary_files = all_files[:3] + [f"...(skipped {len(all_files) - 6} files)..."] + all_files[-3:]
-            common_prefix = os.path.commonpath([f for f in all_files if '/' in f]) if len(all_files) > 1 else ""
-            fn_all_str = f"Total {len(all_files)} files modified. Common path: {common_prefix}\n" + "\n".join(
-                summary_files)
+        # 1. Determine Core Tracing Files
+        if clue_type == "blame":
+            target_sha = payload['sha']
+            show_res = subprocess.run(
+                ["git", "-C", project_source_path, "show", "--name-only", "--format=", target_sha],
+                capture_output=True, text=True, timeout=10).stdout
+            changed = [f.strip() for f in show_res.split('\n') if f.strip()]
+            # Filter to top 3 relevant source/config files
+            exts = ('.c', '.go', '.cpp', '.h', '.sh', 'Dockerfile', 'build.sh', 'go.mod', 'CMakeLists.txt')
+            evidence["core_files"] = [f for f in changed if f.endswith(exts) or any(x in f for x in exts)][:3]
         else:
-            fn_all_str = "\n".join(all_files)
+            # Keyword/Time-Window mode: prioritize the reported file
+            if payload.get("file"):
+                evidence["core_files"] = [payload.get("file")]
+            # If no file, leave empty for Agent to scan config
 
-        pair_res = subprocess.run(
-            ["git", "-C", project_source_path, "show", "-U0", "--format=", buggy_sha, "--", file_rel_path],
-            capture_output=True, text=True, check=True)
+        # 2. Build Time Window (±24h)
+        error_date = payload.get("error_date", "")
+        since_until = []
+        if error_date and error_date.strip():
+            try:
+                clean_date = error_date.replace('.', '-').replace('/', '-')
+                t = datetime.strptime(clean_date.split()[0], '%Y-%m-%d')
+                since_until = [f"--since={(t - timedelta(days=1)).strftime('%Y-%m-%d')}",
+                               f"--until={(t + timedelta(days=1)).strftime('%Y-%m-%d')}"]
+            except:
+                pass
 
-        compressed_lines = []
-        for line in pair_res.stdout.split('\n'):
-            if line.startswith('+') or line.startswith('-'):
-                pure_content = line[1:].strip()
-                if len(pure_content) > 1 and not re.match(r'^[{}()\[\],;.\s]+$', pure_content):
-                    compressed_lines.append(line)
+        # 3. Chain-of-Evidence Collection
+        for f in [x for x in evidence["core_files"] if x and os.path.exists(os.path.join(project_source_path, x))]:
+            # A. Auxiliary Timeline (git log -n 5)
+            log_cmd = ["git", "-C", project_source_path, "log", *since_until, "-n", "5", "--format=%H|%cd|%s", "--", f]
+            log_res = subprocess.run(log_cmd, capture_output=True, text=True, timeout=10).stdout.strip()
+            if log_res:
+                evidence["auxiliary_timeline"].append(
+                    {"file": f, "commits": [l.split('|') for l in log_res.split('\n') if '|' in l]})
 
-        fn_pair = "\n".join(compressed_lines[:12])
+            # B. Structural Sampling (Unified Diff -U3)
+            if evidence["suspect_sha"] != "N/A" and len(evidence["suspect_sha"]) >= 7:
+                diff_cmd = ["git", "-C", project_source_path, "show", "-U3", "--format=", evidence["suspect_sha"], "--",
+                            f]
+                diff_res = subprocess.run(diff_cmd, capture_output=True, text=True, timeout=10).stdout
+                evidence["diffs"].append({"file": f, "content": diff_res[:8000]})  # 8000 char Token Guard
 
-        history_content = (
-            f"--- Simplified Root Cause Report ---\n"
-            f"Suspected Commit: {buggy_sha}\n"
-            f"Affected Files:\n{fn_all_str}\n"
-            f"Key Logic Changes (Functional lines only):\n{fn_pair}\n"
-            f"--------------------------"
-        )
-        return {"status": "success", "data": {"sha": buggy_sha, "history_content": history_content}}
+        return {"status": "success", "data": evidence}
     except Exception as e:
-        return {"status": "error", "message": str(e)}
+        return {"status": "error", "message": f"Synthesis failed: {str(e)}"}
 
 
 def checkout_project_commit(project_source_path: str, sha: str) -> Dict[str, str]:
@@ -571,62 +673,63 @@ def update_yaml_report(file_path: str, row_index: int, result: str) -> Dict[str,
         return {'status': 'error', 'message': message}
 
 
-def get_git_commits_around_date(project_source_path: str, error_date: str, count: int = 10) -> Dict:
+def get_git_commits_around_date(project_source_path: str, error_date: str, max_limit: int = 300) -> Dict:
     """
-    Retrieve commits within a time window around the specified error date.
+    Retrieve ALL commits within a ±24h time window for comprehensive pre-screening.
+    Optimized: Returns lightweight metadata (SHA/Date/Message) only.
+    File changes & diffs are deferred to Phase 3 on-demand extraction to save time & tokens.
     """
     if not ENABLE_HISTORY_ENHANCEMENT:
         print(f"--- [ABLATION] Temporal commit search is DISABLED. ---")
-        return {'status': 'success', 'commits': []}
+        return {'status': 'success', 'commits': [], 'total_count': 0}
 
-    print(f"--- Tool: get_git_commits_around_date called. Path: {project_source_path}, Center Date: {error_date} ---")
+    print(
+        f"--- Tool: get_git_commits_around_date (Comprehensive Scan) | Path: {project_source_path} | Date: {error_date} ---")
 
     if not os.path.isdir(os.path.join(project_source_path, ".git")):
         return {'status': 'error', 'message': "Not a git repository."}
 
     try:
-        try:
-            target_dt = datetime.strptime(error_date, '%Y-%m-%d')
-        except ValueError:
-            target_dt = datetime.strptime(error_date, '%Y.%m.%d')
+        # 容错解析日期
+        target_dt = None
+        if error_date and error_date.strip():
+            for fmt in ['%Y-%m-%d', '%Y.%m.%d', '%Y/%m/%d']:
+                try:
+                    target_dt = datetime.strptime(error_date.strip(), fmt)
+                    break
+                except ValueError:
+                    continue
 
-        start_date = (target_dt - timedelta(days=1)).strftime('%Y-%m-%d')
-        end_date = (target_dt + timedelta(days=1)).strftime('%Y-%m-%d')
-        
-        print(f"--- Searching commits between {start_date} and {end_date} (inclusive) ---")
+        if target_dt:
+            start_date = (target_dt - timedelta(days=1)).strftime('%Y-%m-%d')
+            end_date = (target_dt + timedelta(days=1)).strftime('%Y-%m-%d')
+            print(f"--- Scanning commits between {start_date} and {end_date} (Limit: {max_limit}) ---")
+            cmd = [
+                "git", "log",
+                f"--since={start_date} 00:00:00",
+                f"--until={end_date} 23:59:59",
+                f"--max-count={max_limit}",
+                "--pretty=format:%H|%cd|%s",
+                "--date=format:%Y-%m-%d %H:%M:%S"
+            ]
+        else:
+            print(f"--- Date invalid. Falling back to recent {max_limit} commits. ---")
+            cmd = ["git", "log", f"--max-count={max_limit}", "--pretty=format:%H|%cd|%s",
+                   "--date=format:%Y-%m-%d %H:%M:%S"]
 
-        cmd = [
-            "git", "log", 
-            f"--since={start_date} 00:00:00", 
-            f"--until={end_date} 23:59:59", 
-            f"-n {count}", 
-            "--pretty=format:%H|%cd|%s", 
-            "--date=format:%Y-%m-%d %H:%M:%S"
-        ]
-        
         result = subprocess.run(cmd, cwd=project_source_path, capture_output=True, text=True, check=False)
 
         commits = []
-        lines = result.stdout.strip().split('\n')
-        for line in lines:
+        for line in result.stdout.strip().split('\n'):
             if not line: continue
             parts = line.split('|', 2)
             if len(parts) < 3: continue
             sha, date, msg = parts
+            # 🔑 仅返回轻量元数据，不在此处触发 git show 查询文件变更
+            commits.append({"sha": sha, "date": date, "message": msg})
 
-            cmd_files = ["git", "show", "--name-only", "--format=", sha]
-            res_files = subprocess.run(cmd_files, cwd=project_source_path, capture_output=True, text=True, check=False)
-            files = [f.strip() for f in res_files.stdout.split('\n') if f.strip()]
-
-            commits.append({
-                "sha": sha,
-                "date": date,
-                "message": msg,
-                "files_changed": files
-            })
-
-        print(f"--- Found {len(commits)} commits in range. ---")
-        return {'status': 'success', 'commits': commits}
+        print(f"--- Found {len(commits)} commits in window. Ready for Agent pre-screening. ---")
+        return {'status': 'success', 'commits': commits, 'total_count': len(commits)}
     except Exception as e:
         return {'status': 'error', 'message': f"Failed to get commits: {e}"}
 
@@ -1122,19 +1225,28 @@ def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
     finally:
         os.chdir(original_path)
 
+
 def apply_patch(solution_file_path: str) -> dict:
     """
-    Apply code patches and return detailed feedback. In case of failure, return the actual file content around the target area to help the agent align its replacement logic.
+    Apply code patches and return detailed feedback.
+    Optimized: Added whitespace-tolerant fuzzy matching for ORIGINAL block alignment.
     """
-    import os, difflib
+    import os, difflib, re
     print(f"--- Tool: apply_patch (with Feedback) called ---")
+
+    # 🔑 优化 1：将辅助函数移至循环外，避免重复定义
+    def normalize_whitespace(text: str) -> str:
+        if not text: return ""
+        lines = text.splitlines()
+        return '\n'.join(re.sub(r'[ \t]+', ' ', line.rstrip()) for line in lines)
+
     try:
         if not os.path.exists(solution_file_path):
             return {"status": "error", "message": "Solution file not found."}
         with open(solution_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         patch_blocks = content.split('---=== FILE ===---')[1:]
-        
+
         applied_count, total_lines_changed = 0, 0
         modified_files = set()
         errors = []
@@ -1146,12 +1258,18 @@ def apply_patch(solution_file_path: str) -> dict:
             original_block = content_parts[0].strip("\n\r")
             replacement_block = content_parts[1].strip("\n\r")
 
+            # 🔑 优化 2：增加空块防护
+            if not original_block:
+                errors.append(f"Empty ORIGINAL block for: {file_path}")
+                continue
+
             if not os.path.exists(file_path):
                 errors.append(f"File not found: {file_path}")
                 continue
             with open(file_path, 'r', encoding='utf-8') as f:
                 file_content = f.read()
 
+            # --- Attempt 1: Exact byte-for-byte match ---
             if original_block in file_content:
                 new_content = file_content.replace(original_block, replacement_block, 1)
                 with open(file_path, 'w', encoding='utf-8') as f:
@@ -1159,17 +1277,53 @@ def apply_patch(solution_file_path: str) -> dict:
                 total_lines_changed += max(len(original_block.splitlines()), len(replacement_block.splitlines()))
                 modified_files.add(file_path)
                 applied_count += 1
-            else:
-                lines = file_content.splitlines()
-                search_anchor = original_block.splitlines()[0].strip()
-                matches = difflib.get_close_matches(search_anchor, lines, n=1, cutoff=0.3)
-                
-                actual_context = "Unknown context (File may be too different)"
-                if matches:
-                    idx = lines.index(matches[0])
-                    actual_context = "\n".join(lines[max(0, idx-5):min(len(lines), idx+10)])
-                
-                errors.append(f"MATCH FAILED for {file_path}.\n### ACTUAL CONTENT AROUND TARGET AREA ###\n{actual_context}\n### PLEASE ENSURE ORIGINAL BLOCK MATCHES EXACTLY ###")
+                continue
+
+            # --- Attempt 2: Whitespace-tolerant fuzzy match ---
+            original_normalized = normalize_whitespace(original_block)
+            file_normalized = normalize_whitespace(file_content)
+
+            if original_normalized in file_normalized:
+                original_lines = original_block.splitlines()
+                file_lines = file_content.splitlines()
+                orig_len = len(original_lines)
+
+                match_start = None
+                # 滑动窗口匹配（常规文件 <5000 行时性能无瓶颈）
+                for i in range(len(file_lines) - orig_len + 1):
+                    if normalize_whitespace('\n'.join(file_lines[i:i + orig_len])) == original_normalized:
+                        match_start = i
+                        break
+
+                if match_start is not None:
+                    new_lines = file_lines[:match_start] + replacement_block.splitlines() + file_lines[
+                                                                                            match_start + orig_len:]
+                    new_content = '\n'.join(new_lines)
+                    if file_content.endswith('\n') and not new_content.endswith('\n'):
+                        new_content += '\n'
+                    with open(file_path, 'w', encoding='utf-8') as f:
+                        f.write(new_content)
+                    total_lines_changed += max(orig_len, len(replacement_block.splitlines()))
+                    modified_files.add(file_path)
+                    applied_count += 1
+                    continue
+
+            # --- Match failed: Return actual context for Agent debugging ---
+            lines = file_content.splitlines()
+            search_anchor = original_block.splitlines()[0].strip()
+            matches = difflib.get_close_matches(search_anchor, lines, n=1, cutoff=0.3)
+
+            actual_context = "Unknown context (File may be too different)"
+            if matches:
+                idx = lines.index(matches[0])
+                actual_context = "\n".join(lines[max(0, idx - 5):min(len(lines), idx + 10)])
+
+            errors.append(
+                f"MATCH FAILED for {file_path}.\n"
+                f"### ACTUAL CONTENT AROUND TARGET AREA ###\n"
+                f"{actual_context}\n"
+                f"### TIP: Ensure ORIGINAL block matches EXACTLY (whitespace-tolerant matching was attempted) ###"
+            )
 
         return {
             "status": "success" if not errors else ("partial_success" if applied_count > 0 else "error"),
@@ -1331,61 +1485,54 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
 
 def read_file_content(file_path: str, mode: str = "full") -> dict:
     """
-    Read file content with automatic license header stripping and dynamic truncation to stay within context limits.
-    Supports modes: "full", "tail_50", "tail_30", "tail_100_lines", and includes a safety cap at 500 lines for percentage modes.
+    Read file content with mode support.
+    Optimized: Clear error messages with path guidance when file not found.
     """
-    import os, re
+    import os
     print(f"--- Tool: read_file_content (Mode: {mode}) called for: {file_path} ---")
-    if not os.path.isfile(file_path):
-        return {"status": "error", "message": f"File not found: {file_path}"}
+
+    # --- Path Pre-check: Return clear error + guidance if file not found ---
+    if not os.path.exists(file_path):
+        path_guidance = (
+            "\n【PATH GUIDANCE】\n"
+            "• OSS-Fuzz project configs (Dockerfile, build.sh, project.yaml):\n"
+            "  → /fix_build_agent/oss-fuzz/projects/<project_name>/\n"
+            "• Third-party source code:\n"
+            "  → /fix_build_agent/process/project/<project_name>/\n"
+            "• Build logs:\n"
+            "  → fuzz_build_log_file/fuzz_build_log.txt\n"
+            "• Generated prompts / commit analysis:\n"
+            "  → generated_prompt_file/\n"
+            "Please verify the absolute path and retry."
+        )
+        return {
+            "status": "error",
+            "message": f"File not found: {file_path}{path_guidance}"
+        }
+
+    # --- Original read logic (unchanged) ---
     try:
-        with open(file_path, "r", encoding="utf-8", errors='ignore') as f:
-            lines = f.readlines()
+        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
 
-        license_pattern = re.compile(r"^(#|//|\s*\*|/\*).*$", re.MULTILINE)
-        start_idx = 0
-        for i, line in enumerate(lines[:50]):
-            if line.strip() and not license_pattern.match(line):
-                start_idx = i
-                break
-        if start_idx > 5:
-            lines = lines[start_idx:]
-            print(f"--- Stripped license header ({start_idx} lines) ---")
-
-        total_lines = len(lines)
-
-        if mode == "tail_50":
-            target_count = int(total_lines * 0.5)
-            if target_count > 500:
-                print(f"--- [SAFETY MELT] tail_50 ({target_count} lines) exceeds limit. Falling back to tail_100_lines. ---")
-                lines = lines[-100:]
-                mode = "tail_100_lines (melted)"
-            else:
-                lines = lines[-target_count:]
-        elif mode == "tail_30":
-            target_count = int(total_lines * 0.3)
-            if target_count > 500:
-                print(f"--- [SAFETY MELT] tail_30 ({target_count} lines) exceeds limit. Falling back to tail_100_lines. ---")
-                lines = lines[-100:]
-                mode = "tail_100_lines (melted)"
-            else:
-                lines = lines[-target_count:]
+        if mode == "tail_30":
+            lines = content.splitlines()
+            content = '\n'.join(lines[-30:])
+        elif mode == "tail_50":
+            lines = content.splitlines()
+            content = '\n'.join(lines[-50:])
         elif mode == "tail_100_lines":
-            lines = lines[-100:]
-        elif mode == "full":
-            if total_lines > 1000:
-                print(f"--- [SAFETY MELT] full mode exceeds 1000 lines. Truncating to tail_500. ---")
-                lines = lines[-500:]
-                mode = "full (truncated to 500)"
+            lines = content.splitlines()
+            content = '\n'.join(lines[-100:])
+        # mode == "full": return full content
 
-        content = "".join(lines)
         return {
             "status": "success",
-            "message": f"Read {len(lines)} lines from {file_path} (Mode: {mode})",
+            "message": f"Read {len(content.splitlines())} lines from {file_path} (Mode: {mode})",
             "content": content
         }
     except Exception as e:
-        return {"status": "error", "message": str(e)}
+        return {"status": "error", "message": f"Failed to read {file_path}: {str(e)}"}
 
 
 def create_or_update_file(file_path: str, content: str) -> dict:
@@ -1470,7 +1617,7 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
                          validation_report: dict = None) -> dict:
     """
     Aggregates source code, configuration files, expert knowledge, and build validation results into a single prompt file. 
-    Implements a prioritized loading strategy and dynamic content degradation to stay within a global context budget of approximately 80k tokens.
+    Implements a prioritized loading strategy and dynamic content degradation to stay within a global context budget.
     """
     import os, re
     from agent_tools import read_file_content, save_file_tree_shallow, truncate_prompt_file
@@ -1503,21 +1650,22 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     with open(PROMPT_FILE_PATH, "w", encoding="utf-8") as f:
         f.write(f"Testing Expert. Project: {project_name}. Attempt: {attempt_id}\n")
 
+        # 1. 注入结构化验证报告（已前置，确保 Agent 优先看到判定结果）
         if validation_report:
-            f.write("\n--- 【LAST BUILD VALIDATION (1+6 CRITERIA)】 ---\n")
-            s1 = validation_report.get('step_1_static_output', 'N/A')
+            f.write("\n--- 【LAST BUILD VALIDATION (1+2+6 CRITERIA)】 ---\n")
+            s1 = validation_report.get('step_1_official_list', 'N/A')
+            s2 = validation_report.get('step_2_infra_compliance', 'N/A')
             s6 = validation_report.get('step_6_runtime_stability', 'N/A')
-            f.write(f"CRITICAL - Step 1 (Binary Existence): {s1}\n")
-            f.write(f"CRITICAL - Step 6 (Runtime Stability): {s6}\n")
+            f.write(f"MANDATORY - Step 1 (Official Targets): {s1}\n")
+            f.write(f"MANDATORY - Step 2 (Infra Compliance): {s2}\n")
+            f.write(f"MANDATORY - Step 6 (Runtime Stability): {s6}\n")
 
-            warnings = []
-            for k in ["step_2_sanitizer_injected", "step_3_engine_linked", "step_4_logic_linked",
-                      "step_5_dependencies_ok"]:
+            refs = []
+            for k in ["step_3_sanitizer_injected", "step_4_engine_control", "step_5_logic_linkage"]:
                 status = validation_report.get(k, 'N/A')
-                if 'pass' not in str(status).lower():
-                    warnings.append(f"{k}: {status}")
-            if warnings:
-                f.write("QUALITY WARNINGS (Reference): " + "; ".join(warnings) + "\n")
+                refs.append(f"{k.split('_')[1]}: {status}")
+            if refs:
+                f.write("REFERENCE METRICS: " + "; ".join(refs) + "\n")
 
         f.write(f"\n【ENHANCED HISTORY】\n{enhanced_history}\n")
         f.write(f"\n【STRATEGIC KNOWLEDGE】\n{expert_knowledge}\n")
@@ -1549,8 +1697,24 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
                 current_used += len(c)
 
         save_file_tree_shallow(project_main_folder_path, 1, os.path.join(PROMPT_DIR, "file_tree.txt"))
-        log_res = read_file_content(FUZZ_LOG_PATH, mode="tail_100_lines")
-        f.write(f"\n\n--- BUILD LOG TAIL ---\n{log_res.get('content', '')}")
+
+        # 2. 双区日志提取：分离原始编译报错与末尾验证审计表，防止信息遮蔽
+        if os.path.exists(FUZZ_LOG_PATH):
+            try:
+                with open(FUZZ_LOG_PATH, 'r', encoding='utf-8', errors='ignore') as lf:
+                    full_log = lf.read()
+                # 定位验证报告分隔符
+                val_marker = "--- 1+6 VALIDATION SUMMARY"
+                if val_marker in full_log:
+                    build_context, audit_context = full_log.split(val_marker, 1)
+                    f.write(f"\n\n--- BUILD LOG CONTEXT (Errors above this line) ---\n")
+                    # 安全截断编译日志，保留尾部足够上下文供正则匹配
+                    f.write(build_context[-12000:] if len(build_context) > 12000 else build_context)
+                    f.write(f"\n{val_marker}{audit_context}")
+                else:
+                    f.write(f"\n\n--- BUILD LOG TAIL ---\n{full_log[-12000:]}")
+            except Exception:
+                f.write(f"\n\n--- BUILD LOG TAIL ---\n[Log read failed]")
 
     truncate_prompt_file(PROMPT_FILE_PATH, max_lines=2500)
     try:
@@ -1627,31 +1791,42 @@ def run_fuzz_build_and_validate(
         mount_path: Optional[str] = None
 ) -> dict:
     """
-    Build and validate fuzzers based on two primary success criteria: 1. Successful build producing target files. 2. Detected execution rate during stress testing. Other steps serve as quality references.
+    Build and validate fuzzers using official OSS-Fuzz infrastructure.
+    Success Criteria: Step 1 (list_fuzzers), Step 2 (check_build), and Step 6 (run_fuzzer) must PASS.
+    Reference Criteria: Step 3, 4, 5 are recorded for diagnostic purposes only.
+    Log Strategy: Raw build log preserved + Validation Summary appended + RESULT: success/failed marker.
     """
-    import os, sys, subprocess, time, signal
-    print(f"--- Tool: run_fuzz_build_and_validate (1+6 Criteria) called for: {project_name} ---")
+    import os, sys, subprocess, time, signal, re
+    print(f"--- Tool: run_fuzz_build_and_validate (Official 1+6) called for: {project_name} ---")
     _cleanup_environment(oss_fuzz_path, project_name)
 
     LOG_DIR = "fuzz_build_log_file"
     LOG_FILE_PATH = os.path.join(LOG_DIR, "fuzz_build_log.txt")
     os.makedirs(LOG_DIR, exist_ok=True)
 
+    # 1+6 审计报告初始化
     report = {
-        "step_1_static_output": "pending", "step_2_sanitizer_injected": "pending",
-        "step_3_engine_linked": "pending", "step_4_logic_linked": "pending",
-        "step_5_dependencies_ok": "pending", "step_6_runtime_stability": "pending"
+        "step_1_official_list": "pending",  # 硬性
+        "step_2_infra_compliance": "pending",  # 硬性
+        "step_3_sanitizer_injected": "pending",  # 参考
+        "step_4_engine_control": "pending",  # 参考
+        "step_5_logic_linkage": "pending",  # 参考
+        "step_6_runtime_stability": "pending"  # 硬性
     }
 
     try:
         helper_path = os.path.join(oss_fuzz_path, "infra/helper.py")
-        command = ["python3", helper_path, "build_fuzzers"]
-        if mount_path: command.extend([project_name, mount_path])
-        command.extend(["--sanitizer", sanitizer, "--engine", engine, "--architecture", architecture])
-        if not mount_path: command.append(project_name)
 
-        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1,
-                                   cwd=oss_fuzz_path)
+        # --- Phase 1: Physical Build ---
+        build_cmd = ["python3", helper_path, "build_fuzzers"]
+        if mount_path: build_cmd.extend([project_name, mount_path])
+        build_cmd.extend(["--sanitizer", sanitizer, "--engine", engine, "--architecture", architecture])
+        if not mount_path: build_cmd.append(project_name)
+
+        process = subprocess.Popen(
+            build_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            text=True, bufsize=1, cwd=oss_fuzz_path
+        )
         full_log = []
         for line in process.stdout:
             print(line, end='', flush=True)
@@ -1659,71 +1834,215 @@ def run_fuzz_build_and_validate(
         process.wait()
         final_log = "".join(full_log)
 
-        is_build_ok = (process.returncode == 0)
-        if any(k in final_log.lower() for k in ["error:", "failed:", "build failed"]): is_build_ok = False
+        # 基础编译失败判定（快速失败，不进入深验）
+        if process.returncode != 0 or any(k in final_log.lower() for k in ["error:", "failed:", "build failed"]):
+            with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
+                f.write(final_log + "\n\nRESULT: failed (compilation error)")
+            return {"status": "error", "message": "Compilation failed", "validation_report": report}
 
-        if is_build_ok:
-            print(f"\n--- [Phase 2] Deep Validation (1+6 Focus) ---")
+        # --- Phase 2: Official 1+2+6 Deep Validation ---
+        print(f"\n--- [Phase 2] Deep Validation (Official Suite) ---")
+
+        # Step 1: 官方产物识别 (list_fuzzers)
+        list_cmd = ["python3", helper_path, "list_fuzzers", project_name]
+        list_res = subprocess.run(list_cmd, capture_output=True, text=True, timeout=60, cwd=oss_fuzz_path)
+        targets = [l.strip().lstrip('./') for l in list_res.stdout.splitlines()
+                   if l.strip() and not l.startswith(('-', '#', '['))]
+
+        if list_res.returncode == 0 and targets:
+            report["step_1_official_list"] = f"pass: {len(targets)} target(s)"
+            primary_target = targets[0]
+        else:
+            report["step_1_official_list"] = "fail: no recognized fuzzers"
+            primary_target = None
+
             out_dir = os.path.join(oss_fuzz_path, "build", "out", project_name)
-            targets = [f for f in os.listdir(out_dir) if
-                       os.path.isfile(os.path.join(out_dir, f)) and os.access(os.path.join(out_dir, f),
-                                                                              os.X_OK) and not f.startswith(
-                           ('afl-', 'llvm-')) and not f.endswith(('.so', '.a', '.zip'))] if os.path.exists(
-                out_dir) else []
+            if os.path.exists(out_dir):
+                auxiliary_tools = {"llvm-symbolizer", "clang", "clang++", "llvm-cov"}
+                for f in os.listdir(out_dir):
+                    fpath = os.path.join(out_dir, f)
+                    if f not in auxiliary_tools and os.path.isfile(fpath) and os.access(fpath, os.X_OK):
+                        report["step_1_official_list"] = f"pass (physical): {f}"
+                        report["physical_artifacts_found"] = True
+                        primary_target = f  # Enable subsequent steps to use this target
+                        print(f"  [Physical Scan] Found fuzzer binary: {f}")
+                        break
 
-            if not targets:
-                is_build_ok = False
-                report["step_1_static_output"] = "fail: No targets generated"
-            else:
-                target = targets[0]
-                primary_path = os.path.join(out_dir, target)
-                report["step_1_static_output"] = f"pass: {target}"
+        # Step 2: 基础设施合规性 (check_build)
+        # 严格对齐 build_fuzzers 参数，单次 30 分钟硬超时（提前完成则立即返回）
+        check_cmd = [
+            "python3", helper_path, "check_build", project_name,
+            "--sanitizer", sanitizer,
+            "--engine", engine,
+            "--architecture", architecture
+        ]
+        try:
+            check_res = subprocess.run(check_cmd, capture_output=True, text=True, timeout=1800, cwd=oss_fuzz_path)
+            report[
+                "step_2_infra_compliance"] = "pass" if check_res.returncode == 0 else f"fail: {check_res.stderr.strip()[:100]}"
+        except subprocess.TimeoutExpired:
+            report["step_2_infra_compliance"] = "fail: check_build timeout (exceeded 30m)"
+        except Exception as e:
+            report["step_2_infra_compliance"] = f"fail: {str(e)}"
 
-                nm_res = subprocess.run(['nm', primary_path], capture_output=True, text=True, errors='ignore')
-                report["step_2_sanitizer_injected"] = "pass" if "__asan" in nm_res.stdout else "warning: missing asan"
-                report["step_3_engine_linked"] = "pass" if (
-                            "LLVMFuzzerRunDriver" in nm_res.stdout or "__afl_" in nm_res.stdout) else "warning: engine symbols"
-                report["step_4_logic_linked"] = "pass" if _auto_discover_project_symbols(primary_path,
-                                                                                         project_name) else "warning: logic symbols"
-                ldd_res = subprocess.run(["python3", helper_path, "shell", project_name, "-c", f"ldd /out/{target}"],
-                                         cwd=oss_fuzz_path, capture_output=True, text=True, errors='ignore')
-                report["step_5_dependencies_ok"] = "pass" if "not found" not in ldd_res.stdout.lower() else "warning: shared lib missing"
-
-                print(f"[*] Starting 45s critical stability test...")
-                run_cmd = [sys.executable, helper_path, "run_fuzzer", "--engine", engine, "--sanitizer", sanitizer,
-                           project_name, target]
-                if engine == "libfuzzer": run_cmd.extend(["--", "-max_total_time=30"])
-                stability_proc = subprocess.Popen(run_cmd, cwd=oss_fuzz_path, stdout=subprocess.PIPE,
-                                                  stderr=subprocess.STDOUT, text=True, bufsize=1, preexec_fn=os.setsid)
-                has_rate, start_time = False, time.time()
+        # Step 3-5: 参考项审计 (nm 符号分析)
+        if primary_target:
+            target_path = os.path.join(oss_fuzz_path, "build", "out", project_name, primary_target)
+            if os.path.exists(target_path):
                 try:
-                    while time.time() - start_time < 45:
-                        line = stability_proc.stdout.readline()
-                        if not line and stability_proc.poll() is not None: break
-                        if any(kw in line for kw in ["exec/s:", "corp:", "exec speed"]): has_rate = True
-                finally:
-                    try: os.killpg(os.getpgid(stability_proc.pid), signal.SIGKILL)
-                    except: pass
-                    stability_proc.wait()
+                    nm_res = subprocess.run(['nm', target_path], capture_output=True, text=True, errors='ignore')
+                    nm_stdout = nm_res.stdout
+                except Exception:
+                    nm_res = subprocess.run(
+                        ["python3", helper_path, "shell", project_name, "-c", f"nm /out/{primary_target}"],
+                        capture_output=True, text=True, errors='ignore'
+                    )
+                    nm_stdout = nm_res.stdout
 
-                if has_rate:
-                    report["step_6_runtime_stability"] = "pass"
-                else:
-                    report["step_6_runtime_stability"] = "fail: 0 exec/s (Crash/Freeze)"
-                    is_build_ok = False
+                report["step_3_sanitizer_injected"] = "pass" if "__asan" in nm_stdout else "warning: missing asan"
+                report["step_4_engine_control"] = "pass" if (
+                            "LLVMFuzzerRunDriver" in nm_stdout or "__afl_" in nm_stdout) else "warning: engine symbols"
+                report["step_5_logic_linkage"] = "pass" if _auto_discover_project_symbols_from_content(nm_stdout,
+                                                                                                       project_name) else "warning: logic linkage"
+            else:
+                for s in ["step_3_sanitizer_injected", "step_4_engine_control", "step_5_logic_linkage"]:
+                    report[s] = "skip: binary not accessible"
+        else:
+            for s in ["step_3_sanitizer_injected", "step_4_engine_control", "step_5_logic_linkage"]:
+                report[s] = "skip: no primary target"
 
-        print(f"\n" + "="*40 + "\nVAL-STEP  | STATUS\n" + "-"*40)
-        for i in range(1, 7):
-            key = f"step_{i}_" + ["static_output", "sanitizer_injected", "engine_linked", "logic_linked", "dependencies_ok", "runtime_stability"][i-1]
-            val = report.get(key, "N/A")
-            print(f"Step {i:<4} | {val}")
-        print("="*40 + "\n")
+        # Step 6: 压力测试稳定性 (run_fuzzer + 早停)
+        has_rate = False
+        if primary_target and report["step_2_infra_compliance"].startswith("pass"):
+            print(f"[*] Starting 45s stability test for: {primary_target}")
+            run_cmd = [sys.executable, helper_path, "run_fuzzer", "--engine", engine, "--sanitizer", sanitizer,
+                       project_name, primary_target]
+            if engine == "libfuzzer": run_cmd.extend(["--", "-max_total_time=30"])
 
-        status = "success" if is_build_ok else "error"
+            stability_proc = subprocess.Popen(
+                run_cmd, cwd=oss_fuzz_path, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                text=True, bufsize=1, preexec_fn=os.setsid
+            )
+            start_time = time.time()
+            try:
+                while time.time() - start_time < 45:
+                    line = stability_proc.stdout.readline()
+                    if line and any(kw in line for kw in ["exec/s:", "corp:", "exec speed"]):
+                        has_rate = True
+                        print(f"[*] Early stop: detected execution rate.")
+                        break
+                    if not line and stability_proc.poll() is not None:
+                        break
+            finally:
+                try:
+                    os.killpg(os.getpgid(stability_proc.pid), signal.SIGKILL)
+                except:
+                    pass
+                stability_proc.wait()
+
+            report["step_6_runtime_stability"] = "pass" if has_rate else "fail: 0 exec/s or crash"
+        else:
+            report["step_6_runtime_stability"] = "fail: skipped"
+
+        # --- 最终判定逻辑 (仅 1/2/6 硬性通过) ---
+        is_success = (
+                report["step_1_official_list"].startswith("pass") and
+                report["step_2_infra_compliance"].startswith("pass") and
+                report["step_6_runtime_stability"].startswith("pass")
+        )
+
+        # 构造审计汇总表格
+        summary_table = "\n" + "=" * 50 + "\n1+6 VALIDATION SUMMARY\n" + "-" * 50 + "\n"
+        for i, (k, v) in enumerate(report.items(), 1):
+            marker = "[MANDATORY]" if i in [1, 2, 6] else "[REFERENCE]"
+            summary_table += f"Step {i:<4} {marker:<12} | {v}\n"
+        summary_table += "=" * 50 + "\n"
+        print(summary_table)
+
+        # 写入物理日志：原始日志 + 审计摘要 + 最终标志
         with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
-            f.write("success" if is_build_ok else final_log)
+            f.write(final_log)
+            f.write(summary_table)
+            f.write(f"\nRESULT: {'success' if is_success else 'failed'}\n")
 
-        return {"status": status, "message": f"Validation {status.upper()}", "validation_report": report}
+        return {
+            "status": "success" if is_success else "error",
+            "message": f"Validation {'PASSED' if is_success else 'FAILED'}",
+            "validation_report": report
+        }
+
     except Exception as e:
-        with open(LOG_FILE_PATH, "w") as f: f.write(str(e))
+        import traceback
+        tb = traceback.format_exc()
+        with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
+            f.write(f"Exception during validation:\n{str(e)}\n{tb}")
         return {"status": "error", "message": str(e), "validation_report": report}
+
+
+def _auto_discover_project_symbols_from_content(nm_stdout: str, project_name: str) -> bool:
+    """Helper to analyze nm output without re-running the command. Lightweight & regex-safe."""
+    keywords = [project_name.lower(), "deflate", "inflate", "adler32", "crc32"] if project_name == "zlib" else [
+        project_name.lower()]
+    boilerplate = ('__asan', '__lsan', '__ubsan', '__sanitizer', 'fuzzer::', 'LLVM', 'afl_', '_Z', 'std::')
+
+    for line in nm_stdout.splitlines():
+        parts = line.split()
+        if not parts: continue
+        symbol = parts[-1]
+        if any(kw in symbol.lower() for kw in keywords) and not symbol.startswith(boilerplate):
+            return True
+    return False
+
+
+def run_container_diagnostic(oss_fuzz_path: str, project_name: str, command: str) -> dict:
+    """
+    Execute a diagnostic command inside the OSS-Fuzz build container using docker run directly.
+    Bypasses helper.py limitations (no -c support) for reliable environment probing.
+    """
+    import os, subprocess, re
+    print(f"--- Tool: run_container_diagnostic | Project: {project_name} | Cmd: {command} ---")
+
+    # 1. 安全沙箱拦截
+    dangerous_patterns = ['rm -rf /', 'sudo ', 'chmod ', 'chown ', 'dd ', 'mkfs', 'curl ', 'wget ', 'apt-get ',
+                          'pip install', '> /dev/', 'mktemp']
+    if any(p in command.lower() for p in dangerous_patterns):
+        return {"status": "error", "message": "Command blocked by security policy. Read-only diagnostic commands only."}
+
+    # 2. 构造 docker run 命令（使用项目镜像，若构建失败回退至基础镜像）
+    image_name = f"gcr.io/oss-fuzz/{project_name}"
+    base_image = "gcr.io/oss-fuzz-base/base-builder-go"  # 适配 cert-manager 等项目
+
+    cmd = ["docker", "run", "--rm", "--entrypoint", "/bin/bash", image_name, "-c", command]
+
+    try:
+        # 尝试运行项目镜像
+        res = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+
+        # 如果镜像不存在（通常因构建中途失败导致未打 tag），回退至基础镜像
+        if "Unable to find image" in res.stderr or "No such image" in res.stderr:
+            print(f"  - Image '{image_name}' not found. Fallback to base builder for diagnostics.")
+            cmd[5] = base_image  # Replace image_name with base_image
+            res = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+
+        # 清理 ANSI 码
+        ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+        raw_output = (res.stdout + "\n" + res.stderr).strip()
+        clean_output = ansi_escape.sub('', raw_output)
+
+        # Token 安全截断
+        MAX_CHARS = 8000
+        truncated = False
+        if len(clean_output) > MAX_CHARS:
+            clean_output = clean_output[:MAX_CHARS] + "\n\n[⚠️ OUTPUT TRUNCATED: Exceeded 8000 char safety limit]"
+            truncated = True
+
+        return {
+            "status": "success" if res.returncode == 0 else "warning",
+            "return_code": res.returncode,
+            "output": clean_output,
+            "truncated": truncated
+        }
+    except subprocess.TimeoutExpired:
+        return {"status": "error", "message": "Command execution timed out after 60s."}
+    except Exception as e:
+        return {"status": "error", "message": f"Container diagnostic failed: {str(e)}"}

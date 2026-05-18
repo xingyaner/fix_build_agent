@@ -1,0 +1,1120 @@
+✅ DPSEEK_API_KEY is set.
+✅ GitHub CLI ('gh') is installed.
+✅ 'requests' library is installed.
+✅ GitHub CLI ('gh') is logged in.
+
+--- Checks complete. Preparing to start the Agent... ---
+--- Starting automated fix workflow ---
+--- Tool: read_projects_from_yaml called for: projects.yaml ---
+--- Tool: download_remote_log called for URL: https://oss-fuzz-build-logs.storage.googleapis.com/log-fc4f2c7a-5949-4e2a-8a36-92e030d5c831.txt ---
+--- Downloading log from https://oss-fuzz-build-logs.storage.googleapis.com/log-fc4f2c7a-5949-4e2a-8a36-92e030d5c831.txt to build_error_log/cert-manager/2026_4_10 error.txt ---
+--- Successfully downloaded log to: build_error_log/cert-manager/2026_4_10 error.txt ---
+--- Found 1 projects to process (Filtered fixed/processed). ---
+--- Found 1 projects to process ---
+
+============================================================
+--- Processing Project: cert-manager (Index: 0) ---
+============================================================
+--- Tool: update_yaml_report called for file 'projects.yaml', index 0 ---
+Successfully updated project at index 0 in 'projects.yaml' with result: 'Failure (Crashed/In_Progress)'.
+--- 🧹 Tool: cleanup_environment for: cert-manager ---
+--- 🧹 Tool: cleanup_environment for: cert-manager ---
+✅ Log file created: agent_logs/cert-manager_run_2026.04.29_17.59.19.log
+
+--- 🌀 Starting Attempt 1/3 (Clean State) ---
+EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=1625, Gen=151
+  - TOOL_CALL: download_github_repo({"project_name": "oss-fuzz", "target_dir": "./oss-fuzz"})
+--- Tool: download_github_repo called for 'oss-fuzz' ---
+--- Download attempt 1/3 ---
+EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'download_github_repo': {'status': 'success', 'path': '/home/senchen/temp/fix_build_agent/oss-fuzz', 'message': 'Successfully cloned.'}
+EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=1822, Gen=52
+  - TOOL_CALL: force_clean_git_repo({"repo_path": "./oss-fuzz"})
+--- Tool: force_clean_git_repo (v3) called for: ./oss-fuzz ---
+EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'force_clean_git_repo': {'status': 'success', 'message': "Successfully reclaimed and cleaned './oss-fuzz'."}
+EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=1907, Gen=70
+  - TOOL_CALL: checkout_oss_fuzz_commit({"sha": "2aee6cc3dc14f4da2385836be289f819901262a1"})
+--- Tool: checkout_oss_fuzz_commit called for SHA: 2aee6cc3dc14f4da2385836be289f819901262a1 in '/home/senchen/temp/fix_build_agent/oss-fuzz' ---
+EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'checkout_oss_fuzz_commit': {'status': 'success', 'message': 'Successfully checked out SHA 2aee6cc3dc14f4da2385836be289f819901262a1.'}
+EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=2028, Gen=89
+  - TOOL_CALL: extract_build_metadata_from_log({"log_path": "/home/senchen/temp/fix_build_agent/build_error_log/cert-manager/2026_4_10 error.txt"})
+--- Tool: extract_build_metadata from /home/senchen/temp/fix_build_agent/build_error_log/cert-manager/2026_4_10 error.txt ---
+EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'extract_build_metadata_from_log': {'status': 'success', 'metadata': {'base_image_digest': '5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602', 'engine': 'libfuzzer', 'sanitizer': 'address', 'architecture': 'x86_64', 'software_repo_url': 'https://github.com/cert-manager/cert-manager', 'software_sha': 'baddcd5cf74db53dd465b4536e2261825bbb4a53', 'dependencies': [{'url': 'https://github.com/cert-manager/cert-manager', 'rev': 'baddcd5cf74db53dd465b4536e2261825bbb4a53'}]}}
+EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=2309, Gen=448
+  - TOOL_CALL: patch_project_dockerfile({"project_name": "cert-manager", "oss_fuzz_path": "./oss-fuzz", "base_image_digest": "5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602"})
+--- Tool: patch_project_dockerfile for cert-manager ---
+EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'patch_project_dockerfile': {'status': 'success', 'message': 'Dockerfile patched with digest 5d7001e7... and depth limit removed.'}
+EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=2799, Gen=111
+  - TOOL_CALL: download_github_repo({"project_name": "cert-manager", "target_dir": "./process/project/cert-manager", "repo_url": "https://github.com/cert-manager/cert-manager"})
+--- Tool: download_github_repo called for 'cert-manager' ---
+--- Download attempt 1/3 ---
+EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'download_github_repo': {'status': 'success', 'path': '/home/senchen/temp/fix_build_agent/process/project/cert-manager', 'message': 'Successfully cloned.'}
+EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=2961, Gen=130
+  - TOOL_CALL: checkout_project_commit({"project_source_path": "/home/senchen/temp/fix_build_agent/process/project/cert-manager", "sha": "e60d148b93d0b5e522a5463bbb7c7547647f7dda"})
+--- Tool: checkout_project_commit called for SHA: e60d148b93d0b5e522a5463bbb7c7547647f7dda in '/home/senchen/temp/fix_build_agent/process/project/cert-manager' ---
+EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'checkout_project_commit': {'status': 'success', 'message': 'Successfully checked out SHA e60d148b93d0b5e522a5463bbb7c7547647f7dda in project source.'}
+EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=3147, Gen=56
+  - TOOL_CALL: get_project_paths({"project_name": "cert-manager"})
+--- Tool: get_project_paths called for: cert-manager ---
+--- Generated paths: {'project_name': 'cert-manager', 'project_config_path': '/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager', 'project_source_path': '/home/senchen/temp/fix_build_agent/process/project/cert-manager', 'max_depth': 1} ---
+EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'get_project_paths': {'project_name': 'cert-manager', 'project_config_path': '/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager', 'project_source_path': '/home/senchen/temp/fix_build_agent/process/project/cert-manager', 'max_depth': 1}
+EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=3286, Gen=89
+  - TOOL_CALL: manage_git_state({"path": "/home/senchen/temp/fix_build_agent/process/project/cert-manager", "action": "init"})
+--- Tool: manage_git_state | Action: init | Path: /home/senchen/temp/fix_build_agent/process/project/cert-manager ---
+EVENT from author: 'initial_setup_agent'
+  - TOOL_RESPONSE for 'manage_git_state': {'status': 'success', 'message': 'Git initialized at Baseline in /home/senchen/temp/fix_build_agent/process/project/cert-manager'}
+EVENT from author: 'initial_setup_agent'
+  - TOKEN_USAGE: Prompt=3424, Gen=151
+  - STATE_UPDATE: {'basic_information': '**Step 11:** Return the final JSON object.\n\n```json\n{\n  "project_config_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager",\n  "project_source_path": "/home/senchen/temp/fix_build_agent/process/project/cert-manager",\n  "engine": "libfuzzer",\n  "sanitizer": "address",\n  "architecture": "x86_64",\n  "software_sha": "e60d148b93d0b5e522a5463bbb7c7547647f7dda",\n  "error_time": "",\n  "build_mode": "source"\n}\n```'}
+--- 💾 Full metadata (including dependencies) archived to: /home/senchen/temp/fix_build_agent/process/project/cert-manager/metadata.json ---
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOKEN_USAGE: Prompt=3415, Gen=376
+  - TOOL_CALL: run_fuzz_build_and_validate({"project_name": "cert-manager", "oss_fuzz_path": "/home/senchen/temp/fix_build_agent/oss-fuzz", "sanitizer": "address", "engine": "libfuzzer", "architecture": "x86_64", "mount_path": "/home/senchen/temp/fix_build_agent/process/project/cert-manager"})
+--- Tool: run_fuzz_build_and_validate (Official 1+6) called for: cert-manager ---
+[*] Pre-build cleanup for project: cert-manager
+INFO:common_utils:Running: docker build -t gcr.io/oss-fuzz/cert-manager --file /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager.
+#0 building with "default" instance using docker driver
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 932B done
+#1 DONE 0.0s
+#2 [internal] load metadata for gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602
+#2 DONE 2.8s
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+#4 [internal] load build context
+#4 transferring context: 3.55kB done
+#4 DONE 0.0s
+#5 [1/4] FROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602
+#5 resolve gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602 done
+#5 sha256:19a0c24dfa9d4c1dfdba9e2fa0c77c035468bbe50db9976208f3c763383e2119 28.31kB / 28.31kB done
+#5 sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602 8.92kB / 8.92kB done
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 0B / 83.60MB 0.1s
+#5 sha256:df8cd99afefec8314f5236f60a99ab7734570d0e7cd04e484375d89dc6a9d101 0B / 175B 0.1s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 0B / 34.58MB 0.1s
+#5 sha256:df8cd99afefec8314f5236f60a99ab7734570d0e7cd04e484375d89dc6a9d101 175B / 175B 0.6s done
+#5 sha256:6def16e16f3e8bfc236d4f4d0c2b6c6a20d49b89324a2dbaa35ca048c33980c2 0B / 3.52kB 0.8s
+#5 sha256:6def16e16f3e8bfc236d4f4d0c2b6c6a20d49b89324a2dbaa35ca048c33980c2 3.52kB / 3.52kB 1.8s done
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 0B / 338.23MB 1.9s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 2.10MB / 34.58MB 2.2s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 4.19MB / 83.60MB 2.5s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 4.19MB / 34.58MB 2.5s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 6.29MB / 34.58MB 3.5s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 8.39MB / 83.60MB 4.3s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 8.39MB / 34.58MB 4.3s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 10.49MB / 34.58MB 5.0s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 13.63MB / 83.60MB 5.9s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 12.58MB / 34.58MB 5.9s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 14.68MB / 34.58MB 6.7s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 9.44MB / 338.23MB 7.1s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 17.83MB / 83.60MB 7.6s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 16.78MB / 34.58MB 7.6s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 18.87MB / 34.58MB 8.3s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 20.97MB / 34.58MB 9.1s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 22.02MB / 83.60MB 9.3s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 23.07MB / 34.58MB 10.0s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 25.17MB / 34.58MB 11.0s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 26.21MB / 83.60MB 11.0s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 27.26MB / 34.58MB 11.6s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 20.97MB / 338.23MB 12.1s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 30.41MB / 83.60MB 12.5s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 29.36MB / 34.58MB 12.5s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 31.46MB / 34.58MB 13.4s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 34.60MB / 83.60MB 14.1s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 33.55MB / 34.58MB 14.1s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 38.80MB / 83.60MB 15.4s
+#5 sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 34.58MB / 34.58MB 15.5s done
+#5 sha256:2966d5b1caf465d9cf9d3deae170af0144c42454648b80c60aa0d037796574d0 0B / 148B 15.5s
+#5 sha256:2966d5b1caf465d9cf9d3deae170af0144c42454648b80c60aa0d037796574d0 148B / 148B 15.9s done
+#5 sha256:b2f57b6eaee1756f57937ae093205e8ac70268ab9eb81555eff1f78d70a123a9 0B / 688B 16.1s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 42.99MB / 83.60MB 16.5s
+#5 sha256:b2f57b6eaee1756f57937ae093205e8ac70268ab9eb81555eff1f78d70a123a9 688B / 688B 16.6s done
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 0B / 139.19MB 16.7s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 38.80MB / 338.23MB 17.2s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 47.19MB / 83.60MB 17.3s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 51.38MB / 83.60MB 19.3s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 55.57MB / 83.60MB 20.3s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 7.34MB / 139.19MB 20.6s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 51.38MB / 338.23MB 22.3s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 59.77MB / 83.60MB 22.4s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 63.96MB / 83.60MB 23.8s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 14.68MB / 139.19MB 23.9s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 68.16MB / 83.60MB 25.4s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 22.02MB / 139.19MB 26.2s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 72.35MB / 83.60MB 26.5s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 66.06MB / 338.23MB 27.4s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 76.55MB / 83.60MB 28.3s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 29.36MB / 139.19MB 29.1s
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 80.74MB / 83.60MB 29.7s
+#5 extracting sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9
+#5 sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 83.60MB / 83.60MB 30.6s done
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 0B / 54.82MB 30.7s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 36.70MB / 139.19MB 31.3s
+#5 extracting sha256:1634ba2b9b8f75ef3a1a66abdd0bc824ecdfdad89f3974a4111102a98e80f1f9 1.4s done
+#5 extracting sha256:df8cd99afefec8314f5236f60a99ab7734570d0e7cd04e484375d89dc6a9d101
+#5 extracting sha256:df8cd99afefec8314f5236f60a99ab7734570d0e7cd04e484375d89dc6a9d101 done
+#5 extracting sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 81.79MB / 338.23MB 32.5s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 3.15MB / 54.82MB 33.0s
+#5 extracting sha256:dbc62650797dca4aefea519e9c03585b89f72d16bfdb11c9ef329bb99c7025ae 0.8s done
+#5 extracting sha256:6def16e16f3e8bfc236d4f4d0c2b6c6a20d49b89324a2dbaa35ca048c33980c2 done
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 44.04MB / 139.19MB 33.9s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 6.29MB / 54.82MB 33.9s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 9.44MB / 54.82MB 35.7s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 51.38MB / 139.19MB 36.6s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 12.58MB / 54.82MB 36.6s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 94.37MB / 338.23MB 37.5s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 15.73MB / 54.82MB 37.8s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 18.87MB / 54.82MB 38.9s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 58.72MB / 139.19MB 39.5s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 22.02MB / 54.82MB 40.3s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 25.17MB / 54.82MB 41.7s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 66.06MB / 139.19MB 42.6s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 109.05MB / 338.23MB 42.8s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 28.31MB / 54.82MB 42.8s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 31.46MB / 54.82MB 44.5s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 34.60MB / 54.82MB 45.4s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 73.40MB / 139.19MB 45.8s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 37.75MB / 54.82MB 46.3s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 40.89MB / 54.82MB 47.2s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 80.74MB / 139.19MB 47.6s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 122.68MB / 338.23MB 47.9s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 44.04MB / 54.82MB 48.2s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 47.19MB / 54.82MB 48.9s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 88.08MB / 139.19MB 51.5s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 50.33MB / 54.82MB 51.5s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 53.48MB / 54.82MB 52.4s
+#5 sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 54.82MB / 54.82MB 52.6s done
+#5 sha256:174c61b54b3f09d7269c02e6b48391ff78936a7be4bb3108e2a8a69f600af126 0B / 2.93MB 52.8s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 136.31MB / 338.23MB 53.0s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 95.42MB / 139.19MB 53.2s
+#5 sha256:174c61b54b3f09d7269c02e6b48391ff78936a7be4bb3108e2a8a69f600af126 1.05MB / 2.93MB 54.6s
+#5 sha256:174c61b54b3f09d7269c02e6b48391ff78936a7be4bb3108e2a8a69f600af126 2.10MB / 2.93MB 54.9s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 102.76MB / 139.19MB 56.3s
+#5 sha256:174c61b54b3f09d7269c02e6b48391ff78936a7be4bb3108e2a8a69f600af126 2.93MB / 2.93MB 56.2s done
+#5 sha256:bc60d40638aa0c967aae2e453a79cdec6f0b68b80ae21fa26f43e4f01493d66d 0B / 862.74kB 56.3s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 152.04MB / 338.23MB 58.1s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 110.10MB / 139.19MB 58.3s
+#5 sha256:bc60d40638aa0c967aae2e453a79cdec6f0b68b80ae21fa26f43e4f01493d66d 862.74kB / 862.74kB 58.2s done
+#5 sha256:f08a39057d2a4af797b204f0ba52c05bad777227128e7f8c1c871082e975dde8 0B / 2.09MB 58.3s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 117.44MB / 139.19MB 59.8s
+#5 sha256:f08a39057d2a4af797b204f0ba52c05bad777227128e7f8c1c871082e975dde8 1.05MB / 2.09MB 60.4s
+#5 sha256:f08a39057d2a4af797b204f0ba52c05bad777227128e7f8c1c871082e975dde8 2.09MB / 2.09MB 60.5s done
+#5 sha256:ad726fea1d8dc7ec99a1f2bcf94dc7b372a48ae8333b9d886366851c8ced5ec4 0B / 673B 60.6s
+#5 sha256:ad726fea1d8dc7ec99a1f2bcf94dc7b372a48ae8333b9d886366851c8ced5ec4 673B / 673B 61.6s done
+#5 sha256:7c5c56b7d768c3757c9bb241ad1cb8e885b3a14908ccb10f8a7e73c1a1cf03c5 0B / 3.06MB 61.6s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 124.78MB / 139.19MB 62.1s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 169.87MB / 338.23MB 62.9s
+#5 sha256:7c5c56b7d768c3757c9bb241ad1cb8e885b3a14908ccb10f8a7e73c1a1cf03c5 1.05MB / 3.06MB 63.7s
+#5 sha256:7c5c56b7d768c3757c9bb241ad1cb8e885b3a14908ccb10f8a7e73c1a1cf03c5 2.10MB / 3.06MB 64.1s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 132.12MB / 139.19MB 64.5s
+#5 sha256:7c5c56b7d768c3757c9bb241ad1cb8e885b3a14908ccb10f8a7e73c1a1cf03c5 3.06MB / 3.06MB 64.4s done
+#5 sha256:97ee4a040350fbb6c8a45b4335c8d1dd3d488f8a2d3b5b366b4b1172a505aebf 0B / 789B 64.5s
+#5 sha256:97ee4a040350fbb6c8a45b4335c8d1dd3d488f8a2d3b5b366b4b1172a505aebf 789B / 789B 64.9s done
+#5 sha256:64a20f95fae2089444897a68fc2905289338951943e6a4c95858c50f4c836b6f 0B / 5.24MB 64.9s
+#5 sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 139.19MB / 139.19MB 65.9s done
+#5 sha256:86697a0510ab6d9d559799b922b9e0e04c67544f6e1d9ad8be0c675b74b300d4 0B / 1.23MB 66.0s
+#5 sha256:64a20f95fae2089444897a68fc2905289338951943e6a4c95858c50f4c836b6f 3.15MB / 5.24MB 66.9s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 187.70MB / 338.23MB 67.0s
+#5 sha256:64a20f95fae2089444897a68fc2905289338951943e6a4c95858c50f4c836b6f 4.19MB / 5.24MB 67.2s
+#5 sha256:64a20f95fae2089444897a68fc2905289338951943e6a4c95858c50f4c836b6f 5.24MB / 5.24MB 67.3s done
+#5 sha256:1d6a874f3468a446a1e0e6912a858f8f43cf1876d5cbe74e543c45193c04f062 0B / 1.07kB 67.4s
+#5 sha256:86697a0510ab6d9d559799b922b9e0e04c67544f6e1d9ad8be0c675b74b300d4 1.23MB / 1.23MB 68.0s done
+#5 sha256:6194e856a2959e146ceeafcd8bba3e9a6a1d00c26ae739ccf3fa6b20a7995694 0B / 1.77MB 68.2s
+#5 sha256:1d6a874f3468a446a1e0e6912a858f8f43cf1876d5cbe74e543c45193c04f062 1.07kB / 1.07kB 68.6s done
+#5 sha256:e78acb17135078ee123a4d979b0e15ae75f8b4f1d57f5787f00bd5aac431f009 0B / 526.35kB 68.6s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 205.52MB / 338.23MB 69.5s
+#5 sha256:6194e856a2959e146ceeafcd8bba3e9a6a1d00c26ae739ccf3fa6b20a7995694 1.05MB / 1.77MB 70.5s
+#5 sha256:6194e856a2959e146ceeafcd8bba3e9a6a1d00c26ae739ccf3fa6b20a7995694 1.77MB / 1.77MB 70.6s done
+#5 sha256:e78acb17135078ee123a4d979b0e15ae75f8b4f1d57f5787f00bd5aac431f009 526.35kB / 526.35kB 70.6s done
+#5 sha256:e0242e3f0de575dbcf3d6fadbc3bec150d87c99875a8d2c90bd371f68ac6a113 0B / 3.65MB 70.7s
+#5 sha256:3860cba0b39bdfa9a17cfcbd4f3884da9939b050a47fc61d8fec943d0fdd4ca6 0B / 1.23kB 70.7s
+#5 sha256:3860cba0b39bdfa9a17cfcbd4f3884da9939b050a47fc61d8fec943d0fdd4ca6 1.23kB / 1.23kB 71.9s done
+#5 sha256:e2d458807e24d270a0cc93c5f25c4ab8234c57d89c3e4c9842b939951da06f49 0B / 8.88kB 72.0s
+#5 sha256:e0242e3f0de575dbcf3d6fadbc3bec150d87c99875a8d2c90bd371f68ac6a113 1.05MB / 3.65MB 72.7s
+#5 sha256:e2d458807e24d270a0cc93c5f25c4ab8234c57d89c3e4c9842b939951da06f49 8.88kB / 8.88kB 72.6s done
+#5 sha256:673fccc9a8758c346cb05db01677961889272a681f21325b40eb790d4a37a2bf 0B / 19.37kB 72.7s
+#5 sha256:e0242e3f0de575dbcf3d6fadbc3bec150d87c99875a8d2c90bd371f68ac6a113 2.10MB / 3.65MB 72.8s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 223.35MB / 338.23MB 73.0s
+#5 sha256:e0242e3f0de575dbcf3d6fadbc3bec150d87c99875a8d2c90bd371f68ac6a113 3.65MB / 3.65MB 73.1s done
+#5 sha256:d5e4cfcdf1efb984e61b1d00856eb23dbaa3fe056c88d06c2e79387003b10ac1 0B / 1.66MB 73.2s
+#5 sha256:24a32959b0f4d7ab1c08147ab83bfe6afe7f5b95fd7802df917ad8be4525db57 0B / 1.66MB 74.0s
+#5 sha256:673fccc9a8758c346cb05db01677961889272a681f21325b40eb790d4a37a2bf 19.37kB / 19.37kB 73.9s done
+#5 sha256:d5e4cfcdf1efb984e61b1d00856eb23dbaa3fe056c88d06c2e79387003b10ac1 1.05MB / 1.66MB 74.6s
+#5 sha256:d5e4cfcdf1efb984e61b1d00856eb23dbaa3fe056c88d06c2e79387003b10ac1 1.66MB / 1.66MB 74.7s done
+#5 sha256:391456e66bcba7e18c87458c5c9fa7b8f764fe4ae784ea00bc16096292bd4c2a 0B / 1.99MB 74.8s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 241.17MB / 338.23MB 75.4s
+#5 sha256:24a32959b0f4d7ab1c08147ab83bfe6afe7f5b95fd7802df917ad8be4525db57 1.66MB / 1.66MB 75.9s done
+#5 sha256:d09cad4e0a5371244189df08dd6580bebdf2dceef1d197baa3c59cfbcb3a4e34 0B / 1.99MB 75.9s
+#5 sha256:391456e66bcba7e18c87458c5c9fa7b8f764fe4ae784ea00bc16096292bd4c2a 1.05MB / 1.99MB 76.3s
+#5 sha256:391456e66bcba7e18c87458c5c9fa7b8f764fe4ae784ea00bc16096292bd4c2a 1.99MB / 1.99MB 76.4s done
+#5 sha256:d3fb94af5ce770b6457ebf2c001b637dbe3eee3e3e2841bf6e32eacd1758d683 0B / 7.31MB 76.4s
+#5 sha256:d09cad4e0a5371244189df08dd6580bebdf2dceef1d197baa3c59cfbcb3a4e34 1.05MB / 1.99MB 78.7s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 259.00MB / 338.23MB 79.6s
+#5 sha256:d09cad4e0a5371244189df08dd6580bebdf2dceef1d197baa3c59cfbcb3a4e34 1.99MB / 1.99MB 79.5s done
+#5 sha256:d3fb94af5ce770b6457ebf2c001b637dbe3eee3e3e2841bf6e32eacd1758d683 1.05MB / 7.31MB 79.6s
+#5 sha256:34f59421c55b7c41b75b2b4427dbc39a71d58624b7b5afe2ba05298cbb72aae0 0B / 767B 79.6s
+#5 sha256:d3fb94af5ce770b6457ebf2c001b637dbe3eee3e3e2841bf6e32eacd1758d683 3.15MB / 7.31MB 79.9s
+#5 sha256:d3fb94af5ce770b6457ebf2c001b637dbe3eee3e3e2841bf6e32eacd1758d683 4.19MB / 7.31MB 80.0s
+#5 sha256:34f59421c55b7c41b75b2b4427dbc39a71d58624b7b5afe2ba05298cbb72aae0 767B / 767B 80.2s done
+#5 sha256:605f289d824de459a5e59947d3c6c03f9137571988b51c71dac7e37331b4b9b5 0B / 2.34kB 80.2s
+#5 sha256:d3fb94af5ce770b6457ebf2c001b637dbe3eee3e3e2841bf6e32eacd1758d683 6.29MB / 7.31MB 80.5s
+#5 sha256:d3fb94af5ce770b6457ebf2c001b637dbe3eee3e3e2841bf6e32eacd1758d683 7.31MB / 7.31MB 80.7s done
+#5 sha256:4c94e8d469eb1df24f1d63ca620156740bddd34ca32025ffacd90dc71eec10e9 0B / 574B 80.7s
+#5 sha256:605f289d824de459a5e59947d3c6c03f9137571988b51c71dac7e37331b4b9b5 2.34kB / 2.34kB 81.1s done
+#5 sha256:0fca21d5968958310a028ae7248b72c229addd9ffa638822a189b771f74a33fa 0B / 241B 81.2s
+#5 sha256:4c94e8d469eb1df24f1d63ca620156740bddd34ca32025ffacd90dc71eec10e9 574B / 574B 81.7s done
+#5 sha256:0fca21d5968958310a028ae7248b72c229addd9ffa638822a189b771f74a33fa 241B / 241B 81.7s done
+#5 sha256:7b78ade1c83577e296f8723b93b2a08fc562a538206e65760daa1db6256de327 0B / 1.40MB 81.8s
+#5 sha256:5347259f95f89f327c1bb91e96d2db197ca9d1e13dc3a0d1a1c74869ddc7c0e3 0B / 30.44kB 81.8s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 277.87MB / 338.23MB 82.0s
+#5 sha256:5347259f95f89f327c1bb91e96d2db197ca9d1e13dc3a0d1a1c74869ddc7c0e3 30.44kB / 30.44kB 82.6s done
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 0B / 23.75MB 82.7s
+#5 sha256:7b78ade1c83577e296f8723b93b2a08fc562a538206e65760daa1db6256de327 1.40MB / 1.40MB 83.5s done
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 0B / 23.76MB 83.6s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 295.70MB / 338.23MB 84.6s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 2.10MB / 23.75MB 84.6s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 4.19MB / 23.75MB 84.9s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 6.29MB / 23.75MB 85.5s
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 3.15MB / 23.76MB 86.3s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 8.39MB / 23.75MB 86.5s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 10.49MB / 23.75MB 87.5s
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 5.24MB / 23.76MB 87.5s
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 7.34MB / 23.76MB 87.9s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 12.58MB / 23.75MB 88.1s
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 9.44MB / 23.76MB 88.6s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 14.68MB / 23.75MB 88.7s
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 11.53MB / 23.76MB 89.4s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 16.78MB / 23.75MB 89.5s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 310.38MB / 338.23MB 89.7s
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 13.63MB / 23.76MB 90.0s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 18.87MB / 23.75MB 90.3s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 22.02MB / 23.75MB 91.5s
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 16.78MB / 23.76MB 91.5s
+#5 sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 23.75MB / 23.75MB 92.3s done
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 20.97MB / 23.76MB 92.4s
+#5 sha256:5c4a1cbb260750f23c87dae41ee0b6f90ef17b614f963189f8fa85a58bd93471 0B / 861B 92.4s
+#5 sha256:5c4a1cbb260750f23c87dae41ee0b6f90ef17b614f963189f8fa85a58bd93471 861B / 861B 92.9s done
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 0B / 188.29MB 92.9s
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 23.76MB / 23.76MB 93.2s
+#5 sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 23.76MB / 23.76MB 93.2s done
+#5 sha256:b6ce70e97661f5c4815a1af2e6c6e5c6117b3866b6cc7828bb1be443c82a7b50 0B / 1.11kB 93.3s
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 328.20MB / 338.23MB 94.2s
+#5 sha256:b6ce70e97661f5c4815a1af2e6c6e5c6117b3866b6cc7828bb1be443c82a7b50 1.11kB / 1.11kB 94.5s done
+#5 sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 338.23MB / 338.23MB 96.8s done
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 11.53MB / 188.29MB 96.8s
+#5 extracting sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 22.02MB / 188.29MB 98.1s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 34.60MB / 188.29MB 99.8s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 44.04MB / 188.29MB 100.6s
+#5 extracting sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 5.1s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 55.57MB / 188.29MB 102.1s
+#5 extracting sha256:bc66b449c61d060b4ffb8b16a15eab320dd3fb3b01433b563a88d95d12cef665 5.4s done
+#5 extracting sha256:2966d5b1caf465d9cf9d3deae170af0144c42454648b80c60aa0d037796574d0
+#5 extracting sha256:2966d5b1caf465d9cf9d3deae170af0144c42454648b80c60aa0d037796574d0 done
+#5 extracting sha256:b2f57b6eaee1756f57937ae093205e8ac70268ab9eb81555eff1f78d70a123a9 done
+#5 extracting sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 66.06MB / 188.29MB 103.6s
+#5 extracting sha256:71dec1e20fbba19b75de6895c4f6374f94b325580105dd12de8c8ba15758a7b8 2.1s done
+#5 extracting sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 0.1s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 75.50MB / 188.29MB 105.2s
+#5 extracting sha256:dfe262457388c39afaa9a2c593699f2257cf49cc4a32aa30d4c5079c89dbd629 1.3s done
+#5 extracting sha256:174c61b54b3f09d7269c02e6b48391ff78936a7be4bb3108e2a8a69f600af126 0.0s done
+#5 extracting sha256:bc60d40638aa0c967aae2e453a79cdec6f0b68b80ae21fa26f43e4f01493d66d 0.0s done
+#5 extracting sha256:f08a39057d2a4af797b204f0ba52c05bad777227128e7f8c1c871082e975dde8
+#5 extracting sha256:f08a39057d2a4af797b204f0ba52c05bad777227128e7f8c1c871082e975dde8 0.1s done
+#5 extracting sha256:ad726fea1d8dc7ec99a1f2bcf94dc7b372a48ae8333b9d886366851c8ced5ec4
+#5 extracting sha256:ad726fea1d8dc7ec99a1f2bcf94dc7b372a48ae8333b9d886366851c8ced5ec4 done
+#5 extracting sha256:7c5c56b7d768c3757c9bb241ad1cb8e885b3a14908ccb10f8a7e73c1a1cf03c5
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 84.93MB / 188.29MB 106.5s
+#5 extracting sha256:7c5c56b7d768c3757c9bb241ad1cb8e885b3a14908ccb10f8a7e73c1a1cf03c5 0.2s done
+#5 extracting sha256:97ee4a040350fbb6c8a45b4335c8d1dd3d488f8a2d3b5b366b4b1172a505aebf
+#5 extracting sha256:97ee4a040350fbb6c8a45b4335c8d1dd3d488f8a2d3b5b366b4b1172a505aebf done
+#5 extracting sha256:64a20f95fae2089444897a68fc2905289338951943e6a4c95858c50f4c836b6f 0.1s done
+#5 extracting sha256:86697a0510ab6d9d559799b922b9e0e04c67544f6e1d9ad8be0c675b74b300d4 0.0s done
+#5 extracting sha256:1d6a874f3468a446a1e0e6912a858f8f43cf1876d5cbe74e543c45193c04f062 done
+#5 extracting sha256:6194e856a2959e146ceeafcd8bba3e9a6a1d00c26ae739ccf3fa6b20a7995694 0.1s
+#5 extracting sha256:6194e856a2959e146ceeafcd8bba3e9a6a1d00c26ae739ccf3fa6b20a7995694 0.1s done
+#5 extracting sha256:e78acb17135078ee123a4d979b0e15ae75f8b4f1d57f5787f00bd5aac431f009 0.0s done
+#5 extracting sha256:3860cba0b39bdfa9a17cfcbd4f3884da9939b050a47fc61d8fec943d0fdd4ca6
+#5 extracting sha256:3860cba0b39bdfa9a17cfcbd4f3884da9939b050a47fc61d8fec943d0fdd4ca6 done
+#5 extracting sha256:e0242e3f0de575dbcf3d6fadbc3bec150d87c99875a8d2c90bd371f68ac6a113 0.1s done
+#5 extracting sha256:e2d458807e24d270a0cc93c5f25c4ab8234c57d89c3e4c9842b939951da06f49 done
+#5 extracting sha256:673fccc9a8758c346cb05db01677961889272a681f21325b40eb790d4a37a2bf done
+#5 extracting sha256:d5e4cfcdf1efb984e61b1d00856eb23dbaa3fe056c88d06c2e79387003b10ac1 0.0s done
+#5 extracting sha256:24a32959b0f4d7ab1c08147ab83bfe6afe7f5b95fd7802df917ad8be4525db57 0.0s done
+#5 extracting sha256:391456e66bcba7e18c87458c5c9fa7b8f764fe4ae784ea00bc16096292bd4c2a 0.0s done
+#5 extracting sha256:d09cad4e0a5371244189df08dd6580bebdf2dceef1d197baa3c59cfbcb3a4e34
+#5 extracting sha256:d09cad4e0a5371244189df08dd6580bebdf2dceef1d197baa3c59cfbcb3a4e34 0.0s done
+#5 extracting sha256:d3fb94af5ce770b6457ebf2c001b637dbe3eee3e3e2841bf6e32eacd1758d683 0.1s done
+#5 extracting sha256:34f59421c55b7c41b75b2b4427dbc39a71d58624b7b5afe2ba05298cbb72aae0 done
+#5 extracting sha256:605f289d824de459a5e59947d3c6c03f9137571988b51c71dac7e37331b4b9b5
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 95.42MB / 188.29MB 107.8s
+#5 extracting sha256:605f289d824de459a5e59947d3c6c03f9137571988b51c71dac7e37331b4b9b5 done
+#5 extracting sha256:4c94e8d469eb1df24f1d63ca620156740bddd34ca32025ffacd90dc71eec10e9 done
+#5 extracting sha256:0fca21d5968958310a028ae7248b72c229addd9ffa638822a189b771f74a33fa done
+#5 extracting sha256:7b78ade1c83577e296f8723b93b2a08fc562a538206e65760daa1db6256de327 0.0s done
+#5 extracting sha256:5347259f95f89f327c1bb91e96d2db197ca9d1e13dc3a0d1a1c74869ddc7c0e3 done
+#5 extracting sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926
+#5 extracting sha256:3981f377851d07b55ec721a5bd7d569247997c56abbf7d354b9651f02a9c4926 0.3s done
+#5 extracting sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 0.1s
+#5 extracting sha256:5a5305a83f8271ed354e7660d2be522faa750384577afdade0b74973b5b2b4eb 0.3s done
+#5 extracting sha256:5c4a1cbb260750f23c87dae41ee0b6f90ef17b614f963189f8fa85a58bd93471 done
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 105.91MB / 188.29MB 109.2s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 115.34MB / 188.29MB 110.2s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 124.78MB / 188.29MB 111.4s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 134.22MB / 188.29MB 112.3s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 144.70MB / 188.29MB 113.7s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 157.29MB / 188.29MB 115.5s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 166.72MB / 188.29MB 116.7s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 176.16MB / 188.29MB 118.4s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 185.60MB / 188.29MB 119.1s
+#5 sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 188.29MB / 188.29MB 119.7s done
+#5 extracting sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 0.1s
+#5 extracting sha256:21a9a26ecec56f9df48ab87b37817c63ba4cdd0d4c99e3e2c6064ecca4ddea8e 4.1s done
+#5 extracting sha256:b6ce70e97661f5c4815a1af2e6c6e5c6117b3866b6cc7828bb1be443c82a7b50
+#5 extracting sha256:b6ce70e97661f5c4815a1af2e6c6e5c6117b3866b6cc7828bb1be443c82a7b50 done
+#5 DONE 124.4s
+#6 [2/4] RUN git clone https://github.com/cert-manager/cert-manager
+#6 0.171 Cloning into 'cert-manager'...
+#6 DONE 18.8s
+#7 [3/4] COPY build.sh pki_fuzzer.go /src/
+#7 DONE 0.0s
+#8 [4/4] WORKDIR /src/cert-manager
+#8 DONE 0.0s
+#9 exporting to image
+#9 exporting layers
+#9 exporting layers 0.5s done
+#9 writing image sha256:f044a913520e347eeff85fa3ebd44ce25d01de52d760d3f729f4ceb13678a093 done
+#9 naming to gcr.io/oss-fuzz/cert-manager done
+#9 DONE 0.5s
+INFO:__main__:Keeping existing build artifacts as-is (if any).
+INFO:__main__:Running: docker run --privileged --shm-size=2g --platform linux/amd64 --rm -i -e FUZZING_ENGINE=libfuzzer -e SANITIZER=address -e ARCHITECTURE=x86_64 -e PROJECT_NAME=cert-manager -e HELPER=True -e FUZZING_LANGUAGE=go -v /home/senchen/temp/fix_build_agent/process/project/cert-manager:/src/cert-manager -v /home/senchen/temp/fix_build_agent/oss-fuzz/build/out/cert-manager/:/out -v /home/senchen/temp/fix_build_agent/oss-fuzz/build/work/cert-manager:/work -t gcr.io/oss-fuzz/cert-manager.
+---------------------------------------------------------------
+vm.mmap_rnd_bits = 28
+Compiling libFuzzer to /usr/lib/libFuzzingEngine.a...  done.
+---------------------------------------------------------------
+CC=clang
+CXX=clang++ -lresolv
+CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link
+CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fsanitize=fuzzer-no-link -stdlib=libc++
+RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+---------------------------------------------------------------
++ cp /src/pki_fuzzer.go /src/cert-manager/pkg/util/pki/
++ rm /src/cert-manager/pkg/controller/certificates/trigger/trigger_controller_test.go
++ rm /src/cert-manager/pkg/controller/certificates/revisionmanager/revisionmanager_controller_test.go
++ cd /src/cert-manager
++ go mod tidy
+go: downloading go1.25.7 (linux/amd64)
+go: downloading k8s.io/apimachinery v0.35.4
+go: downloading k8s.io/apiextensions-apiserver v0.35.4
+go: downloading k8s.io/component-base v0.35.4
+go: downloading sigs.k8s.io/randfill v1.0.0
+go: downloading k8s.io/api v0.35.4
+go: downloading github.com/stretchr/testify v1.11.1
+go: downloading sigs.k8s.io/gateway-api v1.5.1
+go: downloading k8s.io/utils v0.0.0-20260210185600-b8788abfbbc2
+go: downloading github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
+go: downloading github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2
+go: downloading k8s.io/klog/v2 v2.140.0
+go: downloading k8s.io/kube-openapi v0.0.0-20260127142750-a19766b6e2d4
+go: downloading sigs.k8s.io/structured-merge-diff/v6 v6.4.0
+go: downloading github.com/google/go-cmp v0.7.0
+go: downloading github.com/spf13/pflag v1.0.10
+go: downloading sigs.k8s.io/yaml v1.6.0
+go: downloading k8s.io/client-go v0.35.4
+go: downloading github.com/Azure/azure-sdk-for-go/sdk/azcore v1.21.1
+go: downloading github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.13.1
+go: downloading github.com/aws/aws-sdk-go-v2 v1.41.6
+go: downloading github.com/go-logr/logr v1.4.3
+go: downloading github.com/digitalocean/godo v1.187.0
+go: downloading github.com/aws/smithy-go v1.25.1
+go: downloading github.com/prometheus/client_golang v1.23.2
+go: downloading github.com/fxamacker/cbor/v2 v2.9.0
+go: downloading github.com/go-ldap/ldap/v3 v3.4.13
+go: downloading golang.org/x/crypto v0.50.0
+go: downloading github.com/go-openapi/jsonreference v0.21.5
+go: downloading github.com/Venafi/vcert/v5 v5.13.1
+go: downloading github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6
+go: downloading github.com/hashicorp/vault/api v1.23.0
+go: downloading github.com/aws/aws-sdk-go-v2/config v1.32.16
+go: downloading github.com/aws/aws-sdk-go-v2/service/sts v1.42.0
+go: downloading github.com/hashicorp/vault/sdk v0.25.1
+go: downloading k8s.io/apiserver v0.35.4
+go: downloading sigs.k8s.io/controller-runtime v0.23.3
+go: downloading github.com/spf13/cobra v1.10.2
+go: downloading github.com/miekg/dns v1.1.72
+go: downloading k8s.io/kube-aggregator v0.35.4
+go: downloading github.com/pavlo-v-chernykh/keystore-go/v4 v4.5.0
+go: downloading software.sslmate.com/src/go-pkcs12 v0.7.1
+go: downloading golang.org/x/sync v0.20.0
+go: downloading github.com/nrdcg/goacmedns v0.2.0
+go: downloading github.com/akamai/AkamaiOPEN-edgegrid-golang/v13 v13.1.0
+go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/dns/armdns v1.2.0
+go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/privatedns/armprivatedns v1.3.0
+go: downloading golang.org/x/oauth2 v0.36.0
+go: downloading google.golang.org/api v0.276.0
+go: downloading github.com/aws/aws-sdk-go-v2/credentials v1.19.15
+go: downloading github.com/aws/aws-sdk-go-v2/service/route53 v1.62.6
+go: downloading github.com/google/gnostic-models v0.7.1
+go: downloading gopkg.in/yaml.v3 v3.0.1
+go: downloading sigs.k8s.io/json v0.0.0-20250730193827-2d320260d730
+go: downloading gopkg.in/inf.v0 v0.9.1
+go: downloading go.yaml.in/yaml/v2 v2.4.3
+go: downloading go.yaml.in/yaml/v3 v3.0.4
+go: downloading github.com/Azure/azure-sdk-for-go/sdk/internal v1.12.0
+go: downloading github.com/AzureAD/microsoft-authentication-library-for-go v1.6.0
+go: downloading github.com/golang-jwt/jwt/v5 v5.3.0
+go: downloading github.com/google/uuid v1.6.0
+go: downloading github.com/x448/float16 v0.8.4
+go: downloading github.com/Azure/go-ntlmssp v0.1.0
+go: downloading github.com/go-asn1-ber/asn1-ber v1.5.8-0.20250403174932-29230038a667
+go: downloading github.com/beorn7/perks v1.0.1
+go: downloading github.com/cespare/xxhash/v2 v2.3.0
+go: downloading github.com/prometheus/client_model v0.6.2
+go: downloading github.com/prometheus/common v0.66.1
+go: downloading github.com/prometheus/procfs v0.17.0
+go: downloading golang.org/x/sys v0.43.0
+go: downloading google.golang.org/protobuf v1.36.11
+go: downloading github.com/emicklei/go-restful/v3 v3.13.0
+go: downloading github.com/go-openapi/swag v0.23.1
+go: downloading github.com/NYTimes/gziphandler v1.1.1
+go: downloading github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822
+go: downloading golang.org/x/net v0.53.0
+go: downloading gopkg.in/evanphx/json-patch.v4 v4.13.0
+go: downloading golang.org/x/time v0.15.0
+go: downloading golang.org/x/term v0.42.0
+go: downloading github.com/go-openapi/jsonpointer v0.22.5
+go: downloading github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.22
+go: downloading github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.23
+go: downloading github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.8
+go: downloading github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.22
+go: downloading github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.22
+go: downloading github.com/aws/aws-sdk-go-v2/service/signin v1.0.10
+go: downloading github.com/aws/aws-sdk-go-v2/service/sso v1.30.16
+go: downloading github.com/aws/aws-sdk-go-v2/service/ssooidc v1.35.20
+go: downloading github.com/kylelemons/godebug v1.1.0
+go: downloading github.com/json-iterator/go v1.1.12
+go: downloading github.com/inconshreveable/mousetrap v1.1.0
+go: downloading github.com/coreos/go-systemd/v22 v22.5.0
+go: downloading go.opentelemetry.io/otel v1.43.0
+go: downloading go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.37.0
+go: downloading go.opentelemetry.io/otel/metric v1.43.0
+go: downloading go.opentelemetry.io/otel/sdk v1.43.0
+go: downloading google.golang.org/grpc v1.80.0
+go: downloading gopkg.in/natefinch/lumberjack.v2 v2.2.1
+go: downloading golang.org/x/tools v0.43.0
+go: downloading github.com/google/go-querystring v1.1.0
+go: downloading github.com/hashicorp/go-retryablehttp v0.7.8
+go: downloading go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.37.0
+go: downloading github.com/cenkalti/backoff/v4 v4.3.0
+go: downloading github.com/go-jose/go-jose/v4 v4.1.4
+go: downloading github.com/hashicorp/errwrap v1.1.0
+go: downloading github.com/hashicorp/go-cleanhttp v0.5.2
+go: downloading github.com/hashicorp/go-multierror v1.1.1
+go: downloading github.com/hashicorp/go-rootcerts v1.0.2
+go: downloading github.com/hashicorp/go-secure-stdlib/parseutil v0.2.0
+go: downloading github.com/hashicorp/go-secure-stdlib/strutil v0.1.2
+go: downloading github.com/hashicorp/hcl v1.0.1-vault-7
+go: downloading github.com/mitchellh/mapstructure v1.5.0
+go: downloading github.com/google/certificate-transparency-go v1.3.1
+go: downloading github.com/stretchr/objx v0.5.2
+go: downloading github.com/evanphx/json-patch/v5 v5.9.11
+go: downloading gopkg.in/ini.v1 v1.67.1
+go: downloading github.com/go-http-utils/headers v0.0.0-20181008091004-fed159eddc2a
+go: downloading github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78
+go: downloading github.com/evanphx/json-patch v5.9.0+incompatible
+go: downloading github.com/Azure/azure-sdk-for-go/sdk/azidentity/cache v0.3.2
+go: downloading go.uber.org/goleak v1.3.0
+go: downloading github.com/go-openapi/testify/v2 v2.4.0
+go: downloading github.com/go-test/deep v1.1.1
+go: downloading github.com/hashicorp/go-hclog v1.6.3
+go: downloading github.com/fatih/structs v1.1.0
+go: downloading github.com/onsi/ginkgo/v2 v2.28.0
+go: downloading github.com/onsi/gomega v1.39.1
+go: downloading go.uber.org/zap v1.27.1
+go: downloading github.com/Khan/genqlient v0.8.1
+go: downloading go.uber.org/mock v0.6.0
+go: downloading github.com/klauspost/compress v1.18.0
+go: downloading gomodules.xyz/jsonpatch/v2 v2.5.0
+go: downloading gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
+go: downloading github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
+go: downloading cloud.google.com/go/compute/metadata v0.9.0
+go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/v3 v3.1.0
+go: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources v1.2.0
+go: downloading github.com/alexbrainman/sspi v0.0.0-20250919150558-7d374ff0d59e
+go: downloading github.com/jcmturner/gokrb5/v8 v8.4.4
+go: downloading github.com/go-ozzo/ozzo-validation/v4 v4.3.0
+go: downloading github.com/mitchellh/go-homedir v1.1.0
+go: downloading go.uber.org/ratelimit v0.3.1
+go: downloading github.com/mailru/easyjson v0.9.1
+go: downloading github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.22
+go: downloading github.com/go-openapi/swag/jsonname v0.25.5
+go: downloading github.com/google/cel-go v0.26.0
+go: downloading github.com/blang/semver/v4 v4.0.0
+go: downloading go.opentelemetry.io/otel/trace v1.43.0
+go: downloading golang.org/x/text v0.36.0
+go: downloading go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.67.0
+go: downloading github.com/fsnotify/fsnotify v1.9.0
+go: downloading sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.33.0
+go: downloading github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+go: downloading github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee
+go: downloading k8s.io/kms v0.35.4
+go: downloading github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
+go: downloading go.etcd.io/etcd/client/pkg/v3 v3.6.5
+go: downloading go.etcd.io/etcd/client/v3 v3.6.5
+go: downloading go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.67.0
+go: downloading github.com/google/btree v1.1.3
+go: downloading github.com/go-logr/stdr v1.2.2
+go: downloading go.opentelemetry.io/proto/otlp v1.7.0
+go: downloading google.golang.org/genproto/googleapis/rpc v0.0.0-20260401024825-9d38bb4040a9
+go: downloading github.com/ryanuber/go-glob v1.0.0
+go: downloading github.com/hashicorp/go-sockaddr v1.0.7
+go: downloading github.com/hashicorp/go-secure-stdlib/cryptoutil v0.1.1
+go: downloading github.com/golang/snappy v0.0.4
+go: downloading github.com/pierrec/lz4 v2.6.1+incompatible
+go: downloading gopkg.in/yaml.v2 v2.4.0
+go: downloading github.com/go-logr/zapr v1.3.0
+go: downloading github.com/google/gofuzz v1.2.0
+go: downloading github.com/sosodev/duration v1.3.1
+go: downloading github.com/gorilla/websocket v1.5.4-0.20250319132907-e064f32e3674
+go: downloading github.com/fatih/color v1.19.0
+go: downloading github.com/mattn/go-colorable v0.1.14
+go: downloading github.com/mattn/go-isatty v0.0.20
+go: downloading go.uber.org/multierr v1.11.0
+go: downloading github.com/vektah/gqlparser/v2 v2.5.30
+go: downloading github.com/AzureAD/microsoft-authentication-extensions-for-go/cache v0.1.1
+go: downloading github.com/kr/pretty v0.3.1
+go: downloading github.com/jcmturner/dnsutils/v2 v2.0.0
+go: downloading github.com/jcmturner/gofork v1.7.6
+go: downloading github.com/hashicorp/go-uuid v1.0.3
+go: downloading github.com/jcmturner/goidentity/v6 v6.0.1
+go: downloading google.golang.org/genproto/googleapis/api v0.0.0-20260319201613-d00831a3d3e7
+go: downloading github.com/benbjohnson/clock v1.3.5
+go: downloading go.uber.org/atomic v1.11.0
+go: downloading github.com/josharian/intern v1.0.0
+go: downloading go.opentelemetry.io/otel/sdk/metric v1.43.0
+go: downloading cel.dev/expr v0.25.1
+go: downloading github.com/stoewer/go-strcase v1.3.1
+go: downloading go.etcd.io/etcd/api/v3 v3.6.5
+go: downloading go.etcd.io/etcd/server/v3 v3.6.5
+go: downloading github.com/felixge/httpsnoop v1.0.4
+go: downloading go.opentelemetry.io/auto/sdk v1.2.1
+go: downloading github.com/cenkalti/backoff/v5 v5.0.3
+go: downloading github.com/coreos/go-semver v0.3.1
+go: downloading golang.org/x/mod v0.34.0
+go: downloading github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1
+go: downloading github.com/pkg/errors v0.9.1
+go: downloading github.com/Masterminds/semver/v3 v3.4.0
+go: downloading github.com/jcmturner/aescts/v2 v2.0.0
+go: downloading github.com/jcmturner/rpc/v2 v2.0.3
+go: downloading github.com/hashicorp/go-hmac-drbg v0.0.0-20210916214228-a6e5a68489f6
+go: downloading github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2
+go: downloading github.com/rogpeppe/go-internal v1.14.1
+go: downloading github.com/kr/text v0.2.0
+go: downloading github.com/antlr4-go/antlr/v4 v4.13.1
+go: downloading github.com/golang/protobuf v1.5.4
+go: downloading github.com/googleapis/gax-go/v2 v2.21.0
+go: downloading cloud.google.com/go/auth v0.20.0
+go: downloading github.com/keybase/go-keychain v0.0.1
+go: downloading github.com/go-task/slim-sprig/v3 v3.0.0
+go: downloading github.com/gogo/protobuf v1.3.2
+go: downloading github.com/andreyvit/diff v0.0.0-20170406064948-c7f18ee00883
+go: downloading gonum.org/v1/gonum v0.17.0
+go: downloading cloud.google.com/go/auth/oauth2adapt v0.2.8
+go: downloading github.com/google/s2a-go v0.1.9
+go: downloading golang.org/x/exp v0.0.0-20250718183923-645b1fa84792
+go: downloading github.com/google/pprof v0.0.0-20250403155104-27863c87afa6
+go: downloading github.com/googleapis/enterprise-certificate-proxy v0.3.14
+go: downloading google.golang.org/genproto v0.0.0-20260319201613-d00831a3d3e7
+go: downloading github.com/sergi/go-diff v1.3.1
+go: downloading go.etcd.io/etcd/pkg/v3 v3.6.5
+go: downloading go.etcd.io/bbolt v1.4.3
+go: downloading github.com/soheilhy/cmux v0.1.5
+go: downloading github.com/tmc/grpc-websocket-proxy v0.0.0-20220101234140-673ab2c3ae75
+go: downloading github.com/dustin/go-humanize v1.0.1
+go: downloading go.etcd.io/raft/v3 v3.6.0
+go: downloading github.com/xiang90/probing v0.0.0-20221125231312-a49e3df8f510
+go: downloading github.com/jonboulle/clockwork v0.5.0
+go: downloading github.com/grpc-ecosystem/go-grpc-middleware/providers/prometheus v1.0.1
+go: downloading github.com/sirupsen/logrus v1.9.3
+go: downloading github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
+go: downloading github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.3.0
+go: downloading github.com/frankban/quicktest v1.14.6
++ compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/internal/webhook/admission/certificaterequest/approval FuzzValidate FuzzValidate_approval
+renaming _test.go file in fuzzer dir:  /src/cert-manager/internal/webhook/admission/certificaterequest/approval/certificaterequest_approval_test.go
+renaming _test.go file in fuzzer dir:  /src/cert-manager/internal/webhook/admission/certificaterequest/approval/fuzz_test.go
+Running go  [build -buildmode c-archive -tags gofuzz_libfuzzer,libfuzzer,gofuzz -trimpath -gcflags all=-d=libfuzzer -gcflags syscall=-d=libfuzzer=0 -gcflags runtime/cgo=-d=libfuzzer=0 -gcflags runtime/pprof=-d=libfuzzer=0 -overlay /tmp/gofuzzbuild1159701444/ossFuzzOverlayFile.json165691534 -o FuzzValidate_approval.a ./main.2910494143.go]
+go: overlay contains a replacement for /root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/testing/fuzz.go. Files beneath GOMODCACHE (/root/go/pkg/mod) must not be replaced.
+panic: exit status 1
+goroutine 1 [running]:
+main.main()
+	/tmp/go-118-fuzz-build/main.go:196 +0x140e
+ERROR:__main__:Building fuzzers failed.
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOOL_RESPONSE for 'run_fuzz_build_and_validate': {'status': 'error', 'message': 'Compilation failed', 'validation_report': {'step_1_official_list': 'pending', 'step_2_infra_compliance': 'pending', 'step_3_sanitizer_injected': 'pending', 'step_4_engine_control': 'pending', 'step_5_logic_linkage': 'pending', 'step_6_runtime_stability': 'pending'}}
+
+[1+2+6 Audit] Step 1 (List): pending | Step 2 (Compliance): pending | Step 6 (Stability): pending
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOKEN_USAGE: Prompt=3892, Gen=105
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/logs/cert-manager/build.log", "mode": "tail_100_lines"})
+--- Tool: read_file_content (Mode: tail_100_lines) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/logs/cert-manager/build.log ---
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'error', 'message': 'File not found: /home/senchen/temp/fix_build_agent/oss-fuzz/logs/cert-manager/build.log'}
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOKEN_USAGE: Prompt=4049, Gen=91
+  - TOOL_CALL: run_command({"command": "find /home/senchen/temp/fix_build_agent/oss-fuzz -name \"*.log\" -path \"*/cert-manager/*\" 2>/dev/null | head -5"})
+--- Tool: run_command called with: 'find /home/senchen/temp/fix_build_agent/oss-fuzz -name "*.log" -path "*/cert-manager/*" 2>/dev/null | head -5' ---
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n\nSTDERR:\n'}
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOKEN_USAGE: Prompt=4174, Gen=75
+  - TOOL_CALL: run_command({"command": "find /home/senchen/temp/fix_build_agent/oss-fuzz -name \"build.log\" 2>/dev/null | head -5"})
+--- Tool: run_command called with: 'find /home/senchen/temp/fix_build_agent/oss-fuzz -name "build.log" 2>/dev/null | head -5' ---
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n\nSTDERR:\n'}
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOKEN_USAGE: Prompt=4283, Gen=71
+  - TOOL_CALL: run_command({"command": "find /home/senchen/temp/fix_build_agent -name \"build.log\" 2>/dev/null | head -10"})
+--- Tool: run_command called with: 'find /home/senchen/temp/fix_build_agent -name "build.log" 2>/dev/null | head -10' ---
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n\nSTDERR:\n'}
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOKEN_USAGE: Prompt=4388, Gen=77
+  - TOOL_CALL: run_command({"command": "ls -la /home/senchen/temp/fix_build_agent/oss-fuzz/logs/ 2>/dev/null || echo \"No logs dir\""})
+--- Tool: run_command called with: 'ls -la /home/senchen/temp/fix_build_agent/oss-fuzz/logs/ 2>/dev/null || echo "No logs dir"' ---
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\nNo logs dir\n\nSTDERR:\n'}
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOKEN_USAGE: Prompt=4503, Gen=71
+  - TOOL_CALL: run_command({"command": "find /home/senchen/temp/fix_build_agent -name \"*.log\" 2>/dev/null | head -20"})
+--- Tool: run_command called with: 'find /home/senchen/temp/fix_build_agent -name "*.log" 2>/dev/null | head -20' ---
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n/home/senchen/temp/fix_build_agent/agent_logs/cert-manager_run_2026.04.29_17.59.19.log\n\nSTDERR:\n'}
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOKEN_USAGE: Prompt=4644, Gen=99
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/agent_logs/cert-manager_run_2026.04.29_17.59.19.log", "mode": "tail_100_lines"})
+--- Tool: read_file_content (Mode: tail_100_lines) called for: /home/senchen/temp/fix_build_agent/agent_logs/cert-manager_run_2026.04.29_17.59.19.log ---
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 100 lines from /home/senchen/temp/fix_build_agent/agent_logs/cert-manager_run_2026.04.29_17.59.19.log (Mode: tail_100_lines)', 'content': 'go: downloading github.com/stoewer/go-strcase v1.3.1\ngo: downloading go.etcd.io/etcd/api/v3 v3.6.5\ngo: downloading go.etcd.io/etcd/server/v3 v3.6.5\ngo: downloading github.com/felixge/httpsnoop v1.0.4\ngo: downloading go.opentelemetry.io/auto/sdk v1.2.1\ngo: downloading github.com/cenkalti/backoff/v5 v5.0.3\ngo: downlo...
+EVENT from author: 'run_fuzz_and_collect_log_agent'
+  - TOKEN_USAGE: Prompt=7688, Gen=584
+  - STATE_UPDATE: {'fuzz_build_log': 'I found the build log content in the agent log. The key error is:\n\n```\ngo: overlay contains a replacement for /root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/testing/fuzz.go. Files beneath GOMODCACHE (/root/go/pkg/mod) must not be replaced.\npanic: exit status 1\n```\n\nThis is the compilation failure. Let me report the final output.\n\n```json\n{\n  "status": "failed",\n  "message": "Compilation failed",\n  "validation_report": {\n    "step_1_official_list": "pending",\n    "step_2_infra_compliance": "pending",\n    "step_3_sanitizer_injected": "pending",\n    "step_4_engine_control": "pending",\n    "step_5_logic_linkage": "pending",\n    "step_6_runtime_stability": "pending"\n  },\n  "log_tail": "go: downloading github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.3.0\\ngo: downloading github.com/frankban/quicktest v1.14.6\\n+ compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/internal/webhook/admission/certificaterequest/approval FuzzValidate FuzzValidate_approval\\nrenaming _test.go file in fuzzer dir:  /src/cert-manager/internal/webhook/admission/certificaterequest/approval/certificaterequest_approval_test.go\\nrenaming _test.go file in fuzzer dir:  /src/cert-manager/internal/webhook/admission/certificaterequest/approval/fuzz_test.go\\nRunning go  [build -buildmode c-archive -tags gofuzz_libfuzzer,libfuzzer,gofuzz -trimpath -gcflags all=-d=libfuzzer -gcflags syscall=-d=libfuzzer=0 -gcflags runtime/cgo=-d=libfuzzer=0 -gcflags runtime/pprof=-d=libfuzzer=0 -overlay /tmp/gofuzzbuild1159701444/ossFuzzOverlayFile.json165691534 -o FuzzValidate_approval.a ./main.2910494143.go]\\ngo: overlay contains a replacement for /root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/testing/fuzz.go. Files beneath GOMODCACHE (/root/go/pkg/mod) must not be replaced.\\npanic: exit status 1"\n}\n```'}
+EVENT from author: 'decision_agent'
+  - TOKEN_USAGE: Prompt=7784, Gen=88
+  - TOOL_CALL: read_file_content({"file_path": "fuzz_build_log_file/fuzz_build_log.txt", "mode": "tail_100_lines"})
+--- Tool: read_file_content (Mode: tail_100_lines) called for: fuzz_build_log_file/fuzz_build_log.txt ---
+EVENT from author: 'decision_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 100 lines from fuzz_build_log_file/fuzz_build_log.txt (Mode: tail_100_lines)', 'content': 'go: downloading github.com/fsnotify/fsnotify v1.9.0\ngo: downloading sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.33.0\ngo: downloading github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd\ngo: downloading github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee\ngo: downloading k8s.io/kms v0.35.4\ngo: downloading github.com/grpc-...
+EVENT from author: 'decision_agent'
+  - TOKEN_USAGE: Prompt=10170, Gen=198
+EVENT from author: 'reflection_agent'
+  - TOKEN_USAGE: Prompt=10821, Gen=352
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/build_error_log/cert-manager/2026_4_10 error.txt", "mode": "tail_100_lines"})
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile", "mode": "full"})
+--- Tool: read_file_content (Mode: tail_100_lines) called for: /home/senchen/temp/fix_build_agent/build_error_log/cert-manager/2026_4_10 error.txt ---
+--- Tool: read_file_content (Mode: full) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile ---
+--- Stripped license header (16 lines) ---
+EVENT from author: 'reflection_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 100 lines from /home/senchen/temp/fix_build_agent/build_error_log/cert-manager/2026_4_10 error.txt (Mode: tail_100_lines)', 'content': 'Step #3 - "compile-libfuzzer-address-x86_64": go: downloading k8s.io/kms v0.35.4\nStep #3 - "compile-libfuzzer-address-x86_64": go: downloading go.etcd.io/etcd/client/v3 v3.6.5\nStep #3 - "compile-libfuzzer-address-x86_64": go: downloading github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0\nStep #3 - "compile-libfuzzer-add...
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 4 lines from /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile (Mode: full)', 'content': 'FROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nCOPY build.sh pki_fuzzer.go $SRC/\nWORKDIR $SRC/cert-manager\n'}
+EVENT from author: 'reflection_agent'
+  - TOKEN_USAGE: Prompt=15480, Gen=100
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/build.sh", "mode": "full"})
+--- Tool: read_file_content (Mode: full) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/build.sh ---
+--- Stripped license header (17 lines) ---
+EVENT from author: 'reflection_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 20 lines from /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/build.sh (Mode: full)', 'content': "cp $SRC/pki_fuzzer.go $SRC/cert-manager/pkg/util/pki/\n\n# These test files break the build, so removing; the fuzz tests don't need them\nrm $SRC/cert-manager/pkg/controller/certificates/trigger/trigger_controller_test.go\nrm $SRC/cert-manager/pkg/controller/certificates/revisionmanager/revisionmanager_controller_test.go\n\ncd $SRC/cert-manage...
+EVENT from author: 'reflection_agent'
+  - TOKEN_USAGE: Prompt=16202, Gen=1035
+  - TOOL_CALL: update_reflection_journal({"project_name": "cert-manager", "attempt_id": 1, "round_id": 1, "strategy_used": "Strategy A: Config Repair", "solution_plan": "The go-118-fuzz-build overlay mechanism tries to replace testing/fuzz.go under GOMODCACHE, which Go 1.25+ forbids. Need to either: (1) Pin Go version in Dockerfile to an older compatible version, or (2) Patch the go-118-fuzz-build tool to not overlay files under GOMODCACHE, or (3) Set GOTOOLCHAIN=go1.24 or similar to avoid the new toolchain management.", "build_log_tail": "go: overlay contains a replacement for /root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/testing/fuzz.go. Files beneath GOMODCACHE (/root/go/pkg/mod) must not be replaced. panic: exit status 1", "reflection_analysis": "Build failed at Step 1 (compilation). The go-118-fuzz-build tool creates an overlay replacing testing/fuzz.go, but Go 1.25+ stores the toolchain under GOMODCACHE and forbids overlay replacements there. This is an infrastructure incompatibility between the base-builder-go image (Go 1.25.7) and the go-118-fuzz-build overlay mechanism. Lesson: Need to either downgrade Go version or patch the overlay logic.", "deterioration_score": 5, "solved_problems": "None (first attempt, no fixes applied yet)", "unsolved_problems": "go-118-fuzz-build overlay incompatible with Go 1.25.7 toolchain under GOMODCACHE", "should_rollback": false})
+--- Tool: update_reflection_journal (v5) for A1_R1 ---
+EVENT from author: 'reflection_agent'
+  - TOOL_RESPONSE for 'update_reflection_journal': {'status': 'success', 'reflection_summary': 'A1_R1 (Score:5):\n  [Fixed]: None (first attempt, no fixes applied yet)\n  [Pending]: go-118-fuzz-build overlay incompatible with Go 1.25.7 toolchain under GOMODCACHE', 'trigger_rollback': False, 'deterioration_score': 5}
+EVENT from author: 'reflection_agent'
+  - TOKEN_USAGE: Prompt=17334, Gen=450
+  - STATE_UPDATE: {'last_reflection_result': "## Post-Mortem Analysis Summary\n\n**Attempt 1, Round 1 - FAILED**\n\n### Solved Problems\nNone (first attempt - no fixes applied yet).\n\n### Unsolved Problems\n**Step 1 (Compilation) Failure**: The `go-118-fuzz-build` tool creates an overlay JSON file that replaces `testing/fuzz.go` to inject fuzzer support. However, Go 1.25.7 stores the standard library toolchain under `GOMODCACHE` (`/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/`), and Go 1.25+ explicitly **forbids overlay replacements under GOMODCACHE**.\n\n### Root Cause\nThe base image `gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7...` ships with Go 1.25.7, which uses the new Go toolchain management where the toolchain (including `testing/fuzz.go`) lives under `GOMODCACHE`. The `go-118-fuzz-build` tool (at `/tmp/go-118-fuzz-build/main.go:196`) hasn't been updated to handle this new toolchain location.\n\n### Recommended Fix Strategy\nOptions to resolve:\n1. **Pin Go version** in the Dockerfile to an older Go version (e.g., Go 1.23 or 1.24) that doesn't use GOMODCACHE for the toolchain\n2. **Set `GOTOOLCHAIN=local`** or similar environment variable to prevent Go from downloading a newer toolchain\n3. **Patch the build.sh** to set `GOTOOLCHAIN=go1.24` or similar before running `compile_native_go_fuzzer_v2`\n\n### Deterioration Score: **5/10**\nFirst attempt, build failed at Step 1 (compilation). No regression since there's no prior state.\n\n### Rollback Decision: **No**\nNone of the backtracking mechanisms apply (first attempt, no complexity overload, no logical loop, score ≤ 7)."}
+EVENT from author: 'rollback_agent'
+  - TOKEN_USAGE: Prompt=17197, Gen=89
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=17987, Gen=79
+  - TOOL_CALL: run_command({"command": "ls generated_prompt_file/commit_changed.txt 2>/dev/null || echo \"FILE_NOT_FOUND\""})
+--- Tool: run_command called with: 'ls generated_prompt_file/commit_changed.txt 2>/dev/null || echo "FILE_NOT_FOUND"' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\nFILE_NOT_FOUND\n\nSTDERR:\n'}
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=18104, Gen=167
+  - TOOL_CALL: extract_buggy_line_info({"log_path": "/home/senchen/temp/fix_build_agent/build_error_log/cert-manager/2026_4_10 error.txt", "project_name": "cert-manager"})
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'extract_buggy_line_info': {'result': []}
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=18287, Gen=95
+  - TOOL_CALL: read_file_content({"file_path": "fuzz_build_log_file/fuzz_build_log.txt", "mode": "tail_100_lines"})
+--- Tool: read_file_content (Mode: tail_100_lines) called for: fuzz_build_log_file/fuzz_build_log.txt ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 100 lines from fuzz_build_log_file/fuzz_build_log.txt (Mode: tail_100_lines)', 'content': 'go: downloading github.com/fsnotify/fsnotify v1.9.0\ngo: downloading sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.33.0\ngo: downloading github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd\ngo: downloading github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee\ngo: downloading k8s.io/kms v0.35.4\ngo: downloading github.com/grpc-...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=20681, Gen=139
+  - TOOL_CALL: extract_buggy_line_info({"log_path": "fuzz_build_log_file/fuzz_build_log.txt", "project_name": "cert-manager"})
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'extract_buggy_line_info': {'result': []}
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=20836, Gen=155
+  - TOOL_CALL: run_command({"command": "head -5 /home/senchen/temp/fix_build_agent/build_error_log/cert-manager/2026_4_10\\ error.txt"})
+--- Tool: run_command called with: 'head -5 /home/senchen/temp/fix_build_agent/build_error_log/cert-manager/2026_4_10\ error.txt' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\nstarting build "fc4f2c7a-5949-4e2a-8a36-92e030d5c831"\n\nFETCHSOURCE\nBUILD\nStarting Step #0\n\nSTDERR:\n'}
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=21071, Gen=99
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/process/project/cert-manager && git log --oneline -20"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/process/project/cert-manager && git log --oneline -20' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\ne60d148b9 fix(deps): update github.com/onsi deps\nb79651065 Merge pull request #8750 from cert-manager/renovate/master-github.comonsi-deps\n14169ebc1 fix(deps): update module github.com/onsi/ginkgo/v2 to v2.28.2\nefbb9cdf6 Merge pull request #8744 from cert-manager/renovate/master-cloud-go-deps\n94628e5fd fix(deps): update cloud go deps\n59d77cbfb Feature/ignore namespaces (#8614)\n2eb5beb07 Merge pull request #8732 from ThatsMrTalbot/feat/gateway-api-co...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=21646, Gen=166
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/oss-fuzz && git log --oneline --all -- projects/cert-manager/ 2>/dev/null | head -20"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/oss-fuzz && git log --oneline --all -- projects/cert-manager/ 2>/dev/null | head -20' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n3c8cea6a4 Revert "migrate batch of projects to ubuntu 24 (#14591)"\ndb9eaf75b migrate batch of projects to ubuntu 24 (#14591)\nfcbc4f497 Revert "Mass Migration: Batch to Ubuntu 24.04" (#14459)\nefc44f3f1 Mass Migration: Batch to Ubuntu 24.04 (#14435)\n21976fd47 Mass migrate batch 1: 828 projects to Ubuntu 24.04\n13a302c3d Mass migrate batch 1: 100 projects to Ubuntu 24.04\n20037072f Mass migrate batch 2: 100 projects to Ubuntu 24.04\n4bce40b3a cert-manag...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=22218, Gen=136
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/oss-fuzz && git log --oneline --all -- projects/cert-manager/build.sh projects/cert-manager/Dockerfile 2>/dev/null | head -20"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/oss-fuzz && git log --oneline --all -- projects/cert-manager/build.sh projects/cert-manager/Dockerfile 2>/dev/null | head -20' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n3c8cea6a4 Revert "migrate batch of projects to ubuntu 24 (#14591)"\ndb9eaf75b migrate batch of projects to ubuntu 24 (#14591)\nfcbc4f497 Revert "Mass Migration: Batch to Ubuntu 24.04" (#14459)\nefc44f3f1 Mass Migration: Batch to Ubuntu 24.04 (#14435)\n21976fd47 Mass migrate batch 1: 828 projects to Ubuntu 24.04\n13a302c3d Mass migrate batch 1: 100 projects to Ubuntu 24.04\n20037072f Mass migrate batch 2: 100 projects to Ubuntu 24.04\n4bce40b3a cert-manag...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=22733, Gen=155
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show db9eaf75b -- projects/cert-manager/Dockerfile projects/cert-manager/build.sh 2>/dev/null | head -80"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show db9eaf75b -- projects/cert-manager/Dockerfile projects/cert-manager/build.sh 2>/dev/null | head -80' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\ncommit db9eaf75bd6927422e7f89dfafbf0707d9dc17c5\nAuthor: DavidKorczynski <david@adalogics.com>\nDate:   Thu Dec 18 07:27:48 2025 -0800\n\n    migrate batch of projects to ubuntu 24 (#14591)\n    \n    Signed-off-by: David Korczynski <david@adalogics.com>\n\ndiff --git a/projects/cert-manager/Dockerfile b/projects/cert-manager/Dockerfile\nindex e94765f76..18ae73abe 100644\n--- a/projects/cert-manager/Dockerfile\n+++ b/projects/cert-manager/Dockerfile\n@@ ...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=23191, Gen=168
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/oss-fuzz && git log --oneline -5 && echo \"---\" && cat projects/cert-manager/Dockerfile"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/oss-fuzz && git log --oneline -5 && echo "---" && cat projects/cert-manager/Dockerfile' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n2aee6cc3d sentencepiece: add training harness (#15423)\ndcfd4587d ogre: extend project (#15424)\n710f2404c lighttpd: expand project (#15425)\nfa7217dfc cpp-httplib: enable all harnesses (#15426)\n18872b281 cel-cpp: add eval harness (#15427)\n---\n# Copyright 2024 Google LLC\n#\n# Licensed under the Apache License, Version 2.0 (the "License");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=23729, Gen=197
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show 3c8cea6a4 --stat 2>/dev/null | head -20"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show 3c8cea6a4 --stat 2>/dev/null | head -20' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\ncommit 3c8cea6a4944098adf9aded6220da89662897708\nAuthor: Jonathan Metzman <metzman@chromium.org>\nDate:   Tue Dec 23 19:09:29 2025 -0500\n\n    Revert "migrate batch of projects to ubuntu 24 (#14591)"\n    \n    This reverts commit db9eaf75bd6927422e7f89dfafbf0707d9dc17c5.\n\n projects/bleach/Dockerfile                | 2 +-\n projects/bleach/project.yaml              | 2 --\n projects/cert-manager/Dockerfile          | 2 +-\n projects/cert-manager/proje...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=24247, Gen=247
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show 2aee6cc3d:projects/cert-manager/Dockerfile"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show 2aee6cc3d:projects/cert-manager/Dockerfile' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n# Copyright 2024 Google LLC\n#\n# Licensed under the Apache License, Version 2.0 (the "License");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#      http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an "AS IS" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, eit...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=24735, Gen=247
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/process/project/cert-manager && git log --oneline e60d148b9 -30"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/process/project/cert-manager && git log --oneline e60d148b9 -30' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': "STDOUT:\ne60d148b9 fix(deps): update github.com/onsi deps\nb79651065 Merge pull request #8750 from cert-manager/renovate/master-github.comonsi-deps\n14169ebc1 fix(deps): update module github.com/onsi/ginkgo/v2 to v2.28.2\nefbb9cdf6 Merge pull request #8744 from cert-manager/renovate/master-cloud-go-deps\n94628e5fd fix(deps): update cloud go deps\n59d77cbfb Feature/ignore namespaces (#8614)\n2eb5beb07 Merge pull request #8732 from ThatsMrTalbot/feat/gateway-api-co...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=25697, Gen=82
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/process/project/cert-manager && head -5 go.mod"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/process/project/cert-manager && head -5 go.mod' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\nmodule github.com/cert-manager/cert-manager\n\ngo 1.25.7\n\n// Do not remove this comment:\n\nSTDERR:\n'}
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=25843, Gen=181
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/oss-fuzz && git log --oneline --all --diff-filter=M -- projects/cert-manager/Dockerfile | head -20"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/oss-fuzz && git log --oneline --all --diff-filter=M -- projects/cert-manager/Dockerfile | head -20' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n3c8cea6a4 Revert "migrate batch of projects to ubuntu 24 (#14591)"\ndb9eaf75b migrate batch of projects to ubuntu 24 (#14591)\nfcbc4f497 Revert "Mass Migration: Batch to Ubuntu 24.04" (#14459)\nefc44f3f1 Mass Migration: Batch to Ubuntu 24.04 (#14435)\n21976fd47 Mass migrate batch 1: 828 projects to Ubuntu 24.04\n13a302c3d Mass migrate batch 1: 100 projects to Ubuntu 24.04\n20037072f Mass migrate batch 2: 100 projects to Ubuntu 24.04\n4bce40b3a cert-manag...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=26305, Gen=101
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show e2296b1e2 -- projects/cert-manager/ 2>/dev/null"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show e2296b1e2 -- projects/cert-manager/ 2>/dev/null' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\ncommit e2296b1e2483854ba94ba1129ab458517162a268\nAuthor: AdamKorcz <44787359+AdamKorcz@users.noreply.github.com>\nDate:   Thu Jul 10 20:50:30 2025 +0100\n\n    cert-manager: bump go (#13577)\n    \n    cert-manager has bumped go to 1.24.0.\n    \n    Signed-off-by: Adam Korczynski <adam@adalogics.com>\n\ndiff --git a/projects/cert-manager/Dockerfile b/projects/cert-manager/Dockerfile\nindex aedd94544..067d1907c 100644\n--- a/projects/cert-manager/Dockerf...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=26866, Gen=183
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show 4bce40b3a -- projects/cert-manager/ 2>/dev/null"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show 4bce40b3a -- projects/cert-manager/ 2>/dev/null' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\ncommit 4bce40b3a56501cbae15db44808ccdb25143673f\nAuthor: AdamKorcz <44787359+AdamKorcz@users.noreply.github.com>\nDate:   Fri Sep 19 17:11:48 2025 +0100\n\n    cert-manager: fix broken build (#14036)\n    \n    Signed-off-by: Adam Korczynski <adam@adalogics.com>\n\ndiff --git a/projects/cert-manager/Dockerfile b/projects/cert-manager/Dockerfile\nindex 067d1907c..e94765f76 100644\n--- a/projects/cert-manager/Dockerfile\n+++ b/projects/cert-manager/Dockerf...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=28559, Gen=344
+  - TOOL_CALL: run_command({"command": "cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show -s --format=\"%ci\" 4bce40b3a"})
+--- Tool: run_command called with: 'cd /home/senchen/temp/fix_build_agent/oss-fuzz && git show -s --format="%ci" 4bce40b3a' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n2025-09-19 17:11:48 +0100\n\nSTDERR:\n'}
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=28953, Gen=155
+  - TOOL_CALL: get_git_commits_around_date({"project_source_path": "/home/senchen/temp/fix_build_agent/oss-fuzz", "error_date": "2025-09-19", "count": 10})
+--- Tool: get_git_commits_around_date called. Path: /home/senchen/temp/fix_build_agent/oss-fuzz, Center Date: 2025-09-19 ---
+--- Searching commits between 2025-09-18 and 2025-09-20 (inclusive) ---
+--- Found 9 commits in range. ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'get_git_commits_around_date': {'status': 'success', 'commits': [{'sha': '0e7214594967696920e84856635f3d0a97f98ed2', 'date': '2025-09-19 23:23:47', 'message': 'syzkaller: update CC list (#14037)', 'files_changed': ['projects/syzkaller/project.yaml']}, {'sha': 'a6b9790b4c113acfcdeb4bbf1874108a1cbba5e9', 'date': '2025-09-19 23:23:19', 'message': "igraph: use 'main' branch (#14038)", 'files_changed': ['projects/igraph/Dockerfile']}, {'sha': 'e92b6f02877106e36dd4b69c45549bbee817947e', 'date': '2025-09-19 17:12:25', 'message': 'co...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=29856, Gen=228
+  - TOOL_CALL: save_commit_diff_to_file({"project_name": "cert-manager", "project_source_path": "/home/senchen/temp/fix_build_agent/oss-fuzz", "sha": "4bce40b3a56501cbae15db44808ccdb25143673f", "error_time": "2025-09-19"})
+--- Tool: save_commit_diff_to_file (With Token Guard) for 4bce40b3a56501cbae15db44808ccdb25143673f ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'save_commit_diff_to_file': {'status': 'success', 'message': 'Saved simplified diff to generated_prompt_file/commit_changed.txt'}
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=30120, Gen=61
+  - TOOL_CALL: run_command({"command": "ls -la generated_prompt_file/commit_changed.txt"})
+--- Tool: run_command called with: 'ls -la generated_prompt_file/commit_changed.txt' ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'run_command': {'status': 'success', 'output': 'STDOUT:\n-rw-r--r-- 1 root root 4707  4月 29 18:05 generated_prompt_file/commit_changed.txt\n\nSTDERR:\n'}
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=30247, Gen=59
+  - TOOL_CALL: read_file_content({"file_path": "generated_prompt_file/commit_changed.txt"})
+--- Tool: read_file_content (Mode: full) called for: generated_prompt_file/commit_changed.txt ---
+EVENT from author: 'commit_finder_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 63 lines from generated_prompt_file/commit_changed.txt (Mode: full)', 'content': 'commit 4bce40b3a56501cbae15db44808ccdb25143673f\nAuthor: AdamKorcz <44787359+AdamKorcz@users.noreply.github.com>\nDate:   Fri Sep 19 17:11:48 2025 +0100\n\n    cert-manager: fix broken build (#14036)\n    \n    Signed-off-by: Adam Korczynski <adam@adalogics.com>\n\ndiff --git a/projects/cert-manager/Dockerfile b/projects/cert-manager/Dockerfile\nindex 067d1907c..e94765f76 1006...
+EVENT from author: 'commit_finder_agent'
+  - TOKEN_USAGE: Prompt=31828, Gen=424
+  - STATE_UPDATE: {'commit_analysis_result': 'The commit analysis has been completed successfully. Let me summarize the findings.\n\n## Summary\n\n**Commit Analysis Completed.**\n\n**Suspect Commit:** `4bce40b3a56501cbae15db44808ccdb25143673f` - "cert-manager: fix broken build (#14036)"\n\n**Why this commit introduced the build error:**\n\n1. **Removed custom Go version pinning**: The previous Dockerfile explicitly downloaded Go 1.24.0 and installed it. This commit removed that, making the build rely on whatever Go version is in the base image (`gcr.io/oss-fuzz-base/base-builder-go`).\n\n2. **Removed custom `go-118-fuzz-build`**: The previous build.sh cloned a custom fork of `go-118-fuzz-build` and used it. This commit removed that, switching to the built-in `compile_native_go_fuzzer_v2` which uses the system\'s `go-118-fuzz-build`.\n\n3. **The incompatibility**: The base image (at the used digest) ships with Go 1.25.7, which stores the toolchain under `GOMODCACHE` (`/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/`). The `go-118-fuzz-build` tool creates an overlay JSON that replaces `testing/fuzz.go`, but Go 1.25+ **forbids overlay replacements under GOMODCACHE**, causing the build to fail with:\n   ```\n   go: overlay contains a replacement for /root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/testing/fuzz.go. Files beneath GOMODCACHE (/root/go/pkg/mod) must not be replaced.\n   ```\n\nThe fix would need to either pin an older Go version or update the `go-118-fuzz-build` overlay mechanism to be compatible with Go 1.25+.'}
+EVENT from author: 'prompt_generate_agent'
+  - TOKEN_USAGE: Prompt=32021, Gen=172
+  - TOOL_CALL: query_expert_knowledge({"log_path": "fuzz_build_log_file/fuzz_build_log.txt"})
+  - TOOL_CALL: read_file_content({"file_path": "generated_prompt_file/commit_changed.txt"})
+--- Tool: read_file_content (Mode: full) called for: generated_prompt_file/commit_changed.txt ---
+EVENT from author: 'prompt_generate_agent'
+  - TOOL_RESPONSE for 'query_expert_knowledge': {'status': 'success', 'knowledge': "--- Relevant Principles ---\n- If the error occurs before code download, investigate Dockerfile configuration rather than source code changes.\n- If Dockerfile pulls remote code, you must use local mounts or modify COPY instructions to make local source changes effective.\n- Before any read_file_content or apply_patch, you MUST ls the parent directory to confirm the exact filename and path.\n- The source path for COPY in Dockerfile is relative to the build con...
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 63 lines from generated_prompt_file/commit_changed.txt (Mode: full)', 'content': 'commit 4bce40b3a56501cbae15db44808ccdb25143673f\nAuthor: AdamKorcz <44787359+AdamKorcz@users.noreply.github.com>\nDate:   Fri Sep 19 17:11:48 2025 +0100\n\n    cert-manager: fix broken build (#14036)\n    \n    Signed-off-by: Adam Korczynski <adam@adalogics.com>\n\ndiff --git a/projects/cert-manager/Dockerfile b/projects/cert-manager/Dockerfile\nindex 067d1907c..e94765f76 1006...
+EVENT from author: 'prompt_generate_agent'
+  - TOKEN_USAGE: Prompt=33932, Gen=2092
+  - TOOL_CALL: prompt_generate_tool({"project_main_folder_path": "/home/senchen/temp/fix_build_agent/process/project/cert-manager", "max_depth": 1, "config_folder_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager", "attempt_id": 1, "expert_knowledge": "--- Relevant Principles ---\n- If the error occurs before code download, investigate Dockerfile configuration rather than source code changes.\n- If Dockerfile pulls remote code, you must use local mounts or modify COPY instructions to make local source changes effective.\n- Before any read_file_content or apply_patch, you MUST ls the parent directory to confirm the exact filename and path.\n- The source path for COPY in Dockerfile is relative to the build context (usually projects/<name>/), not arbitrary host paths.\n- Path Discovery & Verification Principle: Never assume fixed directory structures or relative paths. The source code location varies significantly between 'Standard' and 'Source' build modes. Before attempting to read or patch any file, you MUST use discovery tools (e.g., ls or find) to map the environment and verify the file's existence at its absolute path.\n- For hardcoded absolute paths to missing tools, prioritize creating symbolic links to system tools over recompiling dependencies.", "enhanced_history": "commit 4bce40b3a56501cbae15db44808ccdb25143673f\nAuthor: AdamKorcz <44787359+AdamKorcz@users.noreply.github.com>\nDate:   Fri Sep 19 17:11:48 2025 +0100\n\n    cert-manager: fix broken build (#14036)\n    \n    Signed-off-by: Adam Korczynski <adam@adalogics.com>\n\ndiff --git a/projects/cert-manager/Dockerfile b/projects/cert-manager/Dockerfile\nindex 067d1907c..e94765f76 100644\n--- a/projects/cert-manager/Dockerfile\n+++ b/projects/cert-manager/Dockerfile\n@@ -16,11 +16,5 @@\n \n FROM gcr.io/oss-fuzz-base/base-builder-go\n RUN git clone https://github.com/cert-manager/cert-manager --depth=1\n-RUN git clone --depth=1 https://github.com/AdamKorcz/go-118-fuzz-build --branch=november-backup\n-RUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz \\\n-    && mkdir temp-go \\\n-    && rm -rf /root/.go/* \\\n-    && tar -C temp-go/ -xzf go1.24.0.linux-amd64.tar.gz \\\n-    && mv temp-go/go/* /root/.go/\n COPY build.sh pki_fuzzer.go $SRC/\n WORKDIR $SRC/cert-manager\ndiff --git a/projects/cert-manager/build.sh b/projects/cert-manager/build.sh\nindex e6a753061..b48f9afff 100755\n--- a/projects/cert-manager/build.sh\n+++ b/projects/cert-manager/build.sh\n@@ -21,25 +21,17 @@ cp $SRC/pki_fuzzer.go $SRC/cert-manager/pkg/util/pki/\n rm $SRC/cert-manager/pkg/controller/certificates/trigger/trigger_controller_test.go\n rm $SRC/cert-manager/pkg/controller/certificates/revisionmanager/revisionmanager_controller_test.go\n \n-cd $SRC/go-118-fuzz-build\n-go build .\n-mv go-118-fuzz-build /root/go/bin/\n-\n cd $SRC/cert-manager\n-mkdir $SRC/cert-manager/pkg/fuzz\n-printf \"package fuzz \\nimport _ \\\"github.com/AdamKorcz/go-118-fuzz-build/testing\\\"\\n\" > ./pkg/fuzz/fuzz-register.go\n-go mod tidy\n-go mod edit -replace github.com/AdamKorcz/go-118-fuzz-build=$SRC/go-118-fuzz-build\n go mod tidy\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/internal/webhook/admission/certificaterequest/approval FuzzValidate FuzzValidate_approval\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/trigger FuzzProcessItem FuzzProcessItem_trigger\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/revisionmanager FuzzProcessItem FuzzProcessItem_revisionmanager\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/issuing FuzzProcessItem FuzzProcessItem_issuing\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/readiness FuzzProcessItem FuzzProcessItem_readiness\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/keymanager FuzzProcessItem FuzzProcessItem_keymanager\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/requestmanager FuzzProcessItem FuzzProcessItem_requestmanager\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/vault FuzzVaultCRController FuzzVaultCRController\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi FuzzVenafiCRController FuzzVenafiCRController\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/internal/webhook/admission/certificaterequest/approval FuzzValidate FuzzValidate_approval\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/trigger FuzzProcessItem FuzzProcessItem_trigger\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/revisionmanager FuzzProcessItem FuzzProcessItem_revisionmanager\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/issuing FuzzProcessItem FuzzProcessItem_issuing\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/readiness FuzzProcessItem FuzzProcessItem_readiness\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/keymanager FuzzProcessItem FuzzProcessItem_keymanager\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/requestmanager FuzzProcessItem FuzzProcessItem_requestmanager\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/vault FuzzVaultCRController FuzzVaultCRController\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi FuzzVenafiCRController FuzzVenafiCRController\n compile_go_fuzzer github.com/cert-manager/cert-manager/pkg/util/pki FuzzUnmarshalSubjectStringToRDNSequence FuzzUnmarshalSubjectStringToRDNSequence\n compile_go_fuzzer github.com/cert-manager/cert-manager/pkg/util/pki FuzzDecodePrivateKeyBytes FuzzDecodePrivateKeyBytes\n ", "validation_report": {"step_1_official_list": "pending", "step_2_infra_compliance": "pending", "step_3_sanitizer_injected": "pending", "step_4_engine_control": "pending", "step_5_logic_linkage": "pending", "step_6_runtime_stability": "pending"}})
+--- Workflow Tool: prompt_generate_tool started (Attempt: 1) ---
+--- Tool: read_file_content (Mode: full) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/build.sh ---
+--- Stripped license header (17 lines) ---
+--- Tool: read_file_content (Mode: full) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile ---
+--- Stripped license header (16 lines) ---
+--- Tool: read_file_content (Mode: tail_30) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/pki_fuzzer.go ---
+--- Stripped license header (15 lines) ---
+--- Tool: read_file_content (Mode: tail_30) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/project.yaml ---
+--- Tool: save_file_tree_shallow called for path: /home/senchen/temp/fix_build_agent/process/project/cert-manager with max_depth: 1 ---
+The top 1 levels of the file tree have been successfully generated and saved to 'generated_prompt_file/file_tree.txt'.
+--- Tool: truncate_prompt_file called for: generated_prompt_file/prompt.txt ---
+--- File is within line limits, no truncation needed. ---
+EVENT from author: 'prompt_generate_agent'
+  - TOOL_RESPONSE for 'prompt_generate_tool': {'status': 'success', 'content': 'Testing Expert. Project: cert-manager. Attempt: 1\n\n--- 【LAST BUILD VALIDATION (1+2+6 CRITERIA)】 ---\nMANDATORY - Step 1 (Official Targets): pending\nMANDATORY - Step 2 (Infra Compliance): pending\nMANDATORY - Step 6 (Runtime Stability): pending\nREFERENCE METRICS: 3: pending; 4: pending; 5: pending\n\n【ENHANCED HISTORY】\ncommit 4bce40b3a56501cbae15db44808ccdb25143673f\nAuthor: AdamKorcz <44787359+AdamKorcz@users.noreply.github.com>\nDate:   Fri Sep 19 17:11:48...
+EVENT from author: 'prompt_generate_agent'
+  - TOKEN_USAGE: Prompt=43029, Gen=6929
+  - STATE_UPDATE: {'generated_prompt': 'Now I have the generated prompt content. Let me output it as my final answer.\n\nTesting Expert. Project: cert-manager. Attempt: 1\n\n--- 【LAST BUILD VALIDATION (1+2+6 CRITERIA)】 ---\nMANDATORY - Step 1 (Official Targets): pending\nMANDATORY - Step 2 (Infra Compliance): pending\nMANDATORY - Step 6 (Runtime Stability): pending\nREFERENCE METRICS: 3: pending; 4: pending; 5: pending\n\n【ENHANCED HISTORY】\ncommit 4bce40b3a56501cbae15db44808ccdb25143673f\nAuthor: AdamKorcz <44787359+AdamKorcz@users.noreply.github.com>\nDate:   Fri Sep 19 17:11:48 2025 +0100\n\n    cert-manager: fix broken build (#14036)\n    \n    Signed-off-by: Adam Korczynski <adam@adalogics.com>\n\ndiff --git a/projects/cert-manager/Dockerfile b/projects/cert-manager/Dockerfile\nindex 067d1907c..e94765f76 100644\n--- a/projects/cert-manager/Dockerfile\n+++ b/projects/cert-manager/Dockerfile\n@@ -16,11 +16,5 @@\n \n FROM gcr.io/oss-fuzz-base/base-builder-go\n RUN git clone https://github.com/cert-manager/cert-manager --depth=1\n-RUN git clone --depth=1 https://github.com/AdamKorcz/go-118-fuzz-build --branch=november-backup\n-RUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz \\\n-    && mkdir temp-go \\\n-    && rm -rf /root/.go/* \\\n-    && tar -C temp-go/ -xzf go1.24.0.linux-amd64.tar.gz \\\n-    && mv temp-go/go/* /root/.go/\n COPY build.sh pki_fuzzer.go $SRC/\n WORKDIR $SRC/cert-manager\ndiff --git a/projects/cert-manager/build.sh b/projects/cert-manager/build.sh\nindex e6a753061..b48f9afff 100755\n--- a/projects/cert-manager/build.sh\n+++ b/projects/cert-manager/build.sh\n@@ -21,25 +21,17 @@ cp $SRC/pki_fuzzer.go $SRC/cert-manager/pkg/util/pki/\n rm $SRC/cert-manager/pkg/controller/certificates/trigger/trigger_controller_test.go\n rm $SRC/cert-manager/pkg/controller/certificates/revisionmanager/revisionmanager_controller_test.go\n \n-cd $SRC/go-118-fuzz-build\n-go build .\n-mv go-118-fuzz-build /root/go/bin/\n-\n cd $SRC/cert-manager\n-mkdir $SRC/cert-manager/pkg/fuzz\n-printf "package fuzz \\nimport _ \\"github.com/AdamKorcz/go-118-fuzz-build/testing\\"\\n" > ./pkg/fuzz/fuzz-register.go\n-go mod tidy\n-go mod edit -replace github.com/AdamKorcz/go-118-fuzz-build=$SRC/go-118-fuzz-build\n go mod tidy\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/internal/webhook/admission/certificaterequest/approval FuzzValidate FuzzValidate_approval\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/trigger FuzzProcessItem FuzzProcessItem_trigger\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/revisionmanager FuzzProcessItem FuzzProcessItem_revisionmanager\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/issuing FuzzProcessItem FuzzProcessItem_issuing\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/readiness FuzzProcessItem FuzzProcessItem_readiness\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/keymanager FuzzProcessItem FuzzProcessItem_keymanager\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificates/requestmanager FuzzProcessItem FuzzProcessItem_requestmanager\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/vault FuzzVaultCRController FuzzVaultCRController\n-compile_native_go_fuzzer github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi FuzzVenafiCRController FuzzVenafiCRController\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/internal/webhook/admission/certificaterequest/approval FuzzValidate FuzzValidate_approval\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/trigger FuzzProcessItem FuzzProcessItem_trigger\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/revisionmanager FuzzProcessItem FuzzProcessItem_revisionmanager\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/issuing FuzzProcessItem FuzzProcessItem_issuing\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/readiness FuzzProcessItem FuzzProcessItem_readiness\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/keymanager FuzzProcessItem FuzzProcessItem_keymanager\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/requestmanager FuzzProcessItem FuzzProcessItem_requestmanager\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/vault FuzzVaultCRController FuzzVaultCRController\n+compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi FuzzVenafiCRController FuzzVenafiCRController\n compile_go_fuzzer github.com/cert-manager/cert-manager/pkg/util/pki FuzzUnmarshalSubjectStringToRDNSequence FuzzUnmarshalSubjectStringToRDNSequence\n compile_go_fuzzer github.com/cert-manager/cert-manager/pkg/util/pki FuzzDecodePrivateKeyBytes FuzzDecodePrivateKeyBytes\n \n\n【STRATEGIC KNOWLEDGE】\n--- Relevant Principles ---\n- If the error occurs before code download, investigate Dockerfile configuration rather than source code changes.\n- If Dockerfile pulls remote code, you must use local mounts or modify COPY instructions to make local source changes effective.\n- Before any read_file_content or apply_patch, you MUST ls the parent directory to confirm the exact filename and path.\n- The source path for COPY in Dockerfile is relative to the build context (usually projects/<name>/), not arbitrary host paths.\n- Path Discovery & Verification Principle: Never assume fixed directory structures or relative paths. The source code location varies significantly between \'Standard\' and \'Source\' build modes. Before attempting to read or patch any file, you MUST use discovery tools (e.g., ls or find) to map the environment and verify the file\'s existence at its absolute path.\n- For hardcoded absolute paths to missing tools, prioritize creating symbolic links to system tools over recompiling dependencies.\n\n### build.sh (Priority High) ###\ncp $SRC/pki_fuzzer.go $SRC/cert-manager/pkg/util/pki/\n\n# These test files break the build, so removing; the fuzz tests don\'t need them\nrm $SRC/cert-manager/pkg/controller/certificates/trigger/trigger_controller_test.go\nrm $SRC/cert-manager/pkg/controller/certificates/revisionmanager/revisionmanager_controller_test.go\n\ncd $SRC/cert-manager\ngo mod tidy\ncompile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/internal/webhook/admission/certificaterequest/approval FuzzValidate FuzzValidate_approval\ncompile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/trigger FuzzProcessItem FuzzProcessItem_trigger\ncompile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/revisionmanager FuzzProcessItem FuzzProcessItem_revisionmanager\ncompile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/issuing FuzzProcessItem FuzzProcessItem_issuing\ncompile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/readiness FuzzProcessItem FuzzProcessItem_readiness\ncompile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/keymanager FuzzProcessItem FuzzProcessItem_keymanager\ncompile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificates/requestmanager FuzzProcessItem FuzzProcessItem_requestmanager\ncompile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/vault FuzzVaultCRController FuzzVaultCRController\ncompile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/pkg/controller/certificaterequests/venafi FuzzVenafiCRController FuzzVenafiCRController\ncompile_go_fuzzer github.com/cert-manager/cert-manager/pkg/util/pki FuzzUnmarshalSubjectStringToRDNSequence FuzzUnmarshalSubjectStringToRDNSequence\ncompile_go_fuzzer github.com/cert-manager/cert-manager/pkg/util/pki FuzzDecodePrivateKeyBytes FuzzDecodePrivateKeyBytes\n\n\n\n### Dockerfile (Mode: full) ###\nFROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nCOPY build.sh pki_fuzzer.go $SRC/\nWORKDIR $SRC/cert-manager\n\n\n### pki_fuzzer.go (tail_30) ###\n\tDecodePrivateKeyBytes(data)\n\treturn 1\n}\n\n\n### project.yaml (tail_30) ###\n  - "adam@adalogics.com"      # Adam Korczynski,AdamKorcz,ADALogics\nlanguage: go\nfuzzing_engines:\n  - libfuzzer\nsanitizers:\n  - address\nmain_repo: \'https://github.com/cert-manager/cert-manager\'\n\n\n\n--- BUILD LOG TAIL ---\nials v1.19.15\ngo: downloading github.com/aws/aws-sdk-go-v2/service/route53 v1.62.6\ngo: downloading github.com/google/gnostic-models v0.7.1\ngo: downloading gopkg.in/yaml.v3 v3.0.1\ngo: downloading sigs.k8s.io/json v0.0.0-20250730193827-2d320260d730\ngo: downloading gopkg.in/inf.v0 v0.9.1\ngo: downloading go.yaml.in/yaml/v2 v2.4.3\ngo: downloading go.yaml.in/yaml/v3 v3.0.4\ngo: downloading github.com/Azure/azure-sdk-for-go/sdk/internal v1.12.0\ngo: downloading github.com/AzureAD/microsoft-authentication-library-for-go v1.6.0\ngo: downloading github.com/golang-jwt/jwt/v5 v5.3.0\ngo: downloading github.com/google/uuid v1.6.0\ngo: downloading github.com/x448/float16 v0.8.4\ngo: downloading github.com/Azure/go-ntlmssp v0.1.0\ngo: downloading github.com/go-asn1-ber/asn1-ber v1.5.8-0.20250403174932-29230038a667\ngo: downloading github.com/beorn7/perks v1.0.1\ngo: downloading github.com/cespare/xxhash/v2 v2.3.0\ngo: downloading github.com/prometheus/client_model v0.6.2\ngo: downloading github.com/prometheus/common v0.66.1\ngo: downloading github.com/prometheus/procfs v0.17.0\ngo: downloading golang.org/x/sys v0.43.0\ngo: downloading google.golang.org/protobuf v1.36.11\ngo: downloading github.com/emicklei/go-restful/v3 v3.13.0\ngo: downloading github.com/go-openapi/swag v0.23.1\ngo: downloading github.com/NYTimes/gziphandler v1.1.1\ngo: downloading github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822\ngo: downloading golang.org/x/net v0.53.0\ngo: downloading gopkg.in/evanphx/json-patch.v4 v4.13.0\ngo: downloading golang.org/x/time v0.15.0\ngo: downloading golang.org/x/term v0.42.0\ngo: downloading github.com/go-openapi/jsonpointer v0.22.5\ngo: downloading github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.22\ngo: downloading github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.23\ngo: downloading github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.8\ngo: downloading github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.22\ngo: downloading github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.22\ngo: downloading github.com/aws/aws-sdk-go-v2/service/signin v1.0.10\ngo: downloading github.com/aws/aws-sdk-go-v2/service/sso v1.30.16\ngo: downloading github.com/aws/aws-sdk-go-v2/service/ssooidc v1.35.20\ngo: downloading github.com/kylelemons/godebug v1.1.0\ngo: downloading github.com/json-iterator/go v1.1.12\ngo: downloading github.com/inconshreveable/mousetrap v1.1.0\ngo: downloading github.com/coreos/go-systemd/v22 v22.5.0\ngo: downloading go.opentelemetry.io/otel v1.43.0\ngo: downloading go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.37.0\ngo: downloading go.opentelemetry.io/otel/metric v1.43.0\ngo: downloading go.opentelemetry.io/otel/sdk v1.43.0\ngo: downloading google.golang.org/grpc v1.80.0\ngo: downloading gopkg.in/natefinch/lumberjack.v2 v2.2.1\ngo: downloading golang.org/x/tools v0.43.0\ngo: downloading github.com/google/go-querystring v1.1.0\ngo: downloading github.com/hashicorp/go-retryablehttp v0.7.8\ngo: downloading go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.37.0\ngo: downloading github.com/cenkalti/backoff/v4 v4.3.0\ngo: downloading github.com/go-jose/go-jose/v4 v4.1.4\ngo: downloading github.com/hashicorp/errwrap v1.1.0\ngo: downloading github.com/hashicorp/go-cleanhttp v0.5.2\ngo: downloading github.com/hashicorp/go-multierror v1.1.1\ngo: downloading github.com/hashicorp/go-rootcerts v1.0.2\ngo: downloading github.com/hashicorp/go-secure-stdlib/parseutil v0.2.0\ngo: downloading github.com/hashicorp/go-secure-stdlib/strutil v0.1.2\ngo: downloading github.com/hashicorp/hcl v1.0.1-vault-7\ngo: downloading github.com/mitchellh/mapstructure v1.5.0\ngo: downloading github.com/google/certificate-transparency-go v1.3.1\ngo: downloading github.com/stretchr/objx v0.5.2\ngo: downloading github.com/evanphx/json-patch/v5 v5.9.11\ngo: downloading gopkg.in/ini.v1 v1.67.1\ngo: downloading github.com/go-http-utils/headers v0.0.0-20181008091004-fed159eddc2a\ngo: downloading github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78\ngo: downloading github.com/evanphx/json-patch v5.9.0+incompatible\ngo: downloading github.com/Azure/azure-sdk-for-go/sdk/azidentity/cache v0.3.2\ngo: downloading go.uber.org/goleak v1.3.0\ngo: downloading github.com/go-openapi/testify/v2 v2.4.0\ngo: downloading github.com/go-test/deep v1.1.1\ngo: downloading github.com/hashicorp/go-hclog v1.6.3\ngo: downloading github.com/fatih/structs v1.1.0\ngo: downloading github.com/onsi/ginkgo/v2 v2.28.0\ngo: downloading github.com/onsi/gomega v1.39.1\ngo: downloading go.uber.org/zap v1.27.1\ngo: downloading github.com/Khan/genqlient v0.8.1\ngo: downloading go.uber.org/mock v0.6.0\ngo: downloading github.com/klauspost/compress v1.18.0\ngo: downloading gomodules.xyz/jsonpatch/v2 v2.5.0\ngo: downloading gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c\ngo: downloading github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c\ngo: downloading cloud.google.com/go/compute/metadata v0.9.0\ngo: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/internal/v3 v3.1.0\ngo: downloading github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/resources/armresources v1.2.0\ngo: downloading github.com/alexbrainman/sspi v0.0.0-20250919150558-7d374ff0d59e\ngo: downloading github.com/jcmturner/gokrb5/v8 v8.4.4\ngo: downloading github.com/go-ozzo/ozzo-validation/v4 v4.3.0\ngo: downloading github.com/mitchellh/go-homedir v1.1.0\ngo: downloading go.uber.org/ratelimit v0.3.1\ngo: downloading github.com/mailru/easyjson v0.9.1\ngo: downloading github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.22\ngo: downloading github.com/go-openapi/swag/jsonname v0.25.5\ngo: downloading github.com/google/cel-go v0.26.0\ngo: downloading github.com/blang/semver/v4 v4.0.0\ngo: downloading go.opentelemetry.io/otel/trace v1.43.0\ngo: downloading golang.org/x/text v0.36.0\ngo: downloading go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.67.0\ngo: downloading github.com/fsnotify/fsnotify v1.9.0\ngo: downloading sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.33.0\ngo: downloading github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd\ngo: downloading github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee\ngo: downloading k8s.io/kms v0.35.4\ngo: downloading github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0\ngo: downloading go.etcd.io/etcd/client/pkg/v3 v3.6.5\ngo: downloading go.etcd.io/etcd/client/v3 v3.6.5\ngo: downloading go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.67.0\ngo: downloading github.com/google/btree v1.1.3\ngo: downloading github.com/go-logr/stdr v1.2.2\ngo: downloading go.opentelemetry.io/proto/otlp v1.7.0\ngo: downloading google.golang.org/genproto/googleapis/rpc v0.0.0-20260401024825-9d38bb4040a9\ngo: downloading github.com/ryanuber/go-glob v1.0.0\ngo: downloading github.com/hashicorp/go-sockaddr v1.0.7\ngo: downloading github.com/hashicorp/go-secure-stdlib/cryptoutil v0.1.1\ngo: downloading github.com/golang/snappy v0.0.4\ngo: downloading github.com/pierrec/lz4 v2.6.1+incompatible\ngo: downloading gopkg.in/yaml.v2 v2.4.0\ngo: downloading github.com/go-logr/zapr v1.3.0\ngo: downloading github.com/google/gofuzz v1.2.0\ngo: downloading github.com/sosodev/duration v1.3.1\ngo: downloading github.com/gorilla/websocket v1.5.4-0.20250319132907-e064f32e3674\ngo: downloading github.com/fatih/color v1.19.0\ngo: downloading github.com/mattn/go-colorable v0.1.14\ngo: downloading github.com/mattn/go-isatty v0.0.20\ngo: downloading go.uber.org/multierr v1.11.0\ngo: downloading github.com/vektah/gqlparser/v2 v2.5.30\ngo: downloading github.com/AzureAD/microsoft-authentication-extensions-for-go/cache v0.1.1\ngo: downloading github.com/kr/pretty v0.3.1\ngo: downloading github.com/jcmturner/dnsutils/v2 v2.0.0\ngo: downloading github.com/jcmturner/gofork v1.7.6\ngo: downloading github.com/hashicorp/go-uuid v1.0.3\ngo: downloading github.com/jcmturner/goidentity/v6 v6.0.1\ngo: downloading google.golang.org/genproto/googleapis/api v0.0.0-20260319201613-d00831a3d3e7\ngo: downloading github.com/benbjohnson/clock v1.3.5\ngo: downloading go.uber.org/atomic v1.11.0\ngo: downloading github.com/josharian/intern v1.0.0\ngo: downloading go.opentelemetry.io/otel/sdk/metric v1.43.0\ngo: downloading cel.dev/expr v0.25.1\ngo: downloading github.com/stoewer/go-strcase v1.3.1\ngo: downloading go.etcd.io/etcd/api/v3 v3.6.5\ngo: downloading go.etcd.io/etcd/server/v3 v3.6.5\ngo: downloading github.com/felixge/httpsnoop v1.0.4\ngo: downloading go.opentelemetry.io/auto/sdk v1.2.1\ngo: downloading github.com/cenkalti/backoff/v5 v5.0.3\ngo: downloading github.com/coreos/go-semver v0.3.1\ngo: downloading golang.org/x/mod v0.34.0\ngo: downloading github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1\ngo: downloading github.com/pkg/errors v0.9.1\ngo: downloading github.com/Masterminds/semver/v3 v3.4.0\ngo: downloading github.com/jcmturner/aescts/v2 v2.0.0\ngo: downloading github.com/jcmturner/rpc/v2 v2.0.3\ngo: downloading github.com/hashicorp/go-hmac-drbg v0.0.0-20210916214228-a6e5a68489f6\ngo: downloading github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2\ngo: downloading github.com/rogpeppe/go-internal v1.14.1\ngo: downloading github.com/kr/text v0.2.0\ngo: downloading github.com/antlr4-go/antlr/v4 v4.13.1\ngo: downloading github.com/golang/protobuf v1.5.4\ngo: downloading github.com/googleapis/gax-go/v2 v2.21.0\ngo: downloading cloud.google.com/go/auth v0.20.0\ngo: downloading github.com/keybase/go-keychain v0.0.1\ngo: downloading github.com/go-task/slim-sprig/v3 v3.0.0\ngo: downloading github.com/gogo/protobuf v1.3.2\ngo: downloading github.com/andreyvit/diff v0.0.0-20170406064948-c7f18ee00883\ngo: downloading gonum.org/v1/gonum v0.17.0\ngo: downloading cloud.google.com/go/auth/oauth2adapt v0.2.8\ngo: downloading github.com/google/s2a-go v0.1.9\ngo: downloading golang.org/x/exp v0.0.0-20250718183923-645b1fa84792\ngo: downloading github.com/google/pprof v0.0.0-20250403155104-27863c87afa6\ngo: downloading github.com/googleapis/enterprise-certificate-proxy v0.3.14\ngo: downloading google.golang.org/genproto v0.0.0-20260319201613-d00831a3d3e7\ngo: downloading github.com/sergi/go-diff v1.3.1\ngo: downloading go.etcd.io/etcd/pkg/v3 v3.6.5\ngo: downloading go.etcd.io/bbolt v1.4.3\ngo: downloading github.com/soheilhy/cmux v0.1.5\ngo: downloading github.com/tmc/grpc-websocket-proxy v0.0.0-20220101234140-673ab2c3ae75\ngo: downloading github.com/dustin/go-humanize v1.0.1\ngo: downloading go.etcd.io/raft/v3 v3.6.0\ngo: downloading github.com/xiang90/probing v0.0.0-20221125231312-a49e3df8f510\ngo: downloading github.com/jonboulle/clockwork v0.5.0\ngo: downloading github.com/grpc-ecosystem/go-grpc-middleware/providers/prometheus v1.0.1\ngo: downloading github.com/sirupsen/logrus v1.9.3\ngo: downloading github.com/grpc-ecosystem/go-grpc-middleware v1.4.0\ngo: downloading github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.3.0\ngo: downloading github.com/frankban/quicktest v1.14.6\n+ compile_native_go_fuzzer_v2 github.com/cert-manager/cert-manager/internal/webhook/admission/certificaterequest/approval FuzzValidate FuzzValidate_approval\nrenaming _test.go file in fuzzer dir:  /src/cert-manager/internal/webhook/admission/certificaterequest/approval/certificaterequest_approval_test.go\nrenaming _test.go file in fuzzer dir:  /src/cert-manager/internal/webhook/admission/certificaterequest/approval/fuzz_test.go\nRunning go  [build -buildmode c-archive -tags gofuzz_libfuzzer,libfuzzer,gofuzz -trimpath -gcflags all=-d=libfuzzer -gcflags syscall=-d=libfuzzer=0 -gcflags runtime/cgo=-d=libfuzzer=0 -gcflags runtime/pprof=-d=libfuzzer=0 -overlay /tmp/gofuzzbuild1159701444/ossFuzzOverlayFile.json165691534 -o FuzzValidate_approval.a ./main.2910494143.go]\ngo: overlay contains a replacement for /root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.linux-amd64/src/testing/fuzz.go. Files beneath GOMODCACHE (/root/go/pkg/mod) must not be replaced.\npanic: exit status 1\n\ngoroutine 1 [running]:\nmain.main()\n\t/tmp/go-118-fuzz-build/main.go:196 +0x140e\nERROR:__main__:Building fuzzers failed.\n\n\nRESULT: failed (compilation error)'}
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=50925, Gen=283
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile"})
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/build.sh"})
+--- Tool: read_file_content (Mode: full) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile ---
+--- Stripped license header (16 lines) ---
+--- Tool: read_file_content (Mode: full) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/build.sh ---
+--- Stripped license header (17 lines) ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 4 lines from /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile (Mode: full)', 'content': 'FROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nCOPY build.sh pki_fuzzer.go $SRC/\nWORKDIR $SRC/cert-manager\n'}
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 20 lines from /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/build.sh (Mode: full)', 'content': "cp $SRC/pki_fuzzer.go $SRC/cert-manager/pkg/util/pki/\n\n# These test files break the build, so removing; the fuzz tests don't need them\nrm $SRC/cert-manager/pkg/controller/certificates/trigger/trigger_controller_test.go\nrm $SRC/cert-manager/pkg/controller/certificates/revisionmanager/revisionmanager_controller_test.go\n\ncd $SRC/cert-manage...
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=51986, Gen=244
+  - TOOL_CALL: run_container_diagnostic({"oss_fuzz_path": "/home/senchen/temp/fix_build_agent/oss-fuzz", "project_name": "cert-manager", "command": "go version && echo \"---\" && ls -la /root/go/bin/ 2>/dev/null && echo \"---\" && which go-118-fuzz-build 2>/dev/null || echo \"no go-118-fuzz-build in PATH\" && echo \"---\" && env | grep -E 'GOTOOLCHAIN|GOVERSION|GOROOT|GOPATH|GOMODCACHE' && echo \"---\" && ls /tmp/go-118-fuzz-build/ 2>/dev/null || echo \"no /tmp/go-118-fuzz-build\""})
+--- Tool: run_container_diagnostic | Project: cert-manager | Cmd: go version && echo "---" && ls -la /root/go/bin/ 2>/dev/null && echo "---" && which go-118-fuzz-build 2>/dev/null || echo "no go-118-fuzz-build in PATH" && echo "---" && env | grep -E 'GOTOOLCHAIN|GOVERSION|GOROOT|GOPATH|GOMODCACHE' && echo "---" && ls /tmp/go-118-fuzz-build/ 2>/dev/null || echo "no /tmp/go-118-fuzz-build" ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'run_container_diagnostic': {'status': 'warning', 'return_code': 2, 'output': 'usage: helper.py [-h]\n                 {generate,build_image,build_fuzzers,fuzzbench_build_fuzzers,check_build,index,run_fuzzer,fuzzbench_run_fuzzer,fuzzbench_measure,coverage,introspector,download_corpora,reproduce,shell,run_clusterfuzzlite,pull_images,check-tests,check-replay}\n                 ...\nhelper.py: error: unrecognized arguments: -c go version && echo "---" && ls -la /root/go/bin/ 2>/dev/null && echo "---" && which go-118-fuzz-buil...
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=52492, Gen=113
+  - TOOL_CALL: run_container_diagnostic({"command": "go version", "oss_fuzz_path": "/home/senchen/temp/fix_build_agent/oss-fuzz", "project_name": "cert-manager"})
+--- Tool: run_container_diagnostic | Project: cert-manager | Cmd: go version ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'run_container_diagnostic': {'status': 'warning', 'return_code': 2, 'output': 'usage: helper.py [-h]\n                 {generate,build_image,build_fuzzers,fuzzbench_build_fuzzers,check_build,index,run_fuzzer,fuzzbench_run_fuzzer,fuzzbench_measure,coverage,introspector,download_corpora,reproduce,shell,run_clusterfuzzlite,pull_images,check-tests,check-replay}\n                 ...\nhelper.py: error: unrecognized arguments: -c go version', 'truncated': False}
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=52746, Gen=112
+  - TOOL_CALL: run_container_diagnostic({"command": "ls /root/go/bin/", "oss_fuzz_path": "/home/senchen/temp/fix_build_agent/oss-fuzz", "project_name": "cert-manager"})
+--- Tool: run_container_diagnostic | Project: cert-manager | Cmd: ls /root/go/bin/ ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'run_container_diagnostic': {'status': 'warning', 'return_code': 2, 'output': 'usage: helper.py [-h]\n                 {generate,build_image,build_fuzzers,fuzzbench_build_fuzzers,check_build,index,run_fuzzer,fuzzbench_run_fuzzer,fuzzbench_measure,coverage,introspector,download_corpora,reproduce,shell,run_clusterfuzzlite,pull_images,check-tests,check-replay}\n                 ...\nhelper.py: error: unrecognized arguments: -c ls /root/go/bin/', 'truncated': False}
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=53003, Gen=156
+  - TOOL_CALL: run_container_diagnostic({"command": "go version", "oss_fuzz_path": "/home/senchen/temp/fix_build_agent/oss-fuzz", "project_name": "cert-manager"})
+--- Tool: run_container_diagnostic | Project: cert-manager | Cmd: go version ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'run_container_diagnostic': {'status': 'warning', 'return_code': 2, 'output': 'usage: helper.py [-h]\n                 {generate,build_image,build_fuzzers,fuzzbench_build_fuzzers,check_build,index,run_fuzzer,fuzzbench_run_fuzzer,fuzzbench_measure,coverage,introspector,download_corpora,reproduce,shell,run_clusterfuzzlite,pull_images,check-tests,check-replay}\n                 ...\nhelper.py: error: unrecognized arguments: -c go version', 'truncated': False}
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=53300, Gen=1325
+  - TOOL_CALL: run_container_diagnostic({"command": "cat /tmp/go-118-fuzz-build/main.go | head -200", "oss_fuzz_path": "/home/senchen/temp/fix_build_agent/oss-fuzz", "project_name": "cert-manager"})
+--- Tool: run_container_diagnostic | Project: cert-manager | Cmd: cat /tmp/go-118-fuzz-build/main.go | head -200 ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'run_container_diagnostic': {'status': 'warning', 'return_code': 2, 'output': 'usage: helper.py [-h]\n                 {generate,build_image,build_fuzzers,fuzzbench_build_fuzzers,check_build,index,run_fuzzer,fuzzbench_run_fuzzer,fuzzbench_measure,coverage,introspector,download_corpora,reproduce,shell,run_clusterfuzzlite,pull_images,check-tests,check-replay}\n                 ...\nhelper.py: error: unrecognized arguments: -c cat /tmp/go-118-fuzz-build/main.go | head -200', 'truncated': False}
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=54779, Gen=602
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile"})
+--- Tool: read_file_content (Mode: full) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile ---
+--- Stripped license header (16 lines) ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 4 lines from /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile (Mode: full)', 'content': 'FROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nCOPY build.sh pki_fuzzer.go $SRC/\nWORKDIR $SRC/cert-manager\n'}
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=55542, Gen=174
+  - TOOL_CALL: run_container_diagnostic({"command": "type compile_native_go_fuzzer_v2 2>/dev/null || declare -f compile_native_go_fuzzer_v2 2>/dev/null || echo \"not found\"", "oss_fuzz_path": "/home/senchen/temp/fix_build_agent/oss-fuzz", "project_name": "cert-manager"})
+--- Tool: run_container_diagnostic | Project: cert-manager | Cmd: type compile_native_go_fuzzer_v2 2>/dev/null || declare -f compile_native_go_fuzzer_v2 2>/dev/null || echo "not found" ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'run_container_diagnostic': {'status': 'warning', 'return_code': 2, 'output': 'usage: helper.py [-h]\n                 {generate,build_image,build_fuzzers,fuzzbench_build_fuzzers,check_build,index,run_fuzzer,fuzzbench_run_fuzzer,fuzzbench_measure,coverage,introspector,download_corpora,reproduce,shell,run_clusterfuzzlite,pull_images,check-tests,check-replay}\n                 ...\nhelper.py: error: unrecognized arguments: -c type compile_native_go_fuzzer_v2 2>/dev/null || declare -f compile_native_go_fuzzer_v2 2>/dev/null |...
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=55896, Gen=253
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/process/project/cert-manager/go.mod", "mode": "full"})
+--- Tool: read_file_content (Mode: full) called for: /home/senchen/temp/fix_build_agent/process/project/cert-manager/go.mod ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 194 lines from /home/senchen/temp/fix_build_agent/process/project/cert-manager/go.mod (Mode: full)', 'content': 'module github.com/cert-manager/cert-manager\n\ngo 1.25.7\n\n// Do not remove this comment:\n// please place any replace statements here at the top for visibility and add a\n// comment to it as to when it can be removed\n\nrequire (\n\tgithub.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6\n\tgithub.com/Azure/azure-sdk-for-go/sdk/...
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=60044, Gen=516
+  - TOOL_CALL: run_container_diagnostic({"command": "which go && go env GOROOT GOPATH GOMODCACHE GOTOOLCHAIN 2>/dev/null", "oss_fuzz_path": "/home/senchen/temp/fix_build_agent/oss-fuzz", "project_name": "cert-manager"})
+--- Tool: run_container_diagnostic | Project: cert-manager | Cmd: which go && go env GOROOT GOPATH GOMODCACHE GOTOOLCHAIN 2>/dev/null ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'run_container_diagnostic': {'status': 'warning', 'return_code': 2, 'output': 'usage: helper.py [-h]\n                 {generate,build_image,build_fuzzers,fuzzbench_build_fuzzers,check_build,index,run_fuzzer,fuzzbench_run_fuzzer,fuzzbench_measure,coverage,introspector,download_corpora,reproduce,shell,run_clusterfuzzlite,pull_images,check-tests,check-replay}\n                 ...\nhelper.py: error: unrecognized arguments: -c which go && go env GOROOT GOPATH GOMODCACHE GOTOOLCHAIN 2>/dev/null', 'truncated': False}
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=60725, Gen=587
+  - TOOL_CALL: create_or_update_file({"file_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile", "content": "FROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nRUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz \\\n    && mkdir temp-go \\\n    && rm -rf /root/.go/* \\\n    && tar -C temp-go/ -xzf go1.24.0.linux-amd64.tar.gz \\\n    && mv temp-go/go/* /root/.go/\nENV GOROOT=/root/.go\nENV PATH=/root/.go/bin:$PATH\nCOPY build.sh pki_fuzzer.go $SRC/\nWORKDIR $SRC/cert-manager\n"})
+--- Tool: create_or_update_file called for path: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile ---
+File '/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile' has been successfully created/updated.
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'create_or_update_file': {'status': 'success', 'message': "File '/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile' has been successfully created/updated."}
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=61369, Gen=208
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/build.sh"})
+--- Tool: read_file_content (Mode: full) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/build.sh ---
+--- Stripped license header (17 lines) ---
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 20 lines from /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/build.sh (Mode: full)', 'content': "cp $SRC/pki_fuzzer.go $SRC/cert-manager/pkg/util/pki/\n\n# These test files break the build, so removing; the fuzz tests don't need them\nrm $SRC/cert-manager/pkg/controller/certificates/trigger/trigger_controller_test.go\nrm $SRC/cert-manager/pkg/controller/certificates/revisionmanager/revisionmanager_controller_test.go\n\ncd $SRC/cert-manage...
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=62199, Gen=410
+  - TOOL_CALL: create_or_update_file({"file_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile", "content": "FROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nRUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz \\\n    && mkdir temp-go \\\n    && rm -rf /root/.go/* \\\n    && tar -C temp-go/ -xzf go1.24.0.linux-amd64.tar.gz \\\n    && mv temp-go/go/* /root/.go/\nENV GOROOT=/root/.go\nENV PATH=/root/.go/bin:$PATH\nENV GOTOOLCHAIN=local\nCOPY build.sh pki_fuzzer.go $SRC/\nWORKDIR $SRC/cert-manager\n"})
+--- Tool: create_or_update_file called for path: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile ---
+File '/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile' has been successfully created/updated.
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'create_or_update_file': {'status': 'success', 'message': "File '/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile' has been successfully created/updated."}
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=62666, Gen=444
+  - TOOL_CALL: create_or_update_file({"file_path": "/home/senchen/temp/fix_build_agent/process/project/cert-manager/solution.txt", "content": "---=== FILE ===---\n/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile\n---=== ORIGINAL ===---\nFROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nCOPY build.sh pki_fuzzer.go $SRC/\nWORKDIR $SRC/cert-manager\n---=== REPLACEMENT ===---\nFROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nRUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz \\\n    && mkdir temp-go \\\n    && rm -rf /root/.go/* \\\n    && tar -C temp-go/ -xzf go1.24.0.linux-amd64.tar.gz \\\n    && mv temp-go/go/* /root/.go/\nENV GOROOT=/root/.go\nENV PATH=/root/.go/bin:$PATH\nENV GOTOOLCHAIN=local\nCOPY build.sh pki_fuzzer.go $SRC/\nWORKDIR $SRC/cert-manager\n"})
+--- Tool: create_or_update_file called for path: /home/senchen/temp/fix_build_agent/process/project/cert-manager/solution.txt ---
+File '/home/senchen/temp/fix_build_agent/process/project/cert-manager/solution.txt' has been successfully created/updated.
+EVENT from author: 'fuzzing_solver_agent'
+  - TOOL_RESPONSE for 'create_or_update_file': {'status': 'success', 'message': "File '/home/senchen/temp/fix_build_agent/process/project/cert-manager/solution.txt' has been successfully created/updated."}
+EVENT from author: 'fuzzing_solver_agent'
+  - TOKEN_USAGE: Prompt=63165, Gen=88
+  - STATE_UPDATE: {'solution_plan': '[AUTONOMOUS]: The fix pins Go 1.24.0 in the Dockerfile because Go 1.25.7 stores the standard library toolchain under GOMODCACHE, and the `go-118-fuzz-build` overlay mechanism cannot replace files under GOMODCACHE, causing the build to fail with "overlay contains a replacement for ... Files beneath GOMODCACHE must not be replaced."'}
+EVENT from author: 'solution_applier_agent'
+  - TOKEN_USAGE: Prompt=61835, Gen=85
+  - TOOL_CALL: apply_patch({"solution_file_path": "/home/senchen/temp/fix_build_agent/process/project/cert-manager/solution.txt"})
+--- Tool: apply_patch (with Feedback) called ---
+EVENT from author: 'solution_applier_agent'
+  - TOOL_RESPONSE for 'apply_patch': {'status': 'error', 'modified_files_count': 0, 'total_lines_changed': 0, 'errors': ['MATCH FAILED for /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile.\n### ACTUAL CONTENT AROUND TARGET AREA ###\nFROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nRUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz \\\n    && mkdir temp-go \\\n    && rm -rf /r...
+EVENT from author: 'solution_applier_agent'
+  - TOKEN_USAGE: Prompt=62216, Gen=120
+  - TOOL_CALL: read_file_content({"file_path": "/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile", "mode": "full"})
+--- Tool: read_file_content (Mode: full) called for: /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile ---
+EVENT from author: 'solution_applier_agent'
+  - TOOL_RESPONSE for 'read_file_content': {'status': 'success', 'message': 'Read 12 lines from /home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile (Mode: full)', 'content': 'FROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nRUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz \\\n    && mkdir temp-go \\\n    && rm -rf /root/.go/* \\\n    && tar -C temp-go/ -xzf go1.24.0.linux-amd64.tar....
+EVENT from author: 'solution_applier_agent'
+  - TOKEN_USAGE: Prompt=62615, Gen=636
+  - TOOL_CALL: create_or_update_file({"file_path": "/home/senchen/temp/fix_build_agent/process/project/cert-manager/solution.txt", "content": "---=== FILE ===---\n/home/senchen/temp/fix_build_agent/oss-fuzz/projects/cert-manager/Dockerfile\n---=== ORIGINAL ===---\nFROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nRUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz \\\n    && mkdir temp-go \\\n    && rm -rf /root/.go/* \\\n    && tar -C temp-go/ -xzf go1.24.0.linux-amd64.tar.gz \\\n    && mv temp-go/go/* /root/.go/\nENV GOROOT=/root/.go\nENV PATH=/root/.go/bin:$PATH\nENV GOTOOLCHAIN=local\nCOPY build.sh pki_fuzzer.go $SRC/\nWORKDIR $SRC/cert-manager\n---=== REPLACEMENT ===---\nFROM gcr.io/oss-fuzz-base/base-builder-go@sha256:5d7001e7534834a96a9c39daecbb8740f21b2d1257fb3e9855cfdc4ae5c44602\nRUN git clone https://github.com/cert-manager/cert-manager \nRUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz \\\n    && mkdir temp-go \\\n    && rm -rf /root/.go/* \\\n    && tar -C temp-go/ -xzf go1.24.0.linux-amd64.tar.gz \\\n    && mv temp-go/go/* /root/.go/\nENV GOROOT=/root/.go\nENV PATH=/root/.go/bin:$PATH\nENV GOTOOLCHAIN=local\nCOPY build.sh pki_fuzzer.go $SRC/\nWORKDIR $SRC/cert-manager\n"})
+
+--- Interruption or error detected: ValueError ---
+--- ❌ [CRASH] Attempt 1 failed with ValueError: Tool 'create_or_update_file' not found.
+Available tools: apply_patch, read_file_content, manage_git_state
+
+Possible causes:
+  1. LLM hallucinated the function name - review agent instruction clarity
+  2. Tool not registered - verify agent.tools list
+  3. Name mismatch - check for typos
+
+Suggested fixes:
+  - Review agent instruction to ensure tool usage is clear
+  - Verify tool is included in agent.tools list
+  - Check for typos in function name ---
+--- ❌ [CRASH] Attempt 1 failed with ValueError: Tool 'create_or_update_file' not found.
+Available tools: apply_patch, read_file_content, manage_git_state
+
+Possible causes:
+  1. LLM hallucinated the function name - review agent instruction clarity
+  2. Tool not registered - verify agent.tools list
+  3. Name mismatch - check for typos
+
+Suggested fixes:
+  - Review agent instruction to ensure tool usage is clear
+  - Verify tool is included in agent.tools list
+  - Check for typos in function name ---
+--- DETAILED STACK ---
+Traceback (most recent call last):
+  File "/home/senchen/temp/fix_build_agent/agent.py", line 447, in process_single_project
+    async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id,
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/runners.py", line 505, in run_async
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/runners.py", line 493, in _run_with_trace
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/runners.py", line 722, in _exec_with_plugin
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/runners.py", line 482, in execute
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/agents/base_agent.py", line 294, in run_async
+    async for event in agen:
+  File "/home/senchen/temp/fix_build_agent/agent.py", line 170, in _run_async_impl
+    except (Exception,KeyboardInterrupt) as e: print(f"\n--- Interruption or error detected: {type(e).__name__} ---"); raise e
+  File "/home/senchen/temp/fix_build_agent/agent.py", line 168, in _run_async_impl
+    async for event in self.subject_agent.run_async(context):
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/agents/base_agent.py", line 294, in run_async
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/agents/sequential_agent.py", line 77, in _run_async_impl
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/agents/base_agent.py", line 294, in run_async
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/agents/loop_agent.py", line 100, in _run_async_impl
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/agents/base_agent.py", line 294, in run_async
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/agents/llm_agent.py", line 460, in _run_async_impl
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/flows/llm_flows/base_llm_flow.py", line 370, in run_async
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/flows/llm_flows/base_llm_flow.py", line 457, in _run_one_step_async
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/flows/llm_flows/base_llm_flow.py", line 569, in _postprocess_async
+    async for event in agen:
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/flows/llm_flows/base_llm_flow.py", line 681, in _postprocess_handle_function_calls_async
+    if function_response_event := await functions.handle_function_calls_async(
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/flows/llm_flows/functions.py", line 198, in handle_function_calls_async
+    return await handle_function_call_list_async(
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/flows/llm_flows/functions.py", line 244, in handle_function_call_list_async
+    function_response_events = await asyncio.gather(*tasks)
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/flows/llm_flows/functions.py", line 338, in _execute_single_function_call_async
+    raise tool_error
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/flows/llm_flows/functions.py", line 324, in _execute_single_function_call_async
+    tool = _get_tool(function_call, tools_dict)
+  File "/root/.venv/lib/python3.10/site-packages/google/adk/flows/llm_flows/functions.py", line 729, in _get_tool
+    raise ValueError(error_msg)
+ValueError: Tool 'create_or_update_file' not found.
+Available tools: apply_patch, read_file_content, manage_git_state
+
+Possible causes:
+  1. LLM hallucinated the function name - review agent instruction clarity
+  2. Tool not registered - verify agent.tools list
+  3. Name mismatch - check for typos
+
+Suggested fixes:
+  - Review agent instruction to ensure tool usage is clear
+  - Verify tool is included in agent.tools list
+  - Check for typos in function name
+
+--- 🧹 Tool: cleanup_environment for: cert-manager ---
+  - Cleaned: fuzz_build_log_file
+  - Cleaned: generated_prompt_file
+  - Cleaned: reflection_journal.json

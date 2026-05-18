@@ -58,6 +58,7 @@ from agent_tools import (
     append_string_to_file,
     find_and_append_file_details,
     prune_session_history,
+    run_container_diagnostic,
     save_file_tree_shallow
 )
 
@@ -206,7 +207,7 @@ run_fuzz_and_collect_log_agent = LlmAgent(
     name="run_fuzz_and_collect_log_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/run_fuzz_and_collect_log_instruction.txt"),
-    tools=[read_file_content, run_command, run_fuzz_build_and_validate, create_or_update_file],
+    tools=[read_file_content, run_fuzz_build_and_validate],
     output_key="fuzz_build_log",
 )
 
@@ -271,7 +272,7 @@ fuzzing_solver_agent = LlmAgent(
     name="fuzzing_solver_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=8129, temperature=0.7, top_p=0.8, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/fuzzing_solver_instruction.txt"),
-    tools=[read_file_content, create_or_update_file],
+    tools=[read_file_content, create_or_update_file, run_container_diagnostic],
     output_key="solution_plan",
 )
 
@@ -279,7 +280,7 @@ solution_applier_agent = LlmAgent(
     name="solution_applier_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/solution_applier_instruction.txt"),
-    tools=[apply_patch, read_file_content, manage_git_state],
+    tools=[apply_patch, read_file_content, manage_git_state, create_or_update_file],
     output_key="patch_application_result",
 )
 
@@ -484,11 +485,18 @@ async def process_single_project(
                         if resp.name == 'run_fuzz_build_and_validate':
                             val_report = resp.response.get('validation_report')
                             if val_report:
+                                # 物理更新当前 session 的 state，供后续 prompt_generate_agent 使用
                                 session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID,
                                                                             session_id=current_session_id)
                                 session.state["last_validation_report"] = val_report
+
+                                # 更新控制台打印标签，严格匹配 1/2/6 新标准
+                                s1 = val_report.get('step_1_official_list', 'N/A')
+                                s2 = val_report.get('step_2_infra_compliance', 'N/A')
+                                s6 = val_report.get('step_6_runtime_stability', 'N/A')
+
                                 print(
-                                    f"\n[1+6 Audit] Step 1: {val_report.get('step_1_static_output')} | Step 6: {val_report.get('step_6_runtime_stability')}")
+                                    f"\n[1+2+6 Audit] Step 1 (List): {s1} | Step 2 (Compliance): {s2} | Step 6 (Stability): {s6}")
 
                         if resp.name == 'update_reflection_journal':
                             s = resp.response.get('deterioration_score', 0)
@@ -536,7 +544,6 @@ async def process_single_project(
             if (time.time() - project_start_time) > TIMEOUT_LIMIT:
                 print(f"--- ❌ [TIMEOUT] Project {project_name} reached limit. ---")
                 break
-
             if is_successful:
                 break
             else:
@@ -544,20 +551,52 @@ async def process_single_project(
                 break
 
         except litellm.ContextWindowExceededError as e:
+
+            # Token 溢出：记录并尝试重试
             error_msg = f"--- 🚨 [CONTEXT LIMIT] Attempt {current_attempt_id} hit 13.1w limit: {str(e)} ---"
             print(error_msg)
             if GLOBAL_LOGGER.logger:
                 GLOBAL_LOGGER.logger.error(f"{error_msg}\n{traceback.format_exc()}")
-            if attempt + 1 >= MAX_RETRIES: break
+            if attempt + 1 >= MAX_RETRIES:
+                break
             continue
 
+
+        except (ValueError, TypeError) as e:
+            # --- 精准修复：处理 Agent 工具调用幻觉或参数错误 ---
+            error_msg = str(e)
+            # 判定是否为工具幻觉（核心特征：'Tool' + 'not found' 或 'Available tools:'）
+            if ("Tool" in error_msg and "not found" in error_msg) or "Available tools:" in error_msg:
+                category = "🤖 [HALLUCINATION]"
+                log_detail = f"Agent tried to call a non-existent or unauthorized tool: {error_msg}"
+            elif "invalid" in error_msg.lower() or "expected" in error_msg.lower():
+                # 参数格式错误
+                category = "🧩 [PARAMETER ERROR]"
+                log_detail = f"Agent provided invalid tool parameters: {error_msg}"
+            else:
+                category = "⚠️ [LOGIC ERROR]"
+                log_detail = f"Agent logic error: {error_msg}"
+            print(f"\n--- {category} Attempt {current_attempt_id} failed logic check ---")
+            print(f"Reason: {error_msg}")
+            if GLOBAL_LOGGER.logger:
+                GLOBAL_LOGGER.logger.warning(f"{category} {log_detail}")
+            full_deterioration_history.append(f"A{current_attempt_id}_FAIL:LogicError({category})")
+
+            if attempt + 1 < MAX_RETRIES:
+                cleanup_environment(project_name)
+                continue
+            else:
+                break  # 已达最大重试次数，退出
+
         except Exception as e:
+            # --- 保持现状：处理真正的物理崩溃（网络、代码 Bug、OSError 等） ---
             error_stack = traceback.format_exc()
             error_msg = f"--- ❌ [CRASH] Attempt {current_attempt_id} failed with {type(e).__name__}: {str(e)} ---"
             print(error_msg)
             if GLOBAL_LOGGER.logger:
                 GLOBAL_LOGGER.logger.error(f"{error_msg}\n--- DETAILED STACK ---\n{error_stack}")
-            if attempt + 1 >= MAX_RETRIES: break
+            if attempt + 1 >= MAX_RETRIES:
+                break
             continue
 
 
