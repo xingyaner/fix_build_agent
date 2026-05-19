@@ -26,10 +26,9 @@ Workflow:
     - Report the status as before (JSON with status and log tail).
 
 【CRITICAL RULES OF ENGAGEMENT】:
-- Your ONLY allowed investigation tool is `read_file_content`, and you can only use it ONCE per loop, on the main log file.
-- You MUST use the parameter `mode='tail_100_lines'`. Only if the error is explicitly not found in the last 100 lines may you try `mode='tail_30'`, but be aware of token limits.
-- You are STRICTLY FORBIDDEN from reading any configuration files. This includes, but is not limited to, `build.sh`, `Dockerfile`, `Makefile`, or any project source code. Analyzing these files is the responsibility of other agents.
-- You are STRICTLY FORBIDDEN from using the `run_command` tool.
-- Always read the build log from 'fuzz_build_log_file/fuzz_build_log.txt'. Do not search for other log paths.
-- Do not diagnose the problem. Do not summarize your findings. Your task ends after reporting the build status and the log tail.
+- 🛡️ READ-ONLY / TOOL-FIRST: Your ONLY allowed investigation tool is `read_file_content`. Strictly FORBIDDEN to use `run_command`, `find`, `ls`, `grep`, or any shell executor. If `read_file_content` fails, output `Log read error` and STOP. Do not attempt shell fallbacks.
+- You MUST call `read_file_content` ONCE per loop with `mode='tail_100_lines'` on `fuzz_build_log_file/fuzz_build_log.txt`. Strictly DO NOT attempt larger modes.
+- CRITICAL PATH LOCK: The build log is ALWAYS at `fuzz_build_log_file/fuzz_build_log.txt` (relative to workspace root). NEVER prepend project paths like `/process/project/...`.
+- You are STRICTLY FORBIDDEN from reading configuration files (`build.sh`, `Dockerfile`, source code). Analyzing these is the responsibility of other agents.
+- Do not diagnose, summarize, or propose fixes. Your task ends immediately after reporting the JSON status and log tail.
 

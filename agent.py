@@ -9,15 +9,15 @@ import asyncio
 import subprocess
 import litellm
 import logging
-from datetime import datetime, timedelta
-from typing import Dict, AsyncGenerator, Tuple, Optional
+from datetime import datetime
+from typing import Dict, AsyncGenerator, Tuple, Optional, List, Any
 from dotenv import load_dotenv
 from agent_tools import ENABLE_HISTORY_ENHANCEMENT, ENABLE_REFLECTION, ENABLE_ROLLBACK, ENABLE_EXPERT_KNOWLEDGE
 
 load_dotenv()
-litellm.request_timeout = 600 
-litellm.num_retries = 2   
-litellm.drop_params = True 
+litellm.request_timeout = 600
+litellm.num_retries = 2
+litellm.drop_params = True
 
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
@@ -46,6 +46,7 @@ from agent_tools import (
     save_commit_diff_to_file,
     create_or_update_file,
     run_command,
+    check_file_exists,
     extract_buggy_line_info,
     get_enhanced_history_context,
     run_fuzz_build_and_validate,
@@ -58,9 +59,9 @@ from agent_tools import (
     append_string_to_file,
     find_and_append_file_details,
     prune_session_history,
-    run_container_diagnostic,
     save_file_tree_shallow
 )
+
 
 def load_instruction_from_file(filename: str) -> str:
     try:
@@ -69,6 +70,7 @@ def load_instruction_from_file(filename: str) -> str:
     except FileNotFoundError:
         print(f"Warning: Instruction file '{filename}' not found. The agent will use an empty instruction.")
         return ""
+
 
 class AgentLogger:
     def __init__(self, log_directory: str = "agent_logs"):
@@ -160,16 +162,21 @@ class StreamTee:
     def flush(self):
         self.original_stream.flush()
 
+
 class LoggingWrapperAgent(BaseAgent):
-    name: str="LoggingWrapperAgent"
+    name: str = "LoggingWrapperAgent"
     subject_agent: BaseAgent
+
     async def _run_async_impl(self, context: InvocationContext) -> AsyncGenerator[Event, None]:
         try:
             async for event in self.subject_agent.run_async(context):
-                GLOBAL_LOGGER.log_event(event); yield event
-        except (Exception,KeyboardInterrupt) as e: print(f"\n--- Interruption or error detected: {type(e).__name__} ---"); raise e
+                GLOBAL_LOGGER.log_event(event);
+                yield event
+        except (Exception, KeyboardInterrupt) as e:
+            print(f"\n--- Interruption or error detected: {type(e).__name__} ---"); raise e
         finally:
             if not GLOBAL_LOGGER.file_handler_setup: GLOBAL_LOGGER.setup_file_handler()
+
 
 GLOBAL_LOGGER = AgentLogger()
 
@@ -179,7 +186,7 @@ DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
 USER_ID = "default_user"
 MAX_RETRIES = 3
 LLM_SEED = 42
-top_p= 0.9
+top_p = 0.9
 
 initial_setup_agent = LlmAgent(
     name="initial_setup_agent",
@@ -203,6 +210,7 @@ def exit_loop(tool_context: ToolContext):
     tool_context.actions.escalate = True
     return {"status": "SUCCESS"}
 
+
 run_fuzz_and_collect_log_agent = LlmAgent(
     name="run_fuzz_and_collect_log_agent",
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
@@ -223,11 +231,12 @@ commit_finder_agent = LlmAgent(
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.4, top_p=0.6, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/commit_finder_instruction.txt"),
     tools=[
-        read_projects_from_yaml, 
-        read_file_content, 
-        get_git_commits_around_date, 
-        save_commit_diff_to_file, 
+        read_projects_from_yaml,
+        read_file_content,
+        get_git_commits_around_date,
+        save_commit_diff_to_file,
         create_or_update_file,
+        check_file_exists,
         run_command,
         get_project_paths,
         extract_buggy_line_info,
@@ -253,26 +262,27 @@ rollback_agent = LlmAgent(
 
 prompt_generate_agent = LlmAgent(
     name="prompt_generate_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384, temperature=0.2, top_p=0.3, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384, temperature=0.2, top_p=0.3,
+                  seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/prompt_generate_instruction.txt"),
     tools=[
-        prompt_generate_tool, 
-        run_command,  
-        save_file_tree_shallow, 
-        find_and_append_file_details, 
-        read_file_content, 
-        create_or_update_file, 
+        prompt_generate_tool,
+        save_file_tree_shallow,
+        find_and_append_file_details,
+        read_file_content,
+        create_or_update_file,
         append_string_to_file,
-        query_expert_knowledge, 
+        query_expert_knowledge,
     ],
     output_key="generated_prompt",
 )
 
 fuzzing_solver_agent = LlmAgent(
     name="fuzzing_solver_agent",
-    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=8129, temperature=0.7, top_p=0.8, seed=LLM_SEED),
+    model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=8129, temperature=0.7, top_p=0.8,
+                  seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/fuzzing_solver_instruction.txt"),
-    tools=[read_file_content, create_or_update_file, run_container_diagnostic],
+    tools=[read_file_content, create_or_update_file],
     output_key="solution_plan",
 )
 
@@ -289,7 +299,7 @@ summary_agent = LlmAgent(
     model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
     instruction=load_instruction_from_file("instructions/summary_instruction.txt"),
     tools=[prune_session_history],
-    output_key=".", 
+    output_key=".",
 )
 
 loop_sub_agents = [
@@ -332,11 +342,11 @@ def cleanup_environment(project_name: str):
     print(f"--- 🧹 Tool: cleanup_environment for: {project_name} ---")
 
     paths_to_remove = [
-        "fuzz_build_log_file",    
-        "generated_prompt_file",  
-        "solution.txt",         
-        "file_tree.txt",      
-        "reflection_journal.json" 
+        "fuzz_build_log_file",
+        "generated_prompt_file",
+        "solution.txt",
+        "file_tree.txt",
+        "reflection_journal.json"
     ]
 
     for path in paths_to_remove:
@@ -351,45 +361,109 @@ def cleanup_environment(project_name: str):
                 print(f"  - Warning: Failed to clean {path}: {e}")
 
 
-def save_full_fixed_content(project_name: str, config_path: str, source_path: str):
-    
+def archive_successful_fix(project_name: str, config_path: str, source_path: str,
+                           exclude_patterns: Optional[List[str]] = None) -> Dict[str, Any]:
+    """
+    Precisely archive successfully fixed change files and Patch information based on Git Diff.
+    Replaces the original full-copy logic, greatly reducing archive size and improving readability.
+    """
+    if exclude_patterns is None:
+        exclude_patterns = [".gocache/", "vendor/", "__pycache__/", "*.pyc", "go.sum", "package-lock.json"]
+
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    target_base_dir = os.path.join(os.getcwd(), "process", "fixed", f"{project_name}-{timestamp}")
-    
-    os.makedirs(target_base_dir, exist_ok=True)
-    print(f"--- 💾 Archiving successful fix to: {target_base_dir} ---")
-    
-    repos = [("config", config_path), ("source", source_path)]
-    for label, repo_path in repos:
-        if not repo_path or not os.path.exists(repo_path): continue
+    target_dir = os.path.join(os.getcwd(), "process", "fixed", f"{project_name}-{timestamp}")
+    os.makedirs(target_dir, exist_ok=True)
+    os.makedirs(os.path.join(target_dir, "diffs"), exist_ok=True)
+
+    print(f"--- 💾 Archiving successful fix to: {target_dir} ---")
+    summary = {"config_files": [], "source_files": [], "patches_saved": 0}
+    repos = {"config": config_path, "source": source_path}
+
+    for label, repo_path in repos.items():
+        if not repo_path or not os.path.isdir(repo_path):
+            print(f"  - [{label}] Skip: path not found")
+            continue
+
         try:
-            result = subprocess.run(["git", "-C", repo_path, "show", "--name-only", "--format=", "HEAD"], capture_output=True, text=True, check=True)
-            files = [f.strip() for f in result.stdout.split('\n') if f.strip()]
-            for f_rel in files:
+            # 1. Locate the Baseline commit (created during manage_git_state initialization)
+            baseline_res = subprocess.run(
+                ["git", "-C", repo_path, "log", "--format=%H", "--grep=\\[BASELINE\\]", "-1"],
+                capture_output=True, text=True, check=True
+            )
+            baseline_sha = baseline_res.stdout.strip()
+
+            if not baseline_sha:
+                print(f"  - [{label}] Warning: [BASELINE] commit not found. Archiving HEAD snapshot only.")
+                # Fallback strategy: get all files contained in HEAD
+                res = subprocess.run(["git", "-C", repo_path, "ls-tree", "--name-only", "-r", "HEAD"],
+                                     capture_output=True, text=True, check=True)
+                changed_files = [f.strip() for f in res.stdout.split('\n') if f.strip()]
+            else:
+                # 2. Get the list of changed files
+                diff_res = subprocess.run(
+                    ["git", "-C", repo_path, "diff", "--name-only", "--diff-filter=ACMRT", baseline_sha, "HEAD"],
+                    capture_output=True, text=True, check=True
+                )
+                changed_files = [f.strip() for f in diff_res.stdout.split('\n') if f.strip()]
+
+            # Filter out noise files
+            changed_files = [f for f in changed_files if not any(pat in f for pat in exclude_patterns)]
+
+            if not changed_files:
+                print(f"  - [{label}] No relevant changes detected.")
+                continue
+
+            # 3. Copy changed files
+            for f_rel in changed_files:
                 abs_src = os.path.join(repo_path, f_rel)
-                if os.path.exists(abs_src) and os.path.isfile(abs_src):
-                    abs_dest = os.path.join(target_base_dir, f_rel)
+                if os.path.isfile(abs_src):
+                    abs_dest = os.path.join(target_dir, f_rel)
                     os.makedirs(os.path.dirname(abs_dest), exist_ok=True)
                     shutil.copy2(abs_src, abs_dest)
-                    print(f"  - [{label}] Saved: {f_rel}")
+                    summary[f"{label}_files"].append(f_rel)
+
+            # 4. Generate and save the complete Patch
+            patch_file = os.path.join(target_dir, "diffs", f"{label}_fix.patch")
+            with open(patch_file, "w", encoding="utf-8") as pf:
+                diff_ref = baseline_sha if baseline_sha else "HEAD~1"
+                subprocess.run(
+                    ["git", "-C", repo_path, "diff", diff_ref, "HEAD"],
+                    stdout=pf, check=True
+                )
+                summary["patches_saved"] += 1
+
+            # 5. Save commit logs
+            log_file = os.path.join(target_dir, "diffs", f"{label}_commits.log")
+            with open(log_file, "w", encoding="utf-8") as lf:
+                subprocess.run(
+                    ["git", "-C", repo_path, "log", "--oneline", "--graph", "--decorate", f"{baseline_sha}..HEAD"],
+                    stdout=lf, check=True
+                )
+
+            # Smart log output (avoid flooding the screen)
+            display_files = ", ".join(changed_files[:5]) + ("..." if len(changed_files) > 5 else "")
+            print(f"  - [{label}] Archived {len(changed_files)} files: [{display_files}] + patch/log")
+
         except Exception as e:
-            print(f"  - [{label}] Skip saving: {e}")
+            print(f"  - [{label}] Archiving failed: {e}")
+
+    return summary
 
 
 async def process_single_project(
-    project_info: Dict,
-    session_service: InMemorySessionService
+        project_info: Dict,
+        session_service: InMemorySessionService
 ) -> Tuple[bool, Optional[str]]:
     project_name = project_info['project_name']
     oss_fuzz_sha = project_info['sha']
     software_sha = project_info.get('software_sha', "N/A")
     original_log_path = project_info.get('original_log_path', "")
-    
+
     project_start_time = time.time()
     project_total_tokens = {"prompt": 0, "completion": 0, "total": 0}
     full_deterioration_history = []
-    
-    TIMEOUT_LIMIT = 5400  
+
+    TIMEOUT_LIMIT = 5400
     is_successful = False
     final_basic_information = None
     last_run_stats = {}
@@ -401,14 +475,14 @@ async def process_single_project(
         processed_event_ids = set()
 
         stats = {
-            "repair_rounds": 0,  
-            "build_calls": 0,   
-            "rollback_count": 0,  
-            "total_tokens": {"prompt": 0, "completion": 0, "total": 0}, 
-            "code_gen_tokens": 0,     
-            "scores": full_deterioration_history, 
-            "decision_type": "UNKNOWN", 
-            "patch_impact": {"files": 0, "lines": 0}, 
+            "repair_rounds": 0,
+            "build_calls": 0,
+            "rollback_count": 0,
+            "total_tokens": {"prompt": 0, "completion": 0, "total": 0},
+            "code_gen_tokens": 0,
+            "scores": full_deterioration_history,
+            "decision_type": "UNKNOWN",
+            "patch_impact": {"files": 0, "lines": 0},
             "heuristic_used": False,
             "attempt_id": current_attempt_id
         }
@@ -417,18 +491,18 @@ async def process_single_project(
         current_session_id = f"session_{project_name}_{int(time.time())}_at{attempt}"
         await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=current_session_id)
         session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID, session_id=current_session_id)
-        session.state["attempt_id"] = current_attempt_id 
+        session.state["attempt_id"] = current_attempt_id
 
         GLOBAL_LOGGER.set_project_context(project_name)
         runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
 
         safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
         expected_source_path = os.path.join(os.getcwd(), "process", "project", safe_name)
-        
+
         initial_input = json.dumps({
             "project_name": project_name,
             "oss_fuzz_sha": oss_fuzz_sha,
-            "error_time": project_info.get('error_time', ""),  
+            "error_time": project_info.get('error_time', ""),
             "original_log_path": original_log_path,
             "project_source_path": expected_source_path,
             "software_repo_url": project_info.get('software_repo_url', ""),
@@ -437,7 +511,7 @@ async def process_single_project(
             "sanitizer": project_info.get('sanitizer', ""),
             "architecture": project_info.get('architecture', ""),
             "base_image_digest": project_info.get('base_image_digest', ""),
-            "attempt_id": current_attempt_id 
+            "attempt_id": current_attempt_id
         })
         initial_message = types.Content(parts=[types.Part(text=initial_input)], role='user')
 
@@ -593,12 +667,12 @@ async def process_single_project(
             error_stack = traceback.format_exc()
             error_msg = f"--- ❌ [CRASH] Attempt {current_attempt_id} failed with {type(e).__name__}: {str(e)} ---"
             print(error_msg)
+            print(error_msg)
             if GLOBAL_LOGGER.logger:
                 GLOBAL_LOGGER.logger.error(f"{error_msg}\n--- DETAILED STACK ---\n{error_stack}")
             if attempt + 1 >= MAX_RETRIES:
                 break
             continue
-
 
     final_duration_min = (time.time() - project_start_time) / 60
     l_stats = last_run_stats if last_run_stats else stats
@@ -630,8 +704,10 @@ async def process_single_project(
 
     if is_successful:
         try:
-            with open("fix-success.txt", "a") as f: f.write(f"{project_name}\n")
-        except: pass
+            with open("fix-success.txt", "a") as f:
+                f.write(f"{project_name}\n")
+        except:
+            pass
 
     clean_config_path = None
     if is_successful and final_basic_information:
@@ -645,13 +721,13 @@ async def process_single_project(
                 path_match = re.search(r"(/[^ ]+/oss-fuzz/projects/[^/ \"`]+)", text_content)
                 if path_match:
                     clean_config_path = path_match.group(1).strip().rstrip('\"').rstrip('`').rstrip('.')
-        except: pass
+        except:
+            pass
 
     if clean_config_path and ("\n" in clean_config_path or " " in clean_config_path):
         clean_config_path = None
 
     return is_successful, clean_config_path
-
 
 
 async def main():
@@ -661,8 +737,15 @@ async def main():
     session_service = InMemorySessionService()
 
     projects_result = read_projects_from_yaml(YAML_FILE)
-    if projects_result['status'] == 'error':
-        print(f"Error: Could not process YAML file: {projects_result['message']}")
+
+    # 🔑 防御性检查：强制校验返回类型，防止底层工具函数误返回字符串导致主流程崩溃
+    if not isinstance(projects_result, dict):
+        print(
+            f"❌ Critical Error: read_projects_from_yaml returned invalid type ({type(projects_result)}): {projects_result}")
+        return
+
+    if projects_result.get('status') == 'error':
+        print(f"Error: Could not process YAML file: {projects_result.get('message')}")
         return
 
     projects_to_process = projects_result.get('projects', [])
@@ -671,7 +754,6 @@ async def main():
         return
 
     print(f"--- Found {len(projects_to_process)} projects to process ---")
-
 
     for project_info in projects_to_process:
         project_name = project_info['project_name']
@@ -688,27 +770,25 @@ async def main():
             "base_image_digest": project_info['base_image_digest']
         }
 
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"--- Processing Project: {project_name} (Index: {row_index}) ---")
-        print(f"{'='*60}")
+        print(f"{'=' * 60}")
 
         update_yaml_report(YAML_FILE, row_index, "Failure (Crashed/In_Progress)")
         cleanup_environment(project_name)
 
         is_successful, project_config_path = await process_single_project(initial_input_data, session_service)
 
-
         if is_successful:
-            print(f"\n{'='*20} SUCCESS PROCESSING {'='*20}")
+            print(f"\n{'=' * 20} SUCCESS PROCESSING {'=' * 20}")
             print(f"--- [SUCCESS] Project {project_name} fixed. ---")
 
             safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
             project_source_path = os.path.join(os.getcwd(), "process", "project", safe_name)
-
             try:
-                save_full_fixed_content(project_name, project_config_path, project_source_path)
+                archive_successful_fix(project_name, project_config_path, project_source_path)
             except Exception as e:
-                print(f"--- [ERROR] Failed to save fixed full content: {e} ---")
+                print(f"--- [ERROR] Failed to archive successful fix: {e} ---")
 
             if project_config_path:
                 print(f"--- Archiving config from: {project_config_path} ---")
@@ -720,11 +800,11 @@ async def main():
                     print(f"--- [SUCCESS] Config archive completed. ---")
             else:
                 print(f"--- [WARNING] Project fixed, but config path missing. Skipping archive. ---")
-            
-            print(f"{'='*60}\n")
-        
+
+            print(f"{'=' * 60}\n")
+
         elif not is_successful:
-             print(f"--- [FAILURE] Project {project_name} could not be fixed within allowed attempts. ---")
+            print(f"--- [FAILURE] Project {project_name} could not be fixed within allowed attempts. ---")
 
         result_str = "Success" if is_successful else "Failure"
         print(f"--- Project {project_name} complete. Result: {result_str} ---")
@@ -733,12 +813,9 @@ async def main():
         if update_result['status'] == 'error':
             print(f"--- [CRITICAL] Could not update YAML report: {update_result['message']} ---")
 
-        
         cleanup_environment(project_name)
 
-
     print("\n--- All projects in the queue have been processed. Workflow finished. ---")
-
 
 
 if __name__ == "__main__":
@@ -757,11 +834,12 @@ if __name__ == "__main__":
             print("✅ GitHub CLI ('gh') is installed.")
             try:
                 import requests
+
                 print("✅ 'requests' library is installed.")
             except ImportError:
                 print("\n[ERROR] Startup failed: 'requests' library is not installed.")
                 print("Please install it by running: pip install requests")
-                sys.exit(1) 
+                sys.exit(1)
             subprocess.run(["gh", "auth", "status"], check=True, capture_output=True)
             print("✅ GitHub CLI ('gh') is logged in.")
             print("\n--- Checks complete. Preparing to start the Agent... ---")

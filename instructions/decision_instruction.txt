@@ -1,17 +1,14 @@
-Your task is to determine if the build was successful.
-You must call the `read_file_content` tool with `file_path='fuzz_build_log_file/fuzz_build_log.txt'` and `mode='tail_100_lines'`.
-CRITICAL: Since the success indicator only appears at the very end of the log, reading the full log is prohibited to save tokens.
+Your task is to determine if the build was successful by checking the final validation marker.
 
-- If the value of the `content` field is "success", it means both Step 1 (Build) and Step 6 (Runtime) have passed. You must immediately call the `exit_loop` tool.
-- Otherwise, if the content contains validation failures, you must output "Build failed at 1+6 validation, continuing with the fix."
-- Otherwise, you should simply output "Build failed, continuing with the fix."
+1. You MUST call the `read_file_content` tool with `file_path='fuzz_build_log_file/fuzz_build_log.txt'` and `mode='tail_100_lines'`.
+   CRITICAL: The success/failure indicator is explicitly appended to the VERY END of the log. Reading full logs is prohibited.
 
-Your task is to determine if the build was successful.
-You must call the `read_file_content` tool with `file_path='fuzz_build_log_file/fuzz_build_log.txt'` and `mode='tail_100_lines'`.
-CRITICAL: The success indicator is explicitly appended to the VERY END of the log file.
+2. Decision Logic (Execute sequentially):
+   - IF the `content` field contains the exact string "RESULT: success":
+     It means all MANDATORY checks (Step 1, 2, and 6) passed. You MUST immediately call the `exit_loop` tool and STOP.
+   - ELSE IF the `content` field contains "RESULT: failed":
+     Extract the failed step(s) from the `1+2+6 VALIDATION SUMMARY` table. Output exactly: "Build failed at Step [X/Y], continuing with the fix."
+   - ELSE (marker missing or truncated):
+     Output: "Build status unclear, continuing with diagnostic."
 
-Decision Logic:
-- Scan the final lines of the `content` field.
-- IF the log contains the exact string "RESULT: success", it means all MANDATORY checks (Step 1, 2, and 6) have passed. You MUST immediately call the `exit_loop` tool.
-- IF the log contains "RESULT: failed", identify the failed step(s) from the 1+6 VALIDATION SUMMARY table above it, and output: "Build failed at [Step X/Y/Z], continuing with the fix."
-- Otherwise (marker missing), output: "Build failed, continuing with the fix."
+3. Never speculate or add extra text. Output only the exact decision string or call `exit_loop`.

@@ -7,10 +7,18 @@ import subprocess
 import json
 import yaml
 import openpyxl
-from collections import deque
+import tempfile
+import fnmatch
+import logging
 from datetime import datetime, timedelta
-from typing import Dict, List, Tuple, Optional, Set
+from typing import Dict, List, Tuple,Callable, Optional, Set, Any
 from google.adk.tools.tool_context import ToolContext
+from utils.path_utils import normalize_patch_path, validate_patch_path
+from utils.error_handler import format_path_error
+
+
+
+logger = logging.getLogger(__name__)
 
 ENABLE_HISTORY_ENHANCEMENT = True
 ENABLE_REFLECTION = True
@@ -21,6 +29,49 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
+GLOBAL_CHAR_BUDGET = 280000  # 硬编码
+max_lines = 2500  # 硬编码
+
+def _safe_path_wrapper(func: Callable, operation_name: str) -> Callable:
+    """内部包装器：为文件操作函数添加路径安全校验"""
+
+    def wrapper(*args, **kwargs):
+        # 提取路径参数（按位置或关键字）
+        path_arg = kwargs.get('file_path') or kwargs.get('directory_path') or \
+                   kwargs.get('source_path') or kwargs.get('destination_path') or \
+                   kwargs.get('dir_path') or (args[0] if args else None)
+
+        if not path_arg:
+            return {"status": "error", "message": f"{operation_name}: missing path argument"}
+
+        # 获取 base_dir（默认使用环境变量或当前目录）
+        base_dir = kwargs.get('base_dir', os.environ.get('PROJECT_ROOT', os.getcwd()))
+        strict_mode = kwargs.get('strict_mode', True)
+
+        # 路径规范化 + 验证
+        normalized = normalize_patch_path(path_arg, base_dir)
+        if strict_mode and not validate_patch_path(normalized, strict=True):
+            return {
+                "status": "error",
+                "message": format_path_error(
+                    original_path=path_arg,
+                    normalized_path=normalized,
+                    base_dir=base_dir,
+                    validation_passed=False,
+                    extra_info={'operation': operation_name}
+                )
+            }
+
+        # 替换原路径参数为规范化路径
+        if 'file_path' in kwargs: kwargs['file_path'] = normalized
+        if 'directory_path' in kwargs: kwargs['directory_path'] = normalized
+        if 'source_path' in kwargs: kwargs['source_path'] = normalized
+        if 'destination_path' in kwargs: kwargs['destination_path'] = normalized
+        if 'dir_path' in kwargs: kwargs['dir_path'] = normalized
+
+        return func(*args, **kwargs)
+
+    return wrapper
 
 
 def prune_session_history(tool_context: ToolContext) -> dict:
@@ -35,7 +86,6 @@ def prune_session_history(tool_context: ToolContext) -> dict:
 
         original_count = len(session.events)
         whitelist_authors = ['summary_agent', 'fuzzing_solver_agent']
-        protected_tools = {'run_container_diagnostic'}
 
         new_events = [session.events[0]]
 
@@ -45,14 +95,17 @@ def prune_session_history(tool_context: ToolContext) -> dict:
                 new_events.append(event)
             # 2. 显式保留关键诊断工具的响应，防止环境取证证据丢失
             elif hasattr(event, 'get_function_responses'):
+                critical_tools = {
+                    'run_container_diagnostic', 'extract_buggy_line_info',
+                    'get_enhanced_history_context', 'save_commit_diff_to_file'
+                }
                 keep_event = False
                 for resp in event.get_function_responses():
-                    if resp.name in protected_tools:
+                    if resp.name in critical_tools:
                         keep_event = True
                         break
                 if keep_event:
                     new_events.append(event)
-                # 其他非白名单工具响应默认丢弃
             elif not hasattr(event, 'get_function_calls'):
                 # 保留非工具调用的普通文本/状态事件
                 new_events.append(event)
@@ -673,12 +726,20 @@ def update_yaml_report(file_path: str, row_index: int, result: str) -> Dict[str,
         return {'status': 'error', 'message': message}
 
 
-def get_git_commits_around_date(project_source_path: str, error_date: str, max_limit: int = 300) -> Dict:
+def get_git_commits_around_date(
+    project_source_path: str,
+    error_date: str,
+    max_limit: int = 300,
+    **kwargs  # Catch unexpected params
+) -> Dict:
     """
     Retrieve ALL commits within a ±24h time window for comprehensive pre-screening.
     Optimized: Returns lightweight metadata (SHA/Date/Message) only.
     File changes & diffs are deferred to Phase 3 on-demand extraction to save time & tokens.
     """
+    if 'count' in kwargs:
+        raise ValueError("get_git_commits_around_date does not accept 'count' parameter. Use 'max_limit' instead.")
+
     if not ENABLE_HISTORY_ENHANCEMENT:
         print(f"--- [ABLATION] Temporal commit search is DISABLED. ---")
         return {'status': 'success', 'commits': [], 'total_count': 0}
@@ -725,11 +786,24 @@ def get_git_commits_around_date(project_source_path: str, error_date: str, max_l
             parts = line.split('|', 2)
             if len(parts) < 3: continue
             sha, date, msg = parts
-            # 🔑 仅返回轻量元数据，不在此处触发 git show 查询文件变更
-            commits.append({"sha": sha, "date": date, "message": msg})
+            # 🔑
+            # 31/5000
+            # Only return lightweight metadata. Do not trigger the git show query for file changes here.
+            commits.append({
+                "sha": sha,  # Full 40-char commit SHA
+                "date": date,  # Formatted: YYYY-MM-DD HH:MM:SS
+                "message": msg,  # First line of commit message (truncated if needed)
+                "is_merge": msg.startswith("Merge"),  # Quick merge detection for Agent filtering
+            })
 
         print(f"--- Found {len(commits)} commits in window. Ready for Agent pre-screening. ---")
-        return {'status': 'success', 'commits': commits, 'total_count': len(commits)}
+        return {
+            'status': 'success',
+            'commits': commits,  # List[Dict{sha, date, message, is_merge}]
+            'total_count': len(commits),
+            'note': "File changes & diffs deferred to Phase 3 on-demand extraction via save_commit_diff_to_file/get_enhanced_history_context"
+            # Help Agent understand workflow
+        }
     except Exception as e:
         return {'status': 'error', 'message': f"Failed to get commits: {e}"}
 
@@ -780,13 +854,39 @@ def read_projects_from_yaml(file_path: str) -> Dict:
     """
     Read project information, including state field checks and boolean compatibility.
     """
+    import os, yaml
+    from datetime import datetime
+    from utils.path_utils import normalize_patch_path, validate_patch_path
+    from utils.error_handler import format_path_error
+
     print(f"--- Tool: read_projects_from_yaml called for: {file_path} ---")
-    if not os.path.exists(file_path):
-        return {'status': 'error', 'message': f"YAML file not found at '{file_path}'."}
+
+    # 🔑 1. 核心配置放行：projects.yaml 属于受信任的根目录入口文件，跳过子目录白名单限制
+    if file_path == "projects.yaml":
+        target_path = file_path
+    else:
+        normalized_path = normalize_patch_path(file_path)
+        if not validate_patch_path(normalized_path):
+            return {
+                'status': 'error',
+                'message': format_path_error(
+                    original_path=file_path,
+                    normalized_path=normalized_path,
+                    base_dir=os.environ.get('PROJECT_ROOT', os.getcwd()),
+                    validation_passed=False,
+                    extra_info={'operation': 'read_projects_from_yaml'}
+                )
+            }
+        target_path = normalized_path
+
+    # 🔑 2. 统一返回字典结构（修复原代码返回字符串导致 main() 解析崩溃的问题）
+    if not os.path.exists(target_path):
+        return {'status': 'error', 'message': f"YAML file not found at '{target_path}'."}
 
     projects_to_run = []
+    error_time_str = ""
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(target_path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
 
         if not isinstance(data, list):
@@ -807,10 +907,11 @@ def read_projects_from_yaml(file_path: str) -> Dict:
                     original_log_path = ""
 
                     if fuzzing_build_error_log_url.startswith("http"):
+                        from agent_tools import download_remote_log
                         download_result = download_remote_log(fuzzing_build_error_log_url, project_name, error_time_str)
                         if download_result['status'] == 'success':
                             original_log_path = download_result['local_path']
-                    
+
                     if not original_log_path and os.path.isdir(log_dir):
                         try:
                             y, m, d = map(int, error_time_str.replace('.', '-').split('-'))
@@ -827,7 +928,8 @@ def read_projects_from_yaml(file_path: str) -> Dict:
                             if candidates:
                                 candidates.sort(key=lambda x: x[0])
                                 original_log_path = os.path.abspath(os.path.join(log_dir, candidates[0][1]))
-                        except Exception: pass
+                        except Exception:
+                            pass
 
                     if original_log_path:
                         project_info = {
@@ -854,6 +956,8 @@ def read_projects_from_yaml(file_path: str) -> Dict:
     except Exception as e:
         return {'status': 'error', 'message': f"Failed to read YAML: {e}"}
 
+
+
 def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
     """
     Perform a deep clean of the specified Git repository with automated permission management.
@@ -869,10 +973,14 @@ def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
         abs_repo_path = os.path.abspath(repo_path)
         uid, gid = os.getuid(), os.getgid()
 
-        subprocess.run([
+        result = subprocess.run([
             "docker", "run", "--rm", "-v", f"{abs_repo_path}:/src",
             "alpine", "chown", "-R", f"{uid}:{gid}", "/src"
-        ], capture_output=True, check=False)
+        ], capture_output=True, text=True, check=False)
+
+        if result.returncode != 0:
+            import logging
+            logging.warning(f"Permission fix via Docker failed: {result.stderr.strip()}")
 
         os.chdir(abs_repo_path)
         subprocess.run(["git", "reset", "--hard", "HEAD"], capture_output=True, text=True, check=True)
@@ -993,27 +1101,49 @@ def read_projects_from_excel(file_path: str) -> Dict:
         return {'status': 'error', 'message': f"Failed to read or parse Excel file: {e}"}
 
 
-def run_command(command: str) -> Dict[str, str]:
-    """
-    Executes a shell command and returns its output. This is a dangerous tool; use with caution.
-    """
+def run_command(command: str, timeout: int = 30, max_output_chars: int = 4000) -> Dict:
+    """Execute commands safely, compatible with LLM common Shell syntax, enforce zero-deletion policy, return structured results"""
+    import subprocess, re
     print(f"--- Tool: run_command called with: '{command}' ---")
+
+    # 🔒 Strict zero-deletion policy & high-risk blocking (use word boundary regex to prevent bypass via spaces/case/nesting)
+    # Explicitly prohibited: any file/directory deletion, permission tampering, system-level modification, network download, command injection
+    deletion_patterns = r'\b(?:rm|rmdir|unlink|del|shred|erase)\b'
+    dangerous_patterns = r'\b(?:wget|curl|apt-get|apt|yum|sudo|su|chmod|chown|mkfs|dd|passwd|exec|eval)\b|>\s*/etc/|>\s*/var/|\$\('
+
+    if re.search(f'({deletion_patterns}|{dangerous_patterns})', command, re.IGNORECASE):
+        return {
+            "status": "error",
+            "message": "🚫 Command blocked: Deletion/unsafe operations are strictly forbidden. Use structured discovery tools instead (e.g., list_files_in_dir, read_file_content)."
+        }
+
     try:
-        result = subprocess.run(
-            command,
-            shell=True,
-            capture_output=True,
-            text=True,
-            check=True,
-            encoding='utf-8'
+        # ✅ Use /bin/bash -c to support LLM common syntax such as pipes (|), redirections (>), error suppression (2>/dev/null)
+        res = subprocess.run(
+            ['/bin/bash', '-c', command],
+            capture_output=True, text=True, timeout=timeout, check=False
         )
-        output = f"STDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}"
-        return {"status": "success", "output": output}
-    except subprocess.CalledProcessError as e:
-        output = f"Error executing command.\nReturn Code: {e.returncode}\nSTDOUT:\n{e.stdout}\nSTDERR:\n{e.stderr}"
-        return {"status": "error", "message": output}
+
+        out = (res.stdout + res.stderr).strip()
+        truncated = False
+        if len(out) > max_output_chars:
+            out = out[:max_output_chars] + f"\n[⚠️ OUTPUT TRUNCATED: {len(out) - max_output_chars} chars hidden]"
+            truncated = True
+
+        # 🎯 Unified status semantics: non-zero return code is explicitly marked as error to avoid Agent confusion
+        return {
+            "status": "success" if res.returncode == 0 else "error",
+            "return_code": res.returncode,
+            "output": out,
+            "truncated": truncated,
+            "hint": "Tip: Use `list_files_in_dir` for exploration, `read_file_content` for file inspection. Avoid complex shell chains." if res.returncode != 0 else ""
+        }
+    except subprocess.TimeoutExpired:
+        return {"status": "error",
+                "message": f"Command timed out after {timeout}s. Try `read_file_content` with mode='tail_N' or use `list_files_in_dir`."}
     except Exception as e:
-        return {"status": "error", "message": f"An unexpected error occurred: {e}"}
+        return {"status": "error", "message": f"Execution failed: {str(e)}"}
+
 
 def truncate_prompt_file(file_path: str, max_lines: int = 2000) -> Dict[str, str]:
     """
@@ -1047,30 +1177,76 @@ def truncate_prompt_file(file_path: str, max_lines: int = 2000) -> Dict[str, str
         print(f"--- ERROR: {message} ---")
         return {"status": "error", "message": message}
 
+
+from datetime import datetime
+import os
+import shutil
+import subprocess
+from typing import Dict
+
 def archive_fixed_project(project_name: str, project_config_path: str) -> Dict[str, str]:
     """
-    Archives the configuration directory of a successfully fixed project into a 'success-fix-project' directory.
+    Precisely archive changes in the OSS-Fuzz configuration directory based on Git Diff, for PR submission and auditing.
     """
     print(f"--- Tool: archive_fixed_project called for: {project_name} ---")
     try:
         base_success_dir = "success-fix-project"
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
-
         destination_dir = os.path.join(base_success_dir, f"{safe_project_name}_{timestamp}")
 
         if not os.path.isdir(project_config_path):
             return {"status": "error", "message": f"Source config path does not exist: {project_config_path}"}
 
-        shutil.copytree(project_config_path, destination_dir)
+        os.makedirs(destination_dir, exist_ok=True)
 
-        message = f"Successfully archived config files for '{project_name}' to '{destination_dir}'."
-        print(f"--- {message} ---")
-        return {"status": "success", "message": message}
+        # Try to get the BASELINE commit to compute diff
+        baseline_sha = ""
+        try:
+            res = subprocess.run(
+                ["git", "-C", project_config_path, "log", "--format=%H", "--grep=\\[BASELINE\\]", "-1"],
+                capture_output=True, text=True, check=True
+            )
+            baseline_sha = res.stdout.strip()
+        except Exception:
+            pass
+
+        changed_files = []
+        if baseline_sha:
+            try:
+                res = subprocess.run(
+                    ["git", "-C", project_config_path, "diff", "--name-only", "--diff-filter=ACMRT", baseline_sha, "HEAD"],
+                    capture_output=True, text=True, check=True
+                )
+                changed_files = [f.strip() for f in res.stdout.split('\n') if f.strip()]
+            except Exception:
+                pass
+
+        # If no diff found or acquisition failed, fall back to copying the entire directory
+        if not changed_files:
+            shutil.copytree(project_config_path, destination_dir, dirs_exist_ok=True)
+            msg = f"Archived full config dir for '{project_name}' (no baseline diff found)."
+        else:
+            # Only copy changed files + patch
+            for f_rel in changed_files:
+                src = os.path.join(project_config_path, f_rel)
+                dst = os.path.join(destination_dir, f_rel)
+                if os.path.exists(src):
+                    os.makedirs(os.path.dirname(dst), exist_ok=True)
+                    shutil.copy2(src, dst)
+
+            # Generate patch file
+            patch_path = os.path.join(destination_dir, "fix.patch")
+            with open(patch_path, "w", encoding="utf-8") as f:
+                subprocess.run(["git", "-C", project_config_path, "diff", baseline_sha, "HEAD"], stdout=f, check=True)
+
+            msg = f"Archived {len(changed_files)} changed config files + patch for '{project_name}'."
+
+        print(f"--- {msg} --> {destination_dir} ---")
+        return {"status": "success", "message": msg}
     except Exception as e:
-        message = f"Failed to archive project '{project_name}': {e}"
-        print(f"--- ERROR: {message} ---")
-        return {"status": "error", "message": message}
+        return {"status": "error", "message": f"Failed to archive project '{project_name}': {e}"}
+
 
 def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[str] = None) -> Dict[str, str]:
     """
@@ -1226,15 +1402,21 @@ def checkout_oss_fuzz_commit(sha: str) -> Dict[str, str]:
         os.chdir(original_path)
 
 
-def apply_patch(solution_file_path: str) -> dict:
+def apply_patch(solution_file_path: str, **kwargs) -> dict:
     """
     Apply code patches and return detailed feedback.
     Optimized: Added whitespace-tolerant fuzzy matching for ORIGINAL block alignment.
+    Optimized: Path normalization and whitelist validation for file operations.
     """
-    import os, difflib, re
+    import os, difflib, re, logging
+    from utils.path_utils import normalize_patch_path, validate_patch_path
+    from utils.error_handler import format_path_error
+
+    logger = logging.getLogger(__name__)
+
     print(f"--- Tool: apply_patch (with Feedback) called ---")
 
-    # 🔑 优化 1：将辅助函数移至循环外，避免重复定义
+    # 🔑 Optimization 1: Move helper functions outside the loop to avoid repeated definitions
     def normalize_whitespace(text: str) -> str:
         if not text: return ""
         lines = text.splitlines()
@@ -1251,20 +1433,42 @@ def apply_patch(solution_file_path: str) -> dict:
         modified_files = set()
         errors = []
 
+        # === 🔴 Path Normalization Configuration ===
+        base_dir = kwargs.get('base_dir', os.environ.get('PROJECT_ROOT', '/home/senchen/temp/fix_build_agent'))
+        strict_mode = kwargs.get('strict_mode', True)
+
         for block in patch_blocks:
             parts = block.split('---=== ORIGINAL ===---')
-            file_path = parts[0].strip()
+            original_target = parts[0].strip()
             content_parts = parts[1].split('---=== REPLACEMENT ===---')
             original_block = content_parts[0].strip("\n\r")
             replacement_block = content_parts[1].strip("\n\r")
 
-            # 🔑 优化 2：增加空块防护
+            # 🔑 Optimization 2: Add empty block protection
             if not original_block:
-                errors.append(f"Empty ORIGINAL block for: {file_path}")
+                errors.append(f"Empty ORIGINAL block for: {original_target}")
                 continue
 
+            # === 🔴 Start of Path Normalization Logic ===
+            file_path = normalize_patch_path(original_target, base_dir)
+
+            # Whitelist validation
+            if strict_mode and not validate_patch_path(file_path, strict=True):
+                logger.error(format_path_error(
+                    original_path=original_target,
+                    normalized_path=file_path,
+                    base_dir=base_dir,
+                    validation_passed=False,
+                    extra_info={'operation': 'apply_patch', 'patch_index': len(modified_files)}
+                ))
+                errors.append(f"Path validation failed for: {original_target}")
+                continue
+
+            logger.debug(f"[PATH_DEBUG] apply_patch: '{original_target}' -> '{file_path}'")
+            # === 🔴 End of Path Normalization Logic ===
+
             if not os.path.exists(file_path):
-                errors.append(f"File not found: {file_path}")
+                errors.append(f"File not found: {original_target} (resolved: {file_path})")
                 continue
             with open(file_path, 'r', encoding='utf-8') as f:
                 file_content = f.read()
@@ -1289,7 +1493,7 @@ def apply_patch(solution_file_path: str) -> dict:
                 orig_len = len(original_lines)
 
                 match_start = None
-                # 滑动窗口匹配（常规文件 <5000 行时性能无瓶颈）
+                # Sliding window matching (no performance bottleneck for regular files < 5000 lines)
                 for i in range(len(file_lines) - orig_len + 1):
                     if normalize_whitespace('\n'.join(file_lines[i:i + orig_len])) == original_normalized:
                         match_start = i
@@ -1319,7 +1523,9 @@ def apply_patch(solution_file_path: str) -> dict:
                 actual_context = "\n".join(lines[max(0, idx - 5):min(len(lines), idx + 10)])
 
             errors.append(
-                f"MATCH FAILED for {file_path}.\n"
+                f"MATCH FAILED for {original_target}.\n"
+                f"### RESOLVED PATH: {file_path}\n"
+                f"### BASE DIR: {base_dir}\n"
                 f"### ACTUAL CONTENT AROUND TARGET AREA ###\n"
                 f"{actual_context}\n"
                 f"### TIP: Ensure ORIGINAL block matches EXACTLY (whitespace-tolerant matching was attempted) ###"
@@ -1333,6 +1539,7 @@ def apply_patch(solution_file_path: str) -> dict:
         }
     except Exception as e:
         return {"status": "error", "message": str(e)}
+
 
 def save_file_tree(directory_path: str, output_file: Optional[str] = None) -> dict:
     """
@@ -1423,26 +1630,66 @@ def save_file_tree_shallow(directory_path: str, max_depth: int, output_file: Opt
         print(error_message)
         return {"status": "error", "message": error_message}
 
-def find_and_append_file_details(directory_path: str, search_keyword: str, output_file: Optional[str] = None) -> dict:
+
+def find_and_append_file_details(
+        directory_path: str,
+        search_keyword: str,
+        output_file: Optional[str] = None,
+        base_dir: Optional[str] = None,
+        strict_mode: bool = True
+) -> dict:
     """
     Finds a file or directory by its name or partial path and appends its detailed structure to a file.
+    Optimized: Path normalization + whitelist validation for security.
     """
-    print(f"--- Tool: find_and_append_file_details called for path: {directory_path} with keyword: '{search_keyword}' ---")
-    if not os.path.isdir(directory_path):
+    from utils.path_utils import normalize_patch_path, validate_patch_path
+    from utils.error_handler import format_path_error
+
+    print(
+        f"--- Tool: find_and_append_file_details called for path: {directory_path} with keyword: '{search_keyword}' ---")
+
+    # 🔐 路径安全校验
+    if base_dir is None:
+        base_dir = os.environ.get('PROJECT_ROOT', os.getcwd())
+
+    normalized_dir = normalize_patch_path(directory_path, base_dir)
+    if strict_mode and not validate_patch_path(normalized_dir, strict=True):
+        return {
+            "status": "error",
+            "message": format_path_error(
+                original_path=directory_path,
+                normalized_path=normalized_dir,
+                base_dir=base_dir,
+                validation_passed=False,
+                extra_info={'operation': 'find_and_append_file_details'}
+            )
+        }
+
+    if not os.path.isdir(normalized_dir):
         error_message = f"Error: The provided path '{directory_path}' is not a valid directory."
         print(error_message)
         return {"status": "error", "message": error_message}
+
+    # 输出文件路径也需规范化
     if output_file is None:
         output_dir = "generated_prompt_file"
         final_output_path = os.path.join(output_dir, "file_tree.txt")
     else:
-        final_output_path = output_file
+        final_output_path = normalize_patch_path(output_file, base_dir)
+        if strict_mode and not validate_patch_path(final_output_path, strict=False):  # 输出文件可宽松验证
+            return {
+                "status": "error",
+                "message": f"Invalid output path: {output_file}"
+            }
+
     output_dir = os.path.dirname(final_output_path)
     try:
         if output_dir:
             os.makedirs(output_dir, exist_ok=True)
         found_paths = []
-        for root, dirs, files in os.walk(directory_path):
+        for root, dirs, files in os.walk(normalized_dir):  # ✅ 使用规范化路径
+            # 防止符号链接递归（安全加固）
+            dirs[:] = [d for d in dirs if not os.path.islink(os.path.join(root, d))]
             all_entries = dirs + files
             for entry in all_entries:
                 full_path = os.path.join(root, entry)
@@ -1458,7 +1705,7 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
             return {"status": "success", "message": message}
         details_to_append = [f"\n\n--- Detailed query result for '{search_keyword}' ---"]
         for path in found_paths:
-            relative_path = os.path.relpath(path, directory_path)
+            relative_path = os.path.relpath(path, normalized_dir)
             details_to_append.append(f"\n# Matched path: {relative_path}")
             if os.path.isdir(path):
                 def _build_tree_recursive(sub_path, prefix=""):
@@ -1468,7 +1715,9 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
                         entries = []
                     pointers = ["├── "] * (len(entries) - 1) + ["└── "]
                     for pointer, entry in zip(pointers, entries):
-                        details_to_append.append(f"{prefix}{pointer}{'📁' if os.path.isdir(os.path.join(sub_path, entry)) else '📄'} {entry}")
+                        details_to_append.append(
+                            f"{prefix}{pointer}{'📁' if os.path.isdir(os.path.join(sub_path, entry)) else '📄'} {entry}")
+
                 _build_tree_recursive(path)
             else:
                 details_to_append.append(f"📄 {os.path.basename(path)}")
@@ -1483,7 +1732,7 @@ def find_and_append_file_details(directory_path: str, search_keyword: str, outpu
         return {"status": "error", "message": error_message}
 
 
-def read_file_content(file_path: str, mode: str = "full") -> dict:
+def read_file_content(file_path: str, mode: str = "full", base_dir: str = None) -> dict:
     """
     Read file content with mode support.
     Optimized: Clear error messages with path guidance when file not found.
@@ -1491,54 +1740,119 @@ def read_file_content(file_path: str, mode: str = "full") -> dict:
     import os
     print(f"--- Tool: read_file_content (Mode: {mode}) called for: {file_path} ---")
 
-    # --- Path Pre-check: Return clear error + guidance if file not found ---
-    if not os.path.exists(file_path):
+    # 🔑 路径规范化：统一以项目根目录为基准
+    if base_dir is None:
+        base_dir = os.path.join(os.getcwd())  # 默认当前工作目录
+
+    # 智能解析：相对路径自动补全，绝对路径保持原样
+    if not os.path.isabs(file_path):
+        resolved_path = os.path.normpath(os.path.join(base_dir, file_path))
+    else:
+        resolved_path = file_path
+
+    # --- Path Pre-check with Enhanced Guidance ---
+    if not os.path.exists(resolved_path):
+        # 智能路径建议生成
+        suggestions = []
+
+        # 模式 1: OSS-Fuzz 项目配置路径
+        if 'oss-fuzz/projects/' in file_path:
+            proj_name = file_path.split('oss-fuzz/projects/')[-1].split('/')[0]
+            suggestions.append(f"✓ Try relative: 'oss-fuzz/projects/{proj_name}/build.sh'")
+            suggestions.append(f"✓ Or check: './oss-fuzz/projects/{proj_name}/'")
+
+        # 模式 2: 第三方源码路径
+        elif 'process/project/' in file_path:
+            proj_name = file_path.split('process/project/')[-1].split('/')[0]
+            suggestions.append(f"✓ Try relative: 'process/project/{proj_name}/go.mod'")
+
+        # 模式 3: 标准日志路径
+        elif 'fuzz_build_log' in file_path:
+            suggestions.append("✓ Standard log path: 'fuzz_build_log_file/fuzz_build_log.txt'")
+
         path_guidance = (
-            "\n【PATH GUIDANCE】\n"
-            "• OSS-Fuzz project configs (Dockerfile, build.sh, project.yaml):\n"
-            "  → /fix_build_agent/oss-fuzz/projects/<project_name>/\n"
-            "• Third-party source code:\n"
-            "  → /fix_build_agent/process/project/<project_name>/\n"
-            "• Build logs:\n"
-            "  → fuzz_build_log_file/fuzz_build_log.txt\n"
-            "• Generated prompts / commit analysis:\n"
-            "  → generated_prompt_file/\n"
-            "Please verify the absolute path and retry."
+            "\n【PATH GUIDANCE - Prefer Relative Paths】\n"
+            "  Recommended patterns (relative to project root):\n"
+            "  • OSS-Fuzz configs:  'oss-fuzz/projects/<name>/build.sh'\n"
+            "  • Source code:       'process/project/<name>/go.mod'\n"
+            "  • Build logs:        'fuzz_build_log_file/fuzz_build_log.txt'\n"
+            "  • Generated files:   'generated_prompt_file/*.txt'\n"
+            "\n【CURRENT RESOLUTION】\n"
+            f"  Input:     {file_path}\n"
+            f"  Resolved:  {resolved_path}\n"
+            f"  Base Dir:  {base_dir}\n"
+            f"  Exists:    {os.path.exists(resolved_path)}\n"
         )
+        if suggestions:
+            path_guidance += "\n【SUGGESTED FIXES】\n" + "\n".join(suggestions)
+
         return {
             "status": "error",
             "message": f"File not found: {file_path}{path_guidance}"
         }
 
-    # --- Original read logic (unchanged) ---
+    # --- 原有读取逻辑保持不变 ---
     try:
-        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+        with open(resolved_path, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()
 
-        if mode == "tail_30":
-            lines = content.splitlines()
-            content = '\n'.join(lines[-30:])
-        elif mode == "tail_50":
-            lines = content.splitlines()
-            content = '\n'.join(lines[-50:])
+        if mode == "full":
+            pass  # 返回完整内容
         elif mode == "tail_100_lines":
-            lines = content.splitlines()
-            content = '\n'.join(lines[-100:])
-        # mode == "full": return full content
-
-        return {
-            "status": "success",
-            "message": f"Read {len(content.splitlines())} lines from {file_path} (Mode: {mode})",
-            "content": content
-        }
+            content = "".join(content.splitlines()[-100:])
+        elif mode == "tail_50":
+            content = "".join(content.splitlines()[-50:])
+        elif mode == "tail_30":
+            content = "".join(content.splitlines()[-30:])
+        elif mode == "head_50":
+            content = "".join(content.splitlines()[:50])
+        return {"status": "success", "message": f"Read {len(content.splitlines())} lines from {file_path}",
+                "content": content}
+        return {"status": "success", "message": f"Read {file_path}", "content": content}
     except Exception as e:
         return {"status": "error", "message": f"Failed to read {file_path}: {str(e)}"}
 
 
-def create_or_update_file(file_path: str, content: str) -> dict:
+def create_or_update_file(file_path: str, content: str, **kwargs) -> dict:
     """
     Creates a new file and writes content to it, or overwrites an existing file.
+    Optimized: Path normalization, whitelist validation, and enhanced error reporting.
     """
+    import os, logging
+    from utils.path_utils import normalize_patch_path, validate_patch_path
+    from utils.error_handler import format_path_error
+
+    logger = logging.getLogger(__name__)
+
+    # === 🔴 Start of Path Normalization Logic ===
+    base_dir = kwargs.get('base_dir', os.environ.get('PROJECT_ROOT', '/home/senchen/temp/fix_build_agent'))
+    original_path = file_path
+
+    # 1. Normalize the path (relative path → resolved to relative path based on base_dir, absolute path → kept after normalization)
+    normalized_path = normalize_patch_path(file_path, base_dir)
+
+    # 2. Whitelist validation (optional, enabled by default)
+    strict_mode = kwargs.get('strict_mode', True)
+    if strict_mode and not validate_patch_path(normalized_path, strict=True):
+        error_msg = format_path_error(
+            original_path=original_path,
+            normalized_path=normalized_path,
+            base_dir=base_dir,
+            validation_passed=False,
+            extra_info={'operation': 'create_or_update_file'}
+        )
+        return {
+            "status": "error",
+            "message": f"Path validation failed:\n{error_msg}"
+        }
+
+    # 3. Debug log (🟢 Low priority enhancement)
+    logger.debug(f"[PATH_DEBUG] create_or_update_file: '{original_path}' -> '{normalized_path}'")
+
+    # 4. Continue execution with the normalized path
+    file_path = normalized_path
+    # === 🔴 End of Path Normalization Logic ===
+
     print(f"--- Tool: create_or_update_file called for path: {file_path} ---")
     try:
         directory = os.path.dirname(file_path)
@@ -1546,64 +1860,157 @@ def create_or_update_file(file_path: str, content: str) -> dict:
             os.makedirs(directory, exist_ok=True)
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
-        message = f"File '{file_path}' has been successfully created/updated."
+        message = f"File '{original_path}' has been successfully created/updated."
         print(message)
         return {"status": "success", "message": message}
     except Exception as e:
-        message = f"An error occurred while creating or updating file '{file_path}': {str(e)}"
+        message = f"An error occurred while creating or updating file '{original_path}': {str(e)}"
         print(message)
         return {"status": "error", "message": message}
 
-def append_file_to_file(source_path: str, destination_path: str) -> dict:
+
+def append_file_to_file(
+        source_path: str,
+        destination_path: str,
+        base_dir: Optional[str] = None,
+        strict_mode: bool = True
+) -> dict:
     """
     Reads the entire content of a source file and appends it to the end of a destination file.
+    Optimized: Path normalization + whitelist validation for both paths.
     """
+    from utils.path_utils import normalize_patch_path, validate_patch_path
+    from utils.error_handler import format_path_error
+
     print(f"--- Tool: append_file_to_file called. Source: '{source_path}', Destination: '{destination_path}' ---")
-    if not os.path.isfile(source_path):
-        return {"status": "error", "message": f"Error: Source file '{source_path}' does not exist or is not a valid file."}
-    if os.path.isdir(destination_path):
-        return {"status": "error", "message": f"Error: Destination path '{destination_path}' is a directory and cannot be an append target."}
-    if os.path.abspath(source_path) == os.path.abspath(destination_path):
+
+    if base_dir is None:
+        base_dir = os.environ.get('PROJECT_ROOT', os.getcwd())
+
+    # 🔐 双路径校验
+    normalized_source = normalize_patch_path(source_path, base_dir)
+    normalized_dest = normalize_patch_path(destination_path, base_dir)
+
+    if strict_mode:
+        if not validate_patch_path(normalized_source, strict=True):
+            return {
+                "status": "error",
+                "message": format_path_error(
+                    original_path=source_path,
+                    normalized_path=normalized_source,
+                    base_dir=base_dir,
+                    validation_passed=False,
+                    extra_info={'operation': 'append_file_to_file', 'path_type': 'source'}
+                )
+            }
+        if not validate_patch_path(normalized_dest, strict=True):
+            return {
+                "status": "error",
+                "message": format_path_error(
+                    original_path=destination_path,
+                    normalized_path=normalized_dest,
+                    base_dir=base_dir,
+                    validation_passed=False,
+                    extra_info={'operation': 'append_file_to_file', 'path_type': 'destination'}
+                )
+            }
+
+    if not os.path.isfile(normalized_source):
+        return {"status": "error",
+                "message": f"Error: Source file '{source_path}' does not exist or is not a valid file."}
+    if os.path.isdir(normalized_dest):
+        return {"status": "error",
+                "message": f"Error: Destination path '{destination_path}' is a directory and cannot be an append target."}
+    if os.path.abspath(normalized_source) == os.path.abspath(normalized_dest):
         return {"status": "error", "message": "Error: Source and destination files cannot be the same."}
+
     try:
-        with open(source_path, "r", encoding="utf-8") as f_source:
+        with open(normalized_source, "r", encoding="utf-8") as f_source:
             content_to_append = f_source.read()
-        dest_directory = os.path.dirname(destination_path)
+        dest_directory = os.path.dirname(normalized_dest)
         if dest_directory:
             os.makedirs(dest_directory, exist_ok=True)
-        with open(destination_path, "a", encoding="utf-8") as f_dest:
+        with open(normalized_dest, "a", encoding="utf-8") as f_dest:
             f_dest.write(content_to_append)
-        return {"status": "success", "message": f"Successfully appended the content of '{source_path}' to '{destination_path}'."}
+        return {"status": "success",
+                "message": f"Successfully appended the content of '{source_path}' to '{destination_path}'."}
     except Exception as e:
         return {"status": "error", "message": f"An unknown error occurred while appending the file: {str(e)}"}
 
-def append_string_to_file(file_path: str, content: str) -> dict:
+
+def append_string_to_file(
+        file_path: str,
+        content: str,
+        base_dir: Optional[str] = None,
+        strict_mode: bool = True
+) -> dict:
     """
     Appends a string of content to the end of a specified file.
+    Optimized: Path normalization + whitelist validation.
     """
+    from utils.path_utils import normalize_patch_path, validate_patch_path
+    from utils.error_handler import format_path_error
+
     print(f"--- Tool: append_string_to_file called for path: {file_path} ---")
+
+    if base_dir is None:
+        base_dir = os.environ.get('PROJECT_ROOT', os.getcwd())
+
+    normalized_path = normalize_patch_path(file_path, base_dir)
+    if strict_mode and not validate_patch_path(normalized_path, strict=True):
+        return {
+            "status": "error",
+            "message": format_path_error(
+                original_path=file_path,
+                normalized_path=normalized_path,
+                base_dir=base_dir,
+                validation_passed=False,
+                extra_info={'operation': 'append_string_to_file'}
+            )
+        }
+
     try:
-        directory = os.path.dirname(file_path)
+        directory = os.path.dirname(normalized_path)
         if directory:
             os.makedirs(directory, exist_ok=True)
-        with open(file_path, "a", encoding="utf-8") as f:
+        with open(normalized_path, "a", encoding="utf-8") as f:
             f.write(content)
         return {"status": "success", "message": f"Content successfully appended to file '{file_path}'."}
     except Exception as e:
-        return {"status": "error", "message": f"An error occurred while appending content to file '{file_path}': {str(e)}"}
+        return {"status": "error",
+                "message": f"An error occurred while appending content to file '{file_path}': {str(e)}"}
 
-def delete_file(file_path: str) -> dict:
+
+def delete_file(file_path: str, base_dir: str = None, **kwargs) -> dict:
     """
     Deletes a specified file.
     """
-    print(f"--- Tool: delete_file called for path: {file_path} ---")
-    if not os.path.exists(file_path):
+    if base_dir is None:
+        base_dir = os.environ.get('PROJECT_ROOT', '/home/senchen/temp/fix_build_agent')
+
+    normalized_path = normalize_patch_path(file_path, base_dir)
+
+    # 白名单验证（删除操作必须严格）
+    strict_mode = kwargs.get('strict_mode', True)
+    if strict_mode and not validate_patch_path(normalized_path, strict=True):
+        return {
+            "status": "error",
+            "message": format_path_error(
+                original_path=file_path,
+                normalized_path=normalized_path,
+                base_dir=base_dir,
+                validation_passed=False,
+                extra_info={'operation': 'delete_file'}
+            )
+        }
+    print(f"--- Tool: delete_file called for path: {normalized_path} ---")
+    if not os.path.exists(normalized_path):
         message = f"Error: File '{file_path}' does not exist and cannot be deleted."
         print(message)
         return {"status": "error", "message": message}
     try:
-        os.remove(file_path)
-        message = f"File '{file_path}' has been successfully deleted."
+        os.remove(normalized_path)
+        message = f"File '{normalized_path}' has been successfully deleted."
         print(message)
         return {"status": "success", "message": message}
     except Exception as e:
@@ -1627,7 +2034,6 @@ def prompt_generate_tool(project_main_folder_path: str, max_depth: int, config_f
     PROMPT_FILE_PATH = os.path.join(PROMPT_DIR, "prompt.txt")
     FUZZ_LOG_PATH = "fuzz_build_log_file/fuzz_build_log.txt"
 
-    GLOBAL_CHAR_BUDGET = 280000
     current_used = 0
 
     context_stream = expert_knowledge + enhanced_history
@@ -1747,8 +2153,8 @@ def _auto_discover_project_symbols(binary_path: str, project_name: str) -> Optio
             if any(kw in symbol.lower() for kw in keywords) and not symbol.startswith(boilerplate):
                 candidates.append(symbol)
         return candidates[:5] if candidates else None
-    except:
-        return None
+    except Exception as e:
+        logger.debug(f"Cleanup step failed (non-fatal): {e}")
 
 
 def _cleanup_environment(oss_fuzz_path: str, project_name: str):
@@ -1757,11 +2163,11 @@ def _cleanup_environment(oss_fuzz_path: str, project_name: str):
     print(f"[*] Pre-build cleanup for project: {project_name}")
     try:
         subprocess.run(f"docker ps -q --filter \"ancestor=gcr.io/oss-fuzz/{project_name}\" | xargs -r docker kill",
-                       shell=True, capture_output=True)
+                       capture_output=True, text=True)
         subprocess.run("docker ps -q --filter \"ancestor=gcr.io/oss-fuzz-base/base-runner\" | xargs -r docker kill",
-                       shell=True, capture_output=True)
-    except:
-        pass
+                       capture_output=True, text=True)
+    except Exception as e:
+        logger.debug(f"Cleanup step failed (non-fatal): {e}")
 
     out_dir = os.path.join(oss_fuzz_path, "build", "out", project_name)
     if os.path.exists(out_dir):
@@ -1994,55 +2400,191 @@ def _auto_discover_project_symbols_from_content(nm_stdout: str, project_name: st
     return False
 
 
-def run_container_diagnostic(oss_fuzz_path: str, project_name: str, command: str) -> dict:
+def modify_file_by_lines(
+        file_path: str,
+        operation: str,
+        line_number: int,
+        end_line: Optional[int] = None,
+        content: str = "",
+        base_dir: Optional[str] = None,
+        strict_mode: bool = True
+) -> dict:
     """
-    Execute a diagnostic command inside the OSS-Fuzz build container using docker run directly.
-    Bypasses helper.py limitations (no -c support) for reliable environment probing.
+    Perform precise line-level operations (insert/delete/replace) without risking file deletion.
+    Uses atomic writes and returns context previews for Agent verification.
+    Optimized: Path normalization + whitelist validation.
     """
-    import os, subprocess, re
-    print(f"--- Tool: run_container_diagnostic | Project: {project_name} | Cmd: {command} ---")
+    # 🔐 路径安全校验
+    if base_dir is None:
+        base_dir = os.environ.get('PROJECT_ROOT', os.getcwd())
 
-    # 1. 安全沙箱拦截
-    dangerous_patterns = ['rm -rf /', 'sudo ', 'chmod ', 'chown ', 'dd ', 'mkfs', 'curl ', 'wget ', 'apt-get ',
-                          'pip install', '> /dev/', 'mktemp']
-    if any(p in command.lower() for p in dangerous_patterns):
-        return {"status": "error", "message": "Command blocked by security policy. Read-only diagnostic commands only."}
-
-    # 2. 构造 docker run 命令（使用项目镜像，若构建失败回退至基础镜像）
-    image_name = f"gcr.io/oss-fuzz/{project_name}"
-    base_image = "gcr.io/oss-fuzz-base/base-builder-go"  # 适配 cert-manager 等项目
-
-    cmd = ["docker", "run", "--rm", "--entrypoint", "/bin/bash", image_name, "-c", command]
-
-    try:
-        # 尝试运行项目镜像
-        res = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-
-        # 如果镜像不存在（通常因构建中途失败导致未打 tag），回退至基础镜像
-        if "Unable to find image" in res.stderr or "No such image" in res.stderr:
-            print(f"  - Image '{image_name}' not found. Fallback to base builder for diagnostics.")
-            cmd[5] = base_image  # Replace image_name with base_image
-            res = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
-
-        # 清理 ANSI 码
-        ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
-        raw_output = (res.stdout + "\n" + res.stderr).strip()
-        clean_output = ansi_escape.sub('', raw_output)
-
-        # Token 安全截断
-        MAX_CHARS = 8000
-        truncated = False
-        if len(clean_output) > MAX_CHARS:
-            clean_output = clean_output[:MAX_CHARS] + "\n\n[⚠️ OUTPUT TRUNCATED: Exceeded 8000 char safety limit]"
-            truncated = True
-
+    normalized_path = normalize_patch_path(file_path, base_dir)
+    if strict_mode and not validate_patch_path(normalized_path, strict=True):
         return {
-            "status": "success" if res.returncode == 0 else "warning",
-            "return_code": res.returncode,
-            "output": clean_output,
-            "truncated": truncated
+            "status": "error",
+            "message": format_path_error(
+                original_path=file_path,
+                normalized_path=normalized_path,
+                base_dir=base_dir,
+                validation_passed=False,
+                extra_info={'operation': 'modify_file_by_lines'}
+            )
         }
-    except subprocess.TimeoutExpired:
-        return {"status": "error", "message": "Command execution timed out after 60s."}
+
+    # 1. 安全校验（使用规范化路径）
+    if not os.path.isfile(normalized_path):
+        return {"status": "error", "message": "File not found."}
+    valid_ops = {"insert_after", "insert_before", "delete", "replace"}
+    if operation not in valid_ops:
+        return {"status": "error", "message": f"Invalid operation. Must be one of {valid_ops}."}
+
+    if end_line is None:
+        end_line = line_number
+    if line_number < 1 or end_line < line_number:
+        return {"status": "error", "message": "Invalid line range (line_number must be >= 1)."}
+
+    # 2. 读取文件
+    with open(normalized_path, 'r', encoding='utf-8', errors='ignore') as f:
+        lines = f.readlines()
+    total_lines = len(lines)
+
+    if line_number > total_lines:
+        return {"status": "error", "message": f"Line {line_number} exceeds file length ({total_lines} lines)."}
+    if end_line > total_lines:
+        end_line = total_lines
+
+    # 转为 0-based 索引
+    start_idx = line_number - 1
+    end_idx = end_line  # slice 右边界开区间
+
+    # 捕获修改前上下文 (±3 行)
+    preview_before = "".join(lines[max(0, start_idx - 3):min(total_lines, start_idx + 4)])
+
+    # 3. 执行操作
+    new_lines = []
+    if operation == "delete":
+        new_lines = lines[:start_idx] + lines[end_idx:]
+    elif operation == "replace":
+        if not content.endswith('\n'):
+            content += '\n'
+        replacement_lines = content.splitlines(keepends=True)
+        new_lines = lines[:start_idx] + replacement_lines + lines[end_idx:]
+    elif operation.startswith("insert"):
+        if not content.endswith('\n'):
+            content += '\n'
+        insert_lines = content.splitlines(keepends=True)
+        insert_pos = start_idx if operation == "insert_before" else end_idx
+        new_lines = lines[:insert_pos] + insert_lines + lines[insert_pos:]
+
+    # 4. 原子写入防损坏（使用规范化路径的目录）
+    dir_name = os.path.dirname(normalized_path) or "."
+    try:
+        fd, tmp_path = tempfile.mkstemp(dir=dir_name, prefix=".agent_edit_", suffix=".tmp")
+        with os.fdopen(fd, 'w', encoding='utf-8') as tmp_f:
+            tmp_f.writelines(new_lines)
+        os.replace(tmp_path, normalized_path)  # ✅ 使用规范化路径
     except Exception as e:
-        return {"status": "error", "message": f"Container diagnostic failed: {str(e)}"}
+        return {"status": "error", "message": f"Atomic write failed: {str(e)}"}
+
+    # 返回修改后上下文预览
+    total_after = len(new_lines)
+    preview_after = "".join(new_lines[max(0, start_idx - 3):min(total_after, start_idx + 7)])
+
+    return {
+        "status": "success",
+        "message": f"Applied '{operation}' at lines {line_number}-{end_line}.",
+        "lines_changed": len(new_lines) - total_lines,
+        "preview_before": preview_before,
+        "preview_after": preview_after
+    }
+
+def list_files_in_dir(
+        dir_path: str,
+        max_depth: int = 2,
+        pattern: str = "*",
+        max_results: int = 200,
+        base_dir: Optional[str] = None,
+        strict_mode: bool = True
+) -> dict:
+    """
+    Return a structured, LLM-friendly file tree. Replaces `run_command + find`.
+    Optimized: Path normalization + symlink protection + whitelist validation.
+    """
+    if base_dir is None:
+        base_dir = os.environ.get('PROJECT_ROOT', os.getcwd())
+
+    normalized_dir = normalize_patch_path(dir_path, base_dir)
+    if strict_mode and not validate_patch_path(normalized_dir, strict=True):
+        return {
+            "status": "error",
+            "message": format_path_error(
+                original_path=dir_path,
+                normalized_path=normalized_dir,
+                base_dir=base_dir,
+                validation_passed=False,
+                extra_info={'operation': 'list_files_in_dir'}
+            )
+        }
+
+    if not os.path.isdir(normalized_dir):
+        return {"status": "error", "message": "Directory not found."}
+
+    results = []
+    visited_real_paths = set()  # 🔐 防止符号链接循环
+
+    def _traverse(current: str, depth: int):
+        if depth > max_depth or len(results) >= max_results:
+            return
+        # 🔐 符号链接保护
+        real_path = os.path.realpath(current)
+        if real_path in visited_real_paths:
+            return
+        visited_real_paths.add(real_path)
+
+        try:
+            entries = sorted(os.listdir(current))
+        except PermissionError:
+            return
+
+        for entry in entries:
+            if len(results) >= max_results:
+                break
+            full_path = os.path.join(current, entry)
+            rel_path = os.path.relpath(full_path, normalized_dir)
+
+            if fnmatch.fnmatch(entry, pattern) or fnmatch.fnmatch(rel_path, f"*{pattern}*"):
+                is_dir = os.path.isdir(full_path) and not os.path.islink(full_path)  # 🔐 排除符号链接目录
+                results.append({"path": rel_path, "type": "dir" if is_dir else "file"})
+
+            if os.path.isdir(full_path) and not os.path.islink(full_path):  # 🔐 不递归符号链接
+                _traverse(full_path, depth + 1)
+
+    _traverse(normalized_dir, 0)
+
+    return {
+        "status": "success",
+        "count": len(results),
+        "files": results[:max_results],
+        "truncated": len(results) > max_results
+    }
+
+def check_file_exists(file_path: str) -> dict:
+    """
+    Safely checks if a file exists within the workspace.
+    Replaces unsafe 'ls ... 2>/dev/null' shell commands with structured JSON response.
+    """
+    import os
+    # 1. 路径安全规范化（防穿越）
+    workspace_root = os.getcwd()
+    target = os.path.normpath(
+        os.path.join(workspace_root, file_path) if not os.path.isabs(file_path) else file_path
+    )
+    if not os.path.realpath(target).startswith(os.path.realpath(workspace_root)):
+        return {"status": "error", "message": "Path validation failed: access denied."}
+
+    # 2. 返回结构化状态
+    return {
+        "status": "success",
+        "exists": os.path.isfile(target),
+        "path": target
+    }

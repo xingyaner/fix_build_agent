@@ -1,0 +1,22 @@
+# Path Whitelist Configuration
+# All target files for patch operations must match any of the following prefixes (relative path format)
+
+allowed_prefixes:
+  # OSS-Fuzz project configurations
+  - "oss-fuzz/projects/"
+
+  # Third-party source code
+  - "process/project/"
+
+  # Generated intermediate files
+  - "generated_prompt_file/"
+  - "fuzz_build_log_file/"
+
+  # Logs and status
+  - "agent_logs/"
+  - "build_error_log/"
+  # Solutions and reflections
+  - "solution.txt"
+  - "reflection_journal.json"
+  # Report files
+  - "projects.yaml"

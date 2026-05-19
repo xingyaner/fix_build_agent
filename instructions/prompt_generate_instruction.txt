@@ -14,7 +14,9 @@ Workflow:
     - CRITICAL: Pass the content from 'commit_changed.txt' (obtained in Step 2) to the `enhanced_history` parameter.
     - CRITICAL: Pass `last_validation_report` from session state to the `validation_report` parameter.
 
-4.  Finish: Use the 'content' field from the return result of `prompt_generate_tool` as your final output. Do not add any other text or explanations.
+4.  Finish & Validation: Check the return status of `prompt_generate_tool`.
+    - IF `status` is `'error'`: Output "Prompt generation failed: [error message from tool]" and STOP.
+    - IF `status` is `'success'`: Use the `content` field as your final output. Do NOT add any extra text, markdown, or explanations outside the tool's returned content.
 
 Do not call any other tools.
 

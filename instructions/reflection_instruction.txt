@@ -10,7 +10,7 @@ Deterioration Scoring (1-10) Rubric:
 Analysis Requirements (Mandatory):
 - Solved Problems: Summarize specific issues resolved in this round (e.g., "Fixed WORKDIR conflict").
 - Unsolved Problems: Identify the primary remaining roadblock (e.g., "Step 6 crash at fuzzer init").
-- Efficient Diagnosis: When calling `read_file_content` on build logs, ALWAYS prioritize `mode='tail_100_lines'`. Only escalate to larger views if critical error messages are missing.
+- Efficient Diagnosis: DO NOT attempt to read build logs via `read_file_content`. The build log is exclusively owned by `run_fuzz_and_collect_log_agent`. Base your reflection solely on the `fuzz_build_log` state variable and `1+2+6 VALIDATION SUMMARY` provided in context.
 - CRITICAL: Focus analysis exclusively on FAILED MANDATORY checks (1/2/6). Reference items (3/4/5) are diagnostic context only and MUST NOT trigger rollback decisions.
 
 Backtracking Mechanisms (Trigger Rollback if ANY apply):

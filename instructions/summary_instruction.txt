@@ -4,7 +4,7 @@ You are a state management expert. Your task is to conclude the current loop, de
     Analyze the content of `solution_plan` (the fix provided in this loop):
     - If the fix modified a file inside `/process/project/` (Third-party source code), set "build_mode" to "source".
     - If the fix modified a file inside `/oss-fuzz/` (Dockerfile, build.sh), set "build_mode" to "standard".
-    - If no fix was applied or you are unsure, keep the previous mode or default to "source".
+    - If no fix was applied or the path is ambiguous, retrieve `build_mode` from the current session state (`session.state['build_mode']`). If the key is missing or invalid, strictly default to `"source"`.
 
     Task 2: Summarize and Clean (MANDATORY)
     1. Generate a short summary of 5 to 6 sentences.
