@@ -1,6 +1,6 @@
 - project: espeak-ng
   language: c++
-  error_time: '2023-4-3'
+  error_time: '2023-04-03'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-55ee4d54-bda3-46a2-9566-7f611c1a041c.txt
   software_repo_url: https://github.com/espeak-ng/espeak-ng
@@ -28,7 +28,7 @@
 
 - project: trafficserver
   language: c++
-  error_time: '2025-2-18'
+  error_time: '2025-02-18'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-01341f9e-36a2-484e-a86c-da0b6cf9dff4.txt
   software_repo_url: https://github.com/apache/trafficserver.git
@@ -686,7 +686,7 @@
 
 - project: bls-signatures
   language: c++
-  error_time: '2025-2-23'
+  error_time: '2025-02-23'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3c137f5e-154f-432b-84a9-6d1d531b219a.txt
   software_repo_url: https://github.com/mratsim/constantine
@@ -700,7 +700,7 @@
 
 - project: dulwich
   language: python
-  error_time: '2025-7-12'
+  error_time: '2025-07-12'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-5e4c2e8f-340d-4f1a-a97f-f6d8428fb801.txt
   software_repo_url: https://github.com/jelmer/dulwich.git
@@ -756,7 +756,7 @@
 
 - project: hiredis
   language: c
-  error_time: '2025-4-10'
+  error_time: '2025-04-10'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-ce84f796-6b52-4784-8e5a-c41c52a879b9.txt
   software_repo_url: https://github.com/redis/hiredis
@@ -784,7 +784,7 @@
 
 - project: libecc
   language: c++
-  error_time: '2025-4-12'
+  error_time: '2025-04-12'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-95e1b2ff-c169-450f-a950-211e91318b81.txt
   software_repo_url: https://github.com/MozillaSecurity/cryptofuzz
@@ -798,7 +798,7 @@
 
 - project: linkerd2-proxy
   language: rust
-  error_time: '2024-11-6'
+  error_time: '2024-11-06'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-4a51d346-d82e-44a8-bf6d-9bb1f841f6f1.txt
   software_repo_url: https://github.com/linkerd/linkerd2-proxy
@@ -812,7 +812,7 @@
 
 - project: lwan
   language: c++
-  error_time: '2025-5-12'
+  error_time: '2025-05-12'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-80ff7bd1-d840-4a16-ba27-ad0d86c1b5b5.txt
   software_repo_url: https://github.com/lpereira/lwan.git
@@ -826,7 +826,7 @@
 
 - project: lxc
   language: c
-  error_time: '2025-9-10'
+  error_time: '2025-09-10'
   oss-fuzz_sha: 65e24169d0d6ee8e4cc73dda3f259bbb578e1b33
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-99746d19-9c68-4626-948c-b3fa583e63fa.txt
   software_repo_url: https://github.com/lxc/lxc
@@ -868,7 +868,7 @@
 
 - project: mongo-go-driver
   language: go
-  error_time: '2025-4-1'
+  error_time: '2025-04-01'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-f790e381-dba0-45ad-a0fc-2b04385dff1a.txt
   software_repo_url: https://github.com/mongodb/mongo-go-driver
@@ -882,7 +882,7 @@
 
 - project: numexpr
   language: python
-  error_time: '2025-6-9'
+  error_time: '2025-06-09'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-0efbf59d-34ef-45c1-a033-b8a0724a56e7.txt
   software_repo_url: https://github.com/pydata/numexpr
@@ -896,7 +896,7 @@
 
 - project: perfetto
   language: c++
-  error_time: '2025-9-9'
+  error_time: '2025-09-09'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3c530cd7-abef-4413-9dd1-d7d3d00959a7.txt
   software_repo_url: https://android.googlesource.com/platform/external/perfetto/
@@ -924,7 +924,7 @@
 
 - project: powsybl-java
   language: jvm
-  error_time: '2025-9-5'
+  error_time: '2025-09-05'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3ed509a8-30d1-4f44-9359-ddac880a8d13.txt
   software_repo_url: https://github.com/arthurscchan/powsybl-seed-corpus
@@ -952,7 +952,7 @@
 
 - project: scrypt
   language: rust
-  error_time: '2025-2-23'
+  error_time: '2025-02-23'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-d6332223-bc30-40c9-bd15-360b3b794bcb.txt
   software_repo_url: https://github.com/RustCrypto/password-hashes
@@ -966,7 +966,7 @@
 
 - project: serde-yaml
   language: rust
-  error_time: '2025-9-9'
+  error_time: '2025-09-09'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-31352efd-9ece-4457-bf4e-a7eb63043073.txt
   software_repo_url: https://github.com/dtolnay/serde-yaml
@@ -980,7 +980,7 @@
 
 - project: spring-integration
   language: jvm
-  error_time: '2023-6-23'
+  error_time: '2023-06-23'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-be88c896-89bf-49e2-bc39-859c8143324b.txt
   software_repo_url: https://github.com/spring-projects/spring-integration
@@ -994,7 +994,7 @@
 
 - project: starnix-netlink
   language: rust
-  error_time: '2025-1-11'
+  error_time: '2025-01-11'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-7361411f-4016-4b9c-bfc1-08e91ff71950.txt
   software_repo_url: https://fuchsia.googlesource.com/fuchsia
@@ -1036,7 +1036,7 @@
 
 - project: tensorflow
   language: c++
-  error_time: '2024-5-6'
+  error_time: '2024-05-06'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3b3efa36-a25f-449f-b78e-01c9d6978147.txt
   software_repo_url: https://github.com/tensorflow/tensorflow
@@ -1050,7 +1050,7 @@
 
 - project: toml_edit
   language: rust
-  error_time: '2025-5-1'
+  error_time: '2025-05-01'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-7cecd0af-7959-4a65-a765-93710aa45f1b.txt
   software_repo_url: https://github.com/ordian/toml_edit
@@ -1120,7 +1120,7 @@
 
 - project: bazel-rules-fuzzing-test
   language: c++
-  error_time: '2026-2-3'
+  error_time: '2026-02-03'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-8b0f371c-c0ba-4acd-b14b-103ac46e7767.txt
   software_repo_url: https://github.com/bazelbuild/rules_fuzzing.git
@@ -1131,3 +1131,4 @@
   base_image_digest: c099d3d710d12d5d9a39498463ff10973977d1c7a85e9a0fbe00c7f0a0fa9fb8
   error_category: RC13
   fixed_state: 'no'
+
