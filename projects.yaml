@@ -143,7 +143,7 @@
   error_time: '2025-12-29'
   oss-fuzz_sha: 8dfdeaaa5b1a4c796e61bec6386153d46f3a21c2
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-0a8b1119-f383-4ae2-8bd5-1328a871ae29.txt
-  software_repo_url: https://gitlab.gnome.org/GNOME/libxml2.git
+  software_repo_url: https://github.com/FFmpeg/FFmpeg
   software_sha: 9827e6e44652555992e168609abf94e4237ca944
   engine: afl
   sanitizer: address
@@ -157,7 +157,7 @@
   error_time: '2025-12-05'
   oss-fuzz_sha: ee2ba6094402cac75e7b30fa407b679a0a717cf3
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-a5ccd55e-8bce-429a-a6eb-ba534f91692c.txt
-  software_repo_url: https://gitlab.gnome.org/GNOME/libxml2.git
+  software_repo_url: https://github.com/FFmpeg/FFmpeg
   software_sha: 22f9d730898d2dfcc03a484e65e1f8fc3675225f
   engine: afl
   sanitizer: address
