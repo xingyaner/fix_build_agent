@@ -144,7 +144,7 @@
   oss-fuzz_sha: 8dfdeaaa5b1a4c796e61bec6386153d46f3a21c2
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-0a8b1119-f383-4ae2-8bd5-1328a871ae29.txt
   software_repo_url: https://github.com/FFmpeg/FFmpeg
-  software_sha: 9827e6e44652555992e168609abf94e4237ca944
+  software_sha: 9ab2a437a108469e90bbbfb9dd8dc29ece1c806b
   engine: afl
   sanitizer: address
   architecture: x86_64
@@ -158,7 +158,7 @@
   oss-fuzz_sha: ee2ba6094402cac75e7b30fa407b679a0a717cf3
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-a5ccd55e-8bce-429a-a6eb-ba534f91692c.txt
   software_repo_url: https://github.com/FFmpeg/FFmpeg
-  software_sha: 22f9d730898d2dfcc03a484e65e1f8fc3675225f
+  software_sha: 52c84b06d59d50de6844e75fa06ee50a23fb717a
   engine: afl
   sanitizer: address
   architecture: x86_64
@@ -283,8 +283,8 @@
   error_time: '2025-10-22'
   oss-fuzz_sha: 98ed46e3f74485e5b734293fd715351c6b71cb71
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-26e3881c-33e4-44ce-a381-e1bd4afbab2d.txt
-  software_repo_url: https://github.com/vtest/VTest2
-  software_sha: d04a2007518130abe25a1e0d310fd661f2c79ec3
+  software_repo_url: https://github.com/haproxy/haproxy
+  software_sha: bece70412810b47e5eb98eda059252bf535b2992
   engine: afl
   sanitizer: address
   architecture: x86_64
@@ -367,8 +367,8 @@
   error_time: '2025-11-22'
   oss-fuzz_sha: 261e9e8784d317c6697a57e49d0bd914295a32b6
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-91c310f6-58f3-4b69-8d5a-fb533caf13c2.txt
-  software_repo_url: https://github.com/AdaLogics/ada-fuzzers
-  software_sha: 525070ea875073c7e7d7aa359c00fb1cbe06ec15
+  software_repo_url: https://gitlab.isc.org/isc-projects/kea
+  software_sha: 449a3ca834a2dbda4ca1492c67877a07959fe2ae
   engine: libfuzzer
   sanitizer: address
   architecture: x86_64
@@ -451,8 +451,8 @@
   error_time: '2025-12-03'
   oss-fuzz_sha: c8c1b257db4da92299bdf9fd058fff1bb008b2ad
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-e8e310ea-fadf-48e2-9b51-406f00234cee.txt
-  software_repo_url: https://github.com/google/libultrahdr.git
-  software_sha: 8cbc983d2f6c2171af5cbcdb8801102f83fe92ab
+  software_repo_url: https://github.com/libvips/libvips.git
+  software_sha: 7b9d8234386915b46c6de6304469782ed99d7a5f
   engine: afl
   sanitizer: address
   architecture: x86_64
@@ -465,8 +465,8 @@
   error_time: '2025-10-31'
   oss-fuzz_sha: cb360c2c6a7aaad794b8e09498f336a62c9a09a4
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-43466985-1b1e-4fec-90fc-44eb3d4f9fb5.txt
-  software_repo_url: https://github.com/libyal/libpff.git
-  software_sha: 2f90504f06ac45e83a6c1050666cbd17f7ae2821
+  software_repo_url: https://github.com/libyal/libyal
+  software_sha: 2f30f8bcfff6dc8ff6bcafeff4d0095df57f6faf
   engine: libfuzzer
   sanitizer: address
   architecture: x86_64
@@ -479,8 +479,8 @@
   error_time: '2025-12-11'
   oss-fuzz_sha: 099b4909f37e7f712f6f444c4ba266a5bcfc321f
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3449e0f7-812e-4bc8-85f6-e89034125bd5.txt
-  software_repo_url: https://github.com/google/libprotobuf-mutator
-  software_sha: d780394da371517c2e21190d05414845d0ac1e07
+  software_repo_url: https://github.com/eclipse/mosquitto
+  software_sha: fd0fa727037fe14a554b4a3541f167788a52389d
   engine: afl
   sanitizer: address
   architecture: x86_64
@@ -493,8 +493,8 @@
   error_time: '2026-01-02'
   oss-fuzz_sha: ec42a71c7e3a6e0e11c1e985f671b13d9860db12
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-37c06df6-a70f-456a-a5c8-ee111887d030.txt
-  software_repo_url: https://github.com/neomutt/corpus-address
-  software_sha: 8274c96eb01a2aa600d0bea8a1aa6afcc00e662f
+  software_repo_url: https://github.com/neomutt/neomutt
+  software_sha: 9e9dc2cf3b7cb685dcc33578a758bf409a31da99
   engine: afl
   sanitizer: address
   architecture: x86_64
@@ -507,9 +507,9 @@
   error_time: '2026-01-03'
   oss-fuzz_sha: 3f6797671645f6843f2b735162f75e842dbb9f40
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-9a08d366-099c-4d94-92d4-a23e1901e7e2.txt
-  software_repo_url: https://github.com/ntop/nDPI.git
-  software_sha: 6eb2256ce6a6b6ebe1fecc02c5f3083c36b1997e
-  engine: libfuzzer
+  software_repo_url: https://github.com/ntop/ntopng.git
+  software_sha: c5637a95e53fe7927d8b6a45f1dfe54ac53e0500
+  engine: afl
   sanitizer: address
   architecture: x86_64
   base_image_digest: 9bdf381e5bceb723e4201b2d2bbf79ed474c73d64b871e6102724de93d8702fc
@@ -563,9 +563,9 @@
   error_time: '2025-10-04'
   oss-fuzz_sha: 03a0de7836ba20186ca29602d45beee3fcd1ffee
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-bd803879-b42a-4f66-a647-28ad64e59844.txt
-  software_repo_url: https://github.com/MozillaSecurity/cryptofuzz
-  software_sha: 94ee9f43540875be0bde4cad1cd21e2a1557cc82
-  engine: libfuzzer
+  software_repo_url: https://github.com/relic-toolkit/relic.git
+  software_sha: 0378cf0c72a31dd97b835740d1169da2caee5fcb
+  engine: afl
   sanitizer: address
   architecture: x86_64
   base_image_digest: 3f5877c3af4e971e79b6b0530aebaaabc262c3a7a2f858cf0ca33a2f34d5711b
@@ -579,8 +579,8 @@
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-085433ac-cba5-49b0-b1b8-3bfe4c9094d6.txt
   software_repo_url: https://gitlab.gnome.org/GNOME/tinysparql.git
   software_sha: c0984cae38f998b5571ee907e0e75f76838ee13c
-  engine: libfuzzer
-  sanitizer: address
+  engine: afl
+  sanitizer: afl
   architecture: x86_64
   base_image_digest: 0c229e61349e6e5f4dbcfd433b2b0b5906012d49216675a6402ad1ed270715c4
   error_category: RC13
@@ -605,8 +605,8 @@
   error_time: '2025-10-31'
   oss-fuzz_sha: cb360c2c6a7aaad794b8e09498f336a62c9a09a4
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-fba5869c-402d-4e5f-ae6d-6bb54c1bba59.txt
-  software_repo_url: https://gitlab.gnome.org/GNOME/libxslt.git
-  software_sha: 1ea9faaf53dde9e5ebd5695412575a81c55726a3
+  software_repo_url: https://github.com/lsh123/xmlsec
+  software_sha: 1eb21e26a6ab3ee73e38900305ba546863890200
   engine: afl
   sanitizer: address
   architecture: x86_64
@@ -621,7 +621,7 @@
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-6de2d866-ca6e-4a28-be2e-715f78853bcd.txt
   software_repo_url: https://gitlab.freedesktop.org/freetype/freetype
   software_sha: fc9cc5038e05edceec3d0f605415540ac76163e9
-  engine: libfuzzer
+  engine: afl
   sanitizer: address
   architecture: x86_64
   base_image_digest: eb1da8283405680c0e1792f285f3c7574a58515cccb43e15e8788d565e3690e5
@@ -689,8 +689,8 @@
   error_time: '2025-02-23'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3c137f5e-154f-432b-84a9-6d1d531b219a.txt
-  software_repo_url: https://github.com/mratsim/constantine
-  software_sha: 8e117d74f165297a7a459e3cea3911dff8fe105c
+  software_repo_url: https://github.com/supranational/blst
+  software_sha: 806515251de5cfb9761ad12eb2f2f151b1ad0277
   engine: afl
   sanitizer: address
   architecture: x86_64
@@ -773,8 +773,8 @@
   error_time: '2025-11-22'
   oss-fuzz_sha: 261e9e8784d317c6697a57e49d0bd914295a32b6
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-0197cebb-7adf-44bd-92ef-10fd339c32f8.txt
-  software_repo_url: https://github.com/nss-dev/nss.git
-  software_sha: 2fa4a20621c601f185744fb25a1a0c8e36b881f1
+  software_repo_url: https://gitlab.freedesktop.org/spice/libcacard.git
+  software_sha: 7534373bf36061f86cb6e184120840586f4c6e26
   engine: afl
   sanitizer: address
   architecture: x86_64
@@ -787,8 +787,8 @@
   error_time: '2025-04-12'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-95e1b2ff-c169-450f-a950-211e91318b81.txt
-  software_repo_url: https://github.com/MozillaSecurity/cryptofuzz
-  software_sha: ab4252b39b0c2c38900caf6cf14f0d70d712bd26
+  software_repo_url: https://github.com/libecc/libecc.git
+  software_sha: 8e5c9e16d56a685a7264c525f5234f16d86e5e07
   engine: afl
   sanitizer: address
   architecture: x86_64
@@ -927,8 +927,8 @@
   error_time: '2025-09-05'
   oss-fuzz_sha: e9d36924052c7af1d5bd82071760c1eb114e898b
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-3ed509a8-30d1-4f44-9359-ddac880a8d13.txt
-  software_repo_url: https://github.com/arthurscchan/powsybl-seed-corpus
-  software_sha: 4fd05042bf39370e5ad8f9a3b468fe047262a668
+  software_repo_url: https://github.com/powsybl/powsybl-core
+  software_sha: 13f9040e985f91d4df5fcf064816a4fe7a98ae2d
   engine: libfuzzer
   sanitizer: address
   architecture: x86_64
@@ -1011,8 +1011,8 @@
   error_time: '2025-10-11'
   oss-fuzz_sha: 3775fff873ca34ab6dcf4dad544f3eba224e7b77
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-95ca8fa5-a07a-42f2-b47a-34eb88d5b0cd.txt
-  software_repo_url: https://github.com/surrealdb/docs.surrealdb.com.git
-  software_sha: 3ca36ddf2e54380a69ed3d61c43884a62724b030
+  software_repo_url: https://github.com/surrealdb/surrealdb
+  software_sha: 72c80c30a712ad0477a69f614308f556017c6b91
   engine: libfuzzer
   sanitizer: address
   architecture: x86_64
@@ -1025,8 +1025,8 @@
   error_time: '2025-11-29'
   oss-fuzz_sha: c74d76768368951823cffca3bbd15eaa82093178
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-fbfc6be1-2f52-43bf-9db2-f7b6e99bb4af.txt
-  software_repo_url: https://github.com/surrealdb/docs.surrealdb.com.git
-  software_sha: ee39e632dbbb41166a3eddd2eacf1dd0ca19d605
+  software_repo_url: https://github.com/surrealdb/surrealdb
+  software_sha: b84847ea269ec2209adf8fe8ac5a51147e8b9c94
   engine: libfuzzer
   sanitizer: address
   architecture: x86_64
@@ -1067,9 +1067,9 @@
   error_time: '2026-02-08'
   oss-fuzz_sha: 4c908a6e1075d20c9d0e59e7fff5fe8be4dfd914
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-a1e827c2-8de9-496a-82cd-6061692e8f13.txt
-  software_repo_url: https://github.com/MozillaSecurity/cryptofuzz
-  software_sha: 75e52bea13eefd6fee276468a92ae7e47f1f209a
-  engine: libfuzzer
+  software_repo_url: https://github.com/relic-toolkit/relic.git
+  software_sha: 095a2f0d9033f62e37fe161c1ff55608b30f2765
+  engine: afl
   sanitizer: address
   architecture: x86_64
   base_image_digest: 2cfc6e3d4fb13bd03739be6a2fefd199814d18fd93e5d24551f4dead3504b7ba
