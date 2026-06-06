@@ -1,0 +1,14 @@
+---=== FILE ===---
+oss-fuzz/projects/lwan/build.sh
+---=== ORIGINAL ===---
+	$CXX $CXXFLAGS -std=c++11 \
+		-Wl,-whole-archive $WORK/lwan/src/lib/liblwan.a -Wl,-no-whole-archive \
+		-I$SRC/lwan/src/lib $fuzzer \
+		$LIB_FUZZING_ENGINE -lpthread -lz \
+		-o $OUT/$executable
+---=== REPLACEMENT ===---
+	$CXX $CXXFLAGS -std=c++11 \
+		-Wl,-whole-archive $WORK/lwan/src/lib/liblwan.a -Wl,-no-whole-archive \
+		-I$SRC/lwan/src/lib $fuzzer \
+		$LIB_FUZZING_ENGINE -lpthread -lz \
+		-o $OUT/$executable

@@ -1,0 +1,10 @@
+name: Code Inspector MCP Server
+version: 0.0.1
+schema: v1
+mcpServers:
+  - name: CodeInspectorServer
+    command: /home/.venv/bin/python3
+    args:
+      - /home/senchen/.continue/mcp_server.py # 🔑 修复：直接作为位置参数传递文件绝对路径，不带 --path
+    env:
+      PROJECT_ROOT: /home/senchen/temp/fix_build_agent

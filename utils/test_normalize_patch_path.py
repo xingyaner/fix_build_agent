@@ -1,9 +1,10 @@
 import os
 import tempfile
 import unittest
-# python -m unittest test_normalize_patch_path
-# Assume normalize_patch_path is located in agent_tools.py or utils/path_utils.py
-from agent_tools import normalize_patch_path
+
+# 🔑 升级：将导入源重构为解耦后的物理 path_utils，杜绝由于外部 ADK/LLM 依赖导致的加载缓慢
+from utils.path_utils import normalize_patch_path
+
 
 class TestNormalizePatchPath(unittest.TestCase):
     """Cross-host path normalization test: does not depend on any local absolute paths"""
@@ -12,7 +13,7 @@ class TestNormalizePatchPath(unittest.TestCase):
         # 1. Create a temporary directory as the simulated project root to fully isolate the host environment
         self.temp_dir = tempfile.TemporaryDirectory()
         self.base_dir = self.temp_dir.name
-        
+
         # 2. Dynamically build the standard project structure
         self.oss_fuzz_dir = os.path.join(self.base_dir, "oss-fuzz/projects/cert-manager")
         self.src_dir = os.path.join(self.base_dir, "process/project/cert-manager")
@@ -51,6 +52,7 @@ class TestNormalizePatchPath(unittest.TestCase):
         """Empty string or blank path → return safely"""
         self.assertEqual(normalize_patch_path("", base_dir=self.base_dir), "")
         self.assertEqual(normalize_patch_path("   ", base_dir=self.base_dir), "   ")
+
 
 if __name__ == "__main__":
     unittest.main()

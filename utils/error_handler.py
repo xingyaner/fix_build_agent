@@ -5,6 +5,7 @@ def format_path_error(original_path: str,
                       extra_info: dict = None) -> str:
     """
     Formats path-related error information for debugging with standardized PATH GUIDANCE.
+    Dynamically renders target directories relative to the current project base.
 
     Args:
         original_path: The original path provided by the agent
@@ -17,15 +18,19 @@ def format_path_error(original_path: str,
         Multi-line formatted error details string with PATH GUIDANCE template
     """
     import json
+    import os
+
+    # 🔑 升级：清洗并标准化基准路径，杜绝硬编码提示导致的 LLM 路径偏置幻觉
+    clean_base = os.path.abspath(base_dir).replace('\\', '/')
 
     lines = [
         f"File not found: {original_path}",
         "",
         "【PATH GUIDANCE】",
         "• OSS-Fuzz project configs (Dockerfile, build.sh, project.yaml):",
-        "  → /fix_build_agent/oss-fuzz/projects/<project_name>/",
+        f"  → {clean_base}/oss-fuzz/projects/<project_name>/",
         "• Third-party source code:",
-        "  → /fix_build_agent/process/project/<project_name>/",
+        f"  → {clean_base}/process/project/<project_name>/",
         "• Build logs:",
         "  → fuzz_build_log_file/fuzz_build_log.txt",
         "• Generated prompts / commit analysis:",
@@ -39,7 +44,7 @@ def format_path_error(original_path: str,
         "【DEBUG INFO】",
         f"  Original:    {original_path}",
         f"  Normalized:  {normalized_path}",
-        f"  Base Dir:    {base_dir}",
+        f"  Base Dir:    {clean_base}",
     ]
 
     if validation_passed is not None:

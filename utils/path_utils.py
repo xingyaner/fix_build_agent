@@ -1,34 +1,94 @@
-"""Unified Path Parsing and Validation Tool"""
+"""
+Unified Path Parsing and Validation Tool (Upgrade Version)
+Features dynamic workspace discovery, secure path guards, and dynamic whitelist loading.
+Aligned strictly with the system's authorized read/write boundaries.
+"""
 import os
+import yaml
 from pathlib import Path
 from typing import Optional, List
 
-# Default project root directory (can be overridden from environment variables)
-DEFAULT_PROJECT_ROOT = os.environ.get(
-    'PROJECT_ROOT',
-    '/home/senchen/temp/fix_build_agent'
-)
 
-# Default whitelist prefixes (relative path format)
-DEFAULT_ALLOWED_PREFIXES = [
-    'oss-fuzz/projects/',
-    'process/project/',
-    'generated_prompt_file/',
-    'fuzz_build_log_file/',
-    'agent_logs/',
-    'build_error_log/',
-    'solution.txt',
-    'reflection_journal.json'
-]
+def detect_project_root() -> str:
+    """
+    Dynamically detects the project workspace root directory by walking upwards
+    from the current file location until finding 'config/path_whitelist.yaml' or '.git'.
+    Falls back to the environment variable PROJECT_ROOT or current working directory.
+    """
+    # 优先使用系统环境变量
+    env_root = os.environ.get('PROJECT_ROOT')
+    if env_root and os.path.isdir(env_root):
+        return os.path.abspath(env_root)
+
+    # 沿当前文件所在路径向上追溯寻找特征哨兵
+    current_file_path = Path(__file__).resolve()
+    for parent in [current_file_path] + list(current_file_path.parents):
+        # 如果检测到了特征配置文件或 git 仓库，判定为项目根目录
+        if (parent / "config" / "path_whitelist.yaml").is_file() or (parent / ".git").is_dir():
+            return str(parent.resolve())
+
+    # 最终降级兜底为当前 Python 执行的工作路径
+    return os.path.abspath(os.getcwd())
+
+
+def load_whitelist_config(config_path: Optional[str] = None) -> List[str]:
+    """
+    Loads allowed path prefixes from config/path_whitelist.yaml.
+    Falls back to a default hardcoded whitelist if loading fails or file is missing.
+    Matches the strict read/write boundaries authorized by the user.
+    """
+    # 物理授权读写白名单（严格契约对齐）
+    default_allowed = [
+        'oss-fuzz/',
+        'process/',  # 隐式覆盖 process/project, process/fixed, process/unfixed
+        'generated_prompt_file/',
+        'fuzz_build_log_file/',
+        'success-fix-project/',
+        'agent_logs/',
+        'project_repair_trace.json',
+        'repair_strategy.txt',
+        'fix-success.txt',
+        'projects.yaml',
+        'solution.txt'
+    ]
+
+    if config_path is None:
+        root_dir = detect_project_root()
+        config_path = os.path.join(root_dir, "config", "path_whitelist.yaml")
+
+    if not os.path.exists(config_path):
+        return default_allowed
+
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+        if isinstance(data, dict) and "allowed_prefixes" in data:
+            prefixes = data["allowed_prefixes"]
+            if isinstance(prefixes, list):
+                # 过滤空值并清理前后空格
+                return [str(p).strip() for p in prefixes if p]
+    except Exception:
+        # 发生异常时静默降级，确保核心工作流稳定运行
+        pass
+
+    return default_allowed
+
+
+# =====================================================================
+# 模块层级初始化：动态缓存项目根路径与白名单，杜绝硬编码
+# =====================================================================
+DEFAULT_PROJECT_ROOT = detect_project_root()
+DEFAULT_ALLOWED_PREFIXES = load_whitelist_config()
 
 
 def normalize_patch_path(file_path: str, base_dir: Optional[str] = None) -> str:
     """
-    Unified patch file path normalization: absolute path → relative path
+    Unified patch file path normalization: absolute path -> relative path.
+    Uses relpath-based verification to ensure absolute cross-platform safety.
 
     Args:
         file_path: Original file path (absolute or relative)
-        base_dir: Base directory, uses PROJECT_ROOT by default
+        base_dir: Base directory, uses DEFAULT_PROJECT_ROOT by default
 
     Returns:
         Normalized relative path (using forward slashes)
@@ -36,32 +96,35 @@ def normalize_patch_path(file_path: str, base_dir: Optional[str] = None) -> str:
     if base_dir is None:
         base_dir = DEFAULT_PROJECT_ROOT
 
-    # Handle empty path
     if not file_path:
         return file_path
 
-    # Unify slash style
+    # 统一斜杠与反斜杠格式
     file_path = file_path.replace('\\', '/')
     base_dir = base_dir.replace('\\', '/')
 
-    # Convert to absolute paths for comparison
+    # 转换为绝对路径进行无偏比对
     abs_path = os.path.abspath(file_path)
     abs_base = os.path.abspath(base_dir)
 
-    # Convert to relative path if under the base directory
-    if abs_path.startswith(abs_base + os.sep) or abs_path == abs_base:
+    try:
+        # 利用 os.path.relpath 自动换算相对路径，防范复杂的深度越界
         rel_path = os.path.relpath(abs_path, abs_base)
-        return rel_path.replace('\\', '/')  # Unify output forward slashes
+        if not rel_path.startswith('..') and not os.path.isabs(rel_path):
+            return rel_path.replace('\\', '/')
+    except ValueError:
+        # 处理 Windows 环境下跨盘符等异常边界
+        pass
 
-    # Otherwise return the original path (may already be relative)
     return file_path
 
 
 def validate_patch_path(file_path: str,
-                       allowed_prefixes: Optional[List[str]] = None,
-                       strict: bool = False) -> bool:
+                        allowed_prefixes: Optional[List[str]] = None,
+                        strict: bool = False) -> bool:
     """
-    Whitelist validation: verify if the patch path is within the allowed range
+    Whitelist validation: verify if the patch path is within the allowed range.
+    Automatically loads allowed prefixes from path_whitelist.yaml by default.
 
     Args:
         file_path: File path to be validated
@@ -72,22 +135,22 @@ def validate_patch_path(file_path: str,
         bool: Whether the path is valid
     """
     if allowed_prefixes is None:
-        allowed_prefixes = DEFAULT_ALLOWED_PREFIXES
+        allowed_prefixes = load_whitelist_config()
 
-    # Normalize the path first
+    # 规范化路径
     norm_path = normalize_patch_path(file_path)
 
-    # Empty path or current directory is considered valid
+    # 空路径、当前工作区目录，直接放行
     if norm_path in ('', '.', './'):
         return True
 
-    # Check whitelist prefixes
+    # 进行白名单前缀比对
     for prefix in allowed_prefixes:
         prefix_norm = prefix.rstrip('/')
         if norm_path == prefix_norm or norm_path.startswith(prefix_norm + '/'):
             return True
 
-    # Log debug information in strict mode
+    # 严格审查拦截，如果失败，通过错误处理器打印带标准纠错建议的提示
     if strict:
         from utils.error_handler import format_path_error
         import logging
@@ -110,13 +173,16 @@ def ensure_relative_path(file_path: str, base_dir: Optional[str] = None) -> str:
     Raises:
         ValueError: When the path cannot be converted to a relative path
     """
+    if base_dir is None:
+        base_dir = DEFAULT_PROJECT_ROOT
+
     normalized = normalize_patch_path(file_path, base_dir)
 
-    # Check if it is still an absolute path
+    # 若归一化后仍为物理绝对路径（说明越界脱靶），抛出异常强硬阻断
     if os.path.isabs(normalized):
         raise ValueError(
             f"Path must be relative: '{file_path}' -> '{normalized}'. "
-            f"Expected relative to: {base_dir or DEFAULT_PROJECT_ROOT}"
+            f"Expected relative to workspace root: {base_dir}"
         )
 
     return normalized
