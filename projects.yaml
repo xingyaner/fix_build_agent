@@ -580,7 +580,7 @@
   software_repo_url: https://gitlab.gnome.org/GNOME/tinysparql.git
   software_sha: c0984cae38f998b5571ee907e0e75f76838ee13c
   engine: afl
-  sanitizer: afl
+  sanitizer: address
   architecture: x86_64
   base_image_digest: 0c229e61349e6e5f4dbcfd433b2b0b5906012d49216675a6402ad1ed270715c4
   error_category: RC13
