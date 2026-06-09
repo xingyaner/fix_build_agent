@@ -1,0 +1,664 @@
+INFO:common_utils:Running: docker build -t gcr.io/oss-fuzz/lwan --file /home/senchen/temp/fix_build_agent/oss-fuzz/projects/lwan/Dockerfile /home/senchen/temp/fix_build_agent/oss-fuzz/projects/lwan.
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.06kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for gcr.io/oss-fuzz-base/base-builder@sha256:2d948a5c2c9c11c50ff8a59da5916e4eec1c9abf2638cfe683d96e804994aa5b
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/6] FROM gcr.io/oss-fuzz-base/base-builder@sha256:2d948a5c2c9c11c50ff8a59da5916e4eec1c9abf2638cfe683d96e804994aa5b
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 30B done
+#5 DONE 0.0s
+
+#6 [5/6] WORKDIR lwan
+#6 CACHED
+
+#7 [2/6] RUN apt-get update
+#7 CACHED
+
+#8 [3/6] RUN apt-get install -y build-essential cmake git ninja-build zlib1g-dev
+#8 CACHED
+
+#9 [4/6] RUN git clone  https://github.com/lpereira/lwan.git && cd lwan && git checkout e7ac7f13afd1e060bfef61d2ec5d2a60f356b0eb && cd ..
+#9 CACHED
+
+#10 [6/6] COPY build.sh /src/
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 writing image sha256:cc2223a465cca0cbe839b6e908506698a1728608b7e6fe6410c040dd1017df08 done
+#11 naming to gcr.io/oss-fuzz/lwan done
+#11 DONE 0.0s
+
+ [33m1 warning found (use docker --debug to expand):
+[0m - WorkdirRelativePath: Relative workdir "lwan" can have unexpected results if the base image changes (line 22)
+INFO:__main__:Keeping existing build artifacts as-is (if any).
+INFO:__main__:Running: docker run --privileged --shm-size=2g --platform linux/amd64 --rm -i -e FUZZING_ENGINE=afl -e SANITIZER=address -e ARCHITECTURE=x86_64 -e PROJECT_NAME=lwan -e HELPER=True -e FUZZING_LANGUAGE=c++ -v /home/senchen/temp/fix_build_agent/process/project/lwan:/src/lwan -v /home/senchen/temp/fix_build_agent/oss-fuzz/build/out/lwan/:/out -v /home/senchen/temp/fix_build_agent/oss-fuzz/build/work/lwan:/work -t gcr.io/oss-fuzz/lwan.
+---------------------------------------------------------------
+vm.mmap_rnd_bits = 28
+Copying precompiled AFL++
+
+AFL++ target compilation setup:
+AFL_IGNORE_UNKNOWN_ENVS=1
+AFL_QUIET=1
+AFL_IGNORE_PROBLEMS=1
+
+ done.
+---------------------------------------------------------------
+CC=/src/aflplusplus/afl-clang-fast
+CXX=/src/aflplusplus/afl-clang-fast++
+CFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope 
+CXXFLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope  -stdlib=libc++
+RUSTFLAGS=--cfg fuzzing -Zsanitizer=address -Cdebuginfo=1 -Cforce-frame-pointers
+---------------------------------------------------------------
++ mkdir -p /work/lwan
++ cd /work/lwan
++ cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/src/aflplusplus/afl-clang-fast '-DCMAKE_C_FLAGS=-O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope ' /src/lwan/
+-- Running CMake for lwan (Scalable, high performance, experimental web server)
+-- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+fatal: detected dubious ownership in repository at '/src/lwan'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /src/lwan
+[33mCMake Warning at src/cmake/GitVersionDetect.cmake:56 (message):
+  Failed to determine GITVERSIONDETECT_VERSION from Git tags.  Using default
+  version "0.0.0-0-unknown".
+Call Stack (most recent call first):
+  CMakeLists.txt:20 (include)
+
+[0m
+-- Lwan version 0.0.0-0-unknown
+-- Using zlib for deflate compression
+-- Disabling Lua support
+-- Valgrind headers not found -- disabling valgrind support
+-- Building without a sanitizer
+fatal: detected dubious ownership in repository at '/src/lwan'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /src/lwan
+-- Using built-in context switching routines for x86_64 processors
+-- Using zlib (/usr/lib/x86_64-linux-gnu/libz.so) for mimegen
+-- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+-- Freegeoip sample application not being built: SQLite not found
+-- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+-- Not building benchmark suite: database libraries not found.
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /work/lwan
++ ninja -v liblwan.a
+[1/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/statuslookupgen.dir/statuslookupgen.c.o -MF src/bin/tools/CMakeFiles/statuslookupgen.dir/statuslookupgen.c.o.d -o src/bin/tools/CMakeFiles/statuslookupgen.dir/statuslookupgen.c.o -c /src/lwan/src/bin/tools/statuslookupgen.c
+[2/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/bin2hex.dir/bin2hex.c.o -MF src/bin/tools/CMakeFiles/bin2hex.dir/bin2hex.c.o.d -o src/bin/tools/CMakeFiles/bin2hex.dir/bin2hex.c.o -c /src/lwan/src/bin/tools/bin2hex.c
+[3/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/missing.c.o -MF src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/missing.c.o.d -o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/missing.c.o -c /src/lwan/src/lib/missing.c
+[4/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/lwan-status.c.o -MF src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/lwan-status.c.o.d -o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/lwan-status.c.o -c /src/lwan/src/lib/lwan-status.c
+[5/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/mimegen.dir/mimegen.c.o -MF src/bin/tools/CMakeFiles/mimegen.dir/mimegen.c.o.d -o src/bin/tools/CMakeFiles/mimegen.dir/mimegen.c.o -c /src/lwan/src/bin/tools/mimegen.c
+[6/56] : && /src/aflplusplus/afl-clang-fast -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g -Wl,-z,now -Wl,-z,relro -Wl,-z,noexecstack src/bin/tools/CMakeFiles/statuslookupgen.dir/statuslookupgen.c.o -o src/bin/tools/statuslookupgen   && :
+[7/56] : && /src/aflplusplus/afl-clang-fast -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g -Wl,-z,now -Wl,-z,relro -Wl,-z,noexecstack src/bin/tools/CMakeFiles/bin2hex.dir/bin2hex.c.o -o src/bin/tools/bin2hex   && :
+[8/56] cd /work/lwan/src/lib && /work/lwan/src/bin/tools/statuslookupgen > /work/lwan/lookup-http-status.h
+[9/56] cd /work/lwan/src/lib && /work/lwan/src/bin/tools/bin2hex /src/lwan/src/lib/response-template.html response_template > /work/lwan/response-data.h
+[10/56] cd /work/lwan/src/lib && /work/lwan/src/bin/tools/bin2hex /src/lwan/wwwroot/icons/back.gif back_gif /src/lwan/wwwroot/icons/file.gif file_gif /src/lwan/wwwroot/icons/folder.gif folder_gif /src/lwan/src/lib/servefile-template.html servefile_template > /work/lwan/servefile-data.h
+[11/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -MD -MT src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/hash.c.o -MF src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/hash.c.o.d -o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/hash.c.o -c /src/lwan/src/lib/hash.c
+[12/56] : && /src/aflplusplus/afl-clang-fast -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g -Wl,-z,now -Wl,-z,relro -Wl,-z,noexecstack src/bin/tools/CMakeFiles/mimegen.dir/mimegen.c.o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/hash.c.o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/missing.c.o src/bin/tools/CMakeFiles/mimegen.dir/__/__/lib/lwan-status.c.o -o src/bin/tools/mimegen  /usr/lib/x86_64-linux-gnu/libz.so && :
+[13/56] cd /work/lwan/src/lib && /work/lwan/src/bin/tools/mimegen /src/lwan/src/bin/tools/mime.types > /work/lwan/mime-types.h
+[14/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-array.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-array.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-array.c.o -c /src/lwan/src/lib/lwan-array.c
+[15/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-job.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-job.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-job.c.o -c /src/lwan/src/lib/lwan-job.c
+[16/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-straitjacket.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-straitjacket.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-straitjacket.c.o -c /src/lwan/src/lib/lwan-straitjacket.c
+[17/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-arena.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-arena.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-arena.c.o -c /src/lwan/src/lib/lwan-arena.c
+[18/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-http-authorize.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-http-authorize.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-http-authorize.c.o -c /src/lwan/src/lib/lwan-http-authorize.c
+[19/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-io-wrappers.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-io-wrappers.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-io-wrappers.c.o -c /src/lwan/src/lib/lwan-io-wrappers.c
+[20/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-status.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-status.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-status.c.o -c /src/lwan/src/lib/lwan-status.c
+[21/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-readahead.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-readahead.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-readahead.c.o -c /src/lwan/src/lib/lwan-readahead.c
+[22/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-strbuf.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-strbuf.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-strbuf.c.o -c /src/lwan/src/lib/lwan-strbuf.c
+[23/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-response.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-response.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-response.c.o -c /src/lwan/src/lib/lwan-response.c
+[24/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-socket.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-socket.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-socket.c.o -c /src/lwan/src/lib/lwan-socket.c
+[25/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-pubsub.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-pubsub.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-pubsub.c.o -c /src/lwan/src/lib/lwan-pubsub.c
+[26/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-cache.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-cache.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-cache.c.o -c /src/lwan/src/lib/lwan-cache.c
+[27/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-h2-huffman.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-h2-huffman.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-h2-huffman.c.o -c /src/lwan/src/lib/lwan-h2-huffman.c
+[28/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-trie.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-trie.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-trie.c.o -c /src/lwan/src/lib/lwan-trie.c
+[29/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-time.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-time.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-time.c.o -c /src/lwan/src/lib/lwan-time.c
+[30/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-coro.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-coro.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-coro.c.o -c /src/lwan/src/lib/lwan-coro.c
+[31/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-mod-response.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-mod-response.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-response.c.o -c /src/lwan/src/lib/lwan-mod-response.c
+[32/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-tables.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-tables.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-tables.c.o -c /src/lwan/src/lib/lwan-tables.c
+[33/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-mod-redirect.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-mod-redirect.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-redirect.c.o -c /src/lwan/src/lib/lwan-mod-redirect.c
+[34/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-tq.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-tq.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-tq.c.o -c /src/lwan/src/lib/lwan-tq.c
+[35/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/missing-epoll.c.o -MF src/lib/CMakeFiles/lwan-static.dir/missing-epoll.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/missing-epoll.c.o -c /src/lwan/src/lib/missing-epoll.c
+[36/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/list.c.o -MF src/lib/CMakeFiles/lwan-static.dir/list.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/list.c.o -c /src/lwan/src/lib/list.c
+[37/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/missing-pthread.c.o -MF src/lib/CMakeFiles/lwan-static.dir/missing-pthread.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/missing-pthread.c.o -c /src/lwan/src/lib/missing-pthread.c
+[38/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/int-to-str.c.o -MF src/lib/CMakeFiles/lwan-static.dir/int-to-str.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/int-to-str.c.o -c /src/lwan/src/lib/int-to-str.c
+[39/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/base64.c.o -MF src/lib/CMakeFiles/lwan-static.dir/base64.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/base64.c.o -c /src/lwan/src/lib/base64.c
+[40/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan.c.o -c /src/lwan/src/lib/lwan.c
+[41/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-mod-fastcgi.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-mod-fastcgi.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-fastcgi.c.o -c /src/lwan/src/lib/lwan-mod-fastcgi.c
+[42/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/missing.c.o -MF src/lib/CMakeFiles/lwan-static.dir/missing.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/missing.c.o -c /src/lwan/src/lib/missing.c
+[43/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/realpathat.c.o -MF src/lib/CMakeFiles/lwan-static.dir/realpathat.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/realpathat.c.o -c /src/lwan/src/lib/realpathat.c
+[44/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/sd-daemon.c.o -MF src/lib/CMakeFiles/lwan-static.dir/sd-daemon.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/sd-daemon.c.o -c /src/lwan/src/lib/sd-daemon.c
+[45/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/timeout.c.o -MF src/lib/CMakeFiles/lwan-static.dir/timeout.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/timeout.c.o -c /src/lwan/src/lib/timeout.c
+/src/lwan/src/lib/timeout.c:124:30: warning: higher order bits are zeroes after implicit conversion [-Wimplicit-int-conversion]
+  124 |     return (v << n) | (v >> (-n & (WHEEL_T_BITS - 1)));
+      |                              ^~ ~
+/src/lwan/src/lib/timeout.c:130:30: warning: higher order bits are zeroes after implicit conversion [-Wimplicit-int-conversion]
+  130 |     return (v >> n) | (v << (-n & (WHEEL_T_BITS - 1)));
+      |                              ^~ ~
+2 warnings generated.
+[46/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/sha1.c.o -MF src/lib/CMakeFiles/lwan-static.dir/sha1.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/sha1.c.o -c /src/lwan/src/lib/sha1.c
+[47/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-config.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-config.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-config.c.o -c /src/lwan/src/lib/lwan-config.c
+[48/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/hash.c.o -MF src/lib/CMakeFiles/lwan-static.dir/hash.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/hash.c.o -c /src/lwan/src/lib/hash.c
+[49/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/patterns.c.o -MF src/lib/CMakeFiles/lwan-static.dir/patterns.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/patterns.c.o -c /src/lwan/src/lib/patterns.c
+[50/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-mod-serve-files.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-mod-serve-files.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-serve-files.c.o -c /src/lwan/src/lib/lwan-mod-serve-files.c
+[51/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-websocket.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-websocket.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-websocket.c.o -c /src/lwan/src/lib/lwan-websocket.c
+[52/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-mod-rewrite.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-mod-rewrite.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-rewrite.c.o -c /src/lwan/src/lib/lwan-mod-rewrite.c
+[53/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o -c /src/lwan/src/lib/lwan-request.c
+/src/lwan/src/lib/lwan-request.c:276:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                                    ^~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:276:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                                                     ^~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:276:70: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                                                                      ^~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:277:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  277 |         ['3'] = 3 << 4,    ['4'] = 4 << 4,  ['5'] = 5 << 4,  ['6'] = 6 << 4,
+      |                 ^~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:277:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  277 |         ['3'] = 3 << 4,    ['4'] = 4 << 4,  ['5'] = 5 << 4,  ['6'] = 6 << 4,
+      |                                    ^~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:277:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  277 |         ['3'] = 3 << 4,    ['4'] = 4 << 4,  ['5'] = 5 << 4,  ['6'] = 6 << 4,
+      |                                                     ^~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:277:70: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  277 |         ['3'] = 3 << 4,    ['4'] = 4 << 4,  ['5'] = 5 << 4,  ['6'] = 6 << 4,
+      |                                                                      ^~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:278:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  278 |         ['7'] = 7 << 4,    ['8'] = 8 << 4,  ['9'] = 9 << 4,  ['a'] = 10 << 4,
+      |                 ^~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:278:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  278 |         ['7'] = 7 << 4,    ['8'] = 8 << 4,  ['9'] = 9 << 4,  ['a'] = 10 << 4,
+      |                                    ^~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:278:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  278 |         ['7'] = 7 << 4,    ['8'] = 8 << 4,  ['9'] = 9 << 4,  ['a'] = 10 << 4,
+      |                                                     ^~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:278:70: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  278 |         ['7'] = 7 << 4,    ['8'] = 8 << 4,  ['9'] = 9 << 4,  ['a'] = 10 << 4,
+      |                                                                      ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:279:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  279 |         ['b'] = 11 << 4,   ['c'] = 12 << 4, ['d'] = 13 << 4, ['e'] = 14 << 4,
+      |                 ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:279:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  279 |         ['b'] = 11 << 4,   ['c'] = 12 << 4, ['d'] = 13 << 4, ['e'] = 14 << 4,
+      |                                    ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:279:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  279 |         ['b'] = 11 << 4,   ['c'] = 12 << 4, ['d'] = 13 << 4, ['e'] = 14 << 4,
+      |                                                     ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:279:70: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  279 |         ['b'] = 11 << 4,   ['c'] = 12 << 4, ['d'] = 13 << 4, ['e'] = 14 << 4,
+      |                                                                      ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:280:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  280 |         ['f'] = 15 << 4,   ['A'] = 10 << 4, ['B'] = 11 << 4, ['C'] = 12 << 4,
+      |                 ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:280:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  280 |         ['f'] = 15 << 4,   ['A'] = 10 << 4, ['B'] = 11 << 4, ['C'] = 12 << 4,
+      |                                    ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:280:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  280 |         ['f'] = 15 << 4,   ['A'] = 10 << 4, ['B'] = 11 << 4, ['C'] = 12 << 4,
+      |                                                     ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:280:70: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  280 |         ['f'] = 15 << 4,   ['A'] = 10 << 4, ['B'] = 11 << 4, ['C'] = 12 << 4,
+      |                                                                      ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:281:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  281 |         ['D'] = 13 << 4,   ['E'] = 14 << 4, ['F'] = 15 << 4,
+      |                 ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:281:36: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  281 |         ['D'] = 13 << 4,   ['E'] = 14 << 4, ['F'] = 15 << 4,
+      |                                    ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:281:53: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  281 |         ['D'] = 13 << 4,   ['E'] = 14 << 4, ['F'] = 15 << 4,
+      |                                                     ^~~~~~~
+/src/lwan/src/lib/lwan-request.c:276:23: note: previous initialization is here
+  276 |         [0 ... 255] = 255, ['0'] = 0 << 4,  ['1'] = 1 << 4,  ['2'] = 2 << 4,
+      |                       ^~~
+/src/lwan/src/lib/lwan-request.c:284:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                                   ^
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:284:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                                               ^
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:284:59: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                                                           ^
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:284:71: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                                                                       ^
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:285:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  285 |         ['4'] = 4,        ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,
+      |                 ^
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:285:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  285 |         ['4'] = 4,        ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,
+      |                                   ^
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:285:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  285 |         ['4'] = 4,        ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,
+      |                                               ^
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:285:59: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  285 |         ['4'] = 4,        ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,
+      |                                                           ^
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:285:71: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  285 |         ['4'] = 4,        ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,
+      |                                                                       ^
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:286:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  286 |         ['9'] = 9,        ['a'] = 10, ['b'] = 11, ['c'] = 12, ['d'] = 13,
+      |                 ^
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:286:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  286 |         ['9'] = 9,        ['a'] = 10, ['b'] = 11, ['c'] = 12, ['d'] = 13,
+      |                                   ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:286:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  286 |         ['9'] = 9,        ['a'] = 10, ['b'] = 11, ['c'] = 12, ['d'] = 13,
+      |                                               ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:286:59: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  286 |         ['9'] = 9,        ['a'] = 10, ['b'] = 11, ['c'] = 12, ['d'] = 13,
+      |                                                           ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:286:71: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  286 |         ['9'] = 9,        ['a'] = 10, ['b'] = 11, ['c'] = 12, ['d'] = 13,
+      |                                                                       ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:287:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  287 |         ['e'] = 14,       ['f'] = 15, ['A'] = 10, ['B'] = 11, ['C'] = 12,
+      |                 ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:287:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  287 |         ['e'] = 14,       ['f'] = 15, ['A'] = 10, ['B'] = 11, ['C'] = 12,
+      |                                   ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:287:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  287 |         ['e'] = 14,       ['f'] = 15, ['A'] = 10, ['B'] = 11, ['C'] = 12,
+      |                                               ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:287:59: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  287 |         ['e'] = 14,       ['f'] = 15, ['A'] = 10, ['B'] = 11, ['C'] = 12,
+      |                                                           ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:287:71: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  287 |         ['e'] = 14,       ['f'] = 15, ['A'] = 10, ['B'] = 11, ['C'] = 12,
+      |                                                                       ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:288:17: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  288 |         ['D'] = 13,       ['E'] = 14, ['F'] = 15,
+      |                 ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:288:35: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  288 |         ['D'] = 13,       ['E'] = 14, ['F'] = 15,
+      |                                   ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+/src/lwan/src/lib/lwan-request.c:288:47: warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+  288 |         ['D'] = 13,       ['E'] = 14, ['F'] = 15,
+      |                                               ^~
+/src/lwan/src/lib/lwan-request.c:284:23: note: previous initialization is here
+  284 |         [0 ... 255] = -1, ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,
+      |                       ^~
+44 warnings generated.
+[54/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-thread.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-thread.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-thread.c.o -c /src/lwan/src/lib/lwan-thread.c
+/src/lwan/src/lib/lwan-thread.c:1036:50: warning: unused parameter 'switcher' [-Wunused-parameter]
+ 1036 |                                    coro_context *switcher,
+      |                                                  ^
+/src/lwan/src/lib/lwan-thread.c:1037:58: warning: unused parameter 'tq' [-Wunused-parameter]
+ 1037 |                                    struct timeout_queue *tq)
+      |                                                          ^
+2 warnings generated.
+[55/56] /src/aflplusplus/afl-clang-fast -D_FILE_OFFSET_BITS=64 -D_TIME_BITS=64 -I/src/lwan/src/lib/missing -I/work/lwan -I/src/lwan/src/lib -O1   -fno-omit-frame-pointer   -gline-tables-only   -Wno-error=incompatible-function-pointer-types   -Wno-error=int-conversion   -Wno-error=deprecated-declarations   -Wno-error=implicit-function-declaration   -Wno-error=implicit-int   -Wno-error=unknown-warning-option   -Wno-error=vla-cxx-extension   -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -fno-plt -Warray-bounds -Wdouble-promotion -Wformat-overflow -Wlogical-not-parentheses -Wno-override-init -Wno-unknown-warning-option -Wno-unused-parameter -Wrestrict -Wstringop-overflow -Wstringop-overread -Wunsequenced -Wvla -Wno-free-nonheap-object -Wall -Wextra -Wshadow -Wconversion -std=gnu11 -g   -include /work/lwan/lwan-build-config.h -fPIC -MD -MT src/lib/CMakeFiles/lwan-static.dir/lwan-template.c.o -MF src/lib/CMakeFiles/lwan-static.dir/lwan-template.c.o.d -o src/lib/CMakeFiles/lwan-static.dir/lwan-template.c.o -c /src/lwan/src/lib/lwan-template.c
+[56/56] : && /usr/local/bin/cmake -E rm -f src/lib/liblwan.a && /usr/local/bin/llvm-ar qc src/lib/liblwan.a  src/lib/CMakeFiles/lwan-static.dir/lwan-arena.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-array.c.o src/lib/CMakeFiles/lwan-static.dir/lwan.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-cache.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-config.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-coro.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-h2-huffman.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-http-authorize.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-io-wrappers.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-job.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-pubsub.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-readahead.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-request.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-response.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-socket.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-status.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-straitjacket.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-strbuf.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-tables.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-template.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-thread.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-time.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-tq.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-trie.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-websocket.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-fastcgi.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-redirect.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-response.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-rewrite.c.o src/lib/CMakeFiles/lwan-static.dir/lwan-mod-serve-files.c.o src/lib/CMakeFiles/lwan-static.dir/missing.c.o src/lib/CMakeFiles/lwan-static.dir/missing-epoll.c.o src/lib/CMakeFiles/lwan-static.dir/missing-pthread.c.o src/lib/CMakeFiles/lwan-static.dir/base64.c.o src/lib/CMakeFiles/lwan-static.dir/hash.c.o src/lib/CMakeFiles/lwan-static.dir/int-to-str.c.o src/lib/CMakeFiles/lwan-static.dir/list.c.o src/lib/CMakeFiles/lwan-static.dir/patterns.c.o src/lib/CMakeFiles/lwan-static.dir/realpathat.c.o src/lib/CMakeFiles/lwan-static.dir/sd-daemon.c.o src/lib/CMakeFiles/lwan-static.dir/sha1.c.o src/lib/CMakeFiles/lwan-static.dir/timeout.c.o && /usr/local/bin/llvm-ranlib src/lib/liblwan.a && :
++ cp /src/lwan/fuzz/request_fuzzer.dict /out/
++ for fuzzer in $SRC/lwan/src/bin/fuzz/*_fuzzer.cc
+++ basename /src/lwan/src/bin/fuzz/config_fuzzer.cc .cc
++ executable=config_fuzzer
+++ basename /src/lwan/src/bin/fuzz/config_fuzzer.cc _fuzzer.cc
++ corpus_base=config
++ zip -jr /out/config_fuzzer_seed_corpus.zip /src/lwan/fuzz/corpus/corpus-config-234910329
+updating: corpus-config-234910329 (deflated 59%)
++ /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++11 -Wl,-whole-archive /work/lwan/src/lib/liblwan.a -Wl,-no-whole-archive -I/src/lwan/src/lib /src/lwan/src/bin/fuzz/config_fuzzer.cc /usr/lib/libFuzzingEngine.a -lpthread -lz -o /out/config_fuzzer
+In file included from /src/lwan/src/bin/fuzz/config_fuzzer.cc:6:
+In file included from /src/lwan/src/lib/lwan-config.h:36:
+[1m/src/lwan/src/lib/lwan-strbuf.h:113:19: [0m[0;1;35mwarning: [0m[1m'lwan_strbuf_to_value' has C-linkage specified, but returns incomplete type 'struct lwan_value' which could be incompatible with C [-Wreturn-type-c-linkage][0m
+  113 | [0;34mstruct[0m lwan_value lwan_strbuf_to_value([0;34mconst[0m [0;34mstruct[0m lwan_strbuf *s);[0m
+      | [0;1;32m                  ^
+[0m1 warning generated.
++ for fuzzer in $SRC/lwan/src/bin/fuzz/*_fuzzer.cc
+++ basename /src/lwan/src/bin/fuzz/h2_huffman_fuzzer.cc .cc
++ executable=h2_huffman_fuzzer
+++ basename /src/lwan/src/bin/fuzz/h2_huffman_fuzzer.cc _fuzzer.cc
++ corpus_base=h2_huffman
++ zip -jr /out/h2_huffman_fuzzer_seed_corpus.zip /src/lwan/fuzz/corpus/corpus-h2_huffman-1 /src/lwan/fuzz/corpus/corpus-h2_huffman-2 /src/lwan/fuzz/corpus/corpus-h2_huffman-3
+updating: corpus-h2_huffman-1 (deflated 5%)
+updating: corpus-h2_huffman-2 (stored 0%)
+updating: corpus-h2_huffman-3 (stored 0%)
++ /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++11 -Wl,-whole-archive /work/lwan/src/lib/liblwan.a -Wl,-no-whole-archive -I/src/lwan/src/lib /src/lwan/src/bin/fuzz/h2_huffman_fuzzer.cc /usr/lib/libFuzzingEngine.a -lpthread -lz -o /out/h2_huffman_fuzzer
++ for fuzzer in $SRC/lwan/src/bin/fuzz/*_fuzzer.cc
+++ basename /src/lwan/src/bin/fuzz/pattern_fuzzer.cc .cc
++ executable=pattern_fuzzer
+++ basename /src/lwan/src/bin/fuzz/pattern_fuzzer.cc _fuzzer.cc
++ corpus_base=pattern
++ zip -jr /out/pattern_fuzzer_seed_corpus.zip /src/lwan/fuzz/corpus/corpus-pattern-1 /src/lwan/fuzz/corpus/corpus-pattern-2 /src/lwan/fuzz/corpus/corpus-pattern-3 /src/lwan/fuzz/corpus/corpus-pattern-4
+updating: corpus-pattern-1 (stored 0%)
+updating: corpus-pattern-2 (stored 0%)
+updating: corpus-pattern-3 (stored 0%)
+updating: corpus-pattern-4 (stored 0%)
++ /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++11 -Wl,-whole-archive /work/lwan/src/lib/liblwan.a -Wl,-no-whole-archive -I/src/lwan/src/lib /src/lwan/src/bin/fuzz/pattern_fuzzer.cc /usr/lib/libFuzzingEngine.a -lpthread -lz -o /out/pattern_fuzzer
+In file included from /src/lwan/src/bin/fuzz/pattern_fuzzer.cc:7:
+In file included from /src/lwan/src/lib/lwan-private.h:25:
+In file included from /src/lwan/src/lib/lwan.h:37:
+In file included from /src/lwan/src/lib/lwan-config.h:36:
+[1m/src/lwan/src/lib/lwan-strbuf.h:113:19: [0m[0;1;35mwarning: [0m[1m'lwan_strbuf_to_value' has C-linkage specified, but returns incomplete type 'struct lwan_value' which could be incompatible with C [-Wreturn-type-c-linkage][0m
+  113 | [0;34mstruct[0m lwan_value lwan_strbuf_to_value([0;34mconst[0m [0;34mstruct[0m lwan_strbuf *s);[0m
+      | [0;1;32m                  ^
+[0m1 warning generated.
++ for fuzzer in $SRC/lwan/src/bin/fuzz/*_fuzzer.cc
+++ basename /src/lwan/src/bin/fuzz/request_fuzzer.cc .cc
++ executable=request_fuzzer
+++ basename /src/lwan/src/bin/fuzz/request_fuzzer.cc _fuzzer.cc
++ corpus_base=request
++ zip -jr /out/request_fuzzer_seed_corpus.zip /src/lwan/fuzz/corpus/corpus-request-1012502954 /src/lwan/fuzz/corpus/corpus-request-1025202362 /src/lwan/fuzz/corpus/corpus-request-1036140795 /src/lwan/fuzz/corpus/corpus-request-1067854538 /src/lwan/fuzz/corpus/corpus-request-1102520059 /src/lwan/fuzz/corpus/corpus-request-1117142618 /src/lwan/fuzz/corpus/corpus-request-1129566413 /src/lwan/fuzz/corpus/corpus-request-1139901474 /src/lwan/fuzz/corpus/corpus-request-116087764 /src/lwan/fuzz/corpus/corpus-request-1186452551 /src/lwan/fuzz/corpus/corpus-request-1231192379 /src/lwan/fuzz/corpus/corpus-request-1239036029 /src/lwan/fuzz/corpus/corpus-request-1244316437 /src/lwan/fuzz/corpus/corpus-request-1264095060 /src/lwan/fuzz/corpus/corpus-request-1285228804 /src/lwan/fuzz/corpus/corpus-request-1335354340 /src/lwan/fuzz/corpus/corpus-request-1350573793 /src/lwan/fuzz/corpus/corpus-request-1365180540 /src/lwan/fuzz/corpus/corpus-request-1374344043 /src/lwan/fuzz/corpus/corpus-request-1376710097 /src/lwan/fuzz/corpus/corpus-request-137806862 /src/lwan/fuzz/corpus/corpus-request-1398295499 /src/lwan/fuzz/corpus/corpus-request-1409959708 /src/lwan/fuzz/corpus/corpus-request-1424268980 /src/lwan/fuzz/corpus/corpus-request-1433925857 /src/lwan/fuzz/corpus/corpus-request-1450573622 /src/lwan/fuzz/corpus/corpus-request-1476153275 /src/lwan/fuzz/corpus/corpus-request-1494613810 /src/lwan/fuzz/corpus/corpus-request-1504569917 /src/lwan/fuzz/corpus/corpus-request-1548233367 /src/lwan/fuzz/corpus/corpus-request-159259470 /src/lwan/fuzz/corpus/corpus-request-1600028624 /src/lwan/fuzz/corpus/corpus-request-1605894428 /src/lwan/fuzz/corpus/corpus-request-1605908235 /src/lwan/fuzz/corpus/corpus-request-1626276121 /src/lwan/fuzz/corpus/corpus-request-1631518149 /src/lwan/fuzz/corpus/corpus-request-1649760492 /src/lwan/fuzz/corpus/corpus-request-1714636915 /src/lwan/fuzz/corpus/corpus-request-1726956429 /src/lwan/fuzz/corpus/corpus-request-1749698586 /src/lwan/fuzz/corpus/corpus-request-1780695788 /src/lwan/fuzz/corpus/corpus-request-1827336327 /src/lwan/fuzz/corpus/corpus-request-184803526 /src/lwan/fuzz/corpus/corpus-request-187309218 /src/lwan/fuzz/corpus/corpus-request-1884661237 /src/lwan/fuzz/corpus/corpus-request-1889947178 /src/lwan/fuzz/corpus/corpus-request-1909002904 /src/lwan/fuzz/corpus/corpus-request-1911165193 /src/lwan/fuzz/corpus/corpus-request-1939964443 /src/lwan/fuzz/corpus/corpus-request-1957747793 /src/lwan/fuzz/corpus/corpus-request-1973594324 /src/lwan/fuzz/corpus/corpus-request-1975960378 /src/lwan/fuzz/corpus/corpus-request-2114738097 /src/lwan/fuzz/corpus/corpus-request-2130794395 /src/lwan/fuzz/corpus/corpus-request-213975407 /src/lwan/fuzz/corpus/corpus-request-269455306 /src/lwan/fuzz/corpus/corpus-request-321123 /src/lwan/fuzz/corpus/corpus-request-3298283 /src/lwan/fuzz/corpus/corpus-request-338888228 /src/lwan/fuzz/corpus/corpus-request-356426808 /src/lwan/fuzz/corpus/corpus-request-364228444 /src/lwan/fuzz/corpus/corpus-request-387346491 /src/lwan/fuzz/corpus/corpus-request-412776091 /src/lwan/fuzz/corpus/corpus-request-42999170 /src/lwan/fuzz/corpus/corpus-request-439493451 /src/lwan/fuzz/corpus/corpus-request-511702305 /src/lwan/fuzz/corpus/corpus-request-515530019 /src/lwan/fuzz/corpus/corpus-request-524872353 /src/lwan/fuzz/corpus/corpus-request-532670688 /src/lwan/fuzz/corpus/corpus-request-593209441 /src/lwan/fuzz/corpus/corpus-request-603570492 /src/lwan/fuzz/corpus/corpus-request-631704567 /src/lwan/fuzz/corpus/corpus-request-653468858 /src/lwan/fuzz/corpus/corpus-request-654887343 /src/lwan/fuzz/corpus/corpus-request-709393584 /src/lwan/fuzz/corpus/corpus-request-745425661 /src/lwan/fuzz/corpus/corpus-request-752392754 /src/lwan/fuzz/corpus/corpus-request-76065818 /src/lwan/fuzz/corpus/corpus-request-771151432 /src/lwan/fuzz/corpus/corpus-request-805750846 /src/lwan/fuzz/corpus/corpus-request-846930886 /src/lwan/fuzz/corpus/corpus-request-8936987 /src/lwan/fuzz/corpus/corpus-request-933110197 /src/lwan/fuzz/corpus/corpus-request-943947739 /src/lwan/fuzz/corpus/corpus-request-945117276 /src/lwan/fuzz/corpus/corpus-request-959997301 /src/lwan/fuzz/corpus/corpus-request-968338082 /src/lwan/fuzz/corpus/corpus-request-971899228
+updating: corpus-request-1012502954 (deflated 12%)
+updating: corpus-request-1025202362 (deflated 13%)
+updating: corpus-request-1036140795 (deflated 14%)
+updating: corpus-request-1067854538 (deflated 20%)
+updating: corpus-request-1102520059 (deflated 12%)
+updating: corpus-request-1117142618 (deflated 12%)
+updating: corpus-request-1129566413 (deflated 12%)
+updating: corpus-request-1139901474 (deflated 24%)
+updating: corpus-request-116087764 (stored 0%)
+updating: corpus-request-1186452551 (deflated 24%)
+updating: corpus-request-1231192379 (deflated 12%)
+updating: corpus-request-1239036029 (deflated 24%)
+updating: corpus-request-1244316437 (deflated 24%)
+updating: corpus-request-1264095060 (deflated 13%)
+updating: corpus-request-1285228804 (deflated 13%)
+updating: corpus-request-1335354340 (deflated 12%)
+updating: corpus-request-1350573793 (deflated 24%)
+updating: corpus-request-1365180540 (deflated 11%)
+updating: corpus-request-1374344043 (deflated 12%)
+updating: corpus-request-1376710097 (deflated 14%)
+updating: corpus-request-137806862 (deflated 12%)
+updating: corpus-request-1398295499 (stored 0%)
+updating: corpus-request-1409959708 (deflated 13%)
+updating: corpus-request-1424268980 (deflated 12%)
+updating: corpus-request-1433925857 (deflated 12%)
+updating: corpus-request-1450573622 (deflated 13%)
+updating: corpus-request-1476153275 (deflated 24%)
+updating: corpus-request-1494613810 (deflated 14%)
+updating: corpus-request-1504569917 (deflated 15%)
+updating: corpus-request-1548233367 (deflated 11%)
+updating: corpus-request-159259470 (stored 0%)
+updating: corpus-request-1600028624 (deflated 13%)
+updating: corpus-request-1605894428 (deflated 24%)
+updating: corpus-request-1605908235 (deflated 24%)
+updating: corpus-request-1626276121 (deflated 24%)
+updating: corpus-request-1631518149 (deflated 12%)
+updating: corpus-request-1649760492 (deflated 11%)
+updating: corpus-request-1714636915 (deflated 12%)
+updating: corpus-request-1726956429 (deflated 12%)
+updating: corpus-request-1749698586 (deflated 13%)
+updating: corpus-request-1780695788 (deflated 13%)
+updating: corpus-request-1827336327 (deflated 24%)
+updating: corpus-request-184803526 (deflated 12%)
+updating: corpus-request-187309218 (deflated 30%)
+updating: corpus-request-1884661237 (deflated 24%)
+updating: corpus-request-1889947178 (deflated 13%)
+updating: corpus-request-1909002904 (deflated 20%)
+updating: corpus-request-1911165193 (stored 0%)
+updating: corpus-request-1939964443 (deflated 19%)
+updating: corpus-request-1957747793 (deflated 13%)
+updating: corpus-request-1973594324 (deflated 12%)
+updating: corpus-request-1975960378 (deflated 13%)
+updating: corpus-request-2114738097 (deflated 11%)
+updating: corpus-request-2130794395 (deflated 24%)
+updating: corpus-request-213975407 (deflated 24%)
+updating: corpus-request-269455306 (deflated 15%)
+updating: corpus-request-321123 (deflated 18%)
+updating: corpus-request-3298283 (deflated 9%)
+updating: corpus-request-338888228 (stored 0%)
+updating: corpus-request-356426808 (deflated 12%)
+updating: corpus-request-364228444 (deflated 17%)
+updating: corpus-request-387346491 (stored 0%)
+updating: corpus-request-412776091 (deflated 13%)
+updating: corpus-request-42999170 (deflated 12%)
+updating: corpus-request-439493451 (deflated 12%)
+updating: corpus-request-511702305 (deflated 13%)
+updating: corpus-request-515530019 (deflated 13%)
+updating: corpus-request-524872353 (deflated 13%)
+updating: corpus-request-532670688 (deflated 19%)
+updating: corpus-request-593209441 (deflated 12%)
+updating: corpus-request-603570492 (deflated 16%)
+updating: corpus-request-631704567 (deflated 18%)
+updating: corpus-request-653468858 (deflated 24%)
+updating: corpus-request-654887343 (deflated 14%)
+updating: corpus-request-709393584 (deflated 11%)
+updating: corpus-request-745425661 (deflated 11%)
+updating: corpus-request-752392754 (deflated 15%)
+updating: corpus-request-76065818 (deflated 24%)
+updating: corpus-request-771151432 (deflated 24%)
+updating: corpus-request-805750846 (deflated 11%)
+updating: corpus-request-846930886 (deflated 12%)
+updating: corpus-request-8936987 (stored 0%)
+updating: corpus-request-933110197 (deflated 13%)
+updating: corpus-request-943947739 (deflated 13%)
+updating: corpus-request-945117276 (deflated 13%)
+updating: corpus-request-959997301 (deflated 16%)
+updating: corpus-request-968338082 (deflated 12%)
+updating: corpus-request-971899228 (deflated 24%)
++ /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++11 -Wl,-whole-archive /work/lwan/src/lib/liblwan.a -Wl,-no-whole-archive -I/src/lwan/src/lib /src/lwan/src/bin/fuzz/request_fuzzer.cc /usr/lib/libFuzzingEngine.a -lpthread -lz -o /out/request_fuzzer
+In file included from /src/lwan/src/bin/fuzz/request_fuzzer.cc:1:
+In file included from /src/lwan/src/lib/lwan.h:37:
+In file included from /src/lwan/src/lib/lwan-config.h:36:
+[1m/src/lwan/src/lib/lwan-strbuf.h:113:19: [0m[0;1;35mwarning: [0m[1m'lwan_strbuf_to_value' has C-linkage specified, but returns incomplete type 'struct lwan_value' which could be incompatible with C [-Wreturn-type-c-linkage][0m
+  113 | [0;34mstruct[0m lwan_value lwan_strbuf_to_value([0;34mconst[0m [0;34mstruct[0m lwan_strbuf *s);[0m
+      | [0;1;32m                  ^
+[0m1 warning generated.
++ for fuzzer in $SRC/lwan/src/bin/fuzz/*_fuzzer.cc
+++ basename /src/lwan/src/bin/fuzz/template_fuzzer.cc .cc
++ executable=template_fuzzer
+++ basename /src/lwan/src/bin/fuzz/template_fuzzer.cc _fuzzer.cc
++ corpus_base=template
++ zip -jr /out/template_fuzzer_seed_corpus.zip /src/lwan/fuzz/corpus/corpus-template-1
+updating: corpus-template-1 (deflated 63%)
++ /src/aflplusplus/afl-clang-fast++ -O1 -fno-omit-frame-pointer -gline-tables-only -Wno-error=incompatible-function-pointer-types -Wno-error=int-conversion -Wno-error=deprecated-declarations -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=unknown-warning-option -Wno-error=vla-cxx-extension -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION -fsanitize=address -fsanitize-address-use-after-scope -stdlib=libc++ -std=c++11 -Wl,-whole-archive /work/lwan/src/lib/liblwan.a -Wl,-no-whole-archive -I/src/lwan/src/lib /src/lwan/src/bin/fuzz/template_fuzzer.cc /usr/lib/libFuzzingEngine.a -lpthread -lz -o /out/template_fuzzer
+In file included from /src/lwan/src/bin/fuzz/template_fuzzer.cc:6:
+In file included from /src/lwan/src/lib/lwan-private.h:25:
+In file included from /src/lwan/src/lib/lwan.h:37:
+In file included from /src/lwan/src/lib/lwan-config.h:36:
+[1m/src/lwan/src/lib/lwan-strbuf.h:113:19: [0m[0;1;35mwarning: [0m[1m'lwan_strbuf_to_value' has C-linkage specified, but returns incomplete type 'struct lwan_value' which could be incompatible with C [-Wreturn-type-c-linkage][0m
+  113 | [0;34mstruct[0m lwan_value lwan_strbuf_to_value([0;34mconst[0m [0;34mstruct[0m lwan_strbuf *s);[0m
+      | [0;1;32m                  ^
+[0m[1m/src/lwan/src/bin/fuzz/template_fuzzer.cc:42:22: [0m[0;1;35mwarning: [0m[1mISO C++ requires field designators to be specified in declaration order; field 'lwan_var_descriptor::(anonymous union at /src/lwan/src/lib/lwan-template.h:33:5)' will be initialized after field 'list_desc' [-Wreorder-init-list][0m
+   40 |     TPL_VAR_SEQUENCE(file_list,[0m
+      | [0;1;32m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   41 |                      directory_list_generator,[0m
+      | [0;1;32m                     ~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   42 |                      (([0;34mconst[0m [0;34mstruct[0m lwan_var_descriptor[]){[0m
+      | [0;1;32m                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   43 |                          TPL_VAR_STR(file_list.icon),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   44 |                          TPL_VAR_STR(file_list.icon_alt),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   45 |                          TPL_VAR_STR(file_list.name),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   46 |                          TPL_VAR_STR(file_list.type),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   47 |                          TPL_VAR_INT(file_list.size),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   48 |                          TPL_VAR_STR(file_list.unit),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   49 |                          TPL_VAR_STR(file_list.zebra_class),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   50 |                          TPL_VAR_SENTINEL,[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~
+[0m   51 |                      })),[0m
+      | [0;1;32m                     ~~~
+[0m[1m/src/lwan/src/lib/lwan-template.h:63:47: [0m[0;1;36mnote: [0mexpanded from macro 'TPL_VAR_SEQUENCE'[0m
+   63 |         .generator = generator_, .list_desc = seqitem_desc_                    \[0m
+      | [0;1;32m                                 ~~~~~~~~~~~~~^~~~~~~~~~~~~
+[0m[1m/src/lwan/src/bin/fuzz/template_fuzzer.cc:40:5: [0m[0;1;36mnote: [0mprevious initialization for field 'lwan_var_descriptor::(anonymous union at /src/lwan/src/lib/lwan-template.h:33:5)' is here[0m
+   40 |     TPL_VAR_SEQUENCE(file_list,[0m
+      | [0;1;32m    ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   41 |                      directory_list_generator,[0m
+      | [0;1;32m                     ~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   42 |                      (([0;34mconst[0m [0;34mstruct[0m lwan_var_descriptor[]){[0m
+      | [0;1;32m                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   43 |                          TPL_VAR_STR(file_list.icon),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   44 |                          TPL_VAR_STR(file_list.icon_alt),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   45 |                          TPL_VAR_STR(file_list.name),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   46 |                          TPL_VAR_STR(file_list.type),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   47 |                          TPL_VAR_INT(file_list.size),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   48 |                          TPL_VAR_STR(file_list.unit),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   49 |                          TPL_VAR_STR(file_list.zebra_class),[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[0m   50 |                          TPL_VAR_SENTINEL,[0m
+      | [0;1;32m                         ~~~~~~~~~~~~~~~~~
+[0m   51 |                      })),[0m
+      | [0;1;32m                     ~~~
+[0m[1m/src/lwan/src/lib/lwan-template.h:63:9: [0m[0;1;36mnote: [0mexpanded from macro 'TPL_VAR_SEQUENCE'[0m
+   63 |         .generator = generator_, .list_desc = seqitem_desc_                    \[0m
+      | [0;1;32m        ^~~~~~~~~~~~~~~~~~~~~~~
+[0m2 warnings generated.
+
+==================================================
+--- VALIDATION SUMMARY
+--------------------------------------------------
+Step 1    [REFERENCE]  | pass: 5 target(s) (primary: pattern_fuzzer)
+Step 2    [MANDATORY]  | pass
+Step 3    [REFERENCE]  | pass
+Step 4    [REFERENCE]  | pass
+Step 5    [REFERENCE]  | pass
+Step 6    [REFERENCE]  | pass: Time-limited run completed successfully.
+==================================================
+
+RESULT: success

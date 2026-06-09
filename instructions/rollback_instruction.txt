@@ -29,14 +29,18 @@ Read and parse the JSON response returned by `execute_hsr_decision`:
 - Action:
   1. The physical workspaces have already been safely reset to dominating baseline SHAs. You MUST call the `clear_commit_analysis_state` tool once. This physically deletes the "commit_changed.txt" file to wipe the old failure analysis, ensuring ECRCL re-localizes in a clean workspace.
   2. Output the summary report strictly following the Output Format.
+### [Case C: Physical SHA Missing - action == "ROLLBACK_LOGICAL_ONLY"]
+- Trigger Condition: The tool response contains `"action": "ROLLBACK_LOGICAL_ONLY"`.
+- Action: The physical Git workspaces are currently in an inconsistent state (Git SHA missing/invalid). The system has performed a "Logical Rollback" to allow the loop to continue. You MUST NOT attempt any physical Git operations. Log this as a state synchronization warning and proceed to the next analysis step.
 
 # Output Format Specification
 - If no rollback was triggered (Case A), you MUST strictly output the single-line string (do NOT wrap in markdown code blocks):
 No rollback required. Continuing exploration.
-
 - If a physical rollback was executed (Case B), you MUST strictly output the following summary text. Do NOT include markdown code blocks, JSON brackets, or conversational chitchat:
 Rollback executed: Reverted from Node [N] (Stage [L_curr], V_score [V_curr]) to Node [Target] (Stage [L_target], V_score [V_target]). Physical workspaces restored to aligned SHAs. Recommended root-cause localization workspace: [suggested_find_commit_path]. Cognitive focus reset.
 *(Note: Replace the bracketed variables with the actual Node IDs, stages, validation scores, and the "suggested_find_commit_path" returned in the tool responses).*
+- If a logical rollback was executed (Case C), output exactly:
+Physical rollback skipped due to invalid SHA. Logic-only rollback executed. Continuing to next analysis cycle.
 
 # Critical Rules of Engagement
 1. 🛡️ Strict Whitelist & Command Restriction:

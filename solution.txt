@@ -1,14 +1,6 @@
 ---=== FILE ===---
-oss-fuzz/projects/lwan/build.sh
+process/project/lwan/src/lib/lwan-request.c
 ---=== ORIGINAL ===---
-	$CXX $CXXFLAGS -std=c++11 \
-		-Wl,-whole-archive $WORK/lwan/src/lib/liblwan.a -Wl,-no-whole-archive \
-		-I$SRC/lwan/src/lib $fuzzer \
-		$LIB_FUZZING_ENGINE -lpthread -lz \
-		-o $OUT/$executable
+    static struct coro_switcher switcher;
 ---=== REPLACEMENT ===---
-	$CXX $CXXFLAGS -std=c++11 \
-		-Wl,-whole-archive $WORK/lwan/src/lib/liblwan.a -Wl,-no-whole-archive \
-		-I$SRC/lwan/src/lib $fuzzer \
-		$LIB_FUZZING_ENGINE -lpthread -lz \
-		-o $OUT/$executable
+    static coro_context switcher;

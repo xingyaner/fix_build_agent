@@ -2,21 +2,22 @@
 # All target files for patch operations must match any of the following prefixes (relative path format)
 
 allowed_prefixes:
-  # OSS-Fuzz project configurations
-  - "oss-fuzz/projects/"
+  # OSS-Fuzz infrastructure and configurations (read/write)
+  - "oss-fuzz/"
 
-  # Third-party source code
-  - "process/project/"
+  # Third-party workspaces and archives (read/write)
+  - "process/"
+  - "build_error_log/"
 
-  # Generated intermediate files
+  # Generated intermediate files and logging (read/write)
   - "generated_prompt_file/"
   - "fuzz_build_log_file/"
-
-  # Logs and status
+  - "success-fix-project/"
   - "agent_logs/"
-  - "build_error_log/"
-  # Solutions and reflections
-  - "solution.txt"
-  - "reflection_journal.json"
-  # Report files
+
+  # Core trace, strategy and solution files (read/write)
+  - "project_repair_trace.json"
+  - "repair_strategy.txt"
+  - "fix-success.txt"
   - "projects.yaml"
+  - "solution.txt"

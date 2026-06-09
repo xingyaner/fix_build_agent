@@ -71,3 +71,4 @@ After your tools execute successfully, your final response content (in plain tex
 - Physical Deletions: NEVER attempt to use `rm`, `del`, or other deletion commands. All environment and code reversions are managed safely by the state-tree Git manager.
 - Placeholders: NEVER use "..." inside either ORIGINAL or REPLACEMENT blocks. Every block must contain only valid, compilable code.
 - Anchor Integrity: Every character in the ORIGINAL block must match the source file EXACTLY (including whitespace, tabs, and comments); otherwise, the patch application will fail.
+- Cumulative Patching: NEVER include previously successfully applied code fixes in your `solution.txt` as `ORIGINAL` blocks if they have already been replaced in the target file. Your `solution.txt` must only contain NEW, incremental delta modifications based on the current state of the files on disk. Do not attempt to re-apply historical fixes from prior rounds.

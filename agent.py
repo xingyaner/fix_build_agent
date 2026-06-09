@@ -23,10 +23,15 @@ from google.adk.sessions import InMemorySessionService
 from google.adk.models.lite_llm import LiteLlm
 from google.adk.events import Event
 from google.adk.tools.tool_context import ToolContext
-from google.adk.agents import LoopAgent, LlmAgent, BaseAgent, SequentialAgent
+# 🔑 优化：废弃 LoopAgent, SequentialAgent 导入，改用 Workflow 等先进工作流机制
+from google.adk.agents import LlmAgent, BaseAgent
+from google.adk.workflow import Workflow, Edge, node, BaseNode
 from google.adk.agents.invocation_context import InvocationContext
 from google.genai import types
+from functools import wraps
 
+from functools import wraps
+from agent_tools import safe_delete_path,reclaim_path_permissions
 from agent_tools import (
     read_projects_from_yaml,
     update_yaml_report,
@@ -40,6 +45,7 @@ from agent_tools import (
     get_project_paths,
     checkout_project_commit,
     read_file_content,
+    get_verified_git_sha,
     get_git_commits_around_date,
     save_commit_diff_to_file,
     create_or_update_file,
@@ -84,7 +90,8 @@ class StreamTee:
 
 class LoggingWrapperAgent(BaseAgent):
     name: str = "LoggingWrapperAgent"
-    subject_agent: BaseAgent
+    # 🔑 优化：变更为 BaseNode 以便包裹 Workflow 对象
+    subject_agent: BaseNode
 
     async def _run_async_impl(self, context: InvocationContext) -> AsyncGenerator[Event, None]:
         try:
@@ -96,7 +103,6 @@ class LoggingWrapperAgent(BaseAgent):
             raise e
         finally:
             if not GLOBAL_LOGGER.file_handler_setup: GLOBAL_LOGGER.setup_file_handler()
-
 
 class AgentLogger:
     def __init__(self, log_directory: str = "agent_logs"):
@@ -199,40 +205,70 @@ def update_trace_ledger(node_id: int, fields_dict: dict, tool_context: ToolConte
         return {"status": "error", "message": f"Exception occurred during backfilling: {str(e)}"}
 
 
+def tool_defense_decorator(func):
+    @wraps(func)
+    async def async_wrapper(*args, **kwargs):
+        try:
+            return await func(*args, **kwargs)
+        except Exception as e:
+            # 日志展示非法或异常调用，但不崩溃，将异常抛出给 Agent 处理
+            GLOBAL_LOGGER.log_raw(f"⚠️ [Security/Error] Tool '{func.__name__}' failed: {str(e)}")
+            return {"status": "error", "message": f"Execution failed: {str(e)}"}
+
+    @wraps(func)
+    def sync_wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            GLOBAL_LOGGER.log_raw(f"⚠️ [Security/Error] Tool '{func.__name__}' failed: {str(e)}")
+            return {"status": "error", "message": f"Execution failed: {str(e)}"}
+
+    return async_wrapper if asyncio.iscoroutinefunction(func) else sync_wrapper
+
+def wrap_tools(tools: List[Any]) -> List[Any]:
+    return [tool_defense_decorator(t) for t in tools]
+
 # =====================================================================
 # 辅助函数：安全记忆清理与状态脱水 (物理手术完全无状态版)
 # =====================================================================
 
 async def _safe_memory_cleaning(session_service: InMemorySessionService, session_id: str):
     """
-    【物理裁剪+原地覆盖版】会话记忆重组
-    通过保留最少量的基准环境数据，彻底清除历史轮次的对话噪声，
-    让下一次循环的所有智能体处于完全无状态，消除一切历史认知偏置与上下文膨胀。
+    【防御性优化版】仅对明确的大体积负载进行脱水，严格保护运行环境元数据。
     """
     session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID, session_id=session_id)
-    if not session or not session.events:
+    if not session:
         return
 
-    # 始终物理保留初始第一个 User Message (Index 0)
-    new_events = [session.events[0]]
+    # 1. 维护事件流的精简，保留所有 Agent 的初始 setup 和关键引导
+    if session.events:
+        new_events = [session.events[0]]
+        # 允许保留 setup Agent 和 HSR Agent 的关键决策，防止 Agent 丢失上下文
+        keep_authors = {'initial_setup_agent', 'rollback_agent'}
+        for event in session.events[1:]:
+            if event.author in keep_authors:
+                new_events.append(event)
+        session.events.clear()
+        session.events.extend(new_events)
 
-    # 仅保留 initial_setup_agent 产生的环境 baseline 引导事件
-    for event in session.events[1:]:
-        if event.author == 'initial_setup_agent':
-            new_events.append(event)
+    # 2. 状态字典脱水：仅针对性清除“历史构建日志”和“中间计算结果”
+    # 明确列出我们要保留的元数据，不包含在此列表的 massive_keys 均会被脱水
+    PROTECTED_STATE_KEYS = {
+        "project_source_path", "project_config_path", "error_time",
+        "attempt_id", "round_id", "current_node_id", "rollback_triggered",
+        "ever_used_upstream", "last_validation_report",
+        "software_sha", "oss_fuzz_sha"
+    }
 
-    # --- 原地清空并覆盖事件列表 ---
-    session.events.clear()
-    for e in new_events:
-        session.events.append(e)
-
-    # 状态字典脱水，防止残留的大容量字符串挤爆 Context Window
     massive_keys = ["fuzz_build_log", "commit_analysis_result", "generated_prompt"]
-    for key in massive_keys:
-        if key in session.state:
+
+    for key in list(session.state.keys()):
+        # 只要是已知的超大负载 key，且不属于被保护的元数据，统一脱水
+        if key in massive_keys:
             session.state[key] = f"[DEHYDRATED: SUMMARY IN LEDGER]"
 
-    print(f"--- 🧼 [SAFE CLEANSED] Pruned session {session_id} events. All loop sub-agents reset to stateless. ---")
+    print(f"--- 🧼 [SAFE CLEANSED] Pruned session {session_id}. Core env metadata protected. ---")
+
 def exit_loop(tool_context: ToolContext):
     tool_context.actions.escalate = True
     return {"status": "SUCCESS"}
@@ -250,16 +286,16 @@ LLM_SEED = 42
 top_p = 0.9
 
 
-def initialize_agents() -> Tuple[BaseAgent, InMemorySessionService]:
+def initialize_agents() -> Tuple[BaseNode, InMemorySessionService]:
     """
-    Dynamically instantiates all agents and the InMemorySessionService within the
-    active asyncio event loop to secure model socket connections.
+    Dynamically instantiates all agents and binds them into a modern graph-based
+    ADK Workflow to replace deprecated LoopAgent/SequentialAgent orchestrations.
     """
     initial_setup_agent = LlmAgent(
         name="initial_setup_agent",
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/initial_setup_instruction.txt"),
-        tools=[
+        tools=wrap_tools([
             download_github_repo,
             force_clean_git_repo,
             checkout_oss_fuzz_commit,
@@ -268,7 +304,7 @@ def initialize_agents() -> Tuple[BaseAgent, InMemorySessionService]:
             get_project_paths,
             manage_git_state,
             checkout_project_commit,
-        ],
+        ]),
         output_key="basic_information",
     )
 
@@ -276,7 +312,7 @@ def initialize_agents() -> Tuple[BaseAgent, InMemorySessionService]:
         name="run_fuzz_and_collect_log_agent",
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/run_fuzz_and_collect_log_instruction.txt"),
-        tools=[read_file_content, run_fuzz_build_and_validate],
+        tools=wrap_tools([read_file_content, run_fuzz_build_and_validate]),
         output_key="fuzz_build_log",
     )
 
@@ -284,55 +320,50 @@ def initialize_agents() -> Tuple[BaseAgent, InMemorySessionService]:
         name="decision_agent",
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/decision_instruction.txt"),
-        tools=[read_file_content, exit_loop],
+        tools=wrap_tools([read_file_content, exit_loop]),
         output_key="decision_result",
     )
 
-    # Step 3. rsmc_agent (RSMC 机制)
-    # 🔑 修复：已彻底从 tool 列表中物理移除了 prune_session_history，改由 Orchestrator 进行高阶隐式重组
     rsmc_agent = LlmAgent(
         name="rsmc_agent",
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.4, top_p=0.6, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/rsmc_instruction.txt"),
-        tools=[read_file_content, init_or_update_rsmc_ledger, query_trace_ledger],
+        tools=wrap_tools([read_file_content, init_or_update_rsmc_ledger, query_trace_ledger]),
         output_key="loop_summary",
     )
 
-    # Step 4. rollback_agent (HSR 机制)
     rollback_agent = LlmAgent(
         name="rollback_agent",
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/rollback_instruction.txt"),
-        tools=[
+        tools=wrap_tools([
             cbsc_classify_log,
             execute_hsr_decision,
             clear_commit_analysis_state
-        ],
+        ]),
         output_key="hsr_decision",
     )
 
-    # Step 5. commit_finder_agent (ECRCL 机制)
     commit_finder_agent = LlmAgent(
         name="commit_finder_agent",
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.4, top_p=0.6, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/commit_finder_instruction.txt"),
-        tools=[
+        tools=wrap_tools([
             read_file_content,
             check_file_exists,
-            run_command,
+            extract_buggy_line_info,
             get_project_paths,
             run_ecrcl_localization,
-        ],
+        ]),
         output_key="commit_analysis_result",
     )
 
-    # Step 6. prompt_generate_agent (Few-shot RAG 过滤与 Prompt 组装)
     prompt_generate_agent = LlmAgent(
         name="prompt_generate_agent",
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384, temperature=0.2, top_p=0.3,
                       seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/prompt_generate_instruction.txt"),
-        tools=[
+        tools=wrap_tools([
             prompt_generate_tool,
             save_file_tree_shallow,
             find_and_append_file_details,
@@ -342,64 +373,73 @@ def initialize_agents() -> Tuple[BaseAgent, InMemorySessionService]:
             query_expert_knowledge,
             few_shot_rag_retrieve,
             query_trace_ledger,
-        ],
+        ]),
         output_key="generated_prompt",
     )
 
-    # Step 7. fuzzing_solver_agent
     fuzzing_solver_agent = LlmAgent(
         name="fuzzing_solver_agent",
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=8129, temperature=0.7, top_p=0.8,
                       seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/fuzzing_solver_instruction.txt"),
-        tools=[read_file_content, create_or_update_file],
+        tools=wrap_tools([read_file_content, create_or_update_file]),
         output_key="solution_plan",
     )
 
-    # Step 8. solution_applier_agent
     solution_applier_agent = LlmAgent(
         name="solution_applier_agent",
         model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/solution_applier_instruction.txt"),
-        tools=[
+        tools=wrap_tools([
             apply_patch,
             read_file_content,
             manage_git_state,
             create_or_update_file,
-            update_trace_ledger  # 🔑 已配备：本地安全的接力写盘工具
-        ],
+            update_trace_ledger
+        ]),
         output_key="patch_application_result",
     )
 
-    # Orchestrated sequential sub-agents matching exact 8 sequential loops
-    loop_sub_agents = [
-        run_fuzz_and_collect_log_agent,
-        decision_agent,
-        rsmc_agent,
-        rollback_agent,
-        commit_finder_agent,
-        prompt_generate_agent,
-        fuzzing_solver_agent,
-        solution_applier_agent
+    # 🔑 1. 将 Agent 包装为规范的有向图节点 (BaseNode)，并对齐名称以保证 event.author 兼容性
+    setup_node = node(initial_setup_agent, name="initial_setup_agent")
+    fuzz_node = node(run_fuzz_and_collect_log_agent, name="run_fuzz_and_collect_log_agent")
+    decision_node = node(decision_agent, name="decision_agent")
+    rsmc_node = node(rsmc_agent, name="rsmc_agent")
+    rollback_node = node(rollback_agent, name="rollback_agent")
+    finder_node = node(commit_finder_agent, name="commit_finder_agent")
+    prompt_node = node(prompt_generate_agent, name="prompt_generate_agent")
+    solver_node = node(fuzzing_solver_agent, name="fuzzing_solver_agent")
+    applier_node = node(solution_applier_agent, name="solution_applier_agent")
+
+    # 🔑 2. 定义工作流图中的所有连接边 (Edges)
+    edges = [
+        # 初始化与启动边
+        Edge(from_node=setup_node, to_node=fuzz_node),
+
+        # 环形循环流结构
+        Edge(from_node=fuzz_node, to_node=decision_node),
+        Edge(from_node=decision_node, to_node=rsmc_node),  # 决策通过时，exit_loop 触发 escalate 自动终结
+        Edge(from_node=rsmc_node, to_node=rollback_node),
+        Edge(from_node=rollback_node, to_node=finder_node),
+        Edge(from_node=finder_node, to_node=prompt_node),
+        Edge(from_node=prompt_node, to_node=solver_node),
+        Edge(from_node=solver_node, to_node=applier_node),
+
+        # 反向环回：进入第 1..8 轮的下一轮循环编译
+        Edge(from_node=applier_node, to_node=fuzz_node)
     ]
 
-    workflow_loop_agent = LoopAgent(
-        name="workflow_loop_agent",
-        sub_agents=loop_sub_agents,
-        max_iterations=8
-    )
-
-    subject_agent = SequentialAgent(
-        name="fix_fuzz_agent",
-        sub_agents=[initial_setup_agent, workflow_loop_agent],
-        description="A workflow that automatically downloads, configures, and iteratively fixes Fuzzing build issues"
+    # 🔑 3. 编排并编译为主 Workflow 节点，替代已弃用的 LoopAgent/SequentialAgent
+    subject_agent = Workflow(
+        name="fix_fuzz_agent_workflow",
+        edges=edges,
+        description="A code-first graph workflow that automatically configures and iteratively fixes Fuzzing build issues."
     )
 
     root_agent = LoggingWrapperAgent(subject_agent=subject_agent)
     session_service = InMemorySessionService()
 
     return root_agent, session_service
-
 
 def cleanup_environment(project_name: str):
     import shutil
@@ -416,10 +456,7 @@ def cleanup_environment(project_name: str):
     for path in paths_to_remove:
         if os.path.exists(path):
             try:
-                if os.path.isdir(path):
-                    shutil.rmtree(path)
-                else:
-                    os.remove(path)
+                safe_delete_path(path)
                 print(f"  - Cleaned: {path}")
             except Exception as e:
                 print(f"  - Warning: Failed to clean {path}: {e}")
@@ -448,7 +485,7 @@ async def process_single_project(
     ledger_abs_file = TraceLedgerManager.get_ledger_path()
     if os.path.exists(ledger_abs_file):
         try:
-            os.remove(ledger_abs_file)
+            safe_delete_path(ledger_abs_file)
             print(f"--- 🧹 Cleared stale trace ledger at {ledger_abs_file} ---")
         except Exception as e:
             print(f"--- ⚠️ Failed to clean stale ledger: {e} ---")
@@ -478,6 +515,32 @@ async def process_single_project(
         await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=current_session_id)
         session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID, session_id=current_session_id)
 
+        # 🔑 新增：物理 Git 与账本一致性审计 (Consistency Audit)
+        ledger = TraceLedgerManager.load_ledger()
+        if ledger.get("nodes"):
+            last_node = ledger["nodes"][-1]
+            # 获取账本记录的 SHA
+            ledger_oss = last_node.get("git_sha_state", {}).get("oss-fuzz_sha")
+            ledger_prj = last_node.get("git_sha_state", {}).get("project_sha")
+
+            # 获取物理磁盘实际 SHA
+            disk_oss = TraceLedgerManager.get_git_head_sha(os.path.join(os.getcwd(), "oss-fuzz"))
+            disk_prj = TraceLedgerManager.get_git_head_sha(expected_source_path)
+
+            if ledger_oss != "N/A" and disk_oss != "N/A" and ledger_oss != disk_oss:
+                print(
+                    f"--- ⚠️ Integrity Mismatch [OSS-Fuzz]: Ledger={ledger_oss[:7]}, Disk={disk_oss[:7]}. Resetting... ---")
+                subprocess.run(["git", "-C", "oss-fuzz", "reset", "--hard", ledger_oss], check=True)
+                subprocess.run(["git", "-C", "oss-fuzz", "clean", "-fxd"], check=True)
+
+            if ledger_prj != "N/A" and disk_prj != "N/A" and ledger_prj != disk_prj:
+                print(
+                    f"--- ⚠️ Integrity Mismatch [Upstream]: Ledger={ledger_prj[:7]}, Disk={disk_prj[:7]}. Resetting... ---")
+                subprocess.run(["git", "-C", expected_source_path, "reset", "--hard", ledger_prj], check=True)
+                subprocess.run(["git", "-C", expected_source_path, "clean", "-fxd"], check=True)
+        # 🔑 审计结束
+
+
         # 确定本地项目代码库预期解压路径
         safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
         expected_source_path = os.path.join(os.getcwd(), "process", "project", safe_name)
@@ -493,6 +556,57 @@ async def process_single_project(
         session.state["project_source_path"] = expected_source_path
         session.state["project_config_path"] = os.path.join(os.getcwd(), "oss-fuzz", "projects", project_name)
         session.state["error_time"] = project_info.get('error_time', "")
+
+        oss_sha = get_verified_git_sha("./oss-fuzz")
+        prj_sha = get_verified_git_sha(expected_source_path)
+
+        # 2. 构建完整的初始化对象
+        initial_ledger = {
+            "project_name": project_name,
+            "archive_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "nodes": [{
+                "node_id": 0,
+                "parent_id": -1,
+                "identification": {
+                    "attempt_id": current_attempt_id,
+                    "round_id": 0,
+                    "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "node_status": "Stable",
+                    "should_rollback": False,
+                    "rollback_type": "NONE"
+                },
+                "git_sha_state": {
+                    "oss-fuzz_sha": oss_sha,
+                    "project_sha": prj_sha
+                },
+                "action_and_intent": {
+                    "root_cause_commit_sha": "N/A",
+                    "active_workspace": "UNKNOWN",
+                    "target_file": "N/A",
+                    "repair_strategy": "Initial baseline state configuration.",
+                    "loop_summary": "Baseline compile completed."
+                },
+                "metrics": {
+                    "Ldel": 0, "Ladd": 0,
+                    "build_stage_before": "N/A",
+                    "build_stage_after": "L1"
+                },
+                "validation": {
+                    "step_1_6_bitmap": [0, 0, 0, 0, 0, 0],
+                    "validation_report_before": {},
+                    "validation_report_after": {}
+                },
+                "semantic_memory": {
+                    "solved_problems": "None. Initial setup completed.",
+                    "unsolved_problems": "Initial build attempt pending.",
+                    "reflection_analysis": "Initial environment setup."
+                }
+            }]
+        }
+        # 3. 单次原子性写入
+        TraceLedgerManager.save_ledger(initial_ledger)
+        print(f"--- 📝 Node 0 (Baseline) verified and initialized: {oss_sha[:7]}|{prj_sha[:7]} ---")
+        print(f"--- 📝 Node 0 (Baseline) initialized in trace ledger. ---")
 
         GLOBAL_LOGGER.set_project_context(project_name)
         runner = Runner(agent=root_agent, app_name=APP_NAME, session_service=session_service)
@@ -515,13 +629,25 @@ async def process_single_project(
 
         try:
             print(f"\n--- 🌀 Starting Attempt {current_attempt_id}/{MAX_RETRIES} (Clean State) ---")
+            gen = runner.run_async(user_id=USER_ID, session_id=current_session_id, new_message=initial_message)
+            while True:
+                try:
+                    # 获取下一个事件
+                    event = await gen.__anext__()
+                except StopAsyncIteration:
+                    break
+                except ValueError as ve:
+                    err_msg = str(ve)
+                    if "not found" in err_msg or "not registered" in err_msg:
+                        tool_name = err_msg.split("'")[1] if "'" in err_msg else "unknown"
+                        print(f"--- ⚠️ Intercepted Illegal Tool Call: {tool_name}. Skipping to prevent crash. ---")
+                        GLOBAL_LOGGER.log_raw(f"Security Alert: Agent attempted to call unauthorized tool: {tool_name}")
+                        continue
+                    else:
+                        raise ve
 
-            async for event in runner.run_async(user_id=USER_ID, session_id=current_session_id,
-                                                new_message=initial_message):
                 event_uid = getattr(event, 'id', hash(repr(event)))
 
-                # 🔑 核心逻辑 3：安全去重 Key 设计。通过区分流式文本事件与携带 actions / usage 的最终结算事件，
-                # 避免去重机制误将后期的 state_delta 和 Token 计数吞掉 [1.2.5]
                 has_actions = hasattr(event, 'actions') and event.actions is not None
                 is_final_resp = event.is_final_response() if hasattr(event, 'is_final_response') else False
 
@@ -544,19 +670,17 @@ async def process_single_project(
                 if event.author == 'rsmc_agent' and event.actions and event.actions.state_delta:
                     if 'loop_summary' in event.actions.state_delta:
                         summary = event.actions.state_delta['loop_summary']
-                        # 执行强制截断
                         if len(summary) > 800:
                             event.actions.state_delta['loop_summary'] = summary[:797] + "..."
                             print("--- [Orchestrator] Force truncated loop_summary to save tokens ---")
                         print("--- [Orchestrator] Step 3 RSMC finished. Executing Clean-1 (Pruning build logs)... ---")
                         await _safe_memory_cleaning(session_service, current_session_id)
 
-
                 if event.author == 'solution_applier_agent' and event.actions and event.actions.state_delta:
                     if 'patch_application_result' in event.actions.state_delta:
-                        print("--- [Orchestrator] Step 8 Applier finished. Executing Clean-2 (Pruning Solver & Finder history)... ---")
+                        print(
+                            "--- [Orchestrator] Step 8 Applier finished. Executing Clean-2 (Pruning Solver & Finder history)... ---")
                         await _safe_memory_cleaning(session_service, current_session_id)
-
 
                 if (func_resps := event.get_function_responses()):
                     for resp in func_resps:
@@ -573,10 +697,9 @@ async def process_single_project(
                                 session.state["last_validation_report"] = val_report
                                 session.state["rollback_triggered"] = False
 
-                                # Node 0 阶段回填补丁 (处理时序死锁)
                                 if session.state.get("round_id") == 0:
                                     print("--- [补全] Executing CBSC for Node 0 initial stage backfill... ---")
-                                    classification = cbsc_classify_log()  # ✅ 由函数内部自动按优先级选择日志
+                                    classification = cbsc_classify_log()
                                     TraceLedgerManager.update_node_fields(0, {
                                         "metrics.build_stage_after": classification["determined_stage"]
                                     })
@@ -588,10 +711,29 @@ async def process_single_project(
                                                                             session_id=current_session_id)
                                 session.state["current_node_id"] = resp.response.get("target_node_id")
 
-                        # 拦截补丁应用响应
+                        # 🔑 拦截补丁应用响应 (防御性重构版：物理阻断所有 KeyError)
                         if resp.name == 'apply_patch' and resp.response.get('status') in ['success', 'partial_success']:
-                            stats["patch_impact"]["files"] = resp.response.get('modified_files_count', 0)
-                            stats["patch_impact"]["lines"] = resp.response.get('total_lines_changed', 0)
+                            # 重新绑定会话，保证拿到最新内存视图
+                            session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID,
+                                                                        session_id=current_session_id)
+
+                            # 采用安全 get 路由，如果不存在则退回到本地默认路径，100% 避免 KeyError 闪崩
+                            cfg_path = session.state.get("project_config_path") if session else None
+                            if not cfg_path or not os.path.exists(cfg_path):
+                                cfg_path = os.path.join(os.getcwd(), "oss-fuzz", "projects", project_name)
+
+                            src_path = session.state.get("project_source_path") if session else None
+                            if not src_path or not os.path.exists(src_path):
+                                src_path = expected_source_path
+
+                            oss_sha = TraceLedgerManager.get_git_head_sha(cfg_path)
+                            prj_sha = TraceLedgerManager.get_git_head_sha(src_path)
+
+                            curr_node = session.state.get("current_node_id", 0) if session else 0
+                            TraceLedgerManager.update_node_fields(curr_node, {
+                                "git_sha_state.oss-fuzz_sha": oss_sha,
+                                "git_sha_state.project_sha": prj_sha
+                            })
 
                             # 更新挂载标志
                             ledger = TraceLedgerManager.load_ledger()
@@ -599,23 +741,13 @@ async def process_single_project(
                                 last_node = ledger["nodes"][-1]
                                 if last_node.get("action_and_intent", {}).get("active_workspace") == "UPSTREAM":
                                     ever_used_upstream = True
-                                    session = await session_service.get_session(app_name=APP_NAME, user_id=USER_ID,
-                                                                                session_id=current_session_id)
-                                    session.state["ever_used_upstream"] = True
-
-                            # 🔑 已经将 run_ecrcl_localization 作为 Tool 赋权给 commit_finder_agent 主动调用。
-                            # 此处彻底删除 check_file_exists 的后置异步拦截拦截器，完全消除时序倒置与控制流 race condition。
-                        if resp.name == 'clear_commit_analysis_state':
-                            pass
-
-                        # 处理 Initial Setup 输出
+                                    if session: session.state["ever_used_upstream"] = True
 
                 # 处理 Initial Setup 输出
                 if event.author == 'initial_setup_agent' and event.actions and event.actions.state_delta:
                     if 'basic_information' in event.actions.state_delta:
                         full_info = event.actions.state_delta['basic_information']
                         try:
-                            # 🔑 核心逻辑 5：兼容 dict 与 str 多态结构，防止单引号强制强转引发的 JSON 反序列化崩溃
                             data = None
                             if isinstance(full_info, dict):
                                 data = full_info
@@ -652,17 +784,30 @@ async def process_single_project(
             if attempt + 1 >= MAX_RETRIES: break
             continue
         except Exception as e:
-            print(f"--- ❌ [CRASH] Attempt {current_attempt_id} failed: {e} ---")
+            # 🔑 升级版错误捕获与堆栈跟踪（同时写入标准输出和物理日志文件）
+            err_tb = traceback.format_exc()
+            print(f"\n--- ❌ [CRASH DETECTED] Attempt {current_attempt_id} failed: {str(e)} ---")
+            print(err_tb)  # StreamTee 会将此堆栈自动镜像输出至 agent_logs/*.log
+            GLOBAL_LOGGER.log_raw(f"[CRITICAL ATTEMPT EXCEPTION]\nException: {str(e)}\nTraceback:\n{err_tb}")
             if attempt + 1 >= MAX_RETRIES: break
             continue
 
     # 归档处理
     try:
+        # 获取路径的防御性写法
+        cfg_path = session.state.get("project_config_path")
+        if not cfg_path or not os.path.exists(cfg_path):
+            cfg_path = os.path.join(os.getcwd(), "oss-fuzz", "projects", project_name)
+
+        src_path = session.state.get("project_source_path")
+        if not src_path or not os.path.exists(src_path):
+            src_path = os.path.join(os.getcwd(), "process", "project", safe_name)
+
         archive_fixed_project(
             project_name=project_name,
-            project_config_path=session.state.get("project_config_path"),
+            project_config_path=cfg_path,
             is_success=is_successful,
-            project_source_path=os.path.join(os.getcwd(), "process", "project", safe_name)
+            project_source_path=src_path
         )
     except Exception as e:
         print(f"--- [ERROR] Archive failed: {e} ---")
@@ -718,7 +863,9 @@ async def main():
             "engine": project_info['engine'],
             "sanitizer": project_info['sanitizer'],
             "architecture": project_info['architecture'],
-            "base_image_digest": project_info['base_image_digest']
+            "base_image_digest": project_info['base_image_digest'],
+            "error_time": project_info['error_time']
+
         }
 
         print(f"\n{'=' * 60}")

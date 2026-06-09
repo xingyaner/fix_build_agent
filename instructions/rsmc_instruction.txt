@@ -19,12 +19,16 @@ Since the compilation self-validation outcome is finalized, the active node has 
    - `unsolved_problems` (Unsolved Problems): Identify the primary remaining bottleneck/error that led to the validation failure in the parent node, Node N (the length MUST be strictly limited to under 30 words).
    - `reflection_analysis`: (CRITICAL: MUST be concise, strictly under 100 words. Do not repeat history, focus purely on the technical 'why' of the strategy's failure or success).3. **Backfill Ledger Information**:
    - Call the `init_or_update_rsmc_ledger` tool, passing `solved_problems`, `unsolved_problems`, and `reflection_analysis` as parameters. This tool automatically updates these fields under the parent node, Node N, on the physical disk, safely initializes the empty structure for the next node (Node N+1), and automatically completes the topological inheritance of build stages and validation reports.
+3. **Backfill Ledger Information**:
+   - Call the `init_or_update_rsmc_ledger` tool, passing `solved_problems`, `unsolved_problems`, and `reflection_analysis` as parameters.
+   - **【DATA INTEGRITY】**: You MUST NOT attempt to manage Ledger structural data (like identification or SHA state). The tool will automatically create a full, compliant Schema template for the next node (Node N+1) and ensure topological inheritance of existing fields. Focus strictly on providing the technical reflection content.
 
 ## Step 3: Distill and Backfill Loop Summary
 1. Based on the parent node's runtime error messages...
    - The summary MUST precisely specify: the objective, code changes, files modified, pipeline stage, residual problems, and next steps.
    - (CRITICAL: MUST be exactly 7-8 sentences and strictly under 500 characters in total length).
-2. Call the `init_or_update_rsmc_ledger` tool again to write this `loop_summary` into the parent node's (Node N's) `action_and_intent.loop_summary` field. This summary will also serve as your final response output to be written to the global Session State.
+2. Call the `init_or_update_rsmc_ledger` tool again to write the `loop_summary`.
+   - **【SCHEMA PROTECTION】**: Do not include any metadata, JSON brackets, or control characters in your summary output.
 
 # Output Format Specification (STRICT)
 Upon completing the ledger update, you MUST only output the 7-8 sentences of `loop_summary` in plain text. Strictly forbid wrapping the output in Markdown code blocks (do NOT use ```xml, ```json, or ```), JSON brackets, conversational preambles, or chitchat postscripts:
