@@ -1,25 +1,13 @@
-from typing import Dict, List, Tuple, Optional, Set, Any
-from google.adk.tools.tool_context import ToolContext
-
-import time
-import signal
-import logging
-from datetime import datetime, timezone, timedelta
-
 import os
 import re
-import sys
-import shutil
 import litellm
-import requests
-import subprocess
 import json
 import yaml
 import openpyxl
 import tempfile
 import fnmatch
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Tuple, Callable, Optional, Set, Any
 from google.adk.tools.tool_context import ToolContext
 from utils.path_utils import normalize_patch_path, validate_patch_path
@@ -123,6 +111,68 @@ class TraceLedgerManager:
             return res.stdout.strip()
         except Exception:
             return "N/A"
+
+    @classmethod
+    def get_patch_metrics(cls, repo_path: str) -> dict:
+        """
+        利用 git diff --numstat 获取最近一次提交的精确改动行数（HEAD~1 与 HEAD 之间）。
+        """
+        abs_path = os.path.abspath(repo_path)
+        try:
+            res = subprocess.run(
+                ["git", "-C", abs_path, "diff", "--numstat", "HEAD~1", "HEAD"],
+                capture_output=True, text=True, check=True
+            )
+            total_add = 0
+            total_del = 0
+            for line in res.stdout.splitlines():
+                parts = line.split()
+                if len(parts) >= 2:
+                    total_add += int(parts[0])
+                    total_del += int(parts[1])
+            return {"Ladd": total_add, "Ldel": total_del}
+        except Exception:
+            # 兼容无 HEAD~1 的首个节点或异常情况
+            return {"Ladd": 0, "Ldel": 0}
+
+
+def _is_initial_round() -> bool:
+    """
+    辅助检测器：读取统一账本判断当前是否处于首轮（Node 0/Node 1 baseline 阶段）
+    """
+    ledger_path = "project_repair_trace.json"
+    if os.path.exists(ledger_path):
+        try:
+            with open(ledger_path, 'r', encoding='utf-8') as lf:
+                trace_data = json.load(lf)
+                # 若账本中节点数 > 1（已建立 Node 1 且后续被 backfill 扩展），则说明进入了非初始轮的迭代
+                if trace_data.get("nodes") and len(trace_data["nodes"]) > 1:
+                    return False
+        except Exception:
+            pass
+    return True
+
+
+def update_trace_ledger(node_id: int, fields_dict: dict, repo_path: str = None,
+                        tool_context: ToolContext = None) -> dict:
+    """
+    Secure backfilling tool for the Solution Applier Agent.
+    Safely writes file diff metrics, active workspace, and Git SHAs into project_repair_trace.json.
+    """
+    try:
+        # 如果传入了 repo_path，在写入前自动提取物理 Git 指标进行覆盖，防御模型幻觉
+        if repo_path and os.path.exists(repo_path):
+            metrics = TraceLedgerManager.get_patch_metrics(repo_path)
+            fields_dict["metrics.Ladd"] = metrics["Ladd"]
+            fields_dict["metrics.Ldel"] = metrics["Ldel"]
+
+        success = TraceLedgerManager.update_node_fields(node_id, fields_dict)
+        if success:
+            return {"status": "success", "message": f"Node {node_id} fields successfully backfilled."}
+        else:
+            return {"status": "error", "message": f"Failed to backfill Node {node_id} fields."}
+    except Exception as e:
+        return {"status": "error", "message": f"Exception occurred during backfilling: {str(e)}"}
 
 
 def reclaim_path_permissions(path: str) -> bool:
@@ -295,23 +345,6 @@ def _safe_path_wrapper(*d_args, **d_kwargs):
         return decorator(func)
     else:
         return decorator
-
-
-def _is_initial_round() -> bool:
-    """
-    辅助检测器：读取统一账本判断当前是否处于首轮（Node 0/Node 1 baseline 阶段）
-    """
-    ledger_path = "project_repair_trace.json"
-    if os.path.exists(ledger_path):
-        try:
-            with open(ledger_path, 'r', encoding='utf-8') as lf:
-                trace_data = json.load(lf)
-                # 若账本中节点数 > 1（已建立 Node 1 且后续被 backfill 扩展），则说明进入了非初始轮的迭代
-                if trace_data.get("nodes") and len(trace_data["nodes"]) > 1:
-                    return False
-        except Exception:
-            pass
-    return True
 
 
 def get_verified_git_sha(repo_path: str, retries: int = 3) -> str:
@@ -525,6 +558,40 @@ def query_trace_ledger(tool_context: ToolContext, field_keys: List[str], node_id
     }
 
 
+def get_absolute_host_path(relative_path: str) -> str:
+    """
+    Host-Path Normalization Engine:
+    Translates Agent-provided paths into host-machine absolute paths.
+
+    Logic:
+    1. Strips container-style prefixes like /workspace/, /src/, /work/.
+    2. Maps paths to either 'process/project/' or 'oss-fuzz/'.
+    3. Guarantees return of a valid absolute host path.
+    """
+    import os
+
+    workspace_root = os.getcwd()
+    path = relative_path.lstrip('/')
+
+    # 1. Path Stripping (Removing hallucinatory container prefixes)
+    for prefix in ['workspace/', 'src/', 'work/', 'home/senchen/temp/fix_build_agent/']:
+        if path.startswith(prefix):
+            path = path[len(prefix):]
+            break
+
+    # 2. Heuristic Path Remapping
+    # If it's a project source file, ensure it points to process/project/
+    if "lwan" in path or "croaring" in path:  # Extend this logic if needed
+        if not path.startswith('process/project/') and not path.startswith('oss-fuzz/'):
+            # Fallback: try to locate in process/project
+            potential_path = os.path.join(workspace_root, "process", "project", path.split('/')[0])
+            if os.path.exists(potential_path):
+                return os.path.abspath(os.path.join(workspace_root, "process", "project", path))
+
+    # 3. Default to workspace root resolution
+    return os.path.abspath(os.path.join(workspace_root, path))
+
+
 @_safe_path_wrapper
 def apply_patch(solution_file_path: str, **kwargs) -> dict:
     import difflib
@@ -567,7 +634,6 @@ def apply_patch(solution_file_path: str, **kwargs) -> dict:
             if original_block in file_content:
                 new_content = file_content.replace(original_block, replacement_block, 1)
                 with open(file_path, 'w', encoding='utf-8') as f:
-
                     f.write(new_content)
                 applied_count += 1
                 continue
@@ -604,6 +670,107 @@ def apply_patch(solution_file_path: str, **kwargs) -> dict:
         return {"status": "success" if not errors else "error", "modified_files_count": applied_count, "errors": errors}
     except Exception as e:
         return {"status": "error", "message": str(e)}
+
+
+def manage_git_state(path: str, action: str, message: str = "", commit_sha: str = "") -> Dict:
+    """
+    Manages the Git state tree with logical fencing and physical auditing.
+    Supports: init, commit, rollback, status, log, fetch.
+    """
+    physical_path = get_absolute_host_path(path)
+
+    if not os.path.exists(physical_path):
+        return {'status': 'error', 'message': f'Resolved path {physical_path} does not exist.'}
+    print(f"--- Tool: manage_git_state | Action: {action} | Path: {path} ---")
+
+    if not os.path.exists(path):
+        return {"status": "error", "message": f"Path {path} does not exist."}
+
+    abs_path = os.path.abspath(path)
+    framework_root = os.path.dirname(os.path.abspath(__file__))
+    if abs_path == framework_root:
+        return {"status": "error",
+                "message": "CRITICAL: Security Violation. Operations on Agent Framework root are blocked."}
+
+    original_cwd = os.getcwd()
+    try:
+        # 1. 🔑 物理环境权限自愈（单行调用原子工具，替换原有繁琐的 Docker 代码块）
+        if action in ["init", "commit", "rollback"]:
+            reclaim_path_permissions(abs_path)
+
+        os.chdir(abs_path)
+
+        # 2. 基础配置初始化
+        if action in ["init", "commit"]:
+            if not os.path.exists(".git"):
+                subprocess.run(["git", "init"], check=True, capture_output=True)
+            subprocess.run(["git", "config", "user.email", "agent@oss-fuzz-repair.com"], check=True)
+            subprocess.run(["git", "config", "user.name", "Repair Agent"], check=True)
+
+        # 3. 分支逻辑处理
+        if action == "init":
+            subprocess.run(["git", "-C", path, "commit", "--allow-empty", "-m", "[BASELINE] Initial state"], check=True)
+            subprocess.run(["git", "add", "."], check=True)
+            has_commit = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True).returncode == 0
+            if not has_commit:
+                subprocess.run(["git", "commit", "-m", "[BASELINE] Initial experiment state"], check=True,
+                               capture_output=True)
+            return {"status": "success", "message": f"Git initialized at Baseline in {path}"}
+
+
+        elif action == "commit":
+            subprocess.run(["git", "add", "."], check=True)
+            diff_check = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True).stdout
+            if not diff_check:
+                # 即使无变更，也主动获取并返回当前 HEAD SHA，确保账本不空置
+                sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+                return {"status": "success", "sha": sha, "message": "No changes to commit."}
+            full_message = f"[AGENT_FIX] {message}"
+            subprocess.run(["git", "commit", "-m", full_message], capture_output=True, text=True, check=True)
+            sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+            return {"status": "success", "sha": sha, "message": f"State saved: {full_message}"}
+
+        elif action == "rollback":
+            # 统计带有 [AGENT_FIX] 标记的提交数量作为配额
+            res = subprocess.run(["git", "log", "--grep=\\[AGENT_FIX\\]", "--oneline"], capture_output=True, text=True)
+            quota = len([l for l in res.stdout.split('\n') if l.strip()])
+
+            if quota <= 0:
+                return {
+                    "status": "error",
+                    "message": "Already at the Initial Baseline. No further rollback possible."
+                }
+
+            target = commit_sha if commit_sha else "HEAD~1"
+            subprocess.run(["git", "reset", "--hard", target], check=True, capture_output=True)
+            subprocess.run(["git", "clean", "-fxd"], check=True, capture_output=True)
+            return {"status": "success", "message": f"Rolled back to {target}. Remaining Fixes: {quota - 1}"}
+
+        elif action == "status":
+            res = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+            return {"status": "success", "stdout": res.stdout, "message": "Retrieved git status."}
+
+        elif action == "log":
+            # 支持将 message 解析为附加参数，例如 "-n 5"
+            log_args = message.split() if message else ["-n", "5", "--oneline"]
+            cmd = ["git", "log"] + log_args
+            res = subprocess.run(cmd, capture_output=True, text=True)
+            return {"status": "success", "stdout": res.stdout, "message": f"Executed: {' '.join(cmd)}"}
+
+        elif action == "fetch":
+            # 处理远程拉取请求
+            fetch_args = message.split() if message else ["origin"]
+            cmd = ["git", "fetch"] + fetch_args
+            res = subprocess.run(cmd, capture_output=True, text=True)
+            return {"status": "success", "stdout": res.stdout, "message": "Fetch completed."}
+
+        else:
+            return {"status": "error", "message": f"Action '{action}' is not implemented."}
+
+    except Exception as e:
+        return {"status": "error", "message": f"Git Intervention Failed: {str(e)}"}
+    finally:
+        os.chdir(original_cwd)
 
 
 def cbsc_classify_log(log_path: str = None, dpseek_key: str = None) -> dict:
@@ -820,187 +987,6 @@ Output exactly a single JSON. Do NOT include markdown wrappers outside the JSON 
             "confidence_score": 0.5,
             "remediation_strategy": "Fallback compile debug."
         }
-
-
-def few_shot_rag_retrieve(expert_knowledge_path: str, log_path: str) -> dict:
-    """
-    Three-Step Few-shot RAG Retrieval Pipeline.
-
-    Step 1: Log Error Pattern Matching
-      - Reads [FAILURE_REGION] from commit_changed.txt.
-      - Falls back to tail of fuzz_build_log.txt if missing/empty.
-      - Runs positive pattern and optional negative exclude_pattern regex matches.
-
-    Step 2: Keywords Association & Guideline Expansion
-      - Extracts keywords from matched ERR_xxx entries.
-      - Intersects these keywords with keywords of expert_guidelines to fetch associated GL_xxx.
-
-    Step 3: Prompt Injection & Severity Ordinal Sorting
-      - Merges matched ERRs and associated GLs.
-      - Associated GLs dynamically inherit the highest severity weight of the matched ERRs that triggered them.
-      - Sorts by severity weight descending and formats Top 4 priority blocks for injection.
-    """
-    if not os.path.exists(expert_knowledge_path):
-        return {
-            "status": "error",
-            "message": f"Expert knowledge database missing at: {expert_knowledge_path}",
-            "rag_context": ""
-        }
-
-    try:
-        with open(expert_knowledge_path, 'r', encoding='utf-8') as f:
-            kb = json.load(f)
-    except Exception as e:
-        return {
-            "status": "error",
-            "message": f"Failed to load expert knowledge database: {e}",
-            "rag_context": ""
-        }
-
-    # =================================================================
-    # Step 1: 日志报错特征匹配 (Failure Region Scanning)
-    # =================================================================
-    failure_region = ""
-    changed_file = "generated_prompt_file/commit_changed.txt"
-
-    # 优先读取 ECRCL 生成的精确 FAILURE_REGION
-    if os.path.exists(changed_file) and os.path.getsize(changed_file) > 0:
-        try:
-            with open(changed_file, 'r', encoding='utf-8') as f:
-                content = f.read()
-            # 🔑 修复：使用正确的非贪婪匹配与中括号安全转义
-            match = re.search(r"\[FAILURE_REGION\]\s*([\s\S]*?)\s*\[ATTRIBUTION_TYPE\]", content)
-            if match:
-                failure_region = match.group(1).strip()
-        except Exception as e:
-            logger.debug(f"Failed to parse FAILURE_REGION from commit_changed.txt: {e}")
-
-    # 状态自愈：若归因工件缺失，自适应切换到原始编译日志尾部切片
-    if not failure_region and os.path.exists(log_path):
-        try:
-            with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
-                log_lines = f.readlines()
-            # 提取尾部 200 行编译日志切片作为特征源
-            failure_region = "".join(log_lines[-200:])
-        except Exception as e:
-            logger.error(f"Failed to read fallback compilation log tail: {e}")
-
-    if not failure_region:
-        return {
-            "status": "success",
-            "message": "No compilation failure context available for RAG.",
-            "rag_context": ""
-        }
-
-    # 执行正负向双重正则特征匹配
-    matched_errors = []
-    for err in kb.get("error_patterns", []):
-        pattern = err.get("pattern")
-        if not pattern:
-            continue
-        try:
-            # 正向特征匹配 ("眼睛" 扫描)
-            if re.search(pattern, failure_region, re.IGNORECASE):
-                # 负向噪音过滤
-                exclude_pattern = err.get("exclude_pattern")
-                if exclude_pattern and re.search(exclude_pattern, failure_region, re.IGNORECASE):
-                    # 命中了负向噪音特征，直接排除
-                    continue
-                matched_errors.append(err)
-        except Exception as e:
-            logger.error(f"Regex pattern match error for {err.get('id', 'UNKNOWN')}: {e}")
-
-    # =================================================================
-    # Step 2: 关键词关联扩展 (Keywords Intersection)
-    # =================================================================
-    matched_guidelines = []
-
-    # 建立 ERR_id 与其 keywords 关联映射，便于后续 GL 继承严重度
-    err_keyword_to_severity: Dict[str, str] = {}
-    for err in matched_errors:
-        severity = err.get("severity", "MINOR")
-        for kw in err.get("keywords", []):
-            kw_clean = kw.lower().strip()
-            # 🔑 修复：修正错行问题，同一个关键词对应多个 ERR 时保留最高严重度
-            if kw_clean not in err_keyword_to_severity:
-                err_keyword_to_severity[kw_clean] = severity
-            else:
-                curr_sev = err_keyword_to_severity[kw_clean]
-                weight_map = {"CRITICAL": 3, "MAJOR": 2, "MINOR": 1}
-                if weight_map.get(severity, 0) > weight_map.get(curr_sev, 0):
-                    err_keyword_to_severity[kw_clean] = severity
-
-    # 匹配关联的 GL_xxx 条目并进行严重度隐式绑定
-    for gl in kb.get("expert_guidelines", []):
-        gl_kws = [kw.lower().strip() for kw in gl.get("keywords", [])]
-
-        # 计算关键词交集
-        intersected_kws = set(gl_kws).intersection(set(err_keyword_to_severity.keys()))
-        if intersected_kws:
-            # 拓扑继承设计：寻找关联的最高严重度并赋予该 GL
-            max_severity = "MINOR"
-            weight_map = {"CRITICAL": 3, "MAJOR": 2, "MINOR": 1}
-            for kw in intersected_kws:
-                sev_cand = err_keyword_to_severity[kw]
-                if weight_map.get(sev_cand, 0) > weight_map.get(max_severity, 0):
-                    max_severity = sev_cand
-
-            # 浅拷贝复制一份，写入继承得到的伪严重度属性用于统一排序
-            gl_copied = dict(gl)
-            gl_copied["_inherited_severity"] = max_severity
-            matched_guidelines.append(gl_copied)
-
-    # =================================================================
-    # Step 3: Prompt 注入与严重等级优先级排序 (Prompt Injection)
-    # =================================================================
-    # 硬编码严重级别优先级字典（序数权重换算）
-    SEVERITY_WEIGHT = {
-        "CRITICAL": 3,
-        "MAJOR": 2,
-        "MINOR": 1
-    }
-
-    # 统一整合包结构
-    unified_candidates: List[Tuple[str, int, str]] = []
-
-    # 1. 压入命中错误模式 (ERR)
-    for err in matched_errors:
-        weight = SEVERITY_WEIGHT.get(err.get("severity", "MINOR"), 1)
-        block_text = f"""[MATCHED ERROR PATTERN: {err['id']} ({err['name']})]
-Severity: {err['severity']}
-Diagnosis: {err['diagnosis']}
-Remediation Action: {err['remediation']['action']}
-Remediation Rule: {err['remediation']['rule']}
-Verification: {err['verification']}"""
-        # 🔑 修复：移出多行字符串包裹，保证追加逻辑被正常物理执行
-        unified_candidates.append(("ERR", weight, block_text))
-
-    # 2. 压入关联指导准则 (GL)
-    for gl in matched_guidelines:
-        inherited_sev = gl.get("_inherited_severity", "MINOR")
-        weight = SEVERITY_WEIGHT.get(inherited_sev, 1)
-        block_text = f"""[ASSOCIATED GUIDELINE: {gl['id']} ({gl['category']})]
-Guideline Fact: {gl['guideline']}
-Target Scope: {", ".join(gl.get("target_files", ["*"]))}"""
-        # 🔑 修复：移出多行字符串包裹，保证追加逻辑被正常物理执行
-        unified_candidates.append(("GL", weight, block_text))
-
-    # 3. 按照严重度序数权重由高到低进行最终排序
-    unified_candidates.sort(key=lambda x: x[1], reverse=True)
-
-    # 4. 抽取前 4 个对大模型最具威慑力、最底层的系统/编译级条目进行提取组装
-    top_4_blocks = [item[2] for item in unified_candidates[:4]]
-    final_rag_context = "\n\n".join(top_4_blocks)
-
-    logger.info(
-        f"--- [Few-shot RAG] Retrieved {len(matched_errors)} ERRs, {len(matched_guidelines)} GLs. Selected top 4 priorities. ---")
-
-    return {
-        "status": "success",
-        "matched_errors_count": len(matched_errors),
-        "associated_guidelines_count": len(matched_guidelines),
-        "rag_context": final_rag_context
-    }
 
 
 def init_or_update_rsmc_ledger(tool_context: ToolContext, solved_problems: str, unsolved_problems: str,
@@ -1510,100 +1496,185 @@ def query_expert_knowledge(log_path: str) -> dict:
         return {"status": "error", "message": f"Expert knowledge error: {str(e)}"}
 
 
-def manage_git_state(path: str, action: str, message: str = "", commit_sha: str = "") -> Dict:
+def few_shot_rag_retrieve(expert_knowledge_path: str, log_path: str) -> dict:
     """
-    Manages the Git state tree with logical fencing and physical auditing.
-    Supports: init, commit, rollback, status, log, fetch.
+    Three-Step Few-shot RAG Retrieval Pipeline.
+
+    Step 1: Log Error Pattern Matching
+      - Reads [FAILURE_REGION] from commit_changed.txt.
+      - Falls back to tail of fuzz_build_log.txt if missing/empty.
+      - Runs positive pattern and optional negative exclude_pattern regex matches.
+
+    Step 2: Keywords Association & Guideline Expansion
+      - Extracts keywords from matched ERR_xxx entries.
+      - Intersects these keywords with keywords of expert_guidelines to fetch associated GL_xxx.
+
+    Step 3: Prompt Injection & Severity Ordinal Sorting
+      - Merges matched ERRs and associated GLs.
+      - Associated GLs dynamically inherit the highest severity weight of the matched ERRs that triggered them.
+      - Sorts by severity weight descending and formats Top 4 priority blocks for injection.
     """
-    import os, subprocess
-    print(f"--- Tool: manage_git_state | Action: {action} | Path: {path} ---")
+    if not os.path.exists(expert_knowledge_path):
+        return {
+            "status": "error",
+            "message": f"Expert knowledge database missing at: {expert_knowledge_path}",
+            "rag_context": ""
+        }
 
-    if not os.path.exists(path):
-        return {"status": "error", "message": f"Path {path} does not exist."}
-
-    abs_path = os.path.abspath(path)
-    framework_root = os.path.dirname(os.path.abspath(__file__))
-    if abs_path == framework_root:
-        return {"status": "error",
-                "message": "CRITICAL: Security Violation. Operations on Agent Framework root are blocked."}
-
-    original_cwd = os.getcwd()
     try:
-        # 1. 🔑 物理环境权限自愈（单行调用原子工具，替换原有繁琐的 Docker 代码块）
-        if action in ["init", "commit", "rollback"]:
-            reclaim_path_permissions(abs_path)
-
-        os.chdir(abs_path)
-
-        # 2. 基础配置初始化
-        if action in ["init", "commit"]:
-            if not os.path.exists(".git"):
-                subprocess.run(["git", "init"], check=True, capture_output=True)
-            subprocess.run(["git", "config", "user.email", "agent@oss-fuzz-repair.com"], check=True)
-            subprocess.run(["git", "config", "user.name", "Repair Agent"], check=True)
-
-        # 3. 分支逻辑处理
-        if action == "init":
-            subprocess.run(["git", "-C", path, "commit", "--allow-empty", "-m", "[BASELINE] Initial state"], check=True)
-            subprocess.run(["git", "add", "."], check=True)
-            has_commit = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True).returncode == 0
-            if not has_commit:
-                subprocess.run(["git", "commit", "-m", "[BASELINE] Initial experiment state"], check=True,
-                               capture_output=True)
-            return {"status": "success", "message": f"Git initialized at Baseline in {path}"}
-
-        elif action == "commit":
-            subprocess.run(["git", "add", "."], check=True)
-            diff_check = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True).stdout
-            if not diff_check:
-                return {"status": "success", "message": "No changes to commit."}
-
-            full_message = f"[AGENT_FIX] {message}"
-            subprocess.run(["git", "commit", "-m", full_message], capture_output=True, text=True, check=True)
-            sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
-            return {"status": "success", "sha": sha, "message": f"State saved: {full_message}"}
-
-        elif action == "rollback":
-            # 统计带有 [AGENT_FIX] 标记的提交数量作为配额
-            res = subprocess.run(["git", "log", "--grep=\\[AGENT_FIX\\]", "--oneline"], capture_output=True, text=True)
-            quota = len([l for l in res.stdout.split('\n') if l.strip()])
-
-            if quota <= 0:
-                return {
-                    "status": "error",
-                    "message": "Already at the Initial Baseline. No further rollback possible."
-                }
-
-            target = commit_sha if commit_sha else "HEAD~1"
-            subprocess.run(["git", "reset", "--hard", target], check=True, capture_output=True)
-            subprocess.run(["git", "clean", "-fxd"], check=True, capture_output=True)
-            return {"status": "success", "message": f"Rolled back to {target}. Remaining Fixes: {quota - 1}"}
-
-        elif action == "status":
-            res = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
-            return {"status": "success", "stdout": res.stdout, "message": "Retrieved git status."}
-
-        elif action == "log":
-            # 支持将 message 解析为附加参数，例如 "-n 5"
-            log_args = message.split() if message else ["-n", "5", "--oneline"]
-            cmd = ["git", "log"] + log_args
-            res = subprocess.run(cmd, capture_output=True, text=True)
-            return {"status": "success", "stdout": res.stdout, "message": f"Executed: {' '.join(cmd)}"}
-
-        elif action == "fetch":
-            # 处理远程拉取请求
-            fetch_args = message.split() if message else ["origin"]
-            cmd = ["git", "fetch"] + fetch_args
-            res = subprocess.run(cmd, capture_output=True, text=True)
-            return {"status": "success", "stdout": res.stdout, "message": "Fetch completed."}
-
-        else:
-            return {"status": "error", "message": f"Action '{action}' is not implemented."}
-
+        with open(expert_knowledge_path, 'r', encoding='utf-8') as f:
+            kb = json.load(f)
     except Exception as e:
-        return {"status": "error", "message": f"Git Intervention Failed: {str(e)}"}
-    finally:
-        os.chdir(original_cwd)
+        return {
+            "status": "error",
+            "message": f"Failed to load expert knowledge database: {e}",
+            "rag_context": ""
+        }
+
+    # =================================================================
+    # Step 1: 日志报错特征匹配 (Failure Region Scanning)
+    # =================================================================
+    failure_region = ""
+    changed_file = "generated_prompt_file/commit_changed.txt"
+
+    # 优先读取 ECRCL 生成的精确 FAILURE_REGION
+    if os.path.exists(changed_file) and os.path.getsize(changed_file) > 0:
+        try:
+            with open(changed_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+            # 🔑 修复：使用正确的非贪婪匹配与中括号安全转义
+            match = re.search(r"\[FAILURE_REGION\]\s*([\s\S]*?)\s*\[ATTRIBUTION_TYPE\]", content)
+            if match:
+                failure_region = match.group(1).strip()
+        except Exception as e:
+            logger.debug(f"Failed to parse FAILURE_REGION from commit_changed.txt: {e}")
+
+    # 状态自愈：若归因工件缺失，自适应切换到原始编译日志尾部切片
+    if not failure_region and os.path.exists(log_path):
+        try:
+            with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+                log_lines = f.readlines()
+            # 提取尾部 200 行编译日志切片作为特征源
+            failure_region = "".join(log_lines[-200:])
+        except Exception as e:
+            logger.error(f"Failed to read fallback compilation log tail: {e}")
+
+    if not failure_region:
+        return {
+            "status": "success",
+            "message": "No compilation failure context available for RAG.",
+            "rag_context": ""
+        }
+
+    # 执行正负向双重正则特征匹配
+    matched_errors = []
+    for err in kb.get("error_patterns", []):
+        pattern = err.get("pattern")
+        if not pattern:
+            continue
+        try:
+            # 正向特征匹配 ("眼睛" 扫描)
+            if re.search(pattern, failure_region, re.IGNORECASE):
+                # 负向噪音过滤
+                exclude_pattern = err.get("exclude_pattern")
+                if exclude_pattern and re.search(exclude_pattern, failure_region, re.IGNORECASE):
+                    # 命中了负向噪音特征，直接排除
+                    continue
+                matched_errors.append(err)
+        except Exception as e:
+            logger.error(f"Regex pattern match error for {err.get('id', 'UNKNOWN')}: {e}")
+
+    # =================================================================
+    # Step 2: 关键词关联扩展 (Keywords Intersection)
+    # =================================================================
+    matched_guidelines = []
+
+    # 建立 ERR_id 与其 keywords 关联映射，便于后续 GL 继承严重度
+    err_keyword_to_severity: Dict[str, str] = {}
+    for err in matched_errors:
+        severity = err.get("severity", "MINOR")
+        for kw in err.get("keywords", []):
+            kw_clean = kw.lower().strip()
+            # 🔑 修复：修正错行问题，同一个关键词对应多个 ERR 时保留最高严重度
+            if kw_clean not in err_keyword_to_severity:
+                err_keyword_to_severity[kw_clean] = severity
+            else:
+                curr_sev = err_keyword_to_severity[kw_clean]
+                weight_map = {"CRITICAL": 3, "MAJOR": 2, "MINOR": 1}
+                if weight_map.get(severity, 0) > weight_map.get(curr_sev, 0):
+                    err_keyword_to_severity[kw_clean] = severity
+
+    # 匹配关联的 GL_xxx 条目并进行严重度隐式绑定
+    for gl in kb.get("expert_guidelines", []):
+        gl_kws = [kw.lower().strip() for kw in gl.get("keywords", [])]
+
+        # 计算关键词交集
+        intersected_kws = set(gl_kws).intersection(set(err_keyword_to_severity.keys()))
+        if intersected_kws:
+            # 拓扑继承设计：寻找关联的最高严重度并赋予该 GL
+            max_severity = "MINOR"
+            weight_map = {"CRITICAL": 3, "MAJOR": 2, "MINOR": 1}
+            for kw in intersected_kws:
+                sev_cand = err_keyword_to_severity[kw]
+                if weight_map.get(sev_cand, 0) > weight_map.get(max_severity, 0):
+                    max_severity = sev_cand
+
+            # 浅拷贝复制一份，写入继承得到的伪严重度属性用于统一排序
+            gl_copied = dict(gl)
+            gl_copied["_inherited_severity"] = max_severity
+            matched_guidelines.append(gl_copied)
+
+    # =================================================================
+    # Step 3: Prompt 注入与严重等级优先级排序 (Prompt Injection)
+    # =================================================================
+    # 硬编码严重级别优先级字典（序数权重换算）
+    SEVERITY_WEIGHT = {
+        "CRITICAL": 3,
+        "MAJOR": 2,
+        "MINOR": 1
+    }
+
+    # 统一整合包结构
+    unified_candidates: List[Tuple[str, int, str]] = []
+
+    # 1. 压入命中错误模式 (ERR)
+    for err in matched_errors:
+        weight = SEVERITY_WEIGHT.get(err.get("severity", "MINOR"), 1)
+        block_text = f"""[MATCHED ERROR PATTERN: {err['id']} ({err['name']})]
+Severity: {err['severity']}
+Diagnosis: {err['diagnosis']}
+Remediation Action: {err['remediation']['action']}
+Remediation Rule: {err['remediation']['rule']}
+Verification: {err['verification']}"""
+        # 🔑 修复：移出多行字符串包裹，保证追加逻辑被正常物理执行
+        unified_candidates.append(("ERR", weight, block_text))
+
+    # 2. 压入关联指导准则 (GL)
+    for gl in matched_guidelines:
+        inherited_sev = gl.get("_inherited_severity", "MINOR")
+        weight = SEVERITY_WEIGHT.get(inherited_sev, 1)
+        block_text = f"""[ASSOCIATED GUIDELINE: {gl['id']} ({gl['category']})]
+Guideline Fact: {gl['guideline']}
+Target Scope: {", ".join(gl.get("target_files", ["*"]))}"""
+        # 🔑 修复：移出多行字符串包裹，保证追加逻辑被正常物理执行
+        unified_candidates.append(("GL", weight, block_text))
+
+    # 3. 按照严重度序数权重由高到低进行最终排序
+    unified_candidates.sort(key=lambda x: x[1], reverse=True)
+
+    # 4. 抽取前 4 个对大模型最具威慑力、最底层的系统/编译级条目进行提取组装
+    top_4_blocks = [item[2] for item in unified_candidates[:4]]
+    final_rag_context = "\n\n".join(top_4_blocks)
+
+    logger.info(
+        f"--- [Few-shot RAG] Retrieved {len(matched_errors)} ERRs, {len(matched_guidelines)} GLs. Selected top 4 priorities. ---")
+
+    return {
+        "status": "success",
+        "matched_errors_count": len(matched_errors),
+        "associated_guidelines_count": len(matched_guidelines),
+        "rag_context": final_rag_context
+    }
 
 
 def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
@@ -1693,7 +1764,7 @@ def extract_build_metadata_from_log(log_path: str) -> Dict:
         # 🔑 2. 非贪婪编译器流水线编译参数匹配
         for line in lines:
             if 'compile-' in line:
-                m = re.search(r'compile-([a-z0-9_]+?)-([a-z0-9_]+?)-([a-z0-9_]+?)', line)
+                m = re.search(r'compile-([a-z0-9]+)-([a-z0-9]+)-(x86_64|i386|arm64)', line)
                 if m:
                     metadata['engine'], metadata['sanitizer'], metadata['architecture'] = m.groups()
                 break
@@ -1755,14 +1826,33 @@ def patch_project_dockerfile(
                 sha = dep.get('rev', '')
                 if not url or not sha: continue
 
-                # 在 Dockerfile 中搜索对应的 git clone 指令行
-                # 如果匹配到包含该仓库 URL 的 git clone，则在末尾追加 checkout 指令
-                pattern = rf"(git clone.*?{re.escape(url.split('/')[-1].replace('.git', ''))}.*)"
+                # 💡 证据支撑优化：如果该依赖是主项目仓库，我们将通过宿主机物理挂载覆盖，无需在 Dockerfile 中对其执行 checkout
+                # 提取仓库名称 (如 CRoaring)
+                repo_name = url.split('/')[-1].replace('.git', '')
+                if repo_name.lower() == project_name.lower():
+                    print(f"  - Skip Dockerfile checkout injection for primary repo: {repo_name} (will be mounted)")
+                    continue
+
+                # 仅对次级依赖进行精准 checkout 注入
+                pattern = rf"(git clone.*?{re.escape(repo_name)}[^\&\n;]*)"
 
                 def inject_checkout(match):
-                    original_line = match.group(1)
-                    # 确保命令连接符号正确
-                    return f"{original_line} && cd {url.split('/')[-1].replace('.git', '')} && git checkout {sha} && cd .."
+                    original_line = match.group(1).strip()
+                    tokens = original_line.split()
+                    clone_dir = repo_name
+                    try:
+                        url_idx = -1
+                        for idx, token in enumerate(tokens):
+                            if repo_name in token:
+                                url_idx = idx
+                                break
+                        if url_idx != -1 and url_idx + 1 < len(tokens):
+                            next_token = tokens[url_idx + 1].strip()
+                            if not next_token.startswith('-') and next_token not in ['&&', ';', '|']:
+                                clone_dir = next_token
+                    except Exception:
+                        pass
+                    return f"{original_line} && cd {clone_dir} && git checkout {sha} && cd .."
 
                 content = re.sub(pattern, inject_checkout, content)
 
@@ -1774,52 +1864,65 @@ def patch_project_dockerfile(
         return {'status': 'error', 'message': f'Failed to patch: {str(e)}'}
 
 
-def update_yaml_report(file_path: str, row_index: int, result: str) -> dict:
+def update_yaml_report(file_path: str,
+                       row_index: int,
+                       result_str: str = None,
+                       root_cause_commit: str = None,
+                       root_cause_workspace: str = None) -> dict:
     """
-    Update the project status in the YAML report.
-    Guarantees atomic file swapping and unicode safety to prevent character corruption.
+    统一的 YAML 更新工具：支持可选的根因回写与最终状态更新，具备原子写入能力。
     """
     import os
     import yaml
     import tempfile
+    from collections import OrderedDict
     from datetime import datetime
 
-    print(f"--- Tool: update_yaml_report called for file '{file_path}', index {row_index} ---")
     try:
         if not os.path.exists(file_path):
-            return {'status': 'error', 'message': f"YAML file not found at '{file_path}'."}
+            return {'status': 'error', 'message': f"YAML file not found: {file_path}"}
 
-        # 读取原始数据
         with open(file_path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
 
         if row_index < 0 or row_index >= len(data):
-            return {'status': 'error', 'message': f"Invalid row index: {row_index}."}
+            return {'status': 'error', 'message': f"Invalid row index: {row_index}"}
 
-        # 更新元状态
-        data[row_index]['state'] = 'yes'
-        data[row_index]['fix_result'] = result
-        data[row_index]['fix_date'] = datetime.now().strftime('%Y-%m-%d')
+        entry = data[row_index]
+        # 使用 OrderedDict 保持插入顺序
+        new_entry = OrderedDict()
+        for key, value in entry.items():
+            new_entry[key] = value
+            # 插入点：error_category 之后
+            if key == 'error_category':
+                if root_cause_commit and 'root_cause_commit' not in entry:
+                    new_entry['root_cause_commit'] = root_cause_commit
+                if root_cause_workspace and 'root_cause_workspace' not in entry:
+                    new_entry['root_cause_workspace'] = root_cause_workspace
 
-        # 🔑 强固化写入：通过临时文件原子替换(Atomic Swap) + allow_unicode 保证写入安全与防止乱码
+        # 如果提供了 result_str，更新状态
+        if result_str:
+            new_entry['fixed_state'] = 'no'
+            new_entry['state'] = 'yes'
+            new_entry['fix_result'] = result_str
+            new_entry['fix_date'] = datetime.now().strftime("%Y-%m-%d")
+
+        data[row_index] = dict(new_entry)
+
+        # 原子写入逻辑
         dir_name = os.path.dirname(os.path.abspath(file_path))
-        fd, tmp_path = tempfile.mkstemp(dir=dir_name, prefix=".projects_yaml_tmp_", suffix=".yaml")
+        fd, tmp_path = tempfile.mkstemp(dir=dir_name, prefix=".yaml_tmp_", suffix=".yaml")
         try:
             with os.fdopen(fd, 'w', encoding='utf-8') as tmp_f:
-                yaml.dump(data, tmp_f, default_flow_style=False, allow_unicode=True, sort_keys=False)
-            os.replace(tmp_path, file_path)  # 物理原子级覆盖，杜绝写中途中断损坏原文件
-        except Exception as swap_e:
-            if os.path.exists(tmp_path):
-                safe_delete_path(tmp_path)
-            raise swap_e
+                yaml.dump(data, tmp_f, default_flow_style=False, sort_keys=False, allow_unicode=True)
+            os.replace(tmp_path, file_path)
+        except Exception as e:
+            if os.path.exists(tmp_path): os.remove(tmp_path)
+            raise e
 
-        message = f"Successfully updated project at index {row_index} in '{file_path}' with result: '{result}'."
-        print(message)
-        return {'status': 'success', 'message': message}
+        return {'status': 'success', 'message': "YAML updated successfully."}
     except Exception as e:
-        message = f"Failed to update YAML report cleanly: {e}"
-        print(f"--- ERROR: {message} ---")
-        return {'status': 'error', 'message': message}
+        return {'status': 'error', 'message': str(e)}
 
 
 def get_git_commits_around_date(
@@ -2053,7 +2156,9 @@ def read_projects_from_yaml(file_path: str) -> dict:
                             "engine": entry.get('engine', ""),
                             "sanitizer": entry.get('sanitizer', ""),
                             "architecture": entry.get('architecture', ""),
-                            "base_image_digest": entry.get('base_image_digest', "")
+                            "base_image_digest": entry.get('base_image_digest', ""),
+                            "root_cause_commit": entry.get('root_cause_commit', ""),
+                            "root_cause_workspace": entry.get('root_cause_workspace', "")
                         }
                         projects_to_run.append(project_info)
                     else:
@@ -2462,13 +2567,16 @@ def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[
     # 🔑 2. 若本地已存在合法的全量 Git 仓库，则跳过下载直接放行
     if os.path.isdir(final_target_dir) and os.path.exists(os.path.join(final_target_dir, ".git")):
         if project_name == "oss-fuzz":
-            print(f"--- oss-fuzz exists, pulling latest... ---")
             try:
-                subprocess.run(["git", "pull"], cwd=final_target_dir, check=True, capture_output=True)
-                return {'status': 'success', 'path': final_target_dir, 'message': 'oss-fuzz updated.'}
-            except:
-                return {'status': 'success', 'path': final_target_dir,
-                        'message': 'oss-fuzz update failed, using local.'}
+                # 先清理锁定文件
+                subprocess.run(["rm", "-f", ".git/index.lock"], cwd=final_target_dir)
+                # 强制拉取
+                subprocess.run(["git", "fetch", "origin"], cwd=final_target_dir, check=True)
+                subprocess.run(["git", "reset", "--hard", "origin/master"], cwd=final_target_dir, check=True)
+                return {'status': 'success', 'path': final_target_dir, 'message': 'oss-fuzz synced.'}
+            except Exception as e:
+                return {'status': 'success', 'path': final_target_dir, 'message': f'Sync failed: {e}'}
+
         else:
             print(f"--- Repo '{project_name}' exists and is a valid git repo. Skipping download. ---")
             return {'status': 'success', 'path': final_target_dir, 'message': 'Repository already exists.'}
@@ -2881,10 +2989,6 @@ def read_file_content(file_path: str, mode: str = "full", base_dir: str = None) 
         return {"status": "error", "message": f"Read operation failed: {str(e)}"}
 
 
-# =====================================================================
-# 3. 路径加固后的安全文件写入/更新器 (create_or_update_file)
-# =====================================================================
-
 @_safe_path_wrapper(operation_name="create_or_update_file")
 def create_or_update_file(file_path: str, content: str, **kwargs) -> dict:
     """
@@ -3132,10 +3236,14 @@ def prompt_generate_tool(
         try:
             with open(commit_changed_path, 'r', encoding='utf-8') as f:
                 txt = f.read()
-                # 采用非贪婪匹配提取关键段落
-                cc_match = re.search(r"\[CAUSAL_CHAIN\]\s*([\s\S]*?)(?=\n\n\[|$)", txt)
+                # 🔑 Optimized Parser: Detect fallback mode
+                if "[STATUS]: FAILED" in txt:
+                    causal_chain = "Localization failed. System has automatically switched to Log-Based Diagnostic Mode."
+                else:
+                    cc_match = re.search(r"\[CAUSAL_CHAIN\]\s*([\s\S]*?)(?=\n\n\[|$)", txt)
+                    if cc_match: causal_chain = cc_match.group(1).strip()
+
                 fa_match = re.search(r"\[FINAL_ATTRIBUTION\]\s*([\s\S]*)$", txt)
-                if cc_match: causal_chain = cc_match.group(1).strip()
                 if fa_match: final_attribution = fa_match.group(1).strip()
         except Exception as e:
             print(f"Warning: Failed to parse commit_changed.txt: {e}")
@@ -3592,15 +3700,13 @@ def run_ecrcl_localization(
         suggested_find_commit_path: str = "",
         engine: str = "",
         sanitizer: str = "",
-        architecture: str = ""
+        architecture: str = "",
+        root_cause_commit: str = "",
+        root_cause_workspace: str = "",
+        verify_top_3: bool = False
+
 ) -> dict:
-    """
-    物理定位引擎：升级版 (Phase 0 -> Phase 3 完整融合)。
-    升级重点：
-      1. 双轨制反事实物理编译校验 (git revert 与 git checkout 配合 Docker 构建检验)
-      2. 提取详细物理变更元数据 (Diff, before/after 变动行, commit 信息)
-      3. 生成符合 Agent 系统指令 Schema 约束的标准工件文件，确保零大模型幻觉风险
-    """
+
 
     def finalize_localization(status: str, detail_content: str) -> dict:
         artifact_path = "generated_prompt_file/commit_changed.txt"
@@ -3614,111 +3720,152 @@ def run_ecrcl_localization(
     logger.info(f"Starting Enhanced ECRCL Localization Engine for {project_name}")
     logger.info("=========================================================")
 
+    print(f"[DEBUG] run_ecrcl_localization called with commit='{root_cause_commit}'")
     # 兼容环境变量获取底层编译依赖
     engine = engine or os.environ.get("ENGINE", "libfuzzer")
     sanitizer = sanitizer or os.environ.get("SANITIZER", "address")
     architecture = architecture or os.environ.get("ARCHITECTURE", "x86_64")
 
-    try:
-        env_vars = dict(os.environ)
-        # 0. 时间归一化
-        t_error_epoch = timezone_normalize(error_date)
-        t_error_utc = datetime.fromtimestamp(t_error_epoch, tz=timezone.utc)
+    if root_cause_commit and root_cause_workspace:
+        logger.info(
+            f"--- [ECRCL Fast-Path] Using pre-specified root cause for {project_name}: {root_cause_commit} in {root_cause_workspace} ---")
+        is_downstream = (root_cause_workspace.upper() == "DOWNSTREAM")
+        active_workspace = os.path.abspath(oss_fuzz_path) if is_downstream else os.path.abspath(project_source_path)
 
-        # 1. 故障日志提取 (Phase 0)
-        if not os.path.exists(log_path):
-            return finalize_localization("FAILED", f"Log file not found: {log_path}")
+        # 尝试提取元数据作为补全
+        target_author, target_date, target_title = "N/A", "N/A", "N/A"
+        try:
+            show_meta = ["git", "-C", active_workspace, "show", "--pretty=format:%an|%ad|%s", "-s", root_cause_commit]
+            meta_res = subprocess.run(show_meta, capture_output=True, text=True, check=True)
+            target_author, target_date, target_title = meta_res.stdout.strip().split('|', 2)
+        except Exception as e:
+            logger.warning(f"Failed to fetch pre-specified metadata: {e}")
 
-        with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
-            log_raw = f.read()
+            # 🔑 新增：若预设根因存在，直接归档回填至当前活跃账本节点
+            try:
+                ledger = TraceLedgerManager.load_ledger()
+                if ledger.get("nodes"):
+                    latest_node_id = ledger["nodes"][-1]["node_id"]
+                    TraceLedgerManager.update_node_fields(latest_node_id, {
+                        "action_and_intent.root_cause_commit_sha": root_cause_commit
+                    })
+                    logger.info(
+                        f"--- [Ledger] Pre-specified root cause SHA {root_cause_commit} written to Node {latest_node_id} ---")
+            except Exception as e:
+                logger.warning(f"Failed to auto-update pre-specified root_cause_commit_sha in ledger: {e}")
 
-        val_marker = "--- 1+2+6 VALIDATION SUMMARY"
-        raw_compile_zone = log_raw.split(val_marker)[0] if val_marker in log_raw else log_raw
-        log_lines = raw_compile_zone.splitlines()
+            # 🔑 修正：恢复 8 个空格缩进，使其安全内聚在 if 分支内部
+            detail_report = f"""[FAILURE_REGION]
+        (Skipped physical localization due to pre-specified root cause)
 
-        matched_idx = -1
-        for i in range(len(log_lines) - 1, -1, -1):
-            if any(kw in log_lines[i].lower() for kw in ["error:", "cannot ", "fail", "undefined reference"]):
-                matched_idx = i
-                break
+        [ATTRIBUTION_TYPE]
+        {root_cause_workspace.upper()}
 
-        if matched_idx == -1:
+        [LOCALIZATION_CONFIDENCE]
+        HIGH
+
+        [ROOT_CAUSE_COMMITS]
+        SHA: {root_cause_commit}
+        Author: {target_author}
+        Date: {target_date}
+        Subject: {target_title}
+        Reason: Pre-specified in metadata.
+
+        [CAUSAL_CHAIN]
+        Root cause commit was pre-specified; physical localization bypassed.
+
+        [FINAL_ATTRIBUTION]
+        根因定位成功 (Pre-specified)
+        """
+            return finalize_localization("SUCCESS", detail_report)
+    else:
+        logger.info("--- [ECRCL] No pre-specified root cause. Starting Full Search ---")
+        try:
+            env_vars = dict(os.environ)
+
+            # 0. 时间归一化
+            t_error_epoch = timezone_normalize(error_date)
+            t_error_utc = datetime.fromtimestamp(t_error_epoch, tz=timezone.utc)
+
+            # 1. 故障日志提取 (Phase 0)
+            if not os.path.exists(log_path):
+                return finalize_localization("FAILED", f"Log file not found: {log_path}")
+
+            with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+                log_raw = f.read()
+
+            val_marker = "--- 1+2+6 VALIDATION SUMMARY"
+            raw_compile_zone = log_raw.split(val_marker)[0] if val_marker in log_raw else log_raw
+            log_lines = raw_compile_zone.splitlines()
+
+            matched_idx = -1
             for i in range(len(log_lines) - 1, -1, -1):
-                if any(kw in log_lines[i].lower() for kw in ["warning:", "exit status"]):
+                if any(kw in log_lines[i].lower() for kw in ["error:", "cannot ", "fail", "undefined reference"]):
                     matched_idx = i
                     break
 
-        if matched_idx == -1:
-            return finalize_localization("FAILED", "No build failure features detected.")
+            if matched_idx == -1:
+                for i in range(len(log_lines) - 1, -1, -1):
+                    if any(kw in log_lines[i].lower() for kw in ["warning:", "exit status"]):
+                        matched_idx = i
+                        break
 
-        start_idx = max(0, matched_idx - 30)
-        end_idx = min(len(log_lines), matched_idx + 31)
-        failure_region_text = "\n".join(log_lines[start_idx:end_idx])
+            if matched_idx == -1:
+                return finalize_localization("FAILED", "No build failure features detected.")
 
-        # 提取区域内的相关代码或配置文件
-        path_pattern = r"([\w\-\./_]+\.(?:c|cpp|h|cc|cxx|rs|go|py|sh|java|swift|cmake|txt|yaml|json|PC|pc))"
-        raw_filepaths = re.findall(path_pattern, failure_region_text)
+            start_idx = max(0, matched_idx - 30)
+            end_idx = min(len(log_lines), matched_idx + 31)
+            failure_region_text = "\n".join(log_lines[start_idx:end_idx])
 
-        top_1_file = None
-        for f_cand in raw_filepaths:
-            if not any(sys_p in f_cand for sys_p in ["/usr/include/", "/.cargo/", "/.rustup/", "gcr.io/"]):
-                if f_cand.endswith(
-                        ('.c', '.cpp', '.cc', '.h', '.go', '.rs', '.sh', 'Dockerfile', 'build.sh', 'PC', 'pc')):
-                    top_1_file = f_cand
-                    break
-        if not top_1_file:
-            top_1_file = raw_filepaths[0] if raw_filepaths else "build.sh"
+            # 提取区域内的相关代码或配置文件
+            path_pattern = r"([\w\-\./_]+\.(?:c|cpp|h|cc|cxx|rs|go|py|sh|java|swift|cmake|txt|yaml|json|PC|pc))"
+            raw_filepaths = re.findall(path_pattern, failure_region_text)
 
-        # 2. 确定初始搜索工作区 (Phase 1)
-        is_downstream = any(
-            cfg in top_1_file for cfg in ["Dockerfile", "build.sh", "project.yaml", "oss-fuzz", "projects/"])
-        active_workspace = os.path.abspath(oss_fuzz_path) if is_downstream else os.path.abspath(project_source_path)
+            top_1_file = None
+            for f_cand in raw_filepaths:
+                if not any(sys_p in f_cand for sys_p in ["/usr/include/", "/.cargo/", "/.rustup/", "gcr.io/"]):
+                    if f_cand.endswith(
+                            ('.c', '.cpp', '.cc', '.h', '.go', '.rs', '.sh', 'Dockerfile', 'build.sh', 'PC', 'pc')):
+                        top_1_file = f_cand
+                        break
+            if not top_1_file:
+                top_1_file = raw_filepaths[0] if raw_filepaths else "build.sh"
 
-        logger.info(f"Targeting active workspace: {active_workspace} based on file: {top_1_file}")
+            # 2. 确定初始搜索工作区 (Phase 1)
+            is_downstream = any(
+                cfg in top_1_file for cfg in ["Dockerfile", "build.sh", "project.yaml", "oss-fuzz", "projects/"])
+            active_workspace = os.path.abspath(oss_fuzz_path) if is_downstream else os.path.abspath(project_source_path)
 
-        suspect_commits = []
-        blamed_sha = None
+            logger.info(f"Targeting active workspace: {active_workspace} based on file: {top_1_file}")
 
-        # Phase 1.1: 行级 Blame 追踪
-        line_match = re.search(rf"{re.escape(top_1_file)}:(\d+)", failure_region_text)
-        if line_match and os.path.exists(active_workspace):
-            line_num = int(line_match.group(1))
-            file_abs_path = os.path.abspath(os.path.join(active_workspace, top_1_file))
-            if os.path.exists(file_abs_path) and os.path.isfile(file_abs_path):
-                try:
-                    with open(file_abs_path, 'r', encoding='utf-8', errors='ignore') as f:
-                        file_len = sum(1 for _ in f)
-                    clamped_line = min(line_num, file_len) if file_len > 0 else 1
-                    blame_cmd = ["git", "-C", active_workspace, "blame", "-L", f"{clamped_line},{clamped_line}",
-                                 "--porcelain", file_abs_path]
-                    res = subprocess.run(blame_cmd, capture_output=True, text=True, check=True)
-                    blamed_sha = res.stdout.splitlines()[0].split(' ')[0]
-                    logger.info(f"Precise Blame anchor matched: {blamed_sha}")
-                except Exception as e:
-                    logger.warning(f"Git blame failed on precise line check: {e}")
+            suspect_commits = []
+            blamed_sha = None
 
-        # Phase 1.3: 时域滑动窗口过滤 (T_error ± 24h)
-        since_date = (t_error_utc - timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
-        until_date = (t_error_utc + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
+            # Phase 1.1: 行级 Blame 追踪
+            line_match = re.search(rf"{re.escape(top_1_file)}:(\d+)", failure_region_text)
+            if line_match and os.path.exists(active_workspace):
+                line_num = int(line_match.group(1))
+                file_abs_path = os.path.abspath(os.path.join(active_workspace, top_1_file))
+                if os.path.exists(file_abs_path) and os.path.isfile(file_abs_path):
+                    try:
+                        with open(file_abs_path, 'r', encoding='utf-8', errors='ignore') as f:
+                            file_len = sum(1 for _ in f)
+                        clamped_line = min(line_num, file_len) if file_len > 0 else 1
+                        blame_cmd = ["git", "-C", active_workspace, "blame", "-L", f"{clamped_line},{clamped_line}",
+                                     "--porcelain", file_abs_path]
+                        res = subprocess.run(blame_cmd, capture_output=True, text=True, check=True)
+                        blamed_sha = res.stdout.splitlines()[0].split(' ')[0]
+                        logger.info(f"Precise Blame anchor matched: {blamed_sha}")
+                    except Exception as e:
+                        logger.warning(f"Git blame failed on precise line check: {e}")
 
-        try:
-            log_cmd = ["git", "-C", active_workspace, "log", f"--since={since_date}", f"--until={until_date}",
-                       "--pretty=format:%H|%ct|%an|%cd|%s"]
-            git_res = subprocess.run(log_cmd, capture_output=True, text=True, check=True)
-            for line in git_res.stdout.splitlines():
-                if not line: continue
-                sha, epoch, author, date_str, msg = line.split('|', 4)
-                suspect_commits.append({
-                    "sha": sha, "epoch": int(epoch), "author": author,
-                    "date": date_str, "message": msg, "changed_files": []
-                })
-        except Exception as e:
-            logger.error(f"Failed to query git logs: {e}")
+            # Phase 1.3: 时域滑动窗口过滤 (T_error ± 24h)
+            since_date = (t_error_utc - timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
+            until_date = (t_error_utc + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
 
-        # 兜底
-        if not suspect_commits:
             try:
-                log_cmd = ["git", "-C", active_workspace, "log", "-n", "20", "--pretty=format:%H|%ct|%an|%cd|%s"]
+                log_cmd = ["git", "-C", active_workspace, "log", f"--since={since_date}", f"--until={until_date}",
+                           "--pretty=format:%H|%ct|%an|%cd|%s"]
                 git_res = subprocess.run(log_cmd, capture_output=True, text=True, check=True)
                 for line in git_res.stdout.splitlines():
                     if not line: continue
@@ -3727,233 +3874,271 @@ def run_ecrcl_localization(
                         "sha": sha, "epoch": int(epoch), "author": author,
                         "date": date_str, "message": msg, "changed_files": []
                     })
-            except Exception:
-                pass
+            except Exception as e:
+                logger.error(f"Failed to query git logs: {e}")
 
-        # 3. 约束收缩过滤器 (Phase 2)
-        C1 = []
-        for c in suspect_commits:
-            try:
-                show_cmd = ["git", "-C", active_workspace, "show", "--name-only", "--format=", c["sha"]]
-                files_res = subprocess.run(show_cmd, capture_output=True, text=True, check=True)
-                c_files = [f.strip() for f in files_res.stdout.splitlines() if f.strip()]
-                c["changed_files"] = c_files
+            # 兜底
+            if not suspect_commits:
+                try:
+                    log_cmd = ["git", "-C", active_workspace, "log", "-n", "20", "--pretty=format:%H|%ct|%an|%cd|%s"]
+                    git_res = subprocess.run(log_cmd, capture_output=True, text=True, check=True)
+                    for line in git_res.stdout.splitlines():
+                        if not line: continue
+                        sha, epoch, author, date_str, msg = line.split('|', 4)
+                        suspect_commits.append({
+                            "sha": sha, "epoch": int(epoch), "author": author,
+                            "date": date_str, "message": msg, "changed_files": []
+                        })
+                except Exception:
+                    pass
 
-                is_consistent = False
-                for f in c_files:
+            # 3. 约束收缩过滤器 (Phase 2)
+            C1 = []
+            for c in suspect_commits:
+                try:
+                    show_cmd = ["git", "-C", active_workspace, "show", "--name-only", "--format=", c["sha"]]
+                    files_res = subprocess.run(show_cmd, capture_output=True, text=True, check=True)
+                    c_files = [f.strip() for f in files_res.stdout.splitlines() if f.strip()]
+                    c["changed_files"] = c_files
+
+                    is_consistent = False
+                    for f in c_files:
+                        if os.path.basename(f) == os.path.basename(top_1_file):
+                            is_consistent = True
+                            break
+                        if any(cfg in f for cfg in ["Dockerfile", "build.sh", "Makefile", "CMakeLists.txt"]):
+                            is_consistent = True
+                            break
+                        if any(dep in f for dep in ["go.mod", "go.sum", "Cargo.toml", "package.json"]):
+                            is_consistent = True
+                            break
+                    if is_consistent:
+                        C1.append(c)
+                except Exception:
+                    pass
+
+            if len(C1) >= 1:
+                suspect_commits = C1
+
+            # 4. 构建异构证据图谱并运行信念传播 (Phase 2.5)
+            active_shas = [c["sha"] for c in suspect_commits]
+            commit_messages_map = {c["sha"]: c["message"] for c in suspect_commits}
+
+            graph = EvidenceGraph()
+            graph.add_node("Nregion", "Failure Region")
+
+            for c in suspect_commits:
+                c_node = f"Ncommit_{c['sha']}"
+                graph.add_node(c_node, "Commit")
+                msg_node = f"Nmsg_{c['sha']}"
+                graph.add_node(msg_node, "Commit Message")
+                graph.add_edge(msg_node, c_node, 1.0)
+                if any(kw in c["message"].lower() for kw in ["error", "fail", "conflict", "compile", "fix"]):
+                    graph.add_edge("Nregion", msg_node, 1.1)
+                for f in c["changed_files"]:
+                    f_node = f"Nfile_{f}"
+                    graph.add_node(f_node, "File")
+                    dt = abs(c["epoch"] - t_error_epoch)
+                    decay_weight = max(0.1, 1.5 * (0.5 ** (dt / 86400.0)))
+                    graph.add_edge(f_node, c_node, decay_weight)
                     if os.path.basename(f) == os.path.basename(top_1_file):
-                        is_consistent = True
-                        break
-                    if any(cfg in f for cfg in ["Dockerfile", "build.sh", "Makefile", "CMakeLists.txt"]):
-                        is_consistent = True
-                        break
-                    if any(dep in f for dep in ["go.mod", "go.sum", "Cargo.toml", "package.json"]):
-                        is_consistent = True
-                        break
-                if is_consistent:
-                    C1.append(c)
-            except Exception:
-                pass
+                        graph.add_edge("Nregion", f_node, 1.3)
+                if blamed_sha and c["sha"] == blamed_sha:
+                    graph.add_edge("Nregion", c_node, 1.5)
 
-        if len(C1) >= 1:
-            suspect_commits = C1
+            scores = graph.run_belief_propagation(active_shas, env_vars, commit_messages_map)
+            sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
 
-        # 4. 构建异构证据图谱并运行信念传播 (Phase 2.5)
-        active_shas = [c["sha"] for c in suspect_commits]
-        commit_messages_map = {c["sha"]: c["message"] for c in suspect_commits}
+            # =========================================================================
+            # 🔑 新增合并核心逻辑： Phase 3 双轨反事实顺序因果校验状态机
+            # =========================================================================
+            if verify_top_3:
+                suspect_pool = [score_info[0] for score_info in sorted_scores[:3]] if sorted_scores else []
+                max_attempts = 3
+            else:
+                # 🔑 修正：当非 verify_top_3 时，直接通过下标解包首个元素，消除 score_info 未定义异常
+                suspect_pool = [sorted_scores[0][0]] if sorted_scores else []
+                max_attempts = 1
 
-        graph = EvidenceGraph()
-        graph.add_node("Nregion", "Failure Region")
+            final_suspect = "UNKNOWN"
+            confidence = "LOW"
+            validation_status = "FAIL"
+            verification_passed = False
 
-        for c in suspect_commits:
-            c_node = f"Ncommit_{c['sha']}"
-            graph.add_node(c_node, "Commit")
-            msg_node = f"Nmsg_{c['sha']}"
-            graph.add_node(msg_node, "Commit Message")
-            graph.add_edge(msg_node, c_node, 1.0)
-            if any(kw in c["message"].lower() for kw in ["error", "fail", "conflict", "compile", "fix"]):
-                graph.add_edge("Nregion", msg_node, 1.1)
-            for f in c["changed_files"]:
-                f_node = f"Nfile_{f}"
-                graph.add_node(f_node, "File")
-                dt = abs(c["epoch"] - t_error_epoch)
-                decay_weight = max(0.1, 1.5 * (0.5 ** (dt / 86400.0)))
-                graph.add_edge(f_node, c_node, decay_weight)
-                if os.path.basename(f) == os.path.basename(top_1_file):
-                    graph.add_edge("Nregion", f_node, 1.3)
-            if blamed_sha and c["sha"] == blamed_sha:
-                graph.add_edge("Nregion", c_node, 1.5)
-
-        scores = graph.run_belief_propagation(active_shas, env_vars, commit_messages_map)
-        sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-
-        # =========================================================================
-        # 🔑 新增合并核心逻辑： Phase 3 双轨反事实顺序因果校验状态机
-        # =========================================================================
-        suspect_pool = [score_info[0] for score_info in sorted_scores[:3]] if sorted_scores else []
-        final_suspect = "UNKNOWN"
-        confidence = "LOW"
-        validation_status = "FAIL"
-        verification_passed = False
-
-        for attempt_idx, suspect in enumerate(suspect_pool):
-            logger.info(f"--- [ECRCL Phase 3] Validation Attempt {attempt_idx + 1}/3: Testing {suspect} ---")
-            try:
-                if is_downstream:
-                    # [下游] 走安全回滚验证逻辑
-                    revert_success = git_revert_counterfactual(
-                        repo_path=active_workspace,
-                        target_commit=suspect,
-                        project_name=project_name,
-                        engine=engine,
-                        sanitizer=sanitizer,
-                        architecture=architecture
-                    )
-                    parent_passed = revert_success
-                    suspect_failed = True  # 原构建基线已知失败
-                else:
-                    # [上游] 走双节点 checkout + compile 因果检验逻辑
-                    # A. 物理暂存现场，避免切换分支遗失文件
-                    subprocess.run(["git", "-C", active_workspace, "stash", "--include-untracked"], capture_output=True)
-                    orig_head = subprocess.run(["git", "-C", active_workspace, "rev-parse", "HEAD"],
-                                               capture_output=True, text=True).stdout.strip()
-
-                    # B. 检验父提交 suspect~1 (期望编译 SUCCESS)
-                    checkout_parent = checkout_project_commit(active_workspace, f"{suspect}~1")
-                    if checkout_parent["status"] == "success":
-                        parent_passed = run_fuzz_build_and_validate(
+            for attempt_idx, suspect in enumerate(suspect_pool):
+                logger.info(
+                    f"--- [ECRCL Phase 3] Validation Attempt {attempt_idx + 1}/{max_attempts}: Testing {suspect} ---")
+                try:
+                    if is_downstream:
+                        # [下游] 走安全回滚验证逻辑
+                        revert_success = git_revert_counterfactual(
+                            repo_path=active_workspace,
+                            target_commit=suspect,
                             project_name=project_name,
-                            oss_fuzz_path=oss_fuzz_path,
-                            sanitizer=sanitizer,
                             engine=engine,
-                            architecture=architecture,
-                            mount_path=project_source_path
-                        )["status"] == "success"
-                    else:
-                        parent_passed = False
-
-                    # C. 检验当前提交 suspect (期望编译 FAIL)
-                    checkout_suspect = checkout_project_commit(active_workspace, suspect)
-                    if checkout_suspect["status"] == "success":
-                        suspect_failed = run_fuzz_build_and_validate(
-                            project_name=project_name,
-                            oss_fuzz_path=oss_fuzz_path,
                             sanitizer=sanitizer,
-                            engine=engine,
-                            architecture=architecture,
-                            mount_path=project_source_path
-                        )["status"] != "success"
+                            architecture=architecture
+                        )
+                        parent_passed = revert_success
+                        suspect_failed = True  # 原构建基线已知失败
                     else:
-                        suspect_failed = False
+                        # [上游] 走双节点 checkout + compile 因果检验逻辑
+                        # A. 物理暂存现场，避免切换分支遗失文件
+                        subprocess.run(["git", "-C", active_workspace, "stash", "--include-untracked"], capture_output=True)
+                        orig_head = subprocess.run(["git", "-C", active_workspace, "rev-parse", "HEAD"],
+                                                   capture_output=True, text=True).stdout.strip()
 
-                    # D. 强制复原上游仓库现场
-                    checkout_project_commit(active_workspace, orig_head)
-                    subprocess.run(["git", "-C", active_workspace, "clean", "-fdx"], capture_output=True)
-                    subprocess.run(["git", "-C", active_workspace, "stash", "pop"], capture_output=True)
+                        # B. 检验父提交 suspect~1 (期望编译 SUCCESS)
+                        checkout_parent = checkout_project_commit(active_workspace, f"{suspect}~1")
+                        if checkout_parent["status"] == "success":
+                            parent_passed = run_fuzz_build_and_validate(
+                                project_name=project_name,
+                                oss_fuzz_path=oss_fuzz_path,
+                                sanitizer=sanitizer,
+                                engine=engine,
+                                architecture=architecture,
+                                mount_path=project_source_path,
+                                verbose_step6=False,
+                                verbose_build=False
+                            )["status"] == "success"
+                        else:
+                            parent_passed = False
 
-                # 判定因果链：剔除代码能编过 且 保留代码编不过 => 判定该候选为因果根因
-                if parent_passed and suspect_failed:
-                    validation_status = "PASS"
-                    confidence = "HIGH"
-                    final_suspect = suspect
-                    verification_passed = True
-                    logger.info(f"Causal Counterfactual validation PASSED on Attempt {attempt_idx + 1}!")
-                    break
-                else:
-                    logger.warning(f"Attempt {attempt_idx + 1} failed. Criteria not satisfied.")
-            except Exception as val_err:
-                logger.error(f"Replay validation hit unexpected error on {suspect}: {val_err}")
+                        # C. 检验当前提交 suspect (期望编译 FAIL)
+                        checkout_suspect = checkout_project_commit(active_workspace, suspect)
+                        if checkout_suspect["status"] == "success":
+                            suspect_failed = run_fuzz_build_and_validate(
+                                project_name=project_name,
+                                oss_fuzz_path=oss_fuzz_path,
+                                sanitizer=sanitizer,
+                                engine=engine,
+                                architecture=architecture,
+                                mount_path=project_source_path,
+                                verbose_step6=False,
+                                verbose_build=False
+                            )["status"] != "success"
+                        else:
+                            suspect_failed = False
 
-        # =========================================================================
-        # 🔑 新增合并核心逻辑： 物理元数据提取 (Metadata Extraction)
-        # =========================================================================
-        diff_text = ""
-        target_author = "N/A"
-        target_date = "N/A"
-        target_title = "N/A"
-        before_line = "N/A"
-        after_line = "N/A"
+                        # D. 强制复原上游仓库现场
+                        checkout_project_commit(active_workspace, orig_head)
+                        subprocess.run(["git", "-C", active_workspace, "clean", "-fdx"], capture_output=True)
+                        subprocess.run(["git", "-C", active_workspace, "stash", "pop"], capture_output=True)
 
-        if final_suspect != "UNKNOWN":
-            try:
-                show_meta = ["git", "-C", active_workspace, "show", "--pretty=format:%an|%ad|%s", "-s", final_suspect]
-                meta_res = subprocess.run(show_meta, capture_output=True, text=True, check=True)
-                target_author, target_date, target_title = meta_res.stdout.strip().split('|', 2)
-            except Exception:
-                pass
+                    # 判定因果链：剔除代码能编过 且 保留代码编不过 => 判定该候选为因果根因
+                    if parent_passed and suspect_failed:
+                        validation_status = "PASS"
+                        confidence = "HIGH"
+                        final_suspect = suspect
+                        verification_passed = True
+                        logger.info(f"Causal Counterfactual validation PASSED on Attempt {attempt_idx + 1}!")
 
-            try:
-                diff_res = subprocess.run(["git", "-C", active_workspace, "show", "-U3", final_suspect],
-                                          capture_output=True, text=True, check=True)
-                # 使用内置的 clamp_diff_content 安全保护 Token 容量
-                diff_text = clamp_diff_content(diff_res.stdout)
+                        # 🔑 新增：当且仅当反事实检验判定成功时，物理触发账本归填
+                        try:
+                            ledger = TraceLedgerManager.load_ledger()
+                            if ledger.get("nodes"):
+                                latest_node_id = ledger["nodes"][-1]["node_id"]
+                                TraceLedgerManager.update_node_fields(latest_node_id, {
+                                    "action_and_intent.root_cause_commit_sha": final_suspect
+                                })
+                                logger.info(
+                                    f"--- [Ledger] Discovered root cause SHA {final_suspect} written to Node {latest_node_id} ---")
+                        except Exception as e:
+                            logger.warning(f"Failed to auto-update discovered root_cause_commit_sha in ledger: {e}")
+                        break
+                    else:
+                        logger.warning(f"Attempt {attempt_idx + 1} failed. Criteria not satisfied.")
+                except Exception as val_err:
+                    logger.error(f"Replay validation hit unexpected error on {suspect}: {val_err}")
 
-                removed_lines = [l[1:].strip() for l in diff_res.stdout.splitlines() if
-                                 l.startswith('-') and not l.startswith('---')]
-                added_lines = [l[1:].strip() for l in diff_res.stdout.splitlines() if
-                               l.startswith('+') and not l.startswith('+++')]
-                if removed_lines: before_line = removed_lines[0]
-                if added_lines: after_line = added_lines[0]
-            except Exception:
-                diff_text = "Failed to extract commit diff context."
+            # =========================================================================
+            # 🔑 新增合并核心逻辑： 物理元数据提取 (Metadata Extraction)
+            # =========================================================================
+            diff_text = ""
+            target_author = "N/A"
+            target_date = "N/A"
+            target_title = "N/A"
+            before_line = "N/A"
+            after_line = "N/A"
 
-        # =========================================================================
-        # 🔑 新增合并核心逻辑： 高保真 Schema 工件格式化
-        # =========================================================================
-        artifact_status = "SUCCESS" if verification_passed else "FAILED"
+            if final_suspect == "UNKNOWN":
+                artifact_status = "FAILED"
+                detail_report = f"""[FAILURE_REGION]
+            {failure_region_text}
+    
+            [ATTRIBUTION_TYPE]
+            {'DOWNSTREAM' if is_downstream else 'UPSTREAM'}
+    
+            [LOCALIZATION_CONFIDENCE]
+            LOW
+    
+            [ROOT_CAUSE_COMMITS]
+            SHA: N/A
+            Reason: Localization failed. System has automatically switched to Log-Based Diagnostic Mode.
+    
+            [CAUSAL_CHAIN]
+            ECRCL localization failed, employing log-based diagnostic fallback.
+    
+            [FINAL_ATTRIBUTION]
+            Root cause localization failed; proceed with log-based structural fix.
+            """
+            else:
+                artifact_status = "SUCCESS"
+                # 提取 Git 元数据逻辑 (保留您原有的 try-except)
+                try:
+                    show_meta = ["git", "-C", active_workspace, "show", "--pretty=format:%an|%ad|%s", "-s", final_suspect]
+                    meta_res = subprocess.run(show_meta, capture_output=True, text=True, check=True)
+                    target_author, target_date, target_title = meta_res.stdout.strip().split('|', 2)
 
-        detail_report = f"""[FAILURE_REGION]
-{failure_region_text}
+                    diff_res = subprocess.run(["git", "-C", active_workspace, "show", "-U3", final_suspect],
+                                              capture_output=True, text=True, check=True)
+                    diff_text = clamp_diff_content(diff_res.stdout)
+                    removed_lines = [l[1:].strip() for l in diff_res.stdout.splitlines() if
+                                     l.startswith('-') and not l.startswith('---')]
+                    added_lines = [l[1:].strip() for l in diff_res.stdout.splitlines() if
+                                   l.startswith('+') and not l.startswith('+++')]
+                    if removed_lines: before_line = removed_lines[0]
+                    if added_lines: after_line = added_lines[0]
+                except Exception:
+                    diff_text = "Failed to extract commit diff context."
 
-[ATTRIBUTION_TYPE]
-{'DOWNSTREAM' if is_downstream else 'UPSTREAM'}
+                detail_report = f"""[FAILURE_REGION]
+            {failure_region_text}
+    
+            [ATTRIBUTION_TYPE]
+            {'DOWNSTREAM' if is_downstream else 'UPSTREAM'}
+    
+            [LOCALIZATION_CONFIDENCE]
+            {confidence}
+    
+            [ROOT_CAUSE_COMMITS]
+            SHA: {final_suspect}
+            Author: {target_author}
+            Date: {target_date}
+            Subject: {target_title}
+            File: {top_1_file}
+            Line: {line_match.group(1) if line_match else 'N/A'}
+            Before: {before_line}
+            After: {after_line}
+    
+            [DIFF_CONTEXT]
+            {diff_text}
+    
+            [CAUSAL_CHAIN]
+            Replay verification status: {validation_status}.
+            Belief propagation scores: {sorted_scores[:3]}.
+            The root cause commit '{final_suspect}' introduces changes that broke compile check.
+    
+            [FINAL_ATTRIBUTION]
+            Root cause localization successful.
+            """
 
-[LOCALIZATION_CONFIDENCE]
-{confidence}
+            return finalize_localization(artifact_status, detail_report)
 
-[ROOT_CAUSE_COMMITS]
-SHA: {final_suspect}
-Author: {target_author}
-Date: {target_date}
-Subject: {target_title}
-File: {top_1_file}
-Line: {line_match.group(1) if line_match else 'N/A'}
-Before: {before_line}
-After: {after_line}
+        except Exception as e:
 
-[DIFF_CONTEXT]
-{diff_text}
-
-[CAUSAL_CHAIN]
-Replay verification status: {validation_status}.
-Belief propagation scores: {sorted_scores[:3]}.
-The root cause commit '{final_suspect}' introduces changes that broke compile check (Condition A), while revert/parent commit successfully compiled (Condition B).
-
-[FINAL_ATTRIBUTION]
-{"根因定位成功" if verification_passed else "根因定位失败，全部候选Commit反事实验证未通过，无法锁定故障提交"}
-"""
-
-        result_data = {
-            "status": "success" if verification_passed else "failed",
-            "sorted_scores": sorted_scores,
-            "is_downstream": is_downstream,
-            "active_workspace": active_workspace,
-            "project_source_path": project_source_path,
-            "oss_fuzz_path": oss_fuzz_path,
-            "failure_region_text": failure_region_text,
-            "top_1_file": top_1_file,
-            "line_num": line_match.group(1) if line_match else "N/A",
-            "final_suspect": final_suspect,
-            "confidence": confidence,
-            "validation_status": validation_status
-        }
-
-        return finalize_localization(artifact_status, detail_report)
-
-    except Exception as e:
-
-        logger.error(f"ECRCL localization critical error: {e}")
-        return {"status": "failed", "message": f"Git localization error: {str(e)}"}
+            logger.error(f"ECRCL localization critical error: {e}")
+            return {"status": "failed", "message": f"Git localization error: {str(e)}"}
 
 
 def run_fuzz_build_and_validate(
@@ -3962,7 +4147,9 @@ def run_fuzz_build_and_validate(
         sanitizer: str,
         engine: str,
         architecture: str,
-        mount_path: Optional[str] = None
+        mount_path: Optional[str] = None,
+        verbose_step6: bool = False,
+        verbose_build: bool = True
 ) -> dict:
     """
     Build and validate fuzzers using official OSS-Fuzz infrastructure.
@@ -4110,7 +4297,8 @@ def run_fuzz_build_and_validate(
                         break
                     time.sleep(0.05)
                     continue
-                print(line, end='', flush=True)
+                if verbose_build:
+                    print(line, end='', flush=True)
                 full_log.append(line)
             process.wait(timeout=15)
         except subprocess.TimeoutExpired:
@@ -4216,7 +4404,8 @@ def run_fuzz_build_and_validate(
         # Step 6: 压力测试稳定性 (参考项)
         # =========================================================================
         if primary_target and report["step_2_infra_compliance"].startswith("pass"):
-            print(f"[*] Starting 35s stability test for: {primary_target}")
+            if verbose_step6:  # ✅ 仅在开启 verbose 模式时输出 Header
+                print(f"[*] Starting 35s stability test for: {primary_target}")
             run_cmd = [sys.executable, helper_path, "run_fuzzer", "--engine", engine, "--sanitizer", sanitizer,
                        project_name, primary_target]
 
@@ -4246,9 +4435,9 @@ def run_fuzz_build_and_validate(
 
                     if stability_proc.stdout in rlist:
                         line = stability_proc.stdout.readline()
-                        if not line:
-                            break
-                        print(line, end='', flush=True)
+                        if not line: break
+                        if verbose_step6:  # ✅ 仅在开启时实时打印模糊测试进度
+                            print(line, end='', flush=True)
                         log_lines.append(line)
                     else:
                         if stability_proc.poll() is not None:
@@ -4280,7 +4469,8 @@ def run_fuzz_build_and_validate(
                             pass
                     stability_proc.wait()
 
-                print("[*] Stability test exited. Triggering comprehensive post-validation cleanup...")
+                if verbose_step6:  # ✅ 仅在开启时打印结束信息
+                    print("[*] Stability test exited. Triggering comprehensive post-validation cleanup...")
                 _cleanup_environment(oss_fuzz_path, project_name)
 
             # 日志文本整合与退出码转换
