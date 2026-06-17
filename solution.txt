@@ -1,6 +1,0 @@
----=== FILE ===---
-process/project/lwan/src/lib/lwan-request.c
----=== ORIGINAL ===---
-    static struct coro_switcher switcher;
----=== REPLACEMENT ===---
-    static coro_context switcher;

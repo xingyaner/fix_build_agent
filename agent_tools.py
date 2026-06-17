@@ -1,5 +1,7 @@
 import os
 import re
+import subprocess
+
 import litellm
 import json
 import yaml
@@ -7,6 +9,7 @@ import openpyxl
 import tempfile
 import fnmatch
 import logging
+import textwrap
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Tuple, Callable, Optional, Set, Any
 from google.adk.tools.tool_context import ToolContext
@@ -15,10 +18,16 @@ from utils.error_handler import format_path_error
 
 logger = logging.getLogger(__name__)
 
-ENABLE_HISTORY_ENHANCEMENT = True
 ENABLE_REFLECTION = True
 ENABLE_ROLLBACK = True
+ENABLE_HISTORY_ENHANCEMENT = True
 ENABLE_EXPERT_KNOWLEDGE = True
+
+# Mechanism ablation mapping:
+# - ENABLE_REFLECTION -> RSMC
+# - ENABLE_ROLLBACK -> HSR / rollback
+# - ENABLE_HISTORY_ENHANCEMENT -> ECRCL / history-constrained localization
+# - ENABLE_EXPERT_KNOWLEDGE -> Few-shot RAG / expert knowledge injection
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -26,6 +35,72 @@ PROCESSED_PROJECTS_DIR = os.path.join(CURRENT_DIR, "process")
 PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processed.txt")
 GLOBAL_CHAR_BUDGET = 280000  # 硬编码
 max_lines = 2500  # 硬编码
+_LATEST_BASIC_INFORMATION: Dict[str, Any] = {}
+
+
+def extract_basic_information(raw_basic_information: Any) -> Dict[str, Any]:
+    """
+    Normalize `basic_information` into a structured dictionary.
+    Accepts dict payloads or LLM-formatted strings that wrap a JSON object.
+    """
+    if isinstance(raw_basic_information, dict):
+        data = dict(raw_basic_information)
+    elif isinstance(raw_basic_information, str):
+        data = {}
+        json_match = re.search(r'(\{[\s\S]*\})', raw_basic_information)
+        if json_match:
+            try:
+                data = json.loads(json_match.group(1))
+            except Exception:
+                data = {}
+    else:
+        data = {}
+
+    if not isinstance(data, dict):
+        data = {}
+
+    if "project_name" not in data and data.get("project"):
+        data["project_name"] = data["project"]
+
+    for path_key in ["project_source_path", "project_config_path", "project_config_repo_path"]:
+        if data.get(path_key):
+            data[path_key] = os.path.abspath(data[path_key])
+
+    return data
+
+
+def _coerce_project_paths_with_basic_information(
+        project_source_path: Optional[str],
+        project_config_path: Optional[str],
+        basic_info: Dict[str, Any]
+) -> Tuple[Optional[str], Optional[str], Optional[str]]:
+    """
+    Normalize upstream/downstream repository paths against structured basic_information.
+    Prevents project root paths from degrading to parent directories like `process/project`.
+    """
+    expected_source_path = basic_info.get("project_source_path")
+    expected_config_path = basic_info.get("project_config_path")
+    expected_config_repo_path = basic_info.get("project_config_repo_path")
+
+    if expected_source_path:
+        normalized_source = os.path.abspath(project_source_path) if project_source_path else None
+        expected_source_abs = os.path.abspath(expected_source_path)
+        if normalized_source != expected_source_abs:
+            project_source_path = expected_source_abs
+
+    if expected_config_path:
+        normalized_config = os.path.abspath(project_config_path) if project_config_path else None
+        expected_config_abs = os.path.abspath(expected_config_path)
+        if normalized_config != expected_config_abs:
+            project_config_path = expected_config_abs
+
+    project_config_repo_path = expected_config_repo_path
+    if not project_config_repo_path and project_config_path:
+        candidate_root = os.path.abspath(os.path.join(project_config_path, "..", ".."))
+        if os.path.exists(os.path.join(candidate_root, ".git")):
+            project_config_repo_path = candidate_root
+
+    return project_source_path, project_config_path, project_config_repo_path
 
 
 # =====================================================================
@@ -52,21 +127,31 @@ class TraceLedgerManager:
     def load_ledger(cls) -> dict:
         path = cls.get_ledger_path()
         if not os.path.exists(path):
-            return {"project_name": cls._active_project, "archive_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "nodes": []}
+            return {
+                "project_name": cls._active_project,
+                "archive_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "next_node_id": 0,
+                "nodes": []
+            }
         try:
             with open(path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
                 # 强制同步当前激活项目名
                 data["project_name"] = cls._active_project
+                if "next_node_id" not in data:
+                    existing_ids = [n.get("node_id", -1) for n in data.get("nodes", []) if isinstance(n, dict)]
+                    data["next_node_id"] = (max(existing_ids) + 1) if existing_ids else 0
                 return data
         except Exception as e:
-            return {"project_name": cls._active_project, "archive_date": "", "nodes": []}
+            return {"project_name": cls._active_project, "archive_date": "", "next_node_id": 0, "nodes": []}
 
     @classmethod
     def save_ledger(cls, data: dict) -> bool:
         path = cls.get_ledger_path()
         try:
+            if "next_node_id" not in data:
+                existing_ids = [n.get("node_id", -1) for n in data.get("nodes", []) if isinstance(n, dict)]
+                data["next_node_id"] = (max(existing_ids) + 1) if existing_ids else 0
             os.makedirs(os.path.dirname(path), exist_ok=True)
             with open(path, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
@@ -80,6 +165,7 @@ class TraceLedgerManager:
         """
         Safely update arbitrary deep paths (using dot notation) of a specific node_id.
         """
+        print(f"[DBG] update_node_fields node_id={node_id}, keys={list(fields_dict.keys())}")
         ledger = cls.load_ledger()
         target_node = None
         for node in ledger.get("nodes", []):
@@ -99,7 +185,24 @@ class TraceLedgerManager:
                 curr = curr[part]
             curr[parts[-1]] = value
 
+        print(f"[DBG] update_node_fields target_node_after={json.dumps(target_node, ensure_ascii=False)[:1200]}")
         return cls.save_ledger(ledger)
+
+    @classmethod
+    def get_node_by_id(cls, ledger: dict, node_id: int) -> Optional[dict]:
+        for node in ledger.get("nodes", []):
+            if node.get("node_id") == node_id:
+                return node
+        return None
+
+    @classmethod
+    def allocate_next_node_id(cls, ledger: dict) -> Tuple[int, dict]:
+        if "next_node_id" not in ledger:
+            existing_ids = [n.get("node_id", -1) for n in ledger.get("nodes", []) if isinstance(n, dict)]
+            ledger["next_node_id"] = (max(existing_ids) + 1) if existing_ids else 0
+        node_id = ledger["next_node_id"]
+        ledger["next_node_id"] += 1
+        return node_id, ledger
 
     @classmethod
     def get_git_head_sha(cls, repo_path: str) -> str:
@@ -136,6 +239,32 @@ class TraceLedgerManager:
             return {"Ladd": 0, "Ldel": 0}
 
 
+def _collect_parent_chain_node_ids(ledger: dict, start_node_id: int, limit: Optional[int] = None,
+                                   include_self: bool = False) -> List[int]:
+    chain_ids = []
+    current_id = start_node_id
+    if not include_self:
+        start_node = TraceLedgerManager.get_node_by_id(ledger, start_node_id)
+        if not start_node:
+            return []
+        current_id = start_node.get("parent_id", -1)
+
+    visited = set()
+    while current_id is not None and current_id != -1:
+        if current_id in visited:
+            break
+        visited.add(current_id)
+        node = TraceLedgerManager.get_node_by_id(ledger, current_id)
+        if not node:
+            break
+        chain_ids.append(current_id)
+        if limit is not None and len(chain_ids) >= limit:
+            break
+        current_id = node.get("parent_id", -1)
+
+    return chain_ids
+
+
 def _is_initial_round() -> bool:
     """
     辅助检测器：读取统一账本判断当前是否处于首轮（Node 0/Node 1 baseline 阶段）
@@ -160,6 +289,35 @@ def update_trace_ledger(node_id: int, fields_dict: dict, repo_path: str = None,
     Safely writes file diff metrics, active workspace, and Git SHAs into project_repair_trace.json.
     """
     try:
+        basic_info = extract_basic_information(
+            tool_context.session.state.get("basic_information")
+            if tool_context and getattr(tool_context, "session", None)
+            else _LATEST_BASIC_INFORMATION
+        )
+        target_file = fields_dict.get("action_and_intent.target_file", "")
+        if target_file.startswith("process/project/"):
+            repo_path = basic_info.get("project_source_path") or repo_path
+        elif target_file.startswith("oss-fuzz/projects/"):
+            repo_path = basic_info.get("project_config_repo_path") or repo_path
+
+        print(
+            "[DEBUG update_trace_ledger args] "
+            f"node_id={node_id} | repo_path={repo_path} | "
+            f"fields={json.dumps(fields_dict, ensure_ascii=False)[:1500]}"
+        )
+        ledger = TraceLedgerManager.load_ledger()
+        existing_node = next((n for n in ledger.get("nodes", []) if n.get("node_id") == node_id), None)
+
+        # Do not let placeholder SHAs overwrite real anchors already present in the ledger.
+        if existing_node:
+            for sha_key in ["git_sha_state.oss-fuzz_sha", "git_sha_state.project_sha"]:
+                if sha_key in fields_dict:
+                    incoming_val = fields_dict.get(sha_key)
+                    existing_field = sha_key.split(".")[-1]
+                    existing_val = existing_node.get("git_sha_state", {}).get(existing_field)
+                    if incoming_val in [None, "", "N/A"] and existing_val not in [None, "", "N/A"]:
+                        fields_dict.pop(sha_key, None)
+
         # 如果传入了 repo_path，在写入前自动提取物理 Git 指标进行覆盖，防御模型幻觉
         if repo_path and os.path.exists(repo_path):
             metrics = TraceLedgerManager.get_patch_metrics(repo_path)
@@ -375,188 +533,6 @@ def get_verified_git_sha(repo_path: str, retries: int = 3) -> str:
     return "N/A"
 
 
-def execute_hsr_decision(tool_context: ToolContext) -> dict:
-    """
-    Evaluates the Stage-Guided Decision Policy (HSR Engine).
-    Compares SA >= SB dominance on the state tuple S = <L, V> to decide rollback action.
-    Synchronizes double-workspace Git repositories with exact physical SHA targets on Rollback.
-    """
-    import subprocess
-    import shutil
-    import logging
-
-    logger = logging.getLogger(__name__)
-    session = tool_context.session
-    project_name = session.state.get("project_name") or session.state.get("project", "UNKNOWN")
-    project_source_path = session.state.get("project_source_path")
-    project_config_path = session.state.get("project_config_path")
-
-    ledger = TraceLedgerManager.load_ledger()
-    nodes = ledger.get("nodes", [])
-
-    # 🔑 哨兵过滤：只选取已经回填了构建结论的活跃节点
-    active_nodes = [n for n in nodes if n.get("metrics", {}).get("build_stage_after") not in [None, "N/A"]]
-
-    if len(active_nodes) < 1:
-        return {"status": "success", "action": "NONE",
-                "message": "System at initial baseline. Build classification pending."}
-
-    curr_node = active_nodes[-1]
-
-    # Node 0 基准无需回滚
-    if curr_node["node_id"] == 0:
-        return {"status": "success", "action": "NONE", "message": "Evaluating Node 0 baseline."}
-
-    # 寻找父节点
-    prev_node = next((n for n in nodes if n["node_id"] == curr_node["parent_id"]), None)
-    if not prev_node:
-        return {"status": "success", "action": "NONE", "message": f"Node {curr_node['node_id']} has no stable parent."}
-
-    # 判定逻辑
-    stage_map = {"L1": 1, "L2": 2, "L3": 3, "L4": 4, "L5": 5, "L6": 6, "N/A": 0}
-    L_curr = stage_map.get(curr_node.get("metrics", {}).get("build_stage_after", "N/A"), 0)
-    L_prev = stage_map.get(prev_node.get("metrics", {}).get("build_stage_after", "N/A"), 0)
-
-    def get_validation_score(report: dict) -> int:
-        score = 0
-        if "pass" in str(report.get("step_1_official_list", "")).lower(): score += 1
-        if "pass" in str(report.get("step_2_infra_compliance", "")).lower(): score += 1
-        if "pass" in str(report.get("step_6_runtime_stability", "")).lower(): score += 1
-        return score
-
-    V_curr = get_validation_score(curr_node.get("validation", {}).get("validation_report_after", {}))
-    V_prev = get_validation_score(prev_node.get("validation", {}).get("validation_report_after", {}))
-
-    def dominates(L_a, V_a, L_b, V_b):
-        return L_a > L_b or (L_a == L_b and V_a >= V_b)
-
-    is_curr_dominated = dominates(L_prev, V_prev, L_curr, V_curr)
-
-    decision_status = "Stable"
-    rollback_type = "NONE"
-    should_rollback = False
-    target_node = None
-
-    if is_curr_dominated:
-        should_rollback = True
-        if L_curr == L_prev and V_curr == V_prev:
-            rollback_type = "SINGLE_STEP"
-            target_node = prev_node
-            decision_status = "Neutral Path"
-        else:
-            rollback_type = "ADAPTIVE"
-            decision_status = "Degrading"
-            for node in reversed(nodes[:-1]):
-                L_hist = stage_map.get(node.get("metrics", {}).get("build_stage_after", "N/A"), 0)
-                V_hist = get_validation_score(node.get("validation", {}).get("validation_report_after", {}))
-                if dominates(L_hist, V_hist, L_curr, V_curr):
-                    target_node = node
-                    break
-            if target_node is None: target_node = nodes[0]
-
-    TraceLedgerManager.update_node_fields(curr_node["node_id"], {
-        "identification.node_status": decision_status,
-        "identification.should_rollback": should_rollback,
-        "identification.rollback_type": rollback_type
-    })
-
-    if should_rollback and target_node:
-        oss_sha = target_node["git_sha_state"].get("oss-fuzz_sha")
-        prj_sha = target_node["git_sha_state"].get("project_sha")
-
-        # 🔑 容错逻辑：若 SHA 无效则跳过物理回滚
-        if not oss_sha or oss_sha == "N/A" or not prj_sha or prj_sha == "N/A":
-            print(f"--- [HSR Warning] SHA invalid (OSS:{oss_sha}, PRJ:{prj_sha}), skipping physical reset ---")
-            session.state["rollback_triggered"] = True
-            return {"status": "success", "action": "ROLLBACK_LOGICAL_ONLY", "message": "Logical rollback only."}
-
-        # 执行物理回滚
-        shas_to_reset = [(project_source_path, prj_sha), (project_config_path, oss_sha)]
-        for repo_path, target_sha in shas_to_reset:
-            if os.path.exists(repo_path):
-                # 🔑 联动避险：在执行 git clean 之前，先主动夺回整个工作区的权限，防止 git 报 Permission Denied
-                reclaim_path_permissions(repo_path)
-
-                subprocess.run(["git", "-C", repo_path, "reset", "--hard", target_sha], check=True, capture_output=True)
-                subprocess.run(["git", "-C", repo_path, "clean", "-fxd"], check=True, capture_output=True)
-
-        out_dir = os.path.join(project_config_path, "..", "..", "build", "out", project_name)
-        safe_delete_path(out_dir)
-
-        clear_commit_analysis_state()
-        session.state["rollback_triggered"] = True
-        session.state["software_sha"] = prj_sha
-        session.state["oss_fuzz_sha"] = oss_sha
-
-        ledger = TraceLedgerManager.load_ledger()
-        ledger["nodes"] = [n for n in ledger["nodes"] if n["node_id"] <= target_node["node_id"]]
-        TraceLedgerManager.save_ledger(ledger)
-
-        return {"status": "success", "action": "ROLLBACK", "target_node_id": target_node["node_id"],
-                "message": "Physical rollback successful."}
-
-    return {"status": "success", "action": "NONE", "message": "System stable."}
-
-
-def query_trace_ledger(tool_context: ToolContext, field_keys: List[str], node_id: Optional[int] = None) -> dict:
-    """
-    Secure field-level getter tool for both LLM Agents and python backend prompter.
-    Supports dot-notation path parsing and strictly accesses data based on the node_id.
-    """
-    session = tool_context.session
-
-    if node_id is None:
-        session_node_id = session.state.get("current_node_id", 0)
-        node_id = max(0, session_node_id - 1)
-
-    ledger = TraceLedgerManager.load_ledger()
-
-    # 🔑 修改：账本不存在或 nodes 为空时，返回空数据而非 error
-    if not ledger or not ledger.get("nodes"):
-        retrieved_data = {key: "N/A (Ledger not initialized)" for key in field_keys}
-        return {
-            "status": "success",
-            "node_id": node_id,
-            "data": retrieved_data
-        }
-
-    target_node = None
-    for node in ledger.get("nodes", []):
-        if node.get("node_id") == node_id:
-            target_node = node
-            break
-
-    # 🔑 修改：node_id 不存在时，返回空数据而非 error
-    if not target_node:
-        retrieved_data = {key: "N/A (Node not yet created)" for key in field_keys}
-        return {
-            "status": "success",
-            "node_id": node_id,
-            "data": retrieved_data
-        }
-
-    retrieved_data = {}
-    for key_path in field_keys:
-        parts = key_path.split('.')
-        current_level = target_node
-        success = True
-        for part in parts:
-            if isinstance(current_level, dict) and part in current_level:
-                current_level = current_level[part]
-            else:
-                success = False
-                break
-        if success:
-            retrieved_data[key_path] = current_level
-        else:
-            retrieved_data[key_path] = "N/A (Field not instantiated)"
-
-    return {
-        "status": "success",
-        "node_id": node_id,
-        "data": retrieved_data
-    }
-
 
 def get_absolute_host_path(relative_path: str) -> str:
     """
@@ -571,22 +547,44 @@ def get_absolute_host_path(relative_path: str) -> str:
     import os
 
     workspace_root = os.getcwd()
-    path = relative_path.lstrip('/')
+    if not relative_path:
+        return workspace_root
+
+    normalized_input = os.path.normpath(str(relative_path))
+    if os.path.isabs(normalized_input) and os.path.exists(normalized_input):
+        return normalized_input
+
+    path = normalized_input.lstrip('/')
 
     # 1. Path Stripping (Removing hallucinatory container prefixes)
-    for prefix in ['workspace/', 'src/', 'work/', 'home/senchen/temp/fix_build_agent/']:
+    for prefix in ['workspace/', 'src/', 'work/', 'fix_build_agent/']:
         if path.startswith(prefix):
             path = path[len(prefix):]
             break
 
-    # 2. Heuristic Path Remapping
-    # If it's a project source file, ensure it points to process/project/
-    if "lwan" in path or "croaring" in path:  # Extend this logic if needed
-        if not path.startswith('process/project/') and not path.startswith('oss-fuzz/'):
-            # Fallback: try to locate in process/project
-            potential_path = os.path.join(workspace_root, "process", "project", path.split('/')[0])
-            if os.path.exists(potential_path):
-                return os.path.abspath(os.path.join(workspace_root, "process", "project", path))
+    path = os.path.normpath(path)
+
+    # 2. Structured Path Remapping
+    if path.startswith('oss-fuzz/') or path.startswith('process/project/'):
+        return os.path.abspath(os.path.join(workspace_root, path))
+
+    if path.startswith('projects/'):
+        return os.path.abspath(os.path.join(workspace_root, 'oss-fuzz', path))
+
+    path_parts = path.split(os.sep)
+    first_part = path_parts[0] if path_parts else ''
+
+    candidate_paths = []
+    if first_part:
+        candidate_paths.extend([
+            os.path.join(workspace_root, 'process', 'project', path),
+            os.path.join(workspace_root, 'oss-fuzz', 'projects', path),
+            os.path.join(workspace_root, 'oss-fuzz', path),
+        ])
+
+    for candidate in candidate_paths:
+        if os.path.exists(candidate):
+            return os.path.abspath(candidate)
 
     # 3. Default to workspace root resolution
     return os.path.abspath(os.path.join(workspace_root, path))
@@ -667,7 +665,25 @@ def apply_patch(solution_file_path: str, **kwargs) -> dict:
                 ctx = "\n".join(lines[max(0, idx - 5):min(len(lines), idx + 10)])
             errors.append(f"MATCH FAILED for {original_target}.\n### ACTUAL CONTENT AROUND TARGET AREA ###\n{ctx}")
 
-        return {"status": "success" if not errors else "error", "modified_files_count": applied_count, "errors": errors}
+            # 统计所有块的增删行数（在 for block 循环结束后执行）
+        total_lines_changed = 0
+        for stat_block in patch_blocks:
+            stat_parts = stat_block.split('---=== ORIGINAL ===---')
+            if len(stat_parts) < 2:
+                continue
+            stat_content_parts = stat_parts[1].split('---=== REPLACEMENT ===---')
+            if len(stat_content_parts) < 2:
+                continue
+            orig_line_count = len(stat_content_parts[0].strip("\n\r").splitlines())
+            repl_line_count = len(stat_content_parts[1].strip("\n\r").splitlines())
+            total_lines_changed += max(orig_line_count, repl_line_count)
+
+        return {
+            "status": "success" if not errors else "error",
+            "modified_files_count": applied_count,
+            "modified_lines_count": total_lines_changed,
+            "errors": errors
+        }
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
@@ -709,7 +725,7 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
 
         # 3. 分支逻辑处理
         if action == "init":
-            subprocess.run(["git", "-C", path, "commit", "--allow-empty", "-m", "[BASELINE] Initial state"], check=True)
+            subprocess.run(["git", "commit", "--allow-empty", "-m", "[BASELINE] Initial state"], check=True)
             subprocess.run(["git", "add", "."], check=True)
             has_commit = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True).returncode == 0
             if not has_commit:
@@ -720,13 +736,8 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
 
         elif action == "commit":
             subprocess.run(["git", "add", "."], check=True)
-            diff_check = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True).stdout
-            if not diff_check:
-                # 即使无变更，也主动获取并返回当前 HEAD SHA，确保账本不空置
-                sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
-                return {"status": "success", "sha": sha, "message": "No changes to commit."}
             full_message = f"[AGENT_FIX] {message}"
-            subprocess.run(["git", "commit", "-m", full_message], capture_output=True, text=True, check=True)
+            subprocess.run(["git", "commit", "--allow-empty", "-m", full_message], capture_output=True, text=True, check=True)
             sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
             return {"status": "success", "sha": sha, "message": f"State saved: {full_message}"}
 
@@ -772,6 +783,524 @@ def manage_git_state(path: str, action: str, message: str = "", commit_sha: str 
     finally:
         os.chdir(original_cwd)
 
+
+def commit_workspace_snapshots(project_source_path: str, project_config_path: str, attempt_id: int) -> Dict[str, str]:
+    """
+    Create synchronized Git snapshot commits for both upstream and downstream repositories.
+    Each workspace always receives a new commit SHA via `git add . && git commit --allow-empty -m ...`.
+    """
+    basic_info = extract_basic_information(_LATEST_BASIC_INFORMATION)
+    project_source_path, project_config_path, downstream_repo_path = _coerce_project_paths_with_basic_information(
+        project_source_path,
+        project_config_path,
+        basic_info
+    )
+
+    downstream_repo_path = downstream_repo_path or project_config_path
+    if downstream_repo_path and not os.path.exists(os.path.join(downstream_repo_path, ".git")):
+        candidate_root = os.path.abspath(os.path.join(downstream_repo_path, "..", ".."))
+        if os.path.exists(os.path.join(candidate_root, ".git")):
+            downstream_repo_path = candidate_root
+    print(
+        "[DEBUG commit_workspace_snapshots args] "
+        f"project_source_path={project_source_path} | "
+        f"project_config_path={project_config_path} | "
+        f"downstream_repo_path={downstream_repo_path} | "
+        f"attempt_id={attempt_id}"
+    )
+
+    upstream_res = manage_git_state(
+        path=project_source_path,
+        action="commit",
+        message=f"Applied fix for attempt {attempt_id} (UPSTREAM SNAPSHOT)"
+    )
+    if upstream_res.get("status") != "success" or not upstream_res.get("sha"):
+        return {
+            "status": "error",
+            "message": f"Failed to create upstream snapshot: {upstream_res.get('message', 'Unknown error')}"
+        }
+
+    downstream_res = manage_git_state(
+        path=downstream_repo_path,
+        action="commit",
+        message=f"Applied fix for attempt {attempt_id} (DOWNSTREAM SNAPSHOT)"
+    )
+    if downstream_res.get("status") != "success" or not downstream_res.get("sha"):
+        return {
+            "status": "error",
+            "message": f"Failed to create downstream snapshot: {downstream_res.get('message', 'Unknown error')}",
+            "project_sha": upstream_res.get("sha")
+        }
+
+    return {
+        "status": "success",
+        "project_sha": upstream_res.get("sha"),
+        "oss_fuzz_sha": downstream_res.get("sha"),
+        "message": "Synchronized snapshots committed for both workspaces."
+    }
+
+
+# run_fuzz_and_collect_log_agent tools
+
+def run_fuzz_build_and_validate(
+        project_name: str,
+        oss_fuzz_path: str,
+        sanitizer: str,
+        engine: str,
+        architecture: str,
+        mount_path: Optional[str] = None,
+        verbose_step6: bool = False,
+        verbose_build: bool = True,
+        tool_context: ToolContext = None
+) -> dict:
+    """
+    Build and validate fuzzers using official OSS-Fuzz infrastructure.
+    Success Criteria: Step 2 (check_build) must PASS. All other steps are reference items.
+    """
+
+    import stat
+    import subprocess
+    import time
+    import os
+    import sys
+    import signal
+    import select  # 用于非阻塞读取
+    import re  # 用于进度正则匹配
+
+    raw_basic_information = None
+    if tool_context and getattr(tool_context, "session", None):
+        raw_basic_information = tool_context.session.state.get("basic_information")
+    basic_info = extract_basic_information(raw_basic_information or _LATEST_BASIC_INFORMATION)
+
+    project_name = basic_info.get("project_name") or project_name
+    sanitizer = basic_info.get("sanitizer") or sanitizer
+    engine = basic_info.get("engine") or engine
+    architecture = basic_info.get("architecture") or architecture
+    if basic_info.get("project_source_path"):
+        mount_path = basic_info.get("project_source_path")
+    if basic_info.get("project_config_repo_path"):
+        oss_fuzz_path = basic_info.get("project_config_repo_path")
+    elif basic_info.get("project_config_path"):
+        oss_fuzz_path = os.path.abspath(os.path.join(basic_info.get("project_config_path"), "..", ".."))
+
+    print(
+        "[DEBUG run_fuzz_build_and_validate args] "
+        f"project_name={project_name} | "
+        f"oss_fuzz_path={oss_fuzz_path} | "
+        f"sanitizer={sanitizer} | "
+        f"engine={engine} | "
+        f"architecture={architecture} | "
+        f"mount_path={mount_path}"
+    )
+
+    _cleanup_environment(oss_fuzz_path, project_name)
+    print(f"[*] Comprehensive Pre-build cleanup completed.")
+
+    LOG_DIR = "fuzz_build_log_file"
+    LOG_FILE_PATH = os.path.join(LOG_DIR, "fuzz_build_log.txt")
+    os.makedirs(LOG_DIR, exist_ok=True)
+
+    report = {
+        "step_1_official_list": "pending",
+        "step_2_infra_compliance": "pending",
+        "step_3_sanitizer_injected": "pending",
+        "step_4_engine_control": "pending",
+        "step_5_logic_linkage": "pending",
+        "step_6_runtime_stability": "pending"
+    }
+
+    def build_summary_table() -> str:
+        summary = "\n" + "=" * 50 + "\n--- VALIDATION SUMMARY\n" + "-" * 50 + "\n"
+        for i, (k, v) in enumerate(report.items(), 1):
+            marker = "[MANDATORY]" if i == 2 else "[REFERENCE]"
+            summary += f"Step {i:<4} {marker:<12} | {v}\n"
+        summary += "=" * 50 + "\n"
+        return summary
+
+    def write_log_artifact(base_log: str, result_line: str) -> None:
+        with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
+            f.write(base_log)
+            f.write(build_summary_table())
+            f.write(f"\n{result_line}")
+
+    # =========================================================================
+    # 内部辅助过滤函数（对应 test_all.py 中的合法 Fuzzer 识别逻辑）
+    # =========================================================================
+    def is_elf(filepath: str) -> bool:
+        """判断是否为 ELF 格式二进制文件"""
+        try:
+            result = subprocess.run(
+                ['file', filepath],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL,
+                check=False
+            )
+            if b'ELF' in result.stdout:
+                return True
+        except Exception:
+            pass
+        # 兜底：如果系统没有安装 file 命令，直接读取文件头部魔数进行基础判断
+        try:
+            with open(filepath, 'rb') as f:
+                return f.read(4) == b'\x7fELF'
+        except Exception:
+            return False
+
+    def is_shell_script(filepath: str) -> bool:
+        """判断是否为 shell 脚本"""
+        try:
+            result = subprocess.run(
+                ['file', filepath],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL,
+                check=False
+            )
+            return b'shell script' in result.stdout
+        except Exception:
+            return False
+
+    def find_local_fuzz_targets(directory: str, target_engine: str) -> list:
+        """基于 test_all.py 标准过滤机制定位合法构建产物"""
+        fuzz_targets = []
+        if not os.path.exists(directory):
+            return fuzz_targets
+
+        executable_mask = stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH
+
+        for filename in os.listdir(directory):
+            path = os.path.join(directory, filename)
+
+            # ---- 第一层过滤：物理属性过滤 (Structural Filter) ----
+            # 1. 排除特定辅助工具与非 Fuzzer 产物
+            if filename == 'llvm-symbolizer':
+                continue
+            if filename.startswith('afl-'):
+                continue
+            if filename.startswith('jazzer_'):
+                continue
+            if filename == 'centipede':
+                continue
+
+            # 2. 必须是文件
+            if not os.path.isfile(path):
+                continue
+
+            # 3. 必须具备可执行权限
+            try:
+                if not (os.stat(path).st_mode & executable_mask):
+                    continue
+            except Exception:
+                continue
+
+            # 4. 必须是 ELF 二进制或 Shell 脚本包装器
+            if not is_elf(path) and not is_shell_script(path):
+                continue
+
+            # ---- 第二层过滤：符号合规性过滤 (Symbol Filter) ----
+            if target_engine not in {'none', 'wycheproof'}:
+                try:
+                    with open(path, 'rb') as file_handle:
+                        binary_contents = file_handle.read()
+                        if b'LLVMFuzzerTestOneInput' not in binary_contents:
+                            continue
+                except Exception:
+                    continue
+
+            fuzz_targets.append(filename)
+        return fuzz_targets
+
+    # =========================================================================
+
+    try:
+        helper_path = os.path.join(oss_fuzz_path, "infra/helper.py")
+
+        # --- Phase 1: Physical Build ---
+        build_cmd = ["python3", helper_path, "build_fuzzers"]
+        # 强制始终挂载 project_source_path
+        build_cmd.extend([project_name, mount_path])
+        build_cmd.extend(["--sanitizer", sanitizer, "--engine", engine, "--architecture", architecture])
+
+        build_start = time.time()
+        build_timeout = 5400  # 构建超时上限设定为 90 分钟（5400 秒），不影响正常构建结束
+
+        process = subprocess.Popen(
+            build_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            text=True, bufsize=1, cwd=oss_fuzz_path
+        )
+        full_log = []
+
+        try:
+            while True:
+                if time.time() - build_start > build_timeout:
+                    raise subprocess.TimeoutExpired(build_cmd, build_timeout)
+                line = process.stdout.readline()
+                if not line:
+                    if process.poll() is not None:
+                        break
+                    time.sleep(0.05)
+                    continue
+                if verbose_build:
+                    print(line, end='', flush=True)
+                full_log.append(line)
+            process.wait(timeout=15)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()
+            final_log = "".join(full_log) + f"\n\nRESULT: failed (compilation timeout after {build_timeout}s)"
+            write_log_artifact("".join(full_log), f"RESULT: failed (compilation timeout after {build_timeout}s)")
+            return {"status": "error", "message": "Compilation timed out", "validation_report": report}
+
+        final_log = "".join(full_log)
+
+        # 编译失败检测：仅依据构建进程退出码判定，避免日志关键词误伤后续 Step 2 成功场景
+        if process.returncode != 0:
+            write_log_artifact(final_log, "RESULT: failed (compilation error)")
+            return {"status": "error", "message": "Compilation failed", "validation_report": report}
+
+        # --- Phase 2: Deep Validation ---
+        print(f"\n--- [Phase 2] Deep Validation (Official Suite) ---")
+
+        # 🔑 建立独立验证阶段计时锁，上限调整为 20 分钟 (1200.0 秒)，不影响正常验证结束
+        validation_start_time = time.time()
+        validation_timeout = 1200.0
+
+        def check_validation_limit(cmd_info):
+            elapsed = time.time() - validation_start_time
+            if elapsed >= validation_timeout:
+                raise subprocess.TimeoutExpired(cmd_info, validation_timeout)
+            return validation_timeout - elapsed
+
+        # =========================================================================
+        # Step 1: 官方产物识别 (参考项)
+        # =========================================================================
+        _ = check_validation_limit("list_fuzzers")
+        out_dir = os.path.join(oss_fuzz_path, "build", "out", project_name)
+
+        # 使用高保真度本地过滤逻辑
+        targets = find_local_fuzz_targets(out_dir, engine)
+
+        # 在日志中全量输出检测到的所有合规的模糊构建产物
+        print(
+            f"[*] Detected {len(targets)} compliant fuzz target(s) in Step 1: {', '.join(targets) if targets else 'None'}")
+
+        primary_target = None
+        if targets:
+            primary_target = targets[0]
+            report["step_1_official_list"] = f"pass: {len(targets)} target(s) (primary: {primary_target})"
+        else:
+            report["step_1_official_list"] = "fail: no recognized fuzzers"
+
+        # =========================================================================
+        # Step 2: 基础设施合规性 (唯一强制通过项)
+        # =========================================================================
+        rem_t = check_validation_limit("check_build")
+        check_cmd = [
+            "python3", helper_path, "check_build", project_name,
+            "--sanitizer", sanitizer,
+            "--engine", engine,
+            "--architecture", architecture
+        ]
+        try:
+            check_res = subprocess.run(check_cmd, capture_output=True, text=True, timeout=min(300, rem_t),
+                                       cwd=oss_fuzz_path)
+            report[
+                "step_2_infra_compliance"] = "pass" if check_res.returncode == 0 else f"fail: {check_res.stderr.strip()[:200]}"
+        except subprocess.TimeoutExpired:
+            report["step_2_infra_compliance"] = "fail: check_build timeout"
+        except Exception as e:
+            report["step_2_infra_compliance"] = f"fail: {str(e)}"
+
+        # Step 3-5: 参考项审计 (nm 符号分析 - 参考项)
+        if primary_target:
+            target_path = os.path.join(oss_fuzz_path, "build", "out", project_name, primary_target)
+            if os.path.exists(target_path):
+                rem_t = check_validation_limit("nm_check")
+                try:
+                    nm_res = subprocess.run(['nm', target_path], capture_output=True, text=True,
+                                            timeout=min(30, rem_t),
+                                            errors='ignore')
+                    nm_stdout = nm_res.stdout
+                except Exception:
+                    rem_t = check_validation_limit("nm_check_shell")
+                    nm_res = subprocess.run(
+                        ["python3", helper_path, "shell", project_name, "-c", f"nm /out/{primary_target}"],
+                        capture_output=True, text=True, timeout=min(60, rem_t), errors='ignore'
+                    )
+                    nm_stdout = nm_res.stdout
+
+                report["step_3_sanitizer_injected"] = "pass" if "__asan" in nm_stdout else "warning: missing asan"
+                report["step_4_engine_control"] = "pass" if (
+                        "LLVMFuzzerRunDriver" in nm_stdout or "__afl_" in nm_stdout) else "warning: engine symbols"
+                report["step_5_logic_linkage"] = "pass" if _auto_discover_project_symbols_from_content(nm_stdout,
+                                                                                                       project_name) else "warning: logic linkage"
+            else:
+                for s in ["step_3_sanitizer_injected", "step_4_engine_control", "step_5_logic_linkage"]:
+                    report[s] = "skip: binary not accessible"
+        else:
+            for s in ["step_3_sanitizer_injected", "step_4_engine_control", "step_5_logic_linkage"]:
+                report[s] = "skip: no primary target"
+
+        # =========================================================================
+        # Step 6: 压力测试稳定性 (参考项)
+        # =========================================================================
+        if primary_target and "pass" in str(report["step_2_infra_compliance"]).lower():
+            if verbose_step6:  # ✅ 仅在开启 verbose 模式时输出 Header
+                print(f"[*] Starting 35s stability test for: {primary_target}")
+            run_cmd = [sys.executable, helper_path, "run_fuzzer", "--engine", engine, "--sanitizer", sanitizer,
+                       project_name, primary_target]
+
+            rem_t = check_validation_limit("run_fuzzer")
+
+            # 开启新进程组
+            stability_proc = subprocess.Popen(
+                run_cmd, cwd=oss_fuzz_path, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                text=True, bufsize=1, preexec_fn=os.setsid
+            )
+
+            start_time = time.time()
+            log_lines = []
+            timed_out = False
+
+            try:
+                while True:
+                    check_validation_limit("run_fuzzer_runtime")
+
+                    elapsed = time.time() - start_time
+                    if elapsed >= 35.0:
+                        timed_out = True
+                        break
+
+                    remaining_time = max(0.1, 35.0 - elapsed)
+                    rlist, _, _ = select.select([stability_proc.stdout], [], [], min(remaining_time, 0.5))
+
+                    if stability_proc.stdout in rlist:
+                        line = stability_proc.stdout.readline()
+                        if not line: break
+                        if verbose_step6:  # ✅ 仅在开启时实时打印模糊测试进度
+                            print(line, end='', flush=True)
+                        log_lines.append(line)
+                    else:
+                        if stability_proc.poll() is not None:
+                            break
+            finally:
+                # 🔑 2. 安全优雅释放逻辑
+                pgid = None
+                try:
+                    pgid = os.getpgid(stability_proc.pid)
+                except Exception:
+                    pass
+
+                if pgid:
+                    try:
+                        # 优先发送 SIGTERM，允许 helper.py 在退出前调用 docker 释放容器卷锁
+                        os.killpg(pgid, signal.SIGTERM)
+                    except Exception:
+                        pass
+
+                # 阻塞回收进程状态
+                try:
+                    stability_proc.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    if pgid:
+                        try:
+                            # 如果 5 秒后仍未释放，再使用 SIGKILL 强制物理杀死
+                            os.killpg(pgid, signal.SIGKILL)
+                        except Exception:
+                            pass
+                    stability_proc.wait()
+
+                if verbose_step6:  # ✅ 仅在开启时打印结束信息
+                    print("[*] Stability test exited. Triggering comprehensive post-validation cleanup...")
+                _cleanup_environment(oss_fuzz_path, project_name)
+
+            # 日志文本整合与退出码转换
+            log_content = "".join(log_lines)
+            exit_code = 124 if timed_out else stability_proc.returncode
+            if exit_code is None:
+                exit_code = 124
+
+            # ---- 成功特征检测与失败规则匹配 ----
+            # 🌟 修复关键点：拓宽正则表达式，包含 AFL++ 和其它引擎进度日志的标志词 (如 exec speed, corpus count, cycles done, etc.)
+            progress_pattern = r'(exec/s:|cov:|corp:|exec speed|corpus count|cycles done|execs/sec|active execution rate)'
+            has_progress = bool(re.search(progress_pattern, log_content, re.IGNORECASE))
+            is_success_6 = False
+            success_reason = ""
+
+            # A. 优先执行显式成功逻辑判定 (Success Logic)
+            # 成功情况 1：进程超时正常退出且日志中存在关键变异进度
+            if exit_code == 124 and has_progress:
+                is_success_6 = True
+                success_reason = "pass: Time-limited run completed successfully."
+            # 成功情况 2：引擎平稳退出，且日志显示完成
+            elif exit_code == 0 and any(kw in log_content for kw in ["Done", "fuzzing finished"]):
+                is_success_6 = True
+                success_reason = "pass: Finished normally."
+
+            # B. 若不满足显式成功，执行失败判定过滤；若非检测到的失败条件，则依然判定为成功
+            if not is_success_6:
+                is_failed_6 = False
+                fail_reason = ""
+
+                # 失败条件 B-1: 启动即崩溃/运行时 Crash (严重)
+                if "SUMMARY:" in log_content or "AddressSanitizer" in log_content or "Segmentation fault" in log_content:
+                    is_failed_6 = True
+                    fail_reason = "fail: RUNTIME_CRASH"
+
+                # 失败条件 B-2: 配置/路径/环境不匹配 (启动失败)
+                elif exit_code in [1, 127] or any(k in log_content for k in
+                                                  ["error while loading shared libraries", "undefined reference",
+                                                   "Usage:"]):
+                    is_failed_6 = True
+                    fail_reason = "fail: CONFIG_ERROR"
+
+                # 失败条件 B-3: 伪运行 (Dead/Frozen)
+                elif exit_code == 124 and not has_progress:
+                    is_failed_6 = True
+                    fail_reason = "fail: DEAD_PROCESS"
+
+                # 失败条件 B-4: 其它判定失败的非正常退出码（且排除 0 和 124）
+                elif exit_code != 0 and exit_code != 124:
+                    is_failed_6 = True
+                    fail_reason = f"fail: Exit code {exit_code}"
+
+                # 结论：如果不符合以上任何失败条件，依然判定为成功
+                if not is_failed_6:
+                    report["step_6_runtime_stability"] = "pass: Default success (No failure criteria matched)"
+                else:
+                    report["step_6_runtime_stability"] = fail_reason
+            else:
+                report["step_6_runtime_stability"] = success_reason
+        else:
+            report["step_6_runtime_stability"] = "fail: skipped"
+
+        # --- 最终判定逻辑 (🌟 当前仅以 Step 2 check_build 作为唯一强约束通过项) ---
+        is_success = "pass" in str(report["step_2_infra_compliance"]).lower()
+
+        summary_table = build_summary_table()
+        print(summary_table)
+
+        # 写入物理日志
+        write_log_artifact(final_log, f"RESULT: {'success' if is_success else 'failed'}")
+
+        return {
+            "status": "success" if is_success else "error",
+            "message": f"Validation {'PASSED' if is_success else 'FAILED'}",
+            "validation_report": report
+        }
+
+    except subprocess.TimeoutExpired as e:
+        print(f"\n[⚠️ TIMEOUT] Validation phase exceeded limit. Aborting...")
+        write_log_artifact("Validation phase timed out.\n", "RESULT: failed (compilation error)")
+        return {"status": "error", "message": "Compilation failed", "validation_report": report}
+
+    except Exception as e:
+        import traceback
+        tb = traceback.format_exc()
+        write_log_artifact(f"Exception during validation:\n{str(e)}\n{tb}\n", "RESULT: failed (compilation error)")
+        return {"status": "error", "message": str(e), "validation_report": report}
+
+
+# rollback_agent tools
 
 def cbsc_classify_log(log_path: str = None, dpseek_key: str = None) -> dict:
     """
@@ -822,7 +1351,7 @@ def cbsc_classify_log(log_path: str = None, dpseek_key: str = None) -> dict:
             "remediation_strategy": "Verify file access permissions."
         }
 
-    val_marker = "--- 1+2+6 VALIDATION SUMMARY"
+    val_marker = "--- VALIDATION SUMMARY"
     raw_compile_log = raw_log.split(val_marker)[0] if val_marker in raw_log else raw_log
     log_lines = [line.strip() for line in raw_compile_log.splitlines() if line.strip()]
     tail_500 = "\n".join(log_lines[-500:])
@@ -888,6 +1417,11 @@ def cbsc_classify_log(log_path: str = None, dpseek_key: str = None) -> dict:
         # L3: Compilation 静态插桩编译层 (最低优先级)
         l3_patterns = [
             r"clang\s+-c.*error:",
+            r"fatal\s+error:",
+            r"file\s+not\s+found",
+            r"no\s+such\s+file\s+or\s+directory",
+            r"cannot\s+open\s+include\s+file",
+            r"missing\s+header",
             r"Compiling\s+.*error\s+\[E\d+\]:",
             r"javac.*cannot\s+find\s+symbol",
             r"cython.*error",
@@ -989,30 +1523,368 @@ Output exactly a single JSON. Do NOT include markdown wrappers outside the JSON 
         }
 
 
+def execute_hsr_decision(tool_context: ToolContext) -> dict:
+    """
+    Evaluates the Stage-Guided Decision Policy (HSR Engine).
+    Compares SA >= SB dominance on the state tuple S = <L, V> to decide rollback action.
+    Synchronizes double-workspace Git repositories with exact physical SHA targets on Rollback.
+    """
+    import subprocess
+    import shutil
+    import logging
+
+    logger = logging.getLogger(__name__)
+    session = tool_context.session
+    ledger = TraceLedgerManager.load_ledger()
+    print(f"[DEBUG HSR raw basic_information] {session.state.get('basic_information')}")
+    basic_info = extract_basic_information(session.state.get("basic_information") or _LATEST_BASIC_INFORMATION)
+    project_name = basic_info.get("project_name") or session.state.get("project_name") or session.state.get("project") or ledger.get("project_name") or "UNKNOWN"
+    safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
+
+    default_source_path = os.path.join(os.getcwd(), "process", "project", safe_name) if safe_name else None
+    default_config_path = os.path.join(os.getcwd(), "oss-fuzz", "projects", safe_name) if safe_name else None
+    default_config_repo_path = os.path.join(os.getcwd(), "oss-fuzz") if safe_name else None
+
+    project_source_path = basic_info.get("project_source_path") or session.state.get("project_source_path") or default_source_path
+    project_config_path = basic_info.get("project_config_path") or session.state.get("project_config_path") or default_config_path
+    project_config_repo_path = basic_info.get("project_config_repo_path") or session.state.get("project_config_repo_path") or default_config_repo_path
+
+    project_source_path, project_config_path, project_config_repo_path = _coerce_project_paths_with_basic_information(
+        project_source_path,
+        project_config_path,
+        basic_info
+    )
+
+    if project_source_path and not os.path.exists(project_source_path) and default_source_path and os.path.exists(default_source_path):
+        project_source_path = default_source_path
+    if project_config_path and not os.path.exists(project_config_path) and default_config_path and os.path.exists(default_config_path):
+        project_config_path = default_config_path
+    if project_config_repo_path and not os.path.exists(project_config_repo_path) and default_config_repo_path and os.path.exists(default_config_repo_path):
+        project_config_repo_path = default_config_repo_path
+
+    if project_config_path and not project_config_repo_path:
+        candidate_root = os.path.abspath(os.path.join(project_config_path, "..", ".."))
+        if os.path.exists(os.path.join(candidate_root, ".git")):
+            project_config_repo_path = candidate_root
+
+    session.state["project_name"] = project_name
+    if project_source_path:
+        session.state["project_source_path"] = project_source_path
+    if project_config_path:
+        session.state["project_config_path"] = project_config_path
+    if project_config_repo_path:
+        session.state["project_config_repo_path"] = project_config_repo_path
+    print(f"[DBG] HSR context: project_name={project_name}, project_source_path={project_source_path}, project_config_path={project_config_path}, project_config_repo_path={project_config_repo_path}")
+
+    if not ENABLE_ROLLBACK:
+        nodes = ledger.get("nodes", [])
+        pending_node_id = session.state.get("current_node_id")
+        if pending_node_id is not None and pending_node_id > 0:
+            pending_node = TraceLedgerManager.get_node_by_id(ledger, pending_node_id)
+            parent_node = None
+            if pending_node:
+                parent_node = TraceLedgerManager.get_node_by_id(ledger, pending_node.get("parent_id", -1))
+            if parent_node:
+                parent_stage_after = parent_node.get("metrics", {}).get("build_stage_after", "N/A")
+                parent_validation_after = parent_node.get("validation", {}).get("validation_report_after", {})
+                TraceLedgerManager.update_node_fields(pending_node_id, {
+                    "parent_id": parent_node["node_id"],
+                    "metrics.build_stage_before": parent_stage_after if parent_stage_after not in [None, ""] else "N/A",
+                    "validation.validation_report_before": parent_validation_after if isinstance(parent_validation_after, dict) else {}
+                })
+        return {"status": "success", "action": "NONE", "message": "HSR ablated. Continuing without rollback."}
+
+    nodes = ledger.get("nodes", [])
+
+    # 🔑 哨兵过滤：只选取已经回填了构建结论的活跃节点
+    active_nodes = [n for n in nodes if n.get("metrics", {}).get("build_stage_after") not in [None, "N/A"]]
+
+    if len(active_nodes) < 1:
+        return {"status": "success", "action": "NONE",
+                "message": "System at initial baseline. Build classification pending."}
+
+    def get_validation_score(report: dict) -> int:
+        score = 0
+        if "pass" in str(report.get("step_1_official_list", "")).lower(): score += 1
+        if "pass" in str(report.get("step_2_infra_compliance", "")).lower(): score += 1
+        if "pass" in str(report.get("step_6_runtime_stability", "")).lower(): score += 1
+        return score
+
+    def dominates(L_a, V_a, L_b, V_b):
+        return L_a > L_b or (L_a == L_b and V_a >= V_b)
+
+    def _sync_pending_node_parent(parent_node: dict):
+        pending_node_id = session.state.get("current_node_id")
+        if pending_node_id is None or not parent_node:
+            print(f"[DBG] HSR skip sync: pending_node_id={pending_node_id}, parent_node_exists={bool(parent_node)}")
+            return
+
+        parent_stage_after = parent_node.get("metrics", {}).get("build_stage_after", "N/A")
+        parent_validation_after = parent_node.get("validation", {}).get("validation_report_after", {})
+
+        print(f"[DBG] HSR writing parent fields: pending_node_id={pending_node_id}, parent_node_id={parent_node['node_id']}, parent_stage_after={parent_stage_after}, validation_before_keys={list(parent_validation_after.keys()) if isinstance(parent_validation_after, dict) else 'NON_DICT'}")
+
+        TraceLedgerManager.update_node_fields(pending_node_id, {
+            "parent_id": parent_node["node_id"],
+            "metrics.build_stage_before": parent_stage_after if parent_stage_after not in [None, ""] else "N/A",
+            "validation.validation_report_before": parent_validation_after if isinstance(parent_validation_after,
+                                                                                         dict) else {}
+        })
+
+    curr_node = active_nodes[-1]
+    print(f"[DBG] HSR curr_node_id={curr_node['node_id']}, curr_parent_id={curr_node.get('parent_id')}, session_current_node_id={session.state.get('current_node_id')}, active_node_ids={[n.get('node_id') for n in active_nodes]}")
+
+    # Node 0 基准无需回滚，但仍需为下一悬空节点补父链
+    if curr_node["node_id"] == 0:
+        pending_node_id = session.state.get("current_node_id")
+        if pending_node_id is not None and pending_node_id > curr_node["node_id"]:
+            print(f"[DBG] HSR baseline sync for pending_node_id={pending_node_id} using parent_node_id=0")
+            _sync_pending_node_parent(curr_node)
+        return {"status": "success", "action": "NONE", "message": "Evaluating Node 0 baseline."}
+
+    # 寻找父节点；若当前节点尚未写入 parent_id，则按 node_id-1 推导
+    prev_node = next((n for n in nodes if n["node_id"] == curr_node.get("parent_id")), None)
+    if not prev_node:
+        inferred_parent_id = curr_node["node_id"] - 1
+        prev_node = next((n for n in nodes if n["node_id"] == inferred_parent_id), None)
+        print(f"[DBG] HSR prev_node missing for curr_node_id={curr_node['node_id']}, parent_id={curr_node.get('parent_id')}, inferred_parent_id={inferred_parent_id}, inferred_found={bool(prev_node)}")
+        if not prev_node:
+            return {"status": "success", "action": "NONE", "message": f"Node {curr_node['node_id']} has no stable parent."}
+
+    # 判定逻辑
+    stage_map = {"L1": 1, "L2": 2, "L3": 3, "L4": 4, "L5": 5, "L6": 6, "N/A": 0}
+    L_curr = stage_map.get(curr_node.get("metrics", {}).get("build_stage_after", "N/A"), 0)
+    L_prev = stage_map.get(prev_node.get("metrics", {}).get("build_stage_after", "N/A"), 0)
+
+    V_curr = get_validation_score(curr_node.get("validation", {}).get("validation_report_after", {}))
+    V_prev = get_validation_score(prev_node.get("validation", {}).get("validation_report_after", {}))
+
+    is_curr_dominated = dominates(L_prev, V_prev, L_curr, V_curr)
+
+    decision_status = "Stable"
+    rollback_type = "NONE"
+    should_rollback = False
+    target_node = None
+
+    if is_curr_dominated:
+        should_rollback = True
+        if L_curr == L_prev and V_curr == V_prev:
+            rollback_type = "SINGLE_STEP"
+            # 规则：如果 Node i 被标记为 SINGLE_STEP 回退，则 Node i+1 挂回 Node i。
+            target_node = curr_node
+            decision_status = "Neutral Path"
+        else:
+            rollback_type = "ADAPTIVE"
+            decision_status = "Degrading"
+            # 规则：ADAPTIVE 回退时，向前寻找一个状态严格优于 Node i 的更早节点。
+            historical_candidates = [n for n in nodes if n.get("node_id", -1) < curr_node["node_id"]]
+            for node in reversed(historical_candidates):
+                L_hist = stage_map.get(node.get("metrics", {}).get("build_stage_after", "N/A"), 0)
+                V_hist = get_validation_score(node.get("validation", {}).get("validation_report_after", {}))
+                is_strictly_better = L_hist > L_curr or (L_hist == L_curr and V_hist > V_curr)
+                if is_strictly_better:
+                    target_node = node
+                    break
+            if target_node is None: target_node = nodes[0]
+
+    TraceLedgerManager.update_node_fields(curr_node["node_id"], {
+        "identification.node_status": decision_status,
+        "identification.should_rollback": should_rollback,
+        "identification.rollback_type": rollback_type
+    })
+    print(f"[DBG] HSR decision: curr_node_id={curr_node['node_id']}, should_rollback={should_rollback}, rollback_type={rollback_type}, target_node_id={target_node['node_id'] if target_node else None}")
+
+    if should_rollback and target_node:
+        oss_sha = target_node["git_sha_state"].get("oss-fuzz_sha")
+        prj_sha = target_node["git_sha_state"].get("project_sha")
+        print(f"[DBG] HSR rollback target: target_node_id={target_node['node_id']}, oss_sha={oss_sha}, prj_sha={prj_sha}")
+
+        # 🔑 容错逻辑：若 SHA 无效则跳过物理回滚
+        if not oss_sha or oss_sha == "N/A" or not prj_sha or prj_sha == "N/A":
+            print(f"--- [HSR Warning] SHA invalid (OSS:{oss_sha}, PRJ:{prj_sha}), skipping physical reset ---")
+            session.state["rollback_triggered"] = True
+            _sync_pending_node_parent(target_node)
+            return {"status": "success", "action": "ROLLBACK_LOGICAL_ONLY", "message": "Logical rollback only."}
+
+
+        # 执行物理回滚
+        shas_to_reset = [(project_source_path, prj_sha), (project_config_repo_path, oss_sha)]
+        for repo_path, target_sha in shas_to_reset:
+            print(f"[DBG] HSR physical reset candidate: repo_path={repo_path}, target_sha={target_sha}")
+            if not repo_path:
+                print(f"--- [HSR Warning] Missing repo_path for target_sha={target_sha}. Skipping this reset target. ---")
+                continue
+            if os.path.exists(repo_path):
+                # 🔑 联动避险：在执行 git clean 之前，先主动夺回整个工作区的权限，防止 git 报 Permission Denied
+                reclaim_path_permissions(repo_path)
+
+                subprocess.run(["git", "-C", repo_path, "reset", "--hard", target_sha], check=True, capture_output=True)
+                subprocess.run(["git", "-C", repo_path, "clean", "-fxd"], check=True, capture_output=True)
+            else:
+                print(f"--- [HSR Warning] repo_path does not exist on disk: {repo_path}. Skipping this reset target. ---")
+
+        if project_config_path:
+            out_dir = os.path.join(project_config_path, "..", "..", "build", "out", project_name)
+            safe_delete_path(out_dir)
+        else:
+            print("--- [HSR Warning] project_config_path missing; skipping build/out cleanup. ---")
+
+        clear_commit_analysis_state()
+        session.state["rollback_triggered"] = True
+        session.state["software_sha"] = prj_sha
+        session.state["oss_fuzz_sha"] = oss_sha
+
+        ledger_after_reset = TraceLedgerManager.load_ledger()
+        remaining_ids = [n.get("node_id") for n in ledger_after_reset.get("nodes", [])]
+        print(f"[DBG] HSR full ledger preserved with node_ids={remaining_ids}")
+
+        _sync_pending_node_parent(target_node)
+        return {"status": "success", "action": "ROLLBACK", "target_node_id": target_node["node_id"],
+                "message": "Physical rollback successful."}
+
+        # NONE 路径
+    _sync_pending_node_parent(curr_node)
+    return {"status": "success", "action": "NONE", "message": "System stable."}
+
+
+def clear_commit_analysis_state() -> Dict[str, str]:
+    """
+    Remove the commit analysis sentinel file to allow commit_finder_agent to re-run in the next loop.
+    """
+    commit_analysis_file = "generated_prompt_file/commit_changed.txt"
+    if os.path.exists(commit_analysis_file):
+        try:
+            safe_delete_path(commit_analysis_file)
+            return {"status": "success",
+                    "message": f"Cleared old commit analysis state. '{commit_analysis_file}' has been removed."}
+        except Exception as e:
+            return {"status": "error", "message": f"Failed to remove '{commit_analysis_file}': {e}"}
+    else:
+        return {"status": "success", "message": "No commit analysis state to clear."}
+
+
+# rsmc_agent tools
+
 def init_or_update_rsmc_ledger(tool_context: ToolContext, solved_problems: str, unsolved_problems: str,
                                reflection_analysis: str, loop_summary: str) -> dict:
     session = tool_context.session
     current_node_id = session.state.get("current_node_id", 0)
 
-    # 1. 强制载入最新 Ledger，确保写操作基于最新状态
     ledger = TraceLedgerManager.load_ledger()
 
-    # 2. 回填当前节点逻辑 (使用原子操作更新)
+    if not ENABLE_REFLECTION:
+        last_report = session.state.get("last_validation_report", {})
+        bitmap_keys = [
+            "step_1_official_list",
+            "step_2_infra_compliance",
+            "step_3_sanitizer_injected",
+            "step_4_engine_control",
+            "step_5_logic_linkage",
+            "step_6_runtime_stability"
+        ]
+        step_1_6_bitmap = [
+            1 if str(last_report.get(k, "")).startswith("pass") else 0
+            for k in bitmap_keys
+        ]
+
+        TraceLedgerManager.update_node_fields(current_node_id, {
+            "action_and_intent.loop_summary": "RSMC ablated. Semantic reflection skipped.",
+            "validation.validation_report_after": last_report,
+            "validation.step_1_6_bitmap": step_1_6_bitmap,
+            "semantic_memory.solved_problems": "RSMC ablated.",
+            "semantic_memory.unsolved_problems": "RSMC ablated.",
+            "semantic_memory.reflection_analysis": "RSMC ablated by configuration."
+        })
+
+        pending_node = next((
+            n for n in ledger.get("nodes", [])
+            if n.get("parent_id") == current_node_id and n.get("metrics", {}).get("build_stage_after") is None
+        ), None)
+        if pending_node is None:
+            latest_ledger = TraceLedgerManager.load_ledger()
+            next_node_id, latest_ledger = TraceLedgerManager.allocate_next_node_id(latest_ledger)
+            new_node = {
+                "node_id": next_node_id,
+                "parent_id": current_node_id,
+                "identification": {
+                    "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "node_status": "Stable",
+                    "should_rollback": False,
+                    "rollback_type": "NONE"
+                },
+                "git_sha_state": {"oss-fuzz_sha": None, "project_sha": None},
+                "action_and_intent": {
+                    "root_cause_commit_sha": "N/A",
+                    "active_workspace": "UNKNOWN",
+                    "target_file": "N/A",
+                    "repair_strategy": "Pending",
+                    "loop_summary": "Pending"
+                },
+                "metrics": {
+                    "Ldel": 0, "Ladd": 0,
+                    "build_stage_before": "N/A",
+                    "build_stage_after": None
+                },
+                "validation": {
+                    "step_1_6_bitmap": None,
+                    "validation_report_before": {},
+                    "validation_report_after": {}
+                },
+                "semantic_memory": {
+                    "solved_problems": None,
+                    "unsolved_problems": None,
+                    "reflection_analysis": None
+                }
+            }
+            latest_ledger["nodes"].append(new_node)
+            TraceLedgerManager.save_ledger(latest_ledger)
+        else:
+            next_node_id = pending_node.get("node_id")
+        session.state["current_node_id"] = next_node_id
+        return {"status": "success", "message": f"RSMC ablated. Node {current_node_id} kept minimal ledger integrity, Node {next_node_id} ready."}
+
+    # Prefer the in-memory validation snapshot; if the session view is stale/empty,
+    # preserve the report that was already backfilled by the orchestrator.
+    ledger_current_node = next((n for n in ledger.get("nodes", []) if n.get("node_id") == current_node_id), {})
+    existing_validation_after = ledger_current_node.get("validation", {}).get("validation_report_after", {})
+    last_report = session.state.get("last_validation_report", {})
+    if not last_report and existing_validation_after:
+        last_report = existing_validation_after
+
+    # 🔑 从 last_validation_report 计算 step_1_6_bitmap
+    bitmap_keys = [
+        "step_1_official_list",
+        "step_2_infra_compliance",
+        "step_3_sanitizer_injected",
+        "step_4_engine_control",
+        "step_5_logic_linkage",
+        "step_6_runtime_stability"
+    ]
+    step_1_6_bitmap = [
+        1 if str(last_report.get(k, "")).startswith("pass") else 0
+        for k in bitmap_keys
+    ]
+
     filled_fields = {
         "action_and_intent.loop_summary": loop_summary[:800].strip(),
-        "validation.validation_report_after": session.state.get("last_validation_report", {}),
+        "validation.validation_report_after": last_report,
+        "validation.step_1_6_bitmap": step_1_6_bitmap,
         "semantic_memory.solved_problems": solved_problems[:150].strip(),
         "semantic_memory.unsolved_problems": unsolved_problems[:150].strip(),
         "semantic_memory.reflection_analysis": reflection_analysis[:800].strip()
     }
     TraceLedgerManager.update_node_fields(current_node_id, filled_fields)
 
-    # 3. 幂等性开辟新节点 (检查是否已存在)
-    next_node_id = current_node_id + 1
-    if not any(n.get("node_id") == next_node_id for n in ledger.get("nodes", [])):
-        # 获取最新的父节点状态 (为了继承)
-        parent_node = next((n for n in ledger.get("nodes", []) if n["node_id"] == current_node_id), {})
-
+    # 幂等性开辟新节点
+    pending_node = next((
+        n for n in ledger.get("nodes", [])
+        if n.get("parent_id") == current_node_id and n.get("metrics", {}).get("build_stage_after") is None
+    ), None)
+    next_node_id = pending_node.get("node_id") if pending_node else None
+    print(f"[DBG] RSMC current_node_id={current_node_id}, next_node_id={next_node_id}")
+    if pending_node is None:
+        latest_ledger = TraceLedgerManager.load_ledger()
+        next_node_id, latest_ledger = TraceLedgerManager.allocate_next_node_id(latest_ledger)
         new_node = {
             "node_id": next_node_id,
             "parent_id": current_node_id,
@@ -1023,28 +1895,98 @@ def init_or_update_rsmc_ledger(tool_context: ToolContext, solved_problems: str, 
                 "rollback_type": "NONE"
             },
             "git_sha_state": {"oss-fuzz_sha": None, "project_sha": None},
-            "action_and_intent": {"root_cause_commit_sha": "N/A", "active_workspace": "UNKNOWN", "target_file": "N/A",
-                                  "repair_strategy": "Pending", "loop_summary": "Pending"},
+            "action_and_intent": {
+                "root_cause_commit_sha": "N/A",
+                "active_workspace": "UNKNOWN",
+                "target_file": "N/A",
+                "repair_strategy": "Pending",
+                "loop_summary": "Pending"
+            },
             "metrics": {
                 "Ldel": 0, "Ladd": 0,
-                "build_stage_before": parent_node.get("metrics", {}).get("build_stage_after") or "L1",
+                "build_stage_before": "N/A",
                 "build_stage_after": None
             },
             "validation": {
                 "step_1_6_bitmap": None,
-                "validation_report_before": session.state.get("last_validation_report", {}),
+                "validation_report_before": {},
                 "validation_report_after": {}
             },
-            "semantic_memory": {"solved_problems": None, "unsolved_problems": None, "reflection_analysis": None}
+            "semantic_memory": {
+                "solved_problems": None,
+                "unsolved_problems": None,
+                "reflection_analysis": None
+            }
         }
 
-        # 重新加载一次 ledger 防止并发覆盖
-        latest_ledger = TraceLedgerManager.load_ledger()
         latest_ledger["nodes"].append(new_node)
         TraceLedgerManager.save_ledger(latest_ledger)
+        print(f"[DBG] RSMC created node_id={new_node['node_id']}, parent_id={new_node['parent_id']}, build_stage_before={new_node['metrics']['build_stage_before']}, validation_report_before={new_node['validation']['validation_report_before']}")
 
     session.state["current_node_id"] = next_node_id
+    print(f"[DBG] RSMC session current_node_id updated to {session.state['current_node_id']}")
     return {"status": "success", "message": f"Node {current_node_id} backfilled, Node {next_node_id} ready."}
+
+
+def query_trace_ledger(tool_context: ToolContext, field_keys: List[str], node_id: Optional[int] = None) -> dict:
+    """
+    Secure field-level getter tool for both LLM Agents and python backend prompter.
+    Supports dot-notation path parsing and strictly accesses data based on the node_id.
+    """
+    session = tool_context.session
+    ledger = TraceLedgerManager.load_ledger()
+
+    if node_id is None:
+        session_node_id = session.state.get("current_node_id", 0)
+        session_node = TraceLedgerManager.get_node_by_id(ledger, session_node_id)
+        if session_node:
+            node_id = session_node.get("parent_id", -1)
+        else:
+            node_id = -1
+
+    # 🔑 修改：账本不存在或 nodes 为空时，返回空数据而非 error
+    if not ledger or not ledger.get("nodes"):
+        retrieved_data = {key: "N/A (Ledger not initialized)" for key in field_keys}
+        return {
+            "status": "success",
+            "node_id": node_id,
+            "data": retrieved_data
+        }
+
+    target_node = TraceLedgerManager.get_node_by_id(ledger, node_id)
+
+    # 🔑 修改：node_id 不存在时，返回空数据而非 error
+    if not target_node:
+        retrieved_data = {key: "N/A (Node not yet created)" for key in field_keys}
+        return {
+            "status": "success",
+            "node_id": node_id,
+            "data": retrieved_data
+        }
+
+    retrieved_data = {}
+    for key_path in field_keys:
+        parts = key_path.split('.')
+        current_level = target_node
+        success = True
+        for part in parts:
+            if isinstance(current_level, dict) and part in current_level:
+                current_level = current_level[part]
+            else:
+                success = False
+                break
+        if success:
+            retrieved_data[key_path] = current_level
+        else:
+            retrieved_data[key_path] = "N/A (Field not instantiated)"
+
+    return {
+        "status": "success",
+        "node_id": node_id,
+        "data": retrieved_data
+    }
+
+
 
 
 def extract_buggy_line_info(log_path: str, project_name: str = "", project_source_path: str = "",
@@ -1438,63 +2380,6 @@ def update_reflection_journal(
     }
 
 
-def query_expert_knowledge(log_path: str) -> dict:
-    """
-    Dynamically select relevant principles from the knowledge base based on log keywords to optimize token usage.
-    """
-    if not ENABLE_EXPERT_KNOWLEDGE:
-        print("--- [ABLATION] Expert Knowledge is DISABLED. ---")
-        return {
-            "status": "success",
-            "knowledge": "Expert knowledge system is currently disabled by ablation configuration."
-        }
-    KNOWLEDGE_FILE = "expert_knowledge.json"
-    if not os.path.exists(KNOWLEDGE_FILE):
-        return {"status": "error", "message": "Knowledge base not found."}
-
-    try:
-        with open(KNOWLEDGE_FILE, 'r', encoding='utf-8') as f:
-            kb = json.load(f)
-
-        log_sample = ""
-        if os.path.exists(log_path):
-            with open(log_path, 'r', encoding='utf-8', errors='ignore') as lf:
-                log_sample = "".join(lf.readlines()[-100:]).lower()
-
-        category_map = {
-            "linker": ["linker", "undefined reference", "symbol", "lib", ".a", ".so", "link"],
-            "docker": ["docker", "workdir", "apt-get", "copy", "run", "entrypoint"],
-            "swift": ["swift", "package.swift", "spm", "tools-version"],
-            "path": ["no such file", "directory", "cannot stat", "path", "mkdir"]
-        }
-
-        selected_principles = []
-        all_principles = kb.get("general_principles", [])
-
-        hit_categories = [cat for cat, kws in category_map.items() if any(kw in log_sample for kw in kws)]
-
-        for p in all_principles:
-            if any(cat in p.lower() for cat in hit_categories):
-                selected_principles.append(p)
-
-        if not selected_principles:
-            final_principles = all_principles[:3]
-        else:
-            final_principles = selected_principles[:6]
-
-        matched_advice = []
-        for entry in kb.get("patterns", []):
-            if re.search(entry["pattern"], log_sample, re.IGNORECASE):
-                matched_advice.append(f"- [Specific Match]: {entry['advice']}")
-
-        knowledge_str = "--- Relevant Principles ---\n" + "\n".join([f"- {item}" for item in final_principles])
-        if matched_advice:
-            knowledge_str += "\n\n--- Targeted Advice ---\n" + "\n".join(matched_advice)
-
-        return {"status": "success", "knowledge": knowledge_str}
-    except Exception as e:
-        return {"status": "error", "message": f"Expert knowledge error: {str(e)}"}
-
 
 def few_shot_rag_retrieve(expert_knowledge_path: str, log_path: str) -> dict:
     """
@@ -1514,6 +2399,14 @@ def few_shot_rag_retrieve(expert_knowledge_path: str, log_path: str) -> dict:
       - Associated GLs dynamically inherit the highest severity weight of the matched ERRs that triggered them.
       - Sorts by severity weight descending and formats Top 4 priority blocks for injection.
     """
+    if not ENABLE_EXPERT_KNOWLEDGE:
+        return {
+            "status": "success",
+            "message": "Few-shot RAG disabled by ablation.",
+            "rag_context": "",
+            "matched_errors_count": 0
+        }
+
     if not os.path.exists(expert_knowledge_path):
         return {
             "status": "error",
@@ -1712,21 +2605,6 @@ def force_clean_git_repo(repo_path: str) -> Dict[str, str]:
     except Exception as e:
         return {'status': 'error', 'message': f"Deep clean failed: {str(e)}"}
 
-
-def clear_commit_analysis_state() -> Dict[str, str]:
-    """
-    Remove the commit analysis sentinel file to allow commit_finder_agent to re-run in the next loop.
-    """
-    commit_analysis_file = "generated_prompt_file/commit_changed.txt"
-    if os.path.exists(commit_analysis_file):
-        try:
-            safe_delete_path(commit_analysis_file)
-            return {"status": "success",
-                    "message": f"Cleared old commit analysis state. '{commit_analysis_file}' has been removed."}
-        except Exception as e:
-            return {"status": "error", "message": f"Failed to remove '{commit_analysis_file}': {e}"}
-    else:
-        return {"status": "success", "message": "No commit analysis state to clear."}
 
 
 def extract_build_metadata_from_log(log_path: str) -> Dict:
@@ -2182,16 +3060,28 @@ def get_project_paths(project_name: str) -> Dict[str, str]:
     safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
 
     config_path = os.path.join(base_path, "oss-fuzz", "projects", safe_project_name)
+    config_repo_path = os.path.join(base_path, "oss-fuzz")
     source_path = os.path.join(base_path, "process", "project", safe_project_name)
 
     paths = {
         "project_name": project_name,
         "project_config_path": config_path,
+        "project_config_repo_path": config_repo_path,
         "project_source_path": source_path,
         "max_depth": 1
     }
     print(f"--- Generated paths: {paths} ---")
     return paths
+
+
+def get_workspace_root() -> Dict[str, str]:
+    """
+    Returns the absolute workspace root directory for dynamic path construction.
+    """
+    workspace_root = os.path.abspath(os.path.dirname(__file__))
+    result = {"status": "success", "workspace_root": workspace_root}
+    print(f"--- Tool: get_workspace_root called. Result: {result} ---")
+    return result
 
 
 def save_processed_project(project_name: str) -> Dict[str, str]:
@@ -2361,181 +3251,94 @@ def truncate_prompt_file(file_path: str, max_lines: int = 2000) -> Dict[str, str
         return {"status": "error", "message": message}
 
 
-from datetime import datetime
-import os
-import shutil
-import subprocess
-from typing import Dict
-
-
 def archive_fixed_project(project_name: str, project_config_path: str, is_success: bool = True,
                           project_source_path: str = None) -> dict:
-    """
-    Refactored Double-Track Archiving Tool (双轨制物理归档).
-    Saves complete Trajectory Archives (Code changes, validation reports, LLM semantics, ledgers).
-    Success: Saved under process/fixed/
-    Failure: Saved under process/unfixed/
-    """
-    import os
-    import shutil
-    import subprocess
+    import os, shutil, subprocess
     from datetime import datetime
     from agent_tools import TraceLedgerManager
 
-    print(f"--- Tool: archive_fixed_project (Double-Track) called for: {project_name} (Success: {is_success}) ---")
+    print(f"--- Tool: archive_fixed_project called for: {project_name} (Success: {is_success}) ---")
     try:
-        # 🔑 1. 分流路径决策
+        # 1. 初始化路径与目录
         base_dir = "process/fixed" if is_success else "process/unfixed"
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        safe_project_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
-        destination_dir = os.path.join(os.getcwd(), base_dir, f"{safe_project_name}_{timestamp}")
+        safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
+        destination_dir = os.path.join(os.getcwd(), base_dir, f"{safe_name}_{timestamp}")
 
-        os.makedirs(destination_dir, exist_ok=True)
+        os.makedirs(destination_dir, exist_ok=True)  # 必须存在
         os.makedirs(os.path.join(destination_dir, "diffs"), exist_ok=True)
 
-        # 🔑 2. 导出当前的 project_repair_trace.json 账本物理轨迹文件
+        # 2. 导出账本
         ledger_path = os.path.join(os.getcwd(), "project_repair_trace.json")
+        sha_map = {}
         if os.path.exists(ledger_path):
             shutil.copy2(ledger_path, os.path.join(destination_dir, "project_repair_trace.json"))
-            print(f"  - Captured trace ledger: project_repair_trace.json -> archive")
+            ledger = TraceLedgerManager.load_ledger()
+            baseline = next((n for n in ledger.get("nodes", []) if n.get("node_id") == 0), {})
+            sha_map = baseline.get("git_sha_state", {})
 
-        # 🔑 3. 提取下游配置变更 (oss-fuzz)
-        if os.path.isdir(project_config_path):
-            # 获取 Baseline 节点
-            baseline_sha = ""
-            try:
-                res = subprocess.run(
-                    ["git", "-C", project_config_path, "log", "--format=%H", "--grep=\\[BASELINE\\]", "-1"],
-                    capture_output=True, text=True, check=True
-                )
-                baseline_sha = res.stdout.strip()
-            except Exception:
-                pass
+        # 2.1 纳入最终修复报告
+        result_txt_path = os.path.join(os.getcwd(), "result.txt")
+        if os.path.exists(result_txt_path):
+            shutil.copy2(result_txt_path, os.path.join(destination_dir, "result.txt"))
+            print(f"  - result.txt included in archive: {destination_dir}")
+        else:
+            print(f"  - Warning: result.txt not found at {result_txt_path}, skipping.")
 
-            changed_config_files = []
-            if baseline_sha:
+        # 3. 统一提取变更 (Loop 结构)
+        config_repo_path = project_config_path
+        if config_repo_path and not os.path.exists(os.path.join(config_repo_path, ".git")):
+            candidate_root = os.path.abspath(os.path.join(config_repo_path, "..", ".."))
+            if os.path.exists(os.path.join(candidate_root, ".git")):
+                config_repo_path = candidate_root
+
+        targets = [
+            (config_repo_path, "configs", "config_fix.patch", sha_map.get("oss-fuzz_sha")),
+            (project_source_path, "source", "source_fix.patch", sha_map.get("project_sha"))
+        ]
+
+        for path, dest_sub, patch_name, baseline_sha in targets:
+            if not path or not os.path.isdir(path): continue
+
+            changed_files = []
+            if baseline_sha and baseline_sha != "N/A":
                 try:
                     res = subprocess.run(
-                        ["git", "-C", project_config_path, "diff", "--name-only", "--diff-filter=ACMRT", baseline_sha,
-                         "HEAD"],
-                        capture_output=True, text=True, check=True
-                    )
-                    changed_config_files = [f.strip() for f in res.stdout.split('\n') if f.strip()]
-                except Exception:
-                    pass
-
-            if changed_config_files:
-                # 拷贝变动配置文件
-                for f_rel in changed_config_files:
-                    src = os.path.join(project_config_path, f_rel)
-                    dst = os.path.join(destination_dir, "configs", f_rel)
-                    if os.path.exists(src):
-                        os.makedirs(os.path.dirname(dst), exist_ok=True)
-                        shutil.copy2(src, dst)
-
-                # 生成配置 patch
-                config_patch_path = os.path.join(destination_dir, "diffs", "config_fix.patch")
-                with open(config_patch_path, "w", encoding="utf-8") as pf:
-                    subprocess.run(["git", "-C", project_config_path, "diff", baseline_sha, "HEAD"], stdout=pf,
-                                   check=True)
-                print(f"  - Config files archived: {len(changed_config_files)} files + patch")
-            else:
-                # 若无 Baseline，整体强制拷贝以兜底
-                shutil.copytree(project_config_path, os.path.join(destination_dir, "config_all"), dirs_exist_ok=True)
-
-        # 🔑 4. 提取上游源码变更 (process/project)
-        if project_source_path and os.path.isdir(project_source_path):
-            source_baseline_sha = ""
-            try:
-                res = subprocess.run(
-                    ["git", "-C", project_source_path, "log", "--format=%H", "--grep=\\[BASELINE\\]", "-1"],
-                    capture_output=True, text=True, check=True
-                )
-                source_baseline_sha = res.stdout.strip()
-            except Exception:
-                pass
-
-            changed_source_files = []
-            if source_baseline_sha:
-                try:
-                    res = subprocess.run(
-                        ["git", "-C", project_source_path, "diff", "--name-only", "--diff-filter=ACMRT",
-                         source_baseline_sha, "HEAD"],
-                        capture_output=True, text=True, check=True
-                    )
-                    changed_source_files = [f.strip() for f in res.stdout.split('\n') if f.strip()]
-                except Exception:
-                    pass
-
-            if changed_source_files:
-                # 拷贝变动的源码文件
-                for f_rel in changed_source_files:
-                    src = os.path.join(project_source_path, f_rel)
-                    dst = os.path.join(destination_dir, "source", f_rel)
-                    if os.path.exists(src):
-                        os.makedirs(os.path.dirname(dst), exist_ok=True)
-                        shutil.copy2(src, dst)
-
-                # 生成源码 patch
-                source_patch_path = os.path.join(destination_dir, "diffs", "source_fix.patch")
-                with open(source_patch_path, "w", encoding="utf-8") as pf:
-                    subprocess.run(["git", "-C", project_source_path, "diff", source_baseline_sha, "HEAD"], stdout=pf,
-                                   check=True)
-                print(f"  - Source files archived: {len(changed_source_files)} files + patch")
-
-                # 🔑 5. 任务结束：强力释放物理空间，夺回 Root 权限并彻底删除工作区
-
-            def _safe_physical_remove(dir_path: str):
-                if not dir_path or not os.path.exists(dir_path):
-                    return
-                abs_path = os.path.abspath(dir_path)
-                print(f"  - Post-process cleanup: Reclaiming permissions and removing {abs_path}")
-                uid, gid = os.getuid(), os.getgid()
-                docker_ok = False
-
-                # A. 尝试使用 Docker alpine 容器回收权限
-                try:
-                    result = subprocess.run([
-                        "docker", "run", "--rm", "-v", f"{abs_path}:/src",
-                        "alpine", "chown", "-R", f"{uid}:{gid}", "/src"
-                    ], capture_output=True, text=True, timeout=15, check=False)
-                    if result.returncode == 0:
-                        docker_ok = True
-                except Exception:
-                    pass
-
-                # B. 如果 Docker 不可用，使用 Host native chmod 降级自愈
-                if not docker_ok:
-                    try:
-                        subprocess.run(["chmod", "-R", "u+rwX", abs_path], capture_output=True, check=False)
-                    except Exception:
-                        pass
-
-                # C. 物理彻底删除
-                try:
-                    shutil.rmtree(abs_path, ignore_errors=True)
-                    print(f"    [SUCCESS] Removed directory: {abs_path}")
+                        ["git", "-C", path, "diff", "--name-only", "--diff-filter=ACMRT", baseline_sha, "HEAD"],
+                        capture_output=True, text=True, check=True)
+                    changed_files = [f.strip() for f in res.stdout.split('\n') if f.strip()]
                 except Exception as e:
-                    print(f"    [WARNING] Failed to completely remove {abs_path}: {e}")
+                    print(f"  - Warning: Diff failed for {path}: {e}")
 
-                # 5.1 彻底清理第三方源码仓库
+            if changed_files:
+                for f_rel in changed_files:
+                    src, dst = os.path.join(path, f_rel), os.path.join(destination_dir, dest_sub, f_rel)
+                    os.makedirs(os.path.dirname(dst), exist_ok=True)
+                    shutil.copy2(src, dst)
+                with open(os.path.join(destination_dir, "diffs", patch_name), "w") as pf:
+                    subprocess.run(["git", "-C", path, "diff", baseline_sha, "HEAD"], stdout=pf, check=True)
+            else:
+                shutil.copytree(path, os.path.join(destination_dir, f"{dest_sub}_all"), dirs_exist_ok=True)
 
-            if project_source_path and os.path.isdir(project_source_path):
-                _safe_physical_remove(project_source_path)
+        # 4. 强制物理清理
+        def _safe_physical_remove(dir_path: str):
+            if not dir_path or not os.path.exists(dir_path): return
+            print(f"  - Post-process cleanup: {dir_path}")
+            try:
+                reclaim_path_permissions(dir_path)
+                shutil.rmtree(dir_path, ignore_errors=True)
+            except Exception as e:
+                print(f"    [WARNING] Cleanup failed: {e}")
 
-                # 5.2 彻底清理 oss-fuzz 基础设施目录
-            if project_config_path and os.path.isdir(project_config_path):
-                # 向上定位 oss-fuzz 根目录 (project_config_path 通常是 oss-fuzz/projects/lwan)
-                oss_fuzz_root = os.path.abspath(os.path.join(project_config_path, "..", ".."))
-                if os.path.isdir(oss_fuzz_root) and os.path.exists(os.path.join(oss_fuzz_root, ".git")):
-                    _safe_physical_remove(oss_fuzz_root)
+        _safe_physical_remove(project_source_path)
+        if project_config_path:
+            oss_fuzz_root = os.path.abspath(os.path.join(project_config_path, "..", ".."))
+            if os.path.exists(os.path.join(oss_fuzz_root, ".git")):
+                _safe_physical_remove(oss_fuzz_root)
 
-            msg = f"Archived project '{project_name}' under double-track: -> {destination_dir}"
-            print(f"--- [SUCCESS] {msg} ---")
-            return {"status": "success", "message": msg, "archive_dir": destination_dir}
-
+        return {"status": "success", "archive_dir": destination_dir}
     except Exception as e:
-        return {"status": "error", "message": f"Failed to cleanly execute double-track archive: {e}"}
+        return {"status": "error", "message": str(e)}
 
 
 def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[str] = None) -> Dict[str, str]:
@@ -2966,6 +3769,8 @@ def read_file_content(file_path: str, mode: str = "full", base_dir: str = None) 
             lines = lines[-200:]
         elif mode == "tail_100_lines":
             lines = lines[-100:]
+        elif mode == "tail_40_lines":
+            lines = lines[-40:]
         elif mode == "tail_50":  # 这里是固定的 50 行
             lines = lines[-50:]
         elif mode == "tail_30":  # 这里是固定的 30 行
@@ -3138,7 +3943,7 @@ def delete_file(file_path: str, base_dir: str = None, **kwargs) -> dict:
     Deletes a specified file.
     """
     if base_dir is None:
-        base_dir = os.environ.get('PROJECT_ROOT', '/home/senchen/temp/fix_build_agent')
+        base_dir = os.environ.get('PROJECT_ROOT', 'fix_build_agent')
 
     normalized_path = normalize_patch_path(file_path, base_dir)
 
@@ -3188,6 +3993,21 @@ def prompt_generate_tool(
     session = tool_context.session
     current_node_id = session.state.get("current_node_id", 0)
     validation_report = session.state.get("last_validation_report", {})
+    basic_info = extract_basic_information(session.state.get("basic_information"))
+    if basic_info.get("project_source_path"):
+        project_main_folder_path = basic_info["project_source_path"]
+    if basic_info.get("project_config_path"):
+        config_folder_path = basic_info["project_config_path"]
+    print(
+        "[DEBUG prompt_generate context] "
+        f"project_name={session.state.get('project_name')} | "
+        f"project_source_path={session.state.get('project_source_path')} | "
+        f"project_config_path={session.state.get('project_config_path')} | "
+        f"project_config_repo_path={session.state.get('project_config_repo_path')} | "
+        f"basic_information={session.state.get('basic_information')} | "
+        f"project_main_folder_path={project_main_folder_path} | "
+        f"config_folder_path={config_folder_path}"
+    )
 
     PROMPT_DIR = "generated_prompt_file"
     PROMPT_FILE_PATH = os.path.abspath(os.path.join(PROMPT_DIR, "prompt.txt"))
@@ -3202,9 +4022,10 @@ def prompt_generate_tool(
     if current_node_id == 0:
         enhanced_history = "LOG: This is the initial baseline attempt. No previous repair history exists."
     else:
-        # 仅检索最近三轮 (max 3 nodes)，确保不越界
-        start_nid = max(0, current_node_id - 3)
-        for nid in range(start_nid, current_node_id):
+        ledger = TraceLedgerManager.load_ledger()
+        parent_chain_ids = _collect_parent_chain_node_ids(ledger, current_node_id, limit=3, include_self=False)
+        history_labels = ["ROUND N", "ROUND N-1", "ROUND N-2"]
+        for idx, nid in enumerate(parent_chain_ids):
             res = query_trace_ledger(
                 tool_context=tool_context,
                 field_keys=[
@@ -3216,7 +4037,7 @@ def prompt_generate_tool(
             )
             if res["status"] == "success":
                 data = res["data"]
-                label = "INITIAL BASELINE" if nid == 0 else f"ROUND {nid}"
+                label = "INITIAL BASELINE" if nid == 0 else history_labels[idx] if idx < len(history_labels) else f"ROUND {nid}"
                 enhanced_history += f"\n--- [{label} REFLECTION] ---\n"
                 enhanced_history += f"Strategy: {data.get('action_and_intent.repair_strategy', 'N/A')}\n"
                 enhanced_history += f"Summary: {data.get('action_and_intent.loop_summary', 'N/A')}\n"
@@ -3572,9 +4393,9 @@ class EvidenceGraph:
 def clamp_diff_content(diff_text: str) -> str:
     """
     Enforces token budget limits on Unified Diff content.
-    1. Single file diffs over 3000 chars are pruned to keep only hunk headers and modified lines.
-    2. Total diff over 10000 chars is pruned to keep +, -, @ and headers.
-    3. Exceeding 10000 chars after pruning falls back to 'git show --stat' summary.
+    1. Single file diffs over 500 chars are pruned to keep only hunk headers and modified lines.
+    2. Total diff over 3000 chars is pruned to keep +, -, @ and headers.
+    3. Exceeding 3000 chars after pruning keeps the current core-line-only fallback behavior.
     """
     if not diff_text:
         return ""
@@ -3594,7 +4415,7 @@ def clamp_diff_content(diff_text: str) -> str:
 
     clamped_blocks = []
     for block in file_blocks:
-        if len(block) > 3000:
+        if len(block) > 500:
             # 强行截断：抛弃未修改的上下文行，仅保留 Hunk Header + 修改行
             lines = block.splitlines()
             pruned_lines = [
@@ -3602,15 +4423,15 @@ def clamp_diff_content(diff_text: str) -> str:
                 if l.startswith(('+', '-', '@', 'diff --git ', '--- ', '+++ ', 'index '))
             ]
             clamped_block = "\n".join(pruned_lines)
-            if len(clamped_block) > 3000:
-                clamped_block = clamped_block[:3000] + "\n... [Single File Diff Truncated] ..."
+            if len(clamped_block) > 500:
+                clamped_block = clamped_block[:500] + "\n... [Single File Diff Truncated] ..."
             clamped_blocks.append(clamped_block)
         else:
             clamped_blocks.append(block)
 
     final_diff = "\n".join(clamped_blocks)
 
-    if len(final_diff) > 10000:
+    if len(final_diff) > 3000:
         # 总 Diff 过滤，仅保留核心标记行
         lines = final_diff.splitlines()
         shrunk_lines = [
@@ -3706,7 +4527,8 @@ def run_ecrcl_localization(
         verify_top_3: bool = False
 
 ) -> dict:
-
+    def normalize_report_text(text: str) -> str:
+        return "\n".join(line.lstrip() for line in text.splitlines()).strip()
 
     def finalize_localization(status: str, detail_content: str) -> dict:
         artifact_path = "generated_prompt_file/commit_changed.txt"
@@ -3715,6 +4537,27 @@ def run_ecrcl_localization(
         create_or_update_file(artifact_path, file_content)
         # 如果是成功，返回结构化元数据；如果是失败，返回状态信息
         return {"status": status.lower(), "message": detail_content}
+
+    if not ENABLE_HISTORY_ENHANCEMENT:
+        detail_report = """[FAILURE_REGION]
+(ECRCL ablated by configuration)
+
+[ATTRIBUTION_TYPE]
+UNKNOWN
+
+[LOCALIZATION_CONFIDENCE]
+LOW
+
+[ROOT_CAUSE_COMMITS]
+N/A
+
+[CAUSAL_CHAIN]
+Localization disabled by ablation switch.
+
+[FINAL_ATTRIBUTION]
+ECRCL disabled.
+"""
+        return finalize_localization("FAILED", detail_report)
 
     logger.info("=========================================================")
     logger.info(f"Starting Enhanced ECRCL Localization Engine for {project_name}")
@@ -3732,31 +4575,95 @@ def run_ecrcl_localization(
         is_downstream = (root_cause_workspace.upper() == "DOWNSTREAM")
         active_workspace = os.path.abspath(oss_fuzz_path) if is_downstream else os.path.abspath(project_source_path)
 
+        log_artifact_path = os.path.abspath("fuzz_build_log_file/fuzz_build_log.txt")
+        failure_region_text = "N/A"
+        top_1_file = "N/A"
+        line_number = "N/A"
+
+        try:
+            if os.path.exists(log_artifact_path):
+                with open(log_artifact_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    log_lines = f.read().splitlines()
+                tail_lines = log_lines[-40:] if log_lines else []
+                if tail_lines:
+                    failure_region_text = "\n".join(tail_lines)
+                    matched_idx = -1
+                    for i in range(len(tail_lines) - 1, -1, -1):
+                        if any(kw in tail_lines[i].lower() for kw in ["error:", "cannot ", "fail", "undefined reference"]):
+                            matched_idx = i
+                            break
+                    if matched_idx == -1:
+                        for i in range(len(tail_lines) - 1, -1, -1):
+                            if any(kw in tail_lines[i].lower() for kw in ["warning:", "exit status"]):
+                                matched_idx = i
+                                break
+                    if matched_idx != -1:
+                        start_idx = max(0, matched_idx - 10)
+                        end_idx = min(len(tail_lines), matched_idx + 11)
+                        failure_region_text = "\n".join(tail_lines[start_idx:end_idx])
+
+                    path_pattern = r"([\w\-\./_]+\.(?:c|cpp|h|cc|cxx|rs|go|py|sh|java|swift|cmake|txt|yaml|json|PC|pc))"
+                    raw_filepaths = re.findall(path_pattern, failure_region_text)
+                    for f_cand in raw_filepaths:
+                        if not any(sys_p in f_cand for sys_p in ["/usr/include/", "/.cargo/", "/.rustup/", "gcr.io/"]):
+                            if f_cand.endswith(('.c', '.cpp', '.cc', '.h', '.go', '.rs', '.sh', 'Dockerfile', 'build.sh', 'PC', 'pc')):
+                                top_1_file = f_cand
+                                break
+                    if top_1_file == "N/A" and raw_filepaths:
+                        top_1_file = raw_filepaths[0]
+
+                    line_match = re.search(rf"{re.escape(top_1_file)}:(\d+)", failure_region_text) if top_1_file != "N/A" else None
+                    if line_match:
+                        line_number = line_match.group(1)
+        except Exception as e:
+            logger.warning(f"Failed to recover failure evidence for fast-path localization: {e}")
+
         # 尝试提取元数据作为补全
         target_author, target_date, target_title = "N/A", "N/A", "N/A"
+        diff_text = "Failed to extract commit diff context."
+        before_line = "N/A"
+        after_line = "N/A"
+
         try:
             show_meta = ["git", "-C", active_workspace, "show", "--pretty=format:%an|%ad|%s", "-s", root_cause_commit]
             meta_res = subprocess.run(show_meta, capture_output=True, text=True, check=True)
             target_author, target_date, target_title = meta_res.stdout.strip().split('|', 2)
+
+            diff_res = subprocess.run(["git", "-C", active_workspace, "show", "-U3", root_cause_commit],
+                                      capture_output=True, text=True, check=True)
+            diff_text = clamp_diff_content(diff_res.stdout)
+            removed_lines = [l[1:].strip() for l in diff_res.stdout.splitlines() if l.startswith('-') and not l.startswith('---')]
+            added_lines = [l[1:].strip() for l in diff_res.stdout.splitlines() if l.startswith('+') and not l.startswith('+++')]
+            if removed_lines:
+                before_line = removed_lines[0]
+            if added_lines:
+                after_line = added_lines[0]
+
+            if top_1_file == "N/A":
+                for line in diff_res.stdout.splitlines():
+                    diff_match = re.match(r"diff --git a/(.+?) b/", line)
+                    if diff_match:
+                        top_1_file = diff_match.group(1)
+                        break
         except Exception as e:
             logger.warning(f"Failed to fetch pre-specified metadata: {e}")
 
-            # 🔑 新增：若预设根因存在，直接归档回填至当前活跃账本节点
-            try:
-                ledger = TraceLedgerManager.load_ledger()
-                if ledger.get("nodes"):
-                    latest_node_id = ledger["nodes"][-1]["node_id"]
-                    TraceLedgerManager.update_node_fields(latest_node_id, {
-                        "action_and_intent.root_cause_commit_sha": root_cause_commit
-                    })
-                    logger.info(
-                        f"--- [Ledger] Pre-specified root cause SHA {root_cause_commit} written to Node {latest_node_id} ---")
-            except Exception as e:
-                logger.warning(f"Failed to auto-update pre-specified root_cause_commit_sha in ledger: {e}")
+            # 🔑 修正：账本回填移出 except 块，无条件执行，与元数据提取结果无关
+        try:
+            ledger = TraceLedgerManager.load_ledger()
+            if ledger.get("nodes"):
+                latest_node_id = ledger["nodes"][-1]["node_id"]
+                TraceLedgerManager.update_node_fields(latest_node_id, {
+                    "action_and_intent.root_cause_commit_sha": root_cause_commit
+                })
+                logger.info(
+                    f"--- [Ledger] Pre-specified root cause SHA {root_cause_commit} written to Node {latest_node_id} ---")
+        except Exception as e:
+            logger.warning(f"Failed to auto-update pre-specified root_cause_commit_sha in ledger: {e}")
 
-            # 🔑 修正：恢复 8 个空格缩进，使其安全内聚在 if 分支内部
-            detail_report = f"""[FAILURE_REGION]
-        (Skipped physical localization due to pre-specified root cause)
+        detail_report = textwrap.dedent(f"""
+        [FAILURE_REGION]
+        {failure_region_text}
 
         [ATTRIBUTION_TYPE]
         {root_cause_workspace.upper()}
@@ -3771,13 +4678,24 @@ def run_ecrcl_localization(
         Subject: {target_title}
         Reason: Pre-specified in metadata.
 
+        [ROOT_CAUSE_LINES]
+        File: {top_1_file}
+        Line: {line_number}
+        Before: {before_line}
+        After: {after_line}
+
+        [DIFF_CONTEXT]
+        {diff_text}
+
         [CAUSAL_CHAIN]
-        Root cause commit was pre-specified; physical localization bypassed.
+        Pre-specified root cause bypassed candidate search and replay validation.
+        Phase Four evidence was reconstructed from the current build log tail and commit diff.
 
         [FINAL_ATTRIBUTION]
-        根因定位成功 (Pre-specified)
-        """
-            return finalize_localization("SUCCESS", detail_report)
+        Root cause attribution completed from pre-specified commit metadata, log evidence, and diff context.
+        """).strip()
+        detail_report = normalize_report_text(detail_report)
+        return finalize_localization("SUCCESS", detail_report)
     else:
         logger.info("--- [ECRCL] No pre-specified root cause. Starting Full Search ---")
         try:
@@ -3794,7 +4712,7 @@ def run_ecrcl_localization(
             with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
                 log_raw = f.read()
 
-            val_marker = "--- 1+2+6 VALIDATION SUMMARY"
+            val_marker = "--- VALIDATION SUMMARY"
             raw_compile_zone = log_raw.split(val_marker)[0] if val_marker in log_raw else log_raw
             log_lines = raw_compile_zone.splitlines()
 
@@ -3820,6 +4738,7 @@ def run_ecrcl_localization(
             # 提取区域内的相关代码或配置文件
             path_pattern = r"([\w\-\./_]+\.(?:c|cpp|h|cc|cxx|rs|go|py|sh|java|swift|cmake|txt|yaml|json|PC|pc))"
             raw_filepaths = re.findall(path_pattern, failure_region_text)
+            line_number = "N/A"
 
             top_1_file = None
             for f_cand in raw_filepaths:
@@ -3984,7 +4903,8 @@ def run_ecrcl_localization(
                     else:
                         # [上游] 走双节点 checkout + compile 因果检验逻辑
                         # A. 物理暂存现场，避免切换分支遗失文件
-                        subprocess.run(["git", "-C", active_workspace, "stash", "--include-untracked"], capture_output=True)
+                        subprocess.run(["git", "-C", active_workspace, "stash", "--include-untracked"],
+                                       capture_output=True)
                         orig_head = subprocess.run(["git", "-C", active_workspace, "rev-parse", "HEAD"],
                                                    capture_output=True, text=True).stdout.strip()
 
@@ -4063,30 +4983,41 @@ def run_ecrcl_localization(
 
             if final_suspect == "UNKNOWN":
                 artifact_status = "FAILED"
-                detail_report = f"""[FAILURE_REGION]
-            {failure_region_text}
-    
-            [ATTRIBUTION_TYPE]
-            {'DOWNSTREAM' if is_downstream else 'UPSTREAM'}
-    
-            [LOCALIZATION_CONFIDENCE]
-            LOW
-    
-            [ROOT_CAUSE_COMMITS]
-            SHA: N/A
-            Reason: Localization failed. System has automatically switched to Log-Based Diagnostic Mode.
-    
-            [CAUSAL_CHAIN]
-            ECRCL localization failed, employing log-based diagnostic fallback.
-    
-            [FINAL_ATTRIBUTION]
-            Root cause localization failed; proceed with log-based structural fix.
-            """
+                detail_report = textwrap.dedent(f"""
+                [FAILURE_REGION]
+                {failure_region_text}
+
+                [ATTRIBUTION_TYPE]
+                {'DOWNSTREAM' if is_downstream else 'UPSTREAM'}
+
+                [LOCALIZATION_CONFIDENCE]
+                LOW
+
+                [ROOT_CAUSE_COMMITS]
+                SHA: N/A
+                Reason: Localization failed. System has automatically switched to Log-Based Diagnostic Mode.
+
+                [ROOT_CAUSE_LINES]
+                File: {top_1_file}
+                Line: {line_number if 'line_number' in locals() else 'N/A'}
+                Before: N/A
+                After: N/A
+
+                [DIFF_CONTEXT]
+                N/A
+
+                [CAUSAL_CHAIN]
+                ECRCL localization failed, employing log-based diagnostic fallback.
+
+                [FINAL_ATTRIBUTION]
+                Root cause localization failed; proceed with log-based structural fix.
+                """).strip()
             else:
                 artifact_status = "SUCCESS"
                 # 提取 Git 元数据逻辑 (保留您原有的 try-except)
                 try:
-                    show_meta = ["git", "-C", active_workspace, "show", "--pretty=format:%an|%ad|%s", "-s", final_suspect]
+                    show_meta = ["git", "-C", active_workspace, "show", "--pretty=format:%an|%ad|%s", "-s",
+                                 final_suspect]
                     meta_res = subprocess.run(show_meta, capture_output=True, text=True, check=True)
                     target_author, target_date, target_title = meta_res.stdout.strip().split('|', 2)
 
@@ -4102,36 +5033,41 @@ def run_ecrcl_localization(
                 except Exception:
                     diff_text = "Failed to extract commit diff context."
 
-                detail_report = f"""[FAILURE_REGION]
-            {failure_region_text}
-    
-            [ATTRIBUTION_TYPE]
-            {'DOWNSTREAM' if is_downstream else 'UPSTREAM'}
-    
-            [LOCALIZATION_CONFIDENCE]
-            {confidence}
-    
-            [ROOT_CAUSE_COMMITS]
-            SHA: {final_suspect}
-            Author: {target_author}
-            Date: {target_date}
-            Subject: {target_title}
-            File: {top_1_file}
-            Line: {line_match.group(1) if line_match else 'N/A'}
-            Before: {before_line}
-            After: {after_line}
-    
-            [DIFF_CONTEXT]
-            {diff_text}
-    
-            [CAUSAL_CHAIN]
-            Replay verification status: {validation_status}.
-            Belief propagation scores: {sorted_scores[:3]}.
-            The root cause commit '{final_suspect}' introduces changes that broke compile check.
-    
-            [FINAL_ATTRIBUTION]
-            Root cause localization successful.
-            """
+                detail_report = textwrap.dedent(f"""
+                [FAILURE_REGION]
+                {failure_region_text}
+
+                [ATTRIBUTION_TYPE]
+                {'DOWNSTREAM' if is_downstream else 'UPSTREAM'}
+
+                [LOCALIZATION_CONFIDENCE]
+                {confidence}
+
+                [ROOT_CAUSE_COMMITS]
+                SHA: {final_suspect}
+                Author: {target_author}
+                Date: {target_date}
+                Subject: {target_title}
+
+                [ROOT_CAUSE_LINES]
+                File: {top_1_file}
+                Line: {line_match.group(1) if line_match else 'N/A'}
+                Before: {before_line}
+                After: {after_line}
+
+                [DIFF_CONTEXT]
+                {diff_text}
+
+                [CAUSAL_CHAIN]
+                Replay verification status: {validation_status}.
+                Belief propagation scores: {sorted_scores[:3]}.
+                The root cause commit '{final_suspect}' introduces changes that broke compile check.
+
+                [FINAL_ATTRIBUTION]
+                Root cause localization successful.
+                """).strip()
+
+            detail_report = normalize_report_text(detail_report)
 
             return finalize_localization(artifact_status, detail_report)
 
@@ -4139,432 +5075,3 @@ def run_ecrcl_localization(
 
             logger.error(f"ECRCL localization critical error: {e}")
             return {"status": "failed", "message": f"Git localization error: {str(e)}"}
-
-
-def run_fuzz_build_and_validate(
-        project_name: str,
-        oss_fuzz_path: str,
-        sanitizer: str,
-        engine: str,
-        architecture: str,
-        mount_path: Optional[str] = None,
-        verbose_step6: bool = False,
-        verbose_build: bool = True
-) -> dict:
-    """
-    Build and validate fuzzers using official OSS-Fuzz infrastructure.
-    Success Criteria: Step 2 (check_build) must PASS. All other steps are reference items.
-    """
-
-    import stat
-    import subprocess
-    import time
-    import os
-    import sys
-    import signal
-    import select  # 用于非阻塞读取
-    import re  # 用于进度正则匹配
-
-    _cleanup_environment(oss_fuzz_path, project_name)
-    print(f"[*] Comprehensive Pre-build cleanup completed.")
-
-    LOG_DIR = "fuzz_build_log_file"
-    LOG_FILE_PATH = os.path.join(LOG_DIR, "fuzz_build_log.txt")
-    os.makedirs(LOG_DIR, exist_ok=True)
-
-    report = {
-        "step_1_official_list": "pending",
-        "step_2_infra_compliance": "pending",
-        "step_3_sanitizer_injected": "pending",
-        "step_4_engine_control": "pending",
-        "step_5_logic_linkage": "pending",
-        "step_6_runtime_stability": "pending"
-    }
-
-    # =========================================================================
-    # 内部辅助过滤函数（对应 test_all.py 中的合法 Fuzzer 识别逻辑）
-    # =========================================================================
-    def is_elf(filepath: str) -> bool:
-        """判断是否为 ELF 格式二进制文件"""
-        try:
-            result = subprocess.run(
-                ['file', filepath],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.DEVNULL,
-                check=False
-            )
-            if b'ELF' in result.stdout:
-                return True
-        except Exception:
-            pass
-        # 兜底：如果系统没有安装 file 命令，直接读取文件头部魔数进行基础判断
-        try:
-            with open(filepath, 'rb') as f:
-                return f.read(4) == b'\x7fELF'
-        except Exception:
-            return False
-
-    def is_shell_script(filepath: str) -> bool:
-        """判断是否为 shell 脚本"""
-        try:
-            result = subprocess.run(
-                ['file', filepath],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.DEVNULL,
-                check=False
-            )
-            return b'shell script' in result.stdout
-        except Exception:
-            return False
-
-    def find_local_fuzz_targets(directory: str, target_engine: str) -> list:
-        """基于 test_all.py 标准过滤机制定位合法构建产物"""
-        fuzz_targets = []
-        if not os.path.exists(directory):
-            return fuzz_targets
-
-        executable_mask = stat.S_IEXEC | stat.S_IXGRP | stat.S_IXOTH
-
-        for filename in os.listdir(directory):
-            path = os.path.join(directory, filename)
-
-            # ---- 第一层过滤：物理属性过滤 (Structural Filter) ----
-            # 1. 排除特定辅助工具与非 Fuzzer 产物
-            if filename == 'llvm-symbolizer':
-                continue
-            if filename.startswith('afl-'):
-                continue
-            if filename.startswith('jazzer_'):
-                continue
-            if filename == 'centipede':
-                continue
-
-            # 2. 必须是文件
-            if not os.path.isfile(path):
-                continue
-
-            # 3. 必须具备可执行权限
-            try:
-                if not (os.stat(path).st_mode & executable_mask):
-                    continue
-            except Exception:
-                continue
-
-            # 4. 必须是 ELF 二进制或 Shell 脚本包装器
-            if not is_elf(path) and not is_shell_script(path):
-                continue
-
-            # ---- 第二层过滤：符号合规性过滤 (Symbol Filter) ----
-            if target_engine not in {'none', 'wycheproof'}:
-                try:
-                    with open(path, 'rb') as file_handle:
-                        binary_contents = file_handle.read()
-                        if b'LLVMFuzzerTestOneInput' not in binary_contents:
-                            continue
-                except Exception:
-                    continue
-
-            fuzz_targets.append(filename)
-        return fuzz_targets
-
-    # =========================================================================
-
-    try:
-        helper_path = os.path.join(oss_fuzz_path, "infra/helper.py")
-
-        # --- Phase 1: Physical Build ---
-        build_cmd = ["python3", helper_path, "build_fuzzers"]
-        # 强制始终挂载 project_source_path
-        build_cmd.extend([project_name, mount_path])
-        build_cmd.extend(["--sanitizer", sanitizer, "--engine", engine, "--architecture", architecture])
-
-        build_start = time.time()
-        build_timeout = 5400  # 构建超时上限设定为 90 分钟（5400 秒），不影响正常构建结束
-
-        process = subprocess.Popen(
-            build_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-            text=True, bufsize=1, cwd=oss_fuzz_path
-        )
-        full_log = []
-
-        try:
-            while True:
-                if time.time() - build_start > build_timeout:
-                    raise subprocess.TimeoutExpired(build_cmd, build_timeout)
-                line = process.stdout.readline()
-                if not line:
-                    if process.poll() is not None:
-                        break
-                    time.sleep(0.05)
-                    continue
-                if verbose_build:
-                    print(line, end='', flush=True)
-                full_log.append(line)
-            process.wait(timeout=15)
-        except subprocess.TimeoutExpired:
-            process.kill()
-            process.wait()
-            final_log = "".join(full_log) + f"\n\nRESULT: failed (compilation timeout after {build_timeout}s)"
-            with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
-                f.write(final_log)
-            return {"status": "error", "message": "Compilation timed out", "validation_report": report}
-
-        final_log = "".join(full_log)
-
-        # 编译失败检测 (快速判定，直接写盘退出)
-        if process.returncode != 0 or any(k in final_log.lower() for k in ["error:", "failed:", "build failed"]):
-            with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
-                f.write(final_log + "\n\nRESULT: failed (compilation error)")
-            return {"status": "error", "message": "Compilation failed", "validation_report": report}
-
-        # --- Phase 2: Deep Validation ---
-        print(f"\n--- [Phase 2] Deep Validation (Official Suite) ---")
-
-        # 🔑 建立独立验证阶段计时锁，上限调整为 20 分钟 (1200.0 秒)，不影响正常验证结束
-        validation_start_time = time.time()
-        validation_timeout = 1200.0
-
-        def check_validation_limit(cmd_info):
-            elapsed = time.time() - validation_start_time
-            if elapsed >= validation_timeout:
-                raise subprocess.TimeoutExpired(cmd_info, validation_timeout)
-            return validation_timeout - elapsed
-
-        # =========================================================================
-        # Step 1: 官方产物识别 (参考项)
-        # =========================================================================
-        _ = check_validation_limit("list_fuzzers")
-        out_dir = os.path.join(oss_fuzz_path, "build", "out", project_name)
-
-        # 使用高保真度本地过滤逻辑
-        targets = find_local_fuzz_targets(out_dir, engine)
-
-        # 在日志中全量输出检测到的所有合规的模糊构建产物
-        print(
-            f"[*] Detected {len(targets)} compliant fuzz target(s) in Step 1: {', '.join(targets) if targets else 'None'}")
-
-        primary_target = None
-        if targets:
-            primary_target = targets[0]
-            report["step_1_official_list"] = f"pass: {len(targets)} target(s) (primary: {primary_target})"
-        else:
-            report["step_1_official_list"] = "fail: no recognized fuzzers"
-
-        # =========================================================================
-        # Step 2: 基础设施合规性 (唯一强制通过项)
-        # =========================================================================
-        rem_t = check_validation_limit("check_build")
-        check_cmd = [
-            "python3", helper_path, "check_build", project_name,
-            "--sanitizer", sanitizer,
-            "--engine", engine,
-            "--architecture", architecture
-        ]
-        try:
-            check_res = subprocess.run(check_cmd, capture_output=True, text=True, timeout=min(300, rem_t),
-                                       cwd=oss_fuzz_path)
-            report[
-                "step_2_infra_compliance"] = "pass" if check_res.returncode == 0 else f"fail: {check_res.stderr.strip()[:200]}"
-        except subprocess.TimeoutExpired:
-            report["step_2_infra_compliance"] = "fail: check_build timeout"
-        except Exception as e:
-            report["step_2_infra_compliance"] = f"fail: {str(e)}"
-
-        # Step 3-5: 参考项审计 (nm 符号分析 - 参考项)
-        if primary_target:
-            target_path = os.path.join(oss_fuzz_path, "build", "out", project_name, primary_target)
-            if os.path.exists(target_path):
-                rem_t = check_validation_limit("nm_check")
-                try:
-                    nm_res = subprocess.run(['nm', target_path], capture_output=True, text=True,
-                                            timeout=min(30, rem_t),
-                                            errors='ignore')
-                    nm_stdout = nm_res.stdout
-                except Exception:
-                    rem_t = check_validation_limit("nm_check_shell")
-                    nm_res = subprocess.run(
-                        ["python3", helper_path, "shell", project_name, "-c", f"nm /out/{primary_target}"],
-                        capture_output=True, text=True, timeout=min(60, rem_t), errors='ignore'
-                    )
-                    nm_stdout = nm_res.stdout
-
-                report["step_3_sanitizer_injected"] = "pass" if "__asan" in nm_stdout else "warning: missing asan"
-                report["step_4_engine_control"] = "pass" if (
-                        "LLVMFuzzerRunDriver" in nm_stdout or "__afl_" in nm_stdout) else "warning: engine symbols"
-                report["step_5_logic_linkage"] = "pass" if _auto_discover_project_symbols_from_content(nm_stdout,
-                                                                                                       project_name) else "warning: logic linkage"
-            else:
-                for s in ["step_3_sanitizer_injected", "step_4_engine_control", "step_5_logic_linkage"]:
-                    report[s] = "skip: binary not accessible"
-        else:
-            for s in ["step_3_sanitizer_injected", "step_4_engine_control", "step_5_logic_linkage"]:
-                report[s] = "skip: no primary target"
-
-        # =========================================================================
-        # Step 6: 压力测试稳定性 (参考项)
-        # =========================================================================
-        if primary_target and report["step_2_infra_compliance"].startswith("pass"):
-            if verbose_step6:  # ✅ 仅在开启 verbose 模式时输出 Header
-                print(f"[*] Starting 35s stability test for: {primary_target}")
-            run_cmd = [sys.executable, helper_path, "run_fuzzer", "--engine", engine, "--sanitizer", sanitizer,
-                       project_name, primary_target]
-
-            rem_t = check_validation_limit("run_fuzzer")
-
-            # 开启新进程组
-            stability_proc = subprocess.Popen(
-                run_cmd, cwd=oss_fuzz_path, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                text=True, bufsize=1, preexec_fn=os.setsid
-            )
-
-            start_time = time.time()
-            log_lines = []
-            timed_out = False
-
-            try:
-                while True:
-                    check_validation_limit("run_fuzzer_runtime")
-
-                    elapsed = time.time() - start_time
-                    if elapsed >= 35.0:
-                        timed_out = True
-                        break
-
-                    remaining_time = max(0.1, 35.0 - elapsed)
-                    rlist, _, _ = select.select([stability_proc.stdout], [], [], min(remaining_time, 0.5))
-
-                    if stability_proc.stdout in rlist:
-                        line = stability_proc.stdout.readline()
-                        if not line: break
-                        if verbose_step6:  # ✅ 仅在开启时实时打印模糊测试进度
-                            print(line, end='', flush=True)
-                        log_lines.append(line)
-                    else:
-                        if stability_proc.poll() is not None:
-                            break
-            finally:
-                # 🔑 2. 安全优雅释放逻辑
-                pgid = None
-                try:
-                    pgid = os.getpgid(stability_proc.pid)
-                except Exception:
-                    pass
-
-                if pgid:
-                    try:
-                        # 优先发送 SIGTERM，允许 helper.py 在退出前调用 docker 释放容器卷锁
-                        os.killpg(pgid, signal.SIGTERM)
-                    except Exception:
-                        pass
-
-                # 阻塞回收进程状态
-                try:
-                    stability_proc.wait(timeout=5)
-                except subprocess.TimeoutExpired:
-                    if pgid:
-                        try:
-                            # 如果 5 秒后仍未释放，再使用 SIGKILL 强制物理杀死
-                            os.killpg(pgid, signal.SIGKILL)
-                        except Exception:
-                            pass
-                    stability_proc.wait()
-
-                if verbose_step6:  # ✅ 仅在开启时打印结束信息
-                    print("[*] Stability test exited. Triggering comprehensive post-validation cleanup...")
-                _cleanup_environment(oss_fuzz_path, project_name)
-
-            # 日志文本整合与退出码转换
-            log_content = "".join(log_lines)
-            exit_code = 124 if timed_out else stability_proc.returncode
-            if exit_code is None:
-                exit_code = 124
-
-            # ---- 成功特征检测与失败规则匹配 ----
-            # 🌟 修复关键点：拓宽正则表达式，包含 AFL++ 和其它引擎进度日志的标志词 (如 exec speed, corpus count, cycles done, etc.)
-            progress_pattern = r'(exec/s:|cov:|corp:|exec speed|corpus count|cycles done|execs/sec|active execution rate)'
-            has_progress = bool(re.search(progress_pattern, log_content, re.IGNORECASE))
-            is_success_6 = False
-            success_reason = ""
-
-            # A. 优先执行显式成功逻辑判定 (Success Logic)
-            # 成功情况 1：进程超时正常退出且日志中存在关键变异进度
-            if exit_code == 124 and has_progress:
-                is_success_6 = True
-                success_reason = "pass: Time-limited run completed successfully."
-            # 成功情况 2：引擎平稳退出，且日志显示完成
-            elif exit_code == 0 and any(kw in log_content for kw in ["Done", "fuzzing finished"]):
-                is_success_6 = True
-                success_reason = "pass: Finished normally."
-
-            # B. 若不满足显式成功，执行失败判定过滤；若非检测到的失败条件，则依然判定为成功
-            if not is_success_6:
-                is_failed_6 = False
-                fail_reason = ""
-
-                # 失败条件 B-1: 启动即崩溃/运行时 Crash (严重)
-                if "SUMMARY:" in log_content or "AddressSanitizer" in log_content or "Segmentation fault" in log_content:
-                    is_failed_6 = True
-                    fail_reason = "fail: RUNTIME_CRASH"
-
-                # 失败条件 B-2: 配置/路径/环境不匹配 (启动失败)
-                elif exit_code in [1, 127] or any(k in log_content for k in
-                                                  ["error while loading shared libraries", "undefined reference",
-                                                   "Usage:"]):
-                    is_failed_6 = True
-                    fail_reason = "fail: CONFIG_ERROR"
-
-                # 失败条件 B-3: 伪运行 (Dead/Frozen)
-                elif exit_code == 124 and not has_progress:
-                    is_failed_6 = True
-                    fail_reason = "fail: DEAD_PROCESS"
-
-                # 失败条件 B-4: 其它判定失败的非正常退出码（且排除 0 和 124）
-                elif exit_code != 0 and exit_code != 124:
-                    is_failed_6 = True
-                    fail_reason = f"fail: Exit code {exit_code}"
-
-                # 结论：如果不符合以上任何失败条件，依然判定为成功
-                if not is_failed_6:
-                    report["step_6_runtime_stability"] = "pass: Default success (No failure criteria matched)"
-                else:
-                    report["step_6_runtime_stability"] = fail_reason
-            else:
-                report["step_6_runtime_stability"] = success_reason
-        else:
-            report["step_6_runtime_stability"] = "fail: skipped"
-
-        # --- 最终判定逻辑 (🌟 当前仅以 Step 2 check_build 作为唯一强约束通过项) ---
-        is_success = report["step_2_infra_compliance"].startswith("pass")
-
-        summary_table = "\n" + "=" * 50 + "\n--- VALIDATION SUMMARY\n" + "-" * 50 + "\n"
-        for i, (k, v) in enumerate(report.items(), 1):
-            # 🌟 仅 Step 2 标记为 MANDATORY，其它步骤均标记为 REFERENCE
-            marker = "[MANDATORY]" if i == 2 else "[REFERENCE]"
-            summary_table += f"Step {i:<4} {marker:<12} | {v}\n"
-        summary_table += "=" * 50 + "\n"
-        print(summary_table)
-
-        # 写入物理日志
-        with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
-            f.write(final_log)
-            f.write(summary_table)
-            f.write(f"\nRESULT: {'success' if is_success else 'failed'}\n")
-
-        return {
-            "status": "success" if is_success else "error",
-            "message": f"Validation {'PASSED' if is_success else 'FAILED'}",
-            "validation_report": report
-        }
-
-    except subprocess.TimeoutExpired as e:
-        print(f"\n[⚠️ TIMEOUT] Validation phase exceeded limit. Aborting...")
-        with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
-            f.write(f"Validation phase timed out.\nRESULT: failed (compilation error)")
-        return {"status": "error", "message": "Compilation failed", "validation_report": report}
-
-    except Exception as e:
-        import traceback
-        tb = traceback.format_exc()
-        with open(LOG_FILE_PATH, "w", encoding="utf-8") as f:
-            f.write(f"Exception during validation:\n{str(e)}\n{tb}")
-        return {"status": "error", "message": str(e), "validation_report": report}
