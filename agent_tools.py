@@ -1670,8 +1670,8 @@ def execute_hsr_decision(tool_context: ToolContext) -> dict:
         should_rollback = True
         if L_curr == L_prev and V_curr == V_prev:
             rollback_type = "SINGLE_STEP"
-            # 规则：如果 Node i 被标记为 SINGLE_STEP 回退，则 Node i+1 挂回 Node i。
-            target_node = curr_node
+            # 规则：如果 Node i 被标记为 SINGLE_STEP 回退，则下一待处理节点挂回 Node i 的父节点。
+            target_node = prev_node
             decision_status = "Neutral Path"
         else:
             rollback_type = "ADAPTIVE"
