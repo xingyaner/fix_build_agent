@@ -404,8 +404,9 @@ def exit_loop(tool_context: ToolContext):
 GLOBAL_LOGGER = AgentLogger()
 
 APP_NAME = "fix_build_agent_app"
-MODEL = "deepseek/deepseek-v4-flash"
-DPSEEK_API_KEY = os.getenv("DPSEEK_API_KEY")
+MODEL = ""
+api_base=""
+API_KEY = os.getenv("API_KEY")
 USER_ID = "default_user"
 MAX_RETRIES = 3
 MAX_INTERNAL_ROUNDS = 12
@@ -453,7 +454,7 @@ def initialize_agents(session_state: dict = None) -> Tuple[BaseNode, InMemorySes
     # 1. 初始化所有 LlmAgent
     initial_setup_agent = LlmAgent(
         name="initial_setup_agent",
-        model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
+        model=LiteLlm(model=MODEL, api_base=api_base, api_key=API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/initial_setup_instruction.txt"),
         tools=[
             download_github_repo,
@@ -470,7 +471,7 @@ def initialize_agents(session_state: dict = None) -> Tuple[BaseNode, InMemorySes
 
     run_fuzz_and_collect_log_agent = LlmAgent(
         name="run_fuzz_and_collect_log_agent",
-        model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
+        model=LiteLlm(model=MODEL, api_base=api_base, api_key=API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/run_fuzz_and_collect_log_instruction.txt"),
         tools=[read_file_content, run_fuzz_build_and_validate, get_workspace_root],
         output_key="fuzz_build_log",
@@ -478,7 +479,7 @@ def initialize_agents(session_state: dict = None) -> Tuple[BaseNode, InMemorySes
 
     decision_agent = LlmAgent(
         name="decision_agent",
-        model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
+        model=LiteLlm(model=MODEL, api_base=api_base, api_key=API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/decision_instruction.txt"),
         tools=[read_file_content, exit_loop],
         output_key="decision_result",
@@ -486,7 +487,7 @@ def initialize_agents(session_state: dict = None) -> Tuple[BaseNode, InMemorySes
 
     rsmc_agent = LlmAgent(
         name="rsmc_agent",
-        model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
+        model=LiteLlm(model=MODEL, api_base=api_base, api_key=API_KEY, temperature=0.2, top_p=0.3, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/rsmc_instruction.txt"),
         tools=[read_file_content, init_or_update_rsmc_ledger, query_trace_ledger],
         output_key="loop_summary",
@@ -494,7 +495,7 @@ def initialize_agents(session_state: dict = None) -> Tuple[BaseNode, InMemorySes
 
     rollback_agent = LlmAgent(
         name="rollback_agent",
-        model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
+        model=LiteLlm(model=MODEL, api_base=api_base, api_key=API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/rollback_instruction.txt"),
         tools=[
             cbsc_classify_log,
@@ -506,7 +507,7 @@ def initialize_agents(session_state: dict = None) -> Tuple[BaseNode, InMemorySes
 
     commit_finder_agent = LlmAgent(
         name="commit_finder_agent",
-        model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
+        model=LiteLlm(model=MODEL, api_base=api_base, api_key=API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
         instruction=processed_instruction,
         tools=[
             read_file_content,
@@ -523,7 +524,7 @@ def initialize_agents(session_state: dict = None) -> Tuple[BaseNode, InMemorySes
 
     prompt_generate_agent = LlmAgent(
         name="prompt_generate_agent",
-        model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=16384, temperature=0.2, top_p=0.3,
+        model=LiteLlm(model=MODEL, api_base=api_base, api_key=API_KEY, max_output_tokens=16384, temperature=0.2, top_p=0.3,
                       seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/prompt_generate_instruction.txt"),
         tools=[
@@ -542,7 +543,7 @@ def initialize_agents(session_state: dict = None) -> Tuple[BaseNode, InMemorySes
 
     fuzzing_solver_agent = LlmAgent(
         name="fuzzing_solver_agent",
-        model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, max_output_tokens=8129, temperature=0.0, top_p=0.2,
+        model=LiteLlm(model=MODEL, api_base=api_base, api_key=API_KEY, max_output_tokens=8129, temperature=0.0, top_p=0.2,
                       seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/fuzzing_solver_instruction.txt"),
         tools=[read_file_content, create_or_update_file,list_files_in_dir],
@@ -551,7 +552,7 @@ def initialize_agents(session_state: dict = None) -> Tuple[BaseNode, InMemorySes
 
     solution_applier_agent = LlmAgent(
         name="solution_applier_agent",
-        model=LiteLlm(model=MODEL, api_key=DPSEEK_API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
+        model=LiteLlm(model=MODEL, api_base=api_base, api_key=API_KEY, temperature=0.0, top_p=0.1, seed=LLM_SEED),
         instruction=load_instruction_from_file("instructions/solution_applier_instruction.txt"),
         tools=[
             apply_patch,
@@ -1297,10 +1298,10 @@ if __name__ == "__main__":
     print("--- Performing pre-startup checks... ---")
     sys.stdout = StreamTee(sys.stdout, GLOBAL_LOGGER)
     sys.stderr = StreamTee(sys.stderr, GLOBAL_LOGGER)
-    if not DPSEEK_API_KEY:
-        print("\n[ERROR] Startup failed: DPSEEK_API_KEY is not set.")
+    if not API_KEY:
+        print("\n[ERROR] Startup failed: API_KEY is not set.")
     else:
-        print("✅ DPSEEK_API_KEY is set.")
+        print("✅ API_KEY is set.")
         try:
             subprocess.run(["gh", "--version"], check=True, capture_output=True, text=True)
             print("✅ GitHub CLI ('gh') is installed.")
