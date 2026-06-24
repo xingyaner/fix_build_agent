@@ -3294,9 +3294,8 @@ def archive_fixed_project(project_name: str, project_config_path: str, is_succes
 
         targets = [
             (config_repo_path, "configs", "config_fix.patch", sha_map.get("oss-fuzz_sha")),
-            
+            (project_source_path, "source", "source_fix.patch", sha_map.get("project_sha"))
         ]
-# (project_source_path, "source", "source_fix.patch", sha_map.get("project_sha"))
         
         for path, dest_sub, patch_name, baseline_sha in targets:
             if not path or not os.path.isdir(path): continue
@@ -3312,15 +3311,17 @@ def archive_fixed_project(project_name: str, project_config_path: str, is_succes
                     print(f"  - Warning: Diff failed for {path}: {e}")
 
             if changed_files:
-                for f_rel in changed_files:
-                    src, dst = os.path.join(path, f_rel), os.path.join(destination_dir, dest_sub, f_rel)
-                    os.makedirs(os.path.dirname(dst), exist_ok=True)
-                    shutil.copy2(src, dst)
+                if dest_sub != "source":
+                    for f_rel in changed_files:
+                        src, dst = os.path.join(path, f_rel), os.path.join(destination_dir, dest_sub, f_rel)
+                        os.makedirs(os.path.dirname(dst), exist_ok=True)
+                        shutil.copy2(src, dst)
                 with open(os.path.join(destination_dir, "diffs", patch_name), "w") as pf:
                     subprocess.run(["git", "-C", path, "diff", baseline_sha, "HEAD"], stdout=pf, check=True)
             else:
-                shutil.copytree(path, os.path.join(destination_dir, f"{dest_sub}_all"), dirs_exist_ok=True)
-
+                if dest_sub != "source":
+                    shutil.copytree(path, os.path.join(destination_dir, f"{dest_sub}_all"), dirs_exist_ok=True)
+        
         # 4. 强制物理清理
         def _safe_physical_remove(dir_path: str):
             if not dir_path or not os.path.exists(dir_path): return
