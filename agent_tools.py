@@ -3294,9 +3294,10 @@ def archive_fixed_project(project_name: str, project_config_path: str, is_succes
 
         targets = [
             (config_repo_path, "configs", "config_fix.patch", sha_map.get("oss-fuzz_sha")),
-            (project_source_path, "source", "source_fix.patch", sha_map.get("project_sha"))
+            
         ]
-
+# (project_source_path, "source", "source_fix.patch", sha_map.get("project_sha"))
+        
         for path, dest_sub, patch_name, baseline_sha in targets:
             if not path or not os.path.isdir(path): continue
 
