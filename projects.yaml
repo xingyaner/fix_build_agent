@@ -1066,6 +1066,8 @@
   architecture: x86_64
   base_image_digest: ba757e00046d6088d36985f18cee9198772b26c03b10c40364065888f6da04ba
   error_category: RC13
+  root_cause_commit: b7a5908e1b83bde6b60568f6a67952890ab925a9
+  root_cause_workspace: UPSTREAM
   fixed_state: 'no'
 
 - project: mongo-go-driver
