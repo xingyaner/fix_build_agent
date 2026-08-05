@@ -1312,16 +1312,18 @@
 
 - project: bc-gh
   language: c
-  error_time: '2026-04-16'
-  oss-fuzz_sha: d58fd64ccd646ee3b557c4d9ac694ff6d776302a
+  error_time: '2025-03-19'
+  oss-fuzz_sha: f89faec982e111d2a968bd3497179b623fec9334
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-ef9facea-60a7-437a-b2ab-772faa4a4edd.txt
   software_repo_url: https://github.com/gavinhoward/bc.git
-  software_sha: c628060179e023f6922378ded2a365a329a5f3ac
+  software_sha: 77fcd66898f754cb1dbce262c6c0efd0879f855c
   engine: afl
   sanitizer: address
   architecture: x86_64
   base_image_digest: 6526c483abd4eb41ca22150b503d7c2182faf1602cd6767fbfe8495a59592af9
   error_category: RC13
+  root_cause_commit: 77fcd66898f754cb1dbce262c6c0efd0879f855c
+  root_cause_workspace: UPSTREAM
   fixed_state: 'no'
 
 - project: go-ldap
