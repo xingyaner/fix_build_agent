@@ -49,7 +49,7 @@
   error_time: '2025-10-03'
   oss-fuzz_sha: 6eb955c65e34bf021dba6cba02795457061758da
   fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-19308e5e-fd39-4bf9-b953-d503cc1bb252.txt
-  software_repo_url: git://sourceware.org/git/binutils-gdb.git
+  software_repo_url: https://github.com/ChrisDodd/binutils-gdb.git
   software_sha: f6ed490b6781e55074a21b2e05047ea7f9db688a
   engine: afl
   sanitizer: address
@@ -100,6 +100,8 @@
   architecture: x86_64
   base_image_digest: f51f7e08f410e2d4453693bb0cae3f6bdc53470e8b6bf33ae10fd98757f4e35c
   error_category: RC13
+  root_cause_commit: d5b8adf084845befccc4a76a3b2c3445ff72cfd3
+  root_cause_workspace: UPSTREAM
   fixed_state: 'no'
 
 - project: bind9
@@ -114,6 +116,8 @@
   architecture: x86_64
   base_image_digest: 24ece23c6e7e4483fd49b19c31e4084992088b58a902c3c45d74d10541f3aa40
   error_category: RC13
+  root_cause_commit: 63389b8ce6da705da10606829b0eb9031f22df26
+  root_cause_workspace: UPSTREAM
   fixed_state: 'no'
 
 - project: croaring
@@ -386,6 +390,8 @@
   architecture: x86_64
   base_image_digest: 95d5aea07f19d05e50eef7b71717da9c964b72481fff94d0a4efe3fe5284c7f2
   error_category: RC13
+  root_cause_commit: 589a6947fa5e6f6f1d3f340053a8c92fa8b9f445
+  root_cause_workspace: UPSTREAM
   fixed_state: 'no'
 
 - project: kea
@@ -964,6 +970,8 @@
   architecture: x86_64
   base_image_digest: 5a22963e0582b5ce74e3dac5c175a321dc0cbe319c2851c370b885588327a055
   error_category: RC9
+  root_cause_commit: 42e5268c7e6077a71e54b342ada4ed2843dbc01e
+  root_cause_workspace: UPSTREAM
   fixed_state: 'no'
 
 - project: glaze
@@ -1250,6 +1258,8 @@
   architecture: x86_64
   base_image_digest: 766e7ffff42d1b643d1ea216e3bba4f494d5261e8bdcc5c6cdb349474c58a2a9
   error_category: RC13
+  root_cause_commit: aebc65e39b4db0f1ed22d7add9f7bee1e5b351aa
+  root_cause_workspace: UPSTREAM
   fixed_state: 'no'
 
 - project: dapr
@@ -1338,6 +1348,8 @@
   architecture: x86_64
   base_image_digest: 766e7ffff42d1b643d1ea216e3bba4f494d5261e8bdcc5c6cdb349474c58a2a9
   error_category: RC15
+  root_cause_commit: aebc65e39b4db0f1ed22d7add9f7bee1e5b351aa
+  root_cause_workspace: UPSTREAM
   fixed_state: 'no'
 
 - project: h2database
@@ -1688,6 +1700,8 @@
   architecture: x86_64
   base_image_digest: 766e7ffff42d1b643d1ea216e3bba4f494d5261e8bdcc5c6cdb349474c58a2a9
   error_category: RC13
+  root_cause_commit: 2d1427a99ee0c3eef8b22d06c4d7099200ed41ac
+  root_cause_workspace: UPSTREAM
   fixed_state: 'no'
 
 - project: nats
@@ -1760,6 +1774,8 @@
   architecture: x86_64
   base_image_digest: d223a882810372830fd7968eb3e64533f3a2318c90be43ac753a46a15946faec
   error_category: RC9
+  root_cause_commit: 530d11498af526c4210d8eeaa1ed6c63f44a390f
+  root_cause_workspace: UPSTREAM
   fixed_state: 'no'
 
 - project: roaring-bitmap
@@ -1897,4 +1913,3 @@
   base_image_digest: 5388ee3d06c4a12ed4ee18d74bb35cab0084252fcde1aa1e8393c57ce865371e
   error_category: RC9
   fixed_state: 'no'
-
