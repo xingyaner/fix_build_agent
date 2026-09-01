@@ -36,6 +36,143 @@ PROCESSED_PROJECTS_FILE = os.path.join(PROCESSED_PROJECTS_DIR, "project_processe
 GLOBAL_CHAR_BUDGET = 280000  # 硬编码
 max_lines = 2500  # 硬编码
 _LATEST_BASIC_INFORMATION: Dict[str, Any] = {}
+APPLIED_PATCH_TARGETS: Set[str] = set()
+_ACTIVE_PROJECT_NAME: Optional[str] = None
+_PROJECT_PHASE = "idle"
+
+
+def set_active_project_context(project_name: Optional[str]) -> None:
+    """Set the only project that may invoke project-scoped build tools."""
+    global _ACTIVE_PROJECT_NAME
+    _ACTIVE_PROJECT_NAME = project_name
+
+
+def set_project_phase(phase: str) -> None:
+    """Set the lifecycle phase used to reject late project-side tool calls."""
+    global _PROJECT_PHASE
+    if phase not in {"idle", "main", "draining", "optimizer"}:
+        raise ValueError(f"Unknown project phase: {phase}")
+    _PROJECT_PHASE = phase
+
+
+def _reject_if_project_phase_stopped(operation: str) -> Optional[Dict[str, str]]:
+    if _PROJECT_PHASE == "draining":
+        message = f"Rejected new {operation}: project workflow is draining and no new tool calls are accepted."
+        print(f"[STATE ISOLATION] {message}")
+        return {"status": "error", "message": message}
+    return None
+
+BUILD_GENERATED_ARTIFACT_PATTERNS = (
+    "main.*.go", "*_fuzz.go", "*.orig", "go.sum",
+    "fuzz*.a", "fuzz*.h", "*.o", "*.dSYM"
+)
+
+# These are environment-locking lines generated for the build environment.
+# Only changed lines with these exact content prefixes are excluded; other
+# Dockerfile changes remain part of the repair patch.
+DOCKERFILE_EXCLUDED_PATCH_PREFIXES = (
+    "FROM gcr.io/oss-fuzz-base/",
+    "RUN git clone --depth 1 https://github.com",
+    "RUN git clone --depth 1 http://github.com",
+)
+
+
+def _is_excluded_dockerfile_change(path: str, diff_line: str) -> bool:
+    """Return whether one added/deleted Dockerfile line is environment-only."""
+    if os.path.basename(path).lower() != "dockerfile":
+        return False
+    if not diff_line or diff_line[0] not in "+-" or diff_line.startswith(("+++", "---")):
+        return False
+    return diff_line[1:].startswith(DOCKERFILE_EXCLUDED_PATCH_PREFIXES)
+
+
+def filter_dockerfile_diff(diff_text: str, path: str) -> str:
+    """Remove only configured Dockerfile change lines and repair zero-context hunks."""
+    if os.path.basename(path).lower() != "dockerfile":
+        return diff_text
+
+    lines = diff_text.splitlines(keepends=True)
+    output = []
+    index = 0
+    hunk_pattern = re.compile(r"^(@@ -\d+)(,\d+)?( \+\d+)(,\d+)? @@(.*)$")
+    while index < len(lines):
+        line = lines[index]
+        match = hunk_pattern.match(line.rstrip("\r\n"))
+        if not match:
+            output.append(line)
+            index += 1
+            continue
+
+        hunk_lines = []
+        index += 1
+        while index < len(lines) and not lines[index].startswith("@@ "):
+            hunk_lines.append(lines[index])
+            index += 1
+        kept = [line for line in hunk_lines if not _is_excluded_dockerfile_change(path, line)]
+        old_count = sum(1 for item in kept if item.startswith(" ") or (item.startswith("-") and not item.startswith("---")))
+        new_count = sum(1 for item in kept if item.startswith(" ") or (item.startswith("+") and not item.startswith("+++")))
+        if old_count == 0 and new_count == 0:
+            continue
+        old_start = match.group(1)
+        new_start = match.group(3)
+        suffix = match.group(5)
+        output.append(f"{old_start},{old_count}{new_start},{new_count} @@{suffix}\n")
+        output.extend(kept)
+    return "".join(output) if any(line.startswith("@@ ") for line in output) else ""
+
+
+def get_filtered_git_diff(repo_path: str, baseline_sha: str, paths: list[str]) -> str:
+    """Return a patch with only the explicitly allowed Dockerfile filtering."""
+    chunks = []
+    for path in paths:
+        diff_options = ["--unified=0"] if os.path.basename(path).lower() == "dockerfile" else []
+        result = subprocess.run(
+            ["git", "-C", repo_path, "diff", *diff_options, baseline_sha, "HEAD", "--", path],
+            capture_output=True, text=True, check=False
+        )
+        if result.returncode != 0:
+            continue
+        filtered = filter_dockerfile_diff(result.stdout, path)
+        if filtered:
+            chunks.append(filtered)
+    return "".join(chunks)
+
+
+def get_filtered_git_metrics(repo_path: str, baseline_sha: str, paths: list[str]) -> Dict[str, Any]:
+    """Measure the effective complete patch after the Dockerfile line filter."""
+    statuses_result = subprocess.run(
+        ["git", "-C", repo_path, "diff", "--name-status", baseline_sha, "--", *paths],
+        capture_output=True, text=True, check=False
+    )
+    statuses = {}
+    added = deleted = hunks = 0
+    for row in statuses_result.stdout.splitlines():
+        fields = row.split("\t")
+        if len(fields) < 2:
+            continue
+        path = fields[-1]
+        diff = get_filtered_git_diff(repo_path, baseline_sha, [path])
+        if not diff:
+            continue
+        statuses[path] = fields[0]
+        hunks += sum(1 for line in diff.splitlines() if line.startswith("@@ "))
+        for line in diff.splitlines():
+            if line.startswith("+") and not line.startswith("+++"):
+                added += 1
+            elif line.startswith("-") and not line.startswith("---"):
+                deleted += 1
+    return {"files": len(statuses), "added": added, "deleted": deleted,
+            "hunks": hunks, "statuses": statuses}
+
+
+def is_build_generated_artifact(relative_path: str) -> bool:
+    """Identify known build outputs that are not repair-source evidence."""
+    normalized = relative_path.replace("\\", "/")
+    return any(
+        fnmatch.fnmatch(normalized, pattern) or
+        fnmatch.fnmatch(os.path.basename(normalized), pattern)
+        for pattern in BUILD_GENERATED_ARTIFACT_PATTERNS
+    )
 
 
 def extract_basic_information(raw_basic_information: Any) -> Dict[str, Any]:
@@ -289,16 +426,9 @@ def update_trace_ledger(node_id: int, fields_dict: dict, repo_path: str = None,
     Safely writes file diff metrics, active workspace, and Git SHAs into project_repair_trace.json.
     """
     try:
-        basic_info = extract_basic_information(
-            tool_context.session.state.get("basic_information")
-            if tool_context and getattr(tool_context, "session", None)
-            else _LATEST_BASIC_INFORMATION
-        )
+        # repo_path is an explicit caller-selected repository. Session state
+        # is diagnostic context only and must not redirect ledger writes.
         target_file = fields_dict.get("action_and_intent.target_file", "")
-        if target_file.startswith("process/project/"):
-            repo_path = basic_info.get("project_source_path") or repo_path
-        elif target_file.startswith("oss-fuzz/projects/"):
-            repo_path = basic_info.get("project_config_repo_path") or repo_path
 
         print(
             "[DEBUG update_trace_ledger args] "
@@ -606,6 +736,7 @@ def apply_patch(solution_file_path: str, **kwargs) -> dict:
         for block in patch_blocks:
             parts = block.split('---=== ORIGINAL ===---')
             original_target = parts[0].strip()
+            normalized_target = normalize_patch_path(original_target, base_dir)
             content_parts = parts[1].split('---=== REPLACEMENT ===---')
             original_block = content_parts[0].strip("\n\r")
             replacement_block = content_parts[1].strip("\n\r")
@@ -619,21 +750,12 @@ def apply_patch(solution_file_path: str, **kwargs) -> dict:
             with open(file_path, 'r', encoding='utf-8') as f:
                 file_content = f.read()
 
-            if replacement_block in file_content:
-                applied_count += 1
-                continue
-
-            norm_repl = re.sub(r'\s+', ' ', replacement_block).strip()
-            norm_file = re.sub(r'\s+', ' ', file_content).strip()
-            if norm_repl in norm_file:
-                applied_count += 1
-                continue
-
             if original_block in file_content:
                 new_content = file_content.replace(original_block, replacement_block, 1)
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(new_content)
                 applied_count += 1
+                APPLIED_PATCH_TARGETS.add(normalized_target)
                 continue
 
             norm_orig = re.sub(r'\s+', ' ', original_block).strip()
@@ -654,6 +776,7 @@ def apply_patch(solution_file_path: str, **kwargs) -> dict:
                     with open(file_path, 'w', encoding='utf-8') as f:
                         f.write("\n".join(new_lines))
                     applied_count += 1
+                    APPLIED_PATCH_TARGETS.add(normalized_target)
                     continue
 
             lines = file_content.splitlines()
@@ -789,14 +912,9 @@ def commit_workspace_snapshots(project_source_path: str, project_config_path: st
     Create synchronized Git snapshot commits for both upstream and downstream repositories.
     Each workspace always receives a new commit SHA via `git add . && git commit --allow-empty -m ...`.
     """
-    basic_info = extract_basic_information(_LATEST_BASIC_INFORMATION)
-    project_source_path, project_config_path, downstream_repo_path = _coerce_project_paths_with_basic_information(
-        project_source_path,
-        project_config_path,
-        basic_info
-    )
-
-    downstream_repo_path = downstream_repo_path or project_config_path
+    # The caller supplies the already verified workspaces. Do not replace
+    # them with process-global session state from another project.
+    downstream_repo_path = project_config_path
     if downstream_repo_path and not os.path.exists(os.path.join(downstream_repo_path, ".git")):
         candidate_root = os.path.abspath(os.path.join(downstream_repo_path, "..", ".."))
         if os.path.exists(os.path.join(candidate_root, ".git")):
@@ -868,20 +986,51 @@ def run_fuzz_build_and_validate(
     import re  # 用于进度正则匹配
 
     raw_basic_information = None
+    phase_error = _reject_if_project_phase_stopped("validation")
+    if phase_error:
+        return phase_error
+    if _ACTIVE_PROJECT_NAME and project_name != _ACTIVE_PROJECT_NAME:
+        message = (
+            f"Rejected cross-project validation: active project is "
+            f"{_ACTIVE_PROJECT_NAME}, requested project is {project_name}."
+        )
+        print(f"[STATE ISOLATION] {message}")
+        return {
+            "status": "error",
+            "message": message,
+            "validation_report": {
+                "step_1_official_list": "pending",
+                "step_2_infra_compliance": "pending",
+                "step_3_sanitizer_injected": "pending",
+                "step_4_engine_control": "pending",
+                "step_5_logic_linkage": "pending",
+                "step_6_runtime_stability": "pending",
+            },
+        }
     if tool_context and getattr(tool_context, "session", None):
         raw_basic_information = tool_context.session.state.get("basic_information")
     basic_info = extract_basic_information(raw_basic_information or _LATEST_BASIC_INFORMATION)
-
-    project_name = basic_info.get("project_name") or project_name
-    sanitizer = basic_info.get("sanitizer") or sanitizer
-    engine = basic_info.get("engine") or engine
-    architecture = basic_info.get("architecture") or architecture
-    if basic_info.get("project_source_path"):
+    requested_project_name = project_name
+    state_project_name = basic_info.get("project_name")
+    if state_project_name and requested_project_name and state_project_name != requested_project_name:
+        print(
+            f"[STATE ISOLATION] Ignoring stale basic_information for project "
+            f"{state_project_name}; requested project is {requested_project_name}."
+        )
+        basic_info = {}
+    # Explicit validation arguments are authoritative.  State can only fill
+    # an omitted value, never redirect a build to another project's workspace.
+    project_name = requested_project_name or basic_info.get("project_name")
+    sanitizer = sanitizer or basic_info.get("sanitizer")
+    engine = engine or basic_info.get("engine")
+    architecture = architecture or basic_info.get("architecture")
+    if not mount_path and basic_info.get("project_source_path"):
         mount_path = basic_info.get("project_source_path")
-    if basic_info.get("project_config_repo_path"):
-        oss_fuzz_path = basic_info.get("project_config_repo_path")
-    elif basic_info.get("project_config_path"):
-        oss_fuzz_path = os.path.abspath(os.path.join(basic_info.get("project_config_path"), "..", ".."))
+    if not oss_fuzz_path:
+        if basic_info.get("project_config_repo_path"):
+            oss_fuzz_path = basic_info.get("project_config_repo_path")
+        elif basic_info.get("project_config_path"):
+            oss_fuzz_path = os.path.abspath(os.path.join(basic_info.get("project_config_path"), "..", ".."))
 
     print(
         "[DEBUG run_fuzz_build_and_validate args] "
@@ -3255,7 +3404,7 @@ def archive_fixed_project(project_name: str, project_config_path: str, is_succes
                           project_source_path: str = None) -> dict:
     import os, shutil, subprocess
     from datetime import datetime
-    from agent_tools import TraceLedgerManager
+    from agent_tools import TraceLedgerManager, APPLIED_PATCH_TARGETS
 
     print(f"--- Tool: archive_fixed_project called for: {project_name} (Success: {is_success}) ---")
     try:
@@ -3296,6 +3445,22 @@ def archive_fixed_project(project_name: str, project_config_path: str, is_succes
             (config_repo_path, "configs", "config_fix.patch", sha_map.get("oss-fuzz_sha")),
             (project_source_path, "source", "source_fix.patch", sha_map.get("project_sha"))
         ]
+
+        def _is_deliberate_target(relative_path: str, workspace_kind: str) -> bool:
+            """Keep only files declared by a physical solution patch."""
+            if is_build_generated_artifact(relative_path):
+                return False
+            if not APPLIED_PATCH_TARGETS:
+                return True
+            # Git reports paths relative to each repository root, while
+            # apply_patch records the complete workspace-relative target.
+            # Normalize the absolute Git path into the same namespace first.
+            workspace_root = os.getcwd()
+            repo_relative = os.path.relpath(path, workspace_root)
+            expected = normalize_patch_path(
+                os.path.join(repo_relative, relative_path), workspace_root
+            )
+            return expected in APPLIED_PATCH_TARGETS
         
         for path, dest_sub, patch_name, baseline_sha in targets:
             if not path or not os.path.isdir(path): continue
@@ -3306,10 +3471,18 @@ def archive_fixed_project(project_name: str, project_config_path: str, is_succes
                     res = subprocess.run(
                         ["git", "-C", path, "diff", "--name-only", "--diff-filter=ACMRT", baseline_sha, "HEAD"],
                         capture_output=True, text=True, check=True)
-                    changed_files = [f.strip() for f in res.stdout.split('\n') if f.strip()]
+                    changed_files = [
+                        f.strip() for f in res.stdout.split('\n')
+                        if f.strip() and _is_deliberate_target(f.strip(), dest_sub)
+                    ]
                 except Exception as e:
                     print(f"  - Warning: Diff failed for {path}: {e}")
 
+            if changed_files:
+                changed_files = [
+                    f_rel for f_rel in changed_files
+                    if get_filtered_git_diff(path, baseline_sha, [f_rel])
+                ]
             if changed_files:
                 if dest_sub != "source":
                     for f_rel in changed_files:
@@ -3317,10 +3490,12 @@ def archive_fixed_project(project_name: str, project_config_path: str, is_succes
                         os.makedirs(os.path.dirname(dst), exist_ok=True)
                         shutil.copy2(src, dst)
                 with open(os.path.join(destination_dir, "diffs", patch_name), "w") as pf:
-                    subprocess.run(["git", "-C", path, "diff", baseline_sha, "HEAD"], stdout=pf, check=True)
+                    pf.write(get_filtered_git_diff(path, baseline_sha, changed_files))
             else:
-                if dest_sub != "source":
-                    shutil.copytree(path, os.path.join(destination_dir, f"{dest_sub}_all"), dirs_exist_ok=True)
+                # Never archive an entire repository as a fallback.  An empty
+                # filtered diff is safer and keeps the archive patch-scoped.
+                open(os.path.join(destination_dir, "diffs", patch_name), "w", encoding="utf-8").close()
+                print(f"  - No declared {dest_sub} changes; wrote empty {patch_name}.")
         
         # 4. 强制物理清理
         def _safe_physical_remove(dir_path: str):
@@ -3356,6 +3531,18 @@ def download_github_repo(project_name: str, target_dir: str, repo_url: Optional[
     import shutil
 
     current_work_dir = os.getcwd()
+
+    phase_error = _reject_if_project_phase_stopped("repository setup")
+    if phase_error:
+        return phase_error
+
+    if project_name != "oss-fuzz" and _ACTIVE_PROJECT_NAME and project_name != _ACTIVE_PROJECT_NAME:
+        message = (
+            f"Rejected cross-project repository setup: active project is "
+            f"{_ACTIVE_PROJECT_NAME}, requested project is {project_name}."
+        )
+        print(f"[STATE ISOLATION] {message}")
+        return {"status": "error", "message": message}
 
     # 🔑 1. 下游 oss-fuzz 与 上游开源项目路径强制路由锁
     if project_name == "oss-fuzz":
@@ -3585,7 +3772,12 @@ def save_file_tree_shallow(directory_path: str, max_depth: int, output_file: Opt
             if depth >= max_depth:
                 return
             try:
-                entries = sorted([e for e in os.listdir(path) if not e.startswith('.')])
+                entries = sorted([
+                    e for e in os.listdir(path)
+                    if not e.startswith('.') and not is_build_generated_artifact(
+                        os.path.relpath(os.path.join(path, e), directory_path)
+                    )
+                ])
             except OSError:
                 entries = []
 
@@ -3794,6 +3986,131 @@ def read_file_content(file_path: str, mode: str = "full", base_dir: str = None) 
 
     except Exception as e:
         return {"status": "error", "message": f"Read operation failed: {str(e)}"}
+
+
+def _read_only_git_repo_path(repo_path: str) -> Optional[str]:
+    """Resolve and restrict a repository path for optimizer read-only queries."""
+    workspace_root = os.path.abspath(os.getcwd())
+    resolved = os.path.abspath(repo_path)
+    allowed_roots = (
+        os.path.join(workspace_root, "process", "project"),
+        os.path.join(workspace_root, "oss-fuzz"),
+    )
+    if not any(os.path.commonpath([resolved, root]) == root for root in allowed_roots):
+        return None
+    if not os.path.exists(os.path.join(resolved, ".git")):
+        return None
+    return resolved
+
+
+def read_git_diff(repo_path: str, base_ref: str = "HEAD~1", target_ref: str = "HEAD",
+                  mode: str = "summary", pathspec: str = "", offset: int = 0,
+                  max_lines: int = 40, context_lines: int = 3) -> dict:
+    """Read Git diff evidence incrementally without changing repository state.
+
+    ``summary`` is the safe default. ``excerpt`` reads a bounded line window,
+    and ``full`` is allowed only for an explicit pathspec and still returns a
+    bounded window so generated binaries cannot fill the model context.
+    """
+    resolved = _read_only_git_repo_path(repo_path)
+    if not resolved:
+        return {"status": "error", "message": "Repository is outside the read-only project whitelist or has no .git directory."}
+    try:
+        if mode not in {"summary", "excerpt", "full"}:
+            return {"status": "error", "message": "mode must be summary, excerpt, or full."}
+        if offset < 0 or max_lines < 1 or max_lines > 200:
+            return {"status": "error", "message": "offset must be non-negative and max_lines must be 1..200."}
+        if mode == "full" and not pathspec:
+            return {"status": "error", "message": "Full diff requires an explicit file pathspec."}
+        if pathspec and is_build_generated_artifact(pathspec):
+            return {"status": "error", "message": "Build-generated artifacts are excluded from repair evidence."}
+
+        command = ["git", "-C", resolved, "diff", "--no-ext-diff"]
+        if mode == "summary":
+            command.extend(["--stat", "--summary", "--numstat"])
+        else:
+            command.extend([f"--unified={context_lines}"])
+        command.extend([base_ref, target_ref])
+        if pathspec:
+            command.extend(["--", pathspec])
+        else:
+            command.extend([
+                "--", ".",
+                ":(exclude)main.*.go", ":(exclude)*_fuzz.go",
+                ":(exclude)*.orig", ":(exclude)go.sum",
+                ":(exclude)fuzz*.a", ":(exclude)fuzz*.h",
+                ":(exclude)*.o", ":(exclude)*.dSYM",
+                ":(exclude)**/main.*.go", ":(exclude)**/*_fuzz.go",
+                ":(exclude)**/*.orig", ":(exclude)**/go.sum",
+                ":(exclude)**/fuzz*.a", ":(exclude)**/fuzz*.h",
+                ":(exclude)**/*.o", ":(exclude)**/*.dSYM",
+            ])
+        result = subprocess.run(command, capture_output=True, text=True, check=False)
+        if result.returncode != 0:
+            return {"status": "error", "message": result.stderr.strip() or "git diff failed."}
+        lines = result.stdout.splitlines()
+        if mode == "summary":
+            content = result.stdout
+            truncated = False
+            next_offset = None
+        else:
+            selected = lines[offset:offset + max_lines]
+            content = "\n".join(selected)
+            if selected:
+                content += "\n"
+            truncated = offset + len(selected) < len(lines)
+            next_offset = offset + len(selected) if truncated else None
+        return {
+            "status": "success",
+            "repo_path": resolved,
+            "base_ref": base_ref,
+            "target_ref": target_ref,
+            "mode": mode,
+            "pathspec": pathspec,
+            "offset": offset,
+            "max_lines": max_lines,
+            "content": content,
+            "truncated": truncated,
+            "next_offset": next_offset,
+        }
+    except Exception as exc:
+        return {"status": "error", "message": f"Read-only git diff failed: {exc}"}
+
+
+def read_git_changed_files(repo_path: str, base_ref: str = "HEAD~1", target_ref: str = "HEAD") -> dict:
+    """Read the exact changed-file list for a Git range without mutating it."""
+    resolved = _read_only_git_repo_path(repo_path)
+    if not resolved:
+        return {"status": "error", "message": "Repository is outside the read-only project whitelist or has no .git directory."}
+    try:
+        result = subprocess.run(
+            ["git", "-C", resolved, "diff", "--name-only", "--diff-filter=ACMRT",
+             base_ref, target_ref, "--", ".",
+             ":(exclude)main.*.go", ":(exclude)*_fuzz.go",
+             ":(exclude)*.orig", ":(exclude)go.sum",
+             ":(exclude)fuzz*.a", ":(exclude)fuzz*.h",
+             ":(exclude)*.o", ":(exclude)*.dSYM",
+             ":(exclude)**/main.*.go", ":(exclude)**/*_fuzz.go",
+             ":(exclude)**/*.orig", ":(exclude)**/go.sum",
+             ":(exclude)**/fuzz*.a", ":(exclude)**/fuzz*.h",
+             ":(exclude)**/*.o", ":(exclude)**/*.dSYM"],
+            capture_output=True, text=True, check=False
+        )
+        if result.returncode != 0:
+            return {"status": "error", "message": result.stderr.strip() or "git changed-file query failed."}
+        files = [line.strip() for line in result.stdout.splitlines()
+                 if line.strip() and not is_build_generated_artifact(line.strip())]
+        entries = [{"path": path} for path in files]
+        return {
+            "status": "success",
+            "repo_path": resolved,
+            "base_ref": base_ref,
+            "target_ref": target_ref,
+            "files": files,
+            "entries": entries,
+        }
+    except Exception as exc:
+        return {"status": "error", "message": f"Read-only git file query failed: {exc}"}
 
 
 @_safe_path_wrapper(operation_name="create_or_update_file")
@@ -4310,6 +4627,9 @@ def list_files_in_dir(
                 break
             full_path = os.path.join(current, entry)
             rel_path = os.path.relpath(full_path, normalized_dir)
+
+            if is_build_generated_artifact(rel_path):
+                continue
 
             if fnmatch.fnmatch(entry, pattern) or fnmatch.fnmatch(rel_path, f"*{pattern}*"):
                 is_dir = os.path.isdir(full_path) and not os.path.islink(full_path)  # 🔐 排除符号链接目录

@@ -4,9 +4,11 @@ import re
 import warnings
 import json
 import sys
+import argparse
 import traceback
 import asyncio
 import subprocess
+import shutil
 import litellm
 import logging
 import agent_tools
@@ -47,6 +49,8 @@ from agent_tools import (
     get_workspace_root,
     checkout_project_commit,
     read_file_content,
+    read_git_diff,
+    read_git_changed_files,
     get_verified_git_sha,
     get_git_commits_around_date,
     save_commit_diff_to_file,
@@ -345,6 +349,34 @@ def _generate_final_report(
     input_tokens = attempt_tokens.get("prompt", 0)
     output_tokens = attempt_tokens.get("completion", 0)
 
+    # Report the complete declared patch from the immutable original-failure
+    # baseline to the final verified HEAD. Do not reuse a historical
+    # apply_patch event, which may describe a candidate that was later rolled
+    # back.
+    final_files = attempt_last_patch_files
+    final_added = final_deleted = final_hunks = 0
+    try:
+        baseline_shas = _initial_failure_baselines()
+        source_metrics = _git_change_metrics(
+            os.path.join(os.getcwd(), "process", "project", project_name),
+            baseline_shas["source_sha"],
+        )
+        config_metrics = _git_change_metrics(
+            os.path.join(os.getcwd(), "oss-fuzz"),
+            baseline_shas["config_sha"],
+        )
+        complete_metrics = (source_metrics, config_metrics)
+        if is_successful and all(
+            value not in ("N/A", "PENDING")
+            for value in baseline_shas.values()
+        ):
+            final_files = sum(item["files"] for item in complete_metrics)
+            final_added = sum(item["added"] for item in complete_metrics)
+            final_deleted = sum(item["deleted"] for item in complete_metrics)
+            final_hunks = sum(item["hunks"] for item in complete_metrics)
+    except Exception as exc:
+        print(f"--- ⚠️ [REPORT] Final Git metric calculation failed; using fallback counters: {exc} ---")
+
     report_lines = [
         "============================================================",
         f"🏁 FINAL PROJECT REPAIR REPORT: {project_name}",
@@ -359,8 +391,11 @@ def _generate_final_report(
         f"  - [Time Cost]: {time_cost_str}",
         f"  - [Input Tokens]: {input_tokens}",
         f"  - [Output Tokens]: {output_tokens}",
-        f"  - [Files Change]: {attempt_last_patch_files}",
-        f"  - [Lines Change]: {attempt_last_patch_lines}",
+        f"  - [Files Change]: {final_files}",
+        f"  - [Lines Added]: {final_added}",
+        f"  - [Lines Deleted]: {final_deleted}",
+        f"  - [Lines Change]: {final_added + final_deleted if final_added or final_deleted else attempt_last_patch_lines}",
+        f"  - [Diff Hunks]: {final_hunks}",
         "============================================================",
     ]
     report_text = "\n".join(report_lines)
@@ -404,21 +439,386 @@ def exit_loop(tool_context: ToolContext):
 GLOBAL_LOGGER = AgentLogger()
 
 APP_NAME = "fix_build_agent_app"
-MODEL = ""
-api_base=""
-API_KEY = os.getenv("API_KEY")
+MODEL = os.getenv("MODEL", "")
+api_base = os.getenv("api_base", os.getenv("API_BASE", ""))
+API_KEY = os.getenv("API_KEY", "")
 USER_ID = "default_user"
-MAX_RETRIES = 3
-MAX_INTERNAL_ROUNDS = 12
+MAX_RETRIES = 2
+MAX_INTERNAL_ROUNDS = 6
 PROJECT_TIMEOUT_LIMIT = 10800
 LLM_SEED = 42
 top_p = 0.9
+ENABLE_PATCH_OPTIMIZATION = False
+PATCH_OPTIMIZATION_MAX_ITERATIONS = 3
+PROJECT_LIMIT = 0
+_OPTIMIZATION_RECOVERY_BASELINE = None
 
 
 def _is_step_2_success(validation_report: dict) -> bool:
     if not isinstance(validation_report, dict):
         return False
     return str(validation_report.get("step_2_infra_compliance", "")).strip() == "pass"
+
+
+def _git_change_metrics(repo_path: str, baseline_sha: str) -> Dict[str, Any]:
+    """Measure the complete diff from a fixed baseline to the current HEAD."""
+    excluded_paths = [
+        ":(exclude)main.*.go", ":(exclude)*_fuzz.go", ":(exclude)*.orig",
+        ":(exclude)go.sum", ":(exclude)fuzz*.a", ":(exclude)fuzz*.h",
+        ":(exclude)*.o", ":(exclude)*.dSYM", ":(exclude)**/main.*.go",
+        ":(exclude)**/*_fuzz.go", ":(exclude)**/*.orig", ":(exclude)**/go.sum",
+        ":(exclude)**/fuzz*.a", ":(exclude)**/fuzz*.h",
+        ":(exclude)**/*.o", ":(exclude)**/*.dSYM",
+    ]
+    all_pathspec = ["--", ".", *excluded_paths]
+    changed = subprocess.run(
+        ["git", "-C", repo_path, "diff", "--name-only", baseline_sha, *all_pathspec],
+        capture_output=True, text=True, check=False
+    )
+    changed_paths = [path.strip() for path in changed.stdout.splitlines() if path.strip()]
+    declared_targets = agent_tools.APPLIED_PATCH_TARGETS
+    if declared_targets:
+        workspace_root = os.getcwd()
+        repo_relative = os.path.relpath(repo_path, workspace_root)
+        changed_paths = [
+            path for path in changed_paths
+            if agent_tools.normalize_patch_path(
+                os.path.join(repo_relative, path), workspace_root
+            ) in declared_targets
+        ]
+    if not changed_paths:
+        return {"files": 0, "added": 0, "deleted": 0, "hunks": 0, "statuses": {}}
+    return agent_tools.get_filtered_git_metrics(repo_path, baseline_sha, changed_paths)
+
+
+def _metric_key(metrics: Tuple[Dict[str, Any], Dict[str, Any]]) -> Tuple:
+    """Order complete-patch metrics by files, churn, hunks for source/config."""
+    return tuple(
+        (item["files"], item["added"] + item["deleted"], item["hunks"])
+        for item in metrics
+    )
+
+
+def _initial_failure_baselines() -> Dict[str, str]:
+    """Read the immutable original-failure SHAs recorded in ledger Node 0."""
+    ledger = TraceLedgerManager.load_ledger()
+    node_zero = next((node for node in ledger.get("nodes", []) if node.get("node_id") == 0), {})
+    state = node_zero.get("git_sha_state", {})
+    return {
+        "source_sha": state.get("project_sha", "N/A"),
+        "config_sha": state.get("oss-fuzz_sha", "N/A"),
+    }
+
+
+def _last_commit_metrics(repo_path: str) -> Tuple[int, int]:
+    """Measure the repair represented by the latest snapshot commit."""
+    result = subprocess.run(
+        ["git", "-C", repo_path, "diff", "--numstat", "HEAD~1", "HEAD"],
+        capture_output=True, text=True, check=False
+    )
+    files = lines = 0
+    for row in result.stdout.splitlines():
+        fields = row.split("\t")
+        if len(fields) != 3:
+            continue
+        added, deleted = fields[:2]
+        files += 1
+        lines += int(added) if added.isdigit() else 0
+        lines += int(deleted) if deleted.isdigit() else 0
+    return files, lines
+
+
+def write_optimizer_artifact(file_path: str, content: str) -> Dict[str, str]:
+    """Allow the optimizer to write only its two root-level artifacts."""
+    allowed = {"solution.txt", "repair_strategy.txt"}
+    normalized = os.path.normpath(file_path)
+    if os.path.isabs(normalized):
+        normalized = os.path.normpath(os.path.relpath(normalized, os.getcwd()))
+    if normalized not in allowed:
+        return {
+            "status": "error",
+            "message": "Optimizer artifacts must be written at workspace root: solution.txt or repair_strategy.txt."
+        }
+    return create_or_update_file(normalized, content)
+
+
+def _optimizer_candidate_matches_current_disk(solution_path: str) -> Dict[str, Any]:
+    """Preflight candidate ORIGINAL blocks without changing either repository."""
+    if not os.path.exists(solution_path):
+        return {"status": "error", "message": "Optimizer solution.txt is unavailable."}
+    try:
+        with open(solution_path, "r", encoding="utf-8") as handle:
+            content = handle.read()
+        blocks = content.split("---=== FILE ===---")[1:]
+        mismatches = []
+        for block in blocks:
+            parts = block.split("---=== ORIGINAL ===---", 1)
+            if len(parts) != 2:
+                mismatches.append("Malformed optimizer patch block.")
+                continue
+            target = parts[0].strip()
+            original_parts = parts[1].split("---=== REPLACEMENT ===---", 1)
+            if len(original_parts) != 2:
+                mismatches.append(f"Malformed optimizer patch block for {target}.")
+                continue
+            original = original_parts[0].strip("\n\r")
+            target_path = target if os.path.isabs(target) else os.path.join(os.getcwd(), target)
+            if not os.path.exists(target_path):
+                mismatches.append(f"File not found: {target}")
+                continue
+            with open(target_path, "r", encoding="utf-8") as handle:
+                current = handle.read()
+            if original not in current:
+                mismatches.append(f"ORIGINAL does not match current disk: {target}")
+        if mismatches:
+            return {"status": "error", "message": "\n".join(mismatches)}
+        return {"status": "success"}
+    except Exception as exc:
+        return {"status": "error", "message": f"Optimizer candidate preflight failed: {exc}"}
+
+
+async def optimize_successful_patch(project_info: Dict, attempt_id: int) -> Dict[str, Any]:
+    """Iteratively seek a smaller patch while preserving the already proven build."""
+    global _OPTIMIZATION_RECOVERY_BASELINE
+    project_name = project_info["project_name"]
+    source_path = os.path.abspath(os.path.join(os.getcwd(), "process", "project", project_name))
+    config_repo_path = os.path.abspath(os.path.join(os.getcwd(), "oss-fuzz"))
+    config_path = os.path.join(config_repo_path, "projects", project_name)
+    sanitizer = project_info.get("sanitizer", "")
+    engine = project_info.get("engine", "")
+    architecture = project_info.get("architecture", "")
+
+    # Keep the current verified HEAD for candidate application and rollback.
+    source_baseline = get_verified_git_sha(source_path)
+    config_baseline = get_verified_git_sha(config_repo_path)
+    original_baselines = _initial_failure_baselines()
+    original_source_sha = original_baselines["source_sha"]
+    original_config_sha = original_baselines["config_sha"]
+    if source_baseline == "N/A" or config_baseline == "N/A":
+        return {"status": "skipped", "reason": "Could not establish current verified baselines."}
+    if original_source_sha in ("N/A", "PENDING") or original_config_sha in ("N/A", "PENDING"):
+        return {"status": "skipped", "reason": "Could not establish immutable original-failure baselines."}
+    _OPTIMIZATION_RECOVERY_BASELINE = {
+        "source_path": source_path,
+        "config_repo_path": config_repo_path,
+        "config_path": config_path,
+        "source_sha": source_baseline,
+        "config_sha": config_baseline,
+        "attempt_id": attempt_id,
+    }
+
+    current_metrics = (
+        _git_change_metrics(source_path, original_source_sha),
+        _git_change_metrics(config_repo_path, original_config_sha),
+    )
+    accepted_iterations = 0
+    optimization_status = "no_candidate"
+    optimizer = LlmAgent(
+        name="patch_optimizer_agent",
+        model=LiteLlm(model=MODEL, api_base=api_base, api_key=API_KEY,
+                      temperature=0.0, top_p=0.2, seed=LLM_SEED),
+        instruction=load_instruction_from_file("instructions/patch_optimizer_instruction.txt"),
+        tools=[read_file_content, read_git_diff, read_git_changed_files, write_optimizer_artifact],
+        output_key="optimization_result",
+    )
+
+    # Keep the verified artifact outside the optimizer's writable root files.
+    # The two root files below are disposable candidate outputs only; this copy
+    # remains readable throughout all optimization iterations.
+    baseline_dir = os.path.join(os.getcwd(), "generated_prompt_file", "patch_optimizer_baseline")
+    os.makedirs(baseline_dir, exist_ok=True)
+    baseline_solution_path = os.path.join(baseline_dir, "solution.txt")
+    baseline_strategy_path = os.path.join(baseline_dir, "repair_strategy.txt")
+    if not os.path.exists("solution.txt"):
+        return {"status": "skipped", "reason": "Original verified solution.txt is unavailable."}
+    shutil.copy2("solution.txt", baseline_solution_path)
+    if os.path.exists("repair_strategy.txt"):
+        shutil.copy2("repair_strategy.txt", baseline_strategy_path)
+
+    for iteration in range(1, PATCH_OPTIMIZATION_MAX_ITERATIONS + 1):
+        # Remove only the previous candidate output, never the immutable baseline.
+        safe_delete_path("solution.txt")
+        safe_delete_path("repair_strategy.txt")
+        session_service = InMemorySessionService()
+        session_id = f"optimization_{project_name}_{attempt_id}_{iteration}"
+        await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=session_id)
+        runner = Runner(agent=optimizer, app_name=APP_NAME, session_service=session_service)
+        prompt = json.dumps({
+            "project_name": project_name,
+            "iteration": iteration,
+            "project_source_path": source_path,
+            "project_config_path": config_path,
+            "project_config_repo_path": config_repo_path,
+            "current_verified_state": {
+                "source_path": source_path,
+                "config_path": config_path,
+                "meaning": "These on-disk files are the latest complete state that passed mandatory Step 2 validation. Use them as the direct source for every ORIGINAL block.",
+            },
+            "root_cause_commit": project_info.get("root_cause_commit", ""),
+            "root_cause_workspace": project_info.get("root_cause_workspace", ""),
+            "current_metrics": current_metrics,
+            "original_failure_baseline": {
+                "source_sha": original_source_sha,
+                "oss_fuzz_sha": original_config_sha,
+                "meaning": "All complete-patch metrics and final archives are measured from this immutable original failure state.",
+            },
+            "verified_baseline_solution": os.path.relpath(baseline_solution_path, os.getcwd()),
+            "verified_baseline_strategy": os.path.relpath(baseline_strategy_path, os.getcwd()) if os.path.exists(baseline_strategy_path) else "unavailable",
+            "verified_baseline_diff": {
+                "source": {"base_ref": f"{source_baseline}^", "target_ref": source_baseline},
+                "oss_fuzz": {"base_ref": f"{config_baseline}^", "target_ref": config_baseline},
+            },
+            "required_evidence_reads": [
+                "Read verified_baseline_solution with read_file_content before proposing a candidate.",
+                "First read a summary Git diff for both verified_baseline_diff ranges with read_git_diff(mode='summary').",
+                "Read the exact changed-file lists for both ranges with read_git_changed_files.",
+                "Then inspect only relevant stable files with read_git_diff(mode='excerpt' or mode='full', pathspec='<one changed file>'). Do not request an unscoped full diff.",
+                "Before writing solution.txt, read the current on-disk content of every file to be changed. Every ORIGINAL block must be copied from that current content; the historical baseline solution is reference evidence only.",
+            ],
+            "instruction": "First collect all required verified-baseline evidence. Propose only a strictly smaller candidate, or write NO_IMPROVEMENT only after reviewing that evidence. If any required evidence cannot be read, write BASELINE_UNAVAILABLE instead."
+        })
+        message = types.Content(parts=[types.Part(text=prompt)], role="user")
+        optimizer_stream = None
+        try:
+            optimizer_stream = runner.run_async(
+                user_id=USER_ID, session_id=session_id, new_message=message
+            )
+            async for event in optimizer_stream:
+                GLOBAL_LOGGER.log_event(event)
+        except Exception as exc:
+            print(f"--- [OPTIMIZATION] LLM iteration {iteration} failed: {exc} ---")
+            optimization_status = "error_preserved"
+            break
+        finally:
+            if optimizer_stream is not None:
+                try:
+                    await optimizer_stream.aclose()
+                except Exception as close_error:
+                    print(f"--- [OPTIMIZATION] Stream cleanup warning: {close_error} ---")
+
+        if not os.path.exists("solution.txt"):
+            print(f"--- [OPTIMIZATION] No candidate produced at iteration {iteration}. ---")
+            break
+
+        # Preserve the optimizer's semantic decision separately from an
+        # applied candidate that later fails validation.
+        try:
+            with open("solution.txt", "r", encoding="utf-8") as handle:
+                candidate_text = handle.read().strip()
+            strategy_text = ""
+            if os.path.exists("repair_strategy.txt"):
+                with open("repair_strategy.txt", "r", encoding="utf-8") as handle:
+                    strategy_text = handle.read().strip()
+            declared_result = f"{candidate_text}\n{strategy_text}".upper()
+            if "BASELINE_UNAVAILABLE" in declared_result:
+                optimization_status = "baseline_unavailable"
+                print(f"--- [OPTIMIZATION] Baseline evidence unavailable at iteration {iteration}. ---")
+                break
+            if "NO_IMPROVEMENT" in declared_result:
+                optimization_status = "no_improvement"
+                print(f"--- [OPTIMIZATION] Optimizer declared no improvement at iteration {iteration}. ---")
+                break
+        except OSError as exc:
+            optimization_status = "candidate_read_failed"
+            print(f"--- [OPTIMIZATION] Candidate read failed at iteration {iteration}: {exc} ---")
+            break
+
+        preflight = _optimizer_candidate_matches_current_disk("solution.txt")
+        if preflight.get("status") != "success":
+            print(f"--- [OPTIMIZATION] Candidate rejected before apply: {preflight}. Restoring verified state. ---")
+            manage_git_state(source_path, "rollback", commit_sha=source_baseline)
+            manage_git_state(config_repo_path, "rollback", commit_sha=config_baseline)
+            optimization_status = "candidate_invalid_original"
+            break
+
+        apply_result = apply_patch("solution.txt")
+        if apply_result.get("status") != "success":
+            print(f"--- [OPTIMIZATION] Candidate rejected: {apply_result} ---")
+            manage_git_state(source_path, "rollback", commit_sha=source_baseline)
+            manage_git_state(config_repo_path, "rollback", commit_sha=config_baseline)
+            optimization_status = "candidate_apply_failed"
+            break
+
+        candidate_metrics = (
+            _git_change_metrics(source_path, original_source_sha),
+            _git_change_metrics(config_repo_path, original_config_sha),
+        )
+        if _metric_key(candidate_metrics) >= _metric_key(current_metrics) or _metric_key(candidate_metrics) == ((0, 0, 0), (0, 0, 0)):
+            print(f"--- [OPTIMIZATION] Candidate is not smaller: {candidate_metrics} >= {current_metrics}. ---")
+            manage_git_state(source_path, "rollback", commit_sha=source_baseline)
+            manage_git_state(config_repo_path, "rollback", commit_sha=config_baseline)
+            optimization_status = "candidate_not_smaller"
+            break
+
+        validation = run_fuzz_build_and_validate(
+            project_name=project_name,
+            oss_fuzz_path=config_repo_path,
+            sanitizer=sanitizer,
+            engine=engine,
+            architecture=architecture,
+            mount_path=source_path,
+            verbose_build=False,
+        )
+        if not _is_step_2_success(validation.get("validation_report", {})):
+            print(f"--- [OPTIMIZATION] Candidate failed Step 2; restoring baseline. ---")
+            manage_git_state(source_path, "rollback", commit_sha=source_baseline)
+            manage_git_state(config_repo_path, "rollback", commit_sha=config_baseline)
+            optimization_status = "candidate_failed_validation"
+            break
+
+        snapshot = commit_workspace_snapshots(source_path, config_path, attempt_id)
+        if snapshot.get("status") != "success":
+            manage_git_state(source_path, "rollback", commit_sha=source_baseline)
+            manage_git_state(config_repo_path, "rollback", commit_sha=config_baseline)
+            optimization_status = "snapshot_failed"
+            break
+        source_baseline = snapshot["project_sha"]
+        config_baseline = snapshot["oss_fuzz_sha"]
+        _OPTIMIZATION_RECOVERY_BASELINE["source_sha"] = source_baseline
+        _OPTIMIZATION_RECOVERY_BASELINE["config_sha"] = config_baseline
+        # The just-accepted candidate is the new comparison baseline; recomputing
+        # against its own HEAD would erase the improvement we just measured.
+        current_metrics = candidate_metrics
+        accepted_iterations += 1
+        optimization_status = "optimized"
+        # The next iteration must optimize the latest accepted and verified
+        # candidate, rather than repeatedly reconsidering the first repair.
+        shutil.copy2("solution.txt", baseline_solution_path)
+        if os.path.exists("repair_strategy.txt"):
+            shutil.copy2("repair_strategy.txt", baseline_strategy_path)
+        print(f"--- [OPTIMIZATION] Iteration {iteration} accepted: {candidate_metrics}. ---")
+
+    _OPTIMIZATION_RECOVERY_BASELINE = None
+    return {
+        "status": optimization_status,
+        "accepted_iterations": accepted_iterations,
+        "metrics": current_metrics,
+    }
+
+
+def recover_optimization_state() -> Dict[str, Any]:
+    """Restore the last verified optimization state after an unexpected error."""
+    global _OPTIMIZATION_RECOVERY_BASELINE
+    baseline = _OPTIMIZATION_RECOVERY_BASELINE
+    if not baseline:
+        return {"status": "skipped", "reason": "No optimization state was recorded."}
+
+    source_result = manage_git_state(
+        baseline["source_path"], "rollback", commit_sha=baseline["source_sha"]
+    )
+    config_result = manage_git_state(
+        baseline["config_repo_path"], "rollback", commit_sha=baseline["config_sha"]
+    )
+    if source_result.get("status") != "success" or config_result.get("status") != "success":
+        return {"status": "error", "message": "Could not restore optimization baseline."}
+
+    # The baseline is already the latest verified patch. These synchronized
+    # snapshots make the fallback explicit even when no optimization candidate passed.
+    snapshot = commit_workspace_snapshots(
+        baseline["source_path"], baseline["config_path"], baseline["attempt_id"]
+    )
+    _OPTIMIZATION_RECOVERY_BASELINE = None
+    return {"status": "recovered", "snapshot": snapshot}
 
 
 def initialize_agents(session_state: dict = None) -> Tuple[BaseNode, InMemorySessionService]:
@@ -624,6 +1024,12 @@ async def process_single_project(
     print(f"[EVIDENCE] YAML Data Audit - Workspace: '{project_info.get('root_cause_workspace')}'")
 
     project_name = project_info['project_name']
+    # These module globals are process-wide; clear them at the project boundary
+    # so a prior project's state cannot become this project's fallback context.
+    agent_tools._LATEST_BASIC_INFORMATION = {}
+    agent_tools.APPLIED_PATCH_TARGETS.clear()
+    agent_tools.set_active_project_context(project_name)
+    agent_tools.set_project_phase("main")
     TraceLedgerManager.set_active_project(project_name)
     safe_name = "".join(c for c in project_name if c.isalnum() or c in ('_', '-')).rstrip()
     expected_source_path = os.path.join(os.getcwd(), "process", "project", safe_name)
@@ -1119,6 +1525,9 @@ async def process_single_project(
                     is_exit_triggered = (event.actions and event.actions.escalate)
                     if is_exit_triggered or _is_step_2_success(curr_session.state.get("last_validation_report", {})):
                         is_successful = True
+                        agent_tools.set_project_phase("draining")
+                        curr_session.state["stop_requested"] = True
+                        print("--- [WORKFLOW] stop_requested=True; rejecting new project tool calls while draining. ---")
                         print(f"--- ✅ Build success/exit signal detected. Workflow finishing. ---")
                         break
 
@@ -1127,7 +1536,40 @@ async def process_single_project(
                         print(f"--- ❌ [TIMEOUT] Project {project_name} reached limit. ---")
                         break
 
+                # Explicitly close the ADK async generator before leaving the
+                # attempt. Without this, Runner can leave its workflow task
+                # alive until asyncio.run() tears down the loop, causing
+                # OpenTelemetry to detach a ContextVar in the wrong context.
+                try:
+                    await gen.aclose()
+                except Exception as close_error:
+                    print(f"--- [WORKFLOW] Stream cleanup warning: {close_error} ---")
+
                 if is_successful:
+                    if ENABLE_PATCH_OPTIMIZATION:
+                        agent_tools.set_project_phase("optimizer")
+                        try:
+                            optimization_result = await optimize_successful_patch(
+                                project_info,
+                                current_attempt_id
+                            )
+                        except Exception as optimization_error:
+                            # Optimization is a post-success enhancement. Keep its
+                            # failure inside this layer and preserve the last proven patch.
+                            print(
+                                f"--- [OPTIMIZATION] Isolated failure: {optimization_error}. "
+                                "Recovering the latest verified patch. ---"
+                            )
+                            try:
+                                optimization_result = recover_optimization_state()
+                            except Exception as recovery_error:
+                                # Recovery errors are also confined to the optional
+                                # optimizer and must not restart normal repair attempts.
+                                optimization_result = {
+                                    "status": "error",
+                                    "message": f"Optimization recovery failed: {recovery_error}"
+                                }
+                        print(f"--- [OPTIMIZATION] Result: {optimization_result} ---")
                     break
 
             except litellm.ContextWindowExceededError as e:
@@ -1183,6 +1625,8 @@ async def process_single_project(
         except Exception as e:  # ← try必须配except
             print(f"--- ⚠️ [ERROR] Archive failed: {e} ---")
 
+        agent_tools.set_project_phase("idle")
+
         # 🔑 后续处理逻辑（维持原有缩进，置于循环及 finally 块外部）
 
     found_sha, found_workspace = None, None
@@ -1236,7 +1680,8 @@ async def main():
 
     print(f"--- Found {len(projects_to_process)} projects to process ---")
 
-    for project_info in projects_to_process:
+    selected_projects = projects_to_process[:PROJECT_LIMIT] if PROJECT_LIMIT > 0 else projects_to_process
+    for project_info in selected_projects:
         try:
             project_name = project_info['project_name']
             row_index = project_info['row_index']
@@ -1295,6 +1740,31 @@ async def main():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Automated OSS-Fuzz build repair agent")
+    parser.add_argument("--optimize-patch", action="store_true",
+                        help="Iteratively minimize a successful patch while preserving Step 2")
+    parser.add_argument("--optimization-max-iterations", type=int, default=3,
+                        help="Maximum successful-patch optimization iterations (default: 3)")
+    parser.add_argument("--project-limit", type=int, default=0,
+                        help="Process at most N projects; 0 means all eligible projects")
+    parser.add_argument("--max-retries", type=int, default=2,
+                        help="Maximum normal repair attempts (default: 2)")
+    parser.add_argument("--max-internal-rounds", type=int, default=6,
+                        help="Maximum normal repair workflow rounds per attempt (default: 6)")
+    args = parser.parse_args()
+    if args.optimization_max_iterations < 1:
+        parser.error("--optimization-max-iterations must be at least 1")
+    if args.project_limit < 0:
+        parser.error("--project-limit must be non-negative")
+    if args.max_retries < 1:
+        parser.error("--max-retries must be at least 1")
+    if args.max_internal_rounds < 1:
+        parser.error("--max-internal-rounds must be at least 1")
+    ENABLE_PATCH_OPTIMIZATION = args.optimize_patch
+    PATCH_OPTIMIZATION_MAX_ITERATIONS = args.optimization_max_iterations
+    PROJECT_LIMIT = args.project_limit
+    MAX_RETRIES = args.max_retries
+    MAX_INTERNAL_ROUNDS = args.max_internal_rounds
     print("--- Performing pre-startup checks... ---")
     sys.stdout = StreamTee(sys.stdout, GLOBAL_LOGGER)
     sys.stderr = StreamTee(sys.stderr, GLOBAL_LOGGER)

@@ -53,6 +53,20 @@ After completing your analysis, you must call the `create_or_update_file` tool t
 - Physical output path: "repair_strategy.txt".
 *(Note: Once the patch application succeeds, the system automatically parses this file and backfills it into the Trace Ledger. Your semantic summary here is extremely critical).*
 
+Both artifacts must be written at the workspace root using exactly `solution.txt` and `repair_strategy.txt`. Do not place them under the project source directory, the OSS-Fuzz directory, or any container-style path.
+
+Do not include transient content that is generated or rewritten only during the fuzz build (for example generated fuzz files, temporary entry points, logs, or build output) in `ORIGINAL` or `REPLACEMENT`. This does not prohibit modifying a build-mutated file when evidence proves that its stable source/configuration text is the root-cause fix; in that case, include only the smallest stable block.
+
+## PATCH OWNERSHIP AND MAINTAINABILITY CONSTRAINTS (MANDATORY)
+
+Before writing `solution.txt`, determine which workspace owns the cause of the build failure:
+
+1. Apply the patch first in the responsible party's area. If the failure is caused by the third-party project source or its build system, prefer `process/project/<project_name>/`. If it is caused by OSS-Fuzz configuration, build integration, or fuzzing infrastructure, prefer `oss-fuzz/projects/<project_name>/`.
+2. Do not move a source-owned fix into OSS-Fuzz merely because that is easier to apply, and do not modify upstream source when the evidence identifies an OSS-Fuzz integration defect.
+3. The final patch must be a sustainable upstream- or OSS-Fuzz-maintainable change, not a temporary build bypass. Do not fix the failure by reverting to an older version, pinning or locking a dependency/version solely to avoid the failure, deleting the affected test/fuzzer, or disabling the failing validation/build behavior.
+4. Among patches that address the evidenced root cause, choose the smallest direct change: the fewest target files, changed lines, and edit locations. Preserve the existing build and project semantics and avoid unrelated formatting, comments, or refactors.
+5. In `repair_strategy.txt`, explicitly state the evidence for the responsible workspace and why the selected change is maintainable and minimal. If ownership cannot be established from the supplied artifacts, do not guess; report the missing evidence and stop without inventing a target.
+
 # 【ARTIFACT FORMAT SPECIFICATION - FILE TEMPLATES】
 
 ## 1. solution.txt Format (Strictly No Markdown Code Blocks)
