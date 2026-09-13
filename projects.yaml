@@ -1,3 +1,20 @@
+- project: tomcat
+  language: jvm
+  error_time: '2026-08-12'
+  oss-fuzz_sha: f9bb0e53534a5bf5a8e08524d10ad7b3fdfb0c7b
+  fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-2911e6bf-d54d-4d78-9f17-30f595e4a9be.txt
+  software_repo_url: https://github.com/apache/tomcat
+  software_sha: 16e57c5ccd21df0fd81aca420cd0c0b839fb5f58
+  engine: libfuzzer
+  sanitizer: address
+  architecture: x86_64
+  base_image_digest: cc3c3da52c2f48d7a6caf1d5736ab8ec8cb213f4345329b33cb6e497780b1ed0
+  error_category: RC19
+  root_cause_workspace: UPSTREAM
+  fixed_state: 'no'
+  state: 'yes'
+  fix_result: Success
+  fix_date: '2026-09-13'
 - project: uint256
   language: go
   error_time: '2026-05-28'
@@ -14,7 +31,7 @@
   fixed_state: 'no'
   state: 'yes'
   fix_result: Success
-  fix_date: '2026-08-30'
+  fix_date: '2026-09-02'
 - project: bc-gh
   language: c
   error_time: '2025-03-19'
@@ -32,7 +49,7 @@
   fixed_state: 'no'
   state: 'yes'
   fix_result: Failure
-  fix_date: '2026-08-31'
+  fix_date: '2026-09-01'
 - project: toml_edit
   language: rust
   error_time: '2025-05-01'
@@ -50,4 +67,22 @@
   fixed_state: 'no'
   state: 'yes'
   fix_result: Success
-  fix_date: '2026-08-31'
+  fix_date: '2026-09-13'
+- project: jimfs
+  language: jvm
+  error_time: '2025-10-28'
+  oss-fuzz_sha: 4a96094d3e3d9efad421ee9e4a7e4d4c78526e9c
+  fuzzing_build_error_log: https://oss-fuzz-build-logs.storage.googleapis.com/log-1eed1c19-1005-4c06-8c98-6eb61b5874c8.txt
+  software_repo_url: https://github.com/google/jimfs
+  software_sha: 5b69d0ee4c943bc47a1ee15de7947d43559eba0d
+  engine: libfuzzer
+  sanitizer: address
+  architecture: x86_64
+  base_image_digest: d4d8b420a4de8dcde2f2677f38b8ea4ba6f9f3bcb9773859ad3b3ca676351530
+  error_category: RC13
+  root_cause_commit: 6faa637b19b13b9a816e7896a0605625ea422e7a
+  root_cause_workspace: UPSTREAM
+  fixed_state: 'no'
+  state: 'yes'
+  fix_result: Success
+  fix_date: '2026-09-13'

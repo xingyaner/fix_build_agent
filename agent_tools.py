@@ -74,6 +74,7 @@ DOCKERFILE_EXCLUDED_PATCH_PREFIXES = (
     "FROM gcr.io/oss-fuzz-base/",
     "RUN git clone --depth 1 https://github.com",
     "RUN git clone --depth 1 http://github.com",
+    "RUN git clone  https://github.com",
 )
 
 
@@ -121,13 +122,14 @@ def filter_dockerfile_diff(diff_text: str, path: str) -> str:
     return "".join(output) if any(line.startswith("@@ ") for line in output) else ""
 
 
-def get_filtered_git_diff(repo_path: str, baseline_sha: str, paths: list[str]) -> str:
+def get_filtered_git_diff(repo_path: str, baseline_sha: str, paths: list[str],
+                          target_ref: str = "HEAD") -> str:
     """Return a patch with only the explicitly allowed Dockerfile filtering."""
     chunks = []
     for path in paths:
         diff_options = ["--unified=0"] if os.path.basename(path).lower() == "dockerfile" else []
         result = subprocess.run(
-            ["git", "-C", repo_path, "diff", *diff_options, baseline_sha, "HEAD", "--", path],
+            ["git", "-C", repo_path, "diff", *diff_options, baseline_sha, target_ref, "--", path],
             capture_output=True, text=True, check=False
         )
         if result.returncode != 0:
@@ -138,10 +140,11 @@ def get_filtered_git_diff(repo_path: str, baseline_sha: str, paths: list[str]) -
     return "".join(chunks)
 
 
-def get_filtered_git_metrics(repo_path: str, baseline_sha: str, paths: list[str]) -> Dict[str, Any]:
+def get_filtered_git_metrics(repo_path: str, baseline_sha: str, paths: list[str],
+                             target_ref: str = "HEAD") -> Dict[str, Any]:
     """Measure the effective complete patch after the Dockerfile line filter."""
     statuses_result = subprocess.run(
-        ["git", "-C", repo_path, "diff", "--name-status", baseline_sha, "--", *paths],
+        ["git", "-C", repo_path, "diff", "--name-status", baseline_sha, target_ref, "--", *paths],
         capture_output=True, text=True, check=False
     )
     statuses = {}
@@ -151,7 +154,7 @@ def get_filtered_git_metrics(repo_path: str, baseline_sha: str, paths: list[str]
         if len(fields) < 2:
             continue
         path = fields[-1]
-        diff = get_filtered_git_diff(repo_path, baseline_sha, [path])
+        diff = get_filtered_git_diff(repo_path, baseline_sha, [path], target_ref)
         if not diff:
             continue
         statuses[path] = fields[0]
@@ -163,6 +166,34 @@ def get_filtered_git_metrics(repo_path: str, baseline_sha: str, paths: list[str]
                 deleted += 1
     return {"files": len(statuses), "added": added, "deleted": deleted,
             "hunks": hunks, "statuses": statuses}
+
+
+def get_verified_snapshot_patches(snapshot: Dict[str, str]) -> Dict[str, Any]:
+    """Build final patches and metrics from original and latest verified refs."""
+    result = {"source_patch": "", "config_patch": "",
+              "metrics": {"files": 0, "added": 0, "deleted": 0, "hunks": 0}}
+    groups = (
+        ("source_path", "original_source_sha", "latest_source_sha", "source_patch"),
+        ("config_repo_path", "original_config_sha", "latest_config_sha", "config_patch"),
+    )
+    for path_key, base_key, target_key, patch_key in groups:
+        repo_path = snapshot.get(path_key)
+        base_ref, target_ref = snapshot.get(base_key), snapshot.get(target_key)
+        if not repo_path or not base_ref or not target_ref or base_ref in ("N/A", "PENDING"):
+            continue
+        listed = subprocess.run(
+            ["git", "-C", repo_path, "diff", "--name-only", base_ref, target_ref, "--", "."],
+            capture_output=True, text=True, check=False,
+        )
+        paths = [item.strip() for item in listed.stdout.splitlines()
+                 if item.strip() and not is_build_generated_artifact(item.strip())]
+        if not paths:
+            continue
+        metrics = get_filtered_git_metrics(repo_path, base_ref, paths, target_ref)
+        result[patch_key] = get_filtered_git_diff(repo_path, base_ref, paths, target_ref)
+        for key in ("files", "added", "deleted", "hunks"):
+            result["metrics"][key] += metrics[key]
+    return result
 
 
 def is_build_generated_artifact(relative_path: str) -> bool:
@@ -3400,8 +3431,52 @@ def truncate_prompt_file(file_path: str, max_lines: int = 2000) -> Dict[str, str
         return {"status": "error", "message": message}
 
 
+def _solution_patch_text(solution_path: str, workspace_root: str) -> Dict[str, Any]:
+    """Convert solver blocks into a standalone, patch-scoped unified diff."""
+    with open(solution_path, "r", encoding="utf-8") as handle:
+        content = handle.read()
+    files: Dict[str, List[str]] = {}
+    added = deleted = hunks = 0
+    for block in content.split("---=== FILE ===---")[1:]:
+        parts = block.split("---=== ORIGINAL ===---", 1)
+        if len(parts) != 2:
+            continue
+        target, rest = parts[0].strip(), parts[1]
+        parts = rest.split("---=== REPLACEMENT ===---", 1)
+        if len(parts) != 2:
+            continue
+        original = parts[0].strip("\n\r").splitlines()
+        replacement = parts[1].strip("\n\r").splitlines()
+        normalized = normalize_patch_path(target, workspace_root)
+        files.setdefault(normalized, [])
+        diff = list(__import__("difflib").unified_diff(
+            original, replacement, fromfile=f"a/{normalized}", tofile=f"b/{normalized}", lineterm=""
+        ))
+        if diff:
+            files[normalized].extend([f"diff --git a/{normalized} b/{normalized}", *diff])
+            added += sum(1 for line in diff[2:] if line.startswith("+") and not line.startswith("+++") )
+            deleted += sum(1 for line in diff[2:] if line.startswith("-") and not line.startswith("---") )
+            hunks += sum(1 for line in diff if line.startswith("@@"))
+    text = "\n".join(line for lines in files.values() for line in lines)
+    if text:
+        text += "\n"
+    return {"text": text, "files": len([v for v in files.values() if v]),
+            "added": added, "deleted": deleted, "hunks": hunks}
+
+
+def get_solution_patch_metrics(snapshot: Dict[str, str]) -> Dict[str, int]:
+    """Return metrics for the exact final solver artifact, not repository HEAD."""
+    result = {"files": 0, "added": 0, "deleted": 0, "hunks": 0}
+    for path in (snapshot or {}).values():
+        if path.endswith("solution.txt") and os.path.exists(path):
+            result = _solution_patch_text(path, os.getcwd())
+            break
+    return {key: int(result.get(key, 0)) for key in ("files", "added", "deleted", "hunks")}
+
+
 def archive_fixed_project(project_name: str, project_config_path: str, is_success: bool = True,
-                          project_source_path: str = None) -> dict:
+                          project_source_path: str = None,
+                          final_patch_snapshot: Dict[str, str] = None) -> dict:
     import os, shutil, subprocess
     from datetime import datetime
     from agent_tools import TraceLedgerManager, APPLIED_PATCH_TARGETS
@@ -3434,6 +3509,56 @@ def archive_fixed_project(project_name: str, project_config_path: str, is_succes
         else:
             print(f"  - Warning: result.txt not found at {result_txt_path}, skipping.")
 
+        # 3. Archive only the final verified solver artifact. Repository HEAD
+        # contains setup/history commits and is not the repair patch boundary.
+        if is_success and final_patch_snapshot and final_patch_snapshot.get("latest_source_sha"):
+            verified = get_verified_snapshot_patches(final_patch_snapshot)
+            # The Git snapshot is always the complete patch source.  An
+            # optional optimizer review may remove only explicitly identified
+            # non-repair files; it cannot add or rewrite patch content.
+            if "archive_source_patch" in final_patch_snapshot:
+                verified["source_patch"] = final_patch_snapshot["archive_source_patch"]
+            if "archive_config_patch" in final_patch_snapshot:
+                verified["config_patch"] = final_patch_snapshot["archive_config_patch"]
+            config_repo_path = project_config_path
+            with open(os.path.join(destination_dir, "diffs", "source_fix.patch"), "w", encoding="utf-8") as pf:
+                pf.write(verified["source_patch"])
+            with open(os.path.join(destination_dir, "diffs", "config_fix.patch"), "w", encoding="utf-8") as pf:
+                pf.write(verified["config_patch"])
+            print("  - Archived Git diff from original failure SHA to latest verified SHA.")
+            for cleanup_path in (project_source_path, config_repo_path):
+                if cleanup_path and os.path.isdir(cleanup_path):
+                    reclaim_path_permissions(cleanup_path)
+                    shutil.rmtree(cleanup_path, ignore_errors=True)
+            return {"status": "success", "archive_dir": destination_dir}
+
+        if is_success and final_patch_snapshot and os.path.exists(final_patch_snapshot.get("solution", "")):
+            parsed = _solution_patch_text(final_patch_snapshot["solution"], os.getcwd())
+            grouped: Dict[str, List[str]] = {"source": [], "configs": []}
+            solution_text = parsed["text"]
+            for chunk in solution_text.split("diff --git ")[1:]:
+                first = chunk.splitlines()[0]
+                group = "source" if first.startswith("a/process/project/") else "configs"
+                archive_chunk = "diff --git " + chunk
+                if group == "source":
+                    prefix = f"process/project/{project_name}/"
+                    archive_chunk = archive_chunk.replace(f"a/{prefix}", "a/")
+                    archive_chunk = archive_chunk.replace(f"b/{prefix}", "b/")
+                else:
+                    archive_chunk = archive_chunk.replace("a/oss-fuzz/", "a/")
+                    archive_chunk = archive_chunk.replace("b/oss-fuzz/", "b/")
+                grouped[group].append(archive_chunk)
+            for group, patch_name in (("configs", "config_fix.patch"), ("source", "source_fix.patch")):
+                with open(os.path.join(destination_dir, "diffs", patch_name), "w", encoding="utf-8") as pf:
+                    pf.write("".join(grouped[group]))
+            print("  - Archived only the final verified solution artifact; cumulative repository diff excluded.")
+            for cleanup_path in (project_source_path, config_repo_path):
+                if cleanup_path and os.path.isdir(cleanup_path):
+                    reclaim_path_permissions(cleanup_path)
+                    shutil.rmtree(cleanup_path, ignore_errors=True)
+            return {"status": "success", "archive_dir": destination_dir}
+
+        # 4. Legacy fallback for unsuccessful runs without a verified artifact.
         # 3. 统一提取变更 (Loop 结构)
         config_repo_path = project_config_path
         if config_repo_path and not os.path.exists(os.path.join(config_repo_path, ".git")):

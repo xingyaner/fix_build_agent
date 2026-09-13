@@ -46,6 +46,25 @@ Apply these priorities in order; a candidate that fails Priority 1 must not be a
 
 ## Output
 
+### Final archive review mode
+
+When the user prompt contains `mode: final_archive_review`, do not propose or apply
+any source change and do not write `solution.txt`. Read the supplied complete Git
+diff, changed-file list, and the saved solver artifacts. Return only a
+`repair_strategy.txt` containing these exact lines:
+
+ARCHIVE_KEEP_FILES: <comma-separated workspace-relative paths>
+ARCHIVE_DROP_FILES: <comma-separated workspace-relative paths>
+Reasoning: <evidence-based explanation>
+
+Keep every changed file by default. List a file under `ARCHIVE_DROP_FILES` only
+when the evidence explicitly shows it is a transient build/environment side
+effect and not part of the root-cause repair. Never drop a file merely because
+it is absent from `solution.txt`; the complete Git diff is authoritative for
+patch completeness. If the evidence is insufficient, leave `ARCHIVE_DROP_FILES`
+empty. This review filters archive content only and must not alter the verified
+repositories or the main repair/optimization counters.
+
 If and only if a smaller candidate is justified, write `solution.txt` using the exact existing format:
 
 ---=== FILE ===---
