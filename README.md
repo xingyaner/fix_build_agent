@@ -2,6 +2,8 @@
 
 [📊 BuildFixBench Dataset Homepage](https://xingyaner.github.io/BuildFixBench/)
 
+BuildFixBench is a benchmark dataset for reproducing and repairing fuzzing build failures observed in OSS-Fuzz. Each case provides the metadata needed to recreate the failing environment, including the OSS-Fuzz and upstream commit SHAs, archived build log, fuzzing engine, sanitizer, architecture, base-image digest, error category, and—when available—the root-cause commit and workspace.
+
 This project is a high-performance, industrial-grade autonomous agent system designed to fix build errors in **OSS-Fuzz**. It leverages LLMs (DeepSeek) and a multi-agent orchestration framework (**google-adk**) to perform environment locking, root cause analysis, and dual-track (Config vs. Source) code repair.
 
 ## 🚀 Core Features
