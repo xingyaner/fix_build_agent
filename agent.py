@@ -429,6 +429,26 @@ def exit_loop(tool_context: ToolContext):
     return {"status": "SUCCESS"}
 
 
+def _format_duration(seconds: float) -> str:
+    """将秒数格式化为人类可读的时长字符串，例如 '2h 30m'、'5m 12s'。"""
+    if seconds < 60:
+        return f"{int(seconds)}s"
+    if seconds < 3600:
+        m = int(seconds) // 60
+        s = int(seconds) % 60
+        return f"{m}m {s}s"
+    h = int(seconds) // 3600
+    remainder = int(seconds) % 3600
+    m = remainder // 60
+    s = remainder % 60
+    parts = [f"{h}h"]
+    if m > 0:
+        parts.append(f"{m}m")
+    if s > 0:
+        parts.append(f"{s}s")
+    return " ".join(parts)
+
+
 GLOBAL_LOGGER = AgentLogger()
 
 APP_NAME = "fix_build_agent_app"
@@ -438,7 +458,8 @@ API_KEY = os.getenv("API_KEY", "")
 USER_ID = "default_user"
 MAX_RETRIES = 2
 MAX_INTERNAL_ROUNDS = 6
-PROJECT_TIMEOUT_LIMIT = 10800
+PROJECT_TIMEOUT_LIMIT = 16200       # 单项目总时间上限（秒），默认 4.5 小时
+PER_ATTEMPT_TIMEOUT_LIMIT = 0       # 单次修复尝试的时间预算（秒），0 表示不启用
 LLM_SEED = 42
 top_p = 0.9
 ENABLE_PATCH_OPTIMIZATION = False
@@ -1839,6 +1860,23 @@ async def process_single_project(
                 except Exception as close_error:
                     print(f"--- [WORKFLOW] Stream cleanup warning: {close_error} ---")
 
+                # 🔑 【新增】单次修复尝试时间预算强制判定
+                # 在检查成功结果之前，先判断本次 attempt 是否超出预分配的时间预算。
+                # 注意：即使 build 碰巧通过了，超时的修复也不纳入归档优化（避免掩盖真正原因）。
+                if PER_ATTEMPT_TIMEOUT_LIMIT > 0:
+                    elapsed_seconds = time.time() - attempt_start_time
+                    if elapsed_seconds > PER_ATTEMPT_TIMEOUT_LIMIT:
+                        budget_str = _format_duration(PER_ATTEMPT_TIMEOUT_LIMIT)
+                        actual_str = _format_duration(elapsed_seconds)
+                        if is_successful:
+                            print(f"--- ⏱️ [TIME BUDGET EXCEEDED] Attempt #{current_attempt_id} succeeded but exceeded time budget ({budget_str}). Actual: {actual_str}. Treating as failure for reporting purposes. ---")
+                        else:
+                            print(f"--- ❌ [TIME BUDGET EXCEEDED] Attempt #{current_attempt_id} failed and exceeded time budget ({budget_str}). Actual: {actual_str}. ---")
+                        is_successful = False
+                        agent_tools.set_project_phase("idle")
+                        # break out of the inner while True loop first
+                        break
+
                 if is_successful:
                     snapshot_dir = os.path.join(
                         os.getcwd(), "generated_prompt_file", "final_verified_patch"
@@ -2073,6 +2111,12 @@ if __name__ == "__main__":
                         help="Maximum normal repair attempts (default: 2)")
     parser.add_argument("--max-internal-rounds", type=int, default=6,
                         help="Maximum normal repair workflow rounds per attempt (default: 6)")
+    parser.add_argument("--per-attempt-timeout", type=int, default=0,
+                        help="Time budget for each repair attempt in seconds (0 = disabled, default: 0)")
+    parser.add_argument("--timeout-hours", type=float, default=4.5,
+                        help="Total timeout limit in hours for an entire project (default: 4.5)")
+    parser.add_argument("--experimental-mode", action="store_true",
+                        help="Experimental mode: removes .git directory to avoid stale state before starting")
     args = parser.parse_args()
     if args.optimization_max_iterations < 1:
         parser.error("--optimization-max-iterations must be at least 1")
@@ -2087,6 +2131,21 @@ if __name__ == "__main__":
     PROJECT_LIMIT = args.project_limit
     MAX_RETRIES = args.max_retries
     MAX_INTERNAL_ROUNDS = args.max_internal_rounds
+    PER_ATTEMPT_TIMEOUT_LIMIT = args.per_attempt_timeout
+    PROJECT_TIMEOUT_LIMIT = int(args.timeout_hours * 3600)
+
+    # 🔑 【新增】实验模式：启动时清除 .git 目录，避免残留状态干扰
+    if args.experimental_mode:
+        git_dir = os.path.join(os.getcwd(), ".git")
+        if os.path.isdir(git_dir):
+            try:
+                shutil.rmtree(git_dir)
+                print(f"🧹 [EXPERIMENTAL MODE] Deleted .git directory: {git_dir}")
+            except Exception as e:
+                print(f"⚠️ [EXPERIMENTAL MODE] Failed to delete .git: {e}")
+        else:
+            print(f"ℹ️ [EXPERIMENTAL MODE] No .git directory found at {git_dir}, skipping.")
+
     print("--- Performing pre-startup checks... ---")
     sys.stdout = StreamTee(sys.stdout, GLOBAL_LOGGER)
     sys.stderr = StreamTee(sys.stderr, GLOBAL_LOGGER)

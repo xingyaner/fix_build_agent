@@ -1,0 +1,42 @@
+# Secrets & Credentials
+.env
+*.key
+*.pem
+credentials/
+
+# Logs
+agent_logs/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Runtime artifacts & test data
+oss-fuzz/
+process/project/
+fuzz_build_log_file/
+generated_prompt_file/
+solution.txt
+repair_strategy.txt
+result.txt
+project_repair_trace.json
+file_tree.txt
+.gitkeep
+archive/
+build_error_log/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

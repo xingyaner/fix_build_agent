@@ -2861,8 +2861,34 @@ def patch_project_dockerfile(
 ) -> Dict:
     import os
     import re
+    import json
 
     print(f"--- Tool: patch_project_dockerfile (Enhanced) for {project_name} ---")
+
+    # 🔑 【类型兼容层】确保 dependencies 始终是 list[dict]，防御 Agent 传错格式
+    if isinstance(dependencies, str):
+        if not dependencies.strip():
+            dependencies = []
+        else:
+            try:
+                parsed = json.loads(dependencies)
+                # 情况1: 完整返回对象 {"metadata": {"dependencies": [...]}}
+                if isinstance(parsed, dict) and "metadata" in parsed:
+                    deps = parsed["metadata"].get("dependencies", [])
+                # 情况2: 完整返回对象 {"status": ..., "metadata": {...}, ...}
+                elif isinstance(parsed, dict) and "status" in parsed:
+                    deps = parsed.get("metadata", {}).get("dependencies", [])
+                # 情况3: 纯列表字符串 "[{...}, {...}]"
+                elif isinstance(parsed, list):
+                    deps = parsed
+                else:
+                    deps = []
+                dependencies = deps
+            except (json.JSONDecodeError, KeyError, AttributeError):
+                pass
+    elif not dependencies:
+        dependencies = []
+
     dockerfile_path = os.path.join(oss_fuzz_path, "projects", project_name, "Dockerfile")
 
     try:
