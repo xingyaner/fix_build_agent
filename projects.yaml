@@ -435,7 +435,7 @@
   sanitizer: address
   architecture: x86_64
   base_image_digest: 0c229e61349e6e5f4dbcfd433b2b0b5906012d49216675a6402ad1ed270715c4
-  error_category: 'RC9: Dependency issues'
+  error_category: RC9
   root_cause_commit: caf7047da56ddb51343cf6661fe259d7a166144d
   root_cause_workspace: DOWNSTREAM
   fixed_state: 'no'
@@ -451,7 +451,7 @@
   sanitizer: address
   architecture: x86_64
   base_image_digest: 2b7ffc98a5b69b2b7a1c9a661f9831eec1e37669d100c259425d0fd23435e89f
-  error_category: 'RC13: Source code compilation errors'
+  error_category: RC13
   fixed_state: 'no'
 
 - project: libstdcpp
@@ -465,7 +465,7 @@
   sanitizer: address
   architecture: x86_64
   base_image_digest: 6d7dd44ebec7ae27386a7b8a37ce0e827fe1604c33ef5a3a009a10f0fdf7bc34
-  error_category: 'RC13: Source code compilation errors'
+  error_category: RC13
   fixed_state: 'no'
 
 - project: libtpms
@@ -1017,7 +1017,7 @@
   sanitizer: address
   architecture: x86_64
   base_image_digest: 5b4a8d18f9a854c128279c66c609f4f9c8dc29da9681ec1ecb98c5c1bb7f98e6
-  error_category: 'RC9: Dependency issues'
+  error_category: RC9
   fixed_state: 'no'
 
 - project: libecc
@@ -1031,7 +1031,7 @@
   sanitizer: address
   architecture: x86_64
   base_image_digest: 19782f7fe8092843368894dbc471ce9b30dd6a2813946071a36e8b05f5b1e27e
-  error_category: 'RC9: Dependency issues'
+  error_category: RC9
   fixed_state: 'no'
 
 - project: linkerd2-proxy
